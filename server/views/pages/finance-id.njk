@@ -1,0 +1,95 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Finance &amp; ID" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+<div class="govuk-grid-row govuk-!-padding-top-4">
+
+    <!-- Main content area -->
+    <div class="govuk-grid-column-one-quarter">
+
+        <!-- Pathway subnav -->
+
+        <ul class="app-subnav__section">
+            <li class="app-subnav__section-item app-subnav__section-item--current">
+                <ul class="app-subnav__section app-subnav__section--nested">
+                    <li class="app-subnav__section-item"><a href="#id-documents">ID documents</a> </li>
+                    <li class="app-subnav__section-item"><a href="#finance">Finance</a> </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+
+        <style>
+            .govuk-table__cell pre {
+                display: inline;
+                margin: 0;
+                padding: 0;
+                white-space: pre-wrap;
+                word-break: break-word;
+                font-family: inherit;
+                font-size: inherit;
+                line-height: inherit;
+                background-color: transparent;
+                border: none;
+            }
+        </style>
+        <section id="id-documents" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    ID documents
+                </h3>
+                <span class="right">
+
+                    <a href="id-add" style="color: white; text-decoration: none;" class="govuk-button">
+                        Add an ID
+                    </a>
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+                <br>
+            </div>
+        </section>
+        <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Finance
+                </h3>
+                <span class="right">
+
+                    <a href="bank-account-add.html" style="color: white; text-decoration: none;" class="govuk-button">
+                        Add a bank account</a>
+
+
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+
+                <div class="govuk-grid-row">
+
+                    <div class="govuk-grid-column-full">
+
+                        <h3 class="govuk-heading-s">Bank account</h3>
+
+                        <p>No current bank account applications</p>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <style>
+        .govuk-width-container,
+        .dps-header__container {
+            max-width: 1280px !important;
+        }
+    </style>
+</div>
+
+{% endblock %}

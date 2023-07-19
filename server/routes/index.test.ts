@@ -13,12 +13,12 @@ afterEach(() => {
 })
 
 describe('GET /', () => {
-  it('should render index page', () => {
+  it('should render profile overview page', () => {
     return request(app)
       .get('/')
       .expect('Content-Type', /html/)
       .expect(res => {
-        expect(res.text).toContain('This site is under construction...')
+        expect(res.text).toContain('Accommodation')
       })
   })
 })
