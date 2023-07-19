@@ -17,7 +17,7 @@ export default function routes(service: Services): Router {
   get('/attitudes-thinking-and-behaviour', (req, res, next) => {
     res.render('pages/attitudes-thinking-behaviour')
   })
-  get('/children-families-and-community', (req, res, next) => {
+  get('/children-families-and-communities', (req, res, next) => {
     res.render('pages/children-families-communities')
   })
   get('/drugs-and-alcohol', (req, res, next) => {

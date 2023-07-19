@@ -1,9 +1,12 @@
 {% extends "../partials/layout.njk" %}
 
-{% set pageTitle = applicationName + " - Accommodation" %}
+{% set pageTitle = applicationName + " - Home" %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
+
+
+{% include "../partials/sectionIntro.njk" %}
 <div class="govuk-grid-row govuk-!-padding-top-4">
 
     <!-- Main content area -->
@@ -164,6 +167,5 @@ M1 1AA</td>
 </section>
 
     </div>
-
 </div>
 {% endblock %}

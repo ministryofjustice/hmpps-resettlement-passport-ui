@@ -19,14 +19,13 @@
 
         <!-- Pathway status -->
 
-        <div style="padding: 10px; border-radius: 5px; background:#d2e2f1;">
+        <div>
             <form action="/beta_1-attitudes-form-0" method="POST">
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="attitudesstatus">
                         Attitudes, thinking and behaviour readiness status:<br><br>
                     </label>
-                    <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus"
-                        onchange="this.form.submit()">
+                    <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
                         <option value="unbegun">Not started</option>
                         <option value="declined">Support declined</option>
                         <option value="progress" selected="">In progress</option>
@@ -182,11 +181,5 @@
             </div>
         </section>
     </div>
-    <style>
-        .govuk-width-container,
-        .dps-header__container {
-            max-width: 1280px !important;
-        }
-    </style>
 </div>
 {% endblock %}
