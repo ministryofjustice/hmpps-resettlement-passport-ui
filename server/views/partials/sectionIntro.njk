@@ -1,0 +1,34 @@
+<div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+
+    <div class="govuk-grid-column-three-quarters">
+        <h2 class="govuk-heading-l">Accommodation</h2>
+
+        <p class="govuk-body-l">
+            Referrals and support to enable prison leavers to access suitable and sustainable housing, on their first
+            night and beyond.</p>
+    </div>
+    <div class="govuk-grid-column-one-quarter">
+
+        <!-- Pathway status -->
+
+        <div>
+            <form action="/beta_1-accommodation-form-0" method="POST">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="accommodationstatus">
+                        Accommodation readiness status:<br><br>
+                    </label>
+                    <select class="govuk-select" id="accommodationstatus" name="accommodationreadinessstatus"
+                        onchange="this.form.submit()">
+                        <option value="unbegun">Not started</option>
+                        <option value="declined">Support declined</option>
+                        <option value="progress">In progress</option>
+                        <option value="incomplete">Incomplete</option>
+                        <option value="done" selected="">Complete</option>
+                        <option value="unrequired">Support not required</option>
+                    </select>
+                    <input type="hidden" id="updated" name="updated" value="today">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

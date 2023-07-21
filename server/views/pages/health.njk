@@ -1,0 +1,73 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Health" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+<div class="govuk-grid-row govuk-!-padding-top-4">
+
+    <!-- Main content area -->
+    <div class="govuk-grid-column-one-quarter">
+
+        <!-- Pathway subnav -->
+
+        <ul class="app-subnav__section">
+            <li class="app-subnav__section-item app-subnav__section-item--current">
+                <ul class="app-subnav__section app-subnav__section--nested">
+                    <li class="app-subnav__section-item"><a href="#ews-referral">Emotional wellbeing support
+                            referral</a> </li>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+
+        <section id="ews-referral" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Emotional wellbeing support referral<span class="govuk-caption-m">Data sourced from nDelius</span>
+                </h3>
+                <span class="right">
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+                <table class="govuk-table">
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Referral required</th>
+                            <td class="govuk-table__cell">Yes</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Status</th>
+                            <td class="govuk-table__cell">Completed</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Provider</th>
+                            <td class="govuk-table__cell">EWS Provider</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Provider address</th>
+                            <td class="govuk-table__cell">123 A Street, Manchester, M5 6FG</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Provider phone</th>
+                            <td class="govuk-table__cell">0161 654 3211</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </section>
+
+    </div>
+</div>
+
+{% endblock %}

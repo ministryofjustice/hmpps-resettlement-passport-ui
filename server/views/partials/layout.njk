@@ -23,9 +23,29 @@
 
 {% block header %}
   {% include "./header.njk" %}
+  <div class="govuk-width-container">
+  <div class="govuk-breadcrumbs govuk-breadcrumbs--collapse-on-mobile">
+    <ol class="govuk-breadcrumbs__list">
+
+        <!-- <li class="govuk-breadcrumbs__list-item">
+            <a href="javascript: window.history.go(-1)">Back</a>
+        </li> -->
+        <li class="govuk-breadcrumbs__list-item">
+            <a href="../0/">South, James (G2911GD)</a>
+        </li>
+        <li class="govuk-breadcrumbs__list-item">
+            Accommodation readiness
+        </li>
+    </ol>
+</div>
+{% include "../partials/profileHeader.njk" %}
+{% include "../partials/mainNav.njk" %}
+
+</div>
 {% endblock %}
 
 {% block bodyStart %}
+
 {% endblock %}
 
 {% block bodyEnd %}

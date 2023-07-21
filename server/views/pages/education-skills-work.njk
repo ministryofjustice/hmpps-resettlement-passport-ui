@@ -1,0 +1,177 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Education, skills &amp; work" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+<div class="govuk-grid-row govuk-!-padding-top-4">
+
+    <!-- Main content area -->
+    <div class="govuk-grid-column-one-quarter">
+
+        <!-- Pathway subnav -->
+
+        <ul class="app-subnav__section">
+            <li class="app-subnav__section-item app-subnav__section-item--current">
+                <ul class="app-subnav__section app-subnav__section--nested">
+                    <li class="app-subnav__section-item"><a href="#qualifications-goals">Qualifications and education
+                            goals</a> </li>
+                    <li class="app-subnav__section-item"><a href="#employment-voluntering">Employment and
+                            volunteering</a> </li>
+                    <li class="app-subnav__section-item"><a href="#supporting-documents">Supporting documents</a> </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+        <section id="qualifications-goals" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Qualifications and education goals<span class="govuk-caption-m">Data sourced from Access and
+                        Meganexus</span>
+                </h3>
+                <span class="right">
+                </span>
+            </header>
+            <div class="app-summary-card__body">
+                <h3 class="govuk-heading-s">Qualification 1</h3>
+
+                <table class="govuk-table">
+                    <tbody>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Course</th>
+                            <td class="govuk-table__cell">NVQ Level 2 accounting</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Date completed</th>
+                            <td class="govuk-table__cell">23 June 2021</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Location completed</th>
+                            <td class="govuk-table__cell">HMP Berwyn</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Certificate</th>
+                            <td class="govuk-table__cell"><a href="#" class="govuk-link">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="govuk-heading-s govuk-!-padding-top-8">Qualification 2</h3>
+
+                <table class="govuk-table">
+                    <tbody>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Course</th>
+                            <td class="govuk-table__cell">NVQ Level 3 accounting</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Date completed</th>
+                            <td class="govuk-table__cell">18 March 2023</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Location completed</th>
+                            <td class="govuk-table__cell">HMP Berwyn</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Certificate</th>
+                            <td class="govuk-table__cell"><a href="#" class="govuk-link">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="govuk-heading-s govuk-!-padding-top-8">Education goals</h3>
+
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>Completed current training courses</li>
+                    <li>Be ready to apply to Open University</li>
+                    <li>Create my own learning plan</li>
+                </ul>
+
+            </div>
+        </section>
+        <section id="employment-voluntering" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Employment and volunteering<span class="govuk-caption-m">Data sourced from Access and
+                        Meganexus</span>
+                </h3>
+                <span class="right">
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+
+                <table class="govuk-table">
+                    <tbody>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Employment secured pre-release</th>
+                            <td class="govuk-table__cell">Yes</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Employer</th>
+                            <td class="govuk-table__cell">Timpsons</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Employer address</th>
+                            <td class="govuk-table__cell">123 B Street, Manchester</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Employer phone</th>
+                            <td class="govuk-table__cell">0161 569 7777</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Start date and time</th>
+                            <td class="govuk-table__cell">1 August 2023, 9:00am</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Location</th>
+                            <td class="govuk-table__cell">Manchester city centre</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Shift pattern</th>
+                            <td class="govuk-table__cell">9am to 5pm</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+        <section id="supporting-documents" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Supporting documents<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+                </h3>
+                <span class="right">
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+                <table class="govuk-table">
+                    <tbody>
+
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">CV completed</th>
+                            <td class="govuk-table__cell">Yes</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Disclosure letter completed</th>
+                            <td class="govuk-table__cell">Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+{% endblock %}

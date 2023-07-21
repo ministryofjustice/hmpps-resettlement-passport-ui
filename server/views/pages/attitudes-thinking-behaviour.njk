@@ -1,0 +1,185 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Attitudes, thinking &amp; behaviour" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+
+<div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+
+    <div class="govuk-grid-column-three-quarters">
+
+        <h2 class="govuk-heading-l">Attitudes, thinking and behaviour</h2>
+
+        <p class="govuk-body-l">
+            Understand someone’s risks around how they think and behave and ensure any needs in this area are met.</p>
+
+    </div>
+    <div class="govuk-grid-column-one-quarter">
+
+        <!-- Pathway status -->
+
+        <div>
+            <form action="/beta_1-attitudes-form-0" method="POST">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="attitudesstatus">
+                        Attitudes, thinking and behaviour readiness status:<br><br>
+                    </label>
+                    <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
+                        <option value="unbegun">Not started</option>
+                        <option value="declined">Support declined</option>
+                        <option value="progress" selected="">In progress</option>
+                        <option value="incomplete">Incomplete</option>
+                        <option value="done">Complete</option>
+                        <option value="unrequired">Support not required</option>
+                    </select>
+                    <input type="hidden" id="updated" name="updated" value="today">
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+<div class="govuk-grid-row govuk-!-padding-top-4">
+
+    <!-- Main content area -->
+    <div class="govuk-grid-column-one-quarter">
+
+        <!-- Pathway subnav -->
+
+        <ul class="app-subnav__section">
+            <li class="app-subnav__section-item app-subnav__section-item--current">
+                <ul class="app-subnav__section app-subnav__section--nested">
+                    <li class="app-subnav__section-item"><a href="#risk-assessment">Risk assessment</a> </li>
+                    <li class="app-subnav__section-item"><a href="#individual-risks">Individual risks</a> </li>
+                    <li class="app-subnav__section-item"><a href="#other-risks">Other risks</a> </li>
+                </ul>
+            </li>
+        </ul>
+
+
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+
+
+        <section id="risk-assessment" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Risk assessment<span class="govuk-caption-m">Data sourced from OASys</span>
+                </h3>
+                <span class="right">
+
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+                <table class="govuk-table">
+                    <tbody>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Risk to others</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Risk to children</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Risk to self</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Convicted offences</th>
+                            <td class="govuk-table__cell">Grievous bodily harm</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="individual-risks" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Individual risks<span class="govuk-caption-m">Data sourced from OASys</span>
+                </h3>
+                <span class="right">
+
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+
+                <table class="govuk-table">
+                    <tbody>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Risk of suicide</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Risk of self harm</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Coping in custody</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Vulnerable</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </section>
+
+        <section id="other-risks" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Other risks<span class="govuk-caption-m">Data sourced from OASys</span>
+                </h3>
+                <span class="right">
+
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+
+                <table class="govuk-table">
+                    <tbody>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Escape/abscondment risk</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Control issues</th>
+                            <td class="govuk-table__cell">Yes</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Breach of trust</th>
+                            <td class="govuk-table__cell">Yes</td>
+
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Risk to other prisoners</th>
+                            <td class="govuk-table__cell">No</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

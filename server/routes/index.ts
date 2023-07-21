@@ -11,6 +11,27 @@ export default function routes(service: Services): Router {
   get('/', (req, res, next) => {
     res.render('pages/index')
   })
+  get('/accommodation', (req, res, next) => {
+    res.render('pages/accommodation')
+  })
+  get('/attitudes-thinking-and-behaviour', (req, res, next) => {
+    res.render('pages/attitudes-thinking-behaviour')
+  })
+  get('/children-families-and-communities', (req, res, next) => {
+    res.render('pages/children-families-communities')
+  })
+  get('/drugs-and-alcohol', (req, res, next) => {
+    res.render('pages/drugs-alcohol')
+  })
+  get('/education-skills-and-work', (req, res, next) => {
+    res.render('pages/education-skills-work')
+  })
+  get('/finance-and-id', (req, res, next) => {
+    res.render('pages/finance-id')
+  })
+  get('/health-status', (req, res, next) => {
+    res.render('pages/health')
+  })
 
   return router
 }
