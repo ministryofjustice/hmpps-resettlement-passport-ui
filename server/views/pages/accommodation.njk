@@ -1,169 +1,184 @@
 {% extends "../partials/layout.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% set pageTitle = applicationName + " - Accommodation" %}
+{% set pid= 0 %}
+{% set pathway = "accommodation" %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
+
+{% include "../partials/sectionIntro.njk" %}
 <div class="govuk-grid-row govuk-!-padding-top-4">
+{% include "../partials/sideNavigation.njk" %}
+    <div class="govuk-grid-column-three-quarters">       
+        <section id="crs-refer" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    CRS referral<span class="govuk-caption-m">Data sourced from nDelius</span>
+                </h3>
+                <span class="right">
 
-    <!-- Main content area -->
-    <div class="govuk-grid-column-one-quarter">
+                </span>
+            </header>
 
-        <!-- Pathway subnav -->
-        
-<ul class="app-subnav__section">
-    <li class="app-subnav__section-item app-subnav__section-item--current">
-        <ul class="app-subnav__section app-subnav__section--nested">
-            <li class="app-subnav__section-item"><a href="#crs-refer">CRS referral</a> </li>
-            <li class="app-subnav__section-item"><a href="#duty-to-refer">Duty to refer</a> </li>
-            <li class="app-subnav__section-item"><a href="#first-night-accommodation">First night accommodation</a> </li>
-        </ul>
-    </li>
-</ul>
+            <div class="app-summary-card__body">
+                {{ govukTable({
+                    firstCellIsHeader: true,
+                    rows: [
+                      [
+                        {
+                          text: "CRS referral required"
+                        },
+                        {
+                          text: "Yes"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Status"
+                        },
+                        {
+                          text: "Completed"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Provider"
+                        },
+                        {
+                          text: "Manchester Local Housing Organisation"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Provider address"
+                        },
+                        {
+                          text: "123 Station Road, Manchester, M1 2AB"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Provider phone"
+                        },
+                        {
+                          text: "0161 123 4455"
+                        }
+                      ]
+                    ]
+                  }) }}
+            </div>
+        </section>
+        <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Duty to refer <span class="govuk-caption-m">Data sourced from nDelius</span>
+                </h3>
+                <span class="right">
 
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+                {{ govukTable({
+                    firstCellIsHeader: true,
+                    rows: [
+                      [
+                        {
+                          text: "Duty to refer required"
+                        },
+                        {
+                          text: "Yes"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Referal completed"
+                        },
+                        {
+                          text: "Yes"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Reference number"
+                        },
+                        {
+                          text: "XX457878"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Local authority"
+                        },
+                        {
+                          text: "Manchester City Council"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Local authority address"
+                        },
+                        {
+                          text: "123 Main Street Manchester M1 1AA"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Local authority phone"
+                        },
+                        {
+                          text: "0161 123 4567"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Local authority email"
+                        },
+                        {
+                          text: "housing@manchester.gov.uk"
+                        }
+                      ]
+                    ]
+                  }) }}
+            </div>
+        </section>
+        <section id="first-night-accommodation" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    First night accommodation <span class="govuk-caption-m">Data sourced from nDelius</span>
+                </h3>
+                <span class="right">
+
+                </span>
+            </header>
+
+            <div class="app-summary-card__body">
+                {{ govukTable({
+                    firstCellIsHeader: true,
+                    head: [
+                      {
+                        text: "Address"
+                      },
+                      {
+                        text: "123 Ascot Road Manchester M1 1AA"
+                      }
+                    ],
+                    rows: [
+                      [
+                        {
+                          text: "Type"
+                        },
+                        {
+                          text: "Hostel"
+                        }
+                      ]
+                    ]
+                  }) }}
+            </div>
+        </section>
 
     </div>
-    <div class="govuk-grid-column-three-quarters">
-        
-<section id="crs-refer" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
-            CRS referral<span class="govuk-caption-m">Data sourced from nDelius</span>
-        </h3>
-        <span class="right">
-
-        </span>
-    </header>
-
-    <div class="app-summary-card__body">
-
-        <h3 class="govuk-heading-m"></h3>
-
-        <table class="govuk-table">
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">CRS referral required</th>
-                    <td class="govuk-table__cell">Yes</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Status</th>
-                    <td class="govuk-table__cell">Completed</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Provider</th>
-                    <td class="govuk-table__cell">Manchester Local Housing Organisation</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Provider address</th>
-                    <td class="govuk-table__cell">123 Station Road, Manchester, M1 2AB</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Provider phone</th>
-                    <td class="govuk-table__cell">0161 123 4455</td>
-
-                </tr>
-            </tbody>
-        </table>
-        <br>
-    </div>
-</section>
-<section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
-            Duty to refer <span class="govuk-caption-m">Data sourced from nDelius</span>
-        </h3>
-        <span class="right">
-
-        </span>
-    </header>
-
-    <div class="app-summary-card__body">
-
-        <table class="govuk-table">
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Duty to refer required</th>
-                    <td class="govuk-table__cell">Yes</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Referal completed</th>
-                    <td class="govuk-table__cell">Yes</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Reference number</th>
-                    <td class="govuk-table__cell">XX457878</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Local authority</th>
-                    <td class="govuk-table__cell">Manchester City Council</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Local authority address</th>
-                    <td class="govuk-table__cell">123 Main Street
-Manchester
-M1 1AA</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Local authority phone</th>
-                    <td class="govuk-table__cell">0161 123 4567</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Local authority email</th>
-                    <td class="govuk-table__cell">housing@manchester.gov.uk</td>
-
-                </tr>
-            </tbody>
-        </table>
-        <br>
-
-    </div>
-</section>
-<section id="first-night-accommodation" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
-            First night accommodation <span class="govuk-caption-m">Data sourced from nDelius</span>
-        </h3>
-        <span class="right">
-
-        </span>
-    </header>
-
-    <div class="app-summary-card__body">
-
-
-
-        <table class="govuk-table">
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Address</th>
-                    <td class="govuk-table__cell">123 Ascot Road
-Manchester
-M1 1AA</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Type</th>
-                    <td class="govuk-table__cell">Hostel</td>
-
-                </tr>
-            </tbody>
-        </table>
-        <br>
-
-    </div>
-</section>
-
-    </div>
-
 </div>
 {% endblock %}

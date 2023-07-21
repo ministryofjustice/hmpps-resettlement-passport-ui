@@ -1,4 +1,5 @@
 {% extends "../partials/layout.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
 
 {% set pageTitle = applicationName + " - Attitudes, thinking &amp; behaviour" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -74,30 +75,43 @@
             </header>
 
             <div class="app-summary-card__body">
-                <table class="govuk-table">
-                    <tbody>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Risk to others</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Risk to children</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Risk to self</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Convicted offences</th>
-                            <td class="govuk-table__cell">Grievous bodily harm</td>
-
-                        </tr>
-                    </tbody>
-                </table>
+                {{ govukTable({
+                    firstCellIsHeader: true,
+                    rows: [
+                      [
+                        {
+                          text: "Risk to others"
+                        },
+                        {
+                          text: "No"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Risk to children"
+                        },
+                        {
+                          text: "No"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Risk to self"
+                        },
+                        {
+                          text: "No"
+                        }
+                        ],
+                        [
+                        {
+                          text: "Convicted offences"
+                        },
+                        {
+                          text: "Grievous bodily harm"
+                        }
+                        ]
+                      ]
+                  }) }}
             </div>
         </section>
 
@@ -112,32 +126,43 @@
             </header>
 
             <div class="app-summary-card__body">
-
-                <table class="govuk-table">
-                    <tbody>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Risk of suicide</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Risk of self harm</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Coping in custody</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Vulnerable</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                    </tbody>
-                </table>
-
+                {{ govukTable({
+                    firstCellIsHeader: true,
+                    rows: [
+                      [
+                        {
+                          text: "Risk of suicide"
+                        },
+                        {
+                          text: "No"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Risk of self harm"
+                        },
+                        {
+                          text: "No"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Coping in custody"
+                        },
+                        {
+                          text: "No"
+                        }
+                        ],
+                        [
+                        {
+                          text: "Vulnerable"
+                        },
+                        {
+                          text: "No"
+                        }
+                        ]
+                      ]
+                  }) }}
             </div>
 
         </section>
@@ -153,31 +178,43 @@
             </header>
 
             <div class="app-summary-card__body">
-
-                <table class="govuk-table">
-                    <tbody>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Escape/abscondment risk</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Control issues</th>
-                            <td class="govuk-table__cell">Yes</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Breach of trust</th>
-                            <td class="govuk-table__cell">Yes</td>
-
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Risk to other prisoners</th>
-                            <td class="govuk-table__cell">No</td>
-
-                        </tr>
-                    </tbody>
-                </table>
+                {{ govukTable({
+                    firstCellIsHeader: true,
+                    rows: [
+                      [
+                        {
+                          text: "Escape/abscondment risk"
+                        },
+                        {
+                          text: "No"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Control issues"
+                        },
+                        {
+                          text: "Yes"
+                        }
+                      ],
+                      [
+                        {
+                          text: "Breach of trust"
+                        },
+                        {
+                          text: "Yes"
+                        }
+                        ],
+                        [
+                        {
+                          text: "Risk to other prisoners"
+                        },
+                        {
+                          text: "No"
+                        }
+                        ]
+                      ]
+                  }) }}
             </div>
         </section>
     </div>
