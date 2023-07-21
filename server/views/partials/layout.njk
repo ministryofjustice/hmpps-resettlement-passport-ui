@@ -15,7 +15,7 @@
   <script src="/assets/js/html5shiv-3.7.3.min.js"></script>
   <![endif]-->
 
-  <script src="/assets/js/jquery.min.js"></script> 
+  <script src="/assets/js/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
           integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
           nonce="{{ cspNonce }}"
@@ -24,22 +24,22 @@
 
 {% endblock %}
 
-{% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
+{% block pageTitle %}{{pageTitle | default(applicationName)}}
+{% endblock %}
 
 {% block header %}
   {% include "./header.njk" %}
 
   <div class="govuk-width-container">
-  
-{{ govukPhaseBanner({
+
+    {{ govukPhaseBanner({
   tag: {
     text: "Dev"
   },
   html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
 }) }}
 
-
-{{ govukBreadcrumbs({
+    {{ govukBreadcrumbs({
   items: [
     {
       text: "James South",
@@ -51,19 +51,13 @@
     }
   ]
 }) }}
-{% include "../partials/profileHeader.njk" %}
-{% include "../partials/mainNav.njk" %}
+    {% include "../partials/profileHeader.njk" %}
+    {% include "../partials/mainNav.njk" %}
 
-</div>
+  </div>
 {% endblock %}
 
-{% block bodyStart %}
-
-{% endblock %}
-
-{% block footer %}
-    {% include "./footer.njk" %}
-{% endblock %}
+{% block bodyStart %}{% endblock %}
 
 {% block bodyEnd %}
   {# Run JavaScript at end of the

@@ -29,8 +29,17 @@ export default function routes(service: Services): Router {
   get('/finance-and-id', (req, res, next) => {
     res.render('pages/finance-id')
   })
+  get('/add-an-id', (req, res, next) => {
+    res.render('pages/add-id')
+  })
+  get('/add-a-bank-account', (req, res, next) => {
+    res.render('pages/add-bank-account')
+  })
   get('/health-status', (req, res, next) => {
     res.render('pages/health')
+  })
+  get('/prisoner-profile', (req, res, next) => {
+    res.render('pages/prisoner-profile')
   })
 
   return router
