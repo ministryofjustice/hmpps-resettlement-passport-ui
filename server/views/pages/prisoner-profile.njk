@@ -4,42 +4,6 @@
 {% set pageTitle = applicationName + " - Health" %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set additionalConditions = true %}
-{% set data = {
-    "status": "In Progress",
-    "standardLicenceConditions": [
-        {
-             "id": 98987,
-            "text": "Be of generally good behaviour"
-        }
-    ],
-    "standardPssConditions": [
-        {
-            "id": 98987,
-            "text": "Be of generally good behaviour"
-        }
-    ],
-    "additionalLicenceConditions": [
-        {
-            "id": 98989,
-            "image": true,
-            "text": "You must not enter the location Tesco Superstore"
-        }
-    ],
-    "additionalPssConditions": [
-        {
-            "id": 98989,
-            "image": true,
-            "text": "You must not enter the location Tesco Superstore"
-
-        }
-    ],
-    "bespokeConditions": [
-        {
-            "id": 98989,
-            "text": "You should not visit any music venues"
-        }
-    ]
-} %}
 
 {% block content %}
     <div class="govuk-grid-row govuk-!-padding-top-4">
@@ -71,26 +35,22 @@
 
                 <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
 
+                    {% set conditions %}
+                    <ol class=\"govuk-list govuk-list--number govuk-list--spaced\">
+                        {% for condition in licenceConditions.standardLicenceConditions %}
+                            <li>{{ condition.text }}</li>
+                        {% endfor %}
+                    </ol>
+                    {% endset -%}
+
                     {{ govukDetails({
-  summaryText: "Standard licence conditions",
-  html: "<ol class=\"govuk-list govuk-list--number govuk-list--spaced\">
-            <li>Be of good behaviour and not behave in a way which undermines the purpose of the licence period</li>
-            <li>Not commit any offence</li>
-            <li>Keep in touch with the supervising officer in accordance with instructions given by the supervising officer</li>
-            <li>Receive visits from the supervising officer in accordance with instructions given by the supervising officer</li>
-            <li>Reside permanently at an address approved by the supervising officer and obtain the prior permission of the supervising officer for any stay of one or more nights at a different address</li>
-            <li>Not undertake work, or a particular type of work, unless it is approved by the supervising officer and notify the supervising officer in advance of any proposal to undertake work or a particular type of work</li>
-            <li>Not travel outside the United Kingdom, the Channel Islands or the Isle of Man except with the prior permission of your supervising officer or for the purposes of immigration deportation or removal</li>
-            <li>Tell your supervising officer if you use a name which is different to the name or names which appear on your licence</li>
-            <li>Tell your supervising officer if you change or add any contact details, including phone number or email</li>
-        </ol>"
-}) }}
-                    {% for item in data.standardLicenceConditions %}
-                        <h1>{{ item.text }}</h1>
-                    {% endfor %}
-                    {% if data.standardLicenceConditions.length %}
+                        summaryText: "Standard licence conditions",
+                        html: conditions
+                    }) }}
+
+                    {% if licenceConditions.standardLicenceConditions.length %}
                         <h3 class="govuk-heading-s">Additional and bespoke licence conditions</h3>
-                        <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6" start="10">
+                        <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6" start="{{ licenceConditions.standardLicenceConditions.length + 1 }}">
 
                             <li>Not enter the area of Moss Side, without the prior approval of your supervising officer</li>
                             <li>Not contact or associate with Bob Martin or Bill Hinds without the prior approval of your supervising officer</li>
