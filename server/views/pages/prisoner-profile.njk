@@ -1,0 +1,66 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% set pageTitle = applicationName + " - Health" %}
+{% set mainClasses = "app-container govuk-body" %}
+{% set additionalConditions = true %}
+
+{% block content %}
+    <div class="govuk-grid-row govuk-!-padding-top-4">
+
+        <!-- Main content area -->
+        <div class="govuk-grid-column-one-quarter">
+
+            <!-- Pathway subnav -->
+
+            <ul class="app-subnav__section">
+                <li class="app-subnav__section-item app-subnav__section-item--current">
+                    <ul class="app-subnav__section app-subnav__section--nested">
+                        <li class="app-subnav__section-item">
+                            <a href="#licenceSummary">Licence conditions</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="govuk-grid-column-three-quarters">
+
+            <section id="licenceSummary" class="app-summary-card govuk-!-margin-bottom-8">
+                <header class="app-summary-card__header">
+                    <h3 class="app-summary-card__title">
+                    Licence conditions<span class="govuk-caption-m">Data sourced from CVL</span>
+                    </h3>
+                    <span class="right"></span>
+                </header>
+
+                <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
+
+                    {% set conditions %}
+                    <ol class=\"govuk-list govuk-list--number govuk-list--spaced\">
+                        {% for condition in licenceConditions.standardLicenceConditions %}
+                            <li>{{ condition.text }}</li>
+                        {% endfor %}
+                    </ol>
+                    {% endset -%}
+
+                    {{ govukDetails({
+                        summaryText: "Standard licence conditions",
+                        html: conditions
+                    }) }}
+
+                    {% if licenceConditions.standardLicenceConditions.length %}
+                        <h3 class="govuk-heading-s">Additional and bespoke licence conditions</h3>
+                        <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6" start="{{ licenceConditions.standardLicenceConditions.length + 1 }}">
+
+                            <li>Not enter the area of Moss Side, without the prior approval of your supervising officer</li>
+                            <li>Not contact or associate with Bob Martin or Bill Hinds without the prior approval of your supervising officer</li>
+                            <li>Comply with any requirements specified by your supervising officer for the purpose of ensuring that you address your anger management behaviour problems at the Better You therapy centre in Manchester</li>
+                        </ol>
+                    {% endif %}
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+{% endblock %}

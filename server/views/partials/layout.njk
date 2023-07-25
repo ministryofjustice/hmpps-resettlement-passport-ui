@@ -1,5 +1,10 @@
 {% extends "govuk/template.njk" %}
 
+{% from "../partials/breadCrumb.njk" import breadCrumb %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
 {% block head %}
   <!--[if !IE 8]><!-->
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
@@ -10,7 +15,7 @@
   <script src="/assets/js/html5shiv-3.7.3.min.js"></script>
   <![endif]-->
 
-  <script src="/assets/js/jquery.min.js"></script> 
+  <script src="/assets/js/jquery.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
           integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
           nonce="{{ cspNonce }}"
@@ -19,34 +24,40 @@
 
 {% endblock %}
 
-{% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
+{% block pageTitle %}{{pageTitle | default(applicationName)}}
+{% endblock %}
 
 {% block header %}
   {% include "./header.njk" %}
+
   <div class="govuk-width-container">
-  <div class="govuk-breadcrumbs govuk-breadcrumbs--collapse-on-mobile">
-    <ol class="govuk-breadcrumbs__list">
 
-        <!-- <li class="govuk-breadcrumbs__list-item">
-            <a href="javascript: window.history.go(-1)">Back</a>
-        </li> -->
-        <li class="govuk-breadcrumbs__list-item">
-            <a href="../0/">South, James (G2911GD)</a>
-        </li>
-        <li class="govuk-breadcrumbs__list-item">
-            Accommodation readiness
-        </li>
-    </ol>
-</div>
-{% include "../partials/profileHeader.njk" %}
-{% include "../partials/mainNav.njk" %}
+    {{ govukPhaseBanner({
+  tag: {
+    text: "Dev"
+  },
+  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+}) }}
 
-</div>
+    {{ govukBreadcrumbs({
+  items: [
+    {
+      text: "James South",
+      href: "#"
+    },
+    {
+      text: "Passports, travel and living abroad",
+      href: "#"
+    }
+  ]
+}) }}
+    {% include "../partials/profileHeader.njk" %}
+    {% include "../partials/mainNav.njk" %}
+
+  </div>
 {% endblock %}
 
-{% block bodyStart %}
-
-{% endblock %}
+{% block bodyStart %}{% endblock %}
 
 {% block bodyEnd %}
   {# Run JavaScript at end of the

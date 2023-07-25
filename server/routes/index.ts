@@ -29,8 +29,60 @@ export default function routes(service: Services): Router {
   get('/finance-and-id', (req, res, next) => {
     res.render('pages/finance-id')
   })
+  get('/add-an-id', (req, res, next) => {
+    res.render('pages/add-id')
+  })
+  get('/add-a-bank-account', (req, res, next) => {
+    res.render('pages/add-bank-account')
+  })
   get('/health-status', (req, res, next) => {
     res.render('pages/health')
+  })
+  get('/prisoner-profile', async (req, res, next) => {
+    const licenceConditions = {
+      status: 'In Progress',
+      standardLicenceConditions: [
+        {
+          id: 98987,
+          text: 'Be of generally good behaviour',
+        },
+        {
+          id: 98987,
+          text: 'Be of really good behaviour',
+        },
+        {
+          id: 98987,
+          text: 'Be of extremely good behaviour',
+        },
+      ],
+      standardPssConditions: [
+        {
+          id: 98987,
+          text: 'Be of generally good behaviour',
+        },
+      ],
+      additionalLicenceConditions: [
+        {
+          id: 98989,
+          image: true,
+          text: 'You must not enter the location Tesco Superstore',
+        },
+      ],
+      additionalPssConditions: [
+        {
+          id: 98989,
+          image: true,
+          text: 'You must not enter the location Tesco Superstore',
+        },
+      ],
+      bespokeConditions: [
+        {
+          id: 98989,
+          text: 'You should not visit any music venues',
+        },
+      ],
+    }
+    res.render('pages/prisoner-profile', { licenceConditions })
   })
 
   return router
