@@ -1,29 +1,73 @@
 {% extends "../partials/layout.njk" %}
-{% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% set pageTitle = applicationName + " - Accommodation" %}
-{% set pid= 0 %}
+{% set pathwayTitle = "Accommodation" %}
+{% set pageTitle = applicationName + " - " + pathwayTitle %}
+
+{% set pid = 0 %}
 {% set pathway = "accommodation" %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(
+      pathwayTitle ,
+      'Referrals and support to enable prison leavers to access suitable and sustainable housing, on their first night and beyond.'
+      ) }}
+    <div class="govuk-grid-column-one-quarter">
 
-{% include "../partials/sectionIntro.njk" %}
-<div class="govuk-grid-row govuk-!-padding-top-4">
-{% include "../partials/sideNavigation.njk" %}
-    <div class="govuk-grid-column-three-quarters">       
-        <section id="crs-refer" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-                <h3 class="app-summary-card__title">
+      <!-- Pathway status -->
+
+      <div>
+        <form action="/beta_1-attitudes-form-0" method="POST">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="attitudesstatus">
+              {{ pathway | capitalize }} readiness status:<br><br>
+            </label>
+            <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
+              <option value="unbegun">Not started</option>
+              <option value="declined">Support declined</option>
+              <option value="progress" selected="">In progress</option>
+              <option value="incomplete">Incomplete</option>
+              <option value="done">Complete</option>
+              <option value="unrequired">Support not required</option>
+            </select>
+            <input type="hidden" id="updated" name="updated" value="today">
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+
+    <div class="govuk-grid-column-one-quarter">
+      {{ subNav([
+        {
+          name: "CRS Referral",
+          id: "crs-refer"
+        },
+        {
+          name: "Duty to refer",
+          id: "duty-to-refer"
+        },
+        {
+          name: "First night accommodation",
+          id: "first-night-accommodation"
+        }
+      ]) }}
+    </div>
+
+    <div class="govuk-grid-column-three-quarters">
+      <section id="crs-refer" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
                     CRS referral<span class="govuk-caption-m">Data sourced from nDelius</span>
-                </h3>
-                <span class="right">
+          </h3>
+          <span class="right"></span>
+        </header>
 
-                </span>
-            </header>
-
-            <div class="app-summary-card__body">
-                {{ govukTable({
+        <div class="app-summary-card__body">
+          {{ govukTable({
                     firstCellIsHeader: true,
                     rows: [
                       [
@@ -68,20 +112,18 @@
                       ]
                     ]
                   }) }}
-            </div>
-        </section>
-        <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-                <h3 class="app-summary-card__title">
+        </div>
+      </section>
+      <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
                     Duty to refer <span class="govuk-caption-m">Data sourced from nDelius</span>
-                </h3>
-                <span class="right">
+          </h3>
+          <span class="right"></span>
+        </header>
 
-                </span>
-            </header>
-
-            <div class="app-summary-card__body">
-                {{ govukTable({
+        <div class="app-summary-card__body">
+          {{ govukTable({
                     firstCellIsHeader: true,
                     rows: [
                       [
@@ -142,20 +184,18 @@
                       ]
                     ]
                   }) }}
-            </div>
-        </section>
-        <section id="first-night-accommodation" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-                <h3 class="app-summary-card__title">
+        </div>
+      </section>
+      <section id="first-night-accommodation" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
                     First night accommodation <span class="govuk-caption-m">Data sourced from nDelius</span>
-                </h3>
-                <span class="right">
+          </h3>
+          <span class="right"></span>
+        </header>
 
-                </span>
-            </header>
-
-            <div class="app-summary-card__body">
-                {{ govukTable({
+        <div class="app-summary-card__body">
+          {{ govukTable({
                     firstCellIsHeader: true,
                     head: [
                       {
@@ -176,9 +216,9 @@
                       ]
                     ]
                   }) }}
-            </div>
-        </section>
+        </div>
+      </section>
 
     </div>
-</div>
+  </div>
 {% endblock %}

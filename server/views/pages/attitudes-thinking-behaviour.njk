@@ -1,81 +1,74 @@
 {% extends "../partials/layout.njk" %}
-{% from "govuk/components/table/macro.njk" import govukTable %}
 
-{% set pageTitle = applicationName + " - Attitudes, thinking &amp; behaviour" %}
+{% set pathway = "Attitudes, thinking & behaviour" %}
+{% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
 
-<div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
 
-    <div class="govuk-grid-column-three-quarters">
-
-        <h2 class="govuk-heading-l">Attitudes, thinking and behaviour</h2>
-
-        <p class="govuk-body-l">
-            Understand someone’s risks around how they think and behave and ensure any needs in this area are met.</p>
-
-    </div>
+    {{ titleAndIntro(
+      pathway,
+      'Understand someone’s risks around how they think and behave and ensure any needs in this area are met.'
+      ) }}
     <div class="govuk-grid-column-one-quarter">
 
-        <!-- Pathway status -->
+      <!-- Pathway status -->
 
-        <div>
-            <form action="/beta_1-attitudes-form-0" method="POST">
-                <div class="govuk-form-group">
-                    <label class="govuk-label" for="attitudesstatus">
-                        Attitudes, thinking and behaviour readiness status:<br><br>
-                    </label>
-                    <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
-                        <option value="unbegun">Not started</option>
-                        <option value="declined">Support declined</option>
-                        <option value="progress" selected="">In progress</option>
-                        <option value="incomplete">Incomplete</option>
-                        <option value="done">Complete</option>
-                        <option value="unrequired">Support not required</option>
-                    </select>
-                    <input type="hidden" id="updated" name="updated" value="today">
-                </div>
-            </form>
-        </div>
-
+      <div>
+        <form action="/beta_1-attitudes-form-0" method="POST">
+          <div class="govuk-form-group">
+            <label class="govuk-label" for="attitudesstatus">
+              {{ pathway | capitalize }} readiness status:
+            </label>
+            <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
+              <option value="unbegun">Not started</option>
+              <option value="declined">Support declined</option>
+              <option value="progress" selected="">In progress</option>
+              <option value="incomplete">Incomplete</option>
+              <option value="done">Complete</option>
+              <option value="unrequired">Support not required</option>
+            </select>
+            <input type="hidden" id="updated" name="updated" value="today">
+          </div>
+        </form>
+      </div>
 
     </div>
-</div>
-<div class="govuk-grid-row govuk-!-padding-top-4">
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4">
 
     <!-- Main content area -->
+    <!-- Pathway side nav -->
     <div class="govuk-grid-column-one-quarter">
-
-        <!-- Pathway subnav -->
-
-        <ul class="app-subnav__section">
-            <li class="app-subnav__section-item app-subnav__section-item--current">
-                <ul class="app-subnav__section app-subnav__section--nested">
-                    <li class="app-subnav__section-item"><a href="#risk-assessment">Risk assessment</a> </li>
-                    <li class="app-subnav__section-item"><a href="#individual-risks">Individual risks</a> </li>
-                    <li class="app-subnav__section-item"><a href="#other-risks">Other risks</a> </li>
-                </ul>
-            </li>
-        </ul>
-
-
+      {{ subNav([
+        {
+          name: "Risk assessment",
+          id: "risk-assessment"
+        },
+        {
+          name: "Individual risks",
+          id: "individual-risks"
+        },
+        {
+          name: "Other risks",
+          id: "other-risks"
+        }
+      ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
 
-
-        <section id="risk-assessment" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-                <h3 class="app-summary-card__title">
+      <section id="risk-assessment" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
                     Risk assessment<span class="govuk-caption-m">Data sourced from OASys</span>
-                </h3>
-                <span class="right">
+          </h3>
+          <span class="right"></span>
+        </header>
 
-                </span>
-            </header>
-
-            <div class="app-summary-card__body">
-                {{ govukTable({
+        <div class="app-summary-card__body">
+          {{ govukTable({
                     firstCellIsHeader: true,
                     rows: [
                       [
@@ -112,21 +105,19 @@
                         ]
                       ]
                   }) }}
-            </div>
-        </section>
+        </div>
+      </section>
 
-        <section id="individual-risks" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-                <h3 class="app-summary-card__title">
+      <section id="individual-risks" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
                     Individual risks<span class="govuk-caption-m">Data sourced from OASys</span>
-                </h3>
-                <span class="right">
+          </h3>
+          <span class="right"></span>
+        </header>
 
-                </span>
-            </header>
-
-            <div class="app-summary-card__body">
-                {{ govukTable({
+        <div class="app-summary-card__body">
+          {{ govukTable({
                     firstCellIsHeader: true,
                     rows: [
                       [
@@ -163,22 +154,20 @@
                         ]
                       ]
                   }) }}
-            </div>
+        </div>
 
-        </section>
+      </section>
 
-        <section id="other-risks" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-                <h3 class="app-summary-card__title">
+      <section id="other-risks" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
                     Other risks<span class="govuk-caption-m">Data sourced from OASys</span>
-                </h3>
-                <span class="right">
+          </h3>
+          <span class="right"></span>
+        </header>
 
-                </span>
-            </header>
-
-            <div class="app-summary-card__body">
-                {{ govukTable({
+        <div class="app-summary-card__body">
+          {{ govukTable({
                     firstCellIsHeader: true,
                     rows: [
                       [
@@ -215,8 +204,8 @@
                         ]
                       ]
                   }) }}
-            </div>
-        </section>
+        </div>
+      </section>
     </div>
-</div>
+  </div>
 {% endblock %}
