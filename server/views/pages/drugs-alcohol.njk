@@ -1,50 +1,52 @@
 {% extends "../partials/layout.njk" %}
 
-{% set pageTitle = applicationName + " - Drugs &amp; Alcohol" %}
+{% set pathway = "Drugs & Alcohol" %}
+{% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
-<div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
 
-    <div class="govuk-grid-column-three-quarters">
-        <h2 class="govuk-heading-l">Drugs and alcohol</h2>
+        {{ titleAndIntro(
+      pathway,
+      'Prepare someone with substance misuse issues for release.'
+      ) }}
+        <div class="govuk-grid-column-one-quarter">
 
-        <p class="govuk-body-l">
-            Prepare someone with substance misuse issues for release.</p>
-    </div>
-    <div class="govuk-grid-column-one-quarter">
+            <!-- Pathway status -->
 
-        <!-- Pathway status -->
-        <form action="/beta_1-substance-form-0" method="POST">
-            <div class="govuk-form-group">
-                <label class="govuk-label" for="substancestatus">
-                    Drugs and alcohol readiness status:<br><br>
-                </label>
-                <select class="govuk-select" id="substancestatus" name="substancereadinessstatus"
-                    onchange="this.form.submit()">
-                    <option value="unbegun">Not started</option>
-                    <option value="declined">Support declined</option>
-                    <option value="progress">In progress</option>
-                    <option value="incomplete">Incomplete</option>
-                    <option value="done">Complete</option>
-                    <option value="unrequired" selected="">Support not required</option>
-                </select>
-                <input type="hidden" id="updated" name="updated" value="today">
+            <div>
+                <form action="/beta_1-attitudes-form-0" method="POST">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="attitudesstatus">
+                            {{ pathway | capitalize }} readiness status:
+            </label>
+                        <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
+                            <option value="unbegun">Not started</option>
+                            <option value="declined">Support declined</option>
+                            <option value="progress" selected="">In progress</option>
+                            <option value="incomplete">Incomplete</option>
+                            <option value="done">Complete</option>
+                            <option value="unrequired">Support not required</option>
+                        </select>
+                        <input type="hidden" id="updated" name="updated" value="today">
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
-<div class="govuk-grid-row govuk-!-padding-top-4">
-    <!-- Main content area -->
-    <div class="govuk-grid-column-one-quarter">
-        <!-- Pathway subnav -->
-    </div>
-    <div class="govuk-grid-column-three-quarters">
 
-        <p>Information relating to this pathway is not currently available.</p>
-
-        <p>You can still use the readiness status to track progress.</p>
-
+        </div>
     </div>
-</div>
+    <div class="govuk-grid-row govuk-!-padding-top-4">
+        <!-- Main content area -->
+        <div class="govuk-grid-column-one-quarter">
+            <!-- Pathway subnav -->
+        </div>
+        <div class="govuk-grid-column-three-quarters">
+
+            <p>Information relating to this pathway is not currently available.</p>
+
+            <p>You can still use the readiness status to track progress.</p>
+
+        </div>
+    </div>
 {% endblock %}

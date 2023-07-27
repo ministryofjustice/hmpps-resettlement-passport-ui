@@ -1,0 +1,14 @@
+{% macro subNav(navItems) %}
+    <ul class="app-subnav__section">
+        <li class="app-subnav__section-item app-subnav__section-item--current">
+            <ul class="app-subnav__section app-subnav__section--nested">
+                {% for item in navItems %}
+                    <li class="app-subnav__section-item">
+                        <a href="#{{ item.id }}">{{ item.name }}</a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </li>
+    </ul>
+{% endmacro %}

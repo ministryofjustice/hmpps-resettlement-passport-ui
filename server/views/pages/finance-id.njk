@@ -1,75 +1,105 @@
 {% extends "../partials/layout.njk" %}
 
-{% set pageTitle = applicationName + " - Finance &amp; ID" %}
+{% set pathway = "Finance & ID" %}
+{% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
 
-<div class="govuk-grid-row govuk-!-padding-top-4">
+        {{ titleAndIntro(
+      pathway,
+      'Track financial support requirements and bank account/ID applications.'
+      ) }}
+        <div class="govuk-grid-column-one-quarter">
 
-    <!-- Main content area -->
-    <div class="govuk-grid-column-one-quarter">
+            <!-- Pathway status -->
 
-        <!-- Pathway subnav -->
+            <div>
+                <form action="/beta_1-attitudes-form-0" method="POST">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="attitudesstatus">
+                            {{ pathway | capitalize }} readiness status:
+            </label>
+                        <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
+                            <option value="unbegun">Not started</option>
+                            <option value="declined">Support declined</option>
+                            <option value="progress" selected="">In progress</option>
+                            <option value="incomplete">Incomplete</option>
+                            <option value="done">Complete</option>
+                            <option value="unrequired">Support not required</option>
+                        </select>
+                        <input type="hidden" id="updated" name="updated" value="today">
+                    </div>
+                </form>
+            </div>
 
-        <ul class="app-subnav__section">
-            <li class="app-subnav__section-item app-subnav__section-item--current">
-                <ul class="app-subnav__section app-subnav__section--nested">
-                    <li class="app-subnav__section-item"><a href="#id-documents">ID documents</a> </li>
-                    <li class="app-subnav__section-item"><a href="#finance">Finance</a> </li>
-                </ul>
-            </li>
-        </ul>
+        </div>
     </div>
-    <div class="govuk-grid-column-three-quarters">
-        <section id="id-documents" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-                <h3 class="app-summary-card__title">
+    <div class="govuk-grid-row govuk-!-padding-top-4">
+
+        <!-- Main content area -->
+
+        <div class="govuk-grid-column-one-quarter">
+            {{ subNav([
+        {
+          name: "ID documents",
+          id: "id-documents"
+        },
+        {
+          name: "Finance",
+          id: "finance"
+        }
+      ]) }}
+        </div>
+        <div class="govuk-grid-column-three-quarters">
+            <section id="id-documents" class="app-summary-card govuk-!-margin-bottom-8">
+                <header class="app-summary-card__header">
+                    <h3 class="app-summary-card__title">
                     ID documents
                 </h3>
-                <span class="right">
+                    <span class="right">
 
-                    <a class="govuk-button" href="/add-an-id">
+                        <a class="govuk-button" href="/add-an-id">
                         Add an ID
                     </a>
-                </span>
-            </header>
+                    </span>
+                </header>
 
-            <div class="app-summary-card__body">
-                <br>
-            </div>
-        </section>
-        <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-                <h3 class="app-summary-card__title">
+                <div class="app-summary-card__body">
+                    <br>
+                </div>
+            </section>
+            <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
+                <header class="app-summary-card__header">
+                    <h3 class="app-summary-card__title">
                     Finance
                 </h3>
-                <span class="right">
+                    <span class="right">
 
-                    <a href="add-a-bank-account" class="govuk-button">
+                        <a href="add-a-bank-account" class="govuk-button">
                         Add a bank account</a>
 
+                    </span>
+                </header>
 
-                </span>
-            </header>
+                <div class="app-summary-card__body">
 
-            <div class="app-summary-card__body">
+                    <div class="govuk-grid-row">
 
-                <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-full">
 
-                    <div class="govuk-grid-column-full">
+                            <h3 class="govuk-heading-s">Bank account</h3>
 
-                        <h3 class="govuk-heading-s">Bank account</h3>
+                            <p>No current bank account applications</p>
 
-                        <p>No current bank account applications</p>
-
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+        </div>
 
     </div>
-
-</div>
 
 {% endblock %}
