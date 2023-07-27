@@ -39,50 +39,24 @@ export default function routes(service: Services): Router {
     res.render('pages/health')
   })
   get('/prisoner-profile', async (req, res, next) => {
-    const licenceConditions = {
-      status: 'In Progress',
-      standardLicenceConditions: [
-        {
-          id: 98987,
-          text: 'Be of generally good behaviour',
-        },
-        {
-          id: 98987,
-          text: 'Be of really good behaviour',
-        },
-        {
-          id: 98987,
-          text: 'Be of extremely good behaviour',
-        },
-      ],
-      standardPssConditions: [
-        {
-          id: 98987,
-          text: 'Be of generally good behaviour',
-        },
-      ],
-      additionalLicenceConditions: [
-        {
-          id: 98989,
-          image: true,
-          text: 'You must not enter the location Tesco Superstore',
-        },
-      ],
-      additionalPssConditions: [
-        {
-          id: 98989,
-          image: true,
-          text: 'You must not enter the location Tesco Superstore',
-        },
-      ],
-      bespokeConditions: [
-        {
-          id: 98989,
-          text: 'You should not visit any music venues',
-        },
-      ],
+    try {
+      const token = res.locals?.user?.token
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      }
+      const apiResponse = await fetch(
+        'https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/G4274GN/licence-condition',
+        { headers },
+      )
+      const licenceConditions = await apiResponse.json()
+      if (!apiResponse.ok) {
+        throw new Error(licenceConditions.userMessage)
+      }
+      res.render('pages/prisoner-profile', { licenceConditions })
+    } catch (error) {
+      const errorMessage = error.message
+      res.render('pages/prisoner-profile', { errorMessage })
     }
-    res.render('pages/prisoner-profile', { licenceConditions })
   })
 
   return router
