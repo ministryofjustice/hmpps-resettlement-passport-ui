@@ -41,14 +41,18 @@ export default function routes(service: Services): Router {
   get('/prisoner-profile', async (req, res, next) => {
     try {
       const token = res.locals?.user?.token
+      const prisonerId = 'G4274GN'
+
       const headers = {
         Authorization: `Bearer ${token}`,
       }
+
       const apiResponse = await fetch(
-        'https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/G4274GN/licence-condition',
+        `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
         { headers },
       )
       const licenceConditions = await apiResponse.json()
+
       if (!apiResponse.ok) {
         throw new Error(licenceConditions.userMessage)
       }
