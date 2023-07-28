@@ -42,9 +42,11 @@ export default function routes(service: Services): Router {
     try {
       const token = res.locals?.user?.token
       const prisonerId = 'G4274GN'
+      
       const headers = {
         Authorization: `Bearer ${token}`,
       }
+      
       const apiResponse = await fetch(
         `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
         { headers },
