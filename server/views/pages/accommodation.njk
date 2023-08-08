@@ -4,7 +4,7 @@
 {% set pageTitle = applicationName + " - " + pathwayTitle %}
 
 {% set pid = 0 %}
-{% set pathway = "accommodation" %}
+{% set pathway = "Accommodation" %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
@@ -13,29 +13,10 @@
       pathwayTitle ,
       'Referrals and support to enable prison leavers to access suitable and sustainable housing, on their first night and beyond.'
       ) }}
-    <div class="govuk-grid-column-one-quarter">
+    <div class="govuk-grid-column-one-third">
 
       <!-- Pathway status -->
-
-      <div>
-        <form action="/beta_1-attitudes-form-0" method="POST">
-          <div class="govuk-form-group">
-            <label class="govuk-label" for="attitudesstatus">
-              {{ pathway | capitalize }} readiness status:<br><br>
-            </label>
-            <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
-              <option value="unbegun">Not started</option>
-              <option value="declined">Support declined</option>
-              <option value="progress" selected="">In progress</option>
-              <option value="incomplete">Incomplete</option>
-              <option value="done">Complete</option>
-              <option value="unrequired">Support not required</option>
-            </select>
-            <input type="hidden" id="updated" name="updated" value="today">
-          </div>
-        </form>
-      </div>
-
+      {{ statusDetails(pathway, 'In Progress') }}
     </div>
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">

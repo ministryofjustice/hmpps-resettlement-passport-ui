@@ -11,29 +11,10 @@
       pathway,
       'Review someone’s work readiness and enter post-release employment or volunteering details.'
       ) }}
-        <div class="govuk-grid-column-one-quarter">
+        <div class="govuk-grid-column-one-third">
 
             <!-- Pathway status -->
-
-            <div>
-                <form action="/beta_1-attitudes-form-0" method="POST">
-                    <div class="govuk-form-group">
-                        <label class="govuk-label" for="attitudesstatus">
-                            {{ pathway | capitalize }} readiness status:
-            </label>
-                        <select class="govuk-select" id="attitudesstatus" name="attitudesreadinessstatus">
-                            <option value="unbegun">Not started</option>
-                            <option value="declined">Support declined</option>
-                            <option value="progress" selected="">In progress</option>
-                            <option value="incomplete">Incomplete</option>
-                            <option value="done">Complete</option>
-                            <option value="unrequired">Support not required</option>
-                        </select>
-                        <input type="hidden" id="updated" name="updated" value="today">
-                    </div>
-                </form>
-            </div>
-
+            {{ statusDetails(pathway, 'SUPPORT NOT REQUIRED') }}
         </div>
     </div>
     <div class="govuk-grid-row">
