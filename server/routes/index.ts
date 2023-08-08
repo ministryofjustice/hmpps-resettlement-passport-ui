@@ -42,7 +42,6 @@ export default function routes(service: Services): Router {
     try {
       const token = res.locals?.user?.token
       const prisonerId = 'G4274GN'
-
       const headers = {
         Authorization: `Bearer ${token}`,
       }

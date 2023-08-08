@@ -3905,6 +3905,13 @@ div.sticky {
 
 .profile-header {
   padding: 20px;
+  &__person-id{
+    @extend .govuk-caption-xl;
+    color: white;
+  }
+  &__person-photo{
+    border:2px solid white;
+  }
 }
 
 #risk-tags {
