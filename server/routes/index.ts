@@ -42,31 +42,19 @@ export default function routes(service: Services): Router {
     try {
       const token = res.locals?.user?.token
       const prisonerId = 'G4274GN'
-      const licenceId = '570'
-      const conditionId = '2804'
-
       const headers = {
         Authorization: `Bearer ${token}`,
       }
-
-      const licenceConditionApiResponse = await fetch(
+      const apiResponse = await fetch(
         `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
         { headers },
       )
-      const licenceConditionImageApiResponse = await fetch(
-        `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerId}/licence-condition/id/${licenceId}/condition/${conditionId}/image`,
-        { headers },
-      )
-      const licenceConditions = await licenceConditionApiResponse.json()
-      const licenceConditionsImage = await licenceConditionImageApiResponse.json()
+      const licenceConditions = await apiResponse.json()
 
-      if (!licenceConditionApiResponse.ok) {
+      if (!apiResponse.ok) {
         throw new Error(licenceConditions.userMessage)
       }
-      if (!licenceConditionImageApiResponse.ok) {
-        throw new Error(licenceConditionsImage.userMessage)
-      }
-      res.render('pages/prisoner-profile', { licenceConditions, licenceConditionsImage })
+      res.render('pages/prisoner-profile', { licenceConditions })
     } catch (error) {
       const errorMessage = error.message
       res.render('pages/prisoner-profile', { errorMessage })
