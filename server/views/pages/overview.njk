@@ -1,171 +1,71 @@
 {% extends "../partials/layout.njk" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 
-{% set pageTitle = applicationName + " - Home" %}
+{% set pathway = "Resettlement Overview" %}
+{% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
 
-
-{% include "../partials/sectionIntro.njk" %}
-<div class="govuk-grid-row govuk-!-padding-top-4">
-
-    <!-- Main content area -->
-    <div class="govuk-grid-column-one-quarter">
-
-        <!-- Pathway subnav -->
-        
-<ul class="app-subnav__section">
-    <li class="app-subnav__section-item app-subnav__section-item--current">
-        <ul class="app-subnav__section app-subnav__section--nested">
-            <li class="app-subnav__section-item"><a href="#crs-refer">CRS referral</a> </li>
-            <li class="app-subnav__section-item"><a href="#duty-to-refer">Duty to refer</a> </li>
-            <li class="app-subnav__section-item"><a href="#first-night-accommodation">First night accommodation</a> </li>
-        </ul>
-    </li>
-</ul>
-
-
+        {{ titleAndIntro(
+      pathway, 'Review and enter resettlement information and track progress across the resettlement pathways.'
+      ) }}
     </div>
-    <div class="govuk-grid-column-three-quarters">
-        
-<section id="crs-refer" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
-            CRS referral<span class="govuk-caption-m">Data sourced from nDelius</span>
-        </h3>
-        <span class="right">
+    <div class="govuk-grid-row govuk-!-padding-top-4">
 
-        </span>
-    </header>
+        <!-- Main content area -->
+        <div class="govuk-grid-column-one-quarter">
 
-    <div class="app-summary-card__body">
+            {{ subNav([
+        {
+          name: "Licence conditions",
+          id: "licence-summary"
+        }
+      ]) }}
+        </div>
+        <div class="govuk-grid-column-three-quarters">
 
-        <h3 class="govuk-heading-m"></h3>
+            <section id="licence-summary" class="app-summary-card govuk-!-margin-bottom-8">
+                <header class="app-summary-card__header">
+                    <h3 class="app-summary-card__title">
+                    Licence conditions<span class="govuk-caption-m">Data sourced from CVL</span>
+                    </h3>
+                    <span class="right"></span>
+                </header>
 
-        <table class="govuk-table">
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">CRS referral required</th>
-                    <td class="govuk-table__cell">Yes</td>
+                <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
+                    {% if not errorMessage %}
 
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Status</th>
-                    <td class="govuk-table__cell">Completed</td>
+                        {% set conditions %}
+                        <ol class=\"govuk-list govuk-list--number govuk-list--spaced\">
+                            {% for condition in licenceConditions.standardLicenceConditions %}
+                                <li>{{ condition.text }}</li>
+                            {% endfor %}
+                        </ol>
+                        {% endset -%}
 
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Provider</th>
-                    <td class="govuk-table__cell">Manchester Local Housing Organisation</td>
+                        {{ govukDetails({
+                        summaryText: "Standard licence conditions",
+                        html: conditions
+                    }) }}
 
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Provider address</th>
-                    <td class="govuk-table__cell">123 Station Road, Manchester, M1 2AB</td>
+                        {% if licenceConditions.otherLicenseConditions.length %}
+                            <h3 class="govuk-heading-s">Additional and bespoke licence conditions</h3>
+                            <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6" start="{{ licenceConditions.standardLicenceConditions.length + 1 }}">
 
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Provider phone</th>
-                    <td class="govuk-table__cell">0161 123 4455</td>
+                                {% for condition in licenceConditions.otherLicenseConditions %}
+                                    <li>{{ condition.text }}</li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
 
-                </tr>
-            </tbody>
-        </table>
-        <br>
+                    {% else %}
+                        <p>{{ errorMessage }}</p>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
     </div>
-</section>
-<section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
-            Duty to refer <span class="govuk-caption-m">Data sourced from nDelius</span>
-        </h3>
-        <span class="right">
 
-        </span>
-    </header>
-
-    <div class="app-summary-card__body">
-
-        <table class="govuk-table">
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Duty to refer required</th>
-                    <td class="govuk-table__cell">Yes</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Referal completed</th>
-                    <td class="govuk-table__cell">Yes</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Reference number</th>
-                    <td class="govuk-table__cell">XX457878</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Local authority</th>
-                    <td class="govuk-table__cell">Manchester City Council</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Local authority address</th>
-                    <td class="govuk-table__cell">123 Main Street
-Manchester
-M1 1AA</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Local authority phone</th>
-                    <td class="govuk-table__cell">0161 123 4567</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Local authority email</th>
-                    <td class="govuk-table__cell">housing@manchester.gov.uk</td>
-
-                </tr>
-            </tbody>
-        </table>
-        <br>
-
-    </div>
-</section>
-<section id="first-night-accommodation" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
-            First night accommodation <span class="govuk-caption-m">Data sourced from nDelius</span>
-        </h3>
-        <span class="right">
-
-        </span>
-    </header>
-
-    <div class="app-summary-card__body">
-
-
-
-        <table class="govuk-table">
-            <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Address</th>
-                    <td class="govuk-table__cell">123 Ascot Road
-Manchester
-M1 1AA</td>
-
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Type</th>
-                    <td class="govuk-table__cell">Hostel</td>
-
-                </tr>
-            </tbody>
-        </table>
-        <br>
-
-    </div>
-</section>
-
-    </div>
-</div>
 {% endblock %}

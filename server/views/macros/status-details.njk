@@ -1,0 +1,32 @@
+{% macro statusDetails(pathwayTitle, status) %}
+    <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+                {{pathwayTitle}} status: <strong class="govuk-tag govuk-tag--blue">{{status}}</strong>
+            </h3>
+
+        </header>
+
+        <div class="app-summary-card__body">
+            <div class="govuk-form-group govuk-!-margin-0">
+                <input type="hidden" id="updated" name="updated" value="today">
+                <input type="hidden" id="pathway" name="pathway" value="attitudes">
+
+                <button class="govuk-button" data-module="govuk-button" type="submit">
+                Update status or notes
+            </button>
+
+            </div>
+            <div class="govuk-form-group govuk-!-margin-0">
+
+                <input type="hidden" id="updated" name="updated" value="today">
+                <input type="hidden" id="pathway" name="pathway" value="attitudes">
+
+                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="submit">
+                View history
+            </button>
+
+            </div>
+        </div>
+    </section>
+{% endmacro %}

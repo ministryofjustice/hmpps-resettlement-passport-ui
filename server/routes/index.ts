@@ -8,8 +8,28 @@ export default function routes(service: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
 
-  get('/', (req, res, next) => {
-    res.render('pages/index')
+  get('/', async (req, res, next) => {
+    try {
+      const token = res.locals?.user?.token
+      const prisonerId = 'G4274GN'
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      }
+
+      const apiResponse = await fetch(
+        `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
+        { headers },
+      )
+      const licenceConditions = await apiResponse.json()
+
+      if (!apiResponse.ok) {
+        throw new Error(licenceConditions.userMessage)
+      }
+      res.render('pages/overview', { licenceConditions })
+    } catch (error) {
+      const errorMessage = error.message
+      res.render('pages/overview', { errorMessage })
+    }
   })
   get('/accommodation', (req, res, next) => {
     res.render('pages/accommodation')
@@ -37,29 +57,6 @@ export default function routes(service: Services): Router {
   })
   get('/health-status', (req, res, next) => {
     res.render('pages/health')
-  })
-  get('/prisoner-profile', async (req, res, next) => {
-    try {
-      const token = res.locals?.user?.token
-      const prisonerId = 'G4274GN'
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      }
-
-      const apiResponse = await fetch(
-        `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
-        { headers },
-      )
-      const licenceConditions = await apiResponse.json()
-
-      if (!apiResponse.ok) {
-        throw new Error(licenceConditions.userMessage)
-      }
-      res.render('pages/prisoner-profile', { licenceConditions })
-    } catch (error) {
-      const errorMessage = error.message
-      res.render('pages/prisoner-profile', { errorMessage })
-    }
   })
 
   return router
