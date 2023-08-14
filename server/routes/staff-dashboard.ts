@@ -9,6 +9,8 @@ interface PrisonItem {
 
 const staffDashboardRouterGet = express.Router().get('/', async (req, res, next) => {
   try {
+    const { prisonSelected } = req.query
+
     const token = res.locals?.user?.token
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -32,6 +34,7 @@ const staffDashboardRouterGet = express.Router().get('/', async (req, res, next)
       return {
         text: prison.name,
         value: prison.id,
+        selected: prisonSelected === prison.id,
       }
     })
 
@@ -40,7 +43,7 @@ const staffDashboardRouterGet = express.Router().get('/', async (req, res, next)
       value: 'unset',
     })
 
-    res.render('pages/staff-dashboard', { prisonSelectList })
+    res.render('pages/staff-dashboard', { prisonSelectList, prisonSelected })
   } catch (error) {
     const errorMessage = 'Unexpected error'
     logger.error(error, errorMessage)
