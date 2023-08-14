@@ -1,0 +1,38 @@
+{% extends "../partials/dashboardLayout.njk" %}
+
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">Prepare someone for release</h1>
+
+<form id="staff-dashboard-filters" action="/" method="GET">
+  <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+  <div class="govuk-grid-row filters govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h3 class="govuk-heading-m">Filter by:</h3>
+        </div>
+        <div class="govuk-grid-column-full">
+          <div class="govuk-form-group">
+            {{ govukSelect({
+              id: "prisonsSelect",
+              name: "prisonsSelect",
+              label: {
+                text: "Select prison"
+              },
+              items: prisonSelectList
+            }) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-column-full">
+      {{ govukButton({
+        text: "Update table"
+      }) }}
+    </div>
+  </div>
+</form>
+{% endblock %}
