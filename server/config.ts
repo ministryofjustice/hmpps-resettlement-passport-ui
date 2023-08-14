@@ -68,6 +68,15 @@ export default {
       agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
+    rpClient: {
+      url: get('RESETTLEMENT_PASSPORT_API_URL', 'http://localhost:8080'),
+      timeout: {
+        response: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 5000))),
+      enabled: get('RESETTLEMENT_PASSPORT_API_ENABLED', 'true') === 'true',
+    },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
 }

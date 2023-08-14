@@ -57,16 +57,11 @@
 }) }}
 
   </div>
-  {% if errorMessage %}
+  {% if errors %}
   <div class="govuk-width-container">
 {{ govukErrorSummary({
   titleText: "There is a problem",
-  errorList: [
-    {
-      text: errorMessage,
-      href: "#"
-    }
-  ]
+  errorList: errors
 }) }}
   </div>
   {% endif %}
