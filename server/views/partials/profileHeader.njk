@@ -1,66 +1,51 @@
 <div class="govuk-grid-row profile-header">
-    <div class="govuk-grid-column-full">
-
+  <div class="govuk-grid-column-full">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
         <div class="govuk-grid-row">
-
-            <div class="govuk-grid-column-one-half">
-
-                <div class="govuk-grid-row">
-
-                    <div class="govuk-grid-column-one-quarter">
-                        <a href="overview"><img src="assets/images/profile-photo.png" alt="South" class="govuk-!-width-full profile-header__person-photo"></a>
-                    </div>
-                    <div class="govuk-grid-column-three-quarters">
-                        <h1 class="govuk-heading-xl">
-                                South, James
-                                <span class="govuk-caption-l">G2911GD</span>
-                            <p class="govuk-body-s govuk-!-padding-top-2">
-                                <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G4274GN">View full DPS profile</a>
-                            </p>
-                        </h1>
-                    </div>
-                </div>
-            </div>
-
-            <div class="govuk-grid-column-one-half">
-
-                <div class="govuk-grid-row">
-
-                    <div class="govuk-grid-column-one-half">
-
-                        <p>
-                            <b>Date of birth:</b><br> 17 July 1976<br>
-                            (46 years)</p>
-
-                        <p>
-                            <b>Location:</b>
-                            D3-011
-                        </p>
-
-                        <p>
-                            <b>Date of birth:</b> 17 July 1976
-                            (47)</p>
-                    </div>
-                    <div class="govuk-grid-column-one-half">
-
-                        <p>
-                            <b>Release date:</b>
-
-                            27 October 2023 (Friday)
- (80 days)
-                            
-                        </p>
-
-                        <p>
-                            <b>Release type:</b>
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-
+          <div class="govuk-grid-column-one-quarter">
+            <a href="/prisoner-overview/?prisonerId={{ prisonerData.prisonerId }}">
+              <img src="/assets/images/profile-photo.png" alt="South" class="govuk-!-width-full profile-header__person-photo">
+            </a>
+          </div>
+          <div class="govuk-grid-column-three-quarters">
+            <h1 class="govuk-heading-xl">
+              {{ prisonerData.lastName }}, {{ prisonerData.firstName }}
+              <span class="govuk-caption-l">{{ prisonerData.prisonerId }}</span>
+              <p class="govuk-body-s govuk-!-padding-top-2">
+                <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G4274GN">View full DPS profile</a>
+              </p>
+            </h1>
+          </div>
         </div>
-
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <p>
+              <b>Prisoner number:</b><br> {{ prisonerData.prisonerId }}</p>
+            <p>
+              <b>Location:</b>
+              {{ prisonerData.cellLocation }}
+            </p>
+            <p>
+              <b>Date of birth:</b>
+              {{ prisonerData.DoB | formatDate }} ({{ prisonerData.DoB | getAgeFromDate }})</p>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <p>
+              <b>Release date:</b>
+              {{ prisonerData.releaseDate | formatDate }}
+              {% set isDayFriday = prisonerData.releaseDate | isFriday %}
+              {% if isDayFriday %}(Friday){% endif %}
+              ({{ prisonerData.releaseDate | getDaysFromDate }})
+            </p>
+            <p>
+              <b>Release type: {{ prisonerData.releaseType }}</b>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

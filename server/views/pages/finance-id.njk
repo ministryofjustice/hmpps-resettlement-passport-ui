@@ -1,28 +1,24 @@
 {% extends "../partials/layout.njk" %}
-
 {% set pathway = "Finance and ID" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-
 {% block content %}
-    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-
-        {{ titleAndIntro(
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(
       pathway,
       'Track financial support requirements and bank account/ID applications.'
-      ) }}
-        <div class="govuk-grid-column-one-third">
-
-            <!-- Pathway status -->
-            {{ statusDetails(pathway, 'IN PROGRESS') }}
-        </div>
-    </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-
-        <!-- Main content area -->
-
-        <div class="govuk-grid-column-one-quarter">
-            {{ subNav([
+    ) }}
+  <div
+    class="govuk-grid-column-one-third">
+    <!-- Pathway status -->
+    {{ statusDetails(pathway, 'IN PROGRESS', prisonerData) }}
+  </div>
+  </div>
+  <div
+    class="govuk-grid-row govuk-!-padding-top-4">
+    <!-- Main content area -->
+    <div class="govuk-grid-column-one-quarter">
+      {{ subNav([
         {
           name: "ID documents",
           id: "id-documents"
@@ -32,55 +28,42 @@
           id: "finance"
         }
       ]) }}
-        </div>
-        <div class="govuk-grid-column-three-quarters">
-            <section id="id-documents" class="app-summary-card govuk-!-margin-bottom-8">
-                <header class="app-summary-card__header">
-                    <h3 class="app-summary-card__title">
-                    ID documents
-                </h3>
-                    <span class="right">
-
-                        <a class="govuk-button" href="/add-an-id">
-                        Add an ID
-                    </a>
-                    </span>
-                </header>
-
-                <div class="app-summary-card__body">
-                    <br>
-                </div>
-            </section>
-            <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
-                <header class="app-summary-card__header">
-                    <h3 class="app-summary-card__title">
-                    Finance
-                </h3>
-                    <span class="right">
-
-                        <a href="add-a-bank-account" class="govuk-button">
-                        Add a bank account</a>
-
-                    </span>
-                </header>
-
-                <div class="app-summary-card__body">
-
-                    <div class="govuk-grid-row">
-
-                        <div class="govuk-grid-column-full">
-
-                            <h3 class="govuk-heading-s">Bank account</h3>
-
-                            <p>No current bank account applications</p>
-
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-
     </div>
-
+    <div class="govuk-grid-column-three-quarters">
+      <section id="id-documents" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            ID documents
+          </h3>
+          <span class="right">
+            <a class="govuk-button" href="/add-an-id">
+              Add an ID
+            </a>
+          </span>
+        </header>
+        <div class="app-summary-card__body">
+          <br>
+        </div>
+      </section>
+      <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Finance
+          </h3>
+          <span class="right">
+            <a href="add-a-bank-account" class="govuk-button">
+              Add a bank account</a>
+          </span>
+        </header>
+        <div class="app-summary-card__body">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <h3 class="govuk-heading-s">Bank account</h3>
+              <p>No current bank account applications</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 {% endblock %}

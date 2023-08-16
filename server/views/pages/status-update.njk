@@ -1,0 +1,90 @@
+{% extends "../partials/layout.njk" %}
+{% set pathway = "Change to dynamic" %}
+{% set pageTitle = applicationName + " - " + pathway %}
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    <div class="govuk-grid-row govuk-!-padding-bottom-4">
+      {{ titleAndIntro(
+        pathway, 'THIS SHOULD BE DYNAMIC'
+      ) }}
+      <div class="govuk-grid-column-three-quarters"></div>
+    </div>
+    <div class="govuk-grid-column-one-quarter">
+      {{ subNav([
+        {
+          name: "Accommodation resettlement status",
+          id: "status"
+        },
+        {
+          name: " Accommodation case notes",
+          id: "notes"
+        }
+      ]) }}
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      <section id="status" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            CHANGE TO DYNAMIC resettlement status
+            <span class="govuk-caption-m">Update the status and/or add a note about progress</span>
+          </h3>
+        </header>
+        <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+          <form method="POST" action="#">
+            <div class="govuk-form-group">
+              <div class="govuk-radios" data-module="govuk-radios">
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="notStarted" name="state" type="radio" value="Not Started" checked>
+                  <label class="govuk-label govuk-radios__label" for="notStarted">
+                    Not started
+                  </label>
+                  <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
+                    need not yet assessed or work has not yet begun.
+                  </div>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="inProgress" name="state" type="radio" value="In Progress">
+                  <label class="govuk-label govuk-radios__label" for="inProgress">
+                    In Progress
+                  </label>
+                  <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
+                    a need was identified in this area and work has started.
+                  </div>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="notRequired" name="state" type="radio" value="Support Not Required">
+                  <label class="govuk-label govuk-radios__label" for="notRequired">
+                    Support not required
+                  </label>
+                  <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
+                    no need was identified.
+                  </div>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="declined" name="state" type="radio" value="Support Declined">
+                  <label class="govuk-label govuk-radios__label" for="declined">
+                    Support declined
+                  </label>
+                  <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
+                    a need was identified but support was declined.
+                  </div>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="closed" name="state" type="radio" value="Closed">
+                  <label class="govuk-label govuk-radios__label" for="closed">
+                    Closed
+                  </label>
+                  <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
+                    following identification of a need, all required work has been attempted, regardless of whether it could be completed
+                    and what the final outcome was.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="govuk-button" type="submit">Update</button>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+{% endblock %}

@@ -1,35 +1,29 @@
 {% extends "../partials/layout.njk" %}
-
 {% set pathway = "Drugs & Alcohol" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-
 {% block content %}
-    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-
-        {{ titleAndIntro(
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(
       pathway,
       'Prepare someone with substance misuse issues for release.'
       ) }}
-        <!-- Pathway status -->
-        <div class="govuk-grid-column-one-third">
-
-            <!-- Pathway status -->
-            {{ statusDetails(pathway, 'In Progress') }}
-        </div>
-
+    <!-- Pathway status -->
+    <div
+      class="govuk-grid-column-one-third">
+      <!-- Pathway status -->
+      {{ statusDetails(pathway, 'In Progress', prisonerData) }}
     </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-        <!-- Main content area -->
-        <div class="govuk-grid-column-one-quarter">
-            <!-- Pathway subnav -->
-        </div>
-        <div class="govuk-grid-column-three-quarters">
-
-            <p>Information relating to this pathway is not currently available.</p>
-
-            <p>You can still use the readiness status to track progress.</p>
-
-        </div>
+  </div>
+  <div
+    class="govuk-grid-row govuk-!-padding-top-4">
+    <!-- Main content area -->
+    <div
+      class="govuk-grid-column-one-quarter"><!-- Pathway subnav -->
     </div>
+    <div class="govuk-grid-column-three-quarters">
+      <p>Information relating to this pathway is not currently available.</p>
+      <p>You can still use the readiness status to track progress.</p>
+    </div>
+  </div>
 {% endblock %}
