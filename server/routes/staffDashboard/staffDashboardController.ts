@@ -55,7 +55,7 @@ export default class StaffDashboardController {
           prisonersList = await apiResponse.json()
         }
       } catch (error) {
-        console.error('Error fetching prisoner list:', error)
+        logger.error('Error fetching prisoner list:', error)
       }
 
       const view = new StaffDashboardView(prisonSelectList, <string>prisonSelected, prisonersList, errors)
