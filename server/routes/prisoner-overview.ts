@@ -10,7 +10,6 @@ const prisonerOverviewRouter = express.Router().get('/:prisonerId', async (req, 
       req.user.token,
       `/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
     )
-    const licenceConditionsLink = licenceConditions.map()
 
     const imageBase64 = await apiResponse.getImageAsBase64String(
       req.user.token,
