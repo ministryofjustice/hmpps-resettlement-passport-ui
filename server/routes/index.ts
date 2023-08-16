@@ -36,7 +36,7 @@ function prisonerDetailsMiddleware(req: Request, res: Response, next: NextFuncti
 
 export default function routes(services: Services): Router {
   const router = Router()
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+  // const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)

@@ -41,7 +41,7 @@ export default class StaffDashboardController {
           REFACTOR TO USE RPCLIENT 
       ********************************* */
       const token = res.locals?.user?.token
-      console.log(token)
+      // console.log(token)
       const headers = {
         Authorization: `Bearer ${token}`,
       }
