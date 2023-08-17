@@ -21,3 +21,30 @@ export const initialiseName = (fullName?: string): string | null => {
   const array = fullName.split(' ')
   return `${array[0][0]}. ${array.reverse()[0]}`
 }
+
+export const formatDate = (dateString: string): string => {
+  const date = new Date(dateString)
+  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
+  return date.toLocaleDateString('en-GB', options)
+}
+
+export const getAgeFromDate = (birthDate: string): number => {
+  const birthYear = new Date(birthDate).getFullYear()
+  const currentYear = new Date().getFullYear()
+  return currentYear - birthYear
+}
+
+export const getDaysFromDate = (targetDate: string): number => {
+  const targetDateObj = new Date(targetDate)
+  const currentDate = new Date()
+
+  const timeDiff = Math.abs(currentDate.getTime() - targetDateObj.getTime())
+  const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24))
+
+  return daysDiff
+}
+
+export const isFriday = (targetDate: string): boolean => {
+  const targetDateObj = new Date(targetDate)
+  return targetDateObj.getDay() === 5
+}

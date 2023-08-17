@@ -1,28 +1,23 @@
 {% extends "../partials/layout.njk" %}
-
 {% set pathway = "Children, families and communities" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-
 {% block content %}
-
-    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-
-        {{ titleAndIntro(
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(
       pathway,
       'Consider someone’s needs around maintaining contact with their families and communities on release.'
       ) }}
-        <div class="govuk-grid-column-one-third">
-
-            <!-- Pathway status -->
-            {{ statusDetails(pathway, 'CLOSED') }}
-        </div>
+    <div
+      class="govuk-grid-column-one-third">
+      <!-- Pathway status -->
+      {{ statusDetails(pathway, 'CLOSED', prisonerData) }}
     </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-        <div class="govuk-grid-column-three-quarters">
-            <p>Information relating to this pathway is not currently available.</p>
-
-            <p>You can still use the readiness status to track progress.</p>
-        </div>
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+    <div class="govuk-grid-column-three-quarters">
+      <p>Information relating to this pathway is not currently available.</p>
+      <p>You can still use the readiness status to track progress.</p>
     </div>
+  </div>
 {% endblock %}

@@ -37,8 +37,28 @@ export default class StaffDashboardController {
         })
       }
 
-      const view = new StaffDashboardView(prisonSelectList, <string>prisonSelected, errors)
+      /* *******************************
+          REFACTOR TO USE RPCLIENT 
+      ********************************* */
+      const token = res.locals?.user?.token
+      // console.log(token)
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      }
+      let prisonersList = null
+      try {
+        const apiResponse = await fetch(
+          `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prison/${prisonSelected}/prisoners?page=0&size=50&sort=releaseDate,DESC`,
+          { headers },
+        )
+        if (apiResponse.ok) {
+          prisonersList = await apiResponse.json()
+        }
+      } catch (error) {
+        logger.error('Error fetching prisoner list:', error)
+      }
 
+      const view = new StaffDashboardView(prisonSelectList, <string>prisonSelected, prisonersList, errors)
       res.render('pages/staff-dashboard', { ...view.renderArgs })
     } catch (error) {
       const errors = [
