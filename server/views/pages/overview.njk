@@ -40,32 +40,34 @@
                         {% set conditions %}
                         <ol class=\"govuk-list govuk-list--number govuk-list--spaced\">
                             {% for condition in licenceConditions.standardLicenceConditions %}
-                                <li>{{ condition.text }}</li>
-                            {% endfor %}
-                        </ol>
-                        {% endset -%}
+                                <li>{{ condition.text }}
+                                    {% if condition.image %}
+                                        <a href="/prisoner-overview/{{}}image{{}}">View map</a>{%endif%}</li>
+                                {% endfor %}
+                            </ol>
+                            {% endset -%}
 
-                        {{ govukDetails({
+                            {{ govukDetails({
                         summaryText: "Standard licence conditions",
                         html: conditions
                     }) }}
 
-                        {% if licenceConditions.otherLicenseConditions.length %}
-                            <h3 class="govuk-heading-s">Additional and bespoke licence conditions</h3>
-                            <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6" start="{{ licenceConditions.standardLicenceConditions.length + 1 }}">
+                            {% if licenceConditions.otherLicenseConditions.length %}
+                                <h3 class="govuk-heading-s">Additional and bespoke licence conditions</h3>
+                                <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6" start="{{ licenceConditions.standardLicenceConditions.length + 1 }}">
 
-                                {% for condition in licenceConditions.otherLicenseConditions %}
-                                    <li>{{ condition.text }}</li>
-                                {% endfor %}
-                            </ol>
+                                    {% for condition in licenceConditions.otherLicenseConditions %}
+                                        <li>{{ condition.text }}</li>
+                                    {% endfor %}
+                                </ol>
+                            {% endif %}
+
+                        {% else %}
+                            <p>{{ errorMessage }}</p>
                         {% endif %}
-
-                    {% else %}
-                        <p>{{ errorMessage }}</p>
-                    {% endif %}
-                </div>
-            </section>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
 
-{% endblock %}
+    {% endblock %}
