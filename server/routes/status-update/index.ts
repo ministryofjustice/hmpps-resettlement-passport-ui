@@ -1,8 +1,12 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 
-const statusUpdateRouter = express.Router().get('/', async (req, res, next) => {
+const statusUpdateRouter = express.Router()
+
+statusUpdateRouter.get('/:pathwayName', async (req, res, next) => {
   const { prisonerData } = req
-  res.render('pages/status-update', { prisonerData })
+  const { pathwayName } = req.params
+  console.log(pathwayName)
+  res.render('pages/status-update', { prisonerData, pathwayName })
 })
 
 export default statusUpdateRouter

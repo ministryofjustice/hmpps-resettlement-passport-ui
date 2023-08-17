@@ -4,7 +4,6 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import staffDashboard from './staffDashboard'
 import prisonerOverviewRouter from './prisoner-overview'
-import statusUpdateRouter from './status-update'
 import accommodationRouter from './accommodation'
 import attitudesThinkingBehaviourRouter from './attitudes-thinking-behaviour'
 import childrenFamiliesCommunitiesRouter from './children-families-and-communities'
@@ -72,7 +71,6 @@ export default function routes(services: Services): Router {
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)
   use('/prisoner-overview', prisonerOverviewRouter)
-  use('/status-update', statusUpdateRouter)
   use('/accommodation', accommodationRouter)
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
@@ -83,6 +81,11 @@ export default function routes(services: Services): Router {
   use('/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
+  use('/status-update/:pathwayName', (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const { pathwayName } = req.params
+    res.render('pages/status-update', { prisonerData, pathwayName })
+  })
 
   return router
 }
