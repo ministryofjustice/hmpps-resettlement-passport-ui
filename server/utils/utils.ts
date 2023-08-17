@@ -51,10 +51,6 @@ export const isFriday = (targetDate: string): boolean => {
   return targetDateObj.getDay() === 5
 }
 
-export const getStatusObject = (arrayData: PathwayStatus[], condition: string): PathwayStatus => {
-  const filteredObject = arrayData.find(item => {
-    console.log(item, condition)
-    return item.pathway === condition
-  })
-  return filteredObject
+export const filterByPathway = (arrayData: PathwayStatus[], condition: string): PathwayStatus => {
+  return arrayData.find(item => item.pathway === condition)
 }

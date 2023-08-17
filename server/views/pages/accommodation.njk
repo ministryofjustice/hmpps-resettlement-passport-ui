@@ -1,7 +1,7 @@
 {% extends "../partials/layout.njk" %}
 {% set pathway = "Accommodation" %}
 {% set pageTitle = applicationName + " - " + pathway %}
-{% set pathwayStatus = prisonerData.pathways | getStatusObject("ACCOMMODATION") %}
+{% set pathwayStatus = prisonerData.pathways | filterByPathway("ACCOMMODATION") %}
 
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}

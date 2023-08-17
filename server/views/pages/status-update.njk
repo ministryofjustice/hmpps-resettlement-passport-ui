@@ -62,7 +62,7 @@
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
-                  {% set currentStatus = prisonerData.pathways | getStatusObject(pathwayName | upper | replace(" ", "_") | replace(",", "")) %}
+                  {% set currentStatus = prisonerData.pathways | filterByPathway(pathwayName | upper | replace(" ", "_") | replace(",", "")) %}
                   {% set isChecked = currentStatus.status == statusItem.value %}
                   <div class="govuk-radios__item">
                     <input
