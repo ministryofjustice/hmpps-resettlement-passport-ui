@@ -32,16 +32,16 @@
     </td>
     {% set notStarted = 0 %}
     {% set inProgress = 0 %}
-    {% set closed = 0 %}
+    {% set done = 0 %}
     {% for status in statuses %}
-      {% if status.status === 'Not Started' %}
+      {% if status.status === 'NOT_STARTED' %}
         {% set notStarted = notStarted + 1 %}
       {% endif %}
-      {% if status.status === 'In Progress' %}
+      {% if status.status === 'IN_PROGRESS' %}
         {% set inProgress = inProgress + 1 %}
       {% endif %}
-      {% if status.status === 'Closed' %}
-        {% set closed = closed + 1 %}
+      {% if status.status === 'DONE' %}
+        {% set done = done + 1 %}
       {% endif %}
     {% endfor %}
     <td class="govuk-table__cell">
@@ -56,8 +56,8 @@
       </strong>
       &nbsp;
       <strong class="govuk-tag govuk-tag--green">
-        <b>{{ closed }}</b>
-        closed
+        <b>{{ done }}</b>
+        done
       </strong>
       <br/>
       <details class="govuk-details govuk-body-s" data-module="govuk-details">
@@ -74,18 +74,12 @@
                   </td>
                   <td>
                     {% set tag_color %}
-                      {% if pathway.status == 'Closed' %}
+                      {% if pathway.status == 'DONE' or pathway.status == 'SUPPORT_DECLINED' or pathway.status == 'SUPPORT_NOT_REQUIRED' %}
                         green
-                      {% elif pathway.status == 'In Progress' %}
+                      {% elif pathway.status == 'IN_PROGRESS' %}
                         blue
-                      {% elif pathway.status == 'Declined' %}
-                        green
-                      {% elif pathway.status == 'Not Started' %}
+                      {% elif pathway.status == 'NOT_STARTED' %}
                         red
-                      {% elif pathway.status == 'Incomplete' %}
-                        green
-                      {% elif pathway.status == 'Unrequired' %}
-                        green
                       {% else %}
                         red
                       {% endif %}
