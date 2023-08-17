@@ -6,10 +6,12 @@ const prisonerOverviewRouter = express.Router().get('/:prisonerId', async (req, 
     const { prisonerId } = req.params
 
     const apiResponse = new RPClient()
-    const licenceConditions = await apiResponse.get(
+    const licenceConditions = (await apiResponse.get(
       req.user.token,
       `/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
-    )
+    )) as LicenceCondition
+
+    console.log(licenceConditions)
 
     const imageBase64 = await apiResponse.getImageAsBase64String(
       req.user.token,
@@ -24,3 +26,16 @@ const prisonerOverviewRouter = express.Router().get('/:prisonerId', async (req, 
 })
 
 export default prisonerOverviewRouter
+
+interface LicenceConditions {
+  licenceId?: number
+  status?: string
+
+  standardLicenceConditions?: LicenceCondition[]
+  otherLicenseConditions?: LicenceCondition[]
+}
+interface LicenceCondition {
+  id: number
+  image: boolean
+  text?: string
+}
