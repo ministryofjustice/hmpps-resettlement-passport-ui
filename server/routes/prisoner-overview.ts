@@ -1,27 +1,26 @@
 import express from 'express'
+import { RPClient } from '../data'
 
-const prisonerOverviewRouter = express.Router().get('/:prisonerId', async (req, res, next) => {
+const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) => {
+  const { prisonerData } = req
   try {
-    const token = res.locals?.user?.token
-    const { prisonerId } = req.params
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    }
+    const apiResponse = new RPClient()
+    const licenceConditions = (await apiResponse.get(
+      req.user.token,
+      `/resettlement-passport/prisoner/${prisonerData.prisonerId}/licence-condition`,
+    )) as LicenceCondition
 
-    const apiResponse = await fetch(
-      `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
-      { headers },
-    )
-    const licenceConditions = await apiResponse.json()
-
-    if (!apiResponse.ok) {
-      throw new Error(licenceConditions.userMessage)
-    }
-    res.render('pages/overview', { licenceConditions })
+    res.render('pages/overview', { licenceConditions, prisonerData })
   } catch (error) {
     const errorMessage = error.message
-    res.render('pages/overview', { errorMessage })
+    res.render('pages/overview', { errorMessage, prisonerData })
   }
 })
 
 export default prisonerOverviewRouter
+
+interface LicenceCondition {
+  id: number
+  image: boolean
+  text?: string
+}

@@ -2,7 +2,7 @@
 import nunjucks from 'nunjucks'
 import express from 'express'
 import path from 'path'
-import { initialiseName } from './utils'
+import { formatDate, getAgeFromDate, getDaysFromDate, initialiseName, isFriday } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 
 const production = process.env.NODE_ENV === 'production'
@@ -11,7 +11,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   app.set('view engine', 'njk')
 
   app.locals.asset_path = '/assets/'
-  app.locals.applicationName = 'Hmpps Resettlement Passport Ui'
+  app.locals.applicationName = 'Digital Prison Services'
 
   // Cachebusting version string
   if (production) {
@@ -40,4 +40,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   )
 
   njkEnv.addFilter('initialiseName', initialiseName)
+  njkEnv.addFilter('formatDate', formatDate)
+  njkEnv.addFilter('getAgeFromDate', getAgeFromDate)
+  njkEnv.addFilter('getDaysFromDate', getDaysFromDate)
+  njkEnv.addFilter('isFriday', isFriday)
 }

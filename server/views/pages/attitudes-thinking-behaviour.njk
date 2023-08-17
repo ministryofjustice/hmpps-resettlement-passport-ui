@@ -1,29 +1,23 @@
 {% extends "../partials/layout.njk" %}
-
 {% set pathway = "Attitudes, thinking and behaviour" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-
 {% block content %}
-
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-
     {{ titleAndIntro(
       pathway,
       'Understand someone’s risks around how they think and behave and ensure any needs in this area are met.'
       ) }}
-    <div class="govuk-grid-column-one-third">
-
+    <div
+      class="govuk-grid-column-one-third">
       <!-- Pathway status -->
-      {{ statusDetails(pathway, 'CLOSED') }}
+      {{ statusDetails(pathway, 'CLOSED', prisonerData) }}
     </div>
-
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
-
     <!-- Main content area -->
     <!-- Pathway side nav -->
-    <div class="govuk-grid-column-one-quarter">
+      <div class="govuk-grid-column-one-quarter">
       {{ subNav([
         {
           name: "Risk assessment",
@@ -40,15 +34,13 @@
       ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-
       <section id="risk-assessment" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-                    Risk assessment<span class="govuk-caption-m">Data sourced from OASys</span>
+            Risk assessment<span class="govuk-caption-m">Data sourced from OASys</span>
           </h3>
           <span class="right"></span>
         </header>
-
         <div class="app-summary-card__body">
           {{ govukTable({
                     firstCellIsHeader: true,
@@ -89,15 +81,13 @@
                   }) }}
         </div>
       </section>
-
       <section id="individual-risks" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-                    Individual risks<span class="govuk-caption-m">Data sourced from OASys</span>
+            Individual risks<span class="govuk-caption-m">Data sourced from OASys</span>
           </h3>
           <span class="right"></span>
         </header>
-
         <div class="app-summary-card__body">
           {{ govukTable({
                     firstCellIsHeader: true,
@@ -137,17 +127,14 @@
                       ]
                   }) }}
         </div>
-
       </section>
-
       <section id="other-risks" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-                    Other risks<span class="govuk-caption-m">Data sourced from OASys</span>
+            Other risks<span class="govuk-caption-m">Data sourced from OASys</span>
           </h3>
           <span class="right"></span>
         </header>
-
         <div class="app-summary-card__body">
           {{ govukTable({
                     firstCellIsHeader: true,
