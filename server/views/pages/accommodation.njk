@@ -1,19 +1,19 @@
 {% extends "../partials/layout.njk" %}
-{% set pathwayTitle = "Accommodation" %}
-{% set pageTitle = applicationName + " - " + pathwayTitle %}
-{% set pid = 0 %}
 {% set pathway = "Accommodation" %}
+{% set pageTitle = applicationName + " - " + pathway %}
+{% set pathwayStatus = prisonerData.pathways | getStatusObject("ACCOMMODATION") %}
+
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(
-      pathwayTitle ,
+      pathway,
       'Referrals and support to enable prison leavers to access suitable and sustainable housing, on their first night and beyond.'
       ) }}
     <div
       class="govuk-grid-column-one-third">
       <!-- Pathway status -->
-      {{ statusDetails(pathway, 'In Progress', prisonerData) }}
+      {{ statusDetails(pathwayStatus, prisonerData.prisonerId) }}
     </div>
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">

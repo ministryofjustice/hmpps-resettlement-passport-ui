@@ -2,17 +2,18 @@
 {% set pathway = "Finance and ID" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
+{% set pathwayStatus = prisonerData.pathways | getStatusObject("FINANCE_AND_ID") %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(
       pathway,
       'Track financial support requirements and bank account/ID applications.'
     ) }}
-  <div
+    <div
     class="govuk-grid-column-one-third">
-    <!-- Pathway status -->
-    {{ statusDetails(pathway, 'IN PROGRESS', prisonerData) }}
-  </div>
+      <!-- Pathway status -->
+      {{ statusDetails(pathwayStatus, prisonerData.prisonerId) }}
+    </div>
   </div>
   <div
     class="govuk-grid-row govuk-!-padding-top-4">

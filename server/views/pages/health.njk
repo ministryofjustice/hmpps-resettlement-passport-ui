@@ -2,6 +2,7 @@
 {% set pathway = "Health" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
+{% set pathwayStatus = prisonerData.pathways | getStatusObject("HEALTH") %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(
@@ -11,7 +12,7 @@
     <div
       class="govuk-grid-column-one-third">
       <!-- Pathway status -->
-      {{ statusDetails(pathway, 'CLOSED', prisonerData) }}
+      {{ statusDetails(pathwayStatus, prisonerData.prisonerId) }}
     </div>
   </div>
   <div
