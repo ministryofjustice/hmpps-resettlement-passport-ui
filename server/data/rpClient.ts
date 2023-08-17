@@ -13,4 +13,22 @@ export default class RPClient {
     })
     return prisons as Promise<Prison[]>
   }
+
+  async getImageAsBase64String(token: string, path: string): Promise<string> {
+    const imageResult = (await RPClient.restClient(token).stream({
+      path,
+    })) as ReadableStream
+
+    const imageBlob = await new Response(imageResult).blob()
+    const imageBlobReader = await imageBlob.stream().getReader().read()
+    const imageByteArray = imageBlobReader.value
+    return Buffer.from(imageByteArray).toString('base64')
+  }
+
+  async get(token: string, path: string) {
+    const result = await RPClient.restClient(token).get({
+      path,
+    })
+    return result
+  }
 }
