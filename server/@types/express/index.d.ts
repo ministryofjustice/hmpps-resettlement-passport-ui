@@ -33,4 +33,10 @@ export type PrisonerData = {
   DoB: string
   releaseDate: string
   releaseType: string
+  pathways: PathwayStatus[]
+}
+
+export type PathwayStatus = {
+  pathway: string
+  status: string
 }

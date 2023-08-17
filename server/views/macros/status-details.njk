@@ -1,16 +1,28 @@
-{% macro statusDetails(pathwayTitle, status, prisonerData) %}
+{% macro statusDetails(pathwayData, prisonerId) %}
   <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
-        {{ pathwayTitle }} status:
-        <strong class="govuk-tag govuk-tag--blue">{{ status }}</strong>
+        Resettlement status:
+        {% set tag_color %}
+          {% if pathwayData.status == 'DONE' or pathwayData.status == 'SUPPORT_DECLINED' or pathwayData.status == 'SUPPORT_NOT_REQUIRED' %}
+              green
+            {% elif pathwayData.status == 'IN_PROGRESS' %}
+              blue
+            {% elif pathwayData.status == 'NOT_STARTED' %}
+              red
+            {% else %}
+              red
+          {% endif %}
+        {% endset %}
+
+        <strong class="govuk-tag govuk-tag--{{ tag_color|trim }}">{{ pathwayData.status| replace("_", " ") }}</strong>
       </h3>
     </header>
     <div class="app-summary-card__body">
       <div class="govuk-form-group govuk-!-margin-0">
         <input type="hidden" id="updated" name="updated" value="today">
         <input type="hidden" id="pathway" name="pathway" value="attitudes">
-        <a class="govuk-button" href="/status-update/?prisonerId={{ prisonerData.prisonerId }}">
+        <a class="govuk-button" href="/status-update/?prisonerId={{ prisonerId }}">
           Update status or notes
         </a>
       </div>

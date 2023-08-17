@@ -1,3 +1,5 @@
+import { PathwayStatus } from '../@types/express'
+
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
 
@@ -47,4 +49,8 @@ export const getDaysFromDate = (targetDate: string): number => {
 export const isFriday = (targetDate: string): boolean => {
   const targetDateObj = new Date(targetDate)
   return targetDateObj.getDay() === 5
+}
+
+export const getStatusObject = (arrayData: PathwayStatus[], condition: string): PathwayStatus => {
+  return arrayData.find(item => item.pathway === condition)
 }
