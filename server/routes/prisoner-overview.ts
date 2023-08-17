@@ -10,14 +10,7 @@ const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) 
       `/resettlement-passport/prisoner/${prisonerData.prisonerId}/licence-condition`,
     )) as LicenceCondition
 
-    console.log(licenceConditions)
-
-    const imageBase64 = await apiResponse.getImageAsBase64String(
-      req.user.token,
-      `/resettlement-passport/prisoner/${prisonerData.prisonerId}/licence-condition/id/101/condition/1008/image`,
-    )
-
-    res.render('pages/overview', { licenceConditions, imageBase64, prisonerData })
+    res.render('pages/overview', { licenceConditions, prisonerData })
   } catch (error) {
     const errorMessage = error.message
     res.render('pages/overview', { errorMessage, prisonerData })
@@ -26,13 +19,6 @@ const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) 
 
 export default prisonerOverviewRouter
 
-interface LicenceConditions {
-  licenceId?: number
-  status?: string
-
-  standardLicenceConditions?: LicenceCondition[]
-  otherLicenseConditions?: LicenceCondition[]
-}
 interface LicenceCondition {
   id: number
   image: boolean

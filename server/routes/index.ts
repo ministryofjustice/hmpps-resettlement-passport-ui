@@ -14,6 +14,7 @@ import financeIdRouter from './finance-id'
 import addIdRouter from './add-id'
 import addBankAccountRouter from './add-bank-account'
 import healthRouter from './health-status'
+import licenceImageRouter from './licence-image'
 
 function prisonerDetailsMiddleware(req: Request, res: Response, next: NextFunction) {
   /* *******************************
@@ -51,6 +52,7 @@ export default function routes(services: Services): Router {
   use('/add-an-id', addIdRouter)
   use('/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
+  use('/licence-image', licenceImageRouter)
 
   return router
 }
