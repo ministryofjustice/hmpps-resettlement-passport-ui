@@ -1,61 +1,50 @@
+{% set subNavigationList = [
+  {
+    name: 'Resettlement Overview',
+    url: '/prisoner-overview/'
+  },
+  {
+    name: 'Accommodation',
+    url: '/accommodation/'
+  },
+  {
+    name: 'Attitudes, thinking and behaviour',
+    url: '/attitudes-thinking-and-behaviour'
+  },
+  {
+    name: 'Children, families and communities',
+    url: '/children-families-and-communities/'
+  },
+  {
+    name: 'Drugs and alcohol',
+    url: '/drugs-and-alcohol/'
+  },
+  {
+    name: 'Education, skills and work',
+    url: '/education-skills-and-work/'
+  },
+  {
+    name: 'Finance and ID',
+    url: '/finance-and-id/'
+  },
+  {
+    name: 'Health',
+    url: '/health-status/'
+  }
+] %}
+
 <div class="govuk-grid-row ">
-    <div class="govuk-grid-column-full">
-        <nav class="moj-sub-navigation" aria-label="Sub navigation">
-
-            <ul class="moj-sub-navigation__list">
-                <li class="moj-sub-navigation__item">
-                    <a class="moj-sub-navigation__link" href="/" {{ "aria-current=page" if pathway === "Resettlement Overview" }}>
-                            Resettlement overview
-                        </a>
-                </li>
-
-                <li class="moj-sub-navigation__item">
-
-                    <a class="moj-sub-navigation__link" href="/accommodation" {{ "aria-current=page" if pathway === "Accommodation" }}>
-                            Accommodation
-                        </a>
-                </li>
-
-                <li class="moj-sub-navigation__item">
-                    <a class="moj-sub-navigation__link" href="/attitudes-thinking-and-behaviour" {{ "aria-current=page" if pathway === "Attitudes, thinking and behaviour" }}>
-                            Attitudes, thinking and behaviour
-                        </a>
-                </li>
-
-                <li class="moj-sub-navigation__item">
-
-                    <a class="moj-sub-navigation__link" href="/children-families-and-communities" {{ "aria-current=page" if pathway === "Children, families and communities" }}>
-                            Children, families and communities
-                        </a>
-                </li>
-
-                <li class="moj-sub-navigation__item">
-                    <a class="moj-sub-navigation__link" href="/drugs-and-alcohol" {{ "aria-current=page" if pathway === "Drugs and Alcohol" }}>
-                            Drugs and alcohol
-                        </a>
-                </li>
-
-                <li class="moj-sub-navigation__item">
-                    <a class="moj-sub-navigation__link" href="/education-skills-and-work" {{ "aria-current=page" if pathway === "Education, skills and work" }}>
-       Education, skills and work
-                        </a>
-                </li>
-
-                <li class="moj-sub-navigation__item">
-                    <a class="moj-sub-navigation__link" href="/finance-and-id" {{ "aria-current=page" if pathway === "Finance and ID" }}>
-                            Finance and ID
-                        </a>
-                </li>
-
-                <li class="moj-sub-navigation__item">
-                    <a class="moj-sub-navigation__link" href="/health-status" {{ "aria-current=page" if pathway === "Health" }}>
-                            Health
-                        </a>
-                </li>
-
-            </ul>
-        </nav>
-
-    </div>
-
+  <div class="govuk-grid-column-full">
+    <nav class="moj-sub-navigation" aria-label="Sub navigation">
+      <ul class="moj-sub-navigation__list">
+        {% for navItem in subNavigationList %}
+          <li class="moj-sub-navigation__item">
+            <a class="moj-sub-navigation__link" href="{{ navItem.url }}?prisonerId={{ prisonerData.prisonerId }}" {{ "aria-current=page" if pathway === navItem.name }}>
+              {{ navItem.name }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
 </div>

@@ -20,6 +20,17 @@ export declare global {
       verified?: boolean
       id: string
       logout(done: (err: unknown) => void): void
+      prisonerData: PrisonerData
     }
   }
+}
+
+export type PrisonerData = {
+  prisonerId: string | unknown
+  firstName: string
+  lastName: string
+  cellLocation: string
+  DoB: string
+  releaseDate: string
+  releaseType: string
 }

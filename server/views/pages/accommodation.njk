@@ -1,26 +1,22 @@
 {% extends "../partials/layout.njk" %}
-
 {% set pathwayTitle = "Accommodation" %}
 {% set pageTitle = applicationName + " - " + pathwayTitle %}
-
 {% set pid = 0 %}
 {% set pathway = "Accommodation" %}
 {% set mainClasses = "app-container govuk-body" %}
-
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(
       pathwayTitle ,
       'Referrals and support to enable prison leavers to access suitable and sustainable housing, on their first night and beyond.'
       ) }}
-    <div class="govuk-grid-column-one-third">
-
+    <div
+      class="govuk-grid-column-one-third">
       <!-- Pathway status -->
-      {{ statusDetails(pathway, 'In Progress') }}
+      {{ statusDetails(pathway, 'In Progress', prisonerData) }}
     </div>
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
-
     <div class="govuk-grid-column-one-quarter">
       {{ subNav([
         {
@@ -37,72 +33,70 @@
         }
       ]) }}
     </div>
-
     <div class="govuk-grid-column-three-quarters">
       <section id="crs-refer" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-                    CRS referral<span class="govuk-caption-m">Data sourced from nDelius</span>
+            CRS referral<span class="govuk-caption-m">Data sourced from nDelius</span>
           </h3>
           <span class="right"></span>
         </header>
-
         <div class="app-summary-card__body">
           {{ govukTable({
-                    firstCellIsHeader: true,
-                    rows: [
-                      [
-                        {
-                          text: "CRS referral required"
-                        },
-                        {
-                          text: "Yes"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Status"
-                        },
-                        {
-                          text: "Completed"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Provider"
-                        },
-                        {
-                          text: "Manchester Local Housing Organisation"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Provider address"
-                        },
-                        {
-                          text: "123 Station Road, Manchester, M1 2AB"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Provider phone"
-                        },
-                        {
-                          text: "0161 123 4455"
-                        }
-                      ]
-                    ]
-                  }) }}
+            firstCellIsHeader: true,
+            rows: [
+              [
+                {
+                  text: "CRS referral required"
+                },
+                {
+                  text: "Yes"
+                }
+              ],
+              [
+                {
+                  text: "Status"
+                },
+                {
+                  text: "Completed"
+                }
+              ],
+              [
+                {
+                  text: "Provider"
+                },
+                {
+                  text: "Manchester Local Housing Organisation"
+                }
+              ],
+              [
+                {
+                  text: "Provider address"
+                },
+                {
+                  text: "123 Station Road, Manchester, M1 2AB"
+                }
+              ],
+              [
+                {
+                  text: "Provider phone"
+                },
+                {
+                  text: "0161 123 4455"
+                }
+              ]
+            ]
+          }) }}
         </div>
       </section>
       <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-                    Duty to refer <span class="govuk-caption-m">Data sourced from nDelius</span>
+            Duty to refer
+            <span class="govuk-caption-m">Data sourced from nDelius</span>
           </h3>
           <span class="right"></span>
         </header>
-
         <div class="app-summary-card__body">
           {{ govukTable({
                     firstCellIsHeader: true,
@@ -170,11 +164,11 @@
       <section id="first-night-accommodation" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-                    First night accommodation <span class="govuk-caption-m">Data sourced from nDelius</span>
+            First night accommodation
+            <span class="govuk-caption-m">Data sourced from nDelius</span>
           </h3>
           <span class="right"></span>
         </header>
-
         <div class="app-summary-card__body">
           {{ govukTable({
                     firstCellIsHeader: true,
@@ -199,7 +193,6 @@
                   }) }}
         </div>
       </section>
-
     </div>
   </div>
 {% endblock %}

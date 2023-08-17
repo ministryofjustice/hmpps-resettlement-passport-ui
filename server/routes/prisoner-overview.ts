@@ -1,27 +1,26 @@
 import express from 'express'
 import { RPClient } from '../data'
 
-const prisonerOverviewRouter = express.Router().get('/:prisonerId', async (req, res, next) => {
+const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) => {
+  const { prisonerData } = req
   try {
-    const { prisonerId } = req.params
-
     const apiResponse = new RPClient()
     const licenceConditions = (await apiResponse.get(
       req.user.token,
-      `/resettlement-passport/prisoner/${prisonerId}/licence-condition`,
+      `/resettlement-passport/prisoner/${prisonerData.prisonerId}/licence-condition`,
     )) as LicenceCondition
 
     console.log(licenceConditions)
 
     const imageBase64 = await apiResponse.getImageAsBase64String(
       req.user.token,
-      `/resettlement-passport/prisoner/${prisonerId}/licence-condition/id/101/condition/1008/image`,
+      `/resettlement-passport/prisoner/${prisonerData.prisonerId}/licence-condition/id/101/condition/1008/image`,
     )
 
-    res.render('pages/overview', { licenceConditions, imageBase64 })
+    res.render('pages/overview', { licenceConditions, imageBase64, prisonerData })
   } catch (error) {
     const errorMessage = error.message
-    res.render('pages/overview', { errorMessage })
+    res.render('pages/overview', { errorMessage, prisonerData })
   }
 })
 
