@@ -1,4 +1,4 @@
-import { type RequestHandler, Router, NextFunction, Request, Response } from 'express'
+import { type RequestHandler, Router, Request, Response } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
