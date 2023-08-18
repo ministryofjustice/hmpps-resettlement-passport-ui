@@ -18,30 +18,31 @@
 {% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, lastUpdatedDate) %}
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">
-      <a href="/prisoner-overview/?prisonerId={{ prisonerNumber }}">{{ lastName }}, {{ firstName }}</a>
+      <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName }}, {{ firstName }}</a>
       <br/>
-      <span class="govuk-body-s">
+      <span class="govuk-body-s" id="{{ prisonerNumber }}">
         {{ prisonerNumber }}
       </span>
     </td>
     <td class="govuk-table__cell">
       {{ releaseDate }} <br/>
+      {% if releaseDate | isFriday %}<span class="govuk-body-s">⚠️ Friday</span> <br/>{% endif %}
       <span class="govuk-body-s">
         {{ releaseType }}
       </span>
     </td>
     {% set notStarted = 0 %}
     {% set inProgress = 0 %}
-    {% set closed = 0 %}
+    {% set done = 0 %}
     {% for status in statuses %}
-      {% if status.status === 'Not Started' %}
+      {% if status.status === 'NOT_STARTED' or status.status === 'SUPPORT_NOT_REQUIRED' or status.status === 'SUPPORT_DECLINED' %}
         {% set notStarted = notStarted + 1 %}
       {% endif %}
-      {% if status.status === 'In Progress' %}
+      {% if status.status === 'IN_PROGRESS' %}
         {% set inProgress = inProgress + 1 %}
       {% endif %}
-      {% if status.status === 'Closed' %}
-        {% set closed = closed + 1 %}
+      {% if status.status === 'DONE' %}
+        {% set done = done + 1 %}
       {% endif %}
     {% endfor %}
     <td class="govuk-table__cell">
@@ -56,8 +57,8 @@
       </strong>
       &nbsp;
       <strong class="govuk-tag govuk-tag--green">
-        <b>{{ closed }}</b>
-        closed
+        <b>{{ done }}</b>
+        done
       </strong>
       <br/>
       <details class="govuk-details govuk-body-s" data-module="govuk-details">
@@ -70,27 +71,12 @@
               {% for pathway in statuses %}
                 <tr>
                   <td>
-                    <a href="/{{ pathway.pathway | replace(',', '') | replace(' ', '-') | lower }}/?prisonerId={{ prisonerNumber }}">{{ pathway.pathway }}</a>:
+                    {% set enumValue = pathway.pathway | getEnumValue %}
+                    {% set statusValue = pathway.status | getEnumValue %}
+                    <a href="/{{ enumValue.url }}/?prisonerNumber={{ prisonerNumber }}">{{ enumValue.name }}</a>:
                   </td>
                   <td>
-                    {% set tag_color %}
-                      {% if pathway.status == 'Closed' %}
-                        green
-                      {% elif pathway.status == 'In Progress' %}
-                        blue
-                      {% elif pathway.status == 'Declined' %}
-                        green
-                      {% elif pathway.status == 'Not Started' %}
-                        red
-                      {% elif pathway.status == 'Incomplete' %}
-                        green
-                      {% elif pathway.status == 'Unrequired' %}
-                        green
-                      {% else %}
-                        red
-                      {% endif %}
-                    {% endset %}
-                    <strong class="govuk-tag govuk-tag--{{ tag_color|trim }}">{{ pathway.status }}</strong>
+                    <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">{{ statusValue.name }}</strong>
                   </td>
                 </tr>
               {% endfor %}

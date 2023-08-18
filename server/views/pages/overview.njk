@@ -5,9 +5,7 @@
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-    {{ titleAndIntro(
-      pathway, 'Review and enter resettlement information and track progress across the resettlement pathways.'
-      ) }}
+    {{ titleAndIntro(pathway) }}
   </div>
   <div
     class="govuk-grid-row govuk-!-padding-top-4">
@@ -35,7 +33,7 @@
               {% for condition in licenceConditions.standardLicenceConditions %}
                 <li>{{ condition.text }}
                   {%if condition.image %}
-                    <a href="/licence-image/?licenceId={{licenceConditions.licenceId}}&conditionId={{condition.id}}&prisonerId={{prisonerData.prisonerId}}" rel="noreferrer noopener" target="_blank">View map</a>
+                    <a href="/licence-image/?licenceId={{licenceConditions.licenceId}}&conditionId={{condition.id}}&prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" rel="noreferrer noopener" target="_blank">View map</a>
                     {%endif%}
                   </li>
                 {% endfor %}
@@ -51,7 +49,7 @@
                   {% for condition in licenceConditions.otherLicenseConditions %}
                     <li>{{ condition.text }}
                       {%if condition.image %}
-                        <a href="/licence-image/?licenceId={{licenceConditions.licenceId}}&conditionId={{condition.id}}&prisonerId={{prisonerData.prisonerId}}" rel="noreferrer noopener" target="_blank">View map</a>
+                        <a href="/licence-image/?licenceId={{licenceConditions.licenceId}}&conditionId={{condition.id}}&prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" rel="noreferrer noopener" target="_blank">View map</a>
                         {%endif%}
                       </li>
                     {% endfor %}

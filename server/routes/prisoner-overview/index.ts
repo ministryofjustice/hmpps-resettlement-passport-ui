@@ -1,5 +1,5 @@
 import express from 'express'
-import { RPClient } from '../data'
+import { RPClient } from '../../data'
 
 const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) => {
   const { prisonerData } = req
@@ -7,7 +7,7 @@ const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) 
     const apiResponse = new RPClient()
     const licenceConditions = (await apiResponse.get(
       req.user.token,
-      `/resettlement-passport/prisoner/${prisonerData.prisonerId}/licence-condition`,
+      `resettlement-passport/prisoner/G4274GN/licence-condition`,
     )) as LicenceCondition
 
     res.render('pages/overview', { licenceConditions, prisonerData })

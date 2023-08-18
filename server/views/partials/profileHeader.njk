@@ -4,14 +4,14 @@
       <div class="govuk-grid-column-one-half">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-one-quarter">
-            <a href="/prisoner-overview/?prisonerId={{ prisonerData.prisonerId }}">
+            <a href="/prisoner-overview/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
               <img src="/assets/images/profile-photo.png" alt="South" class="govuk-!-width-full profile-header__person-photo">
             </a>
           </div>
           <div class="govuk-grid-column-three-quarters">
             <h1 class="govuk-heading-xl">
-              {{ prisonerData.lastName }}, {{ prisonerData.firstName }}
-              <span class="govuk-caption-l">{{ prisonerData.prisonerId }}</span>
+              {{ prisonerData.personalDetails.lastName }}, {{ prisonerData.personalDetails.firstName }}
+              <span class="govuk-caption-l">{{ prisonerData.personalDetails.prisonerNumber }}</span>
               <p class="govuk-body-s govuk-!-padding-top-2">
                 <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G4274GN">View full DPS profile</a>
               </p>
@@ -24,25 +24,25 @@
           <div class="govuk-grid-column-one-half">
             <p>
               <b>Prisoner number:</b><br>
-              {{ prisonerData.prisonerId }}</p>
+              {{ prisonerData.personalDetails.prisonerNumber }}</p>
             <p>
               <b>Location:</b>
-              {{ prisonerData.cellLocation }}
+              {{ prisonerData.personalDetails.location }}
             </p>
             <p>
               <b>Date of birth:</b>
-              {{ prisonerData.DoB | formatDate }} ({{ prisonerData.DoB | getAgeFromDate }})</p>
+              {{ prisonerData.personalDetails.dateOfBirth | formatDate }} ({{ prisonerData.personalDetails.dateOfBirth | getAgeFromDate }})</p>
           </div>
           <div class="govuk-grid-column-one-half">
             <p>
               <b>Release date:</b>
-              {{ prisonerData.releaseDate | formatDate }}
-              {% set isDayFriday = prisonerData.releaseDate | isFriday %}
+              {{ prisonerData.personalDetails.releaseDate | formatDate }}
+              {% set isDayFriday = prisonerData.personalDetails.releaseDate | isFriday %}
               {% if isDayFriday %}(Friday){% endif %}
-              ({{ prisonerData.releaseDate | getDaysFromDate }})
+              ({{ prisonerData.personalDetails.releaseDate | getDaysFromDate }})
             </p>
             <p>
-              <b>Release type: {{ prisonerData.releaseType }}</b>
+              <b>Release type: {{ prisonerData.personalDetails.releaseType }}</b>
             </p>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { PathwayStatus } from '../@types/express'
+import ENUMS_DICTIONARY, { EnumValue } from './constants'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -51,6 +52,30 @@ export const isFriday = (targetDate: string): boolean => {
   return targetDateObj.getDay() === 5
 }
 
-export const getStatusObject = (arrayData: PathwayStatus[], condition: string): PathwayStatus => {
+export const filterByPathway = (arrayData: PathwayStatus[], condition: string): PathwayStatus => {
   return arrayData.find(item => item.pathway === condition)
+}
+
+export const getEnumValue = (pathwayStatusEnum: string): EnumValue => {
+  return ENUMS_DICTIONARY[pathwayStatusEnum]
+}
+
+export function getEnumByName(name: string): string {
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
+  return key
+}
+
+export function getUrlFromName(pathwayName: string): string | undefined {
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === pathwayName)
+  return key ? ENUMS_DICTIONARY[key].url : undefined
+}
+
+export function getNameFromUrl(url: string): string | undefined {
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
+  return key ? ENUMS_DICTIONARY[key].name : undefined
+}
+
+export function getDescriptionFromName(name: string): string | undefined {
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
+  return key ? ENUMS_DICTIONARY[key].description : undefined
 }
