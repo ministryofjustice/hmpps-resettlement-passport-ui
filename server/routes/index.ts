@@ -39,7 +39,7 @@ export default function routes(services: Services): Router {
       licenceConditions = await apiResponse.json()
       res.render('pages/overview', { licenceConditions, prisonerData })
     } catch (error) {
-      console.log('Error fetching license conditions:', error)
+      res.send(`Cannot fetch license conditions for this prisonerNumber.`)
     }
   })
   use('/accommodation', accommodationRouter)
