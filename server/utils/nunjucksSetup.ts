@@ -2,7 +2,15 @@
 import nunjucks from 'nunjucks'
 import express from 'express'
 import path from 'path'
-import { formatDate, getAgeFromDate, getDaysFromDate, filterByPathway, initialiseName, isFriday } from './utils'
+import {
+  formatDate,
+  getAgeFromDate,
+  getDaysFromDate,
+  filterByPathway,
+  initialiseName,
+  isFriday,
+  getEnumValue,
+} from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 
 const production = process.env.NODE_ENV === 'production'
@@ -45,4 +53,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getDaysFromDate', getDaysFromDate)
   njkEnv.addFilter('isFriday', isFriday)
   njkEnv.addFilter('filterByPathway', filterByPathway)
+  njkEnv.addFilter('getEnumValue', getEnumValue)
 }

@@ -1,4 +1,5 @@
 import { PathwayStatus } from '../@types/express'
+import ENUMS_DICTIONARY, { EnumValue } from './constants'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -53,4 +54,8 @@ export const isFriday = (targetDate: string): boolean => {
 
 export const filterByPathway = (arrayData: PathwayStatus[], condition: string): PathwayStatus => {
   return arrayData.find(item => item.pathway === condition)
+}
+
+export const getEnumValue = (pathwayStatusEnum: string): EnumValue => {
+  return ENUMS_DICTIONARY[pathwayStatusEnum]
 }

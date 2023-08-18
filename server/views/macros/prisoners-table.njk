@@ -70,7 +70,8 @@
               {% for pathway in statuses %}
                 <tr>
                   <td>
-                    <a href="/{{ pathway.pathway | replace(',', '') | replace(' ', '-') | lower }}/?prisonerId={{ prisonerNumber }}">{{ pathway.pathway }}</a>:
+                    {% set enumValue = pathway.pathway | getEnumValue %}
+                    <a href="/{{ enumValue.url }}/?prisonerId={{ prisonerNumber }}">{{ enumValue.name }}</a>:
                   </td>
                   <td>
                     {% set tag_color %}
@@ -84,7 +85,7 @@
                         red
                       {% endif %}
                     {% endset %}
-                    <strong class="govuk-tag govuk-tag--{{ tag_color|trim }}">{{ pathway.status }}</strong>
+                    <strong class="govuk-tag govuk-tag--{{ tag_color|trim }}">{{ enumValue.name }}</strong>
                   </td>
                 </tr>
               {% endfor %}
