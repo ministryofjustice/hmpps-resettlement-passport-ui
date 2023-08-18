@@ -33,10 +33,10 @@ export default function routes(services: Services): Router {
   use('/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
-  use('/status-update/:pathwayName', (req: Request, res: Response, next) => {
+  use('/status-update/:selectedPathway', (req: Request, res: Response, next) => {
     const { prisonerData } = req
-    const { pathwayName } = req.params
-    res.render('pages/status-update', { prisonerData, pathwayName })
+    const { selectedPathway } = req.params
+    res.render('pages/status-update', { prisonerData, selectedPathway })
   })
 
   return router

@@ -2,10 +2,10 @@ import express from 'express'
 
 const statusUpdateRouter = express.Router()
 
-statusUpdateRouter.get('/:pathwayName', async (req, res, next) => {
+statusUpdateRouter.get('/:selectedPathway', async (req, res, next) => {
   const { prisonerData } = req
-  const { pathwayName } = req.params
-  res.render('pages/status-update', { prisonerData, pathwayName })
+  const { selectedPathway } = req.params
+  res.render('pages/status-update', { prisonerData, selectedPathway })
 })
 
 export default statusUpdateRouter

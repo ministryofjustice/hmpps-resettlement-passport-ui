@@ -1,5 +1,5 @@
 {% extends "../partials/layout.njk" %}
-{% set pathway = pathwayName %}
+{% set pathway = selectedPathway | getNameFromUrl %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set statuses = [
     {
@@ -33,7 +33,7 @@
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-row govuk-!-padding-bottom-4">
       {{ titleAndIntro(
-        pathwayName, 'THIS SHOULD BE DYNAMIC'
+        pathway, 'THIS SHOULD BE DYNAMIC'
       ) }}
       <div class="govuk-grid-column-three-quarters"></div>
     </div>
@@ -53,7 +53,7 @@
       <section id="status" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-            {{ pathwayName }} resettlement status
+            {{ pathway }} resettlement status
             <span class="govuk-caption-m">Update the status and/or add a note about progress</span>
           </h3>
         </header>
@@ -62,8 +62,8 @@
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
-                  {% set currentStatus = prisonerData.pathways | filterByPathway(pathwayName | upper | replace(" ", "_") | replace(",", "")) %}
-                  {% set isChecked = currentStatus.status == statusItem.value %}
+                  {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+                  {% set isChecked = currentPathway.status == statusItem.value %}
                   <div class="govuk-radios__item">
                     <input
                       class="govuk-radios__input"

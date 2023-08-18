@@ -11,6 +11,8 @@ import {
   isFriday,
   getEnumValue,
   getUrlFromName,
+  getNameFromUrl,
+  getEnumByName,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 
@@ -56,4 +58,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('filterByPathway', filterByPathway)
   njkEnv.addFilter('getEnumValue', getEnumValue)
   njkEnv.addFilter('getUrlFromName', getUrlFromName)
+  njkEnv.addFilter('getNameFromUrl', getNameFromUrl)
+  njkEnv.addFilter('getEnumByName', getEnumByName)
 }
