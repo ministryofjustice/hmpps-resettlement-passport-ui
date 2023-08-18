@@ -7,9 +7,10 @@ const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) 
     const apiResponse = new RPClient()
     const licenceConditions = (await apiResponse.get(
       req.user.token,
-      `/resettlement-passport/prisoner/${prisonerData.prisonerId}/licence-condition`,
+      `resettlement-passport/prisoner/G4274GN/licence-condition`,
     )) as LicenceCondition
 
+    console.log(licenceConditions)
     res.render('pages/overview', { licenceConditions, prisonerData })
   } catch (error) {
     const errorMessage = error.message

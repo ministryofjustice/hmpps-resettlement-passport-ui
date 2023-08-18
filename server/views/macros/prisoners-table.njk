@@ -18,14 +18,15 @@
 {% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, lastUpdatedDate) %}
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">
-      <a href="/prisoner-overview/?prisonerId={{ prisonerNumber }}">{{ lastName }}, {{ firstName }}</a>
+      <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName }}, {{ firstName }}</a>
       <br/>
-      <span class="govuk-body-s">
+      <span class="govuk-body-s" id="{{ prisonerNumber }}">
         {{ prisonerNumber }}
       </span>
     </td>
     <td class="govuk-table__cell">
       {{ releaseDate }} <br/>
+      {% if releaseDate | isFriday %}<span class="govuk-body-s">⚠️ Friday</span> <br/>{% endif %}
       <span class="govuk-body-s">
         {{ releaseType }}
       </span>
@@ -72,7 +73,7 @@
                   <td>
                     {% set enumValue = pathway.pathway | getEnumValue %}
                     {% set statusValue = pathway.status | getEnumValue %}
-                    <a href="/{{ enumValue.url }}/?prisonerId={{ prisonerNumber }}">{{ enumValue.name }}</a>:
+                    <a href="/{{ enumValue.url }}/?prisonerNumber={{ prisonerNumber }}">{{ enumValue.name }}</a>:
                   </td>
                   <td>
                     <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">{{ statusValue.name }}</strong>

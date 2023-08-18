@@ -1,4 +1,4 @@
-{% macro statusDetails(pathwayData, prisonerId, pathway) %}
+{% macro statusDetails(pathwayData, prisonerNumber, pathway) %}
   <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
@@ -11,7 +11,7 @@
       <div class="govuk-form-group govuk-!-margin-0">
         <input type="hidden" id="updated" name="updated" value="today">
         <input type="hidden" id="pathway" name="pathway" value="attitudes">
-        <a class="govuk-button" href="/status-update/{{ pathway | getUrlFromName }}/?prisonerId={{ prisonerId }}">
+        <a class="govuk-button" href="/status-update/{{ pathway | getUrlFromName }}/?prisonerNumber={{ prisonerNumber }}">
           Update status or notes
         </a>
       </div>

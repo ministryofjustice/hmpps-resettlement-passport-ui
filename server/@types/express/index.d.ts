@@ -25,18 +25,24 @@ export declare global {
   }
 }
 
-export type PrisonerData = {
-  prisonerId: string | unknown
+export type PersonalDetails = {
+  prisonerNumber: string | unknown
   firstName: string
   lastName: string
-  cellLocation: string
-  DoB: string
+  location: string
+  dateOfBirth: string
   releaseDate: string
   releaseType: string
+  facialImageId: string
+}
+
+export type PrisonerData = {
+  personalDetails: PersonalDetails
   pathways: PathwayStatus[]
 }
 
 export type PathwayStatus = {
   pathway: string
   status: string
+  lastDateChange: string
 }

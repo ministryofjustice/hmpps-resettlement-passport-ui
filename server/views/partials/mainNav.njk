@@ -39,7 +39,7 @@
       <ul class="moj-sub-navigation__list">
         {% for navItem in subNavigationList %}
           <li class="moj-sub-navigation__item">
-            <a class="moj-sub-navigation__link" href="{{ navItem.url }}?prisonerId={{ prisonerData.prisonerId }}" {{ "aria-current=page" if pathway === navItem.name }}>
+            <a class="moj-sub-navigation__link" href="{{ navItem.url }}?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" {{ "aria-current=page" if pathway === navItem.name }}>
               {{ navItem.name }}
             </a>
           </li>

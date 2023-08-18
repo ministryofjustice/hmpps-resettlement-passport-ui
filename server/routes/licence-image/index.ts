@@ -9,7 +9,7 @@ const licenceImageRouter = express.Router().get('/', async (req: Request, res, n
     const apiResponse = new RPClient()
     const imageBase64 = await apiResponse.getImageAsBase64String(
       req.user.token,
-      `/resettlement-passport/prisoner/${prisonerData.prisonerId}/licence-condition/id/${licenceId}/condition/${conditionId}/image`,
+      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition/id/${licenceId}/condition/${conditionId}/image`,
     )
 
     res.render('pages/licence-image', { imageBase64, prisonerData })
