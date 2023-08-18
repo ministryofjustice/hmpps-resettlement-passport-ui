@@ -2,7 +2,7 @@
 {% set pathway = "Children, families and communities" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set pathwayStatus = prisonerData.pathways | filterByPathway("CHILDREN_FAMILIES_AND_COMMUNITY") %}
+{% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(
