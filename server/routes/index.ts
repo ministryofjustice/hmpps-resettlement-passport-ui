@@ -3,7 +3,6 @@ import { type RequestHandler, Router, Request, Response } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import staffDashboard from './staffDashboard'
-import prisonerOverviewRouter from './prisoner-overview'
 import accommodationRouter from './accommodation'
 import attitudesThinkingBehaviourRouter from './attitudes-thinking-behaviour'
 import childrenFamiliesCommunitiesRouter from './children-families-and-communities'
@@ -22,7 +21,27 @@ export default function routes(services: Services): Router {
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)
-  use('/prisoner-overview', prisonerOverviewRouter)
+  /* ************************************
+    REFACTOR USING prisonerOverviewRouter 
+  ************************************** */
+  use('/prisoner-overview', async (req, res, next) => {
+    const { prisonerData } = req
+    const token = res.locals?.user?.token
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    }
+    let licenceConditions = null
+    try {
+      const apiResponse = await fetch(
+        `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
+        { headers },
+      )
+      licenceConditions = await apiResponse.json()
+      res.render('pages/overview', { licenceConditions, prisonerData })
+    } catch (error) {
+      console.log('Error fetching license conditions:', error)
+    }
+  })
   use('/accommodation', accommodationRouter)
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
