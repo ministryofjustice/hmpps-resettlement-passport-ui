@@ -5,10 +5,7 @@
 {% set pathwayStatus = prisonerData.pathways | filterByPathway("DRUGS_AND_ALCOHOL") %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-    {{ titleAndIntro(
-      pathway,
-      'Prepare someone with substance misuse issues for release.'
-      ) }}
+    {{ titleAndIntro(pathway) }}
     <!-- Pathway status -->
     <div
       class="govuk-grid-column-one-third">

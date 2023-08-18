@@ -74,3 +74,8 @@ export function getNameFromUrl(url: string): string | undefined {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
   return key ? ENUMS_DICTIONARY[key].name : undefined
 }
+
+export function getDescriptionFromName(name: string): string | undefined {
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
+  return key ? ENUMS_DICTIONARY[key].description : undefined
+}

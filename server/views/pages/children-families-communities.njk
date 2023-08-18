@@ -5,10 +5,7 @@
 {% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-    {{ titleAndIntro(
-      pathway,
-      'Consider someone’s needs around maintaining contact with their families and communities on release.'
-      ) }}
+    {{ titleAndIntro(pathway) }}
     <div
       class="govuk-grid-column-one-third">
       <!-- Pathway status -->
