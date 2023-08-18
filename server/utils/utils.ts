@@ -59,3 +59,9 @@ export const filterByPathway = (arrayData: PathwayStatus[], condition: string): 
 export const getEnumValue = (pathwayStatusEnum: string): EnumValue => {
   return ENUMS_DICTIONARY[pathwayStatusEnum]
 }
+
+export function getUrlFromName(pathwayName: string): string | undefined {
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === pathwayName)
+
+  return key ? ENUMS_DICTIONARY[key].url : undefined
+}

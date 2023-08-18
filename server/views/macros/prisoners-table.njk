@@ -34,7 +34,7 @@
     {% set inProgress = 0 %}
     {% set done = 0 %}
     {% for status in statuses %}
-      {% if status.status === 'NOT_STARTED' %}
+      {% if status.status === 'NOT_STARTED' or status.status === 'SUPPORT_NOT_REQUIRED' or status.status === 'SUPPORT_DECLINED' %}
         {% set notStarted = notStarted + 1 %}
       {% endif %}
       {% if status.status === 'IN_PROGRESS' %}
@@ -71,21 +71,11 @@
                 <tr>
                   <td>
                     {% set enumValue = pathway.pathway | getEnumValue %}
+                    {% set statusValue = pathway.status | getEnumValue %}
                     <a href="/{{ enumValue.url }}/?prisonerId={{ prisonerNumber }}">{{ enumValue.name }}</a>:
                   </td>
                   <td>
-                    {% set tag_color %}
-                      {% if pathway.status == 'DONE' or pathway.status == 'SUPPORT_DECLINED' or pathway.status == 'SUPPORT_NOT_REQUIRED' %}
-                        green
-                      {% elif pathway.status == 'IN_PROGRESS' %}
-                        blue
-                      {% elif pathway.status == 'NOT_STARTED' %}
-                        red
-                      {% else %}
-                        red
-                      {% endif %}
-                    {% endset %}
-                    <strong class="govuk-tag govuk-tag--{{ tag_color|trim }}">{{ enumValue.name }}</strong>
+                    <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">{{ statusValue.name }}</strong>
                   </td>
                 </tr>
               {% endfor %}

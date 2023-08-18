@@ -1,4 +1,4 @@
-export type EnumValue = { name: string; url?: string }
+export type EnumValue = { name: string; url?: string; color?: string }
 
 const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   ACCOMMODATION: {
@@ -31,18 +31,23 @@ const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   },
   NOT_STARTED: {
     name: 'Not started',
+    color: 'red',
   },
   IN_PROGRESS: {
     name: 'In progress',
+    color: 'blue',
   },
   SUPPORT_NOT_REQUIRED: {
     name: 'Support not required',
+    color: 'green',
   },
   SUPPORT_DECLINED: {
     name: 'Support declined',
+    color: 'green',
   },
   DONE: {
     name: 'Done',
+    color: 'green',
   },
 }
 
