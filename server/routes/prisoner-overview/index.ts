@@ -10,7 +10,6 @@ const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) 
       `resettlement-passport/prisoner/G4274GN/licence-condition`,
     )) as LicenceCondition
 
-    console.log(licenceConditions)
     res.render('pages/overview', { licenceConditions, prisonerData })
   } catch (error) {
     const errorMessage = error.message
