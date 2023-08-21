@@ -20,14 +20,14 @@
     <td class="govuk-table__cell">
       <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName }}, {{ firstName }}</a>
       <br/>
-      <span class="govuk-body-s" id="{{ prisonerNumber }}">
+      <span class="govuk-body-s" id="prisonerNumber">
         {{ prisonerNumber }}
       </span>
     </td>
-    <td class="govuk-table__cell">
+    <td class="govuk-table__cell" id="releaseDate">
       {{ releaseDate }} <br/>
-      {% if releaseDate | isFriday %}<span class="govuk-body-s">⚠️ Friday</span> <br/>{% endif %}
-      <span class="govuk-body-s">
+      {% if releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
+      <span class="govuk-body-s" id="releaseType">
         {{ releaseType }}
       </span>
     </td>
