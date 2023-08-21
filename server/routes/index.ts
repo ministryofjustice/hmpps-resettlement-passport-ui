@@ -3,7 +3,6 @@ import { type RequestHandler, Router, Request, Response } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import staffDashboard from './staffDashboard'
-import prisonerOverviewRouter from './prisoner-overview'
 import accommodationRouter from './accommodation'
 import attitudesThinkingBehaviourRouter from './attitudes-thinking-behaviour'
 import childrenFamiliesCommunitiesRouter from './children-families-and-communities'
@@ -15,6 +14,7 @@ import addBankAccountRouter from './add-bank-account'
 import healthRouter from './health-status'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
+import { RPClient } from '../data'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -22,7 +22,25 @@ export default function routes(services: Services): Router {
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)
-  use('/prisoner-overview', prisonerOverviewRouter)
+  /* ************************************
+    REFACTOR USING prisonerOverviewRouter 
+  ************************************** */
+  use('/prisoner-overview', async (req, res, next) => {
+    const { prisonerData } = req
+    try {
+      const rpClient = new RPClient()
+      const licenceConditions = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
+      )
+
+      res.render('pages/overview', { licenceConditions, prisonerData })
+    } catch (error) {
+      const errorMessage = error.message
+      res.render('pages/overview', { errorMessage, prisonerData })
+    }
+  })
+  // use('/prisoner-overview', prisonerOverviewRouter)
   use('/accommodation', accommodationRouter)
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)

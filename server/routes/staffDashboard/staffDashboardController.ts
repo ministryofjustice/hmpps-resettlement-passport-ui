@@ -48,7 +48,7 @@ export default class StaffDashboardController {
       let prisonersList = null
       try {
         const apiResponse = await fetch(
-          `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prison/${prisonSelected}/prisoners?page=0&size=50&sort=releaseDate,DESC`,
+          `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prison/${prisonSelected}/prisoners?page=0&size=200&sort=releaseDate,DESC`,
           { headers },
         )
         if (apiResponse.ok) {
