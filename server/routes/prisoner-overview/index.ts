@@ -1,13 +1,13 @@
-import express from 'express'
+import { Router } from 'express'
 import { RPClient } from '../../data'
 
-const prisonerOverviewRouter = express.Router().get('/', async (req, res, next) => {
+const prisonerOverviewRouter = Router().get('/', async (req, res, next) => {
   const { prisonerData } = req
   try {
-    const apiResponse = new RPClient()
-    const licenceConditions = (await apiResponse.get(
+    const rpClient = new RPClient()
+    const licenceConditions = (await rpClient.get(
       req.user.token,
-      `resettlement-passport/prisoner/G4274GN/licence-condition`,
+      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
     )) as LicenceCondition
 
     res.render('pages/overview', { licenceConditions, prisonerData })

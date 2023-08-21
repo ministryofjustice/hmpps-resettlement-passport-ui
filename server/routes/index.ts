@@ -14,6 +14,7 @@ import addBankAccountRouter from './add-bank-account'
 import healthRouter from './health-status'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
+import { RPClient } from '../data'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -26,22 +27,20 @@ export default function routes(services: Services): Router {
   ************************************** */
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
-    const token = res.locals?.user?.token
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    }
-    let licenceConditions = null
     try {
-      const apiResponse = await fetch(
-        `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
-        { headers },
+      const rpClient = new RPClient()
+      const licenceConditions = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
       )
-      licenceConditions = await apiResponse.json()
+
       res.render('pages/overview', { licenceConditions, prisonerData })
     } catch (error) {
-      res.send(`Cannot fetch license conditions for this prisonerNumber.`)
+      const errorMessage = error.message
+      res.render('pages/overview', { errorMessage, prisonerData })
     }
   })
+  // use('/prisoner-overview', prisonerOverviewRouter)
   use('/accommodation', accommodationRouter)
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
