@@ -35,13 +35,13 @@
     {% set inProgress = 0 %}
     {% set done = 0 %}
     {% for status in statuses %}
-      {% if status.status === 'NOT_STARTED' or status.status === 'SUPPORT_NOT_REQUIRED' or status.status === 'SUPPORT_DECLINED' %}
+      {% if status.status === 'NOT_STARTED' %}
         {% set notStarted = notStarted + 1 %}
       {% endif %}
       {% if status.status === 'IN_PROGRESS' %}
         {% set inProgress = inProgress + 1 %}
       {% endif %}
-      {% if status.status === 'DONE' %}
+      {% if status.status === 'DONE'  or status.status === 'SUPPORT_NOT_REQUIRED' or status.status === 'SUPPORT_DECLINED' %}
         {% set done = done + 1 %}
       {% endif %}
     {% endfor %}
