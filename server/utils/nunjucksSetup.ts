@@ -14,6 +14,7 @@ import {
   getNameFromUrl,
   getEnumByName,
   getDescriptionFromName,
+  getMostRecentDate,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 
@@ -55,6 +56,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('formatDate', formatDate)
   njkEnv.addFilter('getAgeFromDate', getAgeFromDate)
   njkEnv.addFilter('getDaysFromDate', getDaysFromDate)
+  njkEnv.addFilter('getMostRecentDate', getMostRecentDate)
   njkEnv.addFilter('isFriday', isFriday)
   njkEnv.addFilter('filterByPathway', filterByPathway)
   njkEnv.addFilter('getEnumValue', getEnumValue)

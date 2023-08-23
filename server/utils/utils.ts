@@ -26,6 +26,7 @@ export const initialiseName = (fullName?: string): string | null => {
 }
 
 export const formatDate = (dateString: string): string => {
+  if (!dateString) return null
   const date = new Date(dateString)
   const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }
   return date.toLocaleDateString('en-GB', options)
@@ -45,6 +46,16 @@ export const getDaysFromDate = (targetDate: string): number => {
   const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24))
 
   return daysDiff
+}
+
+export const getMostRecentDate = (dates: string[]): string => {
+  if (dates.length === 0) return undefined
+  return dates.reduce((mostRecent, current) => {
+    if (!mostRecent || current > mostRecent) {
+      return current
+    }
+    return mostRecent
+  })
 }
 
 export const isFriday = (targetDate: string): boolean => {
