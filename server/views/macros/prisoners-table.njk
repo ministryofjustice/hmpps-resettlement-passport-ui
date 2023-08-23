@@ -10,12 +10,12 @@
     </thead>
     <tbody class="govuk-table__body">
       {% for prisoner in prisoners %}
-        {{ prisonerRow(prisoner.firstName, prisoner.lastName, prisoner.prisonerNumber, prisoner.releaseDate, prisoner.releaseType, prisoner.status, prisoner.lastUpdatedDate) }}
+        {{ prisonerRow(prisoner.firstName, prisoner.lastName, prisoner.prisonerNumber, prisoner.releaseDate, prisoner.releaseType, prisoner.status) }}
       {% endfor %}
     </tbody>
   </table>
 {% endmacro %}
-{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, lastUpdatedDate) %}
+{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses) %}
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">
       <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName }}, {{ firstName }}</a>
@@ -68,11 +68,13 @@
         <div class="govuk-details__text">
           <table>
             <tbody>
+              {% set lastUpdatedDates = [] %}
               {% for pathway in statuses %}
                 <tr>
                   <td>
                     {% set enumValue = pathway.pathway | getEnumValue %}
                     {% set statusValue = pathway.status | getEnumValue %}
+                    {% set lastUpdatedDates = (lastUpdatedDates.push(pathway.lastDateChange), lastUpdatedDates) %} {# ADD lastDateChange DATES TO ARRAY #}
                     <a href="/{{ enumValue.url }}/?prisonerNumber={{ prisonerNumber }}">{{ enumValue.name }}</a>:
                   </td>
                   <td>
@@ -86,7 +88,7 @@
       </details>
     </td>
     <td class="govuk-table__cell">
-      {{ lastUpdatedDate }}
+      {{ lastUpdatedDates | getMostRecentDate | formatDate }}
     </td>
   </tr>
 {% endmacro %}
