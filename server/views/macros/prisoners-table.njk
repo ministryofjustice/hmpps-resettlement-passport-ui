@@ -25,7 +25,7 @@
       </span>
     </td>
     <td class="govuk-table__cell" id="releaseDate">
-      {{ releaseDate }} <br/>
+      {{ releaseDate | formatDate }} <br/>
       {% if releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
       <span class="govuk-body-s" id="releaseType">
         {{ releaseType }}

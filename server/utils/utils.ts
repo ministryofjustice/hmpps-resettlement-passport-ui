@@ -27,7 +27,7 @@ export const initialiseName = (fullName?: string): string | null => {
 
 export const formatDate = (dateString: string): string => {
   const date = new Date(dateString)
-  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
+  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }
   return date.toLocaleDateString('en-GB', options)
 }
 
