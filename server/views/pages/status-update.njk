@@ -39,7 +39,16 @@
                 {% for statusItem in statuses %}
                   {% set statusInfo = statusItem | getEnumValue %}
                   {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
-                  {% set isChecked = currentPathway.status == statusItem %}
+                  {% set isChecked = false %}
+                  {% if updateSuccessful %}
+                    {% if state == statusItem %}
+                      {% set isChecked = true %}
+                    {% endif %}
+                  {% else %}
+                    {% if currentPathway.status == statusItem %}
+                      {% set isChecked = true %}
+                    {% endif %}
+                  {% endif %}
                   <div class="govuk-radios__item">
                     <input
                       class="govuk-radios__input"

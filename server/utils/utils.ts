@@ -76,6 +76,11 @@ export function getEnumByName(name: string): string {
   return key
 }
 
+export function getEnumByURL(url: string): string {
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
+  return key
+}
+
 export function getUrlFromName(pathwayName: string): string | undefined {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === pathwayName)
   return key ? ENUMS_DICTIONARY[key].url : undefined
