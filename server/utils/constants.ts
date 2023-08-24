@@ -64,6 +64,22 @@ const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     description:
       'following identification of a need, all required work has been attempted, regardless of whether it could be completed and what the final outcome was.',
   },
+  LOW: {
+    name: 'Low',
+    color: 'grey',
+  },
+  MEDIUM: {
+    name: 'Medium',
+    color: 'blue',
+  },
+  HIGH: {
+    name: 'High',
+    color: 'red',
+  },
+  VERY_HIGH: {
+    name: 'Very high',
+    color: 'red',
+  },
 }
 
 export default ENUMS_DICTIONARY
