@@ -41,28 +41,27 @@ const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   NOT_STARTED: {
     name: 'Not started',
     color: 'red',
-    description: 'need not yet assessed or work has not yet begun.',
+    description: 'no work has begun',
   },
   IN_PROGRESS: {
     name: 'In progress',
     color: 'blue',
-    description: 'a need was identified in this area and work has started.',
+    description: 'work is ongoing',
   },
   SUPPORT_NOT_REQUIRED: {
     name: 'Support not required',
     color: 'green',
-    description: 'no need was identified.',
+    description: 'no need was identified',
   },
   SUPPORT_DECLINED: {
     name: 'Support declined',
     color: 'green',
-    description: 'a need was identified but support was declined.',
+    description: 'a need was identified but support was declined',
   },
   DONE: {
     name: 'Done',
     color: 'green',
-    description:
-      'following identification of a need, all required work has been attempted, regardless of whether it could be completed and what the final outcome was.',
+    description: 'all required work has been completed successfully',
   },
   LOW: {
     name: 'Low',
