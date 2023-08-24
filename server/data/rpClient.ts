@@ -32,7 +32,7 @@ export default class RPClient {
     return result
   }
 
-  async patch(token: string, path: string, body: Record<any, any>) {
+  async patch(token: string, path: string, body: Record<never, never>) {
     return RPClient.restClient(token).patch({
       path,
       data: body,

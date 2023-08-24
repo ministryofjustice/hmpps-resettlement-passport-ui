@@ -114,7 +114,7 @@ export default class RestClient {
     raw = false,
     retry = false,
   }: PostRequest = {}): Promise<unknown> {
-    logger.info(`Post using user credentials: calling ${this.name}: ${path}`)
+    logger.info(`Patch using user credentials: calling ${this.name}: ${path}`)
     try {
       const result = await superagent
         .patch(`${this.apiUrl()}${path}`)
