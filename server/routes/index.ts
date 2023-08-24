@@ -70,28 +70,21 @@ export default function routes(services: Services): Router {
     const { selectedPathway } = req.params
     const { state } = req.query
     const token = res.locals?.user?.token
+
+    const rpClient = new RPClient()
+
     let updateSuccessful = false
     if (state) {
       try {
-        const pathRequest = await fetch(
-          `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`,
+        await rpClient.patch(
+          token,
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`,
           {
-            method: 'PATCH',
-            body: JSON.stringify({
-              pathway: getEnumByURL(selectedPathway),
-              status: state,
-            }),
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-              Authorization: `Bearer ${token}`,
-            },
+            pathway: getEnumByURL(selectedPathway),
+            status: state,
           },
         )
-        if (pathRequest.ok) {
-          updateSuccessful = true
-        } else {
-          throw new Error('Something went wrong when updating the status')
-        }
+        updateSuccessful = true
       } catch (error) {
         logger.error(error)
       }

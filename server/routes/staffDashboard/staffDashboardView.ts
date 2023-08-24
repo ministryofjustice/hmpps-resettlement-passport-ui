@@ -1,21 +1,6 @@
 import View, { ErrorMessage } from '../view'
-
-interface PrisonSelect {
-  text: string
-  value: string
-  selected: boolean
-}
-
-type PrisonersList = {
-  content: Prisoners[]
-  page: number
-  last: boolean
-}
-
-type Prisoners = {
-  firstName: string
-  lastName: string
-}
+import { PrisonersList } from '../../data/model/prisoners'
+import { PrisonSelect } from '../../data/model/prison'
 
 export default class StaffDashboardView implements View {
   constructor(
