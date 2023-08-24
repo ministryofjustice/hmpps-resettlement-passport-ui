@@ -1,6 +1,5 @@
 import { RPClient } from '../data'
 import { PrisonersList } from '../data/model/prisoners'
-import { Prison } from '../data/model/prison'
 
 export default class PrisonService {
   constructor(private readonly rpClient: RPClient) {}
