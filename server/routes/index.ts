@@ -35,8 +35,20 @@ export default function routes(services: Services): Router {
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
       )
+      const riskScores = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/scores`,
+      )
+      const rosh = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/rosh`,
+      )
+      const mappa = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/mappa`,
+      )
 
-      res.render('pages/overview', { licenceConditions, prisonerData })
+      res.render('pages/overview', { licenceConditions, prisonerData, riskScores, rosh, mappa })
     } catch (error) {
       const errorMessage = error.message
       res.render('pages/overview', { errorMessage, prisonerData })
