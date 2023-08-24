@@ -15,6 +15,8 @@ import healthRouter from './health-status'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
+import { getEnumByURL } from '../utils/utils'
+import logger from '../../logger'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -51,10 +53,38 @@ export default function routes(services: Services): Router {
   use('/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
-  use('/status-update/:selectedPathway', (req: Request, res: Response, next) => {
+  use('/status-update/:selectedPathway', async (req: Request, res: Response, next) => {
     const { prisonerData } = req
     const { selectedPathway } = req.params
-    res.render('pages/status-update', { prisonerData, selectedPathway })
+    const { state } = req.query
+    const token = res.locals?.user?.token
+    let updateSuccessful = false
+    if (state) {
+      try {
+        const pathRequest = await fetch(
+          `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`,
+          {
+            method: 'PATCH',
+            body: JSON.stringify({
+              pathway: getEnumByURL(selectedPathway),
+              status: state,
+            }),
+            headers: {
+              'Content-type': 'application/json; charset=UTF-8',
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        if (pathRequest.ok) {
+          updateSuccessful = true
+        } else {
+          throw new Error('Something went wrong when updating the status')
+        }
+      } catch (error) {
+        logger.error(error)
+      }
+    }
+    res.render('pages/status-update', { prisonerData, selectedPathway, updateSuccessful, state })
   })
 
   return router

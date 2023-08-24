@@ -1,34 +1,8 @@
 {% extends "../partials/layout.njk" %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% set pathway = selectedPathway | getNameFromUrl %}
 {% set pageTitle = applicationName + " - " + pathway %}
-{% set statuses = [
-    {
-      name: "Not started",
-      value: "NOT_STARTED",
-      description: "need not yet assessed or work has not yet begun."
-    },
-    {
-      name: "In progress",
-      value: "IN_PROGRESS",
-      description: "a need was identified in this area and work has started."
-    },
-    {
-      name: "Support not required",
-      value: "SUPPORT_NOT_REQUIRED",
-      description: "no need was identified."
-    },
-    {
-      name: "Support declined",
-      value: "SUPPORT_DECLINED",
-      description: "a need was identified but support was declined."
-    },
-    {
-      name: "Done",
-      value: "DONE",
-      description: "following identification of a need, all required work has been attempted, regardless of whether it could be completed and what the final outcome was."
-    }
-  ]
-%}
+{% set statuses = ["NOT_STARTED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-row govuk-!-padding-bottom-4">
@@ -59,32 +33,55 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          <form method="POST" action="#">
+          <form method="GET" action="/status-update/{{ selectedPathway }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
+                  {% set statusInfo = statusItem | getEnumValue %}
                   {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
-                  {% set isChecked = currentPathway.status == statusItem.value %}
+                  {% set isChecked = false %}
+                  {% if updateSuccessful %}
+                    {% if state == statusItem %}
+                      {% set isChecked = true %}
+                    {% endif %}
+                  {% else %}
+                    {% if currentPathway.status == statusItem %}
+                      {% set isChecked = true %}
+                    {% endif %}
+                  {% endif %}
                   <div class="govuk-radios__item">
                     <input
                       class="govuk-radios__input"
                       name="state"
                       type="radio"
-                      id="{{ statusItem.value }}"
-                      value="{{ statusItem.value }}"
+                      id="{{ statusItem }}"
+                      value="{{ statusItem }}"
                       {% if isChecked %}checked{% endif %}
                     >
-                    <label class="govuk-label govuk-radios__label" for="{{ statusItem.value }}">
-                      {{ statusItem.name }}
+                    <label class="govuk-label govuk-radios__label" for="{{ statusItem }}">
+                      {{ statusInfo.name }}
                     </label>
                     <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
-                      {{ statusItem.description }}
+                      {{ statusInfo.description }}
                     </div>
                   </div>
                 {% endfor %}
               </div>
             </div>
+            <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
             <button class="govuk-button" type="submit">Update</button>
+            {% set successNotificationHtml %}
+              <h3 class="govuk-notification-banner__heading">
+                Pathway status updated successfully
+              </h3>
+              <p class="govuk-body">Contact <a class="govuk-notification-banner__link" href="mailto:example@digital.justice.gov.uk">example@digital.justice.gov.uk</a> if you think there’s a problem.</p>
+            {% endset %}
+            {% if updateSuccessful  %}
+              {{ govukNotificationBanner({
+                html: successNotificationHtml,
+                type: 'success'
+              }) }}
+            {% endif %}
           </form>
         </div>
       </section>

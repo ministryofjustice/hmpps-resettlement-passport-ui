@@ -13,7 +13,7 @@
               {{ prisonerData.personalDetails.lastName }}, {{ prisonerData.personalDetails.firstName }}
               <span class="govuk-caption-l">{{ prisonerData.personalDetails.prisonerNumber }}</span>
               <p class="govuk-body-s govuk-!-padding-top-2">
-                <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/G4274GN">View full DPS profile</a>
+                <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/{{ prisonerData.personalDetails.prisonerNumber }}">View full DPS profile</a>
               </p>
             </h1>
           </div>
@@ -37,9 +37,12 @@
             <p>
               <b>Release date:</b>
               {{ prisonerData.personalDetails.releaseDate | formatDate }}
+              <br />
               {% set isDayFriday = prisonerData.personalDetails.releaseDate | isFriday %}
-              {% if isDayFriday %}(Friday){% endif %}
-              ({{ prisonerData.personalDetails.releaseDate | getDaysFromDate }})
+              {% if isDayFriday %}
+                <span class="govuk-body-s">⚠️ (Friday)</span>
+              {% endif %}
+              ({{ prisonerData.personalDetails.releaseDate | getDaysFromDate }} days)
             </p>
             <p>
               <b>Release type: {{ prisonerData.personalDetails.releaseType }}</b>

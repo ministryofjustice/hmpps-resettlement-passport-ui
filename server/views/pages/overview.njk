@@ -13,28 +13,73 @@
     <div class="govuk-grid-column-one-quarter">
       {{ subNav([
         {
+          name: "Resettlement statuses",
+          id: "status"
+        },
+        {
           name: "Licence conditions",
           id: "licence-summary"
         }
       ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <section id="licence-summary" class="app-summary-card govuk-!-margin-bottom-8">
+      <section id="status" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-            Licence conditions<span class="govuk-caption-m">Data sourced from CVL</span>
+            Resettlement statuses
+            <span class="govuk-caption-m">These statuses reflect the completion of activities in each pathway to prepare someone for release</span>
           </h3>
-          <span class="right"></span>
         </header>
-        <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
-          {% if not errorMessage %}
-            {% set conditions %}
-            <ol class="\"govuk-list govuk-list--number govuk-list--spaced\"">
-              {% for condition in licenceConditions.standardLicenceConditions %}
-                <li>{{ condition.text }}
-                  {%if condition.image %}
-                    <a href="/licence-image/?licenceId={{licenceConditions.licenceId}}&conditionId={{condition.id}}&prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" rel="noreferrer noopener" target="_blank">View map</a>
-                    {%endif%}
+        <div class="app-summary-card__body">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Pathway</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            {% for pathway in prisonerData.pathways %}
+              {% set currentPathway = pathway.pathway | getEnumValue %}
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ currentPathway.name }}</a>
+                  <span class="govuk-caption-m">{{ currentPathway.description }}</span>
+                </th>
+                <td class="govuk-table__cell" style="min-width: 240px;">
+                  {% set statusValue = pathway.status | getEnumValue %}
+                  <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
+                    {{ statusValue.name }}
+                  </strong>
+                  <p class="govuk-body-s">
+                    Updated: {{ pathway.lastDateChange | formatDate }}
+                  </p>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          <br></div>
+        </section>
+        <section id="licence-summary" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              Licence conditions<span class="govuk-caption-m">Data sourced from CVL</span>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
+            {% if not errorMessage %}
+              {% set conditions %}
+              <ol class="\" govuk-list govuk-list--number govuk-list--spaced\"">
+                {% for condition in licenceConditions.standardLicenceConditions %}
+                  <li>{{ condition.text }}
+                    {% if condition.image %}
+                      <a
+                        href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                        rel="noreferrer noopener"
+                        target="_blank">View map</a>
+                    {% endif %}
                   </li>
                 {% endfor %}
               </ol>
@@ -48,18 +93,21 @@
                 <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6" start="{{ licenceConditions.standardLicenceConditions.length + 1 }}">
                   {% for condition in licenceConditions.otherLicenseConditions %}
                     <li>{{ condition.text }}
-                      {%if condition.image %}
-                        <a href="/licence-image/?licenceId={{licenceConditions.licenceId}}&conditionId={{condition.id}}&prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" rel="noreferrer noopener" target="_blank">View map</a>
-                        {%endif%}
-                      </li>
-                    {% endfor %}
-                  </ol>
-                {% endif %}
-              {% else %}
-                <p>{{ errorMessage }}</p>
+                      {% if condition.image %}
+                        <a
+                          href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                          rel="noreferrer noopener"
+                          target="_blank">View map</a>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ol>
               {% endif %}
-            </div>
-          </section>
-        </div>
+            {% else %}
+              <p>{{ errorMessage }}</p>
+            {% endif %}
+          </div>
+        </section>
       </div>
-    {% endblock %}
+    </div>
+  {% endblock %}

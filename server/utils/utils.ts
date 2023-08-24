@@ -26,8 +26,9 @@ export const initialiseName = (fullName?: string): string | null => {
 }
 
 export const formatDate = (dateString: string): string => {
+  if (!dateString) return null
   const date = new Date(dateString)
-  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
+  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }
   return date.toLocaleDateString('en-GB', options)
 }
 
@@ -47,6 +48,16 @@ export const getDaysFromDate = (targetDate: string): number => {
   return daysDiff
 }
 
+export const getMostRecentDate = (dates: string[]): string => {
+  if (dates.length === 0) return undefined
+  return dates.reduce((mostRecent, current) => {
+    if (!mostRecent || current > mostRecent) {
+      return current
+    }
+    return mostRecent
+  })
+}
+
 export const isFriday = (targetDate: string): boolean => {
   const targetDateObj = new Date(targetDate)
   return targetDateObj.getDay() === 5
@@ -62,6 +73,11 @@ export const getEnumValue = (pathwayStatusEnum: string): EnumValue => {
 
 export function getEnumByName(name: string): string {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
+  return key
+}
+
+export function getEnumByURL(url: string): string {
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
   return key
 }
 
