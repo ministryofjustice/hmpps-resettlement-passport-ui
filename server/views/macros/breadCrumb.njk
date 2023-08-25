@@ -1,0 +1,10 @@
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% macro breadCrumb(list) %}
+  {{ govukBreadcrumbs({
+    collapseOnMobile: true,
+    items: list,
+    classes: "govuk-!-display-none-print"
+  }) }}
+
+{% endmacro %}

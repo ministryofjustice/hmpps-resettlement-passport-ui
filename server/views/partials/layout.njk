@@ -1,10 +1,8 @@
 {% extends "govuk/template.njk" %}
 
-{% from "../partials/breadCrumb.njk" import breadCrumb %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "../macros/breadCrumb.njk" import breadCrumb %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../macros/title-and-intro.njk" import titleAndIntro %}
 {% from "../macros/status-details.njk" import statusDetails %}
 {% from "../macros/pathway-subnav.njk" import subNav %}
@@ -35,36 +33,46 @@
   {% include "./header.njk" %}
 
   <div class="govuk-width-container">
-
     {{ govukPhaseBanner({
-  tag: {
-    text: "Dev"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
-    {{ govukBreadcrumbs({
-  items: [
-    {
-      text: "Digital Prison Services",
-      href:   'https://digital-dev.prison.service.justice.gov.uk/'
-    },
-    {
-      text: "Prepare someone for release",
-      href:   '/'
-    },
-    {
-      text: "South, James(G2911GD)",
-      href:   '/'
-    },
-    {
-      text: pathway ,
-      href:   ''
-    }
-  ]
-}) }}
+      tag: {
+        text: "Dev"
+      },
+      html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+    }) }}
+
+    {% set breadcrumbItems = [
+      {
+        text: "Digital Prison Services",
+        href: 'https://digital-dev.prison.service.justice.gov.uk/'
+      },
+      {
+        text: "Prepare someone for release",
+        href: '/'
+      },
+      {
+        text: [prisonerData.personalDetails.lastName, ", ", prisonerData.personalDetails.firstName, " (", prisonerData.personalDetails.prisonerNumber, ")"] | join,
+        href: '/prisoner-overview/?prisonerNumber=' + prisonerData.personalDetails.prisonerNumber if pathway !== 'Resettlement overview'
+      },
+      {
+        text: pathway
+      }
+    ] %}
+
+    {% set dynamicBreadcrumbs = [] %}
+    {% for item in breadcrumbItems %}
+      {% if pathway !== 'Resettlement overview' %}
+        {% set _ = dynamicBreadcrumbs.push(item) %}
+      {% else %}
+        {% if loop.index !== 4 %}
+          {% set _ = dynamicBreadcrumbs.push(item) %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {{ breadCrumb(dynamicBreadcrumbs) }}
+
     {% include "../partials/profileHeader.njk" %}
     {% include "../partials/mainNav.njk" %}
-
   </div>
 {% endblock %}
 {% block bodyStart %}{% endblock %}
