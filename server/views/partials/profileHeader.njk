@@ -42,7 +42,8 @@
               {% if isDayFriday %}
                 <span class="govuk-body-s">⚠️ (Friday)</span>
               {% endif %}
-              ({{ prisonerData.personalDetails.releaseDate | getDaysFromDate }} days)
+              {% set daysData = prisonerData.personalDetails.releaseDate | getDaysFromDate%}
+              ({{ daysData.daysDiff }} days{% if daysData.isPast %} ago{% endif %})
             </p>
             <p>
               <b>Release type: {{ prisonerData.personalDetails.releaseType }}</b>
