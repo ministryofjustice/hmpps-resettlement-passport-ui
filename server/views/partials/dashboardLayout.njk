@@ -1,9 +1,7 @@
 {% extends "govuk/template.njk" %}
-{% from "../partials/breadCrumb.njk" import breadCrumb %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "../macros/breadCrumb.njk" import breadCrumb %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
-{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
 {% from "../macros/title-and-intro.njk" import titleAndIntro %}
 {% from "../macros/status-details.njk" import statusDetails %}
 {% from "../macros/pathway-subnav.njk" import subNav %}
@@ -29,18 +27,15 @@
   },
   html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
 }) }}
-      {{ govukBreadcrumbs({
-  items: [
-    {
-      text: "Digital Prison Services",
-      href:   'https://digital-dev.prison.service.justice.gov.uk/'
-    },
-    {
-      text: "Prepare someone for release",
-      href:   '/'
-    }
-  ]
-}) }}
+      {{ breadCrumb([
+        {
+          text: "Digital Prison Services",
+          href:   'https://digital-dev.prison.service.justice.gov.uk/'
+        },
+        {
+          text: "Prepare someone for release"
+        }
+      ])}}
     </div>
     {% if errors %}
       <div class="govuk-width-container">
