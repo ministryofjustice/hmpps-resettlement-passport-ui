@@ -1,6 +1,6 @@
 import RestClient from './restClient'
 import config from '../config'
-import Prison from './model'
+import { Prison } from './model/prison'
 
 export default class RPClient {
   private static restClient(token: string): RestClient {
@@ -30,5 +30,12 @@ export default class RPClient {
       path,
     })
     return result
+  }
+
+  async patch(token: string, path: string, body: Record<never, never>) {
+    return RPClient.restClient(token).patch({
+      path,
+      data: body,
+    })
   }
 }

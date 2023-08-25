@@ -2,8 +2,8 @@ import { RequestHandler } from 'express'
 import PrisonService from '../../services/prisonService'
 import logger from '../../../logger'
 import StaffDashboardView from './staffDashboardView'
-import Prison from '../../data/model'
 import { ErrorMessage } from '../view'
+import { Prison } from '../../data/model/prison'
 
 export default class StaffDashboardController {
   constructor(private readonly prisonService: PrisonService) {}
@@ -36,26 +36,21 @@ export default class StaffDashboardController {
           href: '#',
         })
       }
-
-      /* *******************************
-          REFACTOR TO USE RPCLIENT 
-      ********************************* */
       const token = res.locals?.user?.token
-      // console.log(token)
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      }
+
       let prisonersList = null
       try {
-        const apiResponse = await fetch(
-          `https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk/resettlement-passport/prison/${prisonSelected}/prisoners?page=0&size=200&sort=releaseDate,DESC`,
-          { headers },
+        // TODO add dynamic pagination and sorting
+        prisonersList = await this.prisonService.getListOfPrisoners(
+          token,
+          `${prisonSelected}`,
+          0,
+          200,
+          'releaseDate',
+          'DESC',
         )
-        if (apiResponse.ok) {
-          prisonersList = await apiResponse.json()
-        }
       } catch (error) {
-        logger.error('Error fetching prisoner list:', error)
+        logger.error('Error fetching prisoner list: ', error)
       }
 
       const view = new StaffDashboardView(prisonSelectList, <string>prisonSelected, prisonersList, errors)
