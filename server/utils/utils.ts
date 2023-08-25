@@ -38,14 +38,15 @@ export const getAgeFromDate = (birthDate: string): number => {
   return currentYear - birthYear
 }
 
-export const getDaysFromDate = (targetDate: string): number => {
+export const getDaysFromDate = (targetDate: string): { daysDiff: number; isPast: boolean } => {
   const targetDateObj = new Date(targetDate)
   const currentDate = new Date()
 
-  const timeDiff = Math.abs(currentDate.getTime() - targetDateObj.getTime())
-  const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24))
+  const timeDiff = targetDateObj.getTime() - currentDate.getTime()
+  const daysDiff = Math.abs(Math.ceil(timeDiff / (1000 * 3600 * 24)))
+  const isPast = timeDiff < 0
 
-  return daysDiff
+  return { daysDiff, isPast }
 }
 
 export const getMostRecentDate = (dates: string[]): string => {
