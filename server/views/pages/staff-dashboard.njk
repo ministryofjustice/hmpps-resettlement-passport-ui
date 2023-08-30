@@ -1,8 +1,36 @@
-{% extends "../partials/dashboardLayout.njk" %}
+{% extends "../partials/layout.njk" %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
+{% block header %}
+  {% include "../partials/header.njk" %}
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: {
+        text: "Dev"
+      },
+      html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+    }) }}
+    {{ breadCrumb([
+      {
+        text: "Digital Prison Services",
+        href:   'https://digital-dev.prison.service.justice.gov.uk/'
+      },
+      {
+        text: "Prepare someone for release"
+      }
+    ]) }}
+  </div>
+  {% if errors %}
+    <div class="govuk-width-container">
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: errors
+      }) }}
+    </div>
+  {% endif %}
+{% endblock %}
 {% block content %}
   <h1 class="govuk-heading-xl">Prepare someone for release</h1>
   <form id="staff-dashboard-filters" action="/" method="GET">
@@ -55,9 +83,19 @@
         </li>
       </ul>
       <div class="govuk-pagination__next">
-        <a class="govuk-link govuk-pagination__link" href="#" rel="next"> <span class="govuk-pagination__link-title">Next</span> <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+        <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+          <span class="govuk-pagination__link-title">Next</span>
+          <svg
+            class="govuk-pagination__icon govuk-pagination__icon--next"
+            xmlns="http://www.w3.org/2000/svg"
+            height="13"
+            width="15"
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 15 13">
             <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
-          </svg></a>
+          </svg>
+        </a>
       </div>
     </nav>
   {% endif %}
