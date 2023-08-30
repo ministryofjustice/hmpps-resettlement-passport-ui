@@ -149,7 +149,7 @@ const stubUserRoles = () =>
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
       },
-      jsonBody: [{ roleCode: 'SOME_USER_ROLE' }],
+      jsonBody: [{ roleCode: 'ROLE_RESETTLEMENT_PASSPORT_EDIT' }],
     },
   })
 
