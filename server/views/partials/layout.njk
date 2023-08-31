@@ -33,17 +33,10 @@
   {% include "./header.njk" %}
 
   <div class="govuk-width-container">
-    {{ govukPhaseBanner({
-      tag: {
-        text: "Dev"
-      },
-      html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-    }) }}
-
     {% set breadcrumbItems = [
       {
         text: "Digital Prison Services",
-        href: 'https://digital-dev.prison.service.justice.gov.uk/'
+        href: dpsUrl
       },
       {
         text: "Prepare someone for release",

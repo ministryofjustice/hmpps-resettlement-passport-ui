@@ -1,7 +1,9 @@
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+
 <header class="dps-header" role="banner">
   <div class="dps-header__container">
     <div class="dps-header__title">
-      <a class="dps-header__link dps-header__title__organisation-name" href="/">
+      <a class="dps-header__link dps-header__title__organisation-name" href="{{ dpsUrl }}">
         <svg
           role="presentation"
           focusable="false"
@@ -238,3 +240,18 @@
     </nav>
   </div>
 </header>
+
+<div class="location-bar govuk-width-container">
+  <span class="location-bar__location" data-qa="active-location">
+    {% if phaseName %}
+      {{ govukTag({
+        text: phaseName,
+        classes: 'govuk-!-margin-right-1'
+      }) }}
+    {% endif %}
+    <span class="gtm-active-case-load">{{ userActiveCaseLoad.description }}</span>
+  </span>
+  {% if userActiveCaseLoad.description.length > 1 %}
+    <a class="location-bar__link" href="{{ dpsUrl }}/change-caseload" data-qa="change-location-link">Change your location</a>
+  {% endif %}
+</div>
