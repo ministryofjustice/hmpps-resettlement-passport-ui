@@ -21,6 +21,7 @@ export default defineConfig({
       on('task', {
         reset: resetStubs,
         ...auth,
+        stubSignIn: () => auth.stubSignIn(['ROLE_RESETTLEMENT_PASSPORT_EDIT']),
         ...tokenVerification,
       })
     },
