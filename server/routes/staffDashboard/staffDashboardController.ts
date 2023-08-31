@@ -3,11 +3,9 @@ import PrisonService from '../../services/prisonService'
 import logger from '../../../logger'
 import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
-import { Prison } from '../../data/model/prison'
-import { UserService } from '../../services'
 
 export default class StaffDashboardController {
-  constructor(private readonly prisonService: PrisonService, private readonly userService: UserService) {}
+  constructor(private readonly prisonService: PrisonService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const { token } = req.user

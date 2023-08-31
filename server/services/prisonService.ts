@@ -4,10 +4,6 @@ import { PrisonersList } from '../data/model/prisoners'
 export default class PrisonService {
   constructor(private readonly rpClient: RPClient) {}
 
-  async getListOfPrisons(token: string) {
-    return this.rpClient.getPrisons(token)
-  }
-
   async getListOfPrisoners(
     token: string,
     prisonSelected: string,
