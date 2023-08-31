@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress'
 import { resetStubs } from './integration_tests/mockApis/wiremock'
 import auth from './integration_tests/mockApis/auth'
 import tokenVerification from './integration_tests/mockApis/tokenVerification'
+import nomisUserRolesApi from './integration_tests/mockApis/nomisUserRolesApi'
 
 export default defineConfig({
   chromeWebSecurity: false,
@@ -21,6 +22,7 @@ export default defineConfig({
       on('task', {
         reset: resetStubs,
         ...auth,
+        ...nomisUserRolesApi,
         stubSignIn: () => auth.stubSignIn(['ROLE_RESETTLEMENT_PASSPORT_EDIT']),
         ...tokenVerification,
       })
