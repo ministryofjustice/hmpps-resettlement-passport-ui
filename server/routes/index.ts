@@ -29,6 +29,7 @@ export default function routes(services: Services): Router {
   ************************************** */
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
+    const { page = 0, pageSize = 10 } = req.query
     try {
       const rpClient = new RPClient()
       const licenceConditions = await rpClient.get(
@@ -47,8 +48,21 @@ export default function routes(services: Services): Router {
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/mappa`,
       )
+      const caseNotes = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${pageSize}`,
+      )
 
-      res.render('pages/overview', { licenceConditions, prisonerData, riskScores, rosh, mappa })
+      res.render('pages/overview', {
+        licenceConditions,
+        prisonerData,
+        riskScores,
+        rosh,
+        mappa,
+        caseNotes,
+        page,
+        pageSize,
+      })
     } catch (error) {
       const errorMessage = error.message
       res.render('pages/overview', { errorMessage, prisonerData })

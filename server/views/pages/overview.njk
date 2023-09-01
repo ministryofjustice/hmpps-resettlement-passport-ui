@@ -1,5 +1,6 @@
 {% extends "../partials/layout.njk" %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {% set pathway = "Resettlement overview" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -43,27 +44,110 @@
               </tr>
             </thead>
             <tbody class="govuk-table__body">
-            {% for pathway in prisonerData.pathways %}
-              {% set currentPathway = pathway.pathway | getEnumValue %}
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">
-                  <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ currentPathway.name }}</a>
-                  <span class="govuk-caption-m">{{ currentPathway.description }}</span>
-                </th>
-                <td class="govuk-table__cell" style="min-width: 240px;">
-                  {% set statusValue = pathway.status | getEnumValue %}
-                  <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
-                    {{ statusValue.name }}
-                  </strong>
-                  <p class="govuk-body-s">
+              {% for pathway in prisonerData.pathways %}
+                {% set currentPathway = pathway.pathway | getEnumValue %}
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">
+                    <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ currentPathway.name }}</a>
+                    <span class="govuk-caption-m">{{ currentPathway.description }}</span>
+                  </th>
+                  <td class="govuk-table__cell" style="min-width: 240px;">
+                    {% set statusValue = pathway.status | getEnumValue %}
+                    <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
+                      {{ statusValue.name }}
+                    </strong>
+                    <p class="govuk-body-s">
                     Updated: {{ pathway.lastDateChange | formatDate }}
-                  </p>
-                </td>
-              </tr>
-            {% endfor %}
+                    </p>
+                  </td>
+                </tr>
+              {% endfor %}
             </tbody>
           </table>
           <br></div>
+      </section>
+      <section id="notes" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
+          </h3>
+          <span class="right">
+            <a href="casenote-add.html" style="color: white; text-decoration: none;" class="govuk-button">
+                Add a case note</a>
+
+          </span>
+        </header>
+
+        <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+              <label class="govuk-label" for="pathway-select">Filter by pathway</label>
+              <select class="govuk-select" id="pathway-select" onchange="updateCaseNotes()">
+                <option value="">All pathways</option>
+                {% for pathway in data['pathways'] | sort(attribute = 'title') %}
+                  <option value="{{ pathway.short }}">{{ pathway.title }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-third">
+              <label class="govuk-label" for="date-range-select">Filter by date range</label>
+              <select class="govuk-select" id="date-range-select" onchange="updateCaseNotes()">
+                <option value="">All time</option>
+                <option value="Last week">Last week</option>
+                <option value="Last month">Last month</option>
+                <option value="Last 12 weeks">Last 12 weeks</option>
+              </select>
+            </div>
+
+            <div class="govuk-grid-column-one-third">
+              <label class="govuk-label" for="sort-by-select">Sort by</label>
+              <select class="govuk-select" id="sort-by-select" onchange="updateCaseNotes()">
+                <option value="created">Created (most recent)</option>
+                <option value="pathway">Pathway</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="govuk-grid-row govuk-!-padding-top-8">
+            <div class="govuk-grid-column-full" id="case-notes-container">
+              <hr>
+              {% for notes in caseNotes.content %}
+                {% set currentPathway = notes.pathway | getEnumValue %}
+                <div class="case-note">
+                  <h3>{{ currentPathway.name }}</h3>
+                  <p>{{ notes.text }}</p>
+                  <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate}}</span>
+                  <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate }} by {{notes.createdBy}}</span>
+
+                </div>
+                <hr>
+              {% endfor %}
+              {% set totalPages = caseNotes.totalElements / pageSize %}
+              {{ govukPagination({
+                classes: "govuk-!-padding-top-5",
+                next: {
+                  href: "#"
+                },
+                items: [
+                  {
+                    number: 1,
+                    current: true,
+                    href: "#"
+                  },
+                  {
+                    number: 2,
+                    href: "#"
+                  },
+                  {
+                    number: 3,
+                    href: "#"
+                  }
+                ]
+              }) }}
+              <h1>Total pages: {{ totalPages }}</h1>
+            </div>
+          </div>
         </section>
         <section id="licence-summary" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
@@ -194,7 +278,7 @@
                   </tr>
                 </tbody>
               </table>
-              <br />
+              <br/>
               <h3>Risk of serious harm</h3>
               {% set overallRoshRiskLevel = rosh.overallRiskLevel | getEnumValue %}
               <h4>
@@ -203,92 +287,92 @@
               <p class="govuk-body-s">Last updated: {{ rosh.assessedOn | formatDate  }}</p>
               <table class="govuk-table">
                 <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
                     Risk to
                   </th>
-                  <td class="govuk-table__cell" style="min-width: 240px;">
-                    <br />
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
+                    <td class="govuk-table__cell" style="min-width: 240px;">
+                      <br/>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
                     Children
                   </th>
-                  <td class="govuk-table__cell" style="min-width: 240px;">
-                    {% set childrenRiskLevel = rosh.riskInCommunity.CHILDREN | getEnumValue %}
-                    <strong class="govuk-tag govuk-tag--{{ childrenRiskLevel.color }}">
-                      {{ childrenRiskLevel.name }}
-                    </strong>
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
+                    <td class="govuk-table__cell" style="min-width: 240px;">
+                      {% set childrenRiskLevel = rosh.riskInCommunity.CHILDREN | getEnumValue %}
+                      <strong class="govuk-tag govuk-tag--{{ childrenRiskLevel.color }}">
+                        {{ childrenRiskLevel.name }}
+                      </strong>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
                     Public
                   </th>
-                  <td class="govuk-table__cell" style="min-width: 240px;">
-                    {% set publicRiskLevel = rosh.riskInCommunity.PUBLIC | getEnumValue %}
-                    <strong class="govuk-tag govuk-tag--{{ publicRiskLevel.color }}">
-                      {{ publicRiskLevel.name }}
-                    </strong>
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
+                    <td class="govuk-table__cell" style="min-width: 240px;">
+                      {% set publicRiskLevel = rosh.riskInCommunity.PUBLIC | getEnumValue %}
+                      <strong class="govuk-tag govuk-tag--{{ publicRiskLevel.color }}">
+                        {{ publicRiskLevel.name }}
+                      </strong>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
                     Known adult
                   </th>
-                  <td class="govuk-table__cell" style="min-width: 240px;">
-                    {% set knownAdultRiskLevel = rosh.riskInCommunity.KNOWN_ADULT | getEnumValue %}
-                    <strong class="govuk-tag govuk-tag--{{ knownAdultRiskLevel.color }}">
-                      {{ knownAdultRiskLevel.name }}
-                    </strong>
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
+                    <td class="govuk-table__cell" style="min-width: 240px;">
+                      {% set knownAdultRiskLevel = rosh.riskInCommunity.KNOWN_ADULT | getEnumValue %}
+                      <strong class="govuk-tag govuk-tag--{{ knownAdultRiskLevel.color }}">
+                        {{ knownAdultRiskLevel.name }}
+                      </strong>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
                     Staff
                   </th>
-                  <td class="govuk-table__cell" style="min-width: 240px;">
-                    {% set staffRiskLevel = rosh.riskInCommunity.STAFF | getEnumValue %}
-                    <strong class="govuk-tag govuk-tag--{{ staffRiskLevel.color }}">
-                      {{ staffRiskLevel.name }}
-                    </strong>
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
+                    <td class="govuk-table__cell" style="min-width: 240px;">
+                      {% set staffRiskLevel = rosh.riskInCommunity.STAFF | getEnumValue %}
+                      <strong class="govuk-tag govuk-tag--{{ staffRiskLevel.color }}">
+                        {{ staffRiskLevel.name }}
+                      </strong>
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
                     Prisoners
                   </th>
-                  <td class="govuk-table__cell" style="min-width: 240px;">
-                    {% set prisonersRiskLevel = rosh.riskInCommunity.PRISONERS | getEnumValue %}
-                    <strong class="govuk-tag govuk-tag--{{ prisonersRiskLevel.color }}">
-                      {{ prisonersRiskLevel.name }}
-                    </strong>
-                  </td>
-                </tr>
+                    <td class="govuk-table__cell" style="min-width: 240px;">
+                      {% set prisonersRiskLevel = rosh.riskInCommunity.PRISONERS | getEnumValue %}
+                      <strong class="govuk-tag govuk-tag--{{ prisonersRiskLevel.color }}">
+                        {{ prisonersRiskLevel.name }}
+                      </strong>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
-              <br />
+              <br/>
               <h3>Multi Agency Public Protection Arrangement (MAPPA)</h3>
               <p class="govuk-body-s">Last updated: {{ mappa.startDate | formatDate  }}</p>
               <table class="govuk-table">
                 <tbody class="govuk-table__body">
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
                     Category
                   </th>
-                  <td class="govuk-table__cell" style="min-width: 240px;">
-                    {{ mappa.category }}
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
+                    <td class="govuk-table__cell" style="min-width: 240px;">
+                      {{ mappa.category }}
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
                     Level
                   </th>
-                  <td class="govuk-table__cell" style="min-width: 240px;">
-                    {{ mappa.level }}
-                  </td>
-                </tr>
+                    <td class="govuk-table__cell" style="min-width: 240px;">
+                      {{ mappa.level }}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             {% else %}
