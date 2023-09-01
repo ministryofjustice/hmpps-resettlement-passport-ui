@@ -13,7 +13,7 @@
               {{ prisonerData.personalDetails.lastName }}, {{ prisonerData.personalDetails.firstName }}
               <span class="govuk-caption-l">{{ prisonerData.personalDetails.prisonerNumber }}</span>
               <p class="govuk-body-s govuk-!-padding-top-2">
-                <a href="https://digital-dev.prison.service.justice.gov.uk/prisoner/{{ prisonerData.personalDetails.prisonerNumber }}">View full DPS profile</a>
+                <a href="{{ dpsUrl }}/prisoner/{{ prisonerData.personalDetails.prisonerNumber }}">View full DPS profile</a>
               </p>
             </h1>
           </div>

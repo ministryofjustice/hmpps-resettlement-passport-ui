@@ -12,6 +12,9 @@ generic-service:
     HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
     RESETTLEMENT_PASSPORT_API_URL: "https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk"
+    NOMIS_USER_ROLES_API_URL: "https://nomis-user-dev.aks-dev-1.studio-hosting.service.justice.gov.uk"
+    DPS_URL: "https://digital-dev.prison.service.justice.gov.uk"
+    PHASE_NAME: "DEV"
 
 generic-prometheus-alerts:
   alertSeverity: digital-prison-service-dev

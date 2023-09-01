@@ -21,21 +21,29 @@
   {% block header %}
     {% include "./header.njk" %}
     <div class="govuk-width-container">
-      {{ govukPhaseBanner({
-  tag: {
-    text: "Dev"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
-}) }}
-      {{ breadCrumb([
+      {% set breadcrumbItems = [
         {
           text: "Digital Prison Services",
-          href:   'https://digital-dev.prison.service.justice.gov.uk/'
+          href: dpsUrl
         },
         {
           text: "Prepare someone for release"
         }
-      ])}}
+      ] %}
+
+      {% set dynamicBreadcrumbs = [] %}
+      {% for item in breadcrumbItems %}
+        {% if pathway !== 'Resettlement overview' %}
+          {% set _ = dynamicBreadcrumbs.push(item) %}
+        {% else %}
+          {% if loop.index !== 4 %}
+            {% set _ = dynamicBreadcrumbs.push(item) %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {{ breadCrumb(dynamicBreadcrumbs) }}
+
     </div>
     {% if errors %}
       <div class="govuk-width-container">

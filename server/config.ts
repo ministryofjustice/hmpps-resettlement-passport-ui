@@ -77,6 +77,17 @@ export default {
       agent: new AgentConfig(Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('RESETTLEMENT_PASSPORT_API_ENABLED', 'true') === 'true',
     },
+    nomisUserRolesClient: {
+      url: get('NOMIS_USER_ROLES_API_URL', ''),
+      timeout: {
+        response: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 5000))),
+      enabled: get('NOMIS_USER_ROLES_API_ENABLED', 'true') === 'true',
+    },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
+  dpsHomeUrl: get('DPS_URL', '#', requiredInProduction),
+  phaseName: get('PHASE_NAME', 'DEV', requiredInProduction),
 }

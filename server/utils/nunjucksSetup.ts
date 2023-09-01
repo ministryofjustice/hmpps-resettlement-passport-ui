@@ -18,6 +18,7 @@ import {
   getEnumByURL,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
+import config from '../config'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -66,4 +67,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getEnumByName', getEnumByName)
   njkEnv.addFilter('getEnumByURL', getEnumByURL)
   njkEnv.addFilter('getDescriptionFromName', getDescriptionFromName)
+
+  njkEnv.addGlobal('dpsUrl', config.dpsHomeUrl)
+  njkEnv.addGlobal('phaseName', config.phaseName)
 }
