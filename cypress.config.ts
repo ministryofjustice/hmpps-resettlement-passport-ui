@@ -3,6 +3,7 @@ import { resetStubs } from './integration_tests/mockApis/wiremock'
 import auth from './integration_tests/mockApis/auth'
 import tokenVerification from './integration_tests/mockApis/tokenVerification'
 import nomisUserRolesApi from './integration_tests/mockApis/nomisUserRolesApi'
+import rpApi from './integration_tests/mockApis/rpApi'
 
 export default defineConfig({
   chromeWebSecurity: false,
@@ -23,6 +24,7 @@ export default defineConfig({
         reset: resetStubs,
         ...auth,
         ...nomisUserRolesApi,
+        ...rpApi,
         stubSignIn: () => auth.stubSignIn(['ROLE_RESETTLEMENT_PASSPORT_EDIT']),
         ...tokenVerification,
       })
