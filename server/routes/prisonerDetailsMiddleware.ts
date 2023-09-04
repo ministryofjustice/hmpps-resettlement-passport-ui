@@ -16,9 +16,8 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
         `/resettlement-passport/prisoner/${prisonerNumber}`,
       )) as PrisonerData
       req.prisonerData = prisonerData
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error(errorMessage, 'failed to fetch prisoner details')
+    } catch (err) {
+      next(err)
     }
   }
   next()
