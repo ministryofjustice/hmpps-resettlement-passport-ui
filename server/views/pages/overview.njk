@@ -125,8 +125,11 @@
                 <hr>
               {% endfor %}
               {% set totalPages = caseNotes.totalElements / size %}
-              {{ pagination(prisonerData, page, size, totalPages, caseNotes.last) }}
-              
+              {% set nextPage = page | float + 1 | float%}
+              {% set prevPage = page | float - 1 | float%}
+              {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber%}
+              {{ pagination(page, size, totalPages, caseNotes.last, currentUrl) }}
+
               <h1>Total pages: {{ totalPages | roundNumberUp }}</h1>
             </div>
           </div>
