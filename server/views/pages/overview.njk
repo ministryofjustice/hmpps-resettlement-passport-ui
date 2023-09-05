@@ -124,7 +124,7 @@
                 </div>
                 <hr>
               {% endfor %}
-              {% set totalPages = caseNotes.totalElements / size %}
+              {% set totalPages = (caseNotes.totalElements / size) | roundNumberUp %}
               {% set nextPage = page | float + 1 | float%}
               {% set prevPage = page | float - 1 | float%}
               {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber%}
