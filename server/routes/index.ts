@@ -29,7 +29,7 @@ export default function routes(services: Services): Router {
   ************************************** */
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
-    const { page = 0, pageSize = 10 } = req.query
+    const { page = 0, size = 10 } = req.query
     try {
       const rpClient = new RPClient()
       const licenceConditions = await rpClient.get(
@@ -50,7 +50,7 @@ export default function routes(services: Services): Router {
       )
       const caseNotes = await rpClient.get(
         req.user.token,
-        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${pageSize}`,
+        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=occurenceDateTime%2CDESC`,
       )
 
       res.render('pages/overview', {
@@ -61,7 +61,7 @@ export default function routes(services: Services): Router {
         mappa,
         caseNotes,
         page,
-        pageSize,
+        size,
       })
     } catch (error) {
       const errorMessage = error.message
