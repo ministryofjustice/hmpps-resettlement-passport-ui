@@ -29,6 +29,7 @@ export default function routes(services: Services): Router {
   ************************************** */
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
+    const { page = 0, size = 10 } = req.query
     const rpClient = new RPClient()
 
     let licenceConditions: { error?: boolean } = {}
@@ -36,8 +37,6 @@ export default function routes(services: Services): Router {
     let rosh: { error?: boolean } = {}
     let mappa: { error?: boolean } = {}
     let caseNotes: { error?: boolean } = {}
-
-    const { page = 0, size = 10 } = req.query
     try {
       licenceConditions = await rpClient.get(
         req.user.token,
@@ -86,7 +85,7 @@ export default function routes(services: Services): Router {
       logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
       caseNotes.error = true
     }
-    res.render('pages/overview', { licenceConditions, prisonerData, riskScores, rosh, mappa, page, size })
+    res.render('pages/overview', { licenceConditions, prisonerData, caseNotes, riskScores, rosh, mappa, page, size })
   })
   use('/accommodation', accommodationRouter)
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
