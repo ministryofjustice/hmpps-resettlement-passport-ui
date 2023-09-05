@@ -29,46 +29,65 @@ export default function routes(services: Services): Router {
   ************************************** */
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
+    const rpClient = new RPClient()
+
+    let licenceConditions: { error?: boolean } = {}
+    let riskScores: { error?: boolean } = {}
+    let rosh: { error?: boolean } = {}
+    let mappa: { error?: boolean } = {}
+    let caseNotes: { error?: boolean } = {}
+
     const { page = 0, size = 10 } = req.query
     try {
-      const rpClient = new RPClient()
-      const licenceConditions = await rpClient.get(
+      licenceConditions = await rpClient.get(
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
       )
-      const riskScores = await rpClient.get(
+    } catch (err) {
+      logger.warn(`Cannot retrieve licence conditions for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      licenceConditions.error = true
+    }
+
+    try {
+      riskScores = await rpClient.get(
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/scores`,
       )
-      const rosh = await rpClient.get(
+    } catch (err) {
+      logger.warn(`Cannot retrieve risk scores for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      riskScores.error = true
+    }
+
+    try {
+      rosh = await rpClient.get(
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/rosh`,
       )
-      const mappa = await rpClient.get(
+    } catch (err) {
+      logger.warn(`Cannot retrieve RoSH for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      rosh.error = true
+    }
+
+    try {
+      mappa = await rpClient.get(
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/mappa`,
       )
-      const caseNotes = await rpClient.get(
+    } catch (err) {
+      logger.warn(`Cannot retrieve MAPPA for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      mappa.error = true
+    }
+    try {
+      caseNotes = await rpClient.get(
         req.user.token,
         `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=occurenceDateTime%2CDESC`,
       )
-
-      res.render('pages/overview', {
-        licenceConditions,
-        prisonerData,
-        riskScores,
-        rosh,
-        mappa,
-        caseNotes,
-        page,
-        size,
-      })
-    } catch (error) {
-      const errorMessage = error.message
-      res.render('pages/overview', { errorMessage, prisonerData })
+    } catch (err) {
+      logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      caseNotes.error = true
     }
+    res.render('pages/overview', { licenceConditions, prisonerData, riskScores, rosh, mappa, page, size })
   })
-  // use('/prisoner-overview', prisonerOverviewRouter)
   use('/accommodation', accommodationRouter)
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
