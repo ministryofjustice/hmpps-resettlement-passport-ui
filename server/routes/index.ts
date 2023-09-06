@@ -29,13 +29,14 @@ export default function routes(services: Services): Router {
   ************************************** */
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
+    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0 } = req.query
     const rpClient = new RPClient()
 
     let licenceConditions: { error?: boolean } = {}
     let riskScores: { error?: boolean } = {}
     let rosh: { error?: boolean } = {}
     let mappa: { error?: boolean } = {}
-
+    let caseNotes: { error?: boolean } = {}
     try {
       licenceConditions = await rpClient.get(
         req.user.token,
@@ -45,7 +46,6 @@ export default function routes(services: Services): Router {
       logger.warn(`Cannot retrieve licence conditions for ${prisonerData.personalDetails.prisonerNumber}`, err)
       licenceConditions.error = true
     }
-
     try {
       riskScores = await rpClient.get(
         req.user.token,
@@ -75,10 +75,28 @@ export default function routes(services: Services): Router {
       logger.warn(`Cannot retrieve MAPPA for ${prisonerData.personalDetails.prisonerNumber}`, err)
       mappa.error = true
     }
-
-    res.render('pages/overview', { licenceConditions, prisonerData, riskScores, rosh, mappa })
+    try {
+      caseNotes = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}`,
+      )
+    } catch (err) {
+      logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      caseNotes.error = true
+    }
+    res.render('pages/overview', {
+      licenceConditions,
+      prisonerData,
+      caseNotes,
+      riskScores,
+      rosh,
+      mappa,
+      page,
+      size,
+      sort,
+      days,
+    })
   })
-  // use('/prisoner-overview', prisonerOverviewRouter)
   use('/accommodation', accommodationRouter)
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
