@@ -46,7 +46,6 @@ export default function routes(services: Services): Router {
       logger.warn(`Cannot retrieve licence conditions for ${prisonerData.personalDetails.prisonerNumber}`, err)
       licenceConditions.error = true
     }
-
     try {
       riskScores = await rpClient.get(
         req.user.token,
@@ -79,7 +78,7 @@ export default function routes(services: Services): Router {
     try {
       caseNotes = await rpClient.get(
         req.user.token,
-        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=occurenceDateTime%2CDESC`,
+        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=occurenceDateTime%2CDESC&days=21`,
       )
     } catch (err) {
       logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)

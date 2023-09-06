@@ -7,46 +7,22 @@
   <ul class="moj-pagination__list">
     {% if page > 0 %}
     <li class="moj-pagination__item  moj-pagination__item--prev">
-      <a class="moj-pagination__link" href="{{currentUrl}}&page={{prevPage}}&size={{size}}&sort=occurenceDateTime%2CDESC">Previous<span class="govuk-visually-hidden"> page</span></a>
+      <a class="moj-pagination__link" href="{{currentUrl}}&page={{prevPage}}&size={{size}}&sort=occurenceDateTime%2CDESC&days=21">Previous<span class="govuk-visually-hidden"> page</span></a>
     </li>
     {% endif %}
  {% for i in range(0, totalPages) -%}
   {% if page | float === i | float %}
     <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
   {% else %}
-    <li class="moj-pagination__item"><a class="moj-pagination__link" href="{{currentUrl}}&page={{i}}&size={{size}}&sort=occurenceDateTime%2CDESC" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a></li>
+    <li class="moj-pagination__item"><a class="moj-pagination__link" href="{{currentUrl}}&page={{i}}&size={{size}}&sort=occurenceDateTime%2CDESC&days=21" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a></li>
   {% endif %}
 {%- endfor %}
 {% if isLast === false %}
     <li class="moj-pagination__item  moj-pagination__item--next">
-      <a class="moj-pagination__link" href="">Next<span class="govuk-visually-hidden"> page</span></a>
+      <a class="moj-pagination__link" href="{{currentUrl}}&page={{nextPage}}&size={{size}}&sort=occurenceDateTime%2CDESC&days=21">Next<span class="govuk-visually-hidden"> page</span></a>
     </li>
     {% endif %}
   </ul>
   <p class="moj-pagination__results">Showing page <b>{{page | float + 1 | float}}</b> of <b>{{totalPages}}</b> pages</p>
 </nav>
-
-{#   
-  <nav class="govuk-pagination" role="navigation" aria-label="results">
-
-    <ul class="govuk-pagination__list">
-      {% for i in range(0, totalPages) -%}
-        <li class="govuk-pagination__item {% if page | float === i | float %} govuk-pagination__item--current{% endif %}">
-          <a class="govuk-link govuk-pagination__link " href="{{currentUrl}}&page={{i}}&size={{size}}&sort=occurenceDateTime%2CDESC" aria-label="Page {{i + 1}}" {{ "aria-current=page" if page | float === i | float }}>
-            {{ i + 1 }}
-          </a>
-        </li>
-      {%- endfor %}
-    </ul>
-    {% if isLast === false %}
-      <div class="govuk-pagination__next">
-        <a class="govuk-link govuk-pagination__link" href="{{currentUrl}}&page={{nextPage}}&size={{size}}&sort=occurenceDateTime%2CDESC" rel="next">
-          <span class="govuk-pagination__link-title">Next</span>
-          <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-            <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
-          </svg>
-        </a>
-      </div>
-    {% endif %}
-  </nav> #}
 {% endmacro %}
