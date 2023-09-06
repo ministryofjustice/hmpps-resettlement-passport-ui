@@ -39,6 +39,7 @@ export type PersonalDetails = {
 export type PrisonerData = {
   personalDetails: PersonalDetails
   pathways: PathwayStatus[]
+  prisonerImage?: string
 }
 
 export type PathwayStatus = {
