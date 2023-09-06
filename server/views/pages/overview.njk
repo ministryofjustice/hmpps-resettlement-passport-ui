@@ -132,7 +132,7 @@
                 {% set nextPage = page | float + 1 | float%}
                 {% set prevPage = page | float - 1 | float%}
                 {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber%}
-                {{ pagination(page, size, totalPages, caseNotes.last, currentUrl) }}
+                {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days) }}
 
               </div>
             </div>
