@@ -11,6 +11,10 @@ generic-service:
     INGRESS_URL: "https://resettlement-passport-ui-preprod.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
+    RESETTLEMENT_PASSPORT_API_URL: "https://resettlement-passport-api-preprod.hmpps.service.justice.gov.uk"
+    NOMIS_USER_ROLES_API_URL: "https://nomis-user-pp.aks-dev-1.studio-hosting.service.justice.gov.uk"
+    DPS_URL: "https://digital-preprod.prison.service.justice.gov.uk"
+    PHASE_NAME: "PREPROD"
 
 generic-prometheus-alerts:
   alertSeverity: digital-prison-service-dev
