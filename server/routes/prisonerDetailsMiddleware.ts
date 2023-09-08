@@ -14,6 +14,12 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerNumber}`,
       )) as PrisonerData
+
+      const prisonerImage = (await apiResponse.getImageAsBase64String(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerNumber}/image/${prisonerData.personalDetails.facialImageId}`,
+      )) as string
+      prisonerData.prisonerImage = prisonerImage
       req.prisonerData = prisonerData
     } catch (err) {
       next(err)
