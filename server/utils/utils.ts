@@ -96,3 +96,8 @@ export function getDescriptionFromName(name: string): string | undefined {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
   return key ? ENUMS_DICTIONARY[key].description : undefined
 }
+
+export function roundNumberUp(number: number): number | undefined {
+  const value = Math.ceil(number)
+  return value
+}
