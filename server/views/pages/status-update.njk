@@ -3,6 +3,7 @@
 {% set pathway = selectedPathway | getNameFromUrl %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set statuses = ["NOT_STARTED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
+{% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-row govuk-!-padding-bottom-4">
@@ -89,9 +90,29 @@
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">{{ pathway }} case notes</h3>
         </header>
-        <div class="app-summary-card__body govuk-!-padding-top-4">
-          coming soon...
-        </div>
+        <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+          <p>Filters here</p>
+            {% if not caseNotes.error %}
+
+            <div class="govuk-grid-row govuk-!-padding-top-8">
+              <div class="govuk-grid-column-full" id="case-notes-container">
+                <hr>
+                  {% for notes in caseNotes.content %}
+                    {% set currentPathway = notes.pathway | getEnumValue %}
+                    <div class="case-note">
+                      <h3>{{ currentPathway.name }}</h3>
+                      <p>{{ notes.text }}</p>
+                      <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate}}</span>
+                      <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate }} by {{notes.createdBy}}</span>
+                      <br>
+                    </div>
+                    <hr>
+                  {% endfor %}
+              </div>
+            </div>
+            {% else %}
+            <p>{{ errorMessage }}</p>
+            {% endif%}
       </section>
     </div>
   </div>
