@@ -4244,6 +4244,12 @@ div.sticky {
   position: sticky !important;
 }
 
+.sticky-anchor-links {
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
 .app-subnav__section {
   margin: 0 0 20px;
   padding: 0;
