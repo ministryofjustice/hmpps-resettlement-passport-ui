@@ -90,9 +90,9 @@
               <div class="govuk-grid-column-one-third">
                 <label class="govuk-label" for="pathway-select">Filter by pathway</label>
                 <select name="selectedPathway" class="govuk-select" id="pathway-select">
-                  <option {% if selectedPathway == "" %}selected{% endif %} value="">All pathways</option>
+                  <option {% if selectedPathway == "All" %}selected{% endif %} value="All">All pathways</option>
                   <option {% if selectedPathway == "ACCOMMODATION" %}selected{% endif %} value="ACCOMMODATION">Accommodation</option>
-                  <option {% if selectedPathway == "ATTITUDES_THINKING_AND_BEHAVIOUR" %}selected{% endif %} value="ACCOMMODATION">Attitudes, thinking and behaviour</option>
+                  <option {% if selectedPathway == "ATTITUDES_THINKING_AND_BEHAVIOUR" %}selected{% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
                   <option {% if selectedPathway == "CHILDREN_FAMILIES_AND_COMMUNITY" %}selected{% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
                   <option {% if selectedPathway == "DRUGS_AND_ALCOHOL" %}selected{% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
                   <option {% if selectedPathway == "EDUCATION_SKILLS_AND_WORK" %}selected{% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>

@@ -29,7 +29,8 @@ export default function routes(services: Services): Router {
   ************************************** */
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
-    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway } = req.query
+    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
+    console.log(req.query, selectedPathway)
     const rpClient = new RPClient()
 
     let licenceConditions: { error?: boolean } = {}
