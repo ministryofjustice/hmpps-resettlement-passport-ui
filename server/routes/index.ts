@@ -29,7 +29,7 @@ export default function routes(services: Services): Router {
   ************************************** */
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
-    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0 } = req.query
+    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = '' } = req.query
     const rpClient = new RPClient()
 
     let licenceConditions: { error?: boolean } = {}
@@ -78,7 +78,9 @@ export default function routes(services: Services): Router {
     try {
       caseNotes = await rpClient.get(
         req.user.token,
-        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}`,
+        `/resettlement-passport/case-notes/${
+          prisonerData.personalDetails.prisonerNumber
+        }?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway || 'All'}`,
       )
     } catch (err) {
       logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
@@ -95,6 +97,7 @@ export default function routes(services: Services): Router {
       size,
       sort,
       days,
+      selectedPathway,
     })
   })
   use('/accommodation', accommodationRouter)
