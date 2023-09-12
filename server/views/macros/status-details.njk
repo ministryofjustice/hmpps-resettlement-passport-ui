@@ -18,9 +18,9 @@
       <div class="govuk-form-group govuk-!-margin-0">
         <input type="hidden" id="updated" name="updated" value="today">
         <input type="hidden" id="pathway" name="pathway" value="attitudes">
-        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="submit">
+        <a class="govuk-button govuk-button--secondary" data-module="govuk-button" href="/status-update/{{ pathway | getUrlFromName }}/?prisonerNumber={{ prisonerNumber }}#notes">
           View history
-        </button>
+        </a>
       </div>
     </div>
   </section>
