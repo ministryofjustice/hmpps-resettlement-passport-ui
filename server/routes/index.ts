@@ -134,7 +134,20 @@ export default function routes(services: Services): Router {
         logger.error(error)
       }
     }
-    res.render('pages/status-update', { prisonerData, selectedPathway, updateSuccessful, state })
+    let caseNotes: { error?: boolean } = {}
+    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0 } = req.query
+    try {
+      caseNotes = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/case-notes/${
+          prisonerData.personalDetails.prisonerNumber
+        }?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${getEnumByURL(selectedPathway)}`,
+      )
+    } catch (err) {
+      logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      caseNotes.error = true
+    }
+    res.render('pages/status-update', { prisonerData, selectedPathway, updateSuccessful, state, caseNotes })
   })
 
   return router
