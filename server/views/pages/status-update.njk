@@ -90,10 +90,25 @@
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">{{ pathway }} case notes</h3>
         </header>
-        <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
-          <p>Filters here</p>
-            {% if not caseNotes.error %}
 
+        <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+          <div class="govuk-grid-row">
+            <form action="#" method="GET">
+              <div class="govuk-grid-column-full">
+                <label class="govuk-label" for="pathway-select">Created by</label>
+                <select name="selectedPathway" class="govuk-select" id="pathway-select">
+                  <option value="All">Select an option</option>
+                  {% for creator in caseNoteCreators %}
+                    <option value="{{ creator.createdBy }}">{{ creator.createdBy }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="govuk-grid-column-full">
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
+              </div>
+            </form>
+          </div>
+          {% if not caseNotes.error %}
             <div class="govuk-grid-row govuk-!-padding-top-8">
               <div class="govuk-grid-column-full" id="case-notes-container">
                 <hr>
@@ -112,7 +127,7 @@
             </div>
             {% else %}
             <p>{{ errorMessage }}</p>
-            {% endif%}
+          {% endif%}
       </section>
     </div>
   </div>
