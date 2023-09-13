@@ -1,0 +1,31 @@
+{% extends "../partials/layout.njk" %}
+{% set pathway = "Add a case note" %}
+{% set pageTitle = applicationName + " - " + pathway %}
+{% set mainClasses = "app-container govuk-body" %}
+{% block content %}
+  <div class="govuk-grid-row ">
+    <div class="govuk-!-padding-bottom-4">
+      <h1 class="govuk-heading-l">Add a case note</h1>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <form action="/status-update" method="GET">
+          <div class="govuk-form-group">
+            <input name="prisonerNumber" value="{{prisonerData.personalDetails.prisonerNumber}}" hidden />
+            <label class="govuk-label" for="casenotepathwayselector">Resettlement pathway</label>
+            <select class="govuk-select" id="casenotepathwayselector" name="selectedPathway">
+              <option value="accommodation">Accommodation</option>
+              <option value="attitudes-thinking-and-behaviour">Attitudes, thinking and behaviour</option>
+              <option value="children-families-and-communities">Children, families and communities</option>
+              <option value="drugs-and-alcohol">Drugs and alcohol</option>
+              <option value="education-skills-and-work">Education, skills and work</option>
+              <option value="finance-and-id">Finance and ID</option>
+              <option value="health-status">Health</option>
+            </select>
+          </div>
+          <button class="govuk-button" type="submit">Continue</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

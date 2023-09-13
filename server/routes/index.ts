@@ -120,10 +120,15 @@ export default function routes(services: Services): Router {
   use('/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
-  use('/status-update/:selectedPathway', async (req: Request, res: Response, next) => {
+  use('/add-case-note', async (req: Request, res: Response) => {
     const { prisonerData } = req
-    const { selectedPathway } = req.params
-    const { state } = req.query
+    res.render('pages/add-case-note', {
+      prisonerData,
+    })
+  })
+  use('/status-update/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const { state, selectedPathway } = req.query
     const token = res.locals?.user?.token
 
     const rpClient = new RPClient()
