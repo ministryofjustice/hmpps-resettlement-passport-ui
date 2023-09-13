@@ -103,9 +103,9 @@
                 <label class="govuk-label" for="date-range-select">Filter by date range</label>
                 <select name="days" class="govuk-select" id="date-range-select">
                   <option value="0" {% if days == "0" %}selected{% endif %}>All time</option>
-                  <option value="7" {% if days == "7" %}selected{% endif %}>Last 7 days</option>
-                  <option value="30" {% if days == "30" %}selected{% endif %}>Last 30 days</option>
-                  <option value="84" {% if days == "84" %}selected{% endif %}>Last 84 days</option>
+                  <option value="7" {% if days == "7" %}selected{% endif %}>Last week</option>
+                  <option value="30" {% if days == "30" %}selected{% endif %}>Last 4 weeks</option>
+                  <option value="84" {% if days == "84" %}selected{% endif %}>Last 12 weeks</option>
                 </select>
               </div>
               <div class="govuk-grid-column-one-third">
