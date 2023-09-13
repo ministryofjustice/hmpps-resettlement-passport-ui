@@ -77,7 +77,7 @@ export function getEnumByName(name: string): string {
   return key
 }
 
-export function getEnumByURL(url: any): string {
+export function getEnumByURL(url: unknown): string {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
   return key
 }
