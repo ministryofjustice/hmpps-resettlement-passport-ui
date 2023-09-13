@@ -1,4 +1,4 @@
-{% macro pagination(page, size, totalPages, isLast, currentUrl, totalElements, sort, days) %}
+{% macro pagination(page, size, totalPages, isLast, currentUrl, totalElements, sort, days, selectedPathway) %}
   {% set nextPage = page | float + 1 | float%}
   {% set prevPage = page | float - 1 | float%}
 
@@ -6,7 +6,7 @@
     <ul class="moj-pagination__list">
       {% if page > 0 %}
         <li class="moj-pagination__item  moj-pagination__item--prev">
-          <a class="moj-pagination__link" href="{{currentUrl}}&page={{prevPage}}&size={{size}}&sort={{sort}}&days={{days}}">Previous<span class="govuk-visually-hidden"> page</span></a>
+          <a class="moj-pagination__link" href="{{currentUrl}}&page={{prevPage}}&size={{size}}&sort={{sort}}&days={{days}}&selectedPathway={{selectedPathway}}#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
         </li>
       {% endif %}
       {% for i in range(0, totalPages) -%}
@@ -14,13 +14,13 @@
           <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
         {% else %}
           <li class="moj-pagination__item">
-            <a class="moj-pagination__link" href="{{currentUrl}}&page={{i}}&size={{size}}&sort={{sort}}&days={{days}}" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
+            <a class="moj-pagination__link" href="{{currentUrl}}&page={{i}}&size={{size}}&sort={{sort}}&days={{days}}&selectedPathway={{selectedPathway}}#case-notes " aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
           </li>
         {% endif %}
       {%- endfor %}
       {% if isLast === false %}
         <li class="moj-pagination__item  moj-pagination__item--next">
-          <a class="moj-pagination__link" href="{{currentUrl}}&page={{nextPage}}&size={{size}}&sort={{sort}}&days={{days}}">Next<span class="govuk-visually-hidden"> page</span></a>
+          <a class="moj-pagination__link" href="{{currentUrl}}&page={{nextPage}}&size={{size}}&sort={{sort}}&days={{days}}&selectedPathway={{selectedPathway}}#case-notes">Next<span class="govuk-visually-hidden"> page</span></a>
         </li>
       {% endif %}
     </ul>
