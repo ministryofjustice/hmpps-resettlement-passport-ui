@@ -5644,3 +5644,9 @@ li.hook-selected {
     color: #1d70b8;
   }
 }
+
+.govuk-table__cell{
+  &--min-width-100{
+    min-width: 100px;
+  }
+}
