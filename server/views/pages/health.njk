@@ -12,9 +12,12 @@
       {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
     </div>
   </div>
-  <div
-    class="govuk-grid-row govuk-!-padding-top-4">
-    <!-- Main content area -->
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+    <div class="govuk-grid-column-three-quarters">
+      <p>Information relating to this pathway is not currently available.</p>
+      <p>You can still use the readiness status to track progress.</p>
+    </div>
+    {#
     <div
       class="govuk-grid-column-one-quarter sticky-anchor-links">
       <!-- Pathway subnav -->
@@ -61,5 +64,6 @@
         </div>
       </section>
     </div>
+    #}
   </div>
 {% endblock %}
