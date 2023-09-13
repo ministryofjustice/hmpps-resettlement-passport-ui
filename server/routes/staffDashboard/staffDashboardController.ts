@@ -21,7 +21,7 @@ export default class StaffDashboardController {
         0,
         200,
         'releaseDate',
-        'DESC',
+        'ASC',
       )
       const view = new StaffDashboardView(prisonersList, errors)
       res.render('pages/staff-dashboard', { ...view.renderArgs })
