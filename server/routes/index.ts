@@ -37,6 +37,7 @@ export default function routes(services: Services): Router {
     let rosh: { error?: boolean } = {}
     let mappa: { error?: boolean } = {}
     let caseNotes: { error?: boolean } = {}
+    let staffContacts: { error?: boolean } = {}
     try {
       licenceConditions = await rpClient.get(
         req.user.token,
@@ -86,6 +87,16 @@ export default function routes(services: Services): Router {
       logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
       caseNotes.error = true
     }
+    try {
+      staffContacts = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/staff-contacts`,
+      )
+    } catch (err) {
+      logger.warn(`Cannot retrieve Staff Contacts for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      staffContacts.error = true
+    }
+
     res.render('pages/overview', {
       licenceConditions,
       prisonerData,
@@ -98,6 +109,7 @@ export default function routes(services: Services): Router {
       sort,
       days,
       selectedPathway,
+      staffContacts,
     })
   })
   use('/accommodation', accommodationRouter)

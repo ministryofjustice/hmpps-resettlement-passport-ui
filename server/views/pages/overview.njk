@@ -19,6 +19,10 @@
           id: "status"
         },
         {
+          name: "Staff contacts",
+          id: "staff-contacts"
+        },
+        {
           name: "Case notes",
           id: "case-notes"
         },
@@ -73,6 +77,37 @@
           </table>
           <br></div>
       </section>
+      {# Staff contacts #}
+      <section id="staff-contacts" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Staff contacts
+        </h3>
+        </header>
+        <div class="app-summary-card__body govuk-!-padding-top-4">
+          {% if not staffContacts.error %}
+            <table class="govuk-table">
+              <tbody class="govuk-table__body">
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Key worker</th>
+                  <td class="govuk-table__cell">{{staffContacts.keyWorker["name"]}}</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Prison Offender Manager</th>
+                  <td class="govuk-table__cell">{{ staffContacts.primaryPom["name"] }}</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Community Offender Manager</th>
+                  <td class="govuk-table__cell">{{ staffContacts.com["name"] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          {% else %}
+            <p>{{ errorMessage }}</p>
+          {% endif%}
+          <br>
+        </div>
+      </section>
       <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
@@ -85,7 +120,7 @@
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
             <form action="/prisoner-overview/" method="GET">
-              <input name="prisonerNumber" value="{{prisonerData.personalDetails.prisonerNumber}}" hidden />
+              <input name="prisonerNumber" value="{{prisonerData.personalDetails.prisonerNumber}}" hidden/>
               <div class="govuk-grid-column-one-third">
                 <label class="govuk-label" for="pathway-select">Filter by pathway</label>
                 <select name="selectedPathway" class="govuk-select" id="pathway-select">
@@ -141,9 +176,9 @@
                 {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days) }}
               {% else %}
                 <p>{{ errorMessage }}</p>
-              {% endif%}
+                {% endif%}
+              </div>
             </div>
-          </div>
           </section>
           <section id="licence-summary" class="app-summary-card govuk-!-margin-bottom-8">
             <header class="app-summary-card__header">
@@ -390,8 +425,9 @@
       </div>
     {% endblock %}
 
-{% block bodyEnd %}
-  {% if selectedPathway or days %} {# SCROLL TO CASE NOTES SECTION IF FILTERING/SORTING/PAGINATING #}
-    <script src="/assets/js/scrollToCaseNotes.js"></script>
-  {% endif %}
-{% endblock %}
+    {% block bodyEnd %}
+      {% if selectedPathway or days %}
+        {# SCROLL TO CASE NOTES SECTION IF FILTERING/SORTING/PAGINATING #}
+        <script src="/assets/js/scrollToCaseNotes.js"></script>
+      {% endif %}
+    {% endblock %}
