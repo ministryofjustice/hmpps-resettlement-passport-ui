@@ -119,8 +119,8 @@
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
-            <form action="/prisoner-overview/" method="GET">
-              <input name="prisonerNumber" value="{{prisonerData.personalDetails.prisonerNumber}}" hidden/>
+            <form action="/prisoner-overview/#case-notes" method="GET">
+              <input name="prisonerNumber" value="{{prisonerData.personalDetails.prisonerNumber}}" hidden />
               <div class="govuk-grid-column-one-third">
                 <label class="govuk-label" for="pathway-select">Filter by pathway</label>
                 <select name="selectedPathway" class="govuk-select" id="pathway-select">
@@ -173,7 +173,7 @@
                 {% set nextPage = page | float + 1 | float%}
                 {% set prevPage = page | float - 1 | float%}
                 {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber%}
-                {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days) }}
+                {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
               {% else %}
                 <p>{{ errorMessage }}</p>
                 {% endif%}
@@ -423,11 +423,4 @@
           </section>
         </div>
       </div>
-    {% endblock %}
-
-    {% block bodyEnd %}
-      {% if selectedPathway or days %}
-        {# SCROLL TO CASE NOTES SECTION IF FILTERING/SORTING/PAGINATING #}
-        <script src="/assets/js/scrollToCaseNotes.js"></script>
-      {% endif %}
     {% endblock %}
