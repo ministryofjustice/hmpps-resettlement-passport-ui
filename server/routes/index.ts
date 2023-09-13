@@ -147,7 +147,27 @@ export default function routes(services: Services): Router {
       logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
       caseNotes.error = true
     }
-    res.render('pages/status-update', { prisonerData, selectedPathway, updateSuccessful, state, caseNotes })
+
+    let caseNoteCreators: { error?: boolean } = {}
+    try {
+      caseNoteCreators = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}/creators/${getEnumByURL(
+          selectedPathway,
+        )}`,
+      )
+    } catch (err) {
+      logger.warn(`Cannot retrieve Case Notes creators for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      caseNoteCreators.error = true
+    }
+    res.render('pages/status-update', {
+      prisonerData,
+      selectedPathway,
+      updateSuccessful,
+      state,
+      caseNotes,
+      caseNoteCreators,
+    })
   })
 
   return router
