@@ -147,7 +147,7 @@
                 <label class="govuk-label" for="sort-by-select">Sort by</label>
                 <select name="sort" class="govuk-select" id="sort-by-select">
                   <option {% if sort == "occurenceDateTime,DESC" %}selected{% endif %} value="occurenceDateTime,DESC">Created (most recent)</option>
-                  <option {% if sort == "pathway,DESC" %}selected{% endif %} value="pathway,DESC">Pathway</option>
+                  <option {% if sort == "pathway,ASC" %}selected{% endif %} value="pathway,ASC">Pathway</option>
                 </select>
               </div>
               <div class="govuk-grid-column-one-third">
