@@ -34,7 +34,7 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          <form method="GET" action="/status-update/{{ selectedPathway }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+          <form method="GET" action="/status-update">
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
@@ -69,6 +69,7 @@
                 {% endfor %}
               </div>
             </div>
+            <input type="hidden" name="selectedPathway" value="{{ selectedPathway }}">
             <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
             <button class="govuk-button" type="submit">Update</button>
             {% set successNotificationHtml %}
