@@ -13,6 +13,7 @@ import addIdRouter from './add-id'
 import addBankAccountRouter from './add-bank-account'
 import healthRouter from './health-status'
 import licenceImageRouter from './licence-image'
+import idAssessmentRouter from './finance-id/assessment'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
 import { getEnumByURL } from '../utils/utils'
@@ -179,6 +180,7 @@ export default function routes(services: Services): Router {
       caseNoteCreators,
     })
   })
+  use('/finance-and-id/assessment', idAssessmentRouter)
 
   return router
 }
