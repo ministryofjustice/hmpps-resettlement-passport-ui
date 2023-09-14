@@ -90,15 +90,15 @@
               <tbody class="govuk-table__body">
                 <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Key worker</th>
-                  <td class="govuk-table__cell">{{staffContacts.keyWorker["name"]}}</td>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.keyWorker["name"] if staffContacts.keyWorker["name"] | length else "-" }}</td>
                 </tr>
                 <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Prison Offender Manager</th>
-                  <td class="govuk-table__cell">{{ staffContacts.primaryPom["name"] }}</td>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.primaryPom["name"] if staffContacts.primaryPom["name"] | length else "-" }}</td>
                 </tr>
                 <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Community Offender Manager</th>
-                  <td class="govuk-table__cell">{{ staffContacts.com["name"] }}</td>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.com["name"] if staffContacts.com["name"] | length else "-" }}</td>
                 </tr>
               </tbody>
             </table>

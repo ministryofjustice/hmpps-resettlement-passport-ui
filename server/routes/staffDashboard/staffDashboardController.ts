@@ -22,7 +22,7 @@ export default class StaffDashboardController {
         0,
         200,
         'releaseDate',
-        'DESC',
+        'ASC',
         <string>searchInput,
       )
       const view = new StaffDashboardView(prisonersList, errors, searchInput)
