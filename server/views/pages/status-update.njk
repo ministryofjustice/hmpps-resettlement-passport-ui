@@ -57,6 +57,7 @@
                       type="radio"
                       id="{{ statusItem }}"
                       value="{{ statusItem }}"
+                      data-aria-controls="caseNote_{{statusItem}}"
                       {% if isChecked %}checked{% endif %}
                     >
                     <label class="govuk-label govuk-radios__label" for="{{ statusItem }}">
@@ -64,6 +65,12 @@
                     </label>
                     <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
                       {{ statusInfo.description }}
+                    </div>
+                  </div>
+                  <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="caseNote_{{statusItem}}">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="caseNoteInput">Add a case note</label>
+                      <textarea class="govuk-textarea" id="caseNoteInput" name="caseNoteInput" rows="5" aria-describedby="more-detail-hint"></textarea>
                     </div>
                   </div>
                 {% endfor %}
