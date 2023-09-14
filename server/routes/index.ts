@@ -9,11 +9,11 @@ import childrenFamiliesCommunitiesRouter from './children-families-and-communiti
 import drugsAlcoholRouter from './drugs-alcohol'
 import educationSkillsWorkRouter from './education-skills-work'
 import financeIdRouter from './finance-id'
-import addIdRouter from './add-id'
-import addBankAccountRouter from './add-bank-account'
+import addBankAccountRouter from './finance-id/add-bank-account'
 import healthRouter from './health-status'
 import licenceImageRouter from './licence-image'
 import idAssessmentRouter from './finance-id/assessment'
+import addIdRouter from './finance-id/add-id'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
 import { getEnumByURL } from '../utils/utils'
@@ -117,8 +117,8 @@ export default function routes(services: Services): Router {
   use('/drugs-and-alcohol', drugsAlcoholRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
   use('/finance-and-id', financeIdRouter)
-  use('/add-an-id', addIdRouter)
-  use('/add-a-bank-account', addBankAccountRouter)
+  use('/finance-and-id/add-an-id', addIdRouter)
+  use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
   use('/status-update/:selectedPathway', async (req: Request, res: Response, next) => {

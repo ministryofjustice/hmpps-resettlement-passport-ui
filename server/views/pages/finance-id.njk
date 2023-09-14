@@ -22,8 +22,8 @@
           id: "assessment"
         },
         {
-          name: "ID documents",
-          id: "id-documents"
+          name: "ID",
+          id: "id"
         },
         {
           name: "Finance",
@@ -40,45 +40,50 @@
         </div>
         <div class="govuk-notification-banner__content">
           <p class="govuk-notification-banner__heading">
-            {{ prisonerData.personalDetails.firstName | capitalize }} {{ prisonerData.personalDetails.lastName | capitalize }} does not have a completed Finance and ID assessment.<br>
+            {{ prisonerData.personalDetails.firstName | capitalize }}
+            {{ prisonerData.personalDetails.lastName | capitalize }} does not have a completed Finance and ID assessment.<br>
             <a class="govuk-notification-banner__link" href="/finance-and-id/assessment/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Complete assessment now</a>.
           </p>
         </div>
       </div>
-    <section id="id-documents" class="app-summary-card govuk-!-margin-bottom-8">
-      <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
-            ID documents
-          </h3>
-        <span class="right">
-          <a class="govuk-button" href="/add-an-id">
-              Add an ID
-            </a>
-        </span>
-      </header>
-      <div class="app-summary-card__body">
-        <br>
-      </div>
-    </section>
-    <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
-      <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
+      <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
             Finance
           </h3>
-        <span class="right">
-          <a href="add-a-bank-account" class="govuk-button">
-              Add a bank account</a>
-        </span>
-      </header>
-      <div class="app-summary-card__body">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <h3 class="govuk-heading-s">Bank account</h3>
-            <p>No current bank account applications</p>
+          <span class="right">
+            <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-button">
+              Add a bank account application</a>
+          </span>
+        </header>
+        <div class="app-summary-card__body">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <p>No current applications</p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <section id="id" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            ID
+          </h3>
+          <span class="right">
+            <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+              Add an ID application
+            </a>
+          </span>
+        </header>
+        <div class="app-summary-card__body">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <p>No current applications</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </div>
-</div>
 {% endblock %}
