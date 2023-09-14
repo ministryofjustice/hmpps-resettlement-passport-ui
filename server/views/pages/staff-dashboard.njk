@@ -5,24 +5,21 @@
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 {% block content %}
   <h1 class="govuk-heading-xl">Prepare someone for release</h1>
-  <form id="staff-dashboard-filters" action="/" method="GET">
+  <form action="/" method="GET">
     <div class="govuk-grid-row filters govuk-!-margin-bottom-4">
-      <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <h3 class="govuk-heading-m">Filter by:</h3>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-form-group">
-              <p>Filters coming soon...</p>
-            </div>
-          </div>
+      <div class="govuk-grid-column-full">
+        <h3 class="govuk-heading-m">Filter by:</h3>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <div class="govuk-form-group">
+          <label class="govuk-label " for="searchInput">
+            Prisoner’s name or ID
+          </label>
+          <input class="govuk-input" id="searchInput" name="searchInput" placeholder="" type="text" value="{{ searchInput }}">
         </div>
       </div>
       <div class="govuk-grid-column-full">
-        {{ govukButton({
-          text: "Apply filters"
-        }) }}
+        <button class="govuk-button" type="submit">Apply filters</button>
       </div>
     </div>
   </form>
