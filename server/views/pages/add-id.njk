@@ -1,178 +1,60 @@
 {% extends "../partials/layout.njk" %}
-{% from "govuk/components/table/macro.njk" import govukTable %}
-
-{% set pageTitle = applicationName + " - Add a new ID" %}
+{% set pathway = "Finance and ID" %}
+{% set pageTitle = applicationName + " - " + pathway + " - Add an ID application"%}
 {% set mainClasses = "app-container govuk-body" %}
-
+{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
 {% block content %}
-<h2 class="govuk-heading-m">Apply for an ID</h2>
-<form action="id" class="govuk-form">
-    <div class="govuk-form-group">
-        <label class="govuk-label" for="type">Type</label>
-        <select class="govuk-select" id="type" name="type">
-            <option value="">Select type</option>
-            <option value="passport" {% if data['type'] == 'passport' %}selected{% endif %}>Passport</option>
-            <option value="driving-licence" {% if data['type'] == 'driving-licence' %}selected{% endif %}>Driving licence</option>
-            <option value="other" {% if data['type'] == 'other' %}selected{% endif %}>Other</option>
-        </select>
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+        {{ titleAndIntro(pathway) }}
     </div>
+    <div class="govuk-grid-row govuk-!-padding-bottom-4">
+        <div class="govuk-grid-column-full">
+            <h2>Apply for an ID</h2>
+            <form action="id-add-2" class="govuk-form">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="type">Type</label>
+                    <select class="govuk-select" id="type" name="type">
+                        <option value="">Select type</option>
+                        <option value="birth-certificate">Birth certificate</option>
+                        <option value="replacement-marriage-certificate">Replacement marriage certificate</option>
+                        <option value="replacement-civil-partnership-certificate">Replacement civil partnership certificate</option>
+                        <option value="adoption-certificate">Adoption certificate</option>
+                        <option value="divorce-decree-absolute-certificate">Divorce decree absolute certificate</option>
+                        <option value="driving-licence">Driving licence</option>
+                        <option value="biometric-residence-permit">Biometric residence permit</option>
+                        <option value="deed-poll-certificate">Deed poll certificate</option>
+                    </select>
 
-    <div class="govuk-form-group">
-        <div class="govuk-date-input" id="date-requested">
-            <label class="govuk-label" for="type">Date requested</label>
-            <!-- Date requested input -->
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="date-requested-day">
-                        Day
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-requested-day" name="date-requested-day" type="text" inputmode="numeric" value="{{ data['date-requested-day'] }}">
                 </div>
-            </div>
-            <div class="govuk-date-input__item">
+
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="date-requested-month">
-                        Month
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-requested-month" name="date-requested-month" type="text" inputmode="numeric" value="{{ data['date-requested-month'] }}">
+                    <div class="govuk-date-input" id="date-requested">
+                        <label class="govuk-label" for="date-requested-day">Application submitted</label>
+                        <!-- Date requested input -->
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="date-requested-day">Day</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-requested-day" name="date-requested-day" type="text" inputmode="numeric" value="">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="date-requested-month">Month</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-requested-month" name="date-requested-month" type="text" inputmode="numeric" value="">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="date-requested-year">Year</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-requested-year" name="date-requested-year" type="text" inputmode="numeric" value="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="date-requested-year">
-                        Year
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-requested-year" name="date-requested-year" type="text" inputmode="numeric" value="{{ data['date-requested-year'] }}">
-                </div>
-            </div>
+                <input type="hidden" name="id-1-completed" value="true">
+                <button class="govuk-button" type="submit">Continue</button>
+            </form>
         </div>
     </div>
 
-    <div class="govuk-form-group">
-        <label class="govuk-label" for="application">Application status</label>
-        <select class="govuk-select" id="application" name="application">
-            <option value="">Select application status</option>
-            <option value="accepted" {% if data['application'] == 'accepted' %}selected{% endif %}>Accepted</option>
-            <option value="rejected" {% if data['application'] == 'rejected' %}selected{% endif %}>Rejected</option>
-        </select>
-    </div>
-
-    <div class="govuk-form-group">
-        <div class="govuk-date-input" id="date-id-received">
-            <label class="govuk-label" for="type">Date ID received</label>
-            <!-- Date of ID received input -->
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="date-id-received-day">
-                        Day
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-id-received-day" name="date-id-received-day" type="text" inputmode="numeric" value="{{ data['date-id-received-day'] }}">
-                </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="date-id-received-month">
-                        Month
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-id-received-month" name="date-id-received-month" type="text" inputmode="numeric" value="{{ data['date-id-received-month'] }}">
-                </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="date-id-received-year">
-                        Year
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-id-received-year" name="date-id-received-year" type="text" inputmode="numeric" value="{{ data['date-id-received-year'] }}">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="govuk-form-group">
-        <div class="govuk-date-input" id="id-issue-date">
-            <label class="govuk-label" for="type">Date ID issued</label>
-            <!-- ID issue date input -->
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="id-issue-date-day">
-                        Day
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="id-issue-date-day" name="id-issue-date-day" type="text" inputmode="numeric" value="{{ data['id-issue-date-day'] }}">
-                </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="id-issue-date-month">
-                        Month
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="id-issue-date-month" name="id-issue-date-month" type="text" inputmode="numeric" value="{{ data['id-issue-date-month'] }}">
-                </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="id-issue-date-year">
-                        Year
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="id-issue-date-year" name="id-issue-date-year" type="text" inputmode="numeric" value="{{ data['id-issue-date-year'] }}">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="govuk-form-group">
-        <div class="govuk-date-input" id="id-expiry-date">
-            <label class="govuk-label" for="type">Date of ID expiry</label>
-            <!-- ID expiry date input -->
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="id-expiry-date-day">
-                        Day
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="id-expiry-date-day" name="id-expiry-date-day" type="text" inputmode="numeric" value="{{ data['id-expiry-date-day'] }}">
-                </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="id-expiry-date-month">
-                        Month
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="id-expiry-date-month" name="id-expiry-date-month" type="text" inputmode="numeric" value="{{ data['id-expiry-date-month'] }}">
-                </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="id-expiry-date-year">
-                        Year
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="id-expiry-date-year" name="id-expiry-date-year" type="text" inputmode="numeric" value="{{ data['id-expiry-date-year'] }}">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="govuk-form-group">
-        <label class="govuk-label" for="notes">Notes</label>
-        <textarea class="govuk-textarea" id="notes" name="notes" rows="5">{{ data['notes'] }}</textarea>
-    </div>
-
-    <div class="govuk-form-group">
-        <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Added to personal items</span>
-            </legend>
-            <div class="govuk-radios">
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="id-placement-yes" name="id-placement" type="radio" value="yes" {% if data['id-placement'] == 'yes' %}checked{% endif %}>
-                    <label class="govuk-label govuk-radios__label" for="id-placement-yes">Yes</label>
-                </div>
-                <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="id-placement-no" name="id-placement" type="radio" value="no" {% if data['id-placement'] == 'no' %}checked{% endif %}>
-                    <label class="govuk-label govuk-radios__label" for="id-placement-no">No</label>
-                </div>
-            </div>
-        </fieldset>
-    </div>
-    <input type="hidden" name="id-1-completed" value="true">
-    <button class="govuk-button" type="submit">Submit</button>
-</form>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% set pathway = "Finance and ID" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
+{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
@@ -18,8 +18,12 @@
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {{ subNav([
         {
-          name: "ID documents",
-          id: "id-documents"
+          name: "Finance and ID assessment",
+          id: "assessment"
+        },
+        {
+          name: "ID",
+          id: "id"
         },
         {
           name: "Finance",
@@ -28,40 +32,58 @@
       ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <section id="id-documents" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            ID documents
-          </h3>
-          <span class="right">
-            <a class="govuk-button" href="/add-an-id">
-              Add an ID
-            </a>
-          </span>
-        </header>
-        <div class="app-summary-card__body">
-          <br>
+      <div id="assessment" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Important
+        </h2>
         </div>
-      </section>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-notification-banner__heading">
+            {{ prisonerData.personalDetails.firstName | capitalize }}
+            {{ prisonerData.personalDetails.lastName | capitalize }} does not have a completed Finance and ID assessment.<br>
+            <a class="govuk-notification-banner__link" href="/finance-and-id/assessment/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Complete assessment now</a>.
+          </p>
+        </div>
+      </div>
       <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
             Finance
           </h3>
           <span class="right">
-            <a href="add-a-bank-account" class="govuk-button">
-              Add a bank account</a>
+            <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-button">
+              Add a bank account application</a>
           </span>
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-s">Bank account</h3>
-              <p>No current bank account applications</p>
+              <p>No current applications</p>
             </div>
           </div>
         </div>
       </section>
+      <section id="id" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            ID
+          </h3>
+          <span class="right">
+            <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+              Add an ID application
+            </a>
+          </span>
+        </header>
+        <div class="app-summary-card__body">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+              <p>No current applications</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </div>
 {% endblock %}
