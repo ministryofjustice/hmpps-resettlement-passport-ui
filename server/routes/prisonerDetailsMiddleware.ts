@@ -22,6 +22,9 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
       prisonerData.prisonerImage = prisonerImage
       req.prisonerData = prisonerData
     } catch (err) {
+      if (err.status === 404) {
+        err.customMessage = 'No data found for prisoner'
+      }
       next(err)
     }
   }
