@@ -120,10 +120,15 @@ export default function routes(services: Services): Router {
   use('/education-skills-and-work', educationSkillsWorkRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
-  use('/status-update/:selectedPathway', async (req: Request, res: Response, next) => {
+  use('/add-case-note', async (req: Request, res: Response) => {
     const { prisonerData } = req
-    const { selectedPathway } = req.params
-    const { state } = req.query
+    res.render('pages/add-case-note', {
+      prisonerData,
+    })
+  })
+  use('/status-update/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const { state, selectedPathway } = req.query
     const token = res.locals?.user?.token
 
     const rpClient = new RPClient()
@@ -185,6 +190,7 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/assessment', idAssessmentRouter)
   use('/finance-and-id/confirm-add-a-bank-account', confirmBankAccountRouter)
   use('/finance-and-id/confirm-add-an-id', confirmIdRouter)
+  use('/finance-and-id/assessment', idAssessmentRouter)
 
   return router
 }

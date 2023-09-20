@@ -34,7 +34,7 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          <form method="GET" action="/status-update/{{ selectedPathway }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+          <form method="GET" action="/status-update">
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
@@ -57,6 +57,7 @@
                       type="radio"
                       id="{{ statusItem }}"
                       value="{{ statusItem }}"
+                      data-aria-controls="caseNote_{{statusItem}}"
                       {% if isChecked %}checked{% endif %}
                     >
                     <label class="govuk-label govuk-radios__label" for="{{ statusItem }}">
@@ -66,9 +67,16 @@
                       {{ statusInfo.description }}
                     </div>
                   </div>
+                  <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="caseNote_{{statusItem}}">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="caseNoteInput">Add a case note</label>
+                      <textarea class="govuk-textarea" id="caseNoteInput" name="caseNoteInput" rows="5" aria-describedby="more-detail-hint"></textarea>
+                    </div>
+                  </div>
                 {% endfor %}
               </div>
             </div>
+            <input type="hidden" name="selectedPathway" value="{{ selectedPathway }}">
             <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
             <button class="govuk-button" type="submit">Update</button>
             {% set successNotificationHtml %}

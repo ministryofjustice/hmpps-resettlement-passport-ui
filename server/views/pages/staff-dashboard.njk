@@ -5,53 +5,55 @@
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 {% block content %}
   <h1 class="govuk-heading-xl">Prepare someone for release</h1>
-  <form id="staff-dashboard-filters" action="/" method="GET">
-    <div class="govuk-grid-row filters govuk-!-margin-bottom-4">
-      <div class="govuk-grid-column-two-thirds">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
-            <h3 class="govuk-heading-m">Filter by:</h3>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-form-group">
-              <p>Filters coming soon...</p>
-            </div>
+  {# Only NOMIS users can access the list prisoners functionality at present #}
+  {% if user.authSource === "nomis" %}
+    <form action="/" method="GET">
+      <div class="govuk-grid-row filters govuk-!-margin-bottom-4">
+        <div class="govuk-grid-column-full">
+          <h3 class="govuk-heading-m">Filter by:</h3>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <div class="govuk-form-group">
+            <label class="govuk-label " for="searchInput">
+              Prisoner’s name or ID
+            </label>
+            <input class="govuk-input" id="searchInput" name="searchInput" placeholder="" type="text" value="{{ searchInput }}">
           </div>
         </div>
+        <div class="govuk-grid-column-full">
+          <button class="govuk-button" type="submit">Apply filters</button>
+        </div>
       </div>
-      <div class="govuk-grid-column-full">
-        {{ govukButton({
-          text: "Apply filters"
-        }) }}
-      </div>
-    </div>
-  </form>
-  {% if prisonersList %}
-    <h3 class="govuk-heading-l">All pathways overview</h3>
-    {{ prisonersTable(prisonersList.content) }}
-    <nav class="govuk-pagination" role="navigation" aria-label="results">
-      <ul class="govuk-pagination__list">
-        <li class="govuk-pagination__item govuk-pagination__item--current">
-          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1" aria-current="page">
-            1
-          </a>
-        </li>
-        <li class="govuk-pagination__item">
-          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2">
-            2
-          </a>
-        </li>
-        <li class="govuk-pagination__item">
-          <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 3">
-            3
-          </a>
-        </li>
-      </ul>
-      <div class="govuk-pagination__next">
-        <a class="govuk-link govuk-pagination__link" href="#" rel="next"> <span class="govuk-pagination__link-title">Next</span> <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-            <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
-          </svg></a>
-      </div>
-    </nav>
-  {% endif %}
+    </form>
+    {% if prisonersList %}
+      <h3 class="govuk-heading-l">All pathways overview</h3>
+      {{ prisonersTable(prisonersList.content) }}
+      <nav class="govuk-pagination" role="navigation" aria-label="results">
+        <ul class="govuk-pagination__list">
+          <li class="govuk-pagination__item govuk-pagination__item--current">
+            <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1" aria-current="page">
+              1
+            </a>
+          </li>
+          <li class="govuk-pagination__item">
+            <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2">
+              2
+            </a>
+          </li>
+          <li class="govuk-pagination__item">
+            <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 3">
+              3
+            </a>
+          </li>
+        </ul>
+        <div class="govuk-pagination__next">
+          <a class="govuk-link govuk-pagination__link" href="#" rel="next"> <span class="govuk-pagination__link-title">Next</span> <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
+              <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
+            </svg></a>
+        </div>
+      </nav>
+    {% endif %}
+    {% else %}
+      <p>This functionality is only currently available for NOMIS users. Please log in as a NOMIS user and try again.</p>
+    {% endif %}
 {% endblock %}
