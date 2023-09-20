@@ -34,7 +34,7 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          <form method="GET" action="/status-update">
+          <form method="POST" action="/status-update#notes">
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
@@ -70,7 +70,7 @@
                   <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="caseNote_{{statusItem}}">
                     <div class="govuk-form-group">
                       <label class="govuk-label" for="caseNoteInput">Add a case note</label>
-                      <textarea class="govuk-textarea" id="caseNoteInput" name="caseNoteInput" rows="5" aria-describedby="more-detail-hint"></textarea>
+                      <textarea class="govuk-textarea" id="caseNoteInput" name="caseNoteInput_{{ statusItem }}" rows="5" aria-describedby="more-detail-hint"></textarea>
                     </div>
                   </div>
                 {% endfor %}
@@ -78,12 +78,13 @@
             </div>
             <input type="hidden" name="selectedPathway" value="{{ selectedPathway }}">
             <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
             <button class="govuk-button" type="submit">Update</button>
             {% set successNotificationHtml %}
               <h3 class="govuk-notification-banner__heading">
                 Pathway status updated successfully
               </h3>
-              <p class="govuk-body">Contact <a class="govuk-notification-banner__link" href="mailto:example@digital.justice.gov.uk">example@digital.justice.gov.uk</a> if you think there’s a problem.</p>
+              {# <p class="govuk-body">Contact <a class="govuk-notification-banner__link" href="mailto:example@digital.justice.gov.uk">example@digital.justice.gov.uk</a> if you think there’s a problem.</p> #}
             {% endset %}
             {% if updateSuccessful  %}
               {{ govukNotificationBanner({
@@ -124,7 +125,7 @@
                     {% set currentPathway = notes.pathway | getEnumValue %}
                     <div class="case-note">
                       <h3>{{ currentPathway.name }}</h3>
-                      <p>{{ notes.text }}</p>
+                      <p>{{ notes.text | formatFirstSentence | safe }}</p>
                       <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate}}</span>
                       <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate }} by {{notes.createdBy}}</span>
                       <br>

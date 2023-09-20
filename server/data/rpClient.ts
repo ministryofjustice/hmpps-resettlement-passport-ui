@@ -30,4 +30,11 @@ export default class RPClient {
       data: body,
     })
   }
+
+  async post(token: string, path: string, body: Record<never, never>) {
+    return RPClient.restClient(token).post({
+      path,
+      data: body,
+    })
+  }
 }

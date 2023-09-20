@@ -163,7 +163,7 @@
                   {% set currentPathway = notes.pathway | getEnumValue %}
                   <div class="case-note">
                     <h3>{{ currentPathway.name }}</h3>
-                    <p>{{ notes.text }}</p>
+                    <p>{{ notes.text | formatFirstSentence | safe }}</p>
                     <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate}}</span>
                     <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate }} by {{notes.createdBy}}</span>
                   </div>
