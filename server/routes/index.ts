@@ -16,7 +16,7 @@ import idAssessmentRouter from './finance-id/assessment'
 import addIdRouter from './finance-id/add-id'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
-import { getEnumByURL } from '../utils/utils'
+import { getEnumByURL, getEnumValue } from '../utils/utils'
 import logger from '../../logger'
 
 export default function routes(services: Services): Router {
@@ -129,7 +129,17 @@ export default function routes(services: Services): Router {
   })
   use('/status-update/', async (req: Request, res: Response, next) => {
     const { prisonerData } = req
-    const { state, selectedPathway } = req.query
+    let { state, selectedPathway, _csrf }: { state?: string; selectedPathway?: string; _csrf?: string } = req.query
+    // If query parameters are not provided, try to get values from the request body
+    if (!state || !selectedPathway || !_csrf) {
+      const { state: bodyState, selectedPathway: bodyPathway, _csrf: bodyCsrf } = req.body
+      // Use the values from the request body if they exist
+      state = state || bodyState
+      selectedPathway = selectedPathway || bodyPathway
+      _csrf = _csrf || bodyCsrf
+    }
+    const caseNoteInput = req.body[`caseNoteInput_${state}`] || null
+
     const token = res.locals?.user?.token
 
     const rpClient = new RPClient()
@@ -145,11 +155,20 @@ export default function routes(services: Services): Router {
             status: state,
           },
         )
+        await rpClient.post(
+          req.user.token,
+          `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}`,
+          {
+            pathway: getEnumByURL(selectedPathway),
+            text: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
+          },
+        )
         updateSuccessful = true
       } catch (error) {
         logger.error(error)
       }
     }
+
     let caseNotes: { error?: boolean } = {}
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0 } = req.query
     try {

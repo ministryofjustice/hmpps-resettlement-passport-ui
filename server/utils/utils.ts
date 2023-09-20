@@ -101,3 +101,21 @@ export function roundNumberUp(number: number): number | undefined {
   const value = Math.ceil(number)
   return value
 }
+
+export function formatFirstSentence(inputString: string): string {
+  const sentences = inputString.split(/(?=Resettlement status set to: [^.]*\.)/)
+  let firstSentence = sentences[0]
+  // Check if the first sentence matches the pattern
+  if (firstSentence.startsWith('Resettlement status set to:')) {
+    // Split the first sentence into two parts: before and after the period
+    const parts = firstSentence.split('.')
+    if (parts.length > 1) {
+      const beforePeriod = `${parts[0]}.`
+      const afterPeriod = parts.slice(1).join('.')
+      // Format the part before the period as bold
+      firstSentence = `<strong>${beforePeriod}</strong><div>${afterPeriod}</div>`
+    }
+  }
+  // Join the first sentence with the rest of the sentences using newlines.
+  return [firstSentence, ...sentences.slice(1)].join('')
+}
