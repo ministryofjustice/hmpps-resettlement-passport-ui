@@ -14,6 +14,8 @@ import healthRouter from './health-status'
 import licenceImageRouter from './licence-image'
 import idAssessmentRouter from './finance-id/assessment'
 import addIdRouter from './finance-id/add-id'
+import confirmBankAccountRouter from './finance-id/confirm-bank-account'
+import confirmIdRouter from './finance-id/confirm-id'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
 import { getEnumByURL } from '../utils/utils'
@@ -116,9 +118,6 @@ export default function routes(services: Services): Router {
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/drugs-and-alcohol', drugsAlcoholRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
-  use('/finance-and-id', financeIdRouter)
-  use('/finance-and-id/add-an-id', addIdRouter)
-  use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
   use('/status-update/:selectedPathway', async (req: Request, res: Response, next) => {
@@ -180,7 +179,12 @@ export default function routes(services: Services): Router {
       caseNoteCreators,
     })
   })
+  use('/finance-and-id', financeIdRouter)
+  use('/finance-and-id/add-an-id', addIdRouter)
+  use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
   use('/finance-and-id/assessment', idAssessmentRouter)
+  use('/finance-and-id/confirm-add-a-bank-account', confirmBankAccountRouter)
+  use('/finance-and-id/confirm-add-an-id', confirmIdRouter)
 
   return router
 }

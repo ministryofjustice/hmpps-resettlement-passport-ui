@@ -4,62 +4,54 @@
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
 {% block content %}
-  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-    {{ titleAndIntro(pathway) }}
-  </div>
-  <div class="govuk-grid-row govuk-!-padding-bottom-4">
-    <div class="govuk-grid-column-full">
-    <h2>Apply for a bank account</h2>
-    <form action="bank-account-add-check-answers" class="govuk-form">
-    <div class="govuk-form-group">
-        <label class="govuk-label" for="bank">Bank</label>
-        <select class="govuk-select" id="bank" name="bank">
-            <option value="">Select bank</option>
-            <option value="Barclays">Barclays</option>
-            <option value="Co-op">Co-op</option>
-            <option value="HSBC">HSBC</option>
-            <option value="Lloyds">Lloyds</option>
-            <option value="Nationwide">Nationwide</option>
-            <option value="NatWest">NatWest</option>
-            <option value="Santander">Santander</option>
-        </select>
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+        {{ titleAndIntro(pathway) }}
     </div>
+    <div class="govuk-grid-row govuk-!-padding-bottom-4">
+        <div class="govuk-grid-column-full">
+            <h2>Apply for a bank account</h2>
+            <form action="/finance-and-id/confirm-add-a-bank-account/" class="govuk-form">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="bank">Bank</label>
+                    <select class="govuk-select" id="bank" name="bank">
+                        <option value="">Select bank</option>
+                        <option value="Barclays" {% if params.bank == "Barclays" %}selected{% endif %}>Barclays</option>
+                        <option value="Co-op" {% if params.bank == "Co-op" %}selected{% endif %}>Co-op</option>
+                        <option value="HSBC" {% if params.bank == "HSBC" %}selected{% endif %}>HSBC</option>
+                        <option value="Lloyds" {% if params.bank == "Lloyds" %}selected{% endif %}>Lloyds</option>
+                        <option value="Nationwide" {% if params.bank == "Nationwide" %}selected{% endif %}>Nationwide</option>
+                        <option value="NatWest" {% if params.bank == "NatWest" %}selected{% endif %}>NatWest</option>
+                        <option value="Santander" {% if params.bank == "Santander" %}selected{% endif %}>Santander</option>
+                    </select>
+                </div>
 
-    <div class="govuk-form-group">
-        <label class="govuk-label" for="application-submitted">Application submitted</label>
-        <div class="govuk-date-input" id="application-submitted">
-            <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="application-submitted-day">
-                        Day
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="application-submitted-day" name="application-submitted-day" type="text" value="" inputmode="numeric">
+                    <label class="govuk-label" for="application-submitted">Application submitted</label>
+                    <div class="govuk-date-input" id="application-submitted">
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="applicationSubmittedDay">Day</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedDay" name="applicationSubmittedDay" type="text" value="{{ params.applicationSubmittedDay if params.applicationSubmittedDay | length else "" }}" inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="applicationSubmittedMonth">Month</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedMonth" name="applicationSubmittedMonth" type="text" value="{{ params.applicationSubmittedMonth if params.applicationSubmittedMonth | length else "" }}" inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="applicationSubmittedYear">Year</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="applicationSubmittedYear" name="applicationSubmittedYear" type="text" value="{{ params.applicationSubmittedYear if params.applicationSubmittedYear | length else "" }}" inputmode="numeric">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="application-submitted-month">
-                        Month
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="application-submitted-month" name="application-submitted-month" type="text" value="" inputmode="numeric">
-                </div>
-            </div>
-            <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="application-submitted-year">
-                        Year
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="application-submitted-year" name="application-submitted-year" type="text" value="" inputmode="numeric">
-                </div>
-            </div>
+                <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                <button class="govuk-button" type="submit">Submit</button>
+            </form>
         </div>
     </div>
-
-
-
-    <button class="govuk-button" type="submit">Submit</button>
-</form>
-    </div>
-  </div>
 
 {% endblock %}
