@@ -19,7 +19,7 @@ import confirmIdRouter from './finance-id/confirm-id'
 import idAssessmentConfirmRouter from './finance-id/confirm-assessment'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
-import { getEnumByURL } from '../utils/utils'
+import { getEnumByURL, getEnumValue } from '../utils/utils'
 import logger from '../../logger'
 
 export default function routes(services: Services): Router {
@@ -119,12 +119,30 @@ export default function routes(services: Services): Router {
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/drugs-and-alcohol', drugsAlcoholRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
+  use('/finance-and-id', financeIdRouter)
+  use('/finance-and-id/add-an-id', addIdRouter)
+  use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
-  use('/status-update/:selectedPathway', async (req: Request, res: Response, next) => {
+  use('/add-case-note', async (req: Request, res: Response) => {
     const { prisonerData } = req
-    const { selectedPathway } = req.params
-    const { state } = req.query
+    res.render('pages/add-case-note', {
+      prisonerData,
+    })
+  })
+  use('/status-update/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    let { state, selectedPathway, _csrf }: { state?: string; selectedPathway?: string; _csrf?: string } = req.query
+    // If query parameters are not provided, try to get values from the request body
+    if (!state || !selectedPathway || !_csrf) {
+      const { state: bodyState, selectedPathway: bodyPathway, _csrf: bodyCsrf } = req.body
+      // Use the values from the request body if they exist
+      state = state || bodyState
+      selectedPathway = selectedPathway || bodyPathway
+      _csrf = _csrf || bodyCsrf
+    }
+    const caseNoteInput = req.body[`caseNoteInput_${state}`] || null
+
     const token = res.locals?.user?.token
 
     const rpClient = new RPClient()
@@ -140,11 +158,20 @@ export default function routes(services: Services): Router {
             status: state,
           },
         )
+        await rpClient.post(
+          req.user.token,
+          `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}`,
+          {
+            pathway: getEnumByURL(selectedPathway),
+            text: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
+          },
+        )
         updateSuccessful = true
       } catch (error) {
         logger.error(error)
       }
     }
+
     let caseNotes: { error?: boolean } = {}
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0 } = req.query
     try {
@@ -187,6 +214,7 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/confirm-assessment', idAssessmentConfirmRouter)
   use('/finance-and-id/confirm-add-a-bank-account', confirmBankAccountRouter)
   use('/finance-and-id/confirm-add-an-id', confirmIdRouter)
+  use('/finance-and-id/assessment', idAssessmentRouter)
 
   return router
 }

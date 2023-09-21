@@ -114,7 +114,7 @@
             Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
           </h3>
           <span class="right">
-            <a href="casenote-add.html" class="govuk-button">Add a case note</a>
+            <a href="/add-case-note?prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" class="govuk-button">Add a case note</a>
           </span>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
@@ -147,7 +147,7 @@
                 <label class="govuk-label" for="sort-by-select">Sort by</label>
                 <select name="sort" class="govuk-select" id="sort-by-select">
                   <option {% if sort == "occurenceDateTime,DESC" %}selected{% endif %} value="occurenceDateTime,DESC">Created (most recent)</option>
-                  <option {% if sort == "pathway,DESC" %}selected{% endif %} value="pathway,DESC">Pathway</option>
+                  <option {% if sort == "pathway,ASC" %}selected{% endif %} value="pathway,ASC">Pathway</option>
                 </select>
               </div>
               <div class="govuk-grid-column-one-third">
@@ -163,7 +163,7 @@
                   {% set currentPathway = notes.pathway | getEnumValue %}
                   <div class="case-note">
                     <h3>{{ currentPathway.name }}</h3>
-                    <p>{{ notes.text }}</p>
+                    <p>{{ notes.text | formatFirstSentence | safe }}</p>
                     <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate}}</span>
                     <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate }} by {{notes.createdBy}}</span>
                   </div>

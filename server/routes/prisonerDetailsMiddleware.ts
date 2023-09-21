@@ -6,7 +6,12 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
   /* *******************************
     FETCH PRISONER PROFILE DATA HERE
   ********************************* */
-  const { prisonerNumber } = req.query
+  let { prisonerNumber } = req.query
+
+  if (!prisonerNumber) {
+    const { prisonerNumber: bodyPrisonserNumber } = req.body
+    prisonerNumber = prisonerNumber || bodyPrisonserNumber
+  }
   if (prisonerNumber) {
     try {
       const apiResponse = new RPClient()
@@ -22,8 +27,12 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
       prisonerData.prisonerImage = prisonerImage
       req.prisonerData = prisonerData
     } catch (err) {
+      if (err.status === 404) {
+        err.customMessage = 'No data found for prisoner'
+      }
       next(err)
     }
   }
+
   next()
 }
