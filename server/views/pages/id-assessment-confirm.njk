@@ -1,0 +1,71 @@
+{% extends "../partials/layout.njk" %}
+{% set pathway = "Finance and ID" %}
+{% set pageTitle = applicationName + " - " + pathway %}
+{% set mainClasses = "app-container govuk-body" %}
+{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(pathway) }}
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-full">
+      <h2>Finance and ID assessment</h2>
+      <div class="govuk-grid-row ">
+        <div class="govuk-grid-column-three-quarters">
+          <h2 class="govuk-heading-m">Check your answers before submitting the finance and ID assessment</h2><br>
+          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Date of assessment</dt>
+              {% set date = params.dateAssessmentMonth + "-" + params.dateAssessmentDay + "-" + params.dateAssessmentYear %}
+              <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a href="/finance-and-id/assessment{{req.url}}">Change<span class="govuk-visually-hidden"> date of assessment</span></a>
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Requires a bank account application</dt>
+              <dd class="govuk-summary-list__value">{{ params.bankRequired }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/assessment{{req.url}}">
+                Change<span class="govuk-visually-hidden"> bank account application</span>
+                </a>
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Requires an ID application</dt>
+              <dd class="govuk-summary-list__value">{{ params.idRequired }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/assessment{{req.url}}">
+                Change<span class="govuk-visually-hidden"> ID application</span>
+                </a>
+              </dd>
+            </div>
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Existing ID</dt>
+              <dd class="govuk-summary-list__value">
+                <ul class="govuk-list">
+                  {% for id in params.existingId %}
+                    <li>{{ id }}</li>
+                  {% endfor %}
+                </ul>
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/assessment{{req.url}}">
+                Change<span class="govuk-visually-hidden"> existing ID</span>
+                </a>
+              </dd>
+            </div>
+          </dl>
+          <form action="id" method="GET" novalidate="">
+            <input type="hidden" name="id-assessment" value="done">
+            <button class="govuk-button" data-module="govuk-button">Accept and send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

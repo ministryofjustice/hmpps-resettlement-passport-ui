@@ -10,7 +10,7 @@
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
     <h2>Finance and ID assessment</h2>
-      <form action="id-assessment-check-answers" class="govuk-form">
+      <form action="/finance-and-id/confirm-assessment/" class="govuk-form">
         <div class="govuk-form-group">
           <div class="govuk-date-input" id="date-assessment">
             <label class="govuk-label" for="type">
@@ -18,26 +18,26 @@
             </label>
             <div class="govuk-date-input__item">
               <div class="govuk-form-group">
-                <label class="govuk-label govuk-date-input__label" for="date-assessment-day">
+                <label class="govuk-label govuk-date-input__label" for="dateAssessmentDay">
                         Day
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-assessment-day" name="date-assessment-day" type="text" inputmode="numeric" value="">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateAssessmentDay" name="dateAssessmentDay" type="text" inputmode="numeric" value="{{ params.dateAssessmentDay if params.dateAssessmentDay | length else "" }}">
               </div>
             </div>
             <div class="govuk-date-input__item">
               <div class="govuk-form-group">
-                <label class="govuk-label govuk-date-input__label" for="date-assessment-month">
+                <label class="govuk-label govuk-date-input__label" for="dateAssessmentMonth">
                         Month
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-assessment-month" name="date-assessment-month" type="text" inputmode="numeric" value="">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateAssessmentMonth" name="dateAssessmentMonth" type="text" inputmode="numeric" value="{{ params.dateAssessmentMonth if params.dateAssessmentMonth | length else "" }}">
               </div>
             </div>
             <div class="govuk-date-input__item">
               <div class="govuk-form-group">
-                <label class="govuk-label govuk-date-input__label" for="date-assessment-year">
+                <label class="govuk-label govuk-date-input__label" for="dateAssessmentYear">
                         Year
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-assessment-year" name="date-assessment-year" type="text" inputmode="numeric" value="">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dateAssessmentYear" name="dateAssessmentYear" type="text" inputmode="numeric" value="{{ params.dateAssessmentYear if params.dateAssessmentYear | length else "" }}">
               </div>
             </div>
           </div>
@@ -49,12 +49,12 @@
             </legend><br>
             <div class="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="bank-required-yes" name="bank-required" type="radio" value="yes">
-                <label class="govuk-label govuk-radios__label" for="bank-required-yes">Yes</label>
+                <input class="govuk-radios__input" id="bankRequiredYes" name="bankRequired" type="radio" value="Yes" {% if params.bankRequired == "Yes" %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="bankRequiredYes">Yes</label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="bank-required-no" name="bank-required" type="radio" value="no">
-                <label class="govuk-label govuk-radios__label" for="bank-required-no">No</label>
+                <input class="govuk-radios__input" id="bankRequiredNo" name="bankRequired" type="radio" value="No" {% if params.bankRequired == "No" %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="bankRequiredNo">No</label>
               </div>
             </div>
           </fieldset>
@@ -68,12 +68,12 @@
 
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="id-required-yes" name="id-required" type="radio" value="yes">
-                <label class="govuk-label govuk-radios__label" for="id-required-yes">Yes</label>
+                <input class="govuk-radios__input" id="idRequiredYes" name="idRequired" type="radio" value="Yes" {% if params.idRequired == "Yes" %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="idRequiredYes">Yes</label>
               </div>
               <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="id-required-no" name="id-required" type="radio" value="no" data-aria-controls="conditional-contact-2">
-                <label class="govuk-label govuk-radios__label" for="contact-2">
+                <input class="govuk-radios__input" id="idRequiredNo" name="idRequired" type="radio" value="No" {% if params.idRequired == "No" %}checked{% endif %}>
+                <label class="govuk-label govuk-radios__label" for="idRequiredNo">
                         No
                     </label>
               </div>
@@ -94,56 +94,57 @@
             </div>
             <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="existing-id-birth-certificate" name="existing-id" type="checkbox" value="birth-certificate">
-                <label class="govuk-label govuk-checkboxes__label" for="existing-id-birth-certificate">
+                <input class="govuk-checkboxes__input" id="existingIdBirthCertificate" name="existingId" type="checkbox" value="Birth Certificate" {% if params.existingId and "Birth Certificate" in params.existingId %}checked{% endif %}>
+                <label class="govuk-label govuk-checkboxes__label" for="existingIdBirthCertificate">
                         Birth certificate
                     </label>
               </div>
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="existing-id-marriage-certificate" name="existing-id" type="checkbox" value="marriage-certificate">
-                <label class="govuk-label govuk-checkboxes__label" for="existing-id-marriage-certificate">
+                <input class="govuk-checkboxes__input" id="existingIdMarriageCertificate" name="existingId" type="checkbox" value="Marriage Certificate" {% if params.existingId and "Marriage Certificate" in params.existingId %}checked{% endif %}>
+                <label class="govuk-label govuk-checkboxes__label" for="existingIdMarriageCertificate">
                         Marriage certificate
                     </label>
               </div>
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="existing-id-civil-partnership-certificate" name="existing-id" type="checkbox" value="civil-partnership-certificate">
-                <label class="govuk-label govuk-checkboxes__label" for="existing-id-civil-partnership-certificate">
+                <input class="govuk-checkboxes__input" id="existingIdCivilPartnershipCertificate" name="existingId" type="checkbox" value="Civil Partnership Certificate" {% if params.existingId and "Civil Partnership Certificate" in params.existingId %}checked{% endif %}>
+                <label class="govuk-label govuk-checkboxes__label" for="existingIdCivilPartnershipCertificate">
                         Civil partnership certificate
                     </label>
               </div>
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="existing-id-adoption-certificate" name="existing-id" type="checkbox" value="adoption-certificate">
-                <label class="govuk-label govuk-checkboxes__label" for="existing-id-adoption-certificate">
+                <input class="govuk-checkboxes__input" id="existingIdAdoptionCertificate" name="existingId" type="checkbox" value="Adoption Certificate" {% if params.existingId and "Adoption Certificate" in params.existingId %}checked{% endif %}>
+                <label class="govuk-label govuk-checkboxes__label" for="existingIdAdoptionCertificate">
                         Adoption certificate
                     </label>
               </div>
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="existing-id-divorce-decree-absolute-certificate" name="existing-id" type="checkbox" value="divorce-decree-absolute-certificate">
-                <label class="govuk-label govuk-checkboxes__label" for="existing-id-divorce-decree-absolute-certificate">
+                <input class="govuk-checkboxes__input" id="existingIdDivorceDecreeAbsoluteCertificate" name="existingId" type="checkbox" value="Divorce Decree Absolute Certificate" {% if params.existingId and "Divorce Decree Absolute Certificate" in params.existingId %}checked{% endif %}>
+                <label class="govuk-label govuk-checkboxes__label" for="existingIdDivorceDecreeAbsoluteCertificate">
                         Divorce decree absolute certificate
                     </label>
               </div>
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="existing-id-driving-licence" name="existing-id" type="checkbox" value="driving-licence">
-                <label class="govuk-label govuk-checkboxes__label" for="existing-id-driving-licence">
+                <input class="govuk-checkboxes__input" id="existingIdDrivingLicence" name="existingId" type="checkbox" value="Driving Licence" {% if params.existingId and "Driving Licence" in params.existingId %}checked{% endif %}>
+                <label class="govuk-label govuk-checkboxes__label" for="existingIdDrivingLicence">
                         Driving licence
                     </label>
               </div>
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="existing-id-biometric-residence-permit" name="existing-id" type="checkbox" value="biometric-residence-permit">
-                <label class="govuk-label govuk-checkboxes__label" for="existing-id-biometric-residence-permit">
+                <input class="govuk-checkboxes__input" id="existingIdBiometricResidencePermit" name="existingId" type="checkbox" value="Biometric Residence Permit" {% if params.existingId and "Biometric Residence Permit" in params.existingId %}checked{% endif %}>
+                <label class="govuk-label govuk-checkboxes__label" for="existingIdBiometricResidencePermit">
                         Biometric residence permit
                     </label>
               </div>
               <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input" id="existing-id-deed-poll-certificate" name="existing-id" type="checkbox" value="deed-poll-certificate">
-                <label class="govuk-label govuk-checkboxes__label" for="existing-id-deed-poll-certificate">
+                <input class="govuk-checkboxes__input" id="existingIdDeedPollCertificate" name="existingId" type="checkbox" value="Deed Poll Certificate" {% if params.existingId and "Deed Poll Certificate" in params.existingId %}checked{% endif %}>
+                <label class="govuk-label govuk-checkboxes__label" for="existingIdDeedPollCertificate">
                         Deed poll certificate
                     </label>
               </div>
             </div>
           </fieldset>
         </div>
+        <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
         <button class="govuk-button" type="submit">Submit</button>
       </form>
     </div>
