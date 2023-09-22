@@ -1,9 +1,11 @@
-import express from 'express'
+import express, { Request } from 'express'
+// import { RPClient } from '../../data'
+// import logger from '../../../logger'
 
-const confirmIdAssessmentRouter = express.Router().get('/', async (req, res, next) => {
+const confirmAssessmentRouter = express.Router().get('/', async (req: Request, res, next) => {
   const { prisonerData } = req
   const params = req.query
-  res.render('pages/id-assessment-confirm', { prisonerData, params, req })
+  res.render('pages/assessment-confirmation', { prisonerData, params, req })
 })
 
-export default confirmIdAssessmentRouter
+export default confirmAssessmentRouter

@@ -32,6 +32,13 @@ export const formatDate = (dateString: string): string => {
   return date.toLocaleDateString('en-GB', options)
 }
 
+export const formatDateToIso = (dateString: string): string => {
+  if (!dateString) return null
+  const date = new Date(dateString)
+  const formattedDate = date.toISOString().split('.')[0]
+  return formattedDate
+}
+
 export const getAgeFromDate = (birthDate: string): number => {
   const birthYear = new Date(birthDate).getFullYear()
   const currentYear = new Date().getFullYear()

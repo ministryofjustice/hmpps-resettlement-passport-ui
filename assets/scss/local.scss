@@ -5650,3 +5650,22 @@ li.hook-selected {
     min-width: 100px;
   }
 }
+
+.capitalise{
+  text-transform: capitalize;
+}
+.ghost-button {
+  border: 0px;
+  background: transparent;
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #d4351c;
+  text-decoration: underline;
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+}

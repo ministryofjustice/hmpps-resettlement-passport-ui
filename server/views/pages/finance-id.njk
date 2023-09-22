@@ -32,6 +32,7 @@
       ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
+      {% if not assessment %}
       <div id="assessment" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
         <div class="govuk-notification-banner__header">
           <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
@@ -46,6 +47,50 @@
           </p>
         </div>
       </div>
+      {% else %}
+      <section id="assessment" class="app-summary-card govuk-!-margin-bottom-8">
+    <header class="app-summary-card__header">
+        <h3 class="app-summary-card__title">
+            Finance and ID assessment
+        </h3>
+    </header>
+
+    <div class="app-summary-card__body">
+        <table class="govuk-table">
+            <tbody class=" govuk-table__body">
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Date of assessment</th>
+                    <td class="govuk-table__cell">{{assessment.assessmentDate | formatDate }}
+                    </td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Requires a bank account application</th>
+                    <td class="govuk-table__cell capitalise">{{assessment.isBankAccountRequired }}</td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Requires an ID application</th>
+                    <td class="govuk-table__cell capitalise">{{assessment.isIdRequired }}</td>
+                </tr>
+                <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Existing ID</th>
+                    <td class="govuk-table__cell">
+                        <ul class="govuk-list">
+                            {% for document in assessment.idDocuments %}
+                            <li>{{ document.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <form>
+            <button class="ghost-button" data-module="govuk-button">
+                Delete assessment
+            </button>
+        </form>
+    </div>
+</section>
+      {% endif %}
       <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
