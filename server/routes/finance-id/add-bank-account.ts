@@ -1,8 +1,9 @@
 import express from 'express'
 
-const addBankAccountouter = express.Router().get('/', async (req, res, next) => {
+const addBankAccountRouter = express.Router().get('/', async (req, res, next) => {
   const { prisonerData } = req
-  res.render('pages/add-bank-account', { prisonerData })
+  const params = req.query
+  res.render('pages/add-bank-account', { prisonerData, params })
 })
 
-export default addBankAccountouter
+export default addBankAccountRouter

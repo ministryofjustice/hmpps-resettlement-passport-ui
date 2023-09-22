@@ -1,8 +1,9 @@
 import express from 'express'
 
-const idAssessmentRouter = express.Router().get('/', async (req, res, next) => {
+const assessmentRouter = express.Router().get('/', async (req, res, next) => {
   const { prisonerData } = req
-  res.render('pages/id-assessment', { prisonerData })
+  const params = req.query
+  res.render('pages/assessment', { prisonerData, params })
 })
 
-export default idAssessmentRouter
+export default assessmentRouter

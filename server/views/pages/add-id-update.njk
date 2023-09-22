@@ -1,0 +1,99 @@
+{% extends "../partials/layout.njk" %}
+{% set pathway = "Finance and ID" %}
+{% set pageTitle = applicationName + " - " + pathway + " - Add an ID application"%}
+{% set mainClasses = "app-container govuk-body" %}
+{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+{% block content %}
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+        {{ titleAndIntro(pathway) }}
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-bottom-4">
+        <div class="govuk-grid-column-full">
+            <h2>Apply for a bank account</h2>
+            <form action="bank-account-add-2-check-answers" class="govuk-form">
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="bank-account-application-status">Application status</label>
+                    <select class="govuk-select" id="bank-account-application-status" name="bank-account-application-status">
+                        <option value="">Select status</option>
+                        <option value="account-opened">Account opened</option>
+                        <option value="account-declined">Account declined</option>
+                        <option value="returned-ineligible">Returned ineligible</option>
+                        <option value="returned-inaccurate">Returned inaccurate</option>
+                        <option value="returned-incomplete">Returned incomplete</option>
+                        <option value="resubmitted">Resubmitted</option>
+                    </select>
+                </div>
+
+                <div class="govuk-form-group">
+                    <label class="govuk-label" for="date-bank-details-received">Date bank details received</label>
+                    <div class="govuk-date-input" id="date-bank-details-received">
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="date-bank-details-received-day">Day</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-bank-details-received-day" name="date-bank-details-received-day" type="text" value="" inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="date-bank-details-received-month">Month</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="date-bank-details-received-month" name="date-bank-details-received-month" type="text" value="" inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                            <div class="govuk-form-group">
+                                <label class="govuk-label govuk-date-input__label" for="date-bank-details-received-year">Year</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="date-bank-details-received-year" name="date-bank-details-received-year" type="text" value="" inputmode="numeric">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                            <span class="govuk-fieldset__heading">Added to personal items</span>
+                        </legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="bank-placement-yes" name="bank-placement" type="radio" value="yes" aria-controls="conditional-bank-placement-yes" aria-expanded="false">
+                                <label class="govuk-label govuk-radios__label" for="bank-placement-yes">Yes</label>
+                            </div>
+                            <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-bank-placement-yes">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="date-capture">Date added</label>
+                                    <div class="govuk-date-input">
+                                        <div class="govuk-date-input__item">
+                                            <div class="govuk-form-group">
+                                                <label class="govuk-label govuk-date-input__label" for="day">Day</label>
+                                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="bank-placement-day" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="">
+                                            </div>
+                                        </div>
+                                        <div class="govuk-date-input__item">
+                                            <div class="govuk-form-group">
+                                                <label class="govuk-label govuk-date-input__label" for="month">Month</label>
+                                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="bank-placement-month" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="">
+                                            </div>
+                                        </div>
+                                        <div class="govuk-date-input__item">
+                                            <div class="govuk-form-group">
+                                                <label class="govuk-label govuk-date-input__label" for="year">Year</label>
+                                                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="bank-placement-year" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="bank-placement-no" name="bank-placement" type="radio" value="no" data-aria-controls="conditional-bank-placement-no">
+                                <label class="govuk-label govuk-radios__label" for="bank-placement-no">No</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <input type="hidden" name="bank-acc-2-completed" value="true">
+                <button class="govuk-button" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
