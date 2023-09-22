@@ -102,15 +102,18 @@
 
         <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
           <div class="govuk-grid-row">
-            <form action="#" method="GET">
+            <form action="/status-update#notes" method="GET">
               <div class="govuk-grid-column-full">
                 <label class="govuk-label" for="pathway-select">Created by</label>
-                <select name="selectedPathway" class="govuk-select" id="pathway-select">
-                  <option value="All">Select an option</option>
+                <select name="createdByUserId" class="govuk-select" id="pathway-select">
+                  <option value="0">Select an option</option>
                   {% for creator in caseNoteCreators %}
-                    <option value="{{ creator.createdBy }}">{{ creator.createdBy }}</option>
+                    {% set isSelectedUser = createdByUserId == creator.userId %}
+                    <option {% if isSelectedUser %}selected{% endif %} value="{{ creator.userId }}">{{ creator.createdBy }}</option>
                   {% endfor %}
                 </select>
+                <input type="hidden" name="selectedPathway" value="{{ selectedPathway }}">
+                <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
               </div>
               <div class="govuk-grid-column-full">
                 <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
