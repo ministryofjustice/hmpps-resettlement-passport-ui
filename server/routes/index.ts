@@ -204,6 +204,10 @@ export default function routes(services: Services): Router {
       caseNotes,
       caseNoteCreators,
       createdByUserId,
+      size,
+      page,
+      sort,
+      days,
     })
   })
   use('/finance-and-id/assessment', idAssessmentRouter)
