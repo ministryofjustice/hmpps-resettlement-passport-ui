@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express'
-import { HTTPError } from 'superagent'
 import { RPClient } from '../data'
 import { PrisonerData } from '../@types/express'
 import logger from '../../logger'
