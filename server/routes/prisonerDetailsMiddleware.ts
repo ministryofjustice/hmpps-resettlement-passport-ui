@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
+import { HTTPError } from 'superagent'
 import { RPClient } from '../data'
 import { PrisonerData } from '../@types/express'
+import logger from '../../logger'
 
 export default async function prisonerDetailsMiddleware(req: Request, res: Response, next: NextFunction) {
   /* *******************************
@@ -34,12 +36,17 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
     }
   }
 
-  // RP2-490 If the prisoner's prison does not match the user's caseload then we need to treat this as unauthorized
+  // RP2-490 If the prisoner's prison does not match the user's caseload then we need to treat this as not found
   if (
     res.locals.user.authSource === 'nomis' &&
     res.locals.userActiveCaseLoad.caseLoadId !== prisonerData?.personalDetails.prisonId
   ) {
-    next(new Error("Unauthorised - Prisoner's prison is not in user's caseload"))
+    logger.warn(
+      `User ${res.locals.user.username} trying to access prisoner ${prisonerNumber} in ${prisonerData?.personalDetails.prisonId} from outside caseload ${res.locals.userActiveCaseLoad.caseLoadId}.`,
+    )
+    next({
+      customMessage: 'No data found for prisoner',
+    })
     return
   }
 
