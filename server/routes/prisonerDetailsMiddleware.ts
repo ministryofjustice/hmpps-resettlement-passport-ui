@@ -7,32 +7,42 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
     FETCH PRISONER PROFILE DATA HERE
   ********************************* */
   let { prisonerNumber } = req.query
+  let prisonerData = null
 
   if (!prisonerNumber) {
-    const { prisonerNumber: bodyPrisonserNumber } = req.body
-    prisonerNumber = prisonerNumber || bodyPrisonserNumber
+    const { prisonerNumber: bodyPrisonerNumber } = req.body
+    prisonerNumber = prisonerNumber || bodyPrisonerNumber
   }
   if (prisonerNumber) {
     try {
       const apiResponse = new RPClient()
-      const prisonerData = (await apiResponse.get(
+      prisonerData = (await apiResponse.get(
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerNumber}`,
       )) as PrisonerData
 
-      const prisonerImage = (await apiResponse.getImageAsBase64String(
+      prisonerData.prisonerImage = (await apiResponse.getImageAsBase64String(
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerNumber}/image/${prisonerData.personalDetails.facialImageId}`,
       )) as string
-      prisonerData.prisonerImage = prisonerImage
-      req.prisonerData = prisonerData
     } catch (err) {
       if (err.status === 404) {
         err.customMessage = 'No data found for prisoner'
       }
       next(err)
+      return
     }
   }
 
+  // RP2-490 If the prisoner's prison does not match the user's caseload then we need to treat this as unauthorized
+  if (
+    res.locals.user.authSource === 'nomis' &&
+    res.locals.userActiveCaseLoad.caseLoadId !== prisonerData?.personalDetails.prisonId
+  ) {
+    next(new Error("Unauthorised - Prisoner's prison is not in user's caseload"))
+    return
+  }
+
+  req.prisonerData = prisonerData
   next()
 }
