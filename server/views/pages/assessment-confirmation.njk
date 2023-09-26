@@ -27,7 +27,7 @@
 
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">Requires a bank account application</dt>
-                <dd class="govuk-summary-list__value">{% if params.isBankAccountRequired and "true" in params.isBankAccountRequired %}Yes{% else %}No{% endif %}</dd>
+                <dd class="govuk-summary-list__value">{% if params.isBankAccountRequired and true in params.isBankAccountRequired %}Yes{% else %}No{% endif %}</dd>
                 <input hidden name="isBankAccountRequired" value="{{ params.isBankAccountRequired }}" />
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="/finance-and-id/assessment{{req.url}}">
@@ -38,7 +38,7 @@
 
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">Requires an ID application</dt>
-                <dd class="govuk-summary-list__value">{% if params.isIdRequired and "true" in params.isIdRequired %}Yes{% else %}No{% endif %}</dd>
+                <dd class="govuk-summary-list__value">{% if params.isIdRequired and true in params.isIdRequired %}Yes{% else %}No{% endif %}</dd>
                 <input hidden name="isIdRequired" value="{{ params.isIdRequired }}" />
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="/finance-and-id/assessment{{req.url}}">
