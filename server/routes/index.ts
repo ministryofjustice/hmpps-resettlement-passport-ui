@@ -239,6 +239,30 @@ export default function routes(services: Services): Router {
     }
   })
 
+  use('/finance-and-id/bank-account-submit/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const params = req.body
+    const { prisonerNumber, applicationDate } = req.body
+
+    console.log(applicationDate, prisonerNumber)
+
+    const rpClient = new RPClient()
+    try {
+      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
+        applicationSubmittedDate: applicationDate,
+      })
+      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+    } catch (error) {
+      const errorMessage = error.message
+      logger.error('Error fetching finance data:', error)
+      res.render('pages/add-bank-account-confirm', {
+        errorMessage,
+        prisonerData,
+        params,
+      })
+    }
+  })
+
   use('/finance-and-id', financeIdRouter)
   use('/finance-and-id/add-an-id', addIdRouter)
   use('/finance-and-id/add-a-bank-account', addBankAccountRouter)

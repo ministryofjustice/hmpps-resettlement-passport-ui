@@ -32,7 +32,7 @@
       ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      {% if not assessment %}
+      {% if assessment.error %}
         <div id="assessment" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
           <div class="govuk-notification-banner__header">
             <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
@@ -51,10 +51,9 @@
         <section id="assessment" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-            Finance and ID assessment
-        </h3>
+              Finance and ID assessment
+            </h3>
           </header>
-
           <div class="app-summary-card__body">
             <table class="govuk-table">
               <tbody class=" govuk-table__body">
@@ -84,19 +83,18 @@
               </tbody>
             </table>
             <br/>
-            <button class="ghost-button delete-button">Delete assessment</button>
-            <div class="confirm-delete-form" hidden>
+            <button class="ghost-button delete-assessment-button">Delete assessment</button>
+            <div class="confirm-delete-assessment-form" hidden>
               <div class="govuk-button-group">
                 <form action action="/finance-and-id/" method="GET">
                   <button class="govuk-button govuk-button--warning" type="submit">Confirm delete assessment</button>
-                  <input hidden name="deleteConfirmed" value="true"/>
+                  <input hidden name="deleteAssessmentConfirmed" value="true"/>
                   <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
                   <input hidden name="assessmentId" value="{{ assessment.id }}">
                 </form>
-                <button class="ghost-button cancel-delete-button" hidden>Cancel delete assessment</button>
+                <button class="ghost-button cancel-delete-assessment-button" hidden>Cancel delete assessment</button>
               </div>
             </div>
-
           </div>
         </section>
       {% endif %}
@@ -106,14 +104,46 @@
             Finance
           </h3>
           <span class="right">
-            <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-button">
-              Add a bank account application</a>
+            <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-button">Add a bank account application</a>
           </span>
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
-              <p>No current applications</p>
+              {% if finance.error %}
+                <p>No current applications</p>
+              {% else %}
+                <h3 class="govuk-heading-s">Bank account</h3>
+                <table class="govuk-table">
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Bank</th>
+                      <td class="govuk-table__cell">Lloyds</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Application submitted</th>
+                      <td class="govuk-table__cell">4 Feb 2022</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Status</th>
+                      <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+                <button class="ghost-button delete-finance-button">Delete application</button>
+                <div class="confirm-delete-finance-form" hidden>
+                  <div class="govuk-button-group">
+                    <form action action="/finance-and-id/#finance" method="GET">
+                      <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application</button>
+                      <input hidden name="deleteFinanceConfirmed" value="true"/>
+                      <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                      <input hidden name="financeId" value="{{ finance.id }}">
+                    </form>
+                    <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
+                  </div>
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>
