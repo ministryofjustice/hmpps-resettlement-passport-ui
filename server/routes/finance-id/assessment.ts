@@ -3,6 +3,7 @@ import express from 'express'
 const assessmentRouter = express.Router().get('/', async (req, res, next) => {
   const { prisonerData } = req
   const params = req.query
+  console.log('Query from assessment view: ', req.query)
   res.render('pages/assessment', { prisonerData, params })
 })
 

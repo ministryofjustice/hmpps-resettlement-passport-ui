@@ -33,72 +33,72 @@
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% if not assessment %}
-      <div id="assessment" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-        <div class="govuk-notification-banner__header">
-          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+        <div id="assessment" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+          <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
             Important
         </h2>
-        </div>
-        <div class="govuk-notification-banner__content">
-          <p class="govuk-notification-banner__heading">
-            {{ prisonerData.personalDetails.firstName | capitalize }}
-            {{ prisonerData.personalDetails.lastName | capitalize }} does not have a completed Finance and ID assessment.<br>
-            <a class="govuk-notification-banner__link" href="/finance-and-id/assessment/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Complete assessment now</a>.
+          </div>
+          <div class="govuk-notification-banner__content">
+            <p class="govuk-notification-banner__heading">
+              {{ prisonerData.personalDetails.firstName | capitalize }}
+              {{ prisonerData.personalDetails.lastName | capitalize }} does not have a completed Finance and ID assessment.<br>
+              <a class="govuk-notification-banner__link" href="/finance-and-id/assessment/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Complete assessment now</a>.
           </p>
-        </div>
-      </div>
-      {% else %}
-      <section id="assessment" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-        <h3 class="app-summary-card__title">
-            Finance and ID assessment
-        </h3>
-    </header>
-
-    <div class="app-summary-card__body">
-        <table class="govuk-table">
-            <tbody class=" govuk-table__body">
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Date of assessment</th>
-                    <td class="govuk-table__cell">{{assessment.assessmentDate | formatDate }}
-                    </td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Requires a bank account application</th>
-                    <td class="govuk-table__cell capitalise">{{assessment.isBankAccountRequired }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Requires an ID application</th>
-                    <td class="govuk-table__cell capitalise">{{assessment.isIdRequired }}</td>
-                </tr>
-                <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Existing ID</th>
-                    <td class="govuk-table__cell">
-                        <ul class="govuk-list">
-                            {% for document in assessment.idDocuments %}
-                            <li>{{ document.name }}</li>
-                            {% endfor %}
-                        </ul>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <br />
-        <button class="ghost-button delete-button">
-          Delete assessment
-        </button>
-        <div class="confirm-delete-form" hidden>
-          <div class="govuk-button-group">
-            <button class="govuk-button govuk-button--warning">
-              Confirm delete assessment
-            </button>
-            <button class="ghost-button cancel-delete-button" hidden>
-              Cancel delete assessment
-            </button>
           </div>
         </div>
-    </div>
-</section>
+      {% else %}
+        <section id="assessment" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Finance and ID assessment
+        </h3>
+          </header>
+
+          <div class="app-summary-card__body">
+            <table class="govuk-table">
+              <tbody class=" govuk-table__body">
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Date of assessment</th>
+                  <td class="govuk-table__cell">{{assessment.assessmentDate | formatDate }}
+                  </td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Requires a bank account application</th>
+                  <td class="govuk-table__cell capitalise">{{assessment.isBankAccountRequired }}</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Requires an ID application</th>
+                  <td class="govuk-table__cell capitalise">{{assessment.isIdRequired }}</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Existing ID</th>
+                  <td class="govuk-table__cell">
+                    <ul class="govuk-list">
+                      {% for document in assessment.idDocuments %}
+                        <li>{{ document.name }}</li>
+                      {% endfor %}
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br/>
+            <button class="ghost-button delete-button">Delete assessment</button>
+            <div class="confirm-delete-form" hidden>
+              <div class="govuk-button-group">
+                <form action action="/finance-and-id/" method="GET">
+                  <button class="govuk-button govuk-button--warning" type="submit">Confirm delete assessment</button>
+                  <input hidden name="deleteConfirmed" value="true"/>
+                  <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                  <input hidden name="assessmentId" value="{{ assessment.id }}">
+                </form>
+                <button class="ghost-button cancel-delete-button" hidden>Cancel delete assessment</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
       {% endif %}
       <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">

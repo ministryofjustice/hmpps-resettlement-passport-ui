@@ -37,4 +37,11 @@ export default class RPClient {
       data: body,
     })
   }
+
+  async delete(token: string, path: string) {
+    const result = await RPClient.restClient(token).delete({
+      path,
+    })
+    return result
+  }
 }
