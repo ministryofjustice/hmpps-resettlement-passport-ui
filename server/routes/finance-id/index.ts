@@ -5,7 +5,6 @@ import logger from '../../../logger'
 const financeIdRouter = express.Router().get('/', async (req: Request, res, next) => {
   const { prisonerData } = req
   const { deleteConfirmed, assessmentId } = req.query
-  console.log('Query from finance and ID : ', req.query)
 
   if (deleteConfirmed) {
     try {
@@ -21,6 +20,7 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
 
       res.render('pages/finance-id', { errorMessage, prisonerData })
     }
+    return
   }
   getAssessment()
   async function getAssessment() {
