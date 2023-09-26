@@ -9,7 +9,7 @@ export default class StaffDashboardController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const { token } = req.user
     const { userActiveCaseLoad } = res.locals
-    const { searchInput = '', releaseTime = '0' } = req.query as { searchInput: string; releaseTime: string }
+    const { searchInput = '', releaseTime = '84' } = req.query as { searchInput: string; releaseTime: string }
 
     const errors: ErrorMessage[] = []
     let prisonersList = null
