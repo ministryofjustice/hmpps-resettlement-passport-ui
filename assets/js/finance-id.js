@@ -1,19 +1,43 @@
-// SHOW/HIDE DELETE ASSESSMENT BUTTONS
-const deleteBtnEl = document.querySelector('.delete-button')
-const confirmDeleteFormEl = document.querySelector('.confirm-delete-form')
-const cancelDeleteBtnEl = document.querySelector('.cancel-delete-button')
+/***********************************
+  SHOW/HIDE DELETE ASSESSMENT BUTTONS
+************************************/
+const deleteAssessmentBtnEl = document.querySelector('.delete-assessment-button')
+const confirmDeleteAssessmentFormEl = document.querySelector('.confirm-delete-assessment-form')
+const cancelDeleteAssessmentBtnEl = document.querySelector('.cancel-delete-assessment-button')
 
-function showDeleteConfirmation() {
-  confirmDeleteFormEl.hidden = false
-  cancelDeleteBtnEl.hidden = false
-  deleteBtnEl.hidden = true
+function showDeleteAssessmentConfirmation() {
+  confirmDeleteAssessmentFormEl.hidden = false
+  cancelDeleteAssessmentBtnEl.hidden = false
+  deleteAssessmentBtnEl.hidden = true
 }
 
-function hideDeleteConfirmation() {
-  confirmDeleteFormEl.hidden = true
-  cancelDeleteBtnEl.hidden = true
-  deleteBtnEl.hidden = false
+function hideDeleteAssessmentConfirmation() {
+  confirmDeleteAssessmentFormEl.hidden = true
+  cancelDeleteAssessmentBtnEl.hidden = true
+  deleteAssessmentBtnEl.hidden = false
 }
 
-deleteBtnEl.addEventListener('click', showDeleteConfirmation)
-cancelDeleteBtnEl.addEventListener('click', hideDeleteConfirmation)
+deleteAssessmentBtnEl.addEventListener('click', showDeleteAssessmentConfirmation)
+cancelDeleteAssessmentBtnEl.addEventListener('click', hideDeleteAssessmentConfirmation)
+
+/***********************************
+  SHOW/HIDE DELETE FINANCE BUTTONS
+************************************/
+const deleteFinanceBtnEl = document.querySelector('.delete-finance-button')
+const confirmDeleteFinanceFormEl = document.querySelector('.confirm-delete-finance-form')
+const cancelDeleteFinanceBtnEl = document.querySelector('.cancel-delete-finance-button')
+
+function showDeleteFinanceConfirmation() {
+  confirmDeleteFinanceFormEl.hidden = false
+  cancelDeleteFinanceBtnEl.hidden = false
+  deleteFinanceBtnEl.hidden = true
+}
+
+function hideDeleteFinanceConfirmation() {
+  confirmDeleteFinanceFormEl.hidden = true
+  cancelDeleteFinanceBtnEl.hidden = true
+  deleteFinanceBtnEl.hidden = false
+}
+
+deleteFinanceBtnEl.addEventListener('click', showDeleteFinanceConfirmation)
+cancelDeleteFinanceBtnEl.addEventListener('click', hideDeleteFinanceConfirmation)

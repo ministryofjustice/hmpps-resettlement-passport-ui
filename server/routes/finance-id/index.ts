@@ -4,39 +4,61 @@ import logger from '../../../logger'
 
 const financeIdRouter = express.Router().get('/', async (req: Request, res, next) => {
   const { prisonerData } = req
-  const { deleteConfirmed, assessmentId } = req.query
+  const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId } = req.query
 
-  if (deleteConfirmed) {
+  const apiResponse = new RPClient()
+
+  let assessment: { error?: boolean } = {}
+  let assessmentDeleted: { error?: boolean } = {}
+  let finance: { error?: boolean } = {}
+  let financeDeleted: { error?: boolean } = {}
+
+  // DELETE ASSESSMENT
+  if (deleteAssessmentConfirmed) {
     try {
-      const apiResponse = new RPClient()
-      await apiResponse.delete(
+      assessmentDeleted = await apiResponse.delete(
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment/${assessmentId}`,
       )
-      getAssessment()
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error deleting assessment:', error)
-
-      res.render('pages/finance-id', { errorMessage, prisonerData })
+    } catch (err) {
+      logger.warn(`Error deleting assessment`, err)
+      assessmentDeleted.error = true
     }
-    return
   }
-  getAssessment()
-  async function getAssessment() {
+  // FETCH ASSESSMENT
+  try {
+    assessment = await apiResponse.get(
+      req.user.token,
+      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment`,
+    )
+  } catch (err) {
+    logger.warn(`Error fetching assessment data`, err)
+    assessment.error = true
+  }
+  // DELETE FINANCE
+  if (deleteFinanceConfirmed) {
     try {
-      const apiResponse = new RPClient()
-      const assessment = await apiResponse.get(
+      financeDeleted = await apiResponse.delete(
         req.user.token,
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment`,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication/${financeId}`,
       )
-      res.render('pages/finance-id', { assessment, prisonerData })
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error fetching assessment:', error)
-      res.render('pages/finance-id', { errorMessage, prisonerData })
+    } catch (err) {
+      logger.warn(`Error deleting finance`, err)
+      financeDeleted.error = true
     }
   }
+  // FETCH FINANCE
+  try {
+    finance = await apiResponse.get(
+      req.user.token,
+      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication`,
+    )
+  } catch (err) {
+    logger.warn(`Error fetching finance data`, err)
+    finance.error = true
+  }
+
+  res.render('pages/finance-id', { assessment, prisonerData, finance })
 })
 
 export default financeIdRouter

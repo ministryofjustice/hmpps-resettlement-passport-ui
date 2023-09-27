@@ -21,6 +21,7 @@ import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
 import { getEnumByURL, getEnumValue } from '../utils/utils'
 import logger from '../../logger'
+import updateBankAccountStatusRouter from './finance-id/update-status-bank-account'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -239,9 +240,32 @@ export default function routes(services: Services): Router {
     }
   })
 
+  use('/finance-and-id/bank-account-submit/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const params = req.body
+    const { prisonerNumber, applicationDate } = req.body
+
+    const rpClient = new RPClient()
+    try {
+      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
+        applicationSubmittedDate: applicationDate,
+      })
+      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+    } catch (error) {
+      const errorMessage = error.message
+      logger.error('Error fetching finance data:', error)
+      res.render('pages/add-bank-account-confirm', {
+        errorMessage,
+        prisonerData,
+        params,
+      })
+    }
+  })
+
   use('/finance-and-id', financeIdRouter)
   use('/finance-and-id/add-an-id', addIdRouter)
   use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
+  use('/finance-and-id/update-bank-account-status', updateBankAccountStatusRouter)
   use('/finance-and-id/confirm-assessment', confirmAssessmentRouter)
   use('/finance-and-id/confirm-add-a-bank-account', confirmBankAccountRouter)
   use('/finance-and-id/confirm-add-an-id', confirmIdRouter)
