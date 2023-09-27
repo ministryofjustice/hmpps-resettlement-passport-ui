@@ -35,7 +35,7 @@ export const formatDate = (dateString: string): string => {
 export const formatDateToIso = (dateString: string): string => {
   if (!dateString) return null
   const date = new Date(dateString)
-  const formattedDate = date.toISOString().split('.')[0]
+  const formattedDate = date.toISOString()
   return formattedDate
 }
 

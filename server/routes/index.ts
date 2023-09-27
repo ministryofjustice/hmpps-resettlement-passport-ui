@@ -217,8 +217,17 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/assessment-submit/', async (req: Request, res: Response, next) => {
     const { prisonerData } = req
     const params = req.body
-    const { prisonerNumber, assessmentDate, isBankAccountRequired, isIdRequired, idDocuments } = req.body
+    const { prisonerNumber, assessmentDate, isBankAccountRequired, isIdRequired } = req.body
+    let idDocuments: object | null | undefined = null
+    idDocuments = req.body.idDocuments
+    if (idDocuments === null) {
+      idDocuments = []
+    }
+    if (typeof idDocuments === 'string') {
+      idDocuments = [idDocuments]
+    }
 
+    console.log('assessmentDate', assessmentDate)
     const rpClient = new RPClient()
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {

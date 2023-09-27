@@ -17,7 +17,7 @@
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">Date of assessment</dt>
-                {% set date = params.dateAssessmentMonth + "-" + params.dateAssessmentDay + "-" + params.dateAssessmentYear %}
+                {% set date = params.dateAssessmentYear + "-" + params.dateAssessmentMonth + "-" + params.dateAssessmentDay  %}
                 <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
                 <input hidden name="assessmentDate" value="{{ date | formatDateToIso }}"/>
                 <dd class="govuk-summary-list__actions">
@@ -55,8 +55,13 @@
                 <dt class="govuk-summary-list__key">Existing ID</dt>
                 <dd class="govuk-summary-list__value">
                   <ul class="govuk-list">
+                    {% if not params.idDocuments %}
+                      <li>{{ params.idDocuments }}</li>
+                      <input hidden name="idDocuments" value=""/>
+                    {% endif %}
                     {% if params.idDocuments is string %}
                       <li>{{ params.idDocuments }}</li>
+                      <input hidden name="idDocuments" value="{{ params.idDocuments }}"/>
                     {% else %}
                       {% for id in params.idDocuments %}
                         <li>{{ id }}</li>
