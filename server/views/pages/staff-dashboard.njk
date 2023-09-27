@@ -7,7 +7,7 @@
   <h1 class="govuk-heading-xl">Prepare someone for release</h1>
   {# Only NOMIS users can access the list prisoners functionality at present #}
   {% if isPrisonUser %}
-    <form action="/" method="GET">
+    <form action="/" method="GET" novalidate>
       <div class="govuk-grid-row filters govuk-!-margin-bottom-4">
         <div class="govuk-grid-column-full">
           <h3 class="govuk-heading-m">Filter by:</h3>

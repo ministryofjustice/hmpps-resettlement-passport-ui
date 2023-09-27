@@ -35,7 +35,7 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          <form method="POST" action="/status-update#case-notes">
+          <form method="POST" action="/status-update#case-notes" novalidate>
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
@@ -103,7 +103,7 @@
 
         <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
           <div class="govuk-grid-row">
-            <form action="/status-update#case-notes" method="GET">
+            <form action="/status-update#case-notes" method="GET" novalidate>
               <div class="govuk-grid-column-full">
                 <label class="govuk-label" for="pathway-select">Created by</label>
                 <select name="createdByUserId" class="govuk-select" id="pathway-select">

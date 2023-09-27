@@ -10,7 +10,7 @@
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
       <h3 class="govuk-heading-m">Finance and ID assessment</h3>
-      <form action="/finance-and-id/confirm-assessment/" class="govuk-form">
+      <form action="/finance-and-id/confirm-assessment/" class="govuk-form" novalidate>
         <div class="govuk-form-group">
           <div class="govuk-date-input" id="date-assessment">
             <label class="govuk-label" for="type">
@@ -21,7 +21,7 @@
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentDay">
                         Day
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateAssessmentDay" name="dateAssessmentDay" type="text" inputmode="numeric" value="{{ params.dateAssessmentDay if params.dateAssessmentDay | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateAssessmentDay" name="dateAssessmentDay" type="text" pattern="\d{2}" maxlength="2" required inputmode="numeric" value="{{ params.dateAssessmentDay if params.dateAssessmentDay | length else "" }}">
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -29,7 +29,7 @@
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentMonth">
                         Month
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateAssessmentMonth" name="dateAssessmentMonth" type="text" inputmode="numeric" value="{{ params.dateAssessmentMonth if params.dateAssessmentMonth | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateAssessmentMonth" name="dateAssessmentMonth" type="text" pattern="\d{2}" maxlength="2" required inputmode="numeric" value="{{ params.dateAssessmentMonth if params.dateAssessmentMonth | length else "" }}">
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -37,7 +37,7 @@
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentYear">
                         Year
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dateAssessmentYear" name="dateAssessmentYear" type="text" inputmode="numeric" value="{{ params.dateAssessmentYear if params.dateAssessmentYear | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dateAssessmentYear" name="dateAssessmentYear" type="text" pattern="\d{4}" maxlength="4" required inputmode="numeric" value="{{ params.dateAssessmentYear if params.dateAssessmentYear | length else "" }}">
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
           </fieldset>
         </div>
 
-        <div class="govuk-form-group govuk-!-padding-top-4">
+        <div class="govuk-form-group govuk-!-padding-top-4 {{ govuk-form-group--error if errorMsg.idRequired }}">
           <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <span class="govuk-fieldset__heading">Does {{ prisonerData.personalDetails.firstName | capitalize }} require an ID application?</span>

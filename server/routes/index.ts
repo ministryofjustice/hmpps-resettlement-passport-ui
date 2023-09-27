@@ -16,12 +16,12 @@ import assessmentRouter from './finance-id/assessment'
 import addIdRouter from './finance-id/add-id'
 import confirmBankAccountRouter from './finance-id/confirm-bank-account'
 import confirmIdRouter from './finance-id/confirm-id'
-import confirmAssessmentRouter from './finance-id/confirm-assessment'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
 import { getEnumByURL, getEnumValue } from '../utils/utils'
 import logger from '../../logger'
 import updateBankAccountStatusRouter from './finance-id/update-status-bank-account'
+import confirmAssessmentRouter from './finance-id/confirm-assessment'
 
 export default function routes(services: Services): Router {
   const router = Router()
