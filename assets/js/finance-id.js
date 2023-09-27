@@ -17,8 +17,12 @@ function hideDeleteAssessmentConfirmation() {
   deleteAssessmentBtnEl.hidden = false
 }
 
-deleteAssessmentBtnEl.addEventListener('click', showDeleteAssessmentConfirmation)
-cancelDeleteAssessmentBtnEl.addEventListener('click', hideDeleteAssessmentConfirmation)
+if (deleteAssessmentBtnEl) {
+  deleteAssessmentBtnEl.addEventListener('click', showDeleteAssessmentConfirmation)
+}
+if (cancelDeleteAssessmentBtnEl) {
+  cancelDeleteAssessmentBtnEl.addEventListener('click', hideDeleteAssessmentConfirmation)
+}
 
 /***********************************
   SHOW/HIDE DELETE FINANCE BUTTONS
@@ -39,5 +43,9 @@ function hideDeleteFinanceConfirmation() {
   deleteFinanceBtnEl.hidden = false
 }
 
-deleteFinanceBtnEl.addEventListener('click', showDeleteFinanceConfirmation)
-cancelDeleteFinanceBtnEl.addEventListener('click', hideDeleteFinanceConfirmation)
+if (deleteFinanceBtnEl) {
+  deleteFinanceBtnEl.addEventListener('click', showDeleteFinanceConfirmation)
+}
+if (cancelDeleteFinanceBtnEl) {
+  cancelDeleteFinanceBtnEl.addEventListener('click', hideDeleteFinanceConfirmation)
+}
