@@ -33,18 +33,21 @@
   }
 ] %}
 
-<div class="govuk-grid-row ">
-  <div class="govuk-grid-column-full">
-    <nav class="moj-sub-navigation" aria-label="Sub navigation">
-      <ul class="moj-sub-navigation__list">
-        {% for navItem in subNavigationList %}
-          <li class="moj-sub-navigation__item">
-            <a class="moj-sub-navigation__link" href="{{ navItem.url }}?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" {{ "aria-current=page" if pathway === navItem.name }}>
-              {{ navItem.name }}
-            </a>
-          </li>
-        {% endfor %}
-      </ul>
-    </nav>
+{% if prisonerData %}
+  <div class="govuk-grid-row ">
+    <div class="govuk-grid-column-full">
+      <nav class="moj-sub-navigation" aria-label="Sub navigation">
+        <ul class="moj-sub-navigation__list">
+          {% for navItem in subNavigationList %}
+            <li class="moj-sub-navigation__item">
+              <a class="moj-sub-navigation__link"
+                 href="{{ navItem.url }}?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" {{ "aria-current=page" if pathway === navItem.name }}>
+                {{ navItem.name }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
   </div>
-</div>
+{% endif %}

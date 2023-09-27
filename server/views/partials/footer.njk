@@ -1,7 +1,5 @@
-{% from "govuk/components/footer/macro.njk" import govukFooter %}
-
-{{ 
-  govukFooter({
-    classes: "govuk-!-display-none-print"
-  }) 
-}}
+{% if isPrisonUser %}
+    {% include "./dpsFooter.njk" %}
+{% else %}
+    {% include "./externalFooter.njk" %}
+{% endif %}
