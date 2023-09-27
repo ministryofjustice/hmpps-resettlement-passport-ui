@@ -12,10 +12,11 @@ export default class PrisonService {
     sortField: string,
     sortDirection: string,
     searchInput: string,
+    releaseTime: string,
   ) {
     return (await this.rpClient.get(
       token,
-      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}`,
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}`,
     )) as Promise<PrisonersList>
   }
 }
