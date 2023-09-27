@@ -12,42 +12,84 @@
       <h3 class="govuk-heading-m">Apply for a bank account</h3>
       <form action="/finance-and-id/confirm-add-a-bank-account/" class="govuk-form">
         <div class="govuk-form-group">
-          <label class="govuk-label" for="bank">Bank</label>
-          <select class="govuk-select" id="bank" name="bank">
-            <option value="">Select bank</option>
-            <option value="Barclays" {% if params.bank == "Barclays" %} selected {% endif %}>Barclays</option>
-            <option value="Co-op" {% if params.bank == "Co-op" %} selected {% endif %}>Co-op</option>
-            <option value="HSBC" {% if params.bank == "HSBC" %} selected {% endif %}>HSBC</option>
-            <option value="Lloyds" {% if params.bank == "Lloyds" %} selected {% endif %}>Lloyds</option>
-            <option value="Nationwide" {% if params.bank == "Nationwide" %} selected {% endif %}>Nationwide</option>
-            <option value="NatWest" {% if params.bank == "NatWest" %} selected {% endif %}>NatWest</option>
-            <option value="Santander" {% if params.bank == "Santander" %} selected {% endif %}>Santander</option>
+          <label class="govuk-label" for="status">Application status</label>
+          <select class="govuk-select" id="status" name="status">
+            <option value="">Select status</option>
+            <option value="Account opened">Account opened</option>
+            <option value="Account declined">Account declined</option>
+            <option value="Returned ineligible">Returned ineligible</option>
+            <option value="Returned inaccurate">Returned inaccurate</option>
+            <option value="Returned incomplete">Returned incomplete</option>
           </select>
         </div>
-        <label class="govuk-label" for="application-submitted">Application submitted</label>
-        <div class="govuk-date-input" id="application-submitted">
+
+        <label class="govuk-label" for="date-opened">Date account opened</label>
+        <div class="govuk-date-input" id="date-opened">
           <div class="govuk-date-input__item">
             <div class="govuk-form-group">
-              <label class="govuk-label govuk-date-input__label" for="applicationSubmittedDay">Day</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedDay" name="applicationSubmittedDay" type="text" value="{{ params.applicationSubmittedDay if params.applicationSubmittedDay | length else "" }}" inputmode="numeric"></div>
-            </div>
-            <div class="govuk-date-input__item">
-              <div class="govuk-form-group">
-                <label class="govuk-label govuk-date-input__label" for="applicationSubmittedMonth">Month</label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedMonth" name="applicationSubmittedMonth" type="text" value="{{ params.applicationSubmittedMonth if params.applicationSubmittedMonth | length else "" }}" inputmode="numeric"></div>
-              </div>
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="applicationSubmittedYear">Year</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="applicationSubmittedYear" name="applicationSubmittedYear" type="text" value="{{ params.applicationSubmittedYear if params.applicationSubmittedYear | length else "" }}" inputmode="numeric"></div>
-                </div>
-              </div>
-            </div>
-            <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-              <button class="govuk-button" type="submit">Submit</button>
+              <label class="govuk-label govuk-date-input__label" for="accountOpenedDay">Day</label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedDay" name="accountOpenedDay" type="text" inputmode="numeric">
             </div>
           </div>
-        </form>
-      </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-date-input__label" for="accountOpenedMonth">Month</label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedMonth" name="accountOpenedMonth" type="text" inputmode="numeric">
+            </div>
+          </div>
+          <div class="govuk-date-input__item">
+            <div class="govuk-form-group">
+              <label class="govuk-label govuk-date-input__label" for="accountOpenedYear">Year</label>
+              <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="accountOpenedYear" name="accountOpenedYear" type="text" inputmode="numeric">
+            </div>
+          </div>
+        </div>
+
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset" aria-describedby="Added to personal items">
+            <label class="govuk-label">Added to personal items</label>
+            <div class="govuk-radios" data-module="govuk-radios">
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="added-to-items-yes" name="added-to-personal-items" type="radio" value="yes" aria-controls="conditional-added-to-items-yes" aria-expanded="false">
+                <label class="govuk-label govuk-radios__label" for="added-to-items-yes">Yes</label>
+              </div>
+              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-added-to-items-yes">
+                <div class="govuk-form-group">
+                  <label class="govuk-label">Date added</label>
+                  <div class="govuk-date-input">
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="day">Day</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="date-added-day" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="month">Month</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="date-added-month" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="">
+                      </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                      <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="year">Year</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="date-added-year" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="added-to-items-no" name="added-to-personal-items" type="radio" value="no" data-aria-controls="conditional-added-to-items-no">
+                <label class="govuk-label govuk-radios__label" for="added-to-items-no">No</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+        <button class="govuk-button" type="submit">Submit</button>
+
+      </form>
     </div>
-  {% endblock %}
+  </div>
+{% endblock %}
