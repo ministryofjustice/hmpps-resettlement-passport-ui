@@ -42,11 +42,16 @@
             </div>
           </div>
         </div>
-        <div class="govuk-form-group govuk-!-padding-top-4">
+        <div class="govuk-form-group govuk-!-padding-top-4 {{ "govuk-form-group--error" if errorMsg.bankAccountRequired }}">
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <span class="govuk-fieldset__heading">Does {{ prisonerData.personalDetails.firstName | capitalize }} require a bank account application?</span>
             </legend><br>
+            {% if errorMsg.bankAccountRequired %}
+              <p class="govuk-error-message">
+                {{ errorMsg.bankAccountRequired }}
+              </p>
+            {% endif %}
             <div class="govuk-radios">
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="bankRequiredYes" name="isBankAccountRequired" type="radio" value="true" {% if params.isBankAccountRequired == "true" %}checked{% endif %}>
@@ -60,12 +65,16 @@
           </fieldset>
         </div>
 
-        <div class="govuk-form-group govuk-!-padding-top-4 {{ govuk-form-group--error if errorMsg.idRequired }}">
+        <div class="govuk-form-group govuk-!-padding-top-4 {{ "govuk-form-group--error" if errorMsg.idRequired }}">
           <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <span class="govuk-fieldset__heading">Does {{ prisonerData.personalDetails.firstName | capitalize }} require an ID application?</span>
             </legend><br>
-
+            {% if errorMsg.idRequired %}
+              <p class="govuk-error-message">
+                {{ errorMsg.idRequired }}
+              </p>
+            {% endif %}
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="idRequiredYes" name="isIdRequired" type="radio" value="true" {% if params.isIdRequired == "true" %}checked{% endif %}>
