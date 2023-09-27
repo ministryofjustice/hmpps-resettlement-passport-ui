@@ -1,5 +1,4 @@
 import express, { Request } from 'express'
-import { formatDate } from '../../utils/utils'
 // import { RPClient } from '../../data'
 // import logger from '../../../logger'
 type ErrorMessage = {
