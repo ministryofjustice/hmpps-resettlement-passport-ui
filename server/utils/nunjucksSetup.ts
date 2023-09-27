@@ -29,7 +29,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   app.set('view engine', 'njk')
 
   app.locals.asset_path = '/assets/'
-  app.locals.applicationName = 'Digital Prison Services'
+  app.locals.applicationName = 'Prepare someone for release'
 
   // Cachebusting version string
   if (production) {

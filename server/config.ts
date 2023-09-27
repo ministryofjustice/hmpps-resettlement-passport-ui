@@ -84,8 +84,19 @@ export default {
       agent: new AgentConfig(Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('NOMIS_USER_ROLES_API_ENABLED', 'true') === 'true',
     },
+    frontendComponents: {
+      url: get('COMPONENT_API_URL', 'http://localhost:8082', requiredInProduction),
+      timeout: {
+        response: Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('COMPONENT_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 5000))),
+      enabled: get('COMPONENT_API_ENABLED', 'true') === 'true',
+    },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   dpsHomeUrl: get('DPS_URL', '#', requiredInProduction),
   phaseName: get('PHASE_NAME', 'DEV', requiredInProduction),
+  supportUrl: get('SUPPORT_URL', '', requiredInProduction),
+  environmentName: get('ENVIRONMENT_NAME', ''),
 }

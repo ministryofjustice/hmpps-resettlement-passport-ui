@@ -1,56 +1,61 @@
-<div class="govuk-grid-row profile-header">
-  <div class="govuk-grid-column-full">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-one-quarter">
-            <a href="/prisoner-overview/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
-              <img src="data:image/jpeg;base64, {{ prisonerData.prisonerImage }}" alt="prisoner profile image" class="govuk-!-width-full profile-header__person-photo">
-            </a>
-          </div>
-          <div class="govuk-grid-column-three-quarters">
-            <h1 class="govuk-heading-xl">
-              {{ prisonerData.personalDetails.lastName }}, {{ prisonerData.personalDetails.firstName }}
-              <span class="govuk-caption-l">{{ prisonerData.personalDetails.prisonerNumber }}</span>
-              <p class="govuk-body-s govuk-!-padding-top-2">
-                <a href="{{ dpsUrl }}/prisoner/{{ prisonerData.personalDetails.prisonerNumber }}">View full DPS profile</a>
-              </p>
-            </h1>
+{% if prisonerData %}
+  <div class="govuk-grid-row profile-header">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-quarter">
+              <a href="/prisoner-overview/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+                <img src="data:image/jpeg;base64, {{ prisonerData.prisonerImage }}" alt="prisoner profile image"
+                     class="govuk-!-width-full profile-header__person-photo">
+              </a>
+            </div>
+            <div class="govuk-grid-column-three-quarters">
+              <h1 class="govuk-heading-xl">
+                {{ prisonerData.personalDetails.lastName }}, {{ prisonerData.personalDetails.firstName }}
+                <span class="govuk-caption-l">{{ prisonerData.personalDetails.prisonerNumber }}</span>
+                <p class="govuk-body-s govuk-!-padding-top-2">
+                  <a href="{{ dpsUrl }}/prisoner/{{ prisonerData.personalDetails.prisonerNumber }}">View full DPS
+                    profile</a>
+                </p>
+              </h1>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="govuk-grid-column-one-half">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-one-half">
-            <p>
-              <b>Prisoner number:</b><br>
-              {{ prisonerData.personalDetails.prisonerNumber }}</p>
-            <p>
-              <b>Location:</b>
-              {{ prisonerData.personalDetails.location }}
-            </p>
-            <p>
-              <b>Date of birth:</b>
-              {{ prisonerData.personalDetails.dateOfBirth | formatDate }} ({{ prisonerData.personalDetails.dateOfBirth | getAgeFromDate }})</p>
-          </div>
-          <div class="govuk-grid-column-one-half">
-            <p>
-              <b>Release date:</b>
-              {{ prisonerData.personalDetails.releaseDate | formatDate }}
-              <br />
-              {% set isDayFriday = prisonerData.personalDetails.releaseDate | isFriday %}
-              {% if isDayFriday %}
-                <span class="govuk-body-s">⚠️ (Friday)</span>
-              {% endif %}
-              {% set daysData = prisonerData.personalDetails.releaseDate | getDaysFromDate%}
-              ({{ daysData.daysDiff }} days{% if daysData.isPast %} ago{% endif %})
-            </p>
-            <p>
-              <b>Release type: {{ prisonerData.personalDetails.releaseType }}</b>
-            </p>
+        <div class="govuk-grid-column-one-half">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-half">
+              <p>
+                <b>Prisoner number:</b><br>
+                {{ prisonerData.personalDetails.prisonerNumber }}</p>
+              <p>
+                <b>Location:</b>
+                {{ prisonerData.personalDetails.location }}
+              </p>
+              <p>
+                <b>Date of birth:</b>
+                {{ prisonerData.personalDetails.dateOfBirth | formatDate }}
+                ({{ prisonerData.personalDetails.dateOfBirth | getAgeFromDate }})</p>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <p>
+                <b>Release date:</b>
+                {{ prisonerData.personalDetails.releaseDate | formatDate }}
+                <br />
+                {% set isDayFriday = prisonerData.personalDetails.releaseDate | isFriday %}
+                {% if isDayFriday %}
+                  <span class="govuk-body-s">⚠️ (Friday)</span>
+                {% endif %}
+                {% set daysData = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
+                ({{ daysData.daysDiff }} days{% if daysData.isPast %} ago{% endif %})
+              </p>
+              <p>
+                <b>Release type: {{ prisonerData.personalDetails.releaseType }}</b>
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+{% endif %}
