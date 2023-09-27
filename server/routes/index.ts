@@ -227,7 +227,6 @@ export default function routes(services: Services): Router {
       idDocuments = [idDocuments]
     }
 
-    console.log('assessmentDate', assessmentDate)
     const rpClient = new RPClient()
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
