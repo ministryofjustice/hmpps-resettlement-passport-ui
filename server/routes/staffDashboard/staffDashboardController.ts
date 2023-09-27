@@ -9,7 +9,7 @@ export default class StaffDashboardController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const { token } = req.user
     const { userActiveCaseLoad } = res.locals
-    const { searchInput = '' } = req.query as { searchInput: string }
+    const { searchInput = '', releaseTime = '84' } = req.query as { searchInput: string; releaseTime: string }
 
     const errors: ErrorMessage[] = []
     let prisonersList = null
@@ -26,9 +26,10 @@ export default class StaffDashboardController {
           'releaseDate',
           'ASC',
           <string>searchInput,
+          <string>releaseTime,
         )
       }
-      const view = new StaffDashboardView(prisonersList, errors, searchInput)
+      const view = new StaffDashboardView(prisonersList, errors, searchInput, releaseTime)
       res.render('pages/staff-dashboard', { ...view.renderArgs })
     } catch (err) {
       next(err)
