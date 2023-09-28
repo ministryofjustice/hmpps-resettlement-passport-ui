@@ -10,18 +10,47 @@
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
       <h3 class="govuk-heading-m">Finance and ID assessment</h3>
-      <form action="/finance-and-id/confirm-assessment/" class="govuk-form">
-        <div class="govuk-form-group">
+      <form action="/finance-and-id/confirm-assessment/" class="govuk-form" novalidate>
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAssessmentDay or errorMsg.dateAssessmentMonth or errorMsg.dateAssessmentYear or errorMsg.futureDate or errorMsg.isValidDate }}">
           <div class="govuk-date-input" id="date-assessment">
             <label class="govuk-label" for="type">
               <b>Date of assessment</b>
-            </label>
+            </label><br>
+            {% if errorMsg.dateAssessmentDay or errorMsg.dateAssessmentMonth or errorMsg.dateAssessmentYear or errorMsg.futureDate or errorMsg.isValidDate %}
+              <div class="govuk-!-margin-top-5">
+                {% if errorMsg.dateAssessmentDay %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.dateAssessmentDay }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.dateAssessmentMonth %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.dateAssessmentMonth }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.dateAssessmentYear %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.dateAssessmentYear }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.futureDate %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.futureDate }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.isValidDate %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.isValidDate }}
+                  </p>
+                {% endif %}
+              </div>
+            {% endif %}
             <div class="govuk-date-input__item">
               <div class="govuk-form-group">
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentDay">
                         Day
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateAssessmentDay" name="dateAssessmentDay" type="text" inputmode="numeric" value="{{ params.dateAssessmentDay if params.dateAssessmentDay | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAssessmentDay or errorMsg.futureDate or errorMsg.isValidDate }}" id="dateAssessmentDay" name="dateAssessmentDay" type="text" inputmode="numeric" value="{{ params.dateAssessmentDay if params.dateAssessmentDay | length else "" }}">
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -29,7 +58,7 @@
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentMonth">
                         Month
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateAssessmentMonth" name="dateAssessmentMonth" type="text" inputmode="numeric" value="{{ params.dateAssessmentMonth if params.dateAssessmentMonth | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAssessmentMonth or errorMsg.futureDate or errorMsg.isValidDate }}" id="dateAssessmentMonth" name="dateAssessmentMonth" type="text" inputmode="numeric" value="{{ params.dateAssessmentMonth if params.dateAssessmentMonth | length else "" }}">
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -37,16 +66,21 @@
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentYear">
                         Year
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dateAssessmentYear" name="dateAssessmentYear" type="text" inputmode="numeric" value="{{ params.dateAssessmentYear if params.dateAssessmentYear | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.dateAssessmentYear or errorMsg.futureDate or errorMsg.isValidDate }}" id="dateAssessmentYear" name="dateAssessmentYear" type="text" inputmode="numeric" value="{{ params.dateAssessmentYear if params.dateAssessmentYear | length else "" }}">
               </div>
             </div>
           </div>
         </div>
-        <div class="govuk-form-group govuk-!-padding-top-4">
+        <div class="govuk-form-group govuk-!-padding-top-4 {{ "govuk-form-group--error" if errorMsg.bankAccountRequired }}">
           <fieldset class="govuk-fieldset">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <span class="govuk-fieldset__heading">Does {{ prisonerData.personalDetails.firstName | capitalize }} require a bank account application?</span>
             </legend><br>
+            {% if errorMsg.bankAccountRequired %}
+              <p class="govuk-error-message">
+                {{ errorMsg.bankAccountRequired }}
+              </p>
+            {% endif %}
             <div class="govuk-radios">
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="bankRequiredYes" name="isBankAccountRequired" type="radio" value="true" {% if params.isBankAccountRequired == "true" %}checked{% endif %}>
@@ -60,12 +94,16 @@
           </fieldset>
         </div>
 
-        <div class="govuk-form-group govuk-!-padding-top-4">
+        <div class="govuk-form-group govuk-!-padding-top-4 {{ "govuk-form-group--error" if errorMsg.idRequired }}">
           <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
               <span class="govuk-fieldset__heading">Does {{ prisonerData.personalDetails.firstName | capitalize }} require an ID application?</span>
             </legend><br>
-
+            {% if errorMsg.idRequired %}
+              <p class="govuk-error-message">
+                {{ errorMsg.idRequired }}
+              </p>
+            {% endif %}
             <div class="govuk-radios" data-module="govuk-radios">
               <div class="govuk-radios__item">
                 <input class="govuk-radios__input" id="idRequiredYes" name="isIdRequired" type="radio" value="true" {% if params.isIdRequired == "true" %}checked{% endif %}>

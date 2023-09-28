@@ -86,7 +86,7 @@
             <button class="ghost-button delete-assessment-button">Delete assessment</button>
             <div class="confirm-delete-assessment-form" hidden>
               <div class="govuk-button-group">
-                <form action action="/finance-and-id/" method="GET">
+                <form action action="/finance-and-id/" method="GET" novalidate>
                   <button class="govuk-button govuk-button--warning" type="submit">Confirm delete assessment</button>
                   <input hidden name="deleteAssessmentConfirmed" value="true"/>
                   <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
@@ -142,7 +142,7 @@
                 <button class="ghost-button delete-finance-button">Delete application</button>
                 <div class="confirm-delete-finance-form" hidden>
                   <div class="govuk-button-group">
-                    <form action action="/finance-and-id/#finance" method="GET">
+                    <form action action="/finance-and-id/#finance" method="GET" novalidate>
                       <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application</button>
                       <input hidden name="deleteFinanceConfirmed" value="true"/>
                       <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
