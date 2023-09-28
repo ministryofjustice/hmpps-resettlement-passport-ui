@@ -249,14 +249,16 @@ export default function routes(services: Services): Router {
   })
 
   use('/finance-and-id/bank-account-submit/', async (req: Request, res: Response, next) => {
+    console.log(req.user.token)
     const { prisonerData } = req
     const params = req.body
-    const { prisonerNumber, applicationDate } = req.body
+    const { prisonerNumber, applicationDate, bankName } = req.body
 
     const rpClient = new RPClient()
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
         applicationSubmittedDate: applicationDate,
+        bankName,
       })
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {

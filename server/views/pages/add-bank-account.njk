@@ -13,15 +13,15 @@
             <form action="/finance-and-id/confirm-add-a-bank-account/" class="govuk-form" novalidate>
                 <div class="govuk-form-group">
                     <label class="govuk-label" for="bank">Bank</label>
-                    <select class="govuk-select" id="bank" name="bank">
+                    <select class="govuk-select" id="bank" name="bankName">
                         <option value="">Select bank</option>
-                        <option value="Barclays" {% if params.bank == "Barclays" %}selected{% endif %}>Barclays</option>
-                        <option value="Co-op" {% if params.bank == "Co-op" %}selected{% endif %}>Co-op</option>
-                        <option value="HSBC" {% if params.bank == "HSBC" %}selected{% endif %}>HSBC</option>
-                        <option value="Lloyds" {% if params.bank == "Lloyds" %}selected{% endif %}>Lloyds</option>
-                        <option value="Nationwide" {% if params.bank == "Nationwide" %}selected{% endif %}>Nationwide</option>
-                        <option value="NatWest" {% if params.bank == "NatWest" %}selected{% endif %}>NatWest</option>
-                        <option value="Santander" {% if params.bank == "Santander" %}selected{% endif %}>Santander</option>
+                        <option value="Barclays" {% if params.bankName == "Barclays" %}selected{% endif %}>Barclays</option>
+                        <option value="Co-op" {% if params.bankName == "Co-op" %}selected{% endif %}>Co-op</option>
+                        <option value="HSBC" {% if params.bankName == "HSBC" %}selected{% endif %}>HSBC</option>
+                        <option value="Lloyds" {% if params.bankName == "Lloyds" %}selected{% endif %}>Lloyds</option>
+                        <option value="Nationwide" {% if params.bankName == "Nationwide" %}selected{% endif %}>Nationwide</option>
+                        <option value="NatWest" {% if params.bankName == "NatWest" %}selected{% endif %}>NatWest</option>
+                        <option value="Santander" {% if params.bankName == "Santander" %}selected{% endif %}>Santander</option>
                     </select>
                 </div>
 
@@ -49,6 +49,7 @@
                     </div>
                 </div>
                 <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                <input type="hidden" name="confirmationType" value="addAccount">
                 <button class="govuk-button" type="submit">Submit</button>
             </form>
         </div>

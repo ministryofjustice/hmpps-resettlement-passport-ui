@@ -10,7 +10,7 @@
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
       <h3 class="govuk-heading-m">Apply for a bank account</h3>
-      <form action="/finance-and-id/confirm-add-a-bank-account/" class="govuk-form" novalidate>
+      <form action="/finance-and-id/confirm-add-a-bank-account/" method="get" class="govuk-form" novalidate>
         <div class="govuk-form-group">
           <label class="govuk-label" for="status">Application status</label>
           <select class="govuk-select status-options" id="status" name="status">
@@ -94,26 +94,27 @@
             <div class="govuk-date-input" id="date-bank-details-heard">
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="date-bank-details-heard-day">Day</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-bank-details-heard-day" name="date-bank-details-heard-day" type="text" value="" inputmode="numeric">
+                  <label class="govuk-label govuk-date-input__label" for="heardBackDay">Day</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay | length}}" inputmode="numeric">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="date-bank-details-heard-month">Month</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="date-bank-details-heard-month" name="date-bank-details-heard-month" type="text" value="" inputmode="numeric">
+                  <label class="govuk-label govuk-date-input__label" for="heardBackMonth">Month</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="heardBackMonth" name="heardBackMonth" type="text" value="" inputmode="numeric">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="date-bank-details-heard-year">Year</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="date-bank-details-heard-year" name="date-bank-details-heard-year" type="text" value="" inputmode="numeric">
+                  <label class="govuk-label govuk-date-input__label" for="heardBackYear">Year</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="heardBackYear" name="heardBackYear" type="text" value="" inputmode="numeric">
                 </div>
               </div>
             </div>
           </div>
 
           <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+          <input type="hidden" name="confirmationType" value="updateStatus">
           <button class="govuk-button" type="submit">Submit</button>
 
         </div>
