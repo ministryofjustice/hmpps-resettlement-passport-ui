@@ -65,6 +65,7 @@
                   {% if params.addedToPersonalItems === "Yes" %}
                     {% set dateAddedToItems = params.dateAddedYear + "-" + params.dateAddedMonth + "-" + params.dateAddedDay %}
                     {{ dateAddedToItems | formatDate }}
+                    <input hidden name="addedToPersonalItemsDate" value="{{ dateAddedToItems | formatDateToIso }}" />
                   {% else %}
                     {{ params.addedToPersonalItems }}
                   {% endif %}
@@ -73,7 +74,7 @@
                   <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
                 </dd>
               </div>
-              {# <input hidden name="accountOpenedDate" value="{{ dateAccountOpened | formatDateToIso }}" /> #}
+              <input hidden name="isAddedToPersonalItems" value="{{ params.addedToPersonalItems }}" />
             {% else %}
               <div class="govuk-summary-list__row">
                 {% set heardBackDate = params.heardBackYear + "-" + params.heardBackMonth + "-" + params.heardBackDay %}

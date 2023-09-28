@@ -275,7 +275,16 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/bank-account-update/', async (req: Request, res: Response, next) => {
     const { prisonerData } = req
     const params = req.body
-    const { prisonerNumber, applicationId, updatedStatus, bankResponseDate } = req.body
+    const {
+      prisonerNumber,
+      applicationId,
+      updatedStatus,
+      bankResponseDate,
+      isAddedToPersonalItems,
+      addedToPersonalItemsDate,
+    } = req.body
+
+    console.log(req.body)
 
     const rpClient = new RPClient()
     try {
@@ -285,6 +294,8 @@ export default function routes(services: Services): Router {
         {
           status: updatedStatus,
           bankResponseDate,
+          isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+          addedToPersonalItemsDate,
         },
       )
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)

@@ -136,6 +136,18 @@
                         <td class="govuk-table__cell">{{ finance.bankResponseDate | formatDate }}</td>
                       </tr>
                     {% endif %}
+                    {% if finance.isAddedToPersonalItems %}
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Added to personal items</th>
+                        <td class="govuk-table__cell">
+                          {% if finance.isAddedToPersonalItems %}
+                            {{ finance.addedToPersonalItemsDate | formatDate }}
+                          {% else %}
+                            No
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% endif %}
                   </tbody>
                 </table>
                 <br>
