@@ -249,7 +249,6 @@ export default function routes(services: Services): Router {
   })
 
   use('/finance-and-id/bank-account-submit/', async (req: Request, res: Response, next) => {
-    console.log(req.user.token)
     const { prisonerData } = req
     const params = req.body
     const { prisonerNumber, applicationDate, bankName } = req.body
@@ -283,8 +282,6 @@ export default function routes(services: Services): Router {
       isAddedToPersonalItems,
       addedToPersonalItemsDate,
     } = req.body
-
-    console.log(req.body)
 
     const rpClient = new RPClient()
     try {
