@@ -22,10 +22,7 @@
               <dt class="govuk-summary-list__key">Bank</dt>
               <dd class="govuk-summary-list__value">{{ params.bankName }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">
-                  Change
-                  <span class="govuk-visually-hidden">Bank</span>
-                </a>
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
               </dd>
               <input hidden name="bankName" value="{{ params.bankName }}" />
             </div>
@@ -34,10 +31,7 @@
               <dt class="govuk-summary-list__key">Application submitted</dt>
               <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">
-                  Change
-                  <span class="govuk-visually-hidden">Application submitted</span>
-                </a>
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
               </dd>
               <input hidden name="applicationDate" value="{{ date | formatDateToIso }}" />
             </div>
@@ -48,25 +42,38 @@
               <dt class="govuk-summary-list__key">Status</dt>
               <dd class="govuk-summary-list__value">{{ params.updatedStatus }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">
-                  Change
-                  <span class="govuk-visually-hidden">Bank</span>
-                </a>
+                <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
               </dd>
-              {# <input hidden name="bank" value="{{ params.bank }}" /> #}
+              {# <input hidden name="updatedStatus" value="{{ params.updatedStatus }}" /> #}
             </div>
-            <div class="govuk-summary-list__row">
-              {% set heardBackDate = params.heardBackYear + "-" + params.heardBackMonth + "-" + params.heardBackDay %}
-              <dt class="govuk-summary-list__key">Date heard back from application</dt>
-              <dd class="govuk-summary-list__value">{{ heardBackDate | formatDateToIso }}</dd>
-              <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">
-                  Change
-                  <span class="govuk-visually-hidden">Bank</span>
-                </a>
-              </dd>
-              {# <input hidden name="bankResponseDate" value="{{ heardBackDate | formatDateToIso }}" /> #}
-            </div>
+            {% if params.updatedStatus == 'Account opened' %}
+              {% set dateAccountOpened = params.accountOpenedYear + "-" + params.accountOpenedMonth + "-" + params.accountOpenedDay %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Date account opened</dt>
+                <dd class="govuk-summary-list__value">{{ dateAccountOpened | formatDate }}</dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Added to personal items</dt>
+                <dd class="govuk-summary-list__value">{{ params.addedToPersonalItems }}</dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                </dd>
+              </div>
+              {# <input hidden name="accountOpenedDate" value="{{ dateAccountOpened | formatDateToIso }}" /> #}
+            {% else %}
+              <div class="govuk-summary-list__row">
+                {% set heardBackDate = params.heardBackYear + "-" + params.heardBackMonth + "-" + params.heardBackDay %}
+                <dt class="govuk-summary-list__key">Date heard back from application</dt>
+                <dd class="govuk-summary-list__value">{{ heardBackDate | formatDate }}</dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                </dd>
+                {# <input hidden name="bankResponseDate" value="{{ heardBackDate | formatDateToIso }}" /> #}
+              </div>
+            {% endif %}
           {% endif %}
 
         </dl>

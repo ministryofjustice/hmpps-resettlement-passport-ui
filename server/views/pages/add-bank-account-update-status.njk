@@ -30,19 +30,19 @@
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="accountOpenedDay">Day</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedDay" name="accountOpenedDay" type="text" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedDay" name="accountOpenedDay" type="text" inputmode="numeric" value="{{ params.accountOpenedDay if params.accountOpenedDay | length }}">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="accountOpenedMonth">Month</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedMonth" name="accountOpenedMonth" type="text" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedMonth" name="accountOpenedMonth" type="text" inputmode="numeric" value="{{ params.accountOpenedMonth if params.accountOpenedMonth | length }}">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="accountOpenedYear">Year</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="accountOpenedYear" name="accountOpenedYear" type="text" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="accountOpenedYear" name="accountOpenedYear" type="text" inputmode="numeric" value="{{ params.accountOpenedYear if params.accountOpenedYear | length }}">
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@
                 <label class="govuk-label">Added to personal items</label>
                 <div class="govuk-radios" data-module="govuk-radios">
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="added-to-items-yes" name="added-to-personal-items" type="radio" value="yes" aria-controls="conditional-added-to-items-yes" aria-expanded="false">
+                    <input class="govuk-radios__input" id="added-to-items-yes" name="addedToPersonalItems" type="radio" value="yes" aria-controls="conditional-added-to-items-yes" aria-expanded="false">
                     <label class="govuk-label govuk-radios__label" for="added-to-items-yes">Yes</label>
                   </div>
                   <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-added-to-items-yes">
@@ -81,7 +81,7 @@
                     </div>
                   </div>
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="added-to-items-no" name="added-to-personal-items" type="radio" value="no" data-aria-controls="conditional-added-to-items-no">
+                    <input class="govuk-radios__input" id="added-to-items-no" name="addedToPersonalItems" type="radio" value="no" data-aria-controls="conditional-added-to-items-no">
                     <label class="govuk-label govuk-radios__label" for="added-to-items-no">No</label>
                   </div>
                 </div>
@@ -95,19 +95,19 @@
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackDay">Day</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay | length}}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay | length }}" inputmode="numeric">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackMonth">Month</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="heardBackMonth" name="heardBackMonth" type="text" value="{{ params.heardBackMonth if params.heardBackMonth | length}}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="heardBackMonth" name="heardBackMonth" type="text" value="{{ params.heardBackMonth if params.heardBackMonth | length }}" inputmode="numeric">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackYear">Year</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="heardBackYear" name="heardBackYear" type="text" value="{{ params.heardBackYear if params.heardBackYear | length}}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="heardBackYear" name="heardBackYear" type="text" value="{{ params.heardBackYear if params.heardBackYear | length }}" inputmode="numeric">
                 </div>
               </div>
             </div>
