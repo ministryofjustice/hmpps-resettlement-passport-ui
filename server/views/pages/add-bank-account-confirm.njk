@@ -14,7 +14,11 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-      <form action="/finance-and-id/bank-account-submit" method="post" novalidate>
+      {% set urlEndpoint = "submit" %}
+      {% if params.confirmationType == 'updateStatus' %}
+        {% set urlEndpoint = "update" %}
+      {% endif %}      
+      <form action="/finance-and-id/bank-account-{{ urlEndpoint }}" method="post" novalidate>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
 
           {% if params.confirmationType == 'addAccount' %}
@@ -44,7 +48,7 @@
               <dd class="govuk-summary-list__actions">
                 <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
               </dd>
-              {# <input hidden name="updatedStatus" value="{{ params.updatedStatus }}" /> #}
+              <input hidden name="updatedStatus" value="{{ params.updatedStatus }}" />
             </div>
             {% if params.updatedStatus == 'Account opened' %}
               {% set dateAccountOpened = params.accountOpenedYear + "-" + params.accountOpenedMonth + "-" + params.accountOpenedDay %}
@@ -78,13 +82,14 @@
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
                 </dd>
-                {# <input hidden name="bankResponseDate" value="{{ heardBackDate | formatDateToIso }}" /> #}
+                <input hidden name="bankResponseDate" value="{{ heardBackDate | formatDateToIso }}" />
               </div>
             {% endif %}
           {% endif %}
 
         </dl>
         <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+        <input type="hidden" name="applicationId" value="{{ params.applicationId }}"/>
         <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
         <button class="govuk-button" type="submit">Accept and send</button>
       </form>

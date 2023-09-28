@@ -272,6 +272,33 @@ export default function routes(services: Services): Router {
     }
   })
 
+  use('/finance-and-id/bank-account-update/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const params = req.body
+    const { prisonerNumber, applicationId, updatedStatus, bankResponseDate } = req.body
+
+    const rpClient = new RPClient()
+    try {
+      await rpClient.patch(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`,
+        {
+          status: updatedStatus,
+          bankResponseDate,
+        },
+      )
+      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+    } catch (error) {
+      const errorMessage = error.message
+      logger.error('Error updating banking application:', error)
+      res.render('pages/add-bank-account-confirm', {
+        errorMessage,
+        prisonerData,
+        params,
+      })
+    }
+  })
+
   use('/finance-and-id', financeIdRouter)
   use('/finance-and-id/add-an-id', addIdRouter)
   use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
