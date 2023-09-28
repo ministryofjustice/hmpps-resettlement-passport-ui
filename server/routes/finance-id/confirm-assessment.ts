@@ -1,5 +1,4 @@
 import express, { Request } from 'express'
-
 type ErrorMessage = {
   idRequired: null | string
   bankAccountRequired: null | string
