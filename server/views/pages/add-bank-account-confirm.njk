@@ -46,9 +46,9 @@
           {% if params.confirmationType == 'updateStatus' %}
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">Status</dt>
-              <dd class="govuk-summary-list__value">Account declined</dd>
+              <dd class="govuk-summary-list__value">{{ params.updatedStatus }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">
+                <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">
                   Change
                   <span class="govuk-visually-hidden">Bank</span>
                 </a>
@@ -56,15 +56,16 @@
               {# <input hidden name="bank" value="{{ params.bank }}" /> #}
             </div>
             <div class="govuk-summary-list__row">
+              {% set heardBackDate = params.heardBackYear + "-" + params.heardBackMonth + "-" + params.heardBackDay %}
               <dt class="govuk-summary-list__key">Date heard back from application</dt>
-              <dd class="govuk-summary-list__value">10 10 2023</dd>
+              <dd class="govuk-summary-list__value">{{ heardBackDate | formatDateToIso }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">
+                <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">
                   Change
                   <span class="govuk-visually-hidden">Bank</span>
                 </a>
               </dd>
-              {# <input hidden name="bank" value="{{ params.bank }}" /> #}
+              {# <input hidden name="bankResponseDate" value="{{ heardBackDate | formatDateToIso }}" /> #}
             </div>
           {% endif %}
 
