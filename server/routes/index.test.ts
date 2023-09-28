@@ -18,7 +18,7 @@ describe('GET /', () => {
       .get('/')
       .expect('Content-Type', /html/)
       .expect(res => {
-        expect(res.text).toContain('Prepare someone for release')
+        expect(res.text).toContain('All pathways overview')
       })
   })
 })
