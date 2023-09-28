@@ -130,6 +130,12 @@
                       <th scope="row" class="govuk-table__header">Status</th>
                       <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
                     </tr>
+                    {% if finance.bankResponseDate %}
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Date heard back from application</th>
+                        <td class="govuk-table__cell">{{ finance.bankResponseDate | formatDate }}</td>
+                      </tr>
+                    {% endif %}
                   </tbody>
                 </table>
                 <br>
