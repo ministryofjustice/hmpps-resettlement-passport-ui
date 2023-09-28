@@ -151,12 +151,14 @@
                   </tbody>
                 </table>
                 <br>
-                <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
-                  <button class="govuk-button govuk-button--secondary">
-                    Update application
-                  </button>
-                </a>
-                <br>
+                {% if finance.currentStatus === 'Pending' %}
+                  <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
+                    <button class="govuk-button govuk-button--secondary">
+                      Update application
+                    </button>
+                  </a>
+                  <br>
+                {% endif %}
                 <button class="ghost-button delete-finance-button">Delete application</button>
                 <div class="confirm-delete-finance-form" hidden>
                   <div class="govuk-button-group">
