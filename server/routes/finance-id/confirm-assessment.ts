@@ -77,6 +77,7 @@ const confirmAssessmentRouter = express.Router().get('/', async (req: Request, r
     res.render('pages/assessment', { prisonerData, params, req, errorMsg })
     return
   }
+
   res.render('pages/assessment-confirmation', { prisonerData, params, req })
 })
 
