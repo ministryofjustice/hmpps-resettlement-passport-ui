@@ -57,7 +57,14 @@
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">Added to personal items</dt>
-                <dd class="govuk-summary-list__value">{{ params.addedToPersonalItems }}</dd>
+                <dd class="govuk-summary-list__value">
+                  {% if params.addedToPersonalItems === "Yes" %}
+                    {% set dateAddedToItems = params.dateAddedYear + "-" + params.dateAddedMonth + "-" + params.dateAddedDay %}
+                    {{ dateAddedToItems | formatDate }}
+                  {% else %}
+                    {{ params.addedToPersonalItems }}
+                  {% endif %}
+                </dd>
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
                 </dd>
