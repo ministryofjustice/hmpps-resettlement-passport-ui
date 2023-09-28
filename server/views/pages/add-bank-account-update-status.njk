@@ -23,8 +23,8 @@
           </select>
         </div>
 
-        <div class="input-fields" {% if not params.updatedStatus %}hidden{% endif %}>
-          <div class="date-account-opened" hidden>
+        <div class="input-fields" {% if params.updatedStatus == '' or not params.updatedStatus  %}hidden{% endif %}>
+          <div class="date-account-opened" {% if params.updatedStatus != 'Account opened'  %}hidden{% endif %}>
             <label class="govuk-label" for="date-opened">Date account opened</label>
             <div class="govuk-date-input" id="date-opened">
               <div class="govuk-date-input__item">
@@ -52,7 +52,7 @@
                 <label class="govuk-label">Added to personal items</label>
                 <div class="govuk-radios" data-module="govuk-radios">
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="added-to-items-yes" name="addedToPersonalItems" type="radio" value="yes" aria-controls="conditional-added-to-items-yes" aria-expanded="false">
+                    <input class="govuk-radios__input" id="added-to-items-yes" name="addedToPersonalItems" type="radio" value="Yes" aria-controls="conditional-added-to-items-yes" aria-expanded="false" {% if params.addedToPersonalItems == 'Yes' %}checked{% endif %}>
                     <label class="govuk-label govuk-radios__label" for="added-to-items-yes">Yes</label>
                   </div>
                   <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-added-to-items-yes">
@@ -81,7 +81,7 @@
                     </div>
                   </div>
                   <div class="govuk-radios__item">
-                    <input class="govuk-radios__input" id="added-to-items-no" name="addedToPersonalItems" type="radio" value="no" data-aria-controls="conditional-added-to-items-no">
+                    <input class="govuk-radios__input" id="added-to-items-no" name="addedToPersonalItems" type="radio" value="No" data-aria-controls="conditional-added-to-items-no" {% if params.addedToPersonalItems == 'Yes' %}checked{% endif %}>
                     <label class="govuk-label govuk-radios__label" for="added-to-items-no">No</label>
                   </div>
                 </div>
@@ -89,7 +89,7 @@
             </div>
           </div>
 
-          <div class="govuk-form-group date-heard-from-application">
+          <div class="govuk-form-group date-heard-from-application" {% if params.updatedStatus == 'Account opened'  %}hidden{% endif %}>
             <label class="govuk-label" for="date-bank-details-heard">Date heard back from application</label>
             <div class="govuk-date-input" id="date-bank-details-heard">
               <div class="govuk-date-input__item">
