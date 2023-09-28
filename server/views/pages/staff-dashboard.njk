@@ -1,10 +1,10 @@
 {% extends "../partials/layout.njk" %}
+{% set pageHeading = "All pathways overview" %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 {% block content %}
-  <h1 class="govuk-heading-xl">Prepare someone for release</h1>
   {# Only NOMIS users can access the list prisoners functionality at present #}
   {% if isPrisonUser %}
     <form action="/" method="GET">
@@ -38,7 +38,6 @@
       </div>
     </form>
     {% if prisonersList %}
-      <h3 class="govuk-heading-l">All pathways overview</h3>
       {{ prisonersTable(prisonersList.content) }}
       <nav class="govuk-pagination" role="navigation" aria-label="results">
         <ul class="govuk-pagination__list">

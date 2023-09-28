@@ -55,39 +55,26 @@
         {
           text: "Prepare someone for release",
           href: '/'
-        },
-        {
-          text: [prisonerData.personalDetails.lastName, ", ", prisonerData.personalDetails.firstName, " (", prisonerData.personalDetails.prisonerNumber, ")"] | join,
-          href: '/prisoner-overview/?prisonerNumber=' + prisonerData.personalDetails.prisonerNumber if pathway !== 'Resettlement overview'
-        },
-        {
-          text: pathway
         }
       ] %}
+      {% set pageHeading = "Resettlement dashboard" %}
     {% else %}
       {% set breadcrumbItems = [
         {
           text: topLevelBreadcrumb,
           href: dpsUrl
-        },
-        {
-          text: "Prepare someone for release"
         }
       ] %}
     {% endif %}
 
-    {% set dynamicBreadcrumbs = [] %}
-    {% for item in breadcrumbItems %}
-      {% if pathway !== 'Resettlement overview' %}
-        {% set _ = dynamicBreadcrumbs.push(item) %}
-      {% else %}
-        {% if loop.index !== 4 %}
-          {% set _ = dynamicBreadcrumbs.push(item) %}
-        {% endif %}
-      {% endif %}
-    {% endfor %}
-
-    {{ breadCrumb(dynamicBreadcrumbs) }}
+    {{ breadCrumb(breadcrumbItems) }}
+    <br />
+    {% if pageHeading %}
+      <span class="govuk-caption-xl">{{ applicationName }}</span>
+      <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+    {% else %}
+      <h1 class="govuk-heading-xl">{{ applicationName }}</h1>
+    {% endif %}
 
     {% include "../partials/profileHeader.njk" %}
     {% include "../partials/mainNav.njk" %}
