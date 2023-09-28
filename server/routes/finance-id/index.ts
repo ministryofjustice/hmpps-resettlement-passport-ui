@@ -53,6 +53,7 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
       req.user.token,
       `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication`,
     )
+    console.log(finance)
   } catch (err) {
     logger.warn(`Error fetching finance data`, err)
     finance.error = true

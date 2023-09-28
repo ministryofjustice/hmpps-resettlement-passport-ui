@@ -120,11 +120,11 @@
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Bank</th>
-                      <td class="govuk-table__cell">Lloyds</td>
+                      <td class="govuk-table__cell">{{ finance.bank }}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Application submitted</th>
-                      <td class="govuk-table__cell">4 Feb 2022</td>
+                      <td class="govuk-table__cell">{{ finance.applicationSubmittedDate | formatDate }}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Status</th>
