@@ -161,11 +161,13 @@
           <h3 class="app-summary-card__title">
             ID
           </h3>
+          {% if id.error %}
             <span class="right">
             <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
               Add an ID application
             </a>
           </span>
+          {% endif %}
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -182,15 +184,19 @@
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Application submitted</th>
-                      <td class="govuk-table__cell">{{id.applicationSubmittedDate}}</td>
+                      <td class="govuk-table__cell">{{id.applicationSubmittedDate | formatDate }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Has the GRO number?</th>
+                      <td class="govuk-table__cell">{% if id.haveGro and true %}Yes ({{id.haveGro}}){% else %}No{% endif %}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Was a UK national born overseas?</th>
-                      <td class="govuk-table__cell">{% if id.isUkNationalBornOverseas and true in id.isUkNationalBornOverseas %}Yes{% else %}No{% endif %}</td>
+                      <td class="govuk-table__cell">{% if id.isUkNationalBornOverseas and true %}Yes ({{id.countryBornIn}}){% else %}No{% endif %}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Priority application</th>
-                      <td class="govuk-table__cell">{% if id.isPriorityApplication and true in params.isPriorityApplication %}Yes{% else %}No{% endif %}</td>
+                      <td class="govuk-table__cell">{% if id.isPriorityApplication and true %}Yes{% else %}No{% endif %}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Cost of application</th>
@@ -216,7 +222,7 @@
                       <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application</button>
                       <input hidden name="deleteIdConfirmed" value="true"/>
                       <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-                      <input hidden name="IdId" value="{{ id.id }}">
+                      <input hidden name="idId" value="{{ id.id }}">
                     </form>
                     <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
                   </div>

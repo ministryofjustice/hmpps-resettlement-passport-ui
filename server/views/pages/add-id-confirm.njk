@@ -14,15 +14,15 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-      <form action="/finance-and-id/bank-account-submit" method="post" novalidate>
+      <form action="/finance-and-id/id-submit" method="post" novalidate>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
             Type
         </dt>
             <dd class="govuk-summary-list__value">
-            {{ params.idType }}
-        </dd>
+              {{ params.idType }}
+            </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="/finance-and-id/add-an-id{{req.url}}">Change<span class="govuk-visually-hidden"> type</span></a>
             </dd>
@@ -32,56 +32,66 @@
             <dt class="govuk-summary-list__key">
             Application submitted
         </dt>
-             {% set date = params.applicationSubmittedYear + "-" + params.applicationSubmittedMonth + "-" + params.applicationSubmittedDay  %}
-                <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
-                <input hidden name="applicationDate" value="{{ date | formatDateToIso }}"/>
-        </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/finance-and-id/add-an-id{{req.url}}">Change<span class="govuk-visually-hidden"> application submitted</span></a>
-            </dd>
-          </div>
-
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
+            {% set date = params.applicationSubmittedYear + "-" + params.applicationSubmittedMonth + "-" + params.applicationSubmittedDay  %}
+            <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
+            <input hidden name="applicationSubmittedDate" value="{{ date | formatDateToIso }}"/>
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="/finance-and-id/add-an-id{{req.url}}">Change<span class="govuk-visually-hidden"> application submitted</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
+            Has the GRO number?
+        </dt>
+          <dd class="govuk-summary-list__value">
+            {% if params.haveGro === 'true' %}Yes{% else %}No{% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
             Was a UK national born overseas?
         </dt>
-            <dd class="govuk-summary-list__value">
-            {{ params.ukOverseas | capitalize }} {{ (params.overseasCountry) if params.ukOverseas == "yes"}}
-        </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
-            </dd>
-          </div>
+          <dd class="govuk-summary-list__value">
+            {% if params.isUkNationalBornOverseas === 'true' %}Yes ({{params.countryBornIn}}){% else %}No{% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
+          </dd>
+        </div>
 
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
             Priority application
         </dt>
-            <dd class="govuk-summary-list__value">
-            Yes
-        </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Priority application</span></a>
-            </dd>
-          </div>
+          <dd class="govuk-summary-list__value">
+            {% if params.isPriorityApplication === 'true' %}Yes{% else %}No{% endif %}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Priority application</span></a>
+          </dd>
+        </div>
 
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">
             Cost of application
         </dt>
-            <dd class="govuk-summary-list__value">
-            £{{ params.costApplication}}
-        </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Cost of application</span></a>
-            </dd>
-          </div>
-        </dl>
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-        <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
-        <button class="govuk-button" type="submit">Accept and send</button>
-      </form>
-    </div>
+          <dd class="govuk-summary-list__value">
+            £{{ params.costOfApplication}}
+          </dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Cost of application</span></a>
+          </dd>
+        </div>
+      </dl>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+      <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
+      <button class="govuk-button" type="submit">Accept and send</button>
+    </form>
   </div>
+</div>
 
 {% endblock %}

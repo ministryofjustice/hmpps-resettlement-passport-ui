@@ -270,6 +270,29 @@ export default function routes(services: Services): Router {
       })
     }
   })
+  use('/finance-and-id/id-submit/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const params = req.body
+    const { prisonerNumber, idType, applicationSubmittedDate, isPriorityApplication } = req.body
+
+    const rpClient = new RPClient()
+    try {
+      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
+        idType,
+        applicationSubmittedDate,
+        isPriorityApplication,
+      })
+      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+    } catch (error) {
+      const errorMessage = error.message
+      logger.error('Error fetching id data:', error)
+      res.render('pages/add-id-confirm', {
+        errorMessage,
+        prisonerData,
+        params,
+      })
+    }
+  })
 
   use('/finance-and-id', financeIdRouter)
   use('/finance-and-id/add-an-id', addIdRouter)
