@@ -4,33 +4,84 @@
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
 {% block content %}
-    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-        {{ titleAndIntro(pathway) }}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(pathway) }}
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-m">Check your answers before adding a bank account application</h2>
     </div>
-    <div class="govuk-grid-row govuk-!-padding-bottom-4">
-        <div class="govuk-grid-column-full">
-            <h2>Check your answers before adding a bank account application</h2>
-            <form action="id-add-2" class="govuk-form" novalidate>
-                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                    <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">Bank</dt>
-                        <dd class="govuk-summary-list__value">Barclays</dd>
-                        <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link" href="bank-account-add.html">Change<span class="govuk-visually-hidden">Bank</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row">
-                        <dt class="govuk-summary-list__key">Application submitted</dt>
-                        <dd class="govuk-summary-list__value">10 Feb 2020</dd>
-                        <dd class="govuk-summary-list__actions">
-                            <a class="govuk-link" href="bank-account-add.html">Change<span class="govuk-visually-hidden">Application submitted</span></a>
-                        </dd>
-                    </div>
-                </dl>
-                <input type="hidden" name="id-1-completed" value="true">
-                <button class="govuk-button" type="submit">Accept and send</button>
-            </form>
-        </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <form action="/finance-and-id/bank-account-submit" method="post" novalidate>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Type
+        </dt>
+            <dd class="govuk-summary-list__value">
+            {{ params.idType }}
+        </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id{{req.url}}">Change<span class="govuk-visually-hidden"> type</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Application submitted
+        </dt>
+             {% set date = params.applicationSubmittedYear + "-" + params.applicationSubmittedMonth + "-" + params.applicationSubmittedDay  %}
+                <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
+                <input hidden name="applicationDate" value="{{ date | formatDateToIso }}"/>
+        </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id{{req.url}}">Change<span class="govuk-visually-hidden"> application submitted</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Was a UK national born overseas?
+        </dt>
+            <dd class="govuk-summary-list__value">
+            {{ params.ukOverseas | capitalize }} {{ (params.overseasCountry) if params.ukOverseas == "yes"}}
+        </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Priority application
+        </dt>
+            <dd class="govuk-summary-list__value">
+            Yes
+        </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Priority application</span></a>
+            </dd>
+          </div>
+
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+            Cost of application
+        </dt>
+            <dd class="govuk-summary-list__value">
+            £{{ params.costApplication}}
+        </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Cost of application</span></a>
+            </dd>
+          </div>
+        </dl>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+        <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
+        <button class="govuk-button" type="submit">Accept and send</button>
+      </form>
     </div>
+  </div>
 
 {% endblock %}

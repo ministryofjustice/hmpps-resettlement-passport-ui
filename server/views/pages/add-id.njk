@@ -10,49 +10,48 @@
     <div class="govuk-grid-row govuk-!-padding-bottom-4">
         <div class="govuk-grid-column-full">
             <h2>Apply for an ID</h2>
-            <form action="id-add-2" class="govuk-form" novalidate>
+            <form action="/finance-and-id/add-an-id-further/" class="govuk-form"  novalidate>
                 <div class="govuk-form-group">
-                    <label class="govuk-label" for="type">Type</label>
-                    <select class="govuk-select" id="type" name="type">
+                    <label class="govuk-label" for="idType">Type</label>
+                    <select class="govuk-select" id="idType" name="idType">
                         <option value="">Select type</option>
-                        <option value="birth-certificate">Birth certificate</option>
-                        <option value="replacement-marriage-certificate">Replacement marriage certificate</option>
-                        <option value="replacement-civil-partnership-certificate">Replacement civil partnership certificate</option>
-                        <option value="adoption-certificate">Adoption certificate</option>
-                        <option value="divorce-decree-absolute-certificate">Divorce decree absolute certificate</option>
-                        <option value="driving-licence">Driving licence</option>
-                        <option value="biometric-residence-permit">Biometric residence permit</option>
-                        <option value="deed-poll-certificate">Deed poll certificate</option>
+                        <option value="Birth certificate" {% if params.idType == "Birth certificate" %}selected{% endif %}>Birth certificate</option>
+                        <option value="Replacement marriage certificate" {% if params.idType == "Replacement marriage certificate" %}selected{% endif %}>Replacement marriage certificate</option>
+                        <option value="Replacement civil partnership certificate" {% if params.idType == "Replacement civil partnership certificate" %}selected{% endif %}>Replacement civil partnership certificate</option>
+                        <option value="Adoption certificate" {% if params.idType == "Adoption certificate" %}selected{% endif %}>Adoption certificate</option>
+                        <option value="Divorce decree absolute certificate" {% if params.idType == "Divorce decree absolute certificate" %}selected{% endif %}>Divorce decree absolute certificate</option>
+                        <option value="Driving licence" {% if params.idType == "Driving licence" %}selected{% endif %}>Driving licence</option>
+                        <option value="Biometric residence permit" {% if params.idType == "Biometric residence permit" %}selected{% endif %}>Biometric residence permit</option>
+                        <option value="Deed poll certificate" {% if params.idType == "Deed poll certificate" %}selected{% endif %}>Deed poll certificate</option>
                     </select>
 
                 </div>
 
                 <div class="govuk-form-group">
-                    <div class="govuk-date-input" id="date-requested">
-                        <label class="govuk-label" for="date-requested-day">Application submitted</label>
-                        <!-- Date requested input -->
+                    <label class="govuk-label" for="application-submitted">Application submitted</label>
+                    <div class="govuk-date-input" id="application-submitted">
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
-                                <label class="govuk-label govuk-date-input__label" for="date-requested-day">Day</label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-requested-day" name="date-requested-day" type="text" inputmode="numeric" value="">
+                                <label class="govuk-label govuk-date-input__label" for="applicationSubmittedDay">Day</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedDay" name="applicationSubmittedDay" type="text" value="{{ params.applicationSubmittedDay if params.applicationSubmittedDay | length else "" }}" inputmode="numeric">
                             </div>
                         </div>
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
-                                <label class="govuk-label govuk-date-input__label" for="date-requested-month">Month</label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-requested-month" name="date-requested-month" type="text" inputmode="numeric" value="">
+                                <label class="govuk-label govuk-date-input__label" for="applicationSubmittedMonth">Month</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedMonth" name="applicationSubmittedMonth" type="text" value="{{ params.applicationSubmittedMonth if params.applicationSubmittedMonth | length else "" }}" inputmode="numeric">
                             </div>
                         </div>
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
-                                <label class="govuk-label govuk-date-input__label" for="date-requested-year">Year</label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-requested-year" name="date-requested-year" type="text" inputmode="numeric" value="">
+                                <label class="govuk-label govuk-date-input__label" for="applicationSubmittedYear">Year</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="applicationSubmittedYear" name="applicationSubmittedYear" type="text" value="{{ params.applicationSubmittedYear if params.applicationSubmittedYear | length else "" }}" inputmode="numeric">
                             </div>
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="id-1-completed" value="true">
-                <button class="govuk-button" type="submit">Continue</button>
+                <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                <button class="govuk-button" type="submit">Submit</button>
             </form>
         </div>
     </div>
