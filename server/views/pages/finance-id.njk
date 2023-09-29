@@ -161,7 +161,7 @@
                   <br>
                 {% endif %}
                 {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
-                  <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
+                  <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}&applicationType=resubmit">
                     <button class="govuk-button">
                       Resubmit application
                     </button>
