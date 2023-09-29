@@ -244,15 +244,15 @@
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Has the GRO number?</th>
-                      <td class="govuk-table__cell">{% if id.haveGro and true %}Yes ({{id.haveGro}}){% else %}No{% endif %}</td>
+                      <td class="govuk-table__cell">{% if id.haveGro === true %}Yes{% else %}No{% endif %}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Was a UK national born overseas?</th>
-                      <td class="govuk-table__cell">{% if id.isUkNationalBornOverseas and true %}Yes ({{id.countryBornIn}}){% else %}No{% endif %}</td>
+                      <td class="govuk-table__cell">{% if id.isUkNationalBornOverseas === true %}Yes ({{id.countryBornIn}}){% else %}No{% endif %}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Priority application</th>
-                      <td class="govuk-table__cell">{% if id.isPriorityApplication and true %}Yes{% else %}No{% endif %}</td>
+                      <td class="govuk-table__cell">{% if id.isPriorityApplication === true %}Yes{% else %}No{% endif %}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Cost of application</th>

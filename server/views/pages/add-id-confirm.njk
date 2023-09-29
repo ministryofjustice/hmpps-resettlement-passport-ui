@@ -23,6 +23,7 @@
             <dd class="govuk-summary-list__value">
               {{ params.idType }}
             </dd>
+            <input hidden name="idType" value="{{ params.idType }}"/>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="/finance-and-id/add-an-id{{req.url}}">Change<span class="govuk-visually-hidden"> type</span></a>
             </dd>
@@ -47,6 +48,7 @@
           <dd class="govuk-summary-list__value">
             {% if params.haveGro === 'true' %}Yes{% else %}No{% endif %}
           </dd>
+          <input hidden name="haveGro" value="{{ params.haveGro }}"/>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
           </dd>
@@ -58,6 +60,8 @@
           <dd class="govuk-summary-list__value">
             {% if params.isUkNationalBornOverseas === 'true' %}Yes ({{params.countryBornIn}}){% else %}No{% endif %}
           </dd>
+          <input hidden name="isUkNationalBornOverseas" value="{{ params.isUkNationalBornOverseas }}"/>
+          <input hidden name="countryBornIn" value="{{ params.countryBornIn }}"/>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
           </dd>
@@ -70,6 +74,7 @@
           <dd class="govuk-summary-list__value">
             {% if params.isPriorityApplication === 'true' %}Yes{% else %}No{% endif %}
           </dd>
+          <input hidden name="isPriorityApplication" value="{{ params.isPriorityApplication }}"/>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Priority application</span></a>
           </dd>
@@ -82,6 +87,7 @@
           <dd class="govuk-summary-list__value">
             £{{ params.costOfApplication}}
           </dd>
+          <input hidden name="costOfApplication" value="{{ params.costOfApplication }}"/>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Cost of application</span></a>
           </dd>

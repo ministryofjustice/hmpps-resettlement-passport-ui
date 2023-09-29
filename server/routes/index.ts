@@ -274,15 +274,37 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/id-submit/', async (req: Request, res: Response, next) => {
     const { prisonerData } = req
     const params = req.body
-    const { prisonerNumber, idType, applicationSubmittedDate, isPriorityApplication } = req.body
-
+    const {
+      prisonerNumber,
+      idType,
+      applicationSubmittedDate,
+      isPriorityApplication,
+      haveGro,
+      isUkNationalBornOverseas,
+      countryBornIn,
+    } = req.body
+    const costOfApplication = Number(req.body.costOfApplication)
     const rpClient = new RPClient()
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
         idType,
         applicationSubmittedDate,
         isPriorityApplication,
+        costOfApplication,
+        haveGro,
+        isUkNationalBornOverseas,
+        countryBornIn,
       })
+      console.log(
+        'PARAMS',
+        idType,
+        applicationSubmittedDate,
+        isPriorityApplication,
+        costOfApplication,
+        haveGro,
+        isUkNationalBornOverseas,
+        countryBornIn,
+      )
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {
       const errorMessage = error.message
