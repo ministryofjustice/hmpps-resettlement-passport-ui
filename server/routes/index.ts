@@ -284,14 +284,6 @@ export default function routes(services: Services): Router {
       resubmissionDate,
     } = req.body
 
-    console.log({
-      status: updatedStatus,
-      bankResponseDate,
-      isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
-      addedToPersonalItemsDate,
-      resubmissionDate,
-    })
-
     const rpClient = new RPClient()
     try {
       await rpClient.patch(

@@ -58,8 +58,6 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
     finance.error = true
   }
 
-  console.log(finance)
-
   res.render('pages/finance-id', { assessment, prisonerData, finance })
 })
 
