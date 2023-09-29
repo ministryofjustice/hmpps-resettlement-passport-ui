@@ -15,9 +15,9 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
       {% set urlEndpoint = "submit" %}
-      {% if params.confirmationType == 'updateStatus' %}
+      {% if params.confirmationType == 'updateStatus' or params.confirmationType == 'resubmit' %}
         {% set urlEndpoint = "update" %}
-      {% endif %}      
+      {% endif %}
       <form action="/finance-and-id/bank-account-{{ urlEndpoint }}" method="post" novalidate>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
 
@@ -43,20 +43,30 @@
 
           {% if params.confirmationType == 'resubmit' %}
             <div class="govuk-summary-list__row">
-              {% set date = params.applicationResubmittedYear + "-" + params.applicationResubmittedMonth + "-" + params.applicationResubmittedDay%}
+              {% set resubmissionDate = params.applicationResubmittedYear + "-" + params.applicationResubmittedMonth + "-" + params.applicationResubmittedDay%}
               <dt class="govuk-summary-list__key">Application resubmitted</dt>
-              <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
+              <dd class="govuk-summary-list__value">{{ resubmissionDate | formatDate }}</dd>
               <dd class="govuk-summary-list__actions">
                 <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
               </dd>
-              <input hidden name="applicationDate" value="{{ date | formatDateToIso }}" />
+              <input hidden name="resubmissionDate" value="{{ resubmissionDate | formatDateToIso }}" />
             </div>
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">Status</dt>
-              <dd class="govuk-summary-list__value">Account declined (hardcoded)</dd>
+              <dd class="govuk-summary-list__value">{{ params.status }}</dd>
               <dd class="govuk-summary-list__actions">
                 <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
               </dd>
+              <input hidden name="updatedStatus" value="{{ params.status }}" />
+            </div>
+            <div class="govuk-summary-list__row">
+              {% set dateResubmittedHeard = params.dateResubmittedHeardYear + "-" + params.dateResubmittedHeardMonth + "-" + params.dateResubmittedHeardDay%}
+              <dt class="govuk-summary-list__key">Date heard back from resubmission</dt>
+              <dd class="govuk-summary-list__value">{{ dateResubmittedHeard | formatDate }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+              </dd>
+              <input hidden name="bankResponseDate" value="{{ dateResubmittedHeard | formatDateToIso }}" />
             </div>
           {% endif %}
 
@@ -77,6 +87,7 @@
                 <dd class="govuk-summary-list__actions">
                   <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
                 </dd>
+                <input hidden name="bankResponseDate" value="{{ dateAccountOpened | formatDateToIso }}" />
               </div>
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">Added to personal items</dt>

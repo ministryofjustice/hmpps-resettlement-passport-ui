@@ -180,7 +180,13 @@
                     <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
                   </div>
                 </div>
-                {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
+                {% set showDetails = false %}
+                {% for log in finance.logs %}
+                  {% if log.status === 'Returned inaccurate' or log.status === 'Returned incomplete' %}
+                    {% set showDetails = true %}
+                  {% endif %}
+                {% endfor %}
+                {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' or showDetails %}
                   <details class="govuk-details govuk-!-padding-top-6">
                     <summary class="govuk-details__summary">
                       <span class="govuk-details__summary-text">

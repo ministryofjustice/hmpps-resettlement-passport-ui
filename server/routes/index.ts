@@ -281,7 +281,16 @@ export default function routes(services: Services): Router {
       bankResponseDate,
       isAddedToPersonalItems,
       addedToPersonalItemsDate,
+      resubmissionDate,
     } = req.body
+
+    console.log({
+      status: updatedStatus,
+      bankResponseDate,
+      isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+      addedToPersonalItemsDate,
+      resubmissionDate,
+    })
 
     const rpClient = new RPClient()
     try {
@@ -293,6 +302,7 @@ export default function routes(services: Services): Router {
           bankResponseDate,
           isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
           addedToPersonalItemsDate,
+          resubmissionDate,
         },
       )
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
