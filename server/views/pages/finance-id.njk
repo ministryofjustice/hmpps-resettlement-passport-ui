@@ -161,16 +161,73 @@
           <h3 class="app-summary-card__title">
             ID
           </h3>
-          <span class="right">
+          {% if id.error %}
+            <span class="right">
             <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
               Add an ID application
             </a>
           </span>
+          {% endif %}
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
-              <p>No current applications</p>
+              {% if id.error %}
+                <p>No current applications</p>
+              {% else %}
+                <h3 class="govuk-heading-s">ID</h3>
+                <table class="govuk-table">
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Type</th>
+                      <td class="govuk-table__cell">{{id.type}}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Application submitted</th>
+                      <td class="govuk-table__cell">{{id.applicationSubmittedDate | formatDate }}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Has the GRO number?</th>
+                      <td class="govuk-table__cell">{% if id.haveGro and true %}Yes ({{id.haveGro}}){% else %}No{% endif %}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Was a UK national born overseas?</th>
+                      <td class="govuk-table__cell">{% if id.isUkNationalBornOverseas and true %}Yes ({{id.countryBornIn}}){% else %}No{% endif %}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Priority application</th>
+                      <td class="govuk-table__cell">{% if id.isPriorityApplication and true %}Yes{% else %}No{% endif %}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Cost of application</th>
+                      <td class="govuk-table__cell">£{{id.costOfApplication}}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Application status</th>
+                      <td class="govuk-table__cell">{{ id.status | capitalize }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+                <a href="/finance-and-id/update-id-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+                  <button class="govuk-button govuk-button--secondary">
+                    Update application
+                  </button>
+                </a>
+                <br>
+                <button class="ghost-button delete-id-button">Delete application</button>
+                <div class="confirm-delete-id-form" hidden>
+                  <div class="govuk-button-group">
+                    <form action action="/finance-and-id/#id" method="GET" novalidate>
+                      <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application</button>
+                      <input hidden name="deleteIdConfirmed" value="true"/>
+                      <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                      <input hidden name="idId" value="{{ id.id }}">
+                    </form>
+                    <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                  </div>
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>

@@ -49,3 +49,29 @@ if (deleteFinanceBtnEl) {
 if (cancelDeleteFinanceBtnEl) {
   cancelDeleteFinanceBtnEl.addEventListener('click', hideDeleteFinanceConfirmation)
 }
+
+/***********************************
+  SHOW/HIDE DELETE ID BUTTONS
+************************************/
+const deleteIdBtnEl = document.querySelector('.delete-id-button')
+const confirmDeleteIdFormEl = document.querySelector('.confirm-delete-id-form')
+const cancelDeleteIdBtnEl = document.querySelector('.cancel-delete-id-button')
+
+function showDeleteIdConfirmation() {
+  confirmDeleteIdFormEl.hidden = false
+  cancelDeleteIdBtnEl.hidden = false
+  deleteIdBtnEl.hidden = true
+}
+
+function hideDeleteIdConfirmation() {
+  confirmDeleteIdFormEl.hidden = true
+  cancelDeleteIdBtnEl.hidden = true
+  deleteIdBtnEl.hidden = false
+}
+
+if (deleteIdBtnEl) {
+  deleteIdBtnEl.addEventListener('click', showDeleteIdConfirmation)
+}
+if (cancelDeleteIdBtnEl) {
+  cancelDeleteIdBtnEl.addEventListener('click', hideDeleteIdConfirmation)
+}

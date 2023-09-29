@@ -22,6 +22,7 @@ import { getEnumByURL, getEnumValue } from '../utils/utils'
 import logger from '../../logger'
 import updateBankAccountStatusRouter from './finance-id/update-status-bank-account'
 import confirmAssessmentRouter from './finance-id/confirm-assessment'
+import addIdFurtherRouter from './finance-id/add-id-further'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -269,6 +270,29 @@ export default function routes(services: Services): Router {
       })
     }
   })
+  use('/finance-and-id/id-submit/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const params = req.body
+    const { prisonerNumber, idType, applicationSubmittedDate, isPriorityApplication } = req.body
+
+    const rpClient = new RPClient()
+    try {
+      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
+        idType,
+        applicationSubmittedDate,
+        isPriorityApplication,
+      })
+      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+    } catch (error) {
+      const errorMessage = error.message
+      logger.error('Error fetching id data:', error)
+      res.render('pages/add-id-confirm', {
+        errorMessage,
+        prisonerData,
+        params,
+      })
+    }
+  })
 
   use('/finance-and-id', financeIdRouter)
   use('/finance-and-id/add-an-id', addIdRouter)
@@ -278,6 +302,7 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/confirm-add-a-bank-account', confirmBankAccountRouter)
   use('/finance-and-id/confirm-add-an-id', confirmIdRouter)
   use('/finance-and-id/assessment', assessmentRouter)
+  use('/finance-and-id/add-an-id-further', addIdFurtherRouter)
 
   return router
 }

@@ -4,7 +4,8 @@ import logger from '../../../logger'
 
 const financeIdRouter = express.Router().get('/', async (req: Request, res, next) => {
   const { prisonerData } = req
-  const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId } = req.query
+  const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
+    req.query
 
   const apiResponse = new RPClient()
 
@@ -12,6 +13,8 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   let assessmentDeleted: { error?: boolean } = {}
   let finance: { error?: boolean } = {}
   let financeDeleted: { error?: boolean } = {}
+  let id: { error?: boolean } = {}
+  let idDeleted: { error?: boolean } = {}
 
   // DELETE ASSESSMENT
   if (deleteAssessmentConfirmed) {
@@ -57,8 +60,30 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
     logger.warn(`Error fetching finance data`, err)
     finance.error = true
   }
+  // DELETE ID
+  if (deleteIdConfirmed) {
+    try {
+      idDeleted = await apiResponse.delete(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/${idId}`,
+      )
+    } catch (err) {
+      logger.warn(`Error deleting ID`, err)
+      idDeleted.error = true
+    }
+  }
+  // FETCH ID
+  try {
+    id = await apiResponse.get(
+      req.user.token,
+      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication`,
+    )
+  } catch (err) {
+    logger.warn(`Error fetching ID data`, err)
+    id.error = true
+  }
 
-  res.render('pages/finance-id', { assessment, prisonerData, finance })
+  res.render('pages/finance-id', { assessment, prisonerData, finance, id })
 })
 
 export default financeIdRouter
