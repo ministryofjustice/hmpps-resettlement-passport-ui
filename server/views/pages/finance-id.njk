@@ -120,25 +120,54 @@
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Bank</th>
-                      <td class="govuk-table__cell">Lloyds</td>
+                      <td class="govuk-table__cell">{{ finance.bankName }}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Application submitted</th>
-                      <td class="govuk-table__cell">4 Feb 2022</td>
+                      <td class="govuk-table__cell">{{ finance.applicationSubmittedDate | formatDate }}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Status</th>
                       <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
                     </tr>
+                    {% if finance.bankResponseDate and finance.currentStatus !== 'Returned incomplete' and finance.currentStatus !== 'Returned inaccurate' %}
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Date {{ finance.currentStatus }}</th>
+                        <td class="govuk-table__cell">{{ finance.bankResponseDate | formatDate }}</td>
+                      </tr>
+                    {% endif %}
+                    {% if finance.currentStatus === "Account opened" %}
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Added to personal items</th>
+                        <td class="govuk-table__cell">
+                          {% if finance.isAddedToPersonalItems %}
+                            {{ finance.addedToPersonalItemsDate | formatDate }}
+                          {% endif %}
+                          {% if finance.isAddedToPersonalItems == false %}
+                            No
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% endif %}
                   </tbody>
                 </table>
                 <br>
-                <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
-                  <button class="govuk-button govuk-button--secondary">
-                    Update application
-                  </button>
-                </a>
-                <br>
+                {% if finance.currentStatus === 'Pending' %}
+                  <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
+                    <button class="govuk-button govuk-button--secondary">
+                      Update application
+                    </button>
+                  </a>
+                  <br>
+                {% endif %}
+                {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
+                  <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}&applicationType=resubmit">
+                    <button class="govuk-button">
+                      Resubmit application
+                    </button>
+                  </a>
+                  <br>
+                {% endif %}
                 <button class="ghost-button delete-finance-button">Delete application</button>
                 <div class="confirm-delete-finance-form" hidden>
                   <div class="govuk-button-group">
@@ -151,6 +180,33 @@
                     <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
                   </div>
                 </div>
+                {% set showDetails = false %}
+                {% for log in finance.logs %}
+                  {% if log.status === 'Returned inaccurate' or log.status === 'Returned incomplete' %}
+                    {% set showDetails = true %}
+                  {% endif %}
+                {% endfor %}
+                {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' or showDetails %}
+                  <details class="govuk-details govuk-!-padding-top-6">
+                    <summary class="govuk-details__summary">
+                      <span class="govuk-details__summary-text">
+                        Application history
+                      </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                      <table class="govuk-table">
+                        <tbody class="govuk-table__body">
+                          {% for log in finance.logs %}
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">{{ "Application submitted" if log.status === "Pending" else log.status }}</th>
+                              <td class="govuk-table__cell">{{ log.changeDate | formatDate }}</td>
+                            </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </details>
+                {% endif %}
               {% endif %}
             </div>
           </div>

@@ -10,86 +10,121 @@
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
       <h3 class="govuk-heading-m">Apply for a bank account</h3>
-      <form action="/finance-and-id/confirm-add-a-bank-account/" class="govuk-form" novalidate>
+      <form action="/finance-and-id/confirm-add-a-bank-account/" method="get" class="govuk-form" novalidate>
         <div class="govuk-form-group">
-          <label class="govuk-label" for="status">Application status</label>
-          <select class="govuk-select" id="status" name="status">
+          <label class="govuk-label" for="updatedStatus">Application status</label>
+          <select class="govuk-select status-options" id="status" name="updatedStatus">
             <option value="">Select status</option>
-            <option value="Account opened">Account opened</option>
-            <option value="Account declined">Account declined</option>
-            <option value="Returned ineligible">Returned ineligible</option>
-            <option value="Returned inaccurate">Returned inaccurate</option>
-            <option value="Returned incomplete">Returned incomplete</option>
+            <option value="Account opened" {% if params.updatedStatus == "Account opened" %}selected{% endif %}>Account opened</option>
+            <option value="Account declined" {% if params.updatedStatus == "Account declined" %}selected{% endif %}>Account declined</option>
+            <option value="Returned ineligible" {% if params.updatedStatus == "Returned ineligible" %}selected{% endif %}>Returned ineligible</option>
+            <option value="Returned inaccurate" {% if params.updatedStatus == "Returned inaccurate" %}selected{% endif %}>Returned inaccurate</option>
+            <option value="Returned incomplete" {% if params.updatedStatus == "Returned incomplete" %}selected{% endif %}>Returned incomplete</option>
           </select>
         </div>
 
-        <label class="govuk-label" for="date-opened">Date account opened</label>
-        <div class="govuk-date-input" id="date-opened">
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <label class="govuk-label govuk-date-input__label" for="accountOpenedDay">Day</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedDay" name="accountOpenedDay" type="text" inputmode="numeric">
-            </div>
-          </div>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <label class="govuk-label govuk-date-input__label" for="accountOpenedMonth">Month</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedMonth" name="accountOpenedMonth" type="text" inputmode="numeric">
-            </div>
-          </div>
-          <div class="govuk-date-input__item">
-            <div class="govuk-form-group">
-              <label class="govuk-label govuk-date-input__label" for="accountOpenedYear">Year</label>
-              <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="accountOpenedYear" name="accountOpenedYear" type="text" inputmode="numeric">
-            </div>
-          </div>
-        </div>
-
-        <div class="govuk-form-group">
-          <fieldset class="govuk-fieldset" aria-describedby="Added to personal items">
-            <label class="govuk-label">Added to personal items</label>
-            <div class="govuk-radios" data-module="govuk-radios">
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="added-to-items-yes" name="added-to-personal-items" type="radio" value="yes" aria-controls="conditional-added-to-items-yes" aria-expanded="false">
-                <label class="govuk-label govuk-radios__label" for="added-to-items-yes">Yes</label>
-              </div>
-              <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-added-to-items-yes">
+        <div class="input-fields" {% if params.updatedStatus == '' or not params.updatedStatus  %}hidden{% endif %}>
+          <div class="date-account-opened" {% if params.updatedStatus != 'Account opened'  %}hidden{% endif %}>
+            <label class="govuk-label" for="date-opened">Date account opened</label>
+            <div class="govuk-date-input" id="date-opened">
+              <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
-                  <label class="govuk-label">Date added</label>
-                  <div class="govuk-date-input">
-                    <div class="govuk-date-input__item">
-                      <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="date-added-day" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="">
-                      </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                      <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="date-added-month" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="">
-                      </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                      <div class="govuk-form-group">
-                        <label class="govuk-label govuk-date-input__label" for="year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="date-added-year" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="">
+                  <label class="govuk-label govuk-date-input__label" for="accountOpenedDay">Day</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedDay" name="accountOpenedDay" type="text" inputmode="numeric" value="{{ params.accountOpenedDay if params.accountOpenedDay }}">
+                </div>
+              </div>
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-date-input__label" for="accountOpenedMonth">Month</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedMonth" name="accountOpenedMonth" type="text" inputmode="numeric" value="{{ params.accountOpenedMonth if params.accountOpenedMonth }}">
+                </div>
+              </div>
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-date-input__label" for="accountOpenedYear">Year</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="accountOpenedYear" name="accountOpenedYear" type="text" inputmode="numeric" value="{{ params.accountOpenedYear if params.accountOpenedYear }}">
+                </div>
+              </div>
+            </div>
+
+            <div class="govuk-form-group">
+              <fieldset class="govuk-fieldset" aria-describedby="Added to personal items">
+                <label class="govuk-label">Added to personal items</label>
+                <div class="govuk-radios" data-module="govuk-radios">
+                  <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="added-to-items-yes" name="addedToPersonalItems" type="radio" value="Yes" aria-controls="conditional-added-to-items-yes" aria-expanded="false" {% if params.addedToPersonalItems == 'Yes' %}checked{% endif %}>
+                    <label class="govuk-label govuk-radios__label" for="added-to-items-yes">Yes</label>
+                  </div>
+                  <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-added-to-items-yes">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label">Date added</label>
+                      <div class="govuk-date-input">
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="dateAddedDay" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="{{ params.dateAddedDay if params.dateAddedDay }}">
+                          </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="dateAddedMonth" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="{{ params.dateAddedMonth if params.dateAddedMonth }}">
+                          </div>
+                        </div>
+                        <div class="govuk-date-input__item">
+                          <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="dateAddedYear" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="{{ params.dateAddedYear if params.dateAddedYear }}">
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="added-to-items-no" name="addedToPersonalItems" type="radio" value="No" data-aria-controls="conditional-added-to-items-no" {% if params.addedToPersonalItems == 'No' %}checked{% endif %}>
+                    <label class="govuk-label govuk-radios__label" for="added-to-items-no">No</label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="govuk-form-group date-heard-from-application" {% if params.updatedStatus == 'Account opened'  %}hidden{% endif %}>
+            <label class="govuk-label" for="date-bank-details-heard">Date heard back from application</label>
+            <div class="govuk-date-input" id="date-bank-details-heard">
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-date-input__label" for="heardBackDay">Day</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay }}" inputmode="numeric">
                 </div>
               </div>
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="added-to-items-no" name="added-to-personal-items" type="radio" value="no" data-aria-controls="conditional-added-to-items-no">
-                <label class="govuk-label govuk-radios__label" for="added-to-items-no">No</label>
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-date-input__label" for="heardBackMonth">Month</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="heardBackMonth" name="heardBackMonth" type="text" value="{{ params.heardBackMonth if params.heardBackMonth }}" inputmode="numeric">
+                </div>
+              </div>
+              <div class="govuk-date-input__item">
+                <div class="govuk-form-group">
+                  <label class="govuk-label govuk-date-input__label" for="heardBackYear">Year</label>
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="heardBackYear" name="heardBackYear" type="text" value="{{ params.heardBackYear if params.heardBackYear }}" inputmode="numeric">
+                </div>
               </div>
             </div>
-          </fieldset>
-        </div>
+          </div>
 
-        <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-        <button class="govuk-button" type="submit">Submit</button>
+          <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+          <input type="hidden" name="applicationId" value="{{ params.applicationId }}"/>
+          <input type="hidden" name="confirmationType" value="updateStatus">
+          <button class="govuk-button" type="submit">Submit</button>
+
+        </div>
 
       </form>
     </div>
   </div>
+{% endblock %}
+{% block bodyEnd %}
+  {{ super() }}
+  <script src="/assets/js/finance-id-update-status.js"></script>
 {% endblock %}

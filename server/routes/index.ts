@@ -252,12 +252,13 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/bank-account-submit/', async (req: Request, res: Response, next) => {
     const { prisonerData } = req
     const params = req.body
-    const { prisonerNumber, applicationDate } = req.body
+    const { prisonerNumber, applicationDate, bankName } = req.body
 
     const rpClient = new RPClient()
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
         applicationSubmittedDate: applicationDate,
+        bankName,
       })
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {
@@ -287,6 +288,44 @@ export default function routes(services: Services): Router {
       const errorMessage = error.message
       logger.error('Error fetching id data:', error)
       res.render('pages/add-id-confirm', {
+        errorMessage,
+        prisonerData,
+        params,
+      })
+    }
+  })
+
+  use('/finance-and-id/bank-account-update/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const params = req.body
+    const {
+      prisonerNumber,
+      applicationId,
+      updatedStatus,
+      bankResponseDate,
+      isAddedToPersonalItems,
+      addedToPersonalItemsDate,
+      resubmissionDate,
+    } = req.body
+
+    const rpClient = new RPClient()
+    try {
+      await rpClient.patch(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`,
+        {
+          status: updatedStatus,
+          bankResponseDate,
+          isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+          addedToPersonalItemsDate,
+          resubmissionDate,
+        },
+      )
+      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+    } catch (error) {
+      const errorMessage = error.message
+      logger.error('Error updating banking application:', error)
+      res.render('pages/add-bank-account-confirm', {
         errorMessage,
         prisonerData,
         params,

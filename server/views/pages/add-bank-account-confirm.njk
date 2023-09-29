@@ -14,33 +14,113 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
-      <form action="/finance-and-id/bank-account-submit" method="post" novalidate>
+      {% set urlEndpoint = "submit" %}
+      {% if params.confirmationType == 'updateStatus' or params.confirmationType == 'resubmit' %}
+        {% set urlEndpoint = "update" %}
+      {% endif %}
+      <form action="/finance-and-id/bank-account-{{ urlEndpoint }}" method="post" novalidate>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Bank</dt>
-            <dd class="govuk-summary-list__value">{{ params.bank }}</dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">
-                Change
-                <span class="govuk-visually-hidden">Bank</span>
-              </a>
-            </dd>
-            <input hidden name="bank" value="{{ params.bank }}" />
-          </div>
-          <div class="govuk-summary-list__row">
-            {% set date = params.applicationSubmittedYear + "-" + params.applicationSubmittedMonth + "-" + params.applicationSubmittedDay%}
-            <dt class="govuk-summary-list__key">Application submitted</dt>
-            <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">
-                Change
-                <span class="govuk-visually-hidden">Application submitted</span>
-              </a>
-            </dd>
-            <input hidden name="applicationDate" value="{{ date | formatDateToIso }}" />
-          </div>
+
+          {% if params.confirmationType == 'addAccount' %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Bank</dt>
+              <dd class="govuk-summary-list__value">{{ params.bankName }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+              </dd>
+              <input hidden name="bankName" value="{{ params.bankName }}" />
+            </div>
+            <div class="govuk-summary-list__row">
+              {% set date = params.applicationSubmittedYear + "-" + params.applicationSubmittedMonth + "-" + params.applicationSubmittedDay%}
+              <dt class="govuk-summary-list__key">Application submitted</dt>
+              <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+              </dd>
+              <input hidden name="applicationDate" value="{{ date | formatDateToIso }}" />
+            </div>
+          {% endif %}
+
+          {% if params.confirmationType == 'resubmit' %}
+            <div class="govuk-summary-list__row">
+              {% set resubmissionDate = params.applicationResubmittedYear + "-" + params.applicationResubmittedMonth + "-" + params.applicationResubmittedDay%}
+              <dt class="govuk-summary-list__key">Application resubmitted</dt>
+              <dd class="govuk-summary-list__value">{{ resubmissionDate | formatDate }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+              </dd>
+              <input hidden name="resubmissionDate" value="{{ resubmissionDate | formatDateToIso }}" />
+            </div>
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Status</dt>
+              <dd class="govuk-summary-list__value">{{ params.status }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+              </dd>
+              <input hidden name="updatedStatus" value="{{ params.status }}" />
+            </div>
+            <div class="govuk-summary-list__row">
+              {% set dateResubmittedHeard = params.dateResubmittedHeardYear + "-" + params.dateResubmittedHeardMonth + "-" + params.dateResubmittedHeardDay%}
+              <dt class="govuk-summary-list__key">Date heard back from resubmission</dt>
+              <dd class="govuk-summary-list__value">{{ dateResubmittedHeard | formatDate }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+              </dd>
+              <input hidden name="bankResponseDate" value="{{ dateResubmittedHeard | formatDateToIso }}" />
+            </div>
+          {% endif %}
+
+          {% if params.confirmationType == 'updateStatus' %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Status</dt>
+              <dd class="govuk-summary-list__value">{{ params.updatedStatus }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+              </dd>
+              <input hidden name="updatedStatus" value="{{ params.updatedStatus }}" />
+            </div>
+            {% if params.updatedStatus == 'Account opened' %}
+              {% set dateAccountOpened = params.accountOpenedYear + "-" + params.accountOpenedMonth + "-" + params.accountOpenedDay %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Date account opened</dt>
+                <dd class="govuk-summary-list__value">{{ dateAccountOpened | formatDate }}</dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                </dd>
+                <input hidden name="bankResponseDate" value="{{ dateAccountOpened | formatDateToIso }}" />
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Added to personal items</dt>
+                <dd class="govuk-summary-list__value">
+                  {% if params.addedToPersonalItems === "Yes" %}
+                    {% set dateAddedToItems = params.dateAddedYear + "-" + params.dateAddedMonth + "-" + params.dateAddedDay %}
+                    {{ dateAddedToItems | formatDate }}
+                    <input hidden name="addedToPersonalItemsDate" value="{{ dateAddedToItems | formatDateToIso }}" />
+                  {% else %}
+                    {{ params.addedToPersonalItems }}
+                  {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                </dd>
+              </div>
+              <input hidden name="isAddedToPersonalItems" value="{{ params.addedToPersonalItems }}" />
+            {% else %}
+              <div class="govuk-summary-list__row">
+                {% set heardBackDate = params.heardBackYear + "-" + params.heardBackMonth + "-" + params.heardBackDay %}
+                <dt class="govuk-summary-list__key">Date heard back from application</dt>
+                <dd class="govuk-summary-list__value">{{ heardBackDate | formatDate }}</dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                </dd>
+                <input hidden name="bankResponseDate" value="{{ heardBackDate | formatDateToIso }}" />
+              </div>
+            {% endif %}
+          {% endif %}
+
         </dl>
         <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+        <input type="hidden" name="applicationId" value="{{ params.applicationId }}"/>
         <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
         <button class="govuk-button" type="submit">Accept and send</button>
       </form>
