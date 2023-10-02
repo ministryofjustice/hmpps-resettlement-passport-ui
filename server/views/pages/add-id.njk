@@ -11,8 +11,17 @@
         <div class="govuk-grid-column-full">
             <h2>Apply for an ID</h2>
             <form action="/finance-and-id/add-an-id-further/" class="govuk-form"  novalidate>
-                <div class="govuk-form-group">
+                <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.idType }}">
                     <label class="govuk-label" for="idType">Type</label>
+                    {% if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate %}
+                        <div class="govuk-!-margin-top-5">
+                            {% if errorMsg.idType %}
+                                <p class="govuk-error-message">
+                                    {{ errorMsg.idType }}
+                                </p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                     <select class="govuk-select" id="idType" name="idType">
                         <option value="">Select type</option>
                         <option value="Birth certificate" {% if params.idType == "Birth certificate" %}selected{% endif %}>Birth certificate</option>
@@ -27,25 +36,54 @@
 
                 </div>
 
-                <div class="govuk-form-group">
+                <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate }}">
                     <label class="govuk-label" for="application-submitted">Application submitted</label>
+                    {% if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate %}
+                        <div class="govuk-!-margin-top-5">
+                            {% if errorMsg.applicationSubmittedDay %}
+                                <p class="govuk-error-message">
+                                    {{ errorMsg.applicationSubmittedDay }}
+                                </p>
+                            {% endif %}
+                            {% if errorMsg.applicationSubmittedMonth %}
+                                <p class="govuk-error-message">
+                                    {{ errorMsg.applicationSubmittedMonth }}
+                                </p>
+                            {% endif %}
+                            {% if errorMsg.applicationSubmittedYear %}
+                                <p class="govuk-error-message">
+                                    {{ errorMsg.applicationSubmittedYear }}
+                                </p>
+                            {% endif %}
+                            {% if errorMsg.futureDate %}
+                                <p class="govuk-error-message">
+                                    {{ errorMsg.futureDate }}
+                                </p>
+                            {% endif %}
+                            {% if errorMsg.isValidDate %}
+                                <p class="govuk-error-message">
+                                    {{ errorMsg.isValidDate }}
+                                </p>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                     <div class="govuk-date-input" id="application-submitted">
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
                                 <label class="govuk-label govuk-date-input__label" for="applicationSubmittedDay">Day</label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedDay" name="applicationSubmittedDay" type="text" value="{{ params.applicationSubmittedDay if params.applicationSubmittedDay | length else "" }}" inputmode="numeric">
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.applicationSubmittedDay or errorMsg.futureDate or errorMsg.isValidDate }}" id="applicationSubmittedDay" name="applicationSubmittedDay" type="text" value="{{ params.applicationSubmittedDay if params.applicationSubmittedDay | length else "" }}" inputmode="numeric">
                             </div>
                         </div>
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
-                                <label class="govuk-label govuk-date-input__label" for="applicationSubmittedMonth">Month</label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedMonth" name="applicationSubmittedMonth" type="text" value="{{ params.applicationSubmittedMonth if params.applicationSubmittedMonth | length else "" }}" inputmode="numeric">
+                                <label class="govuk-label govuk-date-input__label " for="applicationSubmittedMonth">Month</label>
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.applicationSubmittedMonth or errorMsg.futureDate or errorMsg.isValidDate }}" id="applicationSubmittedMonth" name="applicationSubmittedMonth" type="text" value="{{ params.applicationSubmittedMonth if params.applicationSubmittedMonth | length else "" }}" inputmode="numeric">
                             </div>
                         </div>
                         <div class="govuk-date-input__item">
                             <div class="govuk-form-group">
                                 <label class="govuk-label govuk-date-input__label" for="applicationSubmittedYear">Year</label>
-                                <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="applicationSubmittedYear" name="applicationSubmittedYear" type="text" value="{{ params.applicationSubmittedYear if params.applicationSubmittedYear | length else "" }}" inputmode="numeric">
+                                <input class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate }}" id="applicationSubmittedYear" name="applicationSubmittedYear" type="text" value="{{ params.applicationSubmittedYear if params.applicationSubmittedYear | length else "" }}" inputmode="numeric">
                             </div>
                         </div>
                     </div>
@@ -58,8 +96,8 @@
                 <input hidden name="courtDetails" value="{{ params.courtDetails }}"/>
                 <input hidden name="caseNumber" value="{{ params.caseNumber }}"/>
                 <input hidden name="isUkNationalBornOverseas" value="{{ params.isUkNationalBornOverseas }}"/>
-              <input hidden name="countryBornIn" value="{{ params.countryBornIn }}"/>
-              <input hidden name="haveGro" value="{{ params.haveGro }}"/>
+                <input hidden name="countryBornIn" value="{{ params.countryBornIn }}"/>
+                <input hidden name="haveGro" value="{{ params.haveGro }}"/>
                 <button class="govuk-button" type="submit">Submit</button>
             </form>
         </div>
