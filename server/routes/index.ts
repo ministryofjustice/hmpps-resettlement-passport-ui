@@ -295,16 +295,6 @@ export default function routes(services: Services): Router {
         isUkNationalBornOverseas,
         countryBornIn,
       })
-      console.log(
-        'PARAMS',
-        idType,
-        applicationSubmittedDate,
-        isPriorityApplication,
-        costOfApplication,
-        haveGro,
-        isUkNationalBornOverseas,
-        countryBornIn,
-      )
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {
       const errorMessage = error.message
