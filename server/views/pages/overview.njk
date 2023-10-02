@@ -194,28 +194,32 @@
             </header>
             <div class="app-summary-card__body">
               {% if not appointments.error %}
-                <table class="govuk-table">
-                  <thead class="govuk-table__head">
-                    <tr class="govuk-table__row">
-                      <th scope="col" class="govuk-table__header">Title</th>
-                      <th scope="col" class="govuk-table__header">Contact</th>
-                      <th scope="col" class="govuk-table__header">Date</th>
-                      <th scope="col" class="govuk-table__header">Time</th>
-                      <th scope="col" class="govuk-table__header">Location</th>
-                    </tr>
-                  </thead>
-                  <tbody class="govuk-table__body">
-                    {% for appointment in appointments.results %}
+                {% if appointments.results | length %}
+                  <table class="govuk-table">
+                    <thead class="govuk-table__head">
                       <tr class="govuk-table__row">
-                        <td class="govuk-table__cell">{{ appointment.title }}</td>
-                        <td class="govuk-table__cell">{{ appointment.contact }}</td>
-                        <td class="govuk-table__cell">{{ appointment.date | formatDate }}</td>
-                        <td class="govuk-table__cell">{{ appointment.time }}</td>
-                        <td class="govuk-table__cell">{{ appointment.location.postcode }}</td>
+                        <th scope="col" class="govuk-table__header">Title</th>
+                        <th scope="col" class="govuk-table__header">Contact</th>
+                        <th scope="col" class="govuk-table__header">Date</th>
+                        <th scope="col" class="govuk-table__header">Time</th>
+                        <th scope="col" class="govuk-table__header">Location</th>
                       </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody class="govuk-table__body">
+                      {% for appointment in appointments.results %}
+                        <tr class="govuk-table__row">
+                          <td class="govuk-table__cell">{{ appointment.title }}</td>
+                          <td class="govuk-table__cell">{{ appointment.contact }}</td>
+                          <td class="govuk-table__cell">{{ appointment.date | formatDate }}</td>
+                          <td class="govuk-table__cell">{{ appointment.time }}</td>
+                          <td class="govuk-table__cell">{{ appointment.location.postcode }}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                {% else %}
+                  <p>No current appointments</p>
+                {% endif %}
               {% endif %}
               <br>
             </div>

@@ -111,8 +111,6 @@ export default function routes(services: Services): Router {
       appointments.error = true
     }
 
-    console.log(appointments)
-
     res.render('pages/overview', {
       licenceConditions,
       prisonerData,
