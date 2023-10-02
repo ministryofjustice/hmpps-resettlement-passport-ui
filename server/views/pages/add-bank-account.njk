@@ -44,7 +44,7 @@
             </select>
           </div>
           <div class="govuk-form-group conditional-form-fields" {% if params.status == '' or not params.status %}hidden{% endif %}>
-            <div class="account-declined-form" {% if params.status != 'Account declined'  %}hidden{% endif %}>
+            <div class="account-declined-form" {% if params.status == 'Account opened' %}hidden{% endif %}>
               <label class="govuk-label" for="date-resubmitted-bank-details-received">Date heard back from resubmission</label>
               <div class="govuk-date-input" id="date-resubmitted-bank-details-received">
                 <div class="govuk-date-input__item">
@@ -52,7 +52,7 @@
                     <label class="govuk-label govuk-date-input__label" for="date-resubmitted-bank-details-heard-day">
                       Day
                     </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-resubmitted-bank-details-heard-day" name="dateResubmittedHeardDay" type="text" value="" inputmode="numeric">
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-resubmitted-bank-details-heard-day" name="dateResubmittedHeardDay" type="text" value="{{ params.dateResubmittedHeardDay if params.dateResubmittedHeardDay | length else "" }}" inputmode="numeric">
                   </div>
                 </div>
                 <div class="govuk-date-input__item">
@@ -60,7 +60,7 @@
                     <label class="govuk-label govuk-date-input__label" for="date-resubmitted-bank-details-heard-month">
                       Month
                     </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="date-resubmiited-resubmitted-bank-details-heard-month" name="dateResubmittedHeardMonth" type="text" value="" inputmode="numeric">
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="date-resubmiited-resubmitted-bank-details-heard-month" name="dateResubmittedHeardMonth" type="text" value="{{ params.dateResubmittedHeardMonth if params.dateResubmittedHeardMonth | length else "" }}" inputmode="numeric">
                   </div>
                 </div>
                 <div class="govuk-date-input__item">
@@ -68,12 +68,12 @@
                     <label class="govuk-label govuk-date-input__label" for="date-resubmitted-bank-details-heard-year">
                       Year
                     </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="date-resubmitted-bank-details-heard-year" name="dateResubmittedHeardYear" type="text" value="" inputmode="numeric">
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="date-resubmitted-bank-details-heard-year" name="dateResubmittedHeardYear" type="text" value="{{ params.dateResubmittedHeardYear if params.dateResubmittedHeardYear | length else "" }}" inputmode="numeric">
                   </div>
                 </div>
               </div>
             </div>
-            <div class="account-opened-form">
+            <div class="account-opened-form" {% if params.status == 'Account declined' %}hidden{% endif %}>
               <label class="govuk-label" for="date-account-opened">Date account opened</label>
               <div class="govuk-date-input govuk-!-margin-bottom-5" id="date-account-opened">
                 <div class="govuk-date-input__item">
@@ -81,7 +81,7 @@
                     <label class="govuk-label govuk-date-input__label" for="account-opened-day">
                       Day
                     </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="account-opened-day" name="accountOpenedDay" type="text" value="" inputmode="numeric">
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="account-opened-day" name="accountOpenedDay" type="text" value="{{ params.accountOpenedDay if params.accountOpenedDay | length else "" }}" inputmode="numeric">
                   </div>
                 </div>
                 <div class="govuk-date-input__item">
@@ -89,7 +89,7 @@
                     <label class="govuk-label govuk-date-input__label" for="account-opened-month">
                       Month
                     </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="date-resubmiited-resubmitted-bank-details-heard-month" name="accountOpenedMonth" type="text" value="" inputmode="numeric">
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="date-resubmiited-resubmitted-bank-details-heard-month" name="accountOpenedMonth" type="text" value="{{ params.accountOpenedMonth if params.accountOpenedMonth | length else "" }}" inputmode="numeric">
                   </div>
                 </div>
                 <div class="govuk-date-input__item">
@@ -97,7 +97,7 @@
                     <label class="govuk-label govuk-date-input__label" for="account-opened-year">
                       Year
                     </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="account-opened-year" name="accountOpenedYear" type="text" value="" inputmode="numeric">
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="account-opened-year" name="accountOpenedYear" type="text" value="{{ params.accountOpenedYear if params.accountOpenedYear | length else "" }}" inputmode="numeric">
                   </div>
                 </div>
               </div>

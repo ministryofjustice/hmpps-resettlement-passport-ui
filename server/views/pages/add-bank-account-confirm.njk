@@ -76,7 +76,7 @@
                 <dt class="govuk-summary-list__key">Date account opened</dt>
                 <dd class="govuk-summary-list__value">{{ dateAccountOpened | formatDate }}</dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
                 </dd>
                 <input hidden name="bankResponseDate" value="{{ dateAccountOpened | formatDateToIso }}" />
               </div>
@@ -92,7 +92,7 @@
                   {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
                 </dd>
               </div>
               <input hidden name="isAddedToPersonalItems" value="{{ params.addedToPersonalItems }}" />
