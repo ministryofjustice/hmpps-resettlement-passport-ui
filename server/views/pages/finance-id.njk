@@ -246,7 +246,7 @@
                       <th scope="row" class="govuk-table__header">Application submitted</th>
                       <td class="govuk-table__cell">{{id.applicationSubmittedDate | formatDate }}</td>
                     </tr>
-                    {% if id.idType.name === "Birth certificate" or id.idType.name  === "Marriage certificate" or id.idType.name  === "Replacement civil partnership certificate" or id.idType.name  === "Adoption certificate"%}
+                    {% if id.idType.name === "Birth certificate" or id.idType.name  === "Marriage certificate" or id.idType.name  === "Civil partnership certificate" or id.idType.name  === "Adoption certificate"%}
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Has the GRO number?</th>
                       <td class="govuk-table__cell">

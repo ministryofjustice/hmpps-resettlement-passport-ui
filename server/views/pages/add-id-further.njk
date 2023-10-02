@@ -12,7 +12,7 @@
     <div class="govuk-grid-column-full">
       <h2>Apply for {{ params.idType }}</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
-        {% if params.idType === "Birth certificate" or params.idType === "Marriage certificate" or params.idType === "Replacement civil partnership certificate" or params.idType === "Adoption certificate"%}
+        {% if params.idType === "Birth certificate" or params.idType === "Marriage certificate" or params.idType === "Civil partnership certificate" or params.idType === "Adoption certificate"%}
           <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
