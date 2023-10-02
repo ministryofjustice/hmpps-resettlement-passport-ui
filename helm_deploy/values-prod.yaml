@@ -12,7 +12,6 @@ generic-service:
     RESETTLEMENT_PASSPORT_API_URL: "https://resettlement-passport-api.hmpps.service.justice.gov.uk"
     NOMIS_USER_ROLES_API_URL: "https://nomis-user.aks-live-1.studio-hosting.service.justice.gov.uk"
     DPS_URL: "https://digital.prison.service.justice.gov.uk"
-    PHASE_NAME: "BETA"
     COMPONENT_API_URL: "https://frontend-components.hmpps.service.justice.gov.uk"
     SUPPORT_URL: "https://support.hmpps.service.justice.gov.uk/feedback-and-support"
 
