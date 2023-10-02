@@ -16,7 +16,7 @@
                     <select class="govuk-select" id="idType" name="idType">
                         <option value="">Select type</option>
                         <option value="Birth certificate" {% if params.idType == "Birth certificate" %}selected{% endif %}>Birth certificate</option>
-                        <option value="Replacement marriage certificate" {% if params.idType == "Replacement marriage certificate" %}selected{% endif %}>Replacement marriage certificate</option>
+                        <option value="Marriage certificate" {% if params.idType == "Marriage certificate" %}selected{% endif %}>Replacement marriage certificate</option>
                         <option value="Replacement civil partnership certificate" {% if params.idType == "Replacement civil partnership certificate" %}selected{% endif %}>Replacement civil partnership certificate</option>
                         <option value="Adoption certificate" {% if params.idType == "Adoption certificate" %}selected{% endif %}>Adoption certificate</option>
                         <option value="Divorce decree absolute certificate" {% if params.idType == "Divorce decree absolute certificate" %}selected{% endif %}>Divorce decree absolute certificate</option>
@@ -51,6 +51,15 @@
                     </div>
                 </div>
                 <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                <input hidden name="isPriorityApplication" value="{{ params.isPriorityApplication }}"/>
+                <input hidden name="costOfApplication" value="{{ params.costOfApplication }}"/>
+                <input hidden name="driversLicenceApplicationMadeAt" value="{{ params.driversLicenceApplicationMadeAt }}"/>
+                <input hidden name="driversLicenceType" value="{{ params.driversLicenceType }}"/>
+                <input hidden name="courtDetails" value="{{ params.courtDetails }}"/>
+                <input hidden name="caseNumber" value="{{ params.caseNumber }}"/>
+                <input hidden name="isUkNationalBornOverseas" value="{{ params.isUkNationalBornOverseas }}"/>
+              <input hidden name="countryBornIn" value="{{ params.countryBornIn }}"/>
+              <input hidden name="haveGro" value="{{ params.haveGro }}"/>
                 <button class="govuk-button" type="submit">Submit</button>
             </form>
         </div>

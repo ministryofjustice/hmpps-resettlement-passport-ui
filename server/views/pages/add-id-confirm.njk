@@ -41,11 +41,9 @@
             <a class="govuk-link" href="/finance-and-id/add-an-id{{req.url}}">Change<span class="govuk-visually-hidden"> application submitted</span></a>
           </dd>
         </div>
-        {% if params.idType === "Birth certificate" or params.idType === "Replacement marriage certificate" or params.idType === "Replacement civil partnership certificate" or params.idType === "Adoption certificate"%}
+        {% if params.idType === "Birth certificate" or params.idType === "Marriage certificate" or params.idType === "Replacement civil partnership certificate" or params.idType === "Adoption certificate"%}
           <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-            Has the GRO number?
-        </dt>
+            <dt class="govuk-summary-list__key">Has the GRO number?</dt>
             <dd class="govuk-summary-list__value">
               {% if params.haveGro === 'true' %}Yes{% else %}No{% endif %}
             </dd>
@@ -56,9 +54,7 @@
           </div>
           {% if not(params.idType === "Adoption certificate") %}
             <div class="govuk-summary-list__row">
-              <dt class="govuk-summary-list__key">
-            Was a UK national born overseas?
-        </dt>
+              <dt class="govuk-summary-list__key">Was a UK national born overseas?</dt>
               <dd class="govuk-summary-list__value">
                 {% if params.isUkNationalBornOverseas === 'true' %}Yes ({{params.countryBornIn}}){% else %}No{% endif %}
               </dd>
@@ -70,18 +66,15 @@
             </div>
           {% endif %}
           <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-            Priority application
-        </dt>
+            <dt class="govuk-summary-list__key">Priority application</dt>
             <dd class="govuk-summary-list__value">
               {% if params.isPriorityApplication === 'true' %}Yes{% else %}No{% endif %}
             </dd>
-            <input hidden name="isPriorityApplication" value="{{ params.isPriorityApplication }}"/>
+            
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Priority application</span></a>
             </dd>
           </div>
-
         {% elif params.idType === "Divorce decree absolute certificate"%}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">Case number</dt>
@@ -132,6 +125,8 @@
       </dl>
       <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
       <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
+      <input hidden name="isPriorityApplication" value="{{ params.isPriorityApplication or false}}"/>
+      
       <button class="govuk-button" type="submit">Accept and send</button>
     </form>
   </div>
