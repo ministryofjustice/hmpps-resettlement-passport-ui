@@ -39,12 +39,12 @@
             <label class="govuk-label" for="application">Resubmitted application status</label>
             <select class="govuk-select status-select" id="bank-account-application-status" name="status">
               <option value="">Select status</option>
-              <option value="Account opened">Account opened</option>
-              <option value="Account declined">Account declined</option>
+              <option value="Account opened" {% if params.status == "Account opened" %}selected{% endif %}>Account opened</option>
+              <option value="Account declined" {% if params.status == "Account declined" %}selected{% endif %}>Account declined</option>
             </select>
           </div>
-          <div class="govuk-form-group conditional-form-fields" hidden>
-            <div class="account-declined-form">
+          <div class="govuk-form-group conditional-form-fields" {% if params.status == '' or not params.status %}hidden{% endif %}>
+            <div class="account-declined-form" {% if params.status != 'Account declined'  %}hidden{% endif %}>
               <label class="govuk-label" for="date-resubmitted-bank-details-received">Date heard back from resubmission</label>
               <div class="govuk-date-input" id="date-resubmitted-bank-details-received">
                 <div class="govuk-date-input__item">
