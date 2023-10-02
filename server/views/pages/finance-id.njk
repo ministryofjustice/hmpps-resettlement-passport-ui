@@ -199,7 +199,7 @@
                           {% for log in finance.logs %}
                             <tr class="govuk-table__row">
                               <th scope="row" class="govuk-table__header">{{ "Application submitted" if log.status === "Pending" else log.status }}</th>
-                              <td class="govuk-table__cell">{{ log.changeDate | formatDate }}</td>
+                              <td class="govuk-table__cell">{{ finance.applicationSubmittedDate | formatDate if log.status === "Pending" else log.changeDate | formatDate }}</td>
                             </tr>
                           {% endfor %}
                         </tbody>
