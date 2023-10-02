@@ -23,6 +23,7 @@ import logger from '../../logger'
 import updateBankAccountStatusRouter from './finance-id/update-status-bank-account'
 import confirmAssessmentRouter from './finance-id/confirm-assessment'
 import addIdFurtherRouter from './finance-id/add-id-further'
+import updateIdStatusRouter from './finance-id/update-status-id'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -362,6 +363,7 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/confirm-add-an-id', confirmIdRouter)
   use('/finance-and-id/assessment', assessmentRouter)
   use('/finance-and-id/add-an-id-further', addIdFurtherRouter)
+  use('/finance-and-id/update-id-status', updateIdStatusRouter)
 
   return router
 }

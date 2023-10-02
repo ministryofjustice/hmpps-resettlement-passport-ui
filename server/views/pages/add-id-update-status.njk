@@ -1,0 +1,114 @@
+{% extends "../partials/layout.njk" %}
+{% set pathway = "Finance and ID" %}
+{% set pageTitle = applicationName + " - " + pathway + " - Add an ID application"%}
+{% set mainClasses = "app-container govuk-body" %}
+{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+{% block content %}
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+        {{ titleAndIntro(pathway) }}
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-bottom-4">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-row">
+                    <h2 class="govuk-heading-m">Apply for a {{params.typeId}}</h2>
+                    <p>
+                        <b>Application submitted:</b>{{params.applicationSubmittedDate | formatDate }}</p>
+                    <form action="/finance-and-id/confirm-add-an-id/" method="get" class="govuk-form govuk-!-padding-top-4">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="application">Application status</label>
+                            <select class="govuk-select status-options-id" id="status" name="updatedStatus">
+                                <option value="">Select application status</option>
+                                <option value="Accepted">Accepted</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </div>
+                        <div class="id-accepted-application" hidden>
+                            <div class="govuk-form-group">
+                                <div class="govuk-date-input" id="date-id-received">
+                                    <label class="govuk-label" for="type">Date ID received</label>
+                                    <!-- Date of ID received input -->
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="date-id-received-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-id-received-day" name="date-id-received-day" type="text" inputmode="numeric" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="date-id-received-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="date-id-received-month" name="date-id-received-month" type="text" inputmode="numeric" value="">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="date-id-received-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="date-id-received-year" name="date-id-received-year" type="text" inputmode="numeric" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div id="id-placement" class="govuk-form-group">
+                                <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                        <span class="govuk-fieldset__heading">Added to personal items</span>
+                                    </legend>
+
+                                    <div class="govuk-radios" data-module="govuk-radios">
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="id-placement-yes" name="id-placement" type="radio" value="yes" aria-controls="conditional-id-placement-yes" aria-expanded="false">
+                                            <label class="govuk-label govuk-radios__label" for="id-placement-yes">Yes</label>
+                                        </div>
+                                        <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-id-placement-yes">
+                                            <div class="govuk-form-group">
+                                                <label class="govuk-label" for="date-capture">Date added</label>
+                                                <div class="govuk-date-input">
+                                                    <div class="govuk-date-input__item">
+                                                        <div class="govuk-form-group">
+                                                            <label class="govuk-label govuk-date-input__label" for="day">Day</label>
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="placement-day" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="govuk-date-input__item">
+                                                        <div class="govuk-form-group">
+                                                            <label class="govuk-label govuk-date-input__label" for="month">Month</label>
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="placement-month" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="govuk-date-input__item">
+                                                        <div class="govuk-form-group">
+                                                            <label class="govuk-label govuk-date-input__label" for="year">Year</label>
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="placement-year" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="id-placement-no" name="id-placement" type="radio" value="no" data-aria-controls="conditional-id-placement-no">
+                                            <label class="govuk-label govuk-radios__label" for="id-placement-no">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group id-rejected-application" hidden>
+                            <label class="govuk-label" for="cost-application">Application refund amount</label>
+                            <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="refund-application" name="refund-application" type="text" spellcheck="false" value="">
+                                <div class="govuk-input__suffix" aria-hidden="true">£</div>
+                            </div>
+                        </div>
+                        <button class="govuk-button" type="submit">Submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block bodyEnd %}
+  {{ super() }}
+  <script src="/assets/js/finance-id-update-status.js"></script>
+{% endblock %}
