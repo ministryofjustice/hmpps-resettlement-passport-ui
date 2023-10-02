@@ -8,7 +8,6 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
     req.query
 
   const apiResponse = new RPClient()
-
   let assessment: { error?: boolean } = {}
   let assessmentDeleted: { error?: boolean } = {}
   let finance: { error?: boolean } = {}
@@ -82,6 +81,8 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
     logger.warn(`Error fetching ID data`, err)
     id.error = true
   }
+
+  console.log(finance)
 
   res.render('pages/finance-id', { assessment, prisonerData, finance, id })
 })

@@ -4,6 +4,8 @@ import { PrisonerData } from '../@types/express'
 import logger from '../../logger'
 
 export default async function prisonerDetailsMiddleware(req: Request, res: Response, next: NextFunction) {
+  console.log(req.user.token)
+
   /* *******************************
     FETCH PRISONER PROFILE DATA HERE
   ********************************* */
