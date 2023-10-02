@@ -41,45 +41,82 @@
             <a class="govuk-link" href="/finance-and-id/add-an-id{{req.url}}">Change<span class="govuk-visually-hidden"> application submitted</span></a>
           </dd>
         </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
+        {% if params.idType === "Birth certificate" or params.idType === "Replacement marriage certificate" or params.idType === "Replacement civil partnership certificate" or params.idType === "Adoption certificate"%}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
             Has the GRO number?
         </dt>
-          <dd class="govuk-summary-list__value">
-            {% if params.haveGro === 'true' %}Yes{% else %}No{% endif %}
-          </dd>
-          <input hidden name="haveGro" value="{{ params.haveGro }}"/>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
-          </dd>
-        </div>
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
+            <dd class="govuk-summary-list__value">
+              {% if params.haveGro === 'true' %}Yes{% else %}No{% endif %}
+            </dd>
+            <input hidden name="haveGro" value="{{ params.haveGro }}"/>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
+            </dd>
+          </div>
+          {% if not(params.idType === "Adoption certificate") %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
             Was a UK national born overseas?
         </dt>
-          <dd class="govuk-summary-list__value">
-            {% if params.isUkNationalBornOverseas === 'true' %}Yes ({{params.countryBornIn}}){% else %}No{% endif %}
-          </dd>
-          <input hidden name="isUkNationalBornOverseas" value="{{ params.isUkNationalBornOverseas }}"/>
-          <input hidden name="countryBornIn" value="{{ params.countryBornIn }}"/>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
-          </dd>
-        </div>
-
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">
+              <dd class="govuk-summary-list__value">
+                {% if params.isUkNationalBornOverseas === 'true' %}Yes ({{params.countryBornIn}}){% else %}No{% endif %}
+              </dd>
+              <input hidden name="isUkNationalBornOverseas" value="{{ params.isUkNationalBornOverseas }}"/>
+              <input hidden name="countryBornIn" value="{{ params.countryBornIn }}"/>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Was a UK national born overseas?</span></a>
+              </dd>
+            </div>
+          {% endif %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
             Priority application
         </dt>
-          <dd class="govuk-summary-list__value">
-            {% if params.isPriorityApplication === 'true' %}Yes{% else %}No{% endif %}
-          </dd>
-          <input hidden name="isPriorityApplication" value="{{ params.isPriorityApplication }}"/>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Priority application</span></a>
-          </dd>
-        </div>
+            <dd class="govuk-summary-list__value">
+              {% if params.isPriorityApplication === 'true' %}Yes{% else %}No{% endif %}
+            </dd>
+            <input hidden name="isPriorityApplication" value="{{ params.isPriorityApplication }}"/>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Priority application</span></a>
+            </dd>
+          </div>
 
+        {% elif params.idType === "Divorce decree absolute certificate"%}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Case number</dt>
+            <dd class="govuk-summary-list__value">{{ params.caseNumber }}</dd>
+            <input hidden name="caseNumber" value="{{ params.caseNumber }}"/>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Case number</span></a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Court details</dt>
+            <dd class="govuk-summary-list__value">{{ params.courtDetails }}</dd>
+            <input hidden name="courtDetails" value="{{ params.courtDetails }}"/>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Court details</span></a>
+            </dd>
+          </div>
+        {% elif params.idType === "Driving licence" %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Driving licence type</dt>
+            <dd class="govuk-summary-list__value">{{params.driversLicenceType}}</dd>
+            <input hidden name="driversLicenceType" value="{{ params.driversLicenceType }}"/>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Driving licence type</span></a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Driving licence application location</dt>
+            <dd class="govuk-summary-list__value">{{params.driversLicenceApplicationMadeAt}}</dd>
+            <input hidden name="driversLicenceApplicationMadeAt" value="{{ params.driversLicenceApplicationMadeAt }}"/>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/add-an-id-further{{req.url}}">Change<span class="govuk-visually-hidden"> Driving licence application location</span></a>
+            </dd>
+          </div>
+        {% endif %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">
             Cost of application

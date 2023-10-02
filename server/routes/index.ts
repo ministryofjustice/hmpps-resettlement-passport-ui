@@ -282,6 +282,10 @@ export default function routes(services: Services): Router {
       haveGro,
       isUkNationalBornOverseas,
       countryBornIn,
+      caseNumber,
+      courtDetails,
+      driversLicenceType,
+      driversLicenceApplicationMadeAt,
     } = req.body
     const costOfApplication = Number(req.body.costOfApplication)
     const rpClient = new RPClient()
@@ -294,6 +298,10 @@ export default function routes(services: Services): Router {
         haveGro,
         isUkNationalBornOverseas,
         countryBornIn,
+        caseNumber,
+        courtDetails,
+        driversLicenceType,
+        driversLicenceApplicationMadeAt,
       })
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {

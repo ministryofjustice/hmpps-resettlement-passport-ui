@@ -64,11 +64,15 @@
                 </tr>
                 <tr class="govuk-table__row">
                   <th scope="row" class="govuk-table__header">Requires a bank account application</th>
-                  <td class="govuk-table__cell capitalise">{% if assessment.isBankAccountRequired and true %}Yes{% else %}No{% endif %}</td>
+                  <td class="govuk-table__cell capitalise">
+                    {% if assessment.isBankAccountRequired and true %}Yes{% else %}No{% endif %}
+                  </td>
                 </tr>
                 <tr class="govuk-table__row">
                   <th scope="row" class="govuk-table__header">Requires an ID application</th>
-                  <td class="govuk-table__cell capitalise">{% if assessment.isIdRequired and true %}Yes{% else %}No{% endif %}</td>
+                  <td class="govuk-table__cell capitalise">
+                    {% if assessment.isIdRequired and true %}Yes{% else %}No{% endif %}
+                  </td>
                 </tr>
                 <tr class="govuk-table__row">
                   <th scope="row" class="govuk-table__header">Existing ID</th>
@@ -219,10 +223,10 @@
           </h3>
           {% if id.error %}
             <span class="right">
-            <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+              <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
               Add an ID application
             </a>
-          </span>
+            </span>
           {% endif %}
         </header>
         <div class="app-summary-card__body">
@@ -242,18 +246,46 @@
                       <th scope="row" class="govuk-table__header">Application submitted</th>
                       <td class="govuk-table__cell">{{id.applicationSubmittedDate | formatDate }}</td>
                     </tr>
+                    {% if params.idType === "Birth certificate" or params.idType === "Replacement marriage certificate" or params.idType === "Replacement civil partnership certificate" or params.idType === "Adoption certificate"%}
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Has the GRO number?</th>
-                      <td class="govuk-table__cell">{% if id.haveGro === true %}Yes{% else %}No{% endif %}</td>
+                      <td class="govuk-table__cell">
+                        {% if id.haveGro === true %}Yes{% else %}No{% endif %}
+                      </td>
                     </tr>
+                    {% if not(params.idType === "Adoption certificate") %}
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Was a UK national born overseas?</th>
-                      <td class="govuk-table__cell">{% if id.isUkNationalBornOverseas === true %}Yes ({{id.countryBornIn}}){% else %}No{% endif %}</td>
+                      <td class="govuk-table__cell">
+                        {% if id.isUkNationalBornOverseas === true %}Yes ({{id.countryBornIn}}){% else %}No{% endif %}
+                      </td>
                     </tr>
+                    {% endif %}
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Priority application</th>
-                      <td class="govuk-table__cell">{% if id.isPriorityApplication === true %}Yes{% else %}No{% endif %}</td>
+                      <td class="govuk-table__cell">
+                        {% if id.isPriorityApplication === true %}Yes{% else %}No{% endif %}
+                      </td>
                     </tr>
+                    {% elif id.idType === "Divorce decree absolute certificate"%}
+                    <tr class="govuk-table__row">
+                      <dt class="govuk-summary-list__key">Case number</dt>
+                      <dd class="govuk-summary-list__value">{{ params.caseNumber }}</dd>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <dt class="govuk-summary-list__key">Court details</dt>
+                      <dd class="govuk-summary-list__value">{{ params.courtDetails }}</dd>
+                    </tr>
+                    {% elif id.idType === "Driving licence" %}
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Driving licence type</th>
+                      <td class="govuk-table__cell">{{id.isPriorityApplication}}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <dt class="govuk-summary-list__key">Driving licence application location</dt>
+                      <dd class="govuk-summary-list__value">{{id.driversLicenceApplicationMadeAt}}</dd>
+                    </tr>
+                    {% endif %}
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Cost of application</th>
                       <td class="govuk-table__cell">£{{id.costOfApplication}}</td>
