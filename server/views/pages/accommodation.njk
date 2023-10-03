@@ -18,12 +18,54 @@
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {{ subNav([
         {
+          name: "Duty to refer",
+          id: "duty-to-refer"
+        },
+        {
           name: "Main address",
           id: "main-address"
         }
       ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
+      <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Duty to refer
+            <span class="govuk-caption-m">Data sourced from nDelius</span>
+          </h3>
+          <span class="right"></span>
+        </header>
+        <div class="app-summary-card__body">
+          {% if accommodation.status %}
+            {{ govukTable({
+              firstCellIsHeader: true,
+              rows: [
+                [
+                  {
+                    text: "Referral date"
+                  },
+                  {
+                    text: accommodation.referralDate | formatDate
+                  }
+                ],
+                [
+                  {
+                    text: "Status"
+                  },
+                  {
+                    text: accommodation.status
+                  }
+                ]
+              ]
+            }) }}
+          {% elseif not accommodation.error %}
+            No duty to refer details found
+          {% else %}
+            {{ errorMessage }}
+          {% endif %}
+        </div>
+      </section>
       <section id="main-address" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
