@@ -8,6 +8,8 @@ type ErrorMessage = {
   resubmittedFutureDate?: null | string
   resubmittedHeardFutureDate?: null | string
   isValidDate?: null | string
+  validResubmissionDate?: null | string
+  validResubmissionHeardBackDate?: null | string
   noBankName?: null | string
   noStatus?: null | string
   dateResubmittedHeardDay?: null | string
@@ -31,6 +33,8 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     resubmittedFutureDate: null,
     resubmittedHeardFutureDate: null,
     isValidDate: null,
+    validResubmissionDate: null,
+    validResubmissionHeardBackDate: null,
     noStatus: null,
     applicationResubmittedDay: null,
     applicationResubmittedMonth: null,
@@ -116,7 +120,10 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
 
   function validateResubmit() {
     let pageContainsError = false
-    const isValidDate = isDateValid(
+    const validResubmissionDate = isDateValid(
+      `${applicationResubmittedYear}-${applicationResubmittedMonth}-${applicationResubmittedDay}`,
+    )
+    const validResubmissionHeardBackDate = isDateValid(
       `${dateResubmittedHeardYear}-${dateResubmittedHeardMonth}-${dateResubmittedHeardDay}`,
     )
     const isResubmittedHeardBackFutureDate = isDateInFuture(
@@ -134,13 +141,15 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
       !applicationResubmittedDay ||
       !applicationResubmittedMonth ||
       !applicationResubmittedYear ||
-      isResubmittedFutureDate
+      isResubmittedFutureDate ||
+      !validResubmissionDate
     ) {
       pageContainsError = true
       errorMsg.applicationResubmittedDay = applicationResubmittedDay ? null : `${dateFieldMissingMessage} day`
       errorMsg.applicationResubmittedMonth = applicationResubmittedMonth ? null : `${dateFieldMissingMessage} month`
       errorMsg.applicationResubmittedYear = applicationResubmittedYear ? null : `${dateFieldMissingMessage} year`
       errorMsg.resubmittedFutureDate = isResubmittedFutureDate ? 'The date of must be in the past' : null
+      errorMsg.validResubmissionDate = validResubmissionDate ? null : dateFieldInvalid
     }
 
     if (!status) {
@@ -154,14 +163,14 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
         !dateResubmittedHeardMonth ||
         !dateResubmittedHeardYear ||
         isResubmittedHeardBackFutureDate ||
-        !isValidDate)
+        !validResubmissionHeardBackDate)
     ) {
       pageContainsError = true
       errorMsg.dateResubmittedHeardDay = dateResubmittedHeardDay ? null : `${dateFieldMissingMessage} day`
       errorMsg.dateResubmittedHeardMonth = dateResubmittedHeardMonth ? null : `${dateFieldMissingMessage} month`
       errorMsg.dateResubmittedHeardYear = dateResubmittedHeardYear ? null : `${dateFieldMissingMessage} year`
       errorMsg.resubmittedHeardFutureDate = isResubmittedHeardBackFutureDate ? 'The date of must be in the past' : null
-      errorMsg.isValidDate = isValidDate ? null : dateFieldInvalid
+      errorMsg.validResubmissionHeardBackDate = validResubmissionHeardBackDate ? null : dateFieldInvalid
     }
 
     if (pageContainsError) {

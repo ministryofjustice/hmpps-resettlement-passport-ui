@@ -14,7 +14,7 @@
         {% if params.applicationType === "resubmit" %}
           <div class="govuk-form-group">
             <label class="govuk-label" for="application-resubmitted">Date application resubmitted</label>
-            {% if errorMsg.applicationResubmittedDay or errorMsg.applicationResubmittedMonth or errorMsg.applicationResubmittedYear or errorMsg.resubmittedFutureDate or errorMsg.isValidDate %}
+            {% if errorMsg.applicationResubmittedDay or errorMsg.applicationResubmittedMonth or errorMsg.applicationResubmittedYear or errorMsg.resubmittedFutureDate or errorMsg.validResubmissionDate %}
               <div class="govuk-!-margin-top-5">
                 {% if errorMsg.applicationResubmittedDay %}
                   <p class="govuk-error-message">
@@ -36,9 +36,9 @@
                     {{ errorMsg.resubmittedFutureDate }}
                   </p>
                 {% endif %}
-                {% if errorMsg.isValidDate %}
+                {% if errorMsg.validResubmissionDate %}
                   <p class="govuk-error-message">
-                    {{ errorMsg.isValidDate }}
+                    {{ errorMsg.validResubmissionDate }}
                   </p>
                 {% endif %}
               </div>
@@ -80,7 +80,7 @@
           <div class="govuk-form-group conditional-form-fields" {% if params.status == '' or not params.status %}hidden{% endif %}>
             <div class="account-declined-form" {% if params.status == 'Account opened' %}hidden{% endif %}>
               <label class="govuk-label" for="date-resubmitted-bank-details-received">Date heard back from resubmission</label>
-              {% if errorMsg.dateResubmittedHeardDay or errorMsg.dateResubmittedHeardMonth or errorMsg.dateResubmittedHeardYear or errorMsg.futureDate or errorMsg.isValidDate %}
+              {% if errorMsg.dateResubmittedHeardDay or errorMsg.dateResubmittedHeardMonth or errorMsg.dateResubmittedHeardYear or errorMsg.resubmittedHeardFutureDate or errorMsg.validResubmissionHeardBackDate %}
                 <div class="govuk-!-margin-top-5">
                   {% if errorMsg.dateResubmittedHeardDay %}
                     <p class="govuk-error-message">
@@ -97,14 +97,14 @@
                       {{ errorMsg.dateResubmittedHeardYear }}
                     </p>
                   {% endif %}
-                  {% if errorMsg.futureDate %}
+                  {% if errorMsg.resubmittedHeardFutureDate %}
                     <p class="govuk-error-message">
-                      {{ errorMsg.futureDate }}
+                      {{ errorMsg.resubmittedHeardFutureDate }}
                     </p>
                   {% endif %}
-                  {% if errorMsg.isValidDate %}
+                  {% if errorMsg.validResubmissionHeardBackDate %}
                     <p class="govuk-error-message">
-                      {{ errorMsg.isValidDate }}
+                      {{ errorMsg.validResubmissionHeardBackDate }}
                     </p>
                   {% endif %}
                 </div>
@@ -116,7 +116,7 @@
                       Day
                     </label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateResubmittedHeardDay or errorMsg.futureDate or errorMsg.isValidDate }}" 
+                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateResubmittedHeardDay or errorMsg.resubmittedHeardFutureDate or errorMsg.validResubmissionHeardBackDate }}" 
                       id="date-resubmitted-bank-details-heard-day"
                       name="dateResubmittedHeardDay"
                       type="text"
@@ -131,7 +131,7 @@
                       Month
                     </label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateResubmittedHeardMonth or errorMsg.futureDate or errorMsg.isValidDate }}"
+                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateResubmittedHeardMonth or errorMsg.resubmittedHeardFutureDate or errorMsg.validResubmissionHeardBackDate }}"
                       id="date-resubmiited-resubmitted-bank-details-heard-month"
                       name="dateResubmittedHeardMonth"
                       type="text"
@@ -146,7 +146,7 @@
                       Year
                     </label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.dateResubmittedHeardYear or errorMsg.futureDate or errorMsg.isValidDate }}"
+                      class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.dateResubmittedHeardYear or errorMsg.resubmittedHeardFutureDate or errorMsg.validResubmissionHeardBackDate }}"
                       id="date-resubmitted-bank-details-heard-year"
                       name="dateResubmittedHeardYear"
                       type="text"
