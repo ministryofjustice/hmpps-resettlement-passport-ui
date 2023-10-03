@@ -25,24 +25,76 @@
 
         <div class="input-fields" {% if params.updatedStatus == '' or not params.updatedStatus  %}hidden{% endif %}>
           <div class="date-account-opened" {% if params.updatedStatus != 'Account opened' %}hidden{% endif %}>
-            <label class="govuk-label" for="date-opened">Date account opened</label>
-            <div class="govuk-date-input" id="date-opened">
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="accountOpenedDay">Day</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedDay" name="accountOpenedDay" type="text" inputmode="numeric" value="{{ params.accountOpenedDay if params.accountOpenedDay }}">
+            <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.accountOpenedDay or errorMsg.accountOpenedMonth or errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}">
+              <label class="govuk-label" for="date-opened">Date account opened</label>
+              {% if errorMsg.accountOpenedDay or errorMsg.accountOpenedMonth or errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate %}
+                <div class="govuk-!-margin-top-5">
+                  {% if errorMsg.heardBackDay %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.heardBackDay }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.accountOpenedMonth %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.accountOpenedMonth }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.accountOpenedYear %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.accountOpenedYear }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.isAccountOpenedFuture %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.isAccountOpenedFuture }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.validAccountOpenedDate %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.validAccountOpenedDate }}
+                    </p>
+                  {% endif %}
                 </div>
-              </div>
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="accountOpenedMonth">Month</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="accountOpenedMonth" name="accountOpenedMonth" type="text" inputmode="numeric" value="{{ params.accountOpenedMonth if params.accountOpenedMonth }}">
+              {% endif %}
+              <div class="govuk-date-input" id="date-opened">
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="accountOpenedDay">Day</label>
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.accountOpenedDay or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}"
+                      id="accountOpenedDay"
+                      name="accountOpenedDay"
+                      type="text"
+                      inputmode="numeric"
+                      value="{{ params.accountOpenedDay if params.accountOpenedDay }}"
+                    >
+                  </div>
                 </div>
-              </div>
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="accountOpenedYear">Year</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="accountOpenedYear" name="accountOpenedYear" type="text" inputmode="numeric" value="{{ params.accountOpenedYear if params.accountOpenedYear }}">
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="accountOpenedMonth">Month</label>
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.accountOpenedMonth or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}"
+                      id="accountOpenedMonth"
+                      name="accountOpenedMonth"
+                      type="text"
+                      inputmode="numeric"
+                      value="{{ params.accountOpenedMonth if params.accountOpenedMonth }}"
+                    >
+                  </div>
+                </div>
+                <div class="govuk-date-input__item">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="accountOpenedYear">Year</label>
+                    <input
+                      class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}"
+                      id="accountOpenedYear"
+                      name="accountOpenedYear"
+                      type="text"
+                      inputmode="numeric"
+                      value="{{ params.accountOpenedYear if params.accountOpenedYear }}"
+                    >
+                  </div>
                 </div>
               </div>
             </div>
@@ -56,25 +108,84 @@
                     <label class="govuk-label govuk-radios__label" for="added-to-items-yes">Yes</label>
                   </div>
                   <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-added-to-items-yes">
-                    <div class="govuk-form-group">
+                    <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAddedDay or errorMsg.dateAddedMonth or errorMsg.dateAddedYear or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded }}">
                       <label class="govuk-label">Date added</label>
+                      {% if errorMsg.dateAddedDay or errorMsg.dateAddedMonth or errorMsg.dateAddedYear or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded %}
+                        <div class="govuk-!-margin-top-5">
+                          {% if errorMsg.dateAddedDay %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.dateAddedDay }}
+                            </p>
+                          {% endif %}
+                          {% if errorMsg.dateAddedMonth %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.dateAddedMonth }}
+                            </p>
+                          {% endif %}
+                          {% if errorMsg.dateAddedYear %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.dateAddedYear }}
+                            </p>
+                          {% endif %}
+                          {% if errorMsg.isDateAddedFutureDate %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.isDateAddedFutureDate }}
+                            </p>
+                          {% endif %}
+                          {% if errorMsg.validDateAdded %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.validDateAdded }}
+                            </p>
+                          {% endif %}
+                        </div>
+                      {% endif %}
                       <div class="govuk-date-input">
                         <div class="govuk-date-input__item">
                           <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="dateAddedDay" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="{{ params.dateAddedDay if params.dateAddedDay }}">
+                            <input
+                              class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAddedDay or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded }}"
+                              id="day"
+                              name="dateAddedDay"
+                              type="number"
+                              pattern="[0-9]*"
+                              inputmode="numeric"
+                              min="1"
+                              max="31"
+                              value="{{ params.dateAddedDay if params.dateAddedDay }}"
+                            >
                           </div>
                         </div>
                         <div class="govuk-date-input__item">
                           <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="dateAddedMonth" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="{{ params.dateAddedMonth if params.dateAddedMonth }}">
+                            <input
+                              class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAddedMonth or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded }}"
+                              id="month"
+                              name="dateAddedMonth"
+                              type="number"
+                              pattern="[0-9]*"
+                              inputmode="numeric"
+                              min="1"
+                              max="12"
+                              value="{{ params.dateAddedMonth if params.dateAddedMonth }}"
+                            >
                           </div>
                         </div>
                         <div class="govuk-date-input__item">
                           <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="dateAddedYear" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="{{ params.dateAddedYear if params.dateAddedYear }}">
+                            <input
+                              class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.dateAddedYear or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded }}"
+                              id="year"
+                              name="dateAddedYear"
+                              type="number"
+                              pattern="[0-9]*"
+                              inputmode="numeric"
+                              min="1900"
+                              max="2099"
+                              value="{{ params.dateAddedYear if params.dateAddedYear }}"
+                            >
                           </div>
                         </div>
                       </div>
@@ -89,25 +200,54 @@
             </div>
           </div>
 
-          <div class="govuk-form-group date-heard-from-application" {% if params.updatedStatus == 'Account opened' %}hidden{% endif %}>
+          <div class="govuk-form-group date-heard-from-application {{ "govuk-form-group--error" if errorMsg.heardBackDay or errorMsg.heardBackMonth or errorMsg.heardBackYear or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }}" {% if params.updatedStatus == 'Account opened' %}hidden{% endif %}>
             <label class="govuk-label" for="date-bank-details-heard">Date heard back from application</label>
+            {% if errorMsg.heardBackDay or errorMsg.heardBackMonth or errorMsg.heardBackYear or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate %}
+              <div class="govuk-!-margin-top-5">
+                {% if errorMsg.heardBackDay %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.heardBackDay }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.heardBackMonth %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.heardBackMonth }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.heardBackYear %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.heardBackYear }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.isHeardBackFutureDate %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.isHeardBackFutureDate }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.validHeardBackDate %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.validHeardBackDate }}
+                  </p>
+                {% endif %}
+              </div>
+            {% endif %}
             <div class="govuk-date-input" id="date-bank-details-heard">
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackDay">Day</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay }}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.heardBackDay or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }}" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay }}" inputmode="numeric">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackMonth">Month</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="heardBackMonth" name="heardBackMonth" type="text" value="{{ params.heardBackMonth if params.heardBackMonth }}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.heardBackMonth or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }} " id="heardBackMonth" name="heardBackMonth" type="text" value="{{ params.heardBackMonth if params.heardBackMonth }}" inputmode="numeric">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackYear">Year</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="heardBackYear" name="heardBackYear" type="text" value="{{ params.heardBackYear if params.heardBackYear }}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.heardBackYear or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }} " id="heardBackYear" name="heardBackYear" type="text" value="{{ params.heardBackYear if params.heardBackYear }}" inputmode="numeric">
                 </div>
               </div>
             </div>
