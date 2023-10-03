@@ -24,7 +24,7 @@
         </div>
 
         <div class="input-fields" {% if params.updatedStatus == '' or not params.updatedStatus  %}hidden{% endif %}>
-          <div class="date-account-opened" {% if params.updatedStatus != 'Account opened'  %}hidden{% endif %}>
+          <div class="date-account-opened" {% if params.updatedStatus != 'Account opened' %}hidden{% endif %}>
             <label class="govuk-label" for="date-opened">Date account opened</label>
             <div class="govuk-date-input" id="date-opened">
               <div class="govuk-date-input__item">
@@ -89,7 +89,7 @@
             </div>
           </div>
 
-          <div class="govuk-form-group date-heard-from-application" {% if params.updatedStatus == 'Account opened'  %}hidden{% endif %}>
+          <div class="govuk-form-group date-heard-from-application" {% if params.updatedStatus == 'Account opened' %}hidden{% endif %}>
             <label class="govuk-label" for="date-bank-details-heard">Date heard back from application</label>
             <div class="govuk-date-input" id="date-bank-details-heard">
               <div class="govuk-date-input__item">
