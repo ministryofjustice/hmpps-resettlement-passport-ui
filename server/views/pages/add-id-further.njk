@@ -144,7 +144,7 @@
           {% if errorMsg.costOfApplication %}
             <p class="govuk-error-message">{{ errorMsg.costOfApplication }}</p>
           {% endif %}
-          <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.costOfApplication }}" id="costOfApplication" name="costOfApplication" type="number" spellcheck="false" {% if params.costOfApplication %}value="{{params.costOfApplication}}"{% endif %}>
+          <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.costOfApplication }}" id="costOfApplication" name="costOfApplication" type="numeric" spellcheck="false" {% if params.costOfApplication %}value="{{params.costOfApplication}}"{% endif %}>
             <div class="govuk-input__suffix" aria-hidden="true">£</div>
           </div>
         </div>
