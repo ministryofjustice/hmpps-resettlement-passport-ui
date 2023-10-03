@@ -96,7 +96,7 @@ export default {
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   dpsHomeUrl: get('DPS_URL', '#', requiredInProduction),
-  phaseName: get('PHASE_NAME', 'DEV', requiredInProduction),
+  phaseName: get('PHASE_NAME', 'BETA'),
   supportUrl: get('SUPPORT_URL', '', requiredInProduction),
   environmentName: get('ENVIRONMENT_NAME', ''),
 }

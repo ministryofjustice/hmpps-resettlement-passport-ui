@@ -3,7 +3,6 @@ import { type RequestHandler, Router, Request, Response } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import staffDashboard from './staffDashboard'
-import accommodationRouter from './accommodation'
 import attitudesThinkingBehaviourRouter from './attitudes-thinking-behaviour'
 import childrenFamiliesCommunitiesRouter from './children-families-and-communities'
 import drugsAlcoholRouter from './drugs-alcohol'
@@ -127,7 +126,26 @@ export default function routes(services: Services): Router {
       appointments,
     })
   })
-  use('/accommodation', accommodationRouter)
+  use('/accommodation', async (req, res, next) => {
+    const { prisonerData } = req
+    const rpClient = new RPClient()
+    let accommodation: { error?: boolean } = {}
+
+    try {
+      accommodation = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/accommodation`,
+      )
+    } catch (err) {
+      logger.warn(`Cannot retrieve accommodation info for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      accommodation.error = true
+    }
+
+    res.render('pages/accommodation', {
+      accommodation,
+      prisonerData,
+    })
+  })
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/drugs-and-alcohol', drugsAlcoholRouter)
@@ -285,14 +303,34 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/id-submit/', async (req: Request, res: Response, next) => {
     const { prisonerData } = req
     const params = req.body
-    const { prisonerNumber, idType, applicationSubmittedDate, isPriorityApplication } = req.body
-
+    const {
+      prisonerNumber,
+      idType,
+      applicationSubmittedDate,
+      haveGro,
+      isUkNationalBornOverseas,
+      countryBornIn,
+      isPriorityApplication,
+      caseNumber,
+      courtDetails,
+      driversLicenceType,
+      driversLicenceApplicationMadeAt,
+    } = req.body
+    const costOfApplication = Number(req.body.costOfApplication)
     const rpClient = new RPClient()
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
         idType,
         applicationSubmittedDate,
         isPriorityApplication,
+        costOfApplication,
+        haveGro,
+        isUkNationalBornOverseas,
+        countryBornIn,
+        caseNumber,
+        courtDetails,
+        driversLicenceType,
+        driversLicenceApplicationMadeAt,
       })
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {

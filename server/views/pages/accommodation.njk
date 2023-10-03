@@ -2,95 +2,32 @@
 {% set pathway = "Accommodation" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
+{% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
     <div
-      class="govuk-grid-column-one-third">
+        class="govuk-grid-column-one-third">
       <!-- Pathway status -->
       {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
     </div>
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
-    <div class="govuk-grid-column-three-quarters">
-      <p>Information relating to this pathway is not currently available.</p>
-      <p>You can still use the readiness status to track progress.</p>
-    </div>
-    {#
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {{ subNav([
-        {
-          name: "CRS Referral",
-          id: "crs-refer"
-        },
         {
           name: "Duty to refer",
           id: "duty-to-refer"
         },
         {
-          name: "First night accommodation",
-          id: "first-night-accommodation"
+          name: "Main address",
+          id: "main-address"
         }
       ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <section id="crs-refer" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            CRS referral<span class="govuk-caption-m">Data sourced from nDelius</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          {{ govukTable({
-            firstCellIsHeader: true,
-            rows: [
-              [
-                {
-                  text: "CRS referral required"
-                },
-                {
-                  text: "Yes"
-                }
-              ],
-              [
-                {
-                  text: "Status"
-                },
-                {
-                  text: "Completed"
-                }
-              ],
-              [
-                {
-                  text: "Provider"
-                },
-                {
-                  text: "Manchester Local Housing Organisation"
-                }
-              ],
-              [
-                {
-                  text: "Provider address"
-                },
-                {
-                  text: "123 Station Road, Manchester, M1 2AB"
-                }
-              ],
-              [
-                {
-                  text: "Provider phone"
-                },
-                {
-                  text: "0161 123 4455"
-                }
-              ]
-            ]
-          }) }}
-        </div>
-      </section>
       <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
@@ -100,102 +37,65 @@
           <span class="right"></span>
         </header>
         <div class="app-summary-card__body">
-          {{ govukTable({
-                    firstCellIsHeader: true,
-                    rows: [
-                      [
-                        {
-                          text: "Duty to refer required"
-                        },
-                        {
-                          text: "Yes"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Referal completed"
-                        },
-                        {
-                          text: "Yes"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Reference number"
-                        },
-                        {
-                          text: "XX457878"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Local authority"
-                        },
-                        {
-                          text: "Manchester City Council"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Local authority address"
-                        },
-                        {
-                          text: "123 Main Street Manchester M1 1AA"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Local authority phone"
-                        },
-                        {
-                          text: "0161 123 4567"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Local authority email"
-                        },
-                        {
-                          text: "housing@manchester.gov.uk"
-                        }
-                      ]
-                    ]
-                  }) }}
+          {% if accommodation.status %}
+            {{ govukTable({
+              firstCellIsHeader: true,
+              rows: [
+                [
+                  {
+                    text: "Referral date"
+                  },
+                  {
+                    text: accommodation.referralDate | formatDate
+                  }
+                ],
+                [
+                  {
+                    text: "Status"
+                  },
+                  {
+                    text: accommodation.status
+                  }
+                ]
+              ]
+            }) }}
+          {% elseif not accommodation.error %}
+            No duty to refer details found
+          {% else %}
+            {{ errorMessage }}
+          {% endif %}
         </div>
       </section>
-      <section id="first-night-accommodation" class="app-summary-card govuk-!-margin-bottom-8">
+      <section id="main-address" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
-            First night accommodation
+            Main address
             <span class="govuk-caption-m">Data sourced from nDelius</span>
           </h3>
           <span class="right"></span>
         </header>
         <div class="app-summary-card__body">
-          {{ govukTable({
-                    firstCellIsHeader: true,
-                    head: [
-                      {
-                        text: "Address"
-                      },
-                      {
-                        text: "123 Ascot Road Manchester M1 1AA"
-                      }
-                    ],
-                    rows: [
-                      [
-                        {
-                          text: "Type"
-                        },
-                        {
-                          text: "Hostel"
-                        }
-                      ]
-                    ]
-                  }) }}
+          {% if accommodation.message %}
+            <p>{{ accommodation.message }}</p>
+          {% elseif not accommodation.error %}
+            {{ govukTable({
+              firstCellIsHeader: true,
+              rows: [
+                [
+                  {
+                    text: "Address"
+                  },
+                  {
+                    text: accommodation.mainAddress
+                  }
+                ]
+              ]
+            }) }}
+          {% else %}
+            {{ errorMessage }}
+          {% endif %}
         </div>
       </section>
     </div>
-    #}
   </div>
 {% endblock %}
