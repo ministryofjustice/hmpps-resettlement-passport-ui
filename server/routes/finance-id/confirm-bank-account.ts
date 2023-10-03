@@ -52,7 +52,7 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
 
     return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
   }
-  const isValidDate = isDateValid(`${applicationSubmittedDay}-${applicationSubmittedMonth}-${applicationSubmittedYear}`)
+  const isValidDate = isDateValid(`${applicationSubmittedYear}-${applicationSubmittedMonth}-${applicationSubmittedDay}`)
 
   if (
     !applicationSubmittedDay ||

@@ -158,8 +158,37 @@
             </select>
           </div>
 
-          <div class="govuk-form-group">
+          <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate }}">
             <label class="govuk-label" for="application-submitted">Application submitted</label>
+            {% if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate %}
+              <div class="govuk-!-margin-top-5">
+                {% if errorMsg.applicationSubmittedDay %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.applicationSubmittedDay }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.applicationSubmittedMonth %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.applicationSubmittedMonth }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.applicationSubmittedYear %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.applicationSubmittedYear }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.futureDate %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.futureDate }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.isValidDate %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.isValidDate }}
+                  </p>
+                {% endif %}
+              </div>
+            {% endif %}
             <div class="govuk-date-input" id="application-submitted">
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
