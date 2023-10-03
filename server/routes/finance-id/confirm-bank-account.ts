@@ -266,6 +266,9 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     const validHeardBackDate = isDateValid(`${heardBackYear}-${heardBackMonth}-${heardBackDay}`)
     const isHeardBackFutureDate = isDateInFuture(<string>heardBackDay, <string>heardBackMonth, <string>heardBackYear)
 
+    const validDateAdded = isDateValid(`${dateAddedYear}-${dateAddedMonth}-${dateAddedDay}`)
+    const isDateAddedFutureDate = isDateInFuture(<string>dateAddedDay, <string>dateAddedMonth, <string>dateAddedYear)
+
     const validAccountOpenedDate = isDateValid(`${accountOpenedYear}-${accountOpenedMonth}-${accountOpenedDay}`)
     const isAccountOpenedFuture = isDateInFuture(
       <string>accountOpenedDay,
@@ -287,6 +290,19 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
       errorMsg.accountOpenedYear = accountOpenedYear ? null : `${dateFieldMissingMessage} year`
       errorMsg.isAccountOpenedFuture = isAccountOpenedFuture ? 'The date of must be in the past' : null
       errorMsg.validAccountOpenedDate = validAccountOpenedDate ? null : dateFieldInvalid
+    }
+
+    if (
+      updatedStatus === 'Account opened' &&
+      addedToPersonalItems === 'Yes' &&
+      (!dateAddedDay || !dateAddedMonth || !dateAddedYear || isDateAddedFutureDate || !validDateAdded)
+    ) {
+      pageContainsError = true
+      errorMsg.dateAddedDay = dateAddedDay ? null : `${dateFieldMissingMessage} day`
+      errorMsg.dateAddedMonth = dateAddedMonth ? null : `${dateFieldMissingMessage} month`
+      errorMsg.dateAddedYear = dateAddedYear ? null : `${dateFieldMissingMessage} year`
+      errorMsg.isDateAddedFutureDate = isDateAddedFutureDate ? 'The date of must be in the past' : null
+      errorMsg.validDateAdded = validDateAdded ? null : dateFieldInvalid
     }
 
     if (

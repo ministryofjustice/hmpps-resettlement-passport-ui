@@ -108,25 +108,84 @@
                     <label class="govuk-label govuk-radios__label" for="added-to-items-yes">Yes</label>
                   </div>
                   <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-added-to-items-yes">
-                    <div class="govuk-form-group">
+                    <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAddedDay or errorMsg.dateAddedMonth or errorMsg.dateAddedYear or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded }}">
                       <label class="govuk-label">Date added</label>
+                      {% if errorMsg.dateAddedDay or errorMsg.dateAddedMonth or errorMsg.dateAddedYear or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded %}
+                        <div class="govuk-!-margin-top-5">
+                          {% if errorMsg.dateAddedDay %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.dateAddedDay }}
+                            </p>
+                          {% endif %}
+                          {% if errorMsg.dateAddedMonth %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.dateAddedMonth }}
+                            </p>
+                          {% endif %}
+                          {% if errorMsg.dateAddedYear %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.dateAddedYear }}
+                            </p>
+                          {% endif %}
+                          {% if errorMsg.isDateAddedFutureDate %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.isDateAddedFutureDate }}
+                            </p>
+                          {% endif %}
+                          {% if errorMsg.validDateAdded %}
+                            <p class="govuk-error-message">
+                              {{ errorMsg.validDateAdded }}
+                            </p>
+                          {% endif %}
+                        </div>
+                      {% endif %}
                       <div class="govuk-date-input">
                         <div class="govuk-date-input__item">
                           <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="day" name="dateAddedDay" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="{{ params.dateAddedDay if params.dateAddedDay }}">
+                            <input
+                              class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAddedDay or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded }}"
+                              id="day"
+                              name="dateAddedDay"
+                              type="number"
+                              pattern="[0-9]*"
+                              inputmode="numeric"
+                              min="1"
+                              max="31"
+                              value="{{ params.dateAddedDay if params.dateAddedDay }}"
+                            >
                           </div>
                         </div>
                         <div class="govuk-date-input__item">
                           <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="month" name="dateAddedMonth" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="{{ params.dateAddedMonth if params.dateAddedMonth }}">
+                            <input
+                              class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAddedMonth or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded }}"
+                              id="month"
+                              name="dateAddedMonth"
+                              type="number"
+                              pattern="[0-9]*"
+                              inputmode="numeric"
+                              min="1"
+                              max="12"
+                              value="{{ params.dateAddedMonth if params.dateAddedMonth }}"
+                            >
                           </div>
                         </div>
                         <div class="govuk-date-input__item">
                           <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="year" name="dateAddedYear" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="{{ params.dateAddedYear if params.dateAddedYear }}">
+                            <input
+                              class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.dateAddedYear or errorMsg.isDateAddedFutureDate or errorMsg.validDateAdded }}"
+                              id="year"
+                              name="dateAddedYear"
+                              type="number"
+                              pattern="[0-9]*"
+                              inputmode="numeric"
+                              min="1900"
+                              max="2099"
+                              value="{{ params.dateAddedYear if params.dateAddedYear }}"
+                            >
                           </div>
                         </div>
                       </div>
