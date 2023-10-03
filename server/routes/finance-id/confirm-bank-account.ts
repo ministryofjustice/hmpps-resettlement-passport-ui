@@ -115,6 +115,7 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
   }
 
   function validateResubmit() {
+    let pageContainsError = false
     const isValidDate = isDateValid(
       `${dateResubmittedHeardYear}-${dateResubmittedHeardMonth}-${dateResubmittedHeardDay}`,
     )
@@ -135,22 +136,16 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
       !applicationResubmittedYear ||
       isResubmittedFutureDate
     ) {
-      errorMsg = {
-        applicationResubmittedDay: applicationResubmittedDay ? null : `${dateFieldMissingMessage} day`,
-        applicationResubmittedMonth: applicationResubmittedMonth ? null : `${dateFieldMissingMessage} month`,
-        applicationResubmittedYear: applicationResubmittedYear ? null : `${dateFieldMissingMessage} year`,
-        resubmittedFutureDate: isResubmittedFutureDate ? 'The date of must be in the past' : null,
-      }
-      res.render('pages/add-bank-account', { prisonerData, params, req, errorMsg })
-      return
+      pageContainsError = true
+      errorMsg.applicationResubmittedDay = applicationResubmittedDay ? null : `${dateFieldMissingMessage} day`
+      errorMsg.applicationResubmittedMonth = applicationResubmittedMonth ? null : `${dateFieldMissingMessage} month`
+      errorMsg.applicationResubmittedYear = applicationResubmittedYear ? null : `${dateFieldMissingMessage} year`
+      errorMsg.resubmittedFutureDate = isResubmittedFutureDate ? 'The date of must be in the past' : null
     }
 
     if (!status) {
-      errorMsg = {
-        noStatus: status ? null : `${missingInput} status`,
-      }
-      res.render('pages/add-bank-account', { prisonerData, params, req, errorMsg })
-      return
+      pageContainsError = true
+      errorMsg.noStatus = status ? null : `${missingInput} status`
     }
 
     if (
@@ -161,17 +156,19 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
         isResubmittedHeardBackFutureDate ||
         !isValidDate)
     ) {
-      errorMsg = {
-        dateResubmittedHeardDay: dateResubmittedHeardDay ? null : `${dateFieldMissingMessage} day`,
-        dateResubmittedHeardMonth: dateResubmittedHeardMonth ? null : `${dateFieldMissingMessage} month`,
-        dateResubmittedHeardYear: dateResubmittedHeardYear ? null : `${dateFieldMissingMessage} year`,
-        resubmittedHeardFutureDate: isResubmittedHeardBackFutureDate ? 'The date of must be in the past' : null,
-        isValidDate: isValidDate ? null : dateFieldInvalid,
-      }
-      res.render('pages/add-bank-account', { prisonerData, params, req, errorMsg })
-      return
+      pageContainsError = true
+      errorMsg.dateResubmittedHeardDay = dateResubmittedHeardDay ? null : `${dateFieldMissingMessage} day`
+      errorMsg.dateResubmittedHeardMonth = dateResubmittedHeardMonth ? null : `${dateFieldMissingMessage} month`
+      errorMsg.dateResubmittedHeardYear = dateResubmittedHeardYear ? null : `${dateFieldMissingMessage} year`
+      errorMsg.resubmittedHeardFutureDate = isResubmittedHeardBackFutureDate ? 'The date of must be in the past' : null
+      errorMsg.isValidDate = isValidDate ? null : dateFieldInvalid
     }
-    res.render('pages/add-bank-account-confirm', { prisonerData, params, req })
+
+    if (pageContainsError) {
+      res.render('pages/add-bank-account', { prisonerData, params, req, errorMsg })
+    } else {
+      res.render('pages/add-bank-account-confirm', { prisonerData, params, req })
+    }
   }
 
   if (confirmationType === 'addAccount') {
