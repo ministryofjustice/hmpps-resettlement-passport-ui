@@ -144,8 +144,13 @@
             </div>
           </div>
         {% else %}
-          <div class="govuk-form-group">
+          <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.noBankName }}">
             <label class="govuk-label" for="bank">Bank</label>
+            {% if errorMsg.noBankName %}
+              <p class="govuk-error-message">
+                {{ errorMsg.noBankName }}
+              </p>
+            {% endif %}
             <select class="govuk-select" id="bank" name="bankName">
               <option value="">Select bank</option>
               <option value="Barclays" {% if params.bankName == "Barclays" %}selected{% endif %}>Barclays</option>
