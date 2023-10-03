@@ -17,26 +17,33 @@ const confirmIdRouter = express.Router().get('/', async (req, res, next) => {
     driversLicenceApplicationMadeAt,
   } = params
 
-  let selectACountry = false
-  if (isUkNationalBornOverseas && countryBornIn === '') {
-    selectACountry = true
-  }
-
   if (
     (idType === 'Birth certificate' ||
       idType === 'Marriage certificate' ||
       idType === 'Civil partnership certificate') &&
-    (!haveGro || !isUkNationalBornOverseas || !isPriorityApplication || !costOfApplication || selectACountry)
+    (!haveGro || !isUkNationalBornOverseas || !isPriorityApplication || !costOfApplication)
   ) {
     const message = 'Select an option'
-    const countryBornMessage = 'Select a country'
     const costMessage = 'Enter the cost of application'
     const errorMsg = {
       haveGro: haveGro ? null : `${message}`,
       isUkNationalBornOverseas: isUkNationalBornOverseas ? null : `${message}`,
       isPriorityApplication: isPriorityApplication ? null : `${message}`,
       costOfApplication: costOfApplication ? null : `${costMessage}`,
-      countryBornIn: selectACountry === false ? null : `${countryBornMessage}`,
+    }
+    res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
+    return
+  }
+  if (
+    (idType === 'Birth certificate' ||
+      idType === 'Marriage certificate' ||
+      idType === 'Civil partnership certificate') &&
+    isUkNationalBornOverseas === 'true' &&
+    countryBornIn === ''
+  ) {
+    const countryBornMessage = 'Select a country'
+    const errorMsg = {
+      countryBornIn: countryBornIn ? null : `${countryBornMessage}`,
     }
     res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
     return
@@ -64,7 +71,7 @@ const confirmIdRouter = express.Router().get('/', async (req, res, next) => {
     res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
     return
   }
-  if ((idType === 'Deed poll certificate' || idType === 'Biometric residence certificate') && !costOfApplication) {
+  if ((idType === 'Deed poll certificate' || idType === 'Biometric residence permit') && !costOfApplication) {
     const costMessage = 'Enter the cost of application'
     const errorMsg = {
       costOfApplication: costOfApplication ? null : `${costMessage}`,

@@ -15,8 +15,11 @@
                     <p>
                         <b>Application submitted: </b>{{params.applicationSubmittedDate | formatDate }}</p>
                     <form action="/finance-and-id/confirm-add-an-id-status/" novalidate class="govuk-form govuk-!-padding-top-4">
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.updatedStatus }}">
                             <label class="govuk-label" for="updatedStatus">Application status</label>
+                            {% if errorMsg.updatedStatus %}
+                                <p class="govuk-error-message">{{ errorMsg.updatedStatus }}</p>
+                            {% endif %}
                             <select class="govuk-select status-options-id" id="updatedStatus" name="updatedStatus">
                                 <option value="">Select application status</option>
                                 <option value="Accepted" {% if params.updatedStatus === "Accepted" %}selected{% endif %}>Accepted</option>
@@ -24,62 +27,114 @@
                             </select>
                         </div>
                         <div class="id-accepted-application" hidden>
-                            <div class="govuk-form-group">
+                            <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateIdReceivedDay or errorMsg.dateIdReceivedMonth or errorMsg.dateIdReceivedYear or errorMsg.isValidDateIdReceivedDate }}">
                                 <div class="govuk-date-input" id="dateIdReceived">
                                     <label class="govuk-label" for="dateIdReceived">Date ID received</label>
                                     <!-- Date of ID received input -->
+                                    {% if errorMsg.dateIdReceivedDay or errorMsg.dateIdReceivedMonth or errorMsg.dateIdReceivedYear or errorMsg.isValidDateIdReceivedDate %}
+                                        <div class="govuk-!-margin-top-5">
+                                            {% if errorMsg.dateIdReceivedDay %}
+                                                <p class="govuk-error-message">
+                                                    {{ errorMsg.dateIdReceivedDay }}
+                                                </p>
+                                            {% endif %}
+                                            {% if errorMsg.dateIdReceivedMonth %}
+                                                <p class="govuk-error-message">
+                                                    {{ errorMsg.dateIdReceivedMonth }}
+                                                </p>
+                                            {% endif %}
+                                            {% if errorMsg.dateIdReceivedYear %}
+                                                <p class="govuk-error-message">
+                                                    {{ errorMsg.dateIdReceivedYear }}
+                                                </p>
+                                            {% endif %}
+                                            {% if errorMsg.isValidDateIdReceivedDate %}
+                                                <p class="govuk-error-message">
+                                                    {{ errorMsg.isValidDateIdReceivedDate }}
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="dateIdReceivedDay">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateIdReceivedDay" name="dateIdReceivedDay" type="text" inputmode="numeric" value="{{ params.dateIdReceivedDay if params.dateIdReceivedDay }}">
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateIdReceivedDay or errorMsg.isValidDateIdReceivedDate }}" id="dateIdReceivedDay" name="dateIdReceivedDay" type="text" inputmode="numeric" value="{{ params.dateIdReceivedDay if params.dateIdReceivedDay }}">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="dateIdReceivedMonth">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateIdReceivedMonth" name="dateIdReceivedMonth" type="text" inputmode="numeric" value="{{ params.dateIdReceivedMonth if params.dateIdReceivedMonth }}">
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateIdReceivedMonth or errorMsg.isValidDateIdReceivedDate }}" id="dateIdReceivedMonth" name="dateIdReceivedMonth" type="text" inputmode="numeric" value="{{ params.dateIdReceivedMonth if params.dateIdReceivedMonth }}">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="dateIdReceivedYear">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dateIdReceivedYear" name="dateIdReceivedYear" type="text" inputmode="numeric" value="{{ params.dateIdReceivedYear if params.dateIdReceivedYear }}">
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.dateIdReceivedYear or errorMsg.isValidDateIdReceivedDate }}" id="dateIdReceivedYear" name="dateIdReceivedYear" type="text" inputmode="numeric" value="{{ params.dateIdReceivedYear if params.dateIdReceivedYear }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <br>
-                            <div id="id-placement" class="govuk-form-group">
+                            <div id="id-placement" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.isAddedToPersonalItems }}">
                                 <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
                                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                                         <span class="govuk-fieldset__heading">Added to personal items</span>
                                     </legend>
-
+                                    {% if errorMsg.isAddedToPersonalItems %}
+                                        <p class="govuk-error-message">
+                                            {{ errorMsg.isAddedToPersonalItems }}
+                                        </p>
+                                    {% endif %}
                                     <div class="govuk-radios" data-module="govuk-radios">
                                         <div class="govuk-radios__item">
                                             <input class="govuk-radios__input" id="isAddedToPersonalItemsYes" name="isAddedToPersonalItems" type="radio" value="true" aria-controls="conditional-id-placement-yes" aria-expanded="false" {% if params.isAddedToPersonalItems === 'true' %}checked{% endif %}>
                                             <label class="govuk-label govuk-radios__label" for="isAddedToPersonalItemsYes">Yes</label>
                                         </div>
                                         <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-id-placement-yes">
-                                            <div class="govuk-form-group">
+                                            <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.isValidAddedToPersonalItemsDate }}">
                                                 <label class="govuk-label" for="date-capture">Date added</label>
+                                                {% if errorMsg.addedToPersonalItemsDateDay or errorMsg.addedToPersonalItemsDateMonth or errorMsg.addedToPersonalItemsDateYear or errorMsg.isValidAddedToPersonalItemsDate %}
+                                                    <div class="govuk-!-margin-top-5">
+                                                        {% if errorMsg.addedToPersonalItemsDateDay %}
+                                                            <p class="govuk-error-message">
+                                                                {{ errorMsg.addedToPersonalItemsDateDay }}
+                                                            </p>
+                                                        {% endif %}
+                                                        {% if errorMsg.addedToPersonalItemsDateMonth %}
+                                                            <p class="govuk-error-message">
+                                                                {{ errorMsg.addedToPersonalItemsDateMonth }}
+                                                            </p>
+                                                        {% endif %}
+                                                        {% if errorMsg.addedToPersonalItemsDateYear %}
+                                                            <p class="govuk-error-message">
+                                                                {{ errorMsg.addedToPersonalItemsDateYear }}
+                                                            </p>
+                                                        {% endif %}
+                                                        {% if errorMsg.isValidAddedToPersonalItemsDate %}
+                                                            <p class="govuk-error-message">
+                                                                {{ errorMsg.isValidAddedToPersonalItemsDate }}
+                                                            </p>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endif %}
                                                 <div class="govuk-date-input">
                                                     <div class="govuk-date-input__item">
                                                         <div class="govuk-form-group">
-                                                            <label class="govuk-label govuk-date-input__label" for="addedToPersonalItemsDateDay">Day</label>
-                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="addedToPersonalItemsDateDay" name="addedToPersonalItemsDateDay" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="{{ params.addedToPersonalItemsDateDay if params.addedToPersonalItemsDateDay }}">
+                                                            <label class="govuk-label govuk-date-input__label" id="addedToPersonalItemsDateDay" name="addedToPersonalItemsDateDay" type="text" inputmode="numeric" for="addedToPersonalItemsDateDay">Day</label>
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateIdReceivedDay or errorMsg.isValidAddedToPersonalItemsDate }}" id="addedToPersonalItemsDateDay" name="addedToPersonalItemsDateDay" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="{{ params.addedToPersonalItemsDateDay if params.addedToPersonalItemsDateDay }}">
                                                         </div>
                                                     </div>
                                                     <div class="govuk-date-input__item">
                                                         <div class="govuk-form-group">
                                                             <label class="govuk-label govuk-date-input__label" for="addedToPersonalItemsDateMonth">Month</label>
-                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="addedToPersonalItemsDateMonth" name="addedToPersonalItemsDateMonth" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="{{ params.addedToPersonalItemsDateMonth if params.addedToPersonalItemsDateMonth }}">
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.addedToPersonalItemsDateMonth or errorMsg.isValidAddedToPersonalItemsDate }}" id="addedToPersonalItemsDateMonth" name="addedToPersonalItemsDateMonth" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="{{ params.addedToPersonalItemsDateMonth if params.addedToPersonalItemsDateMonth }}">
                                                         </div>
                                                     </div>
                                                     <div class="govuk-date-input__item">
                                                         <div class="govuk-form-group">
                                                             <label class="govuk-label govuk-date-input__label" for="addedToPersonalItemsDateYear">Year</label>
-                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="addedToPersonalItemsDateYear" name="addedToPersonalItemsDateYear" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="{{ params.addedToPersonalItemsDateYear if params.addedToPersonalItemsDateYear }}">
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.addedToPersonalItemsDateYear or errorMsg.isValidAddedToPersonalItemsDate }}" id="addedToPersonalItemsDateYear" name="addedToPersonalItemsDateYear" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="{{ params.addedToPersonalItemsDateYear if params.addedToPersonalItemsDateYear }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -93,10 +148,15 @@
                                 </fieldset>
                             </div>
                         </div>
-                        <div class="govuk-form-group id-rejected-application" hidden>
-                            <label class="govuk-label" for="refundAmount">Application refund amount</label>
-                            <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="refundAmount" name="refundAmount" type="text" spellcheck="false" value="{{ params.refundAmount if params.refundAmount }}">
-                                <div class="govuk-input__suffix" aria-hidden="true">£</div>
+                        <div class="id-rejected-application" hidden>
+                            <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.refundAmount }}" >
+                                <label class="govuk-label" for="refundAmount">Application refund amount</label>
+                                {% if errorMsg.refundAmount %}
+                                    <p class="govuk-error-message">{{ errorMsg.refundAmount }}</p>
+                                {% endif %}
+                                <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.refundAmount }}" id="refundAmount" name="refundAmount" type="text" spellcheck="false" value="{{ params.refundAmount if params.refundAmount }}">
+                                    <div class="govuk-input__suffix" aria-hidden="true">£</div>
+                                </div>
                             </div>
                         </div>
                         <input hidden name="idType" value="{{ params.idType }}"/>
