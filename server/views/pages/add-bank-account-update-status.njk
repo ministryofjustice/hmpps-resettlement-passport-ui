@@ -27,12 +27,41 @@
           <div class="date-account-opened" {% if params.updatedStatus != 'Account opened' %}hidden{% endif %}>
             <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.accountOpenedDay or errorMsg.accountOpenedMonth or errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}">
               <label class="govuk-label" for="date-opened">Date account opened</label>
+              {% if errorMsg.accountOpenedDay or errorMsg.accountOpenedMonth or errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate %}
+                <div class="govuk-!-margin-top-5">
+                  {% if errorMsg.heardBackDay %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.heardBackDay }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.accountOpenedMonth %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.accountOpenedMonth }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.accountOpenedYear %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.accountOpenedYear }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.isAccountOpenedFuture %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.isAccountOpenedFuture }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.validAccountOpenedDate %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.validAccountOpenedDate }}
+                    </p>
+                  {% endif %}
+                </div>
+              {% endif %}
               <div class="govuk-date-input" id="date-opened">
                 <div class="govuk-date-input__item">
                   <div class="govuk-form-group">
                     <label class="govuk-label govuk-date-input__label" for="accountOpenedDay">Day</label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.accountOpenedDay or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay }}"
+                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.accountOpenedDay or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}"
                       id="accountOpenedDay"
                       name="accountOpenedDay"
                       type="text"
@@ -45,7 +74,7 @@
                   <div class="govuk-form-group">
                     <label class="govuk-label govuk-date-input__label" for="accountOpenedMonth">Month</label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.accountOpenedMonth or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay }}"
+                      class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.accountOpenedMonth or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}"
                       id="accountOpenedMonth"
                       name="accountOpenedMonth"
                       type="text"
@@ -58,7 +87,7 @@
                   <div class="govuk-form-group">
                     <label class="govuk-label govuk-date-input__label" for="accountOpenedYear">Year</label>
                     <input
-                      class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay }}"
+                      class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFuture or errorMsg.validAccountOpenedDate }}"
                       id="accountOpenedYear"
                       name="accountOpenedYear"
                       type="text"
@@ -115,34 +144,34 @@
           <div class="govuk-form-group date-heard-from-application {{ "govuk-form-group--error" if errorMsg.heardBackDay or errorMsg.heardBackMonth or errorMsg.heardBackYear or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }}" {% if params.updatedStatus == 'Account opened' %}hidden{% endif %}>
             <label class="govuk-label" for="date-bank-details-heard">Date heard back from application</label>
             {% if errorMsg.heardBackDay or errorMsg.heardBackMonth or errorMsg.heardBackYear or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate %}
-                <div class="govuk-!-margin-top-5">
-                  {% if errorMsg.heardBackDay %}
-                    <p class="govuk-error-message">
-                      {{ errorMsg.heardBackDay }}
-                    </p>
-                  {% endif %}
-                  {% if errorMsg.heardBackMonth %}
-                    <p class="govuk-error-message">
-                      {{ errorMsg.heardBackMonth }}
-                    </p>
-                  {% endif %}
-                  {% if errorMsg.heardBackYear %}
-                    <p class="govuk-error-message">
-                      {{ errorMsg.heardBackYear }}
-                    </p>
-                  {% endif %}
-                  {% if errorMsg.isHeardBackFutureDate %}
-                    <p class="govuk-error-message">
-                      {{ errorMsg.isHeardBackFutureDate }}
-                    </p>
-                  {% endif %}
-                  {% if errorMsg.validHeardBackDate %}
-                    <p class="govuk-error-message">
-                      {{ errorMsg.validHeardBackDate }}
-                    </p>
-                  {% endif %}
-                </div>
-              {% endif %}
+              <div class="govuk-!-margin-top-5">
+                {% if errorMsg.heardBackDay %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.heardBackDay }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.heardBackMonth %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.heardBackMonth }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.heardBackYear %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.heardBackYear }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.isHeardBackFutureDate %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.isHeardBackFutureDate }}
+                  </p>
+                {% endif %}
+                {% if errorMsg.validHeardBackDate %}
+                  <p class="govuk-error-message">
+                    {{ errorMsg.validHeardBackDate }}
+                  </p>
+                {% endif %}
+              </div>
+            {% endif %}
             <div class="govuk-date-input" id="date-bank-details-heard">
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
