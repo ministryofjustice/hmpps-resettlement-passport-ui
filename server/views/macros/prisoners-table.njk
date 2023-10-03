@@ -4,18 +4,19 @@
       <tr class="govuk-table__row">
         <th scope="col" class="govuk-table__header">Name</th>
         <th scope="col" class="govuk-table__header">Release</th>
+        <th scope="col" class="govuk-table__header">Release eligibility</th>
         <th scope="col" class="govuk-table__header">Resettlement statuses</th>
         <th scope="col" class="govuk-table__header">Last updated</th>
       </tr>
     </thead>
     <tbody class="govuk-table__body">
       {% for prisoner in prisoners %}
-        {{ prisonerRow(prisoner.firstName, prisoner.lastName, prisoner.prisonerNumber, prisoner.releaseDate, prisoner.releaseType, prisoner.status) }}
+        {{ prisonerRow(prisoner.firstName, prisoner.lastName, prisoner.prisonerNumber, prisoner.releaseDate, prisoner.releaseType, prisoner.status, prisoner.paroleEligibilityDate, prisoner.homeDetentionCurfewEligibilityDate ) }}
       {% endfor %}
     </tbody>
   </table>
 {% endmacro %}
-{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses) %}
+{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, paroleEligibilityDate, homeDetentionCurfewEligibilityDate) %}
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">
       <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName }}, {{ firstName }}</a>
@@ -30,6 +31,22 @@
       <span class="govuk-body-s" id="releaseType">
         {{ releaseType }}
       </span>
+    </td>
+    <td class="govuk-table__cell" id="releaseEligibilityDate">
+      {% if paroleEligibilityDate|length %}
+      {{ paroleEligibilityDate | formatDate }} <br/>
+      {% if paroleEligibilityDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
+      <span class="govuk-body-s" id="releaseeligibilityType">
+        PED
+      </span>
+      {% endif %}
+      {% if homeDetentionCurfewEligibilityDate|length %}
+      {{ homeDetentionCurfewEligibilityDate | formatDate }} <br/>
+      {% if homeDetentionCurfewEligibilityDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
+      <span class="govuk-body-s" id="releaseeligibilityType">
+        HDCED
+      </span>
+      {% endif %}
     </td>
     {% set notStarted = 0 %}
     {% set inProgress = 0 %}
