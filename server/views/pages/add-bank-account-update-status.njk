@@ -89,25 +89,54 @@
             </div>
           </div>
 
-          <div class="govuk-form-group date-heard-from-application" {% if params.updatedStatus == 'Account opened' %}hidden{% endif %}>
+          <div class="govuk-form-group date-heard-from-application {{ "govuk-form-group--error" if errorMsg.heardBackDay or errorMsg.heardBackMonth or errorMsg.heardBackYear or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }}" {% if params.updatedStatus == 'Account opened' %}hidden{% endif %}>
             <label class="govuk-label" for="date-bank-details-heard">Date heard back from application</label>
+            {% if errorMsg.heardBackDay or errorMsg.heardBackMonth or errorMsg.heardBackYear or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate %}
+                <div class="govuk-!-margin-top-5">
+                  {% if errorMsg.heardBackDay %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.heardBackDay }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.heardBackMonth %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.heardBackMonth }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.heardBackYear %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.heardBackYear }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.isHeardBackFutureDate %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.isHeardBackFutureDate }}
+                    </p>
+                  {% endif %}
+                  {% if errorMsg.validHeardBackDate %}
+                    <p class="govuk-error-message">
+                      {{ errorMsg.validHeardBackDate }}
+                    </p>
+                  {% endif %}
+                </div>
+              {% endif %}
             <div class="govuk-date-input" id="date-bank-details-heard">
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackDay">Day</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay }}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.heardBackDay or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }}" id="heardBackDay" name="heardBackDay" type="text" value="{{ params.heardBackDay if params.heardBackDay }}" inputmode="numeric">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackMonth">Month</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="heardBackMonth" name="heardBackMonth" type="text" value="{{ params.heardBackMonth if params.heardBackMonth }}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.heardBackMonth or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }} " id="heardBackMonth" name="heardBackMonth" type="text" value="{{ params.heardBackMonth if params.heardBackMonth }}" inputmode="numeric">
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="heardBackYear">Year</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="heardBackYear" name="heardBackYear" type="text" value="{{ params.heardBackYear if params.heardBackYear }}" inputmode="numeric">
+                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.heardBackYear or errorMsg.isHeardBackFutureDate or errorMsg.validHeardBackDate }} " id="heardBackYear" name="heardBackYear" type="text" value="{{ params.heardBackYear if params.heardBackYear }}" inputmode="numeric">
                 </div>
               </div>
             </div>

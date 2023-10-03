@@ -264,10 +264,13 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
       console.log('hello')
     }
 
-    if (updatedStatus !== 'Account opened' && (!heardBackDay || !heardBackMonth || !heardBackYear)) {
-      const validHeardBackDate = isDateValid(`${heardBackYear}-${heardBackMonth}-${heardBackDay}`)
-      const isHeardBackFutureDate = isDateInFuture(<string>heardBackDay, <string>heardBackMonth, <string>heardBackYear)
+    const validHeardBackDate = isDateValid(`${heardBackYear}-${heardBackMonth}-${heardBackDay}`)
+    const isHeardBackFutureDate = isDateInFuture(<string>heardBackDay, <string>heardBackMonth, <string>heardBackYear)
 
+    if (
+      updatedStatus !== 'Account opened' &&
+      (!heardBackDay || !heardBackMonth || !heardBackYear || isHeardBackFutureDate || !validHeardBackDate)
+    ) {
       pageContainsError = true
       errorMsg.heardBackDay = heardBackDay ? null : `${dateFieldMissingMessage} day`
       errorMsg.heardBackMonth = heardBackMonth ? null : `${dateFieldMissingMessage} month`
@@ -277,7 +280,7 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     }
 
     if (pageContainsError) {
-      res.render('pages/add-bank-account', { prisonerData, params, req, errorMsg })
+      res.render('pages/add-bank-account-update-status', { prisonerData, params, req, errorMsg })
     } else {
       res.render('pages/add-bank-account-confirm', { prisonerData, params, req })
     }
