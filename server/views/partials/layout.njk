@@ -9,7 +9,8 @@
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% set feedbackUrl = "https://eu.surveymonkey.com/r/prepare-someone-for-release-beta" %}
-{% set feedbackText %}This is a new service – your <a class="govuk-link" href="{{ feedbackUrl }}">feedback</a> will help us to improve it.{% endset %}
+{% set feedbackText %}This is a new service – your <a class="govuk-link"
+                                                      href="{{ feedbackUrl }}">feedback</a> will help us to improve it.{% endset %}
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet" />
@@ -45,14 +46,12 @@
   {% endif %}
 
   <div class="govuk-width-container">
-    <div class="govuk-phase-banner">
-      {{ govukPhaseBanner({
-        tag: {
-          text: phaseName
-        },
-        html: feedbackText
-      }) }}
-    </div>
+    {{ govukPhaseBanner({
+      tag: {
+        text: phaseName
+      },
+      html: feedbackText
+    }) }}
     {% if isPrisonUser %}
       {% set topLevelBreadcrumb = 'Digital Prison Services' %}
     {% else %}
