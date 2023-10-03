@@ -28,6 +28,11 @@ type ErrorMessage = {
   dateAddedYear?: null | string
   isDateAddedFutureDate?: null | string
   validDateAdded?: null | string
+  heardBackDay?: null | string
+  heardBackMonth?: null | string
+  heardBackYear?: null | string
+  isHeardBackFutureDate?: null | string
+  validHeardBackDate?: null | string
 }
 
 const confirmBankAccountRouter = express.Router().get('/', async (req, res, next) => {
@@ -62,6 +67,11 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     dateAddedYear: null,
     isDateAddedFutureDate: null,
     validDateAdded: null,
+    heardBackDay: null,
+    heardBackMonth: null,
+    heardBackYear: null,
+    isHeardBackFutureDate: null,
+    validHeardBackDate: null,
   }
 
   const {
@@ -85,6 +95,10 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     dateAddedDay,
     dateAddedMonth,
     addedToPersonalItems,
+    updatedStatus,
+    heardBackDay,
+    heardBackMonth,
+    heardBackYear,
   } = params
 
   const dateFieldMissingMessage = 'The date must include a'
@@ -244,6 +258,31 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     }
   }
 
+  function validateUpdate() {
+    let pageContainsError = false
+    if (updatedStatus === 'Account opened') {
+      console.log('hello')
+    }
+
+    if (updatedStatus !== 'Account opened' && (!heardBackDay || !heardBackMonth || !heardBackYear)) {
+      const validHeardBackDate = isDateValid(`${heardBackYear}-${heardBackMonth}-${heardBackDay}`)
+      const isHeardBackFutureDate = isDateInFuture(<string>heardBackDay, <string>heardBackMonth, <string>heardBackYear)
+
+      pageContainsError = true
+      errorMsg.heardBackDay = heardBackDay ? null : `${dateFieldMissingMessage} day`
+      errorMsg.heardBackMonth = heardBackMonth ? null : `${dateFieldMissingMessage} month`
+      errorMsg.heardBackYear = heardBackYear ? null : `${dateFieldMissingMessage} year`
+      errorMsg.isHeardBackFutureDate = isHeardBackFutureDate ? 'The date of must be in the past' : null
+      errorMsg.validHeardBackDate = validHeardBackDate ? null : dateFieldInvalid
+    }
+
+    if (pageContainsError) {
+      res.render('pages/add-bank-account', { prisonerData, params, req, errorMsg })
+    } else {
+      res.render('pages/add-bank-account-confirm', { prisonerData, params, req })
+    }
+  }
+
   if (confirmationType === 'addAccount') {
     validateNewAccount()
   }
@@ -251,7 +290,7 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     validateResubmit()
   }
   if (confirmationType === 'updateStatus') {
-    res.render('pages/add-bank-account-confirm', { prisonerData, params, req })
+    validateUpdate()
   }
 })
 
