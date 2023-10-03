@@ -116,7 +116,26 @@ export default function routes(services: Services): Router {
       staffContacts,
     })
   })
-  use('/accommodation', accommodationRouter)
+  use('/accommodation', async (req, res, next) => {
+    const { prisonerData } = req
+    const rpClient = new RPClient()
+    let accommodation: { error?: boolean } = {}
+
+    try {
+      accommodation = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/accommodation`,
+      )
+    } catch (err) {
+      logger.warn(`Cannot retrieve accommodation info for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      accommodation.error = true
+    }
+
+    res.render('pages/accommodation', {
+      accommodation,
+      prisonerData,
+    })
+  })
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/drugs-and-alcohol', drugsAlcoholRouter)
