@@ -59,15 +59,44 @@
               </dd>
               <input hidden name="updatedStatus" value="{{ params.status }}" />
             </div>
-            <div class="govuk-summary-list__row">
-              {% set dateResubmittedHeard = params.dateResubmittedHeardYear + "-" + params.dateResubmittedHeardMonth + "-" + params.dateResubmittedHeardDay%}
-              <dt class="govuk-summary-list__key">Date heard back from resubmission</dt>
-              <dd class="govuk-summary-list__value">{{ dateResubmittedHeard | formatDate }}</dd>
-              <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
-              </dd>
-              <input hidden name="bankResponseDate" value="{{ dateResubmittedHeard | formatDateToIso }}" />
-            </div>
+            {% if params.status == 'Account declined' %}
+              <div class="govuk-summary-list__row">
+                {% set dateResubmittedHeard = params.dateResubmittedHeardYear + "-" + params.dateResubmittedHeardMonth + "-" + params.dateResubmittedHeardDay%}
+                <dt class="govuk-summary-list__key">Date heard back from resubmission</dt>
+                <dd class="govuk-summary-list__value">{{ dateResubmittedHeard | formatDate }}</dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                </dd>
+                <input hidden name="bankResponseDate" value="{{ dateResubmittedHeard | formatDateToIso }}" />
+              </div>
+            {% endif %}
+            {% if params.status == 'Account opened' %}
+              {% set dateAccountOpened = params.accountOpenedYear + "-" + params.accountOpenedMonth + "-" + params.accountOpenedDay %}
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Date account opened</dt>
+                <dd class="govuk-summary-list__value">{{ dateAccountOpened | formatDate }}</dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                </dd>
+                <input hidden name="bankResponseDate" value="{{ dateAccountOpened | formatDateToIso }}" />
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Added to personal items</dt>
+                <dd class="govuk-summary-list__value">
+                  {% if params.addedToPersonalItems === "Yes" %}
+                    {% set dateAddedToItems = params.dateAddedYear + "-" + params.dateAddedMonth + "-" + params.dateAddedDay %}
+                    {{ dateAddedToItems | formatDate }}
+                    <input hidden name="addedToPersonalItemsDate" value="{{ dateAddedToItems | formatDateToIso }}" />
+                  {% else %}
+                    {{ params.addedToPersonalItems }}
+                  {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                </dd>
+              </div>
+              <input hidden name="isAddedToPersonalItems" value="{{ params.addedToPersonalItems }}" />
+            {% endif %}
           {% endif %}
 
           {% if params.confirmationType == 'updateStatus' %}
