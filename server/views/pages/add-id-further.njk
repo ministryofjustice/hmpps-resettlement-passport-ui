@@ -13,11 +13,14 @@
       <h2>Apply for {{ params.idType }}</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         {% if params.idType === "Birth certificate" or params.idType === "Marriage certificate" or params.idType === "Civil partnership certificate" or params.idType === "Adoption certificate"%}
-          <div class="govuk-form-group">
+          <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.haveGro }}">
             <fieldset class="govuk-fieldset">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                 <span class="govuk-fieldset__heading">Do you have the GRO number?</span>
               </legend>
+              {% if errorMsg.haveGro %}
+                <p class="govuk-error-message">{{ errorMsg.haveGro }}</p>
+              {% endif %}
               <div class="govuk-radios">
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="haveGroYes" name="haveGro" type="radio" value="true" {% if params.haveGro == "true" %}checked{% endif %}>
@@ -31,10 +34,13 @@
             </fieldset>
           </div>
           {% if not(params.idType === "Adoption certificate") %}
-            <div id="overseasId" class="govuk-form-group">
+            <div id="overseasId" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.isUkNationalBornOverseas }}">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                 <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
               </legend>
+              {% if errorMsg.isUkNationalBornOverseas %}
+                <p class="govuk-error-message">{{ errorMsg.isUkNationalBornOverseas }}</p>
+              {% endif %}
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="isUkNationalBornOverseasYes" name="isUkNationalBornOverseas" type="radio" value="true" aria-controls="conditional-contact-2" aria-expanded="false" {% if params.isUkNationalBornOverseas == "true" %}checked{% endif %}>
@@ -42,16 +48,19 @@
                     Yes
                 </label>
                 </div>
-                <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-contact-2">
+                <div class="govuk-radios__conditional govuk-radios__conditional--hidden {{ "govuk-form-group--error" if errorMsg.countryBornIn }}" id="conditional-contact-2">
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="sort">
                         Which country were they born in?
                     </label>
+                    {% if errorMsg.countryBornIn %}
+                      <p class="govuk-error-message">{{ errorMsg.countryBornIn }}</p>
+                    {% endif %}
                     <select class="govuk-select" id="countryBornIn" name="countryBornIn">
-                      <option value="">Select a country</option>
+                      <option value=''>Select a country</option>
                       {% set countryList = ["Afghanistan","Aland Islands","Albania","Algeria","American Samoa","Andorra","Angola","Anguilla","Antarctica","Antigua and Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bonaire, Sint Eustatius and Saba","Bosnia and Herzegovina","Botswana","Bouvet Island","Brazil","British Indian Ocean Territory","Brunei Darussalam","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central African Republic","Chad","Chile","China","Christmas Island","Cocos (Keeling) Islands","Colombia","Comoros","Congo","Congo, Democratic Republic of the Congo","Cook Islands","Costa Rica","Cote D'Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands (Malvinas)","Faroe Islands","Fiji","Finland","France","French Guiana","French Polynesia","French Southern Territories","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guadeloupe","Guam","Guatemala","Guernsey","Guinea","Guinea-Bissau","Guyana","Haiti","Heard Island and Mcdonald Islands","Holy See (Vatican City State)","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran, Islamic Republic of","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Korea, Democratic People's Republic of","Korea, Republic of","Kosovo","Kuwait","Kyrgyzstan","Lao People's Democratic Republic","Latvia","Lebanon","Lesotho","Liberia","Libyan Arab Jamahiriya","Liechtenstein","Lithuania","Luxembourg","Macao","Macedonia, the Former Yugoslav Republic of","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Martinique","Mauritania","Mauritius","Mayotte","Mexico","Micronesia, Federated States of","Moldova, Republic of","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Niue","Norfolk Island","Northern Mariana Islands","Norway","Oman","Pakistan","Palau","Palestinian Territory, Occupied","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Pitcairn","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russian Federation","Rwanda","Saint Barthelemy","Saint Helena","Saint Kitts and Nevis","Saint Lucia","Saint Martin","Saint Pierre and Miquelon","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Serbia and Montenegro","Seychelles","Sierra Leone","Singapore","Sint Maarten","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Georgia and the South Sandwich Islands","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Svalbard and Jan Mayen","Swaziland","Sweden","Switzerland","Syrian Arab Republic","Taiwan, Province of China","Tajikistan","Tanzania, United Republic of","Thailand","Timor-Leste","Togo","Tokelau","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Turks and Caicos Islands","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Vanuatu","Venezuela","Viet Nam","Virgin Islands, British","Virgin Islands, U.s.","Wallis and Futuna","Western Sahara","Yemen","Zambia","Zimbabwe"]%}
                       {% for country in countryList %}
-                        <option value="{{country}}" {% if params.countryBornIn === country %}selected{% endif %}>{{country}}</option>
+                        <option value="{{country}}" {% if params.isUkNationalBornOverseas and params.countryBornIn === country %}selected{% endif %}>{{country}}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -65,11 +74,14 @@
               </div>
             </div>
           {% endif %}
-          <div class="govuk-form-group">
+          <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.isPriorityApplication }}">
             <fieldset class="govuk-fieldset">
               <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                 <span class="govuk-fieldset__heading">Is this a priority application?</span>
               </legend>
+              {% if errorMsg.isPriorityApplication %}
+                <p class="govuk-error-message">{{ errorMsg.isPriorityApplication }}</p>
+              {% endif %}
               <div class="govuk-radios">
                 <div class="govuk-radios__item">
                   <input class="govuk-radios__input" id="isPriorityApplicationYes" name="isPriorityApplication" type="radio" value="true" {% if params.isPriorityApplication == "true" %}checked{% endif %}>
@@ -84,20 +96,29 @@
           </div>
         {% elif params.idType === "Divorce decree absolute certificate"%}
 
-          <div id="caseNumber" class="govuk-form-group">
+          <div id="caseNumber" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.caseNumber }}">
             <label class="govuk-label" for="caseNumber">Case number</label>
-            <input class="govuk-input govuk-!-width-one-half" type="text" id="caseNumber" name="caseNumber" {% if params.caseNumber %}value="{{params.caseNumber}}"{% endif %}>
+            {% if errorMsg.caseNumber %}
+              <p class="govuk-error-message">{{ errorMsg.caseNumber }}</p>
+            {% endif %}
+            <input class="govuk-input govuk-!-width-one-half {{ "govuk-input--error" if errorMsg.caseNumber }}" type="text" id="caseNumber" name="caseNumber" {% if params.caseNumber %}value="{{params.caseNumber}}"{% endif %}>
           </div>
 
-          <div id="courtDetails" class="govuk-form-group">
+          <div id="courtDetails" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.courtDetails }}">
             <label class="govuk-label" for="courtDetails">Court details</label>
-            <input class="govuk-input govuk-!-width-one-half" type="text" id="courtDetails" name="courtDetails" {% if params.courtDetails %}value="{{params.courtDetails}}"{% endif %}>
+            {% if errorMsg.courtDetails %}
+              <p class="govuk-error-message">{{ errorMsg.courtDetails }}</p>
+            {% endif %}
+            <input class="govuk-input govuk-!-width-one-half {{ "govuk-input--error" if errorMsg.courtDetails }}" type="text" id="courtDetails" name="courtDetails" {% if params.courtDetails %}value="{{params.courtDetails}}"{% endif %}>
           </div>
         {% elif params.idType === "Driving licence" %}
-          <div id="diriving-licence-type" class="govuk-form-group">
+          <div id="driversLicenceType" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.driversLicenceType }}">
             <label class="govuk-label" for="driversLicenceType">Driving licence type</label>
+            {% if errorMsg.driversLicenceType %}
+              <p class="govuk-error-message">{{ errorMsg.driversLicenceType }}</p>
+            {% endif %}
             <select class="govuk-select govuk-!-width-one-half" id="driversLicenceType" name="driversLicenceType">
-              <option value="">Select driving licence type</option>
+              <option value=''>Select driving licence type</option>
               <option value="Provisional" {% if params.driversLicenceType === "Provisional" %}selected{% endif %}>Provisional</option>
               <option value="Renewal" {% if params.driversLicenceType === "Renewal" %}selected{% endif %}>Renewal</option>
               <option value="Replacement" {% if params.driversLicenceType === "Replacement" %}selected{% endif %}>Replacement</option>
@@ -105,19 +126,25 @@
             </select>
           </div>
 
-          <div id="driversLicenceApplicationMadeAt" class="govuk-form-group">
+          <div id="driversLicenceApplicationMadeAt" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.driversLicenceApplicationMadeAt }}">
             <label class="govuk-label" for="driversLicenceApplicationMadeAt">Where was the application made?</label>
+            {% if errorMsg.driversLicenceApplicationMadeAt %}
+              <p class="govuk-error-message">{{ errorMsg.driversLicenceApplicationMadeAt }}</p>
+            {% endif %}
             <select class="govuk-select govuk-!-width-one-half" id="driversLicenceApplicationMadeAt" name="driversLicenceApplicationMadeAt">
-              <option value="">Select application location</option>
+              <option value=''>Select application location</option>
               <option value="Online" {% if params.driversLicenceApplicationMadeAt === "Online" %}selected{% endif %}>Online</option>
               <option value="By post" {% if params.driversLicenceApplicationMadeAt === "By post" %}selected{% endif %}>By post</option>
               <option value="At Post Office" {% if params.driversLicenceApplicationMadeAt === "At Post Office" %}selected{% endif %}>At Post Office</option>
             </select>
           </div>
         {% endif %}
-        <div id="costApplication" class="govuk-form-group">
+        <div id="costApplication" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.costOfApplication }}">
           <label class="govuk-label" for="costApplication">Cost of application</label>
-          <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="costOfApplication" name="costOfApplication" type="text" spellcheck="false" {% if params.costOfApplication %}value="{{params.costOfApplication}}"{% endif %}>
+          {% if errorMsg.costOfApplication %}
+            <p class="govuk-error-message">{{ errorMsg.costOfApplication }}</p>
+          {% endif %}
+          <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.costOfApplication }}" id="costOfApplication" name="costOfApplication" type="text" spellcheck="false" {% if params.costOfApplication %}value="{{params.costOfApplication}}"{% endif %}>
             <div class="govuk-input__suffix" aria-hidden="true">£</div>
           </div>
         </div>
