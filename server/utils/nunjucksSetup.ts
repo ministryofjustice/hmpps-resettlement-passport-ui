@@ -19,6 +19,7 @@ import {
   roundNumberUp,
   formatFirstSentence,
   formatDateToIso,
+  formatTime,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -73,6 +74,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('roundNumberUp', roundNumberUp)
   njkEnv.addFilter('formatFirstSentence', formatFirstSentence)
   njkEnv.addFilter('formatDateToIso', formatDateToIso)
+  njkEnv.addFilter('formatTime', formatTime)
   njkEnv.addGlobal('dpsUrl', config.dpsHomeUrl)
   njkEnv.addGlobal('phaseName', config.phaseName)
 }

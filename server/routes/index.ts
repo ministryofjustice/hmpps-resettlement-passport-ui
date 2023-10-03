@@ -45,6 +45,7 @@ export default function routes(services: Services): Router {
     let mappa: { error?: boolean } = {}
     let caseNotes: { error?: boolean } = {}
     let staffContacts: { error?: boolean } = {}
+    let appointments: { error?: boolean } = {}
     try {
       licenceConditions = await rpClient.get(
         req.user.token,
@@ -101,6 +102,15 @@ export default function routes(services: Services): Router {
       logger.warn(`Cannot retrieve Staff Contacts for ${prisonerData.personalDetails.prisonerNumber}`, err)
       staffContacts.error = true
     }
+    try {
+      appointments = await rpClient.get(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/appointments?page=0&size=1000`,
+      )
+    } catch (err) {
+      logger.warn(`Cannot retrieve appointments for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      appointments.error = true
+    }
 
     res.render('pages/overview', {
       licenceConditions,
@@ -115,6 +125,7 @@ export default function routes(services: Services): Router {
       days,
       selectedPathway,
       staffContacts,
+      appointments,
     })
   })
   use('/accommodation', async (req, res, next) => {
