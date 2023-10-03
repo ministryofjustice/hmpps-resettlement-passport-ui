@@ -24,6 +24,7 @@ import updateBankAccountStatusRouter from './finance-id/update-status-bank-accou
 import confirmAssessmentRouter from './finance-id/confirm-assessment'
 import addIdFurtherRouter from './finance-id/add-id-further'
 import updateIdStatusRouter from './finance-id/update-status-id'
+import confirmIdStatusRouter from './finance-id/confirm-id-status'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -354,6 +355,46 @@ export default function routes(services: Services): Router {
     }
   })
 
+  use('/finance-and-id/id-update/', async (req: Request, res: Response, next) => {
+    const { prisonerData } = req
+    const params = req.body
+    const {
+      prisonerNumber,
+      applicationId,
+      isAddedToPersonalItems,
+      addedToPersonalItemsDate,
+      updatedStatus,
+      statusUpdateDate,
+      dateIdReceived,
+    } = req.body
+
+    const refundAmount = Number(req.body.refundAmount)
+    const rpClient = new RPClient()
+    try {
+      await rpClient.patch(
+        req.user.token,
+        `/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`,
+        {
+          status: updatedStatus,
+          isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+          addedToPersonalItemsDate,
+          statusUpdateDate,
+          dateIdReceived,
+          refundAmount,
+        },
+      )
+      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+    } catch (error) {
+      const errorMessage = error.message
+      logger.error('Error updating id application:', error)
+      res.render('pages/add-id-update-status-confirm', {
+        errorMessage,
+        prisonerData,
+        params,
+      })
+    }
+  })
+
   use('/finance-and-id', financeIdRouter)
   use('/finance-and-id/add-an-id', addIdRouter)
   use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
@@ -364,6 +405,7 @@ export default function routes(services: Services): Router {
   use('/finance-and-id/assessment', assessmentRouter)
   use('/finance-and-id/add-an-id-further', addIdFurtherRouter)
   use('/finance-and-id/update-id-status', updateIdStatusRouter)
+  use('/finance-and-id/confirm-add-an-id-status', confirmIdStatusRouter)
 
   return router
 }

@@ -1,0 +1,78 @@
+{% extends "../partials/layout.njk" %}
+{% set pathway = "Finance and ID" %}
+{% set pageTitle = applicationName + " - " + pathway + " - Add an ID application"%}
+{% set mainClasses = "app-container govuk-body" %}
+{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(pathway) }}
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-full">
+      <h2 class="govuk-heading-m">Check your answers before completing application for a {{ params.idType }}</h2>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <form action="/finance-and-id/id-update" method="post" novalidate>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Application status</dt>
+            <dd class="govuk-summary-list__value">
+              {{ params.updatedStatus }}
+            </dd>
+            <input hidden name="updatedStatus" value="{{ params.updatedStatus }}"/>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> application status</span></a>
+            </dd>
+          </div>
+          {% if params.updatedStatus === 'Rejected' %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Application Refund</dt>
+              <dd class="govuk-summary-list__value">
+              £{{ params.refundAmount }}
+              </dd>
+              <input hidden name="refundAmount" value="{{ params.refundAmount }}"/>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> Application refund</span></a>
+              </dd>
+            </div>
+          {% elif params.updatedStatus === 'Accepted' %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Date ID received</dt>
+              {% set dateIdReceived = params.dateIdReceivedYear + "-" + params.dateIdReceivedMonth + "-" + params.dateIdReceivedDay %}
+              <dd class="govuk-summary-list__value">
+                {{ dateIdReceived | formatDate }}
+              </dd>
+              <input hidden name="dateIdReceived" value="{{ dateIdReceived | formatDateToIso }}"/>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> Date ID received</span></a>
+              </dd>
+            </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Added to personal items</dt>
+                {% if params.isAddedToPersonalItems === "true" %}
+                    {% set addedToPersonalItemsDate = params.addedToPersonalItemsDateYear + "-" + params.addedToPersonalItemsDateMonth + "-" + params.addedToPersonalItemsDateDay%}
+                    <input hidden name="addedToPersonalItemsDate" value="{{ addedToPersonalItemsDate | formatDateToIso }}"/>
+                    <dd class="govuk-summary-list__value">{{ addedToPersonalItemsDate | formatDate }}<br>
+                  {% else %}
+                    {% if params.isAddedToPersonalItems === 'true' %}Yes{% else %}No{% endif %}
+                  {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> Added to personal items</span></a>
+                </dd>
+                <input hidden name="isAddedToPersonalItems" value="{{ params.isAddedToPersonalItems }}" />
+              </div>
+          {% endif %}
+        </dl>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+        <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
+        <input type="hidden" name="applicationId" value="{{ params.applicationId }}"/>
+        <input hidden name="idType" value="{{ params.idType }}"/>
+        <button class="govuk-button" type="submit">Accept and send</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

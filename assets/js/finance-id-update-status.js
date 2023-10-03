@@ -43,3 +43,13 @@ if (selectOptionsEl) {
 if (selectOptionsIdEl) {
   selectOptionsIdEl.addEventListener('change', handleIDChangeStatus)
 }
+
+window.addEventListener('load', function () {
+  if (selectOptionsIdEl.value === 'Rejected') {
+    acceptedApplicationEl.hidden = true
+    rejectedApplicationEl.hidden = false
+  } else if (selectOptionsIdEl.value === 'Accepted') {
+    acceptedApplicationEl.hidden = false
+    rejectedApplicationEl.hidden = true
+  }
+})
