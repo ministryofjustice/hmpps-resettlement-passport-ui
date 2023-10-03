@@ -36,7 +36,7 @@ const confirmIdRouter = express.Router().get('/', async (req, res, next) => {
       isUkNationalBornOverseas: isUkNationalBornOverseas ? null : `${message}`,
       isPriorityApplication: isPriorityApplication ? null : `${message}`,
       costOfApplication: costOfApplication ? null : `${costMessage}`,
-      countryBornIn: !selectACountry ? null : `${countryBornMessage}`,
+      countryBornIn: selectACountry === false ? null : `${countryBornMessage}`,
     }
     res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
     return

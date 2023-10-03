@@ -1,0 +1,116 @@
+{% extends "../partials/layout.njk" %}
+{% set pathway = "Finance and ID" %}
+{% set pageTitle = applicationName + " - " + pathway + " - Add an ID application"%}
+{% set mainClasses = "app-container govuk-body" %}
+{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+{% block content %}
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+        {{ titleAndIntro(pathway) }}
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-bottom-4">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-row">
+                    <h2 class="govuk-heading-m">Apply for a {{params.idType}}</h2>
+                    <p>
+                        <b>Application submitted: </b>{{params.applicationSubmittedDate | formatDate }}</p>
+                    <form action="/finance-and-id/confirm-add-an-id-status/" novalidate class="govuk-form govuk-!-padding-top-4">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="updatedStatus">Application status</label>
+                            <select class="govuk-select status-options-id" id="updatedStatus" name="updatedStatus">
+                                <option value="">Select application status</option>
+                                <option value="Accepted" {% if params.updatedStatus === "Accepted" %}selected{% endif %}>Accepted</option>
+                                <option value="Rejected" {% if params.updatedStatus === "Rejected" %}selected{% endif %}>Rejected</option>
+                            </select>
+                        </div>
+                        <div class="id-accepted-application" hidden>
+                            <div class="govuk-form-group">
+                                <div class="govuk-date-input" id="dateIdReceived">
+                                    <label class="govuk-label" for="dateIdReceived">Date ID received</label>
+                                    <!-- Date of ID received input -->
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="dateIdReceivedDay">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateIdReceivedDay" name="dateIdReceivedDay" type="text" inputmode="numeric" value="{{ params.dateIdReceivedDay if params.dateIdReceivedDay }}">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="dateIdReceivedMonth">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="dateIdReceivedMonth" name="dateIdReceivedMonth" type="text" inputmode="numeric" value="{{ params.dateIdReceivedMonth if params.dateIdReceivedMonth }}">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="dateIdReceivedYear">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="dateIdReceivedYear" name="dateIdReceivedYear" type="text" inputmode="numeric" value="{{ params.dateIdReceivedYear if params.dateIdReceivedYear }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div id="id-placement" class="govuk-form-group">
+                                <fieldset class="govuk-fieldset" aria-describedby="contact-hint">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                                        <span class="govuk-fieldset__heading">Added to personal items</span>
+                                    </legend>
+
+                                    <div class="govuk-radios" data-module="govuk-radios">
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="isAddedToPersonalItemsYes" name="isAddedToPersonalItems" type="radio" value="true" aria-controls="conditional-id-placement-yes" aria-expanded="false" {% if params.isAddedToPersonalItems === 'true' %}checked{% endif %}>
+                                            <label class="govuk-label govuk-radios__label" for="isAddedToPersonalItemsYes">Yes</label>
+                                        </div>
+                                        <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-id-placement-yes">
+                                            <div class="govuk-form-group">
+                                                <label class="govuk-label" for="date-capture">Date added</label>
+                                                <div class="govuk-date-input">
+                                                    <div class="govuk-date-input__item">
+                                                        <div class="govuk-form-group">
+                                                            <label class="govuk-label govuk-date-input__label" for="addedToPersonalItemsDateDay">Day</label>
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="addedToPersonalItemsDateDay" name="addedToPersonalItemsDateDay" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="31" value="{{ params.addedToPersonalItemsDateDay if params.addedToPersonalItemsDateDay }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="govuk-date-input__item">
+                                                        <div class="govuk-form-group">
+                                                            <label class="govuk-label govuk-date-input__label" for="addedToPersonalItemsDateMonth">Month</label>
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="addedToPersonalItemsDateMonth" name="addedToPersonalItemsDateMonth" type="number" pattern="[0-9]*" inputmode="numeric" min="1" max="12" value="{{ params.addedToPersonalItemsDateMonth if params.addedToPersonalItemsDateMonth }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="govuk-date-input__item">
+                                                        <div class="govuk-form-group">
+                                                            <label class="govuk-label govuk-date-input__label" for="addedToPersonalItemsDateYear">Year</label>
+                                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4" id="addedToPersonalItemsDateYear" name="addedToPersonalItemsDateYear" type="number" pattern="[0-9]*" inputmode="numeric" min="1900" max="2099" value="{{ params.addedToPersonalItemsDateYear if params.addedToPersonalItemsDateYear }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="isAddedToPersonalItemsNo" name="isAddedToPersonalItems" type="radio" value="false" data-aria-controls="conditional-id-placement-no" {% if params.isAddedToPersonalItems === 'false' %}checked{% endif %}>
+                                            <label class="govuk-label govuk-radios__label" for="isAddedToPersonalItemsNo">No</label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="govuk-form-group id-rejected-application" hidden>
+                            <label class="govuk-label" for="refundAmount">Application refund amount</label>
+                            <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5" id="refundAmount" name="refundAmount" type="text" spellcheck="false" value="{{ params.refundAmount if params.refundAmount }}">
+                                <div class="govuk-input__suffix" aria-hidden="true">£</div>
+                            </div>
+                        </div>
+                        <input hidden name="idType" value="{{ params.idType }}"/>
+                        <input type="hidden" name="applicationId" value="{{ params.applicationId }}"/>
+                        <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                        <button class="govuk-button" type="submit">Submit</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block bodyEnd %}
+    {{ super() }}
+    <script src="/assets/js/finance-id-update-status.js"></script>
+{% endblock %}
