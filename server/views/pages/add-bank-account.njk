@@ -93,19 +93,40 @@
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="applicationSubmittedDay">Day</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedDay" name="applicationSubmittedDay" type="text" value="{{ params.applicationSubmittedDay if params.applicationSubmittedDay | length else "" }}" inputmode="numeric">
+                  <input
+                    class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.applicationSubmittedDay or errorMsg.futureDate or errorMsg.isValidDate }}"
+                    id="applicationSubmittedDay"
+                    name="applicationSubmittedDay"
+                    type="text"
+                    value="{{ params.applicationSubmittedDay if params.applicationSubmittedDay | length else "" }}"
+                    inputmode="numeric"
+                  >
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="applicationSubmittedMonth">Month</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="applicationSubmittedMonth" name="applicationSubmittedMonth" type="text" value="{{ params.applicationSubmittedMonth if params.applicationSubmittedMonth | length else "" }}" inputmode="numeric">
+                  <input
+                    class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.applicationSubmittedMonth or errorMsg.futureDate or errorMsg.isValidDate }}"
+                    id="applicationSubmittedMonth"
+                    name="applicationSubmittedMonth"
+                    type="text"
+                    value="{{ params.applicationSubmittedMonth if params.applicationSubmittedMonth | length else "" }}"
+                    inputmode="numeric"
+                  >
                 </div>
               </div>
               <div class="govuk-date-input__item">
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="applicationSubmittedYear">Year</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="applicationSubmittedYear" name="applicationSubmittedYear" type="text" value="{{ params.applicationSubmittedYear if params.applicationSubmittedYear | length else "" }}" inputmode="numeric">
+                  <input
+                    class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate }}"
+                    id="applicationSubmittedYear"
+                    name="applicationSubmittedYear"
+                    type="text"
+                    value="{{ params.applicationSubmittedYear if params.applicationSubmittedYear | length else "" }}"
+                    inputmode="numeric"
+                  >
                 </div>
               </div>
             </div>
