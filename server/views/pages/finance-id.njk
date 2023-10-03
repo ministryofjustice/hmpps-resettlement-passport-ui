@@ -202,7 +202,19 @@
                         <tbody class="govuk-table__body">
                           {% for log in finance.logs %}
                             <tr class="govuk-table__row">
-                              <th scope="row" class="govuk-table__header">{{ "Application submitted" if log.status === "Pending" else log.status }}</th>
+                              <th scope="row" class="govuk-table__header">
+                                {% if log.status === "Pending" %}
+                                  Application submitted
+                                {% elif log.status === "Account resubmitted" %}
+                                  Application resubmitted
+                                {% elif log.status === "Account declined" %}
+                                  Application declined
+                                {% elif log.status === "Account opened" %}
+                                  Date account opened
+                                {% else %}
+                                  {{ log.status }}
+                                {% endif %}
+                              </th>
                               <td class="govuk-table__cell">{{ log.changeDate | formatDate }}</td>
                             </tr>
                           {% endfor %}
