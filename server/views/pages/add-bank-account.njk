@@ -12,7 +12,7 @@
       <h3 class="govuk-heading-m">Apply for a bank account</h3>
       <form action="/finance-and-id/confirm-add-a-bank-account/" class="govuk-form" novalidate>
         {% if params.applicationType === "resubmit" %}
-          <div class="govuk-form-group">
+          <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.applicationResubmittedDay or errorMsg.applicationResubmittedMonth or errorMsg.applicationResubmittedYear or errorMsg.resubmittedFutureDate or errorMsg.validResubmissionDate }}">
             <label class="govuk-label" for="application-resubmitted">Date application resubmitted</label>
             {% if errorMsg.applicationResubmittedDay or errorMsg.applicationResubmittedMonth or errorMsg.applicationResubmittedYear or errorMsg.resubmittedFutureDate or errorMsg.validResubmissionDate %}
               <div class="govuk-!-margin-top-5">
@@ -77,7 +77,7 @@
               <option value="Account declined" {% if params.status == "Account declined" %}selected{% endif %}>Account declined</option>
             </select>
           </div>
-          <div class="govuk-form-group conditional-form-fields" {% if params.status == '' or not params.status %}hidden{% endif %}>
+          <div class="govuk-form-group conditional-form-fields {{ "govuk-form-group--error" if errorMsg.dateResubmittedHeardDay or errorMsg.dateResubmittedHeardMonth or errorMsg.dateResubmittedHeardYear or errorMsg.resubmittedHeardFutureDate or errorMsg.validResubmissionHeardBackDate }}" {% if params.status == '' or not params.status %}hidden{% endif %}>
             <div class="account-declined-form" {% if params.status == 'Account opened' %}hidden{% endif %}>
               <label class="govuk-label" for="date-resubmitted-bank-details-received">Date heard back from resubmission</label>
               {% if errorMsg.dateResubmittedHeardDay or errorMsg.dateResubmittedHeardMonth or errorMsg.dateResubmittedHeardYear or errorMsg.resubmittedHeardFutureDate or errorMsg.validResubmissionHeardBackDate %}
@@ -158,30 +158,82 @@
               </div>
             </div>
             <div class="account-opened-form" {% if params.status == 'Account declined' %}hidden{% endif %}>
-              <label class="govuk-label" for="date-account-opened">Date account opened</label>
-              <div class="govuk-date-input govuk-!-margin-bottom-5" id="date-account-opened">
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="account-opened-day">
-                      Day
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="account-opened-day" name="accountOpenedDay" type="text" value="{{ params.accountOpenedDay if params.accountOpenedDay | length else "" }}" inputmode="numeric">
+              <div class="{{ "govuk-form-group--error" if errorMsg.accountOpenedDay or errorMsg.accountOpenedMonth or errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFutureDate or errorMsg.validAccountOpenedDate }}">
+                <label class="govuk-label" for="date-account-opened">Date account opened</label>
+                {% if errorMsg.accountOpenedDay or errorMsg.accountOpenedMonth or errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFutureDate or errorMsg.validAccountOpenedDate %}
+                  <div class="govuk-!-margin-top-5">
+                    {% if errorMsg.accountOpenedDay %}
+                      <p class="govuk-error-message">
+                        {{ errorMsg.accountOpenedDay }}
+                      </p>
+                    {% endif %}
+                    {% if errorMsg.accountOpenedMonth %}
+                      <p class="govuk-error-message">
+                        {{ errorMsg.accountOpenedMonth }}
+                      </p>
+                    {% endif %}
+                    {% if errorMsg.accountOpenedYear %}
+                      <p class="govuk-error-message">
+                        {{ errorMsg.accountOpenedYear }}
+                      </p>
+                    {% endif %}
+                    {% if errorMsg.isAccountOpenedFutureDate %}
+                      <p class="govuk-error-message">
+                        {{ errorMsg.isAccountOpenedFutureDate }}
+                      </p>
+                    {% endif %}
+                    {% if errorMsg.validAccountOpenedDate %}
+                      <p class="govuk-error-message">
+                        {{ errorMsg.validAccountOpenedDate }}
+                      </p>
+                    {% endif %}
                   </div>
-                </div>
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="account-opened-month">
-                      Month
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 " id="date-resubmiited-resubmitted-bank-details-heard-month" name="accountOpenedMonth" type="text" value="{{ params.accountOpenedMonth if params.accountOpenedMonth | length else "" }}" inputmode="numeric">
+                {% endif %}
+                <div class="govuk-date-input govuk-!-margin-bottom-5" id="date-account-opened">
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="account-opened-day">
+                        Day
+                      </label>
+                      <input
+                        class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.accountOpenedDay or errorMsg.isAccountOpenedFutureDate or errorMsg.validAccountOpenedDate }}"
+                        id="account-opened-day"
+                        name="accountOpenedDay"
+                        type="text"
+                        value="{{ params.accountOpenedDay if params.accountOpenedDay | length else "" }}"
+                        inputmode="numeric"
+                      >
+                    </div>
                   </div>
-                </div>
-                <div class="govuk-date-input__item">
-                  <div class="govuk-form-group">
-                    <label class="govuk-label govuk-date-input__label" for="account-opened-year">
-                      Year
-                    </label>
-                    <input class="govuk-input govuk-date-input__input govuk-input--width-4 " id="account-opened-year" name="accountOpenedYear" type="text" value="{{ params.accountOpenedYear if params.accountOpenedYear | length else "" }}" inputmode="numeric">
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="account-opened-month">
+                        Month
+                      </label>
+                      <input
+                        class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.accountOpenedMonth or errorMsg.isAccountOpenedFutureDate or errorMsg.validAccountOpenedDate }}"
+                        id="date-resubmiited-resubmitted-bank-details-heard-month"
+                        name="accountOpenedMonth"
+                        type="text"
+                        value="{{ params.accountOpenedMonth if params.accountOpenedMonth | length else "" }}"
+                        inputmode="numeric"
+                      >
+                    </div>
+                  </div>
+                  <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label govuk-date-input__label" for="account-opened-year">
+                        Year
+                      </label>
+                      <input
+                        class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.accountOpenedYear or errorMsg.isAccountOpenedFutureDate or errorMsg.validAccountOpenedDate }}"
+                        id="account-opened-year"
+                        name="accountOpenedYear"
+                        type="text"
+                        value="{{ params.accountOpenedYear if params.accountOpenedYear | length else "" }}"
+                        inputmode="numeric"
+                      >
+                    </div>
                   </div>
                 </div>
               </div>

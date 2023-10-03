@@ -18,6 +18,11 @@ type ErrorMessage = {
   applicationResubmittedDay?: null | string
   applicationResubmittedMonth?: null | string
   applicationResubmittedYear?: null | string
+  accountOpenedDay?: null | string
+  accountOpenedMonth?: null | string
+  accountOpenedYear?: null | string
+  isAccountOpenedFutureDate?: null | string
+  validAccountOpenedDate?: null | string
 }
 
 const confirmBankAccountRouter = express.Router().get('/', async (req, res, next) => {
@@ -42,6 +47,11 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     dateResubmittedHeardDay: null,
     dateResubmittedHeardMonth: null,
     dateResubmittedHeardYear: null,
+    accountOpenedDay: null,
+    accountOpenedMonth: null,
+    accountOpenedYear: null,
+    isAccountOpenedFutureDate: null,
+    validAccountOpenedDate: null,
   }
 
   const {
@@ -58,6 +68,9 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     applicationResubmittedDay,
     applicationResubmittedMonth,
     applicationResubmittedYear,
+    accountOpenedDay,
+    accountOpenedMonth,
+    accountOpenedYear,
   } = params
 
   const dateFieldMissingMessage = 'The date must include a'
@@ -126,6 +139,7 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     const validResubmissionHeardBackDate = isDateValid(
       `${dateResubmittedHeardYear}-${dateResubmittedHeardMonth}-${dateResubmittedHeardDay}`,
     )
+    const validAccountOpenedDate = isDateValid(`${accountOpenedYear}-${accountOpenedMonth}-${accountOpenedDay}`)
     const isResubmittedHeardBackFutureDate = isDateInFuture(
       <string>dateResubmittedHeardDay,
       <string>dateResubmittedHeardMonth,
@@ -135,6 +149,11 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
       <string>applicationResubmittedDay,
       <string>applicationResubmittedMonth,
       <string>applicationResubmittedYear,
+    )
+    const isAccountOpenedFutureDate = isDateInFuture(
+      <string>accountOpenedDay,
+      <string>accountOpenedMonth,
+      <string>accountOpenedYear,
     )
 
     if (
@@ -171,6 +190,22 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
       errorMsg.dateResubmittedHeardYear = dateResubmittedHeardYear ? null : `${dateFieldMissingMessage} year`
       errorMsg.resubmittedHeardFutureDate = isResubmittedHeardBackFutureDate ? 'The date of must be in the past' : null
       errorMsg.validResubmissionHeardBackDate = validResubmissionHeardBackDate ? null : dateFieldInvalid
+    }
+
+    if (
+      status === 'Account opened' &&
+      (!accountOpenedDay ||
+        !accountOpenedMonth ||
+        !accountOpenedYear ||
+        isAccountOpenedFutureDate ||
+        !validAccountOpenedDate)
+    ) {
+      pageContainsError = true
+      errorMsg.accountOpenedDay = accountOpenedDay ? null : `${dateFieldMissingMessage} day`
+      errorMsg.accountOpenedMonth = accountOpenedMonth ? null : `${dateFieldMissingMessage} month`
+      errorMsg.accountOpenedYear = accountOpenedYear ? null : `${dateFieldMissingMessage} year`
+      errorMsg.isAccountOpenedFutureDate = isAccountOpenedFutureDate ? 'The date of must be in the past' : null
+      errorMsg.validAccountOpenedDate = validAccountOpenedDate ? null : dateFieldInvalid
     }
 
     if (pageContainsError) {
