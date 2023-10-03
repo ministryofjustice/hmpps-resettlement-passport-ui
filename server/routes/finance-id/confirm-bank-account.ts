@@ -33,6 +33,7 @@ type ErrorMessage = {
   heardBackYear?: null | string
   isHeardBackFutureDate?: null | string
   validHeardBackDate?: null | string
+  isAccountOpenedFuture?: null | string
 }
 
 const confirmBankAccountRouter = express.Router().get('/', async (req, res, next) => {
@@ -72,6 +73,7 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
     heardBackYear: null,
     isHeardBackFutureDate: null,
     validHeardBackDate: null,
+    isAccountOpenedFuture: null,
   }
 
   const {
@@ -260,12 +262,32 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
 
   function validateUpdate() {
     let pageContainsError = false
-    if (updatedStatus === 'Account opened') {
-      console.log('hello')
-    }
 
     const validHeardBackDate = isDateValid(`${heardBackYear}-${heardBackMonth}-${heardBackDay}`)
     const isHeardBackFutureDate = isDateInFuture(<string>heardBackDay, <string>heardBackMonth, <string>heardBackYear)
+
+    const validAccountOpenedDate = isDateValid(`${accountOpenedYear}-${accountOpenedMonth}-${accountOpenedDay}`)
+    const isAccountOpenedFuture = isDateInFuture(
+      <string>accountOpenedDay,
+      <string>accountOpenedMonth,
+      <string>accountOpenedYear,
+    )
+
+    if (
+      updatedStatus === 'Account opened' &&
+      (!accountOpenedDay ||
+        !accountOpenedMonth ||
+        !accountOpenedYear ||
+        isAccountOpenedFuture ||
+        !validAccountOpenedDate)
+    ) {
+      pageContainsError = true
+      errorMsg.accountOpenedDay = accountOpenedDay ? null : `${dateFieldMissingMessage} day`
+      errorMsg.accountOpenedMonth = accountOpenedMonth ? null : `${dateFieldMissingMessage} month`
+      errorMsg.accountOpenedYear = accountOpenedYear ? null : `${dateFieldMissingMessage} year`
+      errorMsg.isAccountOpenedFuture = isAccountOpenedFuture ? 'The date of must be in the past' : null
+      errorMsg.validAccountOpenedDate = validAccountOpenedDate ? null : dateFieldInvalid
+    }
 
     if (
       updatedStatus !== 'Account opened' &&
