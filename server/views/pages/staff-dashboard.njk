@@ -39,30 +39,42 @@
     </form>
     {% if prisonersList %}
       {{ prisonersTable(prisonersList.content) }}
-      {# <nav class="govuk-pagination" role="navigation" aria-label="results">
-        <ul class="govuk-pagination__list">
-          <li class="govuk-pagination__item govuk-pagination__item--current">
-            <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 1" aria-current="page">
-              1
-            </a>
-          </li>
-          <li class="govuk-pagination__item">
-            <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 2">
-              2
-            </a>
-          </li>
-          <li class="govuk-pagination__item">
-            <a class="govuk-link govuk-pagination__link" href="#" aria-label="Page 3">
-              3
-            </a>
-          </li>
-        </ul>
-        <div class="govuk-pagination__next">
-          <a class="govuk-link govuk-pagination__link" href="#" rel="next"> <span class="govuk-pagination__link-title">Next</span> <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-              <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
-            </svg></a>
-        </div>
-      </nav> #}
+      {% if prisonersList.content | length %}
+        {% set nextPage = page | float + 1 | float%}
+        {% set prevPage = page | float - 1 | float%}
+        {% set size = 20 %}
+        {% set totalPages = (prisonersList.totalElements / size) | roundNumberUp %}
+        <nav class="moj-pagination" aria-label="Pagination navigation">
+          <ul class="moj-pagination__list">
+            {% if page > 0 %}
+              <li class="moj-pagination__item  moj-pagination__item--prev">
+                <a class="moj-pagination__link" href="/?searchInput={{searchInput}}&releaseTime={{releaseTime}}&page={{prevPage}}">Previous<span class="govuk-visually-hidden"> page</span></a>
+              </li>
+            {% endif %}
+            {% for i in range(0, totalPages) %}
+              {% if page | float === i | float %}
+                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
+              {% else %}
+                <li class="moj-pagination__item">
+                  <a class="moj-pagination__link" href="/?searchInput={{searchInput}}&releaseTime={{releaseTime}}&page={{i}}" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
+                </li>
+              {% endif %}
+            {%- endfor %}
+            {% if prisonersList.last === false %}
+              <li class="moj-pagination__item  moj-pagination__item--next">
+                <a class="moj-pagination__link" href="/?searchInput={{searchInput}}&releaseTime={{releaseTime}}&page={{nextPage}}">Next<span class="govuk-visually-hidden"> page</span></a>
+              </li>
+            {% endif %}
+          </ul>
+          {% set fromPage = (page | float + 1 | float) * (size | float) - 9 | float %}
+          {% if prisonersList.last === false %}
+            {% set toPage = (page | float + 1 | float) * size | float %}
+          {% else %}
+            {% set toPage = totalElements %}
+          {% endif %}
+          <p class="moj-pagination__results">Showing <b>{{fromPage}}</b> to <b>{{toPage}}</b> of <b>{{ totalElements }}</b> results</p>
+        </nav>
+      {% endif %}
     {% endif %}
     {% else %}
       <p>This functionality is only currently available for NOMIS users. Please log in as a NOMIS user and try again.</p>

@@ -9,7 +9,13 @@ export default class StaffDashboardController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const { token } = req.user
     const { userActiveCaseLoad } = res.locals
-    const { searchInput = '', releaseTime = '84' } = req.query as { searchInput: string; releaseTime: string }
+    const {
+      searchInput = '',
+      releaseTime = '84',
+      page = '0',
+    } = req.query as { searchInput: string; releaseTime: string; page: string }
+
+    console.log(req.query)
 
     const errors: ErrorMessage[] = []
     let prisonersList = null
@@ -21,15 +27,16 @@ export default class StaffDashboardController {
         prisonersList = await this.prisonService.getListOfPrisoners(
           token,
           userActiveCaseLoad.caseLoadId,
-          0,
-          200,
+          parseInt(page, 10),
+          20,
           'releaseDate',
           'ASC',
           <string>searchInput,
           <string>releaseTime,
         )
+        console.log(prisonersList)
       }
-      const view = new StaffDashboardView(prisonersList, errors, searchInput, releaseTime)
+      const view = new StaffDashboardView(prisonersList, errors, searchInput, releaseTime, page)
       res.render('pages/staff-dashboard', { ...view.renderArgs })
     } catch (err) {
       next(err)
