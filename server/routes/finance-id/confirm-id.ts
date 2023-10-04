@@ -14,9 +14,8 @@ const confirmIdRouter = express.Router().get('/', async (req, res, next) => {
     courtDetails,
     driversLicenceType,
     driversLicenceApplicationMadeAt,
+    costOfApplication,
   } = params
-
-  const { costOfApplication } = params
 
   function checkIsValidCurrency(str: string): boolean {
     const regex = /^[0-9]+(\.[0-9]{2})?$/
@@ -27,7 +26,7 @@ const confirmIdRouter = express.Router().get('/', async (req, res, next) => {
 
   if (!costOfApplication || !costIsValid) {
     const costMessage = 'Enter the cost of application'
-    const costIsNotValidMessage = 'Cost of application is invalid'
+    const costIsNotValidMessage = 'Application cost can only include pounds and pence'
     const errorMsg = {
       costOfApplication: costOfApplication ? null : `${costMessage}`,
       costIsValid: costIsValid ? null : `${costIsNotValidMessage}`,
