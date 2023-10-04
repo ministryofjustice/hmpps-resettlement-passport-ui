@@ -40,7 +40,7 @@
           {% elif params.updatedStatus === 'Accepted' %}
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">Date ID received</dt>
-              {% set dateIdReceived = params.dateIdReceivedDay + "-" + params.dateIdReceivedMonth + "-" + params.dateIdReceivedYear %}
+              {% set dateIdReceived = params.dateIdReceivedYear + "-" + params.dateIdReceivedMonth + "-" + params.dateIdReceivedDay %}
               <dd class="govuk-summary-list__value">
                 {{ dateIdReceived | formatDate }}
               </dd>
@@ -52,7 +52,7 @@
               <div class="govuk-summary-list__row">
                 <dt class="govuk-summary-list__key">Added to personal items</dt>
                 {% if params.isAddedToPersonalItems === "true" %}
-                    {% set addedToPersonalItemsDate = params.addedToPersonalItemsDateDay + "-" + params.addedToPersonalItemsDateMonth + "-" + params.addedToPersonalItemsDateYear%}
+                    {% set addedToPersonalItemsDate = params.addedToPersonalItemsDateYear + "-" + params.addedToPersonalItemsDateMonth + "-" + params.addedToPersonalItemsDateDay %}
                     <input hidden name="addedToPersonalItemsDate" value="{{ addedToPersonalItemsDate | formatDateToIso }}"/>
                     <dd class="govuk-summary-list__value">{{ addedToPersonalItemsDate | formatDate }}<br>
                   {% else %}
