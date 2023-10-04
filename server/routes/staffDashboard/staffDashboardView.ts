@@ -22,7 +22,7 @@ export default class StaffDashboardView implements View {
       errors: this.errors.length !== 0 ? this.errors : null,
       searchInput: this.searchInput,
       releaseTime: this.releaseTime,
-      page: this.releaseTime,
+      page: this.page,
     }
   }
 }

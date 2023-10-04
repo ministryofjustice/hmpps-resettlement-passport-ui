@@ -15,8 +15,6 @@ export default class StaffDashboardController {
       page = '0',
     } = req.query as { searchInput: string; releaseTime: string; page: string }
 
-    console.log(req.query)
-
     const errors: ErrorMessage[] = []
     let prisonersList = null
 
@@ -34,7 +32,6 @@ export default class StaffDashboardController {
           <string>searchInput,
           <string>releaseTime,
         )
-        console.log(prisonersList)
       }
       const view = new StaffDashboardView(prisonersList, errors, searchInput, releaseTime, page)
       res.render('pages/staff-dashboard', { ...view.renderArgs })
