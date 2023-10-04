@@ -139,12 +139,14 @@
             </select>
           </div>
         {% endif %}
-        <div id="costApplication" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.costOfApplication }}">
+        <div id="costApplication" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.costOfApplication or errorMsg.costIsValid}}">
           <label class="govuk-label" for="costApplication">Cost of application</label>
           {% if errorMsg.costOfApplication %}
             <p class="govuk-error-message">{{ errorMsg.costOfApplication }}</p>
+          {% elif errorMsg.costIsValid %}
+            <p class="govuk-error-message">{{ errorMsg.costIsValid }}</p>
           {% endif %}
-          <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.costOfApplication }}" id="costOfApplication" name="costOfApplication" type="numeric" spellcheck="false" {% if params.costOfApplication %}value="{{params.costOfApplication}}"{% endif %}>
+          <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.costOfApplication or errorMsg.costIsValid }}" id="costOfApplication" name="costOfApplication" type="text" spellcheck="false" {% if params.costOfApplication %}value="{{params.costOfApplication}}"{% endif %}>
             <div class="govuk-input__suffix" aria-hidden="true">£</div>
           </div>
         </div>

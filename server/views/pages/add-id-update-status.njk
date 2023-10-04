@@ -149,12 +149,14 @@
                             </div>
                         </div>
                         <div class="id-rejected-application" hidden>
-                            <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.refundAmount }}" >
+                            <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.refundAmount or errorMsg.costIsValid }}" >
                                 <label class="govuk-label" for="refundAmount">Application refund amount</label>
                                 {% if errorMsg.refundAmount %}
                                     <p class="govuk-error-message">{{ errorMsg.refundAmount }}</p>
+                                    {% elif errorMsg.costIsValid %}
+                                    <p class="govuk-error-message">{{ errorMsg.costIsValid }}</p>
                                 {% endif %}
-                                <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.refundAmount }}" id="refundAmount" name="refundAmount" type="text" spellcheck="false" value="{{ params.refundAmount if params.refundAmount }}">
+                                <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.refundAmount or errorMsg.costIsValid }}" id="refundAmount" name="refundAmount" type="text" spellcheck="false" value="{{ params.refundAmount if params.refundAmount }}">
                                     <div class="govuk-input__suffix" aria-hidden="true">£</div>
                                 </div>
                             </div>

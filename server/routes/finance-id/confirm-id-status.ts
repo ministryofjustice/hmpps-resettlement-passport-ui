@@ -6,7 +6,6 @@ const confirmIdStatusRouter = express.Router().get('/', async (req, res, next) =
 
   const {
     updatedStatus,
-    refundAmount,
     isAddedToPersonalItems,
     addedToPersonalItemsDateDay,
     addedToPersonalItemsDateMonth,
@@ -14,7 +13,16 @@ const confirmIdStatusRouter = express.Router().get('/', async (req, res, next) =
     dateIdReceivedDay,
     dateIdReceivedMonth,
     dateIdReceivedYear,
+    refundAmount,
   } = params
+
+  function checkIsValidCurrency(str: string): boolean {
+    const regex = /^[0-9]+(\.[0-9]{2})?$/
+    return regex.test(str)
+  }
+
+  const costIsValid: boolean = checkIsValidCurrency(<string>refundAmount)
+
   function isDateValid(dateString: string): boolean {
     const pattern = /^\d{4}-\d{1,2}-\d{1,2}$/
     if (!pattern.test(dateString)) {
@@ -33,12 +41,14 @@ const confirmIdStatusRouter = express.Router().get('/', async (req, res, next) =
     `${addedToPersonalItemsDateYear}-${addedToPersonalItemsDateMonth}-${addedToPersonalItemsDateDay}`,
   )
 
-  if (updatedStatus === 'Rejected' && (!refundAmount || !updatedStatus)) {
+  if (updatedStatus === 'Rejected' && (!refundAmount || !updatedStatus || !costIsValid)) {
     const refundMessage = 'Enter a refund amount'
     const statusMessage = 'Please choose a status'
+    const costIsNotValidMessage = 'Refund amount can only include pounds and pence'
     const errorMsg = {
       refundAmount: refundAmount ? null : `${refundMessage}`,
       updatedStatus: updatedStatus ? null : `${statusMessage}`,
+      costIsValid: costIsValid ? null : `${costIsNotValidMessage}`,
     }
     res.render('pages/add-id-update-status', { prisonerData, params, req, errorMsg })
     return
