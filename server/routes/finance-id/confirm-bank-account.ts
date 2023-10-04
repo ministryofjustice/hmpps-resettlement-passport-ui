@@ -286,7 +286,8 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
         !accountOpenedMonth ||
         !accountOpenedYear ||
         isAccountOpenedFuture ||
-        !validAccountOpenedDate)
+        !validAccountOpenedDate ||
+        !addedToPersonalItems)
     ) {
       pageContainsError = true
       errorMsg.accountOpenedDay = accountOpenedDay ? null : `${dateFieldMissingMessage} day`
@@ -294,6 +295,7 @@ const confirmBankAccountRouter = express.Router().get('/', async (req, res, next
       errorMsg.accountOpenedYear = accountOpenedYear ? null : `${dateFieldMissingMessage} year`
       errorMsg.isAccountOpenedFuture = isAccountOpenedFuture ? 'The date of must be in the past' : null
       errorMsg.validAccountOpenedDate = validAccountOpenedDate ? null : dateFieldInvalid
+      errorMsg.noPersonalItems = addedToPersonalItems ? null : 'Select if it was added to personal items'
     }
 
     if (
