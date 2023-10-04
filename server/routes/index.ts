@@ -405,7 +405,7 @@ export default function routes(services: Services): Router {
         `/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`,
         {
           status: updatedStatus,
-          isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+          isAddedToPersonalItems,
           addedToPersonalItemsDate,
           statusUpdateDate,
           dateIdReceived,
