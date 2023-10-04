@@ -61,7 +61,7 @@
             </div>
             {% if params.status == 'Account declined' %}
               <div class="govuk-summary-list__row">
-                {% set dateResubmittedHeard = params.dateResubmittedHeardDay+ "-" + params.dateResubmittedHeardMonth + "-" + params.dateResubmittedHeardDay%}
+                {% set dateResubmittedHeard = params.dateResubmittedHeardYear + "-" + params.dateResubmittedHeardMonth + "-" + params.dateResubmittedHeardDay %}
                 <dt class="govuk-summary-list__key">Date heard back from resubmission</dt>
                 <dd class="govuk-summary-list__value">{{ dateResubmittedHeard | formatDate }}</dd>
                 <dd class="govuk-summary-list__actions">
