@@ -42,7 +42,7 @@
       {% if prisonersList.content | length %}
         {% set nextPage = page | float + 1 | float %}
         {% set prevPage = page | float - 1 | float %}
-        {% set size = 2 %}
+        {% set size = 20 %}
         {% set totalPages = (prisonersList.totalElements / size) | roundNumberUp %}
         <nav class="moj-pagination" aria-label="Pagination navigation">
           <ul class="moj-pagination__list">
@@ -59,15 +59,14 @@
                   <a class="moj-pagination__link" href="/?searchInput={{searchInput}}&releaseTime={{releaseTime}}&page={{i}}" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
                 </li>
               {% endif %}
-            {% endfor %}
-             <li class="moj-pagination__item moj-pagination__item--dots">…</li>
+            {%- endfor %}
             {% if prisonersList.last === false %}
               <li class="moj-pagination__item  moj-pagination__item--next">
                 <a class="moj-pagination__link" href="/?searchInput={{searchInput}}&releaseTime={{releaseTime}}&page={{nextPage}}">Next<span class="govuk-visually-hidden"> page</span></a>
               </li>
             {% endif %}
           </ul>
-          {% set fromPage = (page | float + 1 | float) * (size | float) - 1 | float %}
+          {% set fromPage = (page | float + 1 | float) * (size | float) - 19 | float %}
           {% if prisonersList.last === false %}
             {% set toPage = (page | float + 1 | float) * size | float %}
           {% else %}
