@@ -9,7 +9,7 @@
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2 class="govuk-heading-m">Check your answers before adding a bank account application</h2>
+      <h2 class="govuk-heading-m">Check your answers before appling for {% if params.idType === 'Adoption certificate' %}an{% else %}a{% endif %} {{ params.idType }}</h2>
     </div>
   </div>
   <div class="govuk-grid-row">
@@ -33,7 +33,7 @@
             <dt class="govuk-summary-list__key">
             Application submitted
         </dt>
-            {% set date = params.applicationSubmittedYear + "-" + params.applicationSubmittedMonth + "-" + params.applicationSubmittedDay  %}
+            {% set date = params.applicationSubmittedDay + "-" + params.applicationSubmittedMonth + "-" + params.applicationSubmittedYear  %}
             <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
             <input hidden name="applicationSubmittedDate" value="{{ date | formatDateToIso }}"/>
           </dd>
