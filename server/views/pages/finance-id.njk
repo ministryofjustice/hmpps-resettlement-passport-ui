@@ -317,7 +317,6 @@
                         <th scope="row" class="govuk-table__header">Date ID received</th>
                         <td class="govuk-table__cell">{{ id.dateIdReceived | formatDate }}</td>
                       </tr>
-                      {% if id.isAddedToPersonalItems %}
                         <tr class="govuk-table__row">
                           <th scope="row" class="govuk-table__header">Added to personal items</th>
                            <td class="govuk-table__cell">
@@ -329,7 +328,6 @@
                           {% endif %}
                           </td>
                         </tr>
-                      {% endif %}
                     {% endif %}
                   </tbody>
                 </table>
