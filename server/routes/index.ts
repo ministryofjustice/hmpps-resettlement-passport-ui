@@ -27,13 +27,22 @@ import confirmIdStatusRouter from './finance-id/confirm-id-status'
 
 export default function routes(services: Services): Router {
   const router = Router()
-  // const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
   ************************************** */
+  // RP2-622 Temporary redirect for access from Delius
+  get('/resettlement', async (req, res, next) => {
+    const { noms } = req.query
+    if (noms) {
+      res.redirect(`/prisoner-overview/?prisonerNumber=${noms}`)
+    } else {
+      next()
+    }
+  })
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
