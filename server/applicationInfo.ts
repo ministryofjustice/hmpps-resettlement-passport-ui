@@ -9,7 +9,6 @@ export type ApplicationInfo = { applicationName: string; buildNumber: string; gi
 
 export default (): ApplicationInfo => {
   try {
-    logger.warn('Return default application name string if errored')
     const packageJson = path.join(__dirname, '../../package.json')
     const packageJsonContent = fs.readFileSync(packageJson).toString()
     const { name: applicationName } = JSON.parse(packageJsonContent)
@@ -20,6 +19,7 @@ export default (): ApplicationInfo => {
       gitShortHash: gitRef.substring(0, 7),
     }
   } catch (error) {
+    logger.warn('Return default application name string if errored')
     return {
       applicationName: 'hmpps-resettlement-passport-ui',
       buildNumber,
