@@ -1,7 +1,10 @@
 import RestClient from './restClient'
 import config from '../config'
+import logger from '../../logger'
 
 export default class RPClient {
+  constructor(private readonly sessionId: string = '', private readonly userId: string = '') {}
+
   private static restClient(token: string): RestClient {
     return new RestClient('RP API Client', config.apis.rpClient, token)
   }
@@ -18,6 +21,7 @@ export default class RPClient {
   }
 
   async get(token: string, path: string) {
+    logger.info(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
     const result = await RPClient.restClient(token).get({
       path,
     })
@@ -25,6 +29,7 @@ export default class RPClient {
   }
 
   async patch(token: string, path: string, body: Record<never, never>) {
+    logger.info(`User: ${this.userId} Session: ${this.sessionId} making PATCH request to ${path}`)
     return RPClient.restClient(token).patch({
       path,
       data: body,
@@ -32,6 +37,7 @@ export default class RPClient {
   }
 
   async post(token: string, path: string, body: Record<never, never>) {
+    logger.info(`User: ${this.userId} Session: ${this.sessionId} making POST request to ${path}`)
     return RPClient.restClient(token).post({
       path,
       data: body,
@@ -39,6 +45,7 @@ export default class RPClient {
   }
 
   async delete(token: string, path: string) {
+    logger.info(`User: ${this.userId} Session: ${this.sessionId} making DELETE request to ${path}`)
     const result = await RPClient.restClient(token).delete({
       path,
     })

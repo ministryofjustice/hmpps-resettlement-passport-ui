@@ -16,7 +16,7 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
   }
   if (prisonerNumber) {
     try {
-      const apiResponse = new RPClient()
+      const apiResponse = new RPClient(req.sessionID, req.user.username)
       prisonerData = (await apiResponse.get(
         req.user.token,
         `/resettlement-passport/prisoner/${prisonerNumber}`,

@@ -7,7 +7,7 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
     req.query
 
-  const apiResponse = new RPClient()
+  const apiResponse = new RPClient(req.sessionID, req.user.username)
   let assessment: { error?: boolean } = {}
   let assessmentDeleted: { error?: boolean } = {}
   let finance: { error?: boolean } = {}
