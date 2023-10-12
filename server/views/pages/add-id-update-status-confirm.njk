@@ -26,7 +26,7 @@
               <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> application status</span></a>
             </dd>
           </div>
-          {% if params.updatedStatus === 'Rejected' and not (params.idType === 'National Insurance letter')  %}
+          {% if params.updatedStatus === 'Rejected' and not (params.idType === 'National Insurance Number letter')  %}
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key">Application Refund</dt>
               <dd class="govuk-summary-list__value">
