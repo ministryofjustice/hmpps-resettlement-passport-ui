@@ -74,7 +74,7 @@ const addIdFurtherRouter = express.Router().get('/', async (req, res, next) => {
     res.render('pages/add-id', { prisonerData, params, req, errorMsg })
     return
   }
-  if (idType === 'National Insurance letter') {
+  if (params.idType === 'National Insurance Number letter') {
     res.render('pages/add-id-confirm', { prisonerData, params, req })
     return
   }
