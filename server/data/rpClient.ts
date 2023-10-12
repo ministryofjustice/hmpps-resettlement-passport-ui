@@ -1,16 +1,19 @@
 import RestClient from './restClient'
 import config from '../config'
-import logger from '../../logger'
 
 export default class RPClient {
-  constructor(private readonly sessionId: string = '', private readonly userId: string = '') {}
+  restClient: RestClient
 
-  private static restClient(token: string): RestClient {
-    return new RestClient('RP API Client', config.apis.rpClient, token)
+  constructor(token = '', sessionId = '', userId = '') {
+    this.restClient = new RestClient('RP API Client', config.apis.rpClient, token, sessionId, userId)
+  }
+
+  async setToken(token: string) {
+    this.restClient.token = token
   }
 
   async getImageAsBase64String(token: string, path: string): Promise<string> {
-    const imageResult = (await RPClient.restClient(token).stream({
+    const imageResult = (await this.restClient.stream({
       path,
     })) as ReadableStream
 
@@ -21,32 +24,28 @@ export default class RPClient {
   }
 
   async get(token: string, path: string) {
-    logger.info(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
-    const result = await RPClient.restClient(token).get({
+    const result = await this.restClient.get({
       path,
     })
     return result
   }
 
   async patch(token: string, path: string, body: Record<never, never>) {
-    logger.info(`User: ${this.userId} Session: ${this.sessionId} making PATCH request to ${path}`)
-    return RPClient.restClient(token).patch({
+    return this.restClient.patch({
       path,
       data: body,
     })
   }
 
   async post(token: string, path: string, body: Record<never, never>) {
-    logger.info(`User: ${this.userId} Session: ${this.sessionId} making POST request to ${path}`)
-    return RPClient.restClient(token).post({
+    return this.restClient.post({
       path,
       data: body,
     })
   }
 
   async delete(token: string, path: string) {
-    logger.info(`User: ${this.userId} Session: ${this.sessionId} making DELETE request to ${path}`)
-    const result = await RPClient.restClient(token).delete({
+    const result = await this.restClient.delete({
       path,
     })
     return result

@@ -44,7 +44,11 @@ export default function createApp(services: Services): express.Application {
 
   app.get('*', getFrontendComponents(services))
   app.use((req, res, next) =>
-    next(logger.info({ user_id: req.user.username, path: req.url, session_id: req.sessionID })),
+    next(
+      logger.info(
+        `User: ${req.user.username} Session: ${req.sessionID} Auth Source: ${req.user.authSource} requested page ${req.url}`,
+      ),
+    ),
   )
   app.use(routes(services))
 

@@ -46,7 +46,7 @@ export default function routes(services: Services): Router {
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
-    const rpClient = new RPClient(req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
     let licenceConditions: { error?: boolean } = {}
     let riskScores: { error?: boolean } = {}
@@ -153,7 +153,7 @@ export default function routes(services: Services): Router {
   })
   use('/accommodation', async (req, res, next) => {
     const { prisonerData } = req
-    const rpClient = new RPClient(req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     let accommodation: { error?: boolean } = {}
 
     try {
@@ -203,7 +203,7 @@ export default function routes(services: Services): Router {
 
     const token = res.locals?.user?.token
 
-    const rpClient = new RPClient(req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
     let updateSuccessful = false
     if (state) {
@@ -288,7 +288,7 @@ export default function routes(services: Services): Router {
       idDocuments = [idDocuments]
     }
 
-    const rpClient = new RPClient(req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
         assessmentDate,
@@ -314,7 +314,7 @@ export default function routes(services: Services): Router {
     const params = req.body
     const { prisonerNumber, applicationDate, bankName } = req.body
 
-    const rpClient = new RPClient(req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
         applicationSubmittedDate: applicationDate,
@@ -348,7 +348,7 @@ export default function routes(services: Services): Router {
       driversLicenceApplicationMadeAt,
     } = req.body
     const costOfApplication = Number(req.body.costOfApplication)
-    const rpClient = new RPClient(req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
       await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
         idType,
@@ -388,7 +388,7 @@ export default function routes(services: Services): Router {
       resubmissionDate,
     } = req.body
 
-    const rpClient = new RPClient(req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
       await rpClient.patch(
         req.user.token,
@@ -427,7 +427,7 @@ export default function routes(services: Services): Router {
     } = req.body
 
     const refundAmount = Number(req.body.refundAmount)
-    const rpClient = new RPClient(req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
       await rpClient.patch(
         req.user.token,

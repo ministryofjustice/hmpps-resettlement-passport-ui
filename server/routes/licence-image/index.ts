@@ -6,7 +6,7 @@ const licenceImageRouter = express.Router().get('/', async (req: Request, res, n
   const { prisonerData } = req
   const { licenceId, conditionId } = req.query
   try {
-    const apiResponse = new RPClient(req.sessionID, req.user.username)
+    const apiResponse = new RPClient(req.user.token, req.sessionID, req.user.username)
     const imageBase64 = await apiResponse.getImageAsBase64String(
       req.user.token,
       `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition/id/${licenceId}/condition/${conditionId}/image`,
