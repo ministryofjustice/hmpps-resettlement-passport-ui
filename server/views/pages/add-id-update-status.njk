@@ -148,19 +148,24 @@
                                 </fieldset>
                             </div>
                         </div>
-                        <div class="id-rejected-application" hidden>
-                            <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.refundAmount or errorMsg.costIsValid }}" >
-                                <label class="govuk-label" for="refundAmount">Application refund amount</label>
-                                {% if errorMsg.refundAmount %}
-                                    <p class="govuk-error-message">{{ errorMsg.refundAmount }}</p>
+                        {% if params.idType === 'National Insurance letter' %}
+                            <input hidden name="refundAmount" value="0">
+                        {% else %}
+                            <div class="id-rejected-application" hidden>
+                                <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.refundAmount or errorMsg.costIsValid }}" >
+                                    <label class="govuk-label" for="refundAmount">Application refund amount</label>
+                                    {% if errorMsg.refundAmount %}
+                                        <p class="govuk-error-message">{{ errorMsg.refundAmount }}</p>
                                     {% elif errorMsg.costIsValid %}
-                                    <p class="govuk-error-message">{{ errorMsg.costIsValid }}</p>
-                                {% endif %}
-                                <div class="govuk-input__wrapper"><input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.refundAmount or errorMsg.costIsValid }}" id="refundAmount" name="refundAmount" type="text" spellcheck="false" value="{{ params.refundAmount if params.refundAmount }}">
-                                    <div class="govuk-input__suffix" aria-hidden="true">£</div>
+                                        <p class="govuk-error-message">{{ errorMsg.costIsValid }}</p>
+                                    {% endif %}
+                                    <div class="govuk-input__wrapper">
+                                        <input class="govuk-input govuk-input--width-5 {{ "govuk-input--error" if errorMsg.refundAmount or errorMsg.costIsValid }}" id="refundAmount" name="refundAmount" type="text" spellcheck="false" value="{{ params.refundAmount }}">
+                                        <div class="govuk-input__suffix" aria-hidden="true">£</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
                         <input hidden name="idType" value="{{ params.idType }}"/>
                         <input type="hidden" name="applicationId" value="{{ params.applicationId }}"/>
                         <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
