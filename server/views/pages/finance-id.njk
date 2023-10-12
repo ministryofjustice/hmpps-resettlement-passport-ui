@@ -298,15 +298,17 @@
                         <td class="govuk-table__cell">{{id.driversLicenceApplicationMadeAt}}</td>
                       </tr>
                     {% endif %}
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Cost of application</th>
-                      <td class="govuk-table__cell">£{{id.costOfApplication}}</td>
-                    </tr>
+                    {% if not(id.idType.name === "National Insurance letter") %}
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Cost of application</th>
+                        <td class="govuk-table__cell">£{{id.costOfApplication}}</td>
+                      </tr>
+                    {% endif %}
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Application status</th>
                       <td class="govuk-table__cell">{{ id.status | capitalize }}</td>
                     </tr>
-                    {% if id.status === 'Rejected' %}
+                    {% if id.status === 'Rejected' and not(id.idType.name === "National Insurance letter") %}
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application refund</th>
                         <td class="govuk-table__cell">£{{ id.refundAmount }}</td>
@@ -317,17 +319,17 @@
                         <th scope="row" class="govuk-table__header">Date ID received</th>
                         <td class="govuk-table__cell">{{ id.dateIdReceived | formatDate }}</td>
                       </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">Added to personal items</th>
-                           <td class="govuk-table__cell">
-                            {% if id.isAddedToPersonalItems == true %}
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Added to personal items</th>
+                        <td class="govuk-table__cell">
+                          {% if id.isAddedToPersonalItems == true %}
                             {{ id.addedToPersonalItemsDate | formatDate }}
                           {% endif %}
                           {% if id.isAddedToPersonalItems == false %}
                             No
                           {% endif %}
-                          </td>
-                        </tr>
+                        </td>
+                      </tr>
                     {% endif %}
                   </tbody>
                 </table>
