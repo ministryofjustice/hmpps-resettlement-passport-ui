@@ -2,12 +2,18 @@ import RestClient from './restClient'
 import config from '../config'
 
 export default class RPClient {
-  private static restClient(token: string): RestClient {
-    return new RestClient('RP API Client', config.apis.rpClient, token)
+  restClient: RestClient
+
+  constructor(token = '', sessionId = '', userId = '') {
+    this.restClient = new RestClient('RP API Client', config.apis.rpClient, token, sessionId, userId)
   }
 
-  async getImageAsBase64String(token: string, path: string): Promise<string> {
-    const imageResult = (await RPClient.restClient(token).stream({
+  async setToken(token: string) {
+    this.restClient.token = token
+  }
+
+  async getImageAsBase64String(path: string): Promise<string> {
+    const imageResult = (await this.restClient.stream({
       path,
     })) as ReadableStream
 
@@ -17,31 +23,29 @@ export default class RPClient {
     return Buffer.from(imageByteArray).toString('base64')
   }
 
-  async get(token: string, path: string) {
-    const result = await RPClient.restClient(token).get({
+  async get(path: string) {
+    return this.restClient.get({
       path,
     })
-    return result
   }
 
-  async patch(token: string, path: string, body: Record<never, never>) {
-    return RPClient.restClient(token).patch({
+  async patch(path: string, body: Record<never, never>) {
+    return this.restClient.patch({
       path,
       data: body,
     })
   }
 
-  async post(token: string, path: string, body: Record<never, never>) {
-    return RPClient.restClient(token).post({
+  async post(path: string, body: Record<never, never>) {
+    return this.restClient.post({
       path,
       data: body,
     })
   }
 
-  async delete(token: string, path: string) {
-    const result = await RPClient.restClient(token).delete({
+  async delete(path: string) {
+    return this.restClient.delete({
       path,
     })
-    return result
   }
 }

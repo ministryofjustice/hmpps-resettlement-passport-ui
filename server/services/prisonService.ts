@@ -14,8 +14,8 @@ export default class PrisonService {
     searchInput: string,
     releaseTime: string,
   ) {
+    await this.rpClient.setToken(token)
     return (await this.rpClient.get(
-      token,
       `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}`,
     )) as Promise<PrisonersList>
   }
