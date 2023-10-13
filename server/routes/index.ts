@@ -57,7 +57,6 @@ export default function routes(services: Services): Router {
     let appointments: { error?: boolean } = {}
     try {
       licenceConditions = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
       )
     } catch (err) {
@@ -68,7 +67,6 @@ export default function routes(services: Services): Router {
     }
     try {
       riskScores = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/scores`,
       )
     } catch (err) {
@@ -80,7 +78,6 @@ export default function routes(services: Services): Router {
 
     try {
       rosh = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/rosh`,
       )
     } catch (err) {
@@ -92,7 +89,6 @@ export default function routes(services: Services): Router {
 
     try {
       mappa = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/mappa`,
       )
     } catch (err) {
@@ -103,7 +99,6 @@ export default function routes(services: Services): Router {
     }
     try {
       caseNotes = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway}`,
       )
     } catch (err) {
@@ -114,7 +109,6 @@ export default function routes(services: Services): Router {
     }
     try {
       staffContacts = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/staff-contacts`,
       )
     } catch (err) {
@@ -125,7 +119,6 @@ export default function routes(services: Services): Router {
     }
     try {
       appointments = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/appointments?page=0&size=1000`,
       )
     } catch (err) {
@@ -158,7 +151,6 @@ export default function routes(services: Services): Router {
 
     try {
       accommodation = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/accommodation`,
       )
     } catch (err) {
@@ -201,29 +193,19 @@ export default function routes(services: Services): Router {
     }
     const caseNoteInput = req.body[`caseNoteInput_${state}`] || null
 
-    const token = res.locals?.user?.token
-
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
     let updateSuccessful = false
     if (state) {
       try {
-        await rpClient.patch(
-          token,
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`,
-          {
-            pathway: getEnumByURL(selectedPathway),
-            status: state,
-          },
-        )
-        await rpClient.post(
-          req.user.token,
-          `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}`,
-          {
-            pathway: getEnumByURL(selectedPathway),
-            text: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
-          },
-        )
+        await rpClient.patch(`/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`, {
+          pathway: getEnumByURL(selectedPathway),
+          status: state,
+        })
+        await rpClient.post(`/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}`, {
+          pathway: getEnumByURL(selectedPathway),
+          text: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
+        })
         updateSuccessful = true
       } catch (error) {
         logger.error(error)
@@ -233,7 +215,6 @@ export default function routes(services: Services): Router {
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, createdByUserId = 0 } = req.query
     try {
       caseNotes = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/case-notes/${
           prisonerData.personalDetails.prisonerNumber
         }?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${getEnumByURL(
@@ -250,7 +231,6 @@ export default function routes(services: Services): Router {
     let caseNoteCreators: { error?: boolean } = {}
     try {
       caseNoteCreators = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}/creators/${getEnumByURL(
           selectedPathway,
         )}`,
@@ -290,7 +270,7 @@ export default function routes(services: Services): Router {
 
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
+      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
         assessmentDate,
         isBankAccountRequired,
         isIdRequired,
@@ -316,7 +296,7 @@ export default function routes(services: Services): Router {
 
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
+      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
         applicationSubmittedDate: applicationDate,
         bankName,
       })
@@ -350,7 +330,7 @@ export default function routes(services: Services): Router {
     const costOfApplication = Number(req.body.costOfApplication)
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
+      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
         idType,
         applicationSubmittedDate,
         isPriorityApplication,
@@ -390,17 +370,13 @@ export default function routes(services: Services): Router {
 
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.patch(
-        req.user.token,
-        `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`,
-        {
-          status: updatedStatus,
-          bankResponseDate,
-          isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
-          addedToPersonalItemsDate,
-          resubmissionDate,
-        },
-      )
+      await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`, {
+        status: updatedStatus,
+        bankResponseDate,
+        isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+        addedToPersonalItemsDate,
+        resubmissionDate,
+      })
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {
       const errorMessage = error.message
@@ -429,18 +405,14 @@ export default function routes(services: Services): Router {
     const refundAmount = Number(req.body.refundAmount)
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.patch(
-        req.user.token,
-        `/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`,
-        {
-          status: updatedStatus,
-          isAddedToPersonalItems,
-          addedToPersonalItemsDate,
-          statusUpdateDate,
-          dateIdReceived,
-          refundAmount,
-        },
-      )
+      await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, {
+        status: updatedStatus,
+        isAddedToPersonalItems,
+        addedToPersonalItemsDate,
+        statusUpdateDate,
+        dateIdReceived,
+        refundAmount,
+      })
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {
       const errorMessage = error.message

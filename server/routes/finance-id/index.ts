@@ -19,7 +19,6 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   if (deleteAssessmentConfirmed) {
     try {
       assessmentDeleted = await apiResponse.delete(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment/${assessmentId}`,
       )
     } catch (err) {
@@ -30,7 +29,6 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   // FETCH ASSESSMENT
   try {
     assessment = await apiResponse.get(
-      req.user.token,
       `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment`,
     )
   } catch (err) {
@@ -41,7 +39,6 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   if (deleteFinanceConfirmed) {
     try {
       financeDeleted = await apiResponse.delete(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication/${financeId}`,
       )
     } catch (err) {
@@ -52,7 +49,6 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   // FETCH FINANCE
   try {
     finance = await apiResponse.get(
-      req.user.token,
       `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication`,
     )
   } catch (err) {
@@ -63,7 +59,6 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   if (deleteIdConfirmed) {
     try {
       idDeleted = await apiResponse.delete(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/${idId}`,
       )
     } catch (err) {
@@ -74,7 +69,6 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   // FETCH ID
   try {
     id = await apiResponse.get(
-      req.user.token,
       `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication`,
     )
   } catch (err) {

@@ -57,7 +57,12 @@ export default class RestClient {
 
   async get<T>({ path = null, query = '', headers = {}, responseType = '', raw = false }: GetRequest): Promise<T> {
     try {
-      logger.info(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
+      if (this.userId) {
+        logger.info(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
+      } else {
+        logger.info(`User making GET request to ${path}`)
+      }
+
       const result = await superagent
         .get(`${this.apiUrl()}${path}`)
         .agent(this.agent)
@@ -89,7 +94,11 @@ export default class RestClient {
     retry = false,
   }: PostRequest = {}): Promise<unknown> {
     try {
-      logger.info(`User: ${this.userId} Session: ${this.sessionId} making POST request to ${path}`)
+      if (this.userId) {
+        logger.info(`User: ${this.userId} Session: ${this.sessionId} making POST request to ${path}`)
+      } else {
+        logger.info(`User making POST request to ${path}`)
+      }
       const result = await superagent
         .post(`${this.apiUrl()}${path}`)
         .send(data)
@@ -124,7 +133,11 @@ export default class RestClient {
     retry = false,
   }: PostRequest = {}): Promise<unknown> {
     try {
-      logger.info(`User: ${this.userId} Session: ${this.sessionId} making PATCH request to ${path}`)
+      if (this.userId) {
+        logger.info(`User: ${this.userId} Session: ${this.sessionId} making PATCH request to ${path}`)
+      } else {
+        logger.info(`User making PATCH request to ${path}`)
+      }
       const result = await superagent
         .patch(`${this.apiUrl()}${path}`)
         .send(data)
@@ -151,7 +164,11 @@ export default class RestClient {
   }
 
   async stream({ path = null, headers = {} }: StreamRequest = {}): Promise<unknown> {
-    logger.info(`User: ${this.userId} Session: ${this.sessionId} making STREAM request to ${path}`)
+    if (this.userId) {
+      logger.info(`User: ${this.userId} Session: ${this.sessionId} making STREAM request to ${path}`)
+    } else {
+      logger.info(`User making STREAM request to ${path}`)
+    }
     return new Promise((resolve, reject) => {
       superagent
         .get(`${this.apiUrl()}${path}`)
@@ -187,7 +204,11 @@ export default class RestClient {
     raw = false,
     retry = false,
   }: PostRequest = {}): Promise<unknown> {
-    logger.info(`User: ${this.userId} Session: ${this.sessionId} making DELETE request to ${path}`)
+    if (this.userId) {
+      logger.info(`User: ${this.userId} Session: ${this.sessionId} making DELETE request to ${path}`)
+    } else {
+      logger.info(`User making DELETE request to ${path}`)
+    }
     try {
       const result = await superagent
         .delete(`${this.apiUrl()}${path}`)

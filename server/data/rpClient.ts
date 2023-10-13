@@ -12,7 +12,7 @@ export default class RPClient {
     this.restClient.token = token
   }
 
-  async getImageAsBase64String(token: string, path: string): Promise<string> {
+  async getImageAsBase64String(path: string): Promise<string> {
     const imageResult = (await this.restClient.stream({
       path,
     })) as ReadableStream
@@ -23,31 +23,29 @@ export default class RPClient {
     return Buffer.from(imageByteArray).toString('base64')
   }
 
-  async get(token: string, path: string) {
-    const result = await this.restClient.get({
+  async get(path: string) {
+    return this.restClient.get({
       path,
     })
-    return result
   }
 
-  async patch(token: string, path: string, body: Record<never, never>) {
+  async patch(path: string, body: Record<never, never>) {
     return this.restClient.patch({
       path,
       data: body,
     })
   }
 
-  async post(token: string, path: string, body: Record<never, never>) {
+  async post(path: string, body: Record<never, never>) {
     return this.restClient.post({
       path,
       data: body,
     })
   }
 
-  async delete(token: string, path: string) {
-    const result = await this.restClient.delete({
+  async delete(path: string) {
+    return this.restClient.delete({
       path,
     })
-    return result
   }
 }
