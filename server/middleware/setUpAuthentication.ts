@@ -4,6 +4,7 @@ import passport from 'passport'
 import flash from 'connect-flash'
 import config from '../config'
 import auth from '../authentication/auth'
+import userMetricsCounter from '../monitoring/customMetrics'
 
 const router = express.Router()
 
@@ -15,6 +16,9 @@ export default function setUpAuth(): Router {
   router.use(flash())
 
   router.get('/autherror', (req, res) => {
+    userMetricsCounter.inc({
+      path: req.path.toLowerCase(),
+    })
     res.status(401)
     return res.render('autherror')
   })
