@@ -46,7 +46,7 @@ export default function routes(services: Services): Router {
   use('/prisoner-overview', async (req, res, next) => {
     const { prisonerData } = req
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
-    const rpClient = new RPClient()
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
     let licenceConditions: { error?: boolean } = {}
     let riskScores: { error?: boolean } = {}
@@ -57,67 +57,74 @@ export default function routes(services: Services): Router {
     let appointments: { error?: boolean } = {}
     try {
       licenceConditions = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve licence conditions for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve licence conditions for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       licenceConditions.error = true
     }
     try {
       riskScores = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/scores`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve risk scores for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve risk scores for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       riskScores.error = true
     }
 
     try {
       rosh = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/rosh`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve RoSH for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve RoSH for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       rosh.error = true
     }
 
     try {
       mappa = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/mappa`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve MAPPA for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve MAPPA for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       mappa.error = true
     }
     try {
       caseNotes = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway}`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       caseNotes.error = true
     }
     try {
       staffContacts = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/staff-contacts`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve Staff Contacts for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve Staff Contacts for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       staffContacts.error = true
     }
     try {
       appointments = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/appointments?page=0&size=1000`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve appointments for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve appointments for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       appointments.error = true
     }
 
@@ -139,16 +146,17 @@ export default function routes(services: Services): Router {
   })
   use('/accommodation', async (req, res, next) => {
     const { prisonerData } = req
-    const rpClient = new RPClient()
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     let accommodation: { error?: boolean } = {}
 
     try {
       accommodation = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/accommodation`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve accommodation info for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve accommodation info for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       accommodation.error = true
     }
 
@@ -185,29 +193,19 @@ export default function routes(services: Services): Router {
     }
     const caseNoteInput = req.body[`caseNoteInput_${state}`] || null
 
-    const token = res.locals?.user?.token
-
-    const rpClient = new RPClient()
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
     let updateSuccessful = false
     if (state) {
       try {
-        await rpClient.patch(
-          token,
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`,
-          {
-            pathway: getEnumByURL(selectedPathway),
-            status: state,
-          },
-        )
-        await rpClient.post(
-          req.user.token,
-          `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}`,
-          {
-            pathway: getEnumByURL(selectedPathway),
-            text: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
-          },
-        )
+        await rpClient.patch(`/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`, {
+          pathway: getEnumByURL(selectedPathway),
+          status: state,
+        })
+        await rpClient.post(`/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}`, {
+          pathway: getEnumByURL(selectedPathway),
+          text: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
+        })
         updateSuccessful = true
       } catch (error) {
         logger.error(error)
@@ -217,7 +215,6 @@ export default function routes(services: Services): Router {
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, createdByUserId = 0 } = req.query
     try {
       caseNotes = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/case-notes/${
           prisonerData.personalDetails.prisonerNumber
         }?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${getEnumByURL(
@@ -225,20 +222,23 @@ export default function routes(services: Services): Router {
         )}&createdByUserId=${createdByUserId}`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       caseNotes.error = true
     }
 
     let caseNoteCreators: { error?: boolean } = {}
     try {
       caseNoteCreators = await rpClient.get(
-        req.user.token,
         `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}/creators/${getEnumByURL(
           selectedPathway,
         )}`,
       )
     } catch (err) {
-      logger.warn(`Cannot retrieve Case Notes creators for ${prisonerData.personalDetails.prisonerNumber}`, err)
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve Case Notes creators for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
       caseNoteCreators.error = true
     }
     res.render('pages/status-update', {
@@ -268,9 +268,9 @@ export default function routes(services: Services): Router {
       idDocuments = [idDocuments]
     }
 
-    const rpClient = new RPClient()
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
+      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
         assessmentDate,
         isBankAccountRequired,
         isIdRequired,
@@ -294,9 +294,9 @@ export default function routes(services: Services): Router {
     const params = req.body
     const { prisonerNumber, applicationDate, bankName } = req.body
 
-    const rpClient = new RPClient()
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
+      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
         applicationSubmittedDate: applicationDate,
         bankName,
       })
@@ -328,9 +328,9 @@ export default function routes(services: Services): Router {
       driversLicenceApplicationMadeAt,
     } = req.body
     const costOfApplication = Number(req.body.costOfApplication)
-    const rpClient = new RPClient()
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(req.user.token, `/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
+      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
         idType,
         applicationSubmittedDate,
         isPriorityApplication,
@@ -368,19 +368,15 @@ export default function routes(services: Services): Router {
       resubmissionDate,
     } = req.body
 
-    const rpClient = new RPClient()
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.patch(
-        req.user.token,
-        `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`,
-        {
-          status: updatedStatus,
-          bankResponseDate,
-          isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
-          addedToPersonalItemsDate,
-          resubmissionDate,
-        },
-      )
+      await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`, {
+        status: updatedStatus,
+        bankResponseDate,
+        isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+        addedToPersonalItemsDate,
+        resubmissionDate,
+      })
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {
       const errorMessage = error.message
@@ -407,20 +403,16 @@ export default function routes(services: Services): Router {
     } = req.body
 
     const refundAmount = Number(req.body.refundAmount)
-    const rpClient = new RPClient()
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.patch(
-        req.user.token,
-        `/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`,
-        {
-          status: updatedStatus,
-          isAddedToPersonalItems,
-          addedToPersonalItemsDate,
-          statusUpdateDate,
-          dateIdReceived,
-          refundAmount,
-        },
-      )
+      await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, {
+        status: updatedStatus,
+        isAddedToPersonalItems,
+        addedToPersonalItemsDate,
+        statusUpdateDate,
+        dateIdReceived,
+        refundAmount,
+      })
       res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
     } catch (error) {
       const errorMessage = error.message

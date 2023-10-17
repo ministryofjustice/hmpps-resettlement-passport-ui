@@ -20,6 +20,7 @@ import routes from './routes'
 import type { Services } from './services'
 import getFrontendComponents from './middleware/setUpFrontendComponents'
 import setUpEnvironmentName from './middleware/setUpEnvironmentName'
+import logger from '../logger'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -42,7 +43,13 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpCurrentUser(services))
 
   app.get('*', getFrontendComponents(services))
-
+  app.use((req, res, next) =>
+    next(
+      logger.info(
+        `User: ${req.user.username} Session: ${req.sessionID} Auth Source: ${req.user.authSource} requested page ${req.url}`,
+      ),
+    ),
+  )
   app.use(routes(services))
 
   app.use((req, res, next) => next(createError(404, 'Not found')))
