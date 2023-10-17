@@ -20,7 +20,7 @@ import routes from './routes'
 import type { Services } from './services'
 import getFrontendComponents from './middleware/setUpFrontendComponents'
 import setUpEnvironmentName from './middleware/setUpEnvironmentName'
-import logger from '../logger'
+import userMetricsAndLoggingMiddleware from './middleware/userMetricsAndLoggingMiddleware'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -41,15 +41,9 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware(AUTH_ROLES))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
+  app.use(userMetricsAndLoggingMiddleware())
 
   app.get('*', getFrontendComponents(services))
-  app.use((req, res, next) =>
-    next(
-      logger.info(
-        `User: ${req.user.username} Session: ${req.sessionID} Auth Source: ${req.user.authSource} requested page ${req.url}`,
-      ),
-    ),
-  )
   app.use(routes(services))
 
   app.use((req, res, next) => next(createError(404, 'Not found')))
