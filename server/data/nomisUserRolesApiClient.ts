@@ -41,8 +41,8 @@ interface GetStaffDetailsResponse {
 export default class NomisUserRolesApiClient {
   restClient: RestClient
 
-  constructor(token: string) {
-    this.restClient = new RestClient('Nomis User Roles API', config.apis.nomisUserRolesClient, token)
+  constructor(token: string, sessionId = '', userId = '') {
+    this.restClient = new RestClient('Nomis User Roles API', config.apis.nomisUserRolesClient, token, sessionId, userId)
   }
 
   async getUserCaseLoads(username: string): Promise<string[]> {

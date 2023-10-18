@@ -24,6 +24,7 @@ export default function setUpWebSecurity(): Router {
   const styleSrc = ["'self'", (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`]
   const imgSrc = ["'self'", 'data:']
   const fontSrc = ["'self'"]
+  const formAction = [`'self' ${config.apis.hmppsAuth.externalUrl} ${config.dpsHomeUrl}`]
 
   if (config.apis.frontendComponents.url) {
     scriptSrc.push(config.apis.frontendComponents.url)
@@ -41,6 +42,7 @@ export default function setUpWebSecurity(): Router {
           styleSrc,
           fontSrc,
           imgSrc,
+          formAction,
         },
       },
       crossOriginEmbedderPolicy: true,

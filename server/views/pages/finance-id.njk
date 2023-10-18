@@ -300,7 +300,7 @@
                             <td class="govuk-table__cell">{{id.driversLicenceApplicationMadeAt}}</td>
                           </tr>
                         {% endif %}
-                        {% if not(id.idType.name === "National Insurance Number letter") %}
+                        {% if not(id.idType.name === "National Insurance Number Number letter") %}
                           <tr class="govuk-table__row">
                             <th scope="row" class="govuk-table__header">Cost of application</th>
                             <td class="govuk-table__cell">£{{id.costOfApplication}}</td>
@@ -310,7 +310,7 @@
                           <th scope="row" class="govuk-table__header">Application status</th>
                           <td class="govuk-table__cell">{{ id.status | capitalize }}</td>
                         </tr>
-                        {% if id.status === 'Rejected' and not(id.idType.name === "National Insurance Number letter") %}
+                        {% if id.status === 'Rejected' and not(id.idType.name === "National Insurance Number Number letter") %}
                           <tr class="govuk-table__row">
                             <th scope="row" class="govuk-table__header">Application refund</th>
                             <td class="govuk-table__cell">£{{ id.refundAmount }}</td>

@@ -16,14 +16,10 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
   }
   if (prisonerNumber) {
     try {
-      const apiResponse = new RPClient()
-      prisonerData = (await apiResponse.get(
-        req.user.token,
-        `/resettlement-passport/prisoner/${prisonerNumber}`,
-      )) as PrisonerData
+      const apiResponse = new RPClient(req.user.token, req.sessionID, req.user.username)
+      prisonerData = (await apiResponse.get(`/resettlement-passport/prisoner/${prisonerNumber}`)) as PrisonerData
 
       prisonerData.prisonerImage = (await apiResponse.getImageAsBase64String(
-        req.user.token,
         `/resettlement-passport/prisoner/${prisonerNumber}/image/${prisonerData.personalDetails.facialImageId}`,
       )) as string
     } catch (err) {
