@@ -247,7 +247,7 @@
               {% if id.error %}
                 <p>No current applications</p>
               {% else %}
-                {% for id in id.content %}
+                {% for id in id %}
                   <div class="{{ 'govuk-!-margin-bottom-8' if loop.length > 1 and not loop.last }}">
                     <h3 class="govuk-heading-s">ID {{loop.index if loop.length > 1}}</h3>
                     <table class="govuk-table">

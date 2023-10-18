@@ -75,7 +75,7 @@ const financeIdRouter = express.Router().get('/', async (req: Request, res, next
   try {
     id = await apiResponse.get(
       req.user.token,
-      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication`,
+      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/all`,
     )
   } catch (err) {
     logger.warn(`Error fetching ID data`, err)
