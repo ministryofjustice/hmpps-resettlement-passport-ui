@@ -1270,6 +1270,11 @@ div.sticky {
 .filters {
   background-color: #f3f2f1 !important;
   padding: 15px 10px 10px 0px;
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
 }
 
 .table-panel {
