@@ -10,7 +10,7 @@ const userMetricsAndLoggingMiddleware = (): RequestHandler => {
     userMetricsCounter.inc({
       path: req.path.toLowerCase(),
       auth_type: res.locals.user.authSource,
-      ...(res.locals.userActiveCaseLoad && { caseload: res.locals.userActiveCaseLoad.caseLoadId }),
+      ...(res.locals.userActiveCaseLoad && { caseload: res.locals.userActiveCaseLoad.description }),
     })
     next()
   }
