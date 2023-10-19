@@ -233,18 +233,18 @@
           <h3 class="app-summary-card__title">
             ID
           </h3>
-          {% if id.error %}
-            <span class="right">
-              <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+          <span class="right">
+            <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
               Add an ID application
             </a>
-            </span>
-          {% endif %}
+          </span>
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
               {% if id.error %}
+                <p>No current applications</p>
+              {% elif not(id.length) %}
                 <p>No current applications</p>
               {% else %}
                 {% for id in id %}
