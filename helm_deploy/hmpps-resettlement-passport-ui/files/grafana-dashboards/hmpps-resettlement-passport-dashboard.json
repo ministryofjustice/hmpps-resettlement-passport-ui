@@ -118,7 +118,7 @@
           "refId": "A"
         }
       ],
-      "title": "API Pod Status",
+      "title": "API Pod Statuses",
       "type": "stat"
     },
     {
@@ -581,6 +581,7 @@
       "type": "piechart"
     }
   ],
+  "refresh": "5s",
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -588,7 +589,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "hmpps-resettlement-passport-dev",
           "value": "hmpps-resettlement-passport-dev"
         },
@@ -616,7 +617,7 @@
       {
         "allValue": ".+|",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -644,7 +645,7 @@
       {
         "allValue": ".+|",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -672,7 +673,7 @@
       {
         "allValue": ".+|",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -710,6 +711,6 @@
   "timezone": "browser",
   "title": "HMPPS Resettlement Passport",
   "uid": "fc317542-6db7-11ee-b962-0242ac120002",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
