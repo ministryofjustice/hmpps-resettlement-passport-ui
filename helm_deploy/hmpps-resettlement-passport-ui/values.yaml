@@ -104,3 +104,5 @@ generic-service:
 
 generic-prometheus-alerts:
   targetApplication: hmpps-resettlement-passport-ui
+
+deploy_grafana_dashboards: false

@@ -20,3 +20,5 @@ generic-service:
 
 generic-prometheus-alerts:
   alertSeverity: digital-prison-service-dev
+
+deploy_grafana_dashboards: true

@@ -53,25 +53,18 @@ if (cancelDeleteFinanceBtnEl) {
 /***********************************
   SHOW/HIDE DELETE ID BUTTONS
 ************************************/
-const deleteIdBtnEl = document.querySelector('.delete-id-button')
-const confirmDeleteIdFormEl = document.querySelector('.confirm-delete-id-form')
-const cancelDeleteIdBtnEl = document.querySelector('.cancel-delete-id-button')
+document.querySelectorAll('.delete-id-button').forEach(btn =>
+  btn.addEventListener('click', () => {
+    btn.nextElementSibling.hidden = false
+    btn.nextElementSibling.querySelector('.cancel-delete-id-button').hidden = false
+    btn.hidden = true
+  }),
+)
 
-function showDeleteIdConfirmation() {
-  confirmDeleteIdFormEl.hidden = false
-  cancelDeleteIdBtnEl.hidden = false
-  deleteIdBtnEl.hidden = true
-}
-
-function hideDeleteIdConfirmation() {
-  confirmDeleteIdFormEl.hidden = true
-  cancelDeleteIdBtnEl.hidden = true
-  deleteIdBtnEl.hidden = false
-}
-
-if (deleteIdBtnEl) {
-  deleteIdBtnEl.addEventListener('click', showDeleteIdConfirmation)
-}
-if (cancelDeleteIdBtnEl) {
-  cancelDeleteIdBtnEl.addEventListener('click', hideDeleteIdConfirmation)
-}
+document.querySelectorAll('.cancel-delete-id-button').forEach(btn =>
+  btn.addEventListener('click', () => {
+    btn.closest('.confirm-delete-id-form').hidden = true
+    btn.hidden = true
+    btn.closest('.confirm-delete-id-form').previousElementSibling.hidden = false
+  }),
+)
