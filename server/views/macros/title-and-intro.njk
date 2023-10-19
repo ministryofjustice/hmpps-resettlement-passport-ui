@@ -3,8 +3,10 @@
     <h2 class="govuk-heading-l">
       {{ title }}
     </h2>
-    <p class="govuk-body-l">
-      {{ title | getDescriptionFromName }}
-    </p>
+    {% if title | getDescriptionFromName | length %}
+      <p class="govuk-body-l">
+        {{ title | getDescriptionFromName }}
+      </p>
+    {% endif %}
   </div>
 {% endmacro %}
