@@ -382,7 +382,20 @@
           },
           "mappings": []
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "^Value$"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "N/A"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
