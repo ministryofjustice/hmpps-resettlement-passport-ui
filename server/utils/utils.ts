@@ -135,8 +135,7 @@ export function formatTime(inputTime: string): string {
   // Determine whether it's AM or PM
   const period = hourInt < 12 ? 'am' : 'pm'
 
-  // Calculate the 12-hour format hour with leading zeros
-  const twelveHour = (hourInt % 12 === 0 ? 12 : hourInt % 12).toString().padStart(2, '0')
+  const twelveHour = (hourInt % 12 === 0 ? 12 : hourInt % 12).toString()
 
   // Calculate the minute with leading zeros
   const minuteStr = minuteInt.toString().padStart(2, '0')
