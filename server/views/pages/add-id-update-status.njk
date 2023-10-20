@@ -13,7 +13,7 @@
                 <div class="govuk-grid-row">
                     <h2 class="govuk-heading-m">Apply for a {{params.idType}}</h2>
                     <p>
-                        <b>Application submitted: </b>{{params.applicationSubmittedDate | formatDate }}</p>
+                        <b>Application submitted: </b>{{params.applicationSubmittedDate | formatDate('long') }}</p>
                     <form action="/finance-and-id/confirm-add-an-id-status/" novalidate class="govuk-form govuk-!-padding-top-4">
                         <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.updatedStatus }}">
                             <label class="govuk-label" for="updatedStatus">Application status</label>

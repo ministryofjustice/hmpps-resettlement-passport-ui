@@ -42,7 +42,7 @@
               <dt class="govuk-summary-list__key">Date ID received</dt>
               {% set dateIdReceived = params.dateIdReceivedYear + "-" + params.dateIdReceivedMonth + "-" + params.dateIdReceivedDay %}
               <dd class="govuk-summary-list__value">
-                {{ dateIdReceived | formatDate }}
+                {{ dateIdReceived | formatDate('long') }}
               </dd>
               <input hidden name="dateIdReceived" value="{{ dateIdReceived | formatDateToIso }}"/>
               <dd class="govuk-summary-list__actions">
@@ -54,7 +54,7 @@
                 {% if params.isAddedToPersonalItems === "true" %}
                     {% set addedToPersonalItemsDate = params.addedToPersonalItemsDateYear + "-" + params.addedToPersonalItemsDateMonth + "-" + params.addedToPersonalItemsDateDay %}
                     <input hidden name="addedToPersonalItemsDate" value="{{ addedToPersonalItemsDate | formatDateToIso }}"/>
-                    <dd class="govuk-summary-list__value">{{ addedToPersonalItemsDate | formatDate }}<br>
+                    <dd class="govuk-summary-list__value">{{ addedToPersonalItemsDate | formatDate('long') }}<br>
                   {% else %}
                     {% if params.isAddedToPersonalItems === 'true' %}Yes{% else %}No{% endif %}
                   {% endif %}
