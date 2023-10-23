@@ -215,7 +215,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -292,7 +292,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "expr": "round (sum by (path, auth_type) (increase(user_activity_count{namespace=~'$namespace', auth_type=~'$authType', path=~'$path', caseload=~'$caseload'}[1m])))",
@@ -307,7 +307,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -351,7 +351,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "expr": "round(sum(increase(user_activity_count{namespace=~'$namespace', auth_type=~'$authType', path=~'$path', caseload=~'$caseload'}[$__range])))",
@@ -366,7 +366,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -382,20 +382,7 @@
           },
           "mappings": []
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byRegexp",
-              "options": "^Value$"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "N/A"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -428,7 +415,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -447,7 +434,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -496,7 +483,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -515,7 +502,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -577,7 +564,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -594,6 +581,7 @@
       "type": "piechart"
     }
   ],
+  "refresh": "",
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -602,8 +590,8 @@
       {
         "current": {
           "selected": false,
-          "text": "hmpps-resettlement-passport-dev",
-          "value": "hmpps-resettlement-passport-dev"
+          "text": "hmpps-resettlement-passport-prod",
+          "value": "hmpps-resettlement-passport-prod"
         },
         "datasource": {
           "type": "prometheus",
@@ -657,7 +645,7 @@
       {
         "allValue": ".+|",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -685,7 +673,7 @@
       {
         "allValue": ".+|",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -713,7 +701,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -723,6 +711,6 @@
   "timezone": "browser",
   "title": "HMPPS Resettlement Passport",
   "uid": "fc317542-6db7-11ee-b962-0242ac120002",
-  "version": 1,
+  "version": 6,
   "weekStart": ""
 }
