@@ -149,15 +149,16 @@ export function formatTime(inputTime: string): string {
 
 export function convertArrayToCommaSeparatedList(inputArray: string[]): string {
   let commaSeparatedList = ''
-  inputArray.forEach(element => {
-    commaSeparatedList += element
-    commaSeparatedList += ', '
-  })
-
+  if (inputArray !== null) {
+    inputArray.forEach(element => {
+      commaSeparatedList += element
+      commaSeparatedList += ', '
+    })
+  }
   return commaSeparatedList.slice(0, -2)
 }
 
-export function createReferralsSubNav(numberOfReferrals: number): { id: string; name: string }[] {
+export function createReferralsSubNav(numberOfReferrals: number): { name: string; id: string }[] {
   const subNav: { id: string; name: string }[] = []
   if (numberOfReferrals === undefined || numberOfReferrals <= 1) {
     return [{ name: 'Referral details', id: 'referral-details' }]
