@@ -233,8 +233,12 @@
           <h3 class="app-summary-card__title">
             ID
           </h3>
+          {% set existingIdTypes = [] %}
+          {% for id in id %}
+          {% set existingIdTypes = existingIdTypes.concat([id.idType.name]) %}
+          {% endfor %}
           <span class="right">
-            <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">
+            <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&existingIdTypes={{existingIdTypes}}">
               Add an ID application
             </a>
           </span>
