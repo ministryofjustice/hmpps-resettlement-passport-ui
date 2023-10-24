@@ -25,10 +25,10 @@ export const initialiseName = (fullName?: string): string | null => {
   return `${array[0][0]}. ${array.reverse()[0]}`
 }
 
-export const formatDate = (dateString: string): string => {
+export const formatDate = (dateString: string, monthStyle: 'short' | 'long' = 'short'): string => {
   if (!dateString) return null
   const date = new Date(dateString)
-  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }
+  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: monthStyle, year: 'numeric' }
   return date.toLocaleDateString('en-GB', options)
 }
 

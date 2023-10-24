@@ -59,7 +59,7 @@
               <tbody class=" govuk-table__body">
                 <tr class="govuk-table__row">
                   <th scope="row" class="govuk-table__header">Date of assessment</th>
-                  <td class="govuk-table__cell">{{assessment.assessmentDate | formatDate }}
+                  <td class="govuk-table__cell">{{assessment.assessmentDate | formatDate('long') }}
                   </td>
                 </tr>
                 <tr class="govuk-table__row">
@@ -128,7 +128,7 @@
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Application submitted</th>
-                      <td class="govuk-table__cell">{{ finance.applicationSubmittedDate | formatDate }}</td>
+                      <td class="govuk-table__cell">{{ finance.applicationSubmittedDate | formatDate('long') }}</td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Status</th>
@@ -137,7 +137,7 @@
                     {% if finance.bankResponseDate and finance.currentStatus !== 'Returned incomplete' and finance.currentStatus !== 'Returned inaccurate' %}
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Date {{ finance.currentStatus }}</th>
-                        <td class="govuk-table__cell">{{ finance.bankResponseDate | formatDate }}</td>
+                        <td class="govuk-table__cell">{{ finance.bankResponseDate | formatDate('long') }}</td>
                       </tr>
                     {% endif %}
                     {% if finance.currentStatus === "Account opened" %}
@@ -145,7 +145,7 @@
                         <th scope="row" class="govuk-table__header">Added to personal items</th>
                         <td class="govuk-table__cell">
                           {% if finance.isAddedToPersonalItems %}
-                            {{ finance.addedToPersonalItemsDate | formatDate }}
+                            {{ finance.addedToPersonalItemsDate | formatDate('long') }}
                           {% endif %}
                           {% if finance.isAddedToPersonalItems == false %}
                             No
@@ -215,7 +215,7 @@
                                   {{ log.status }}
                                 {% endif %}
                               </th>
-                              <td class="govuk-table__cell">{{ log.changeDate | formatDate }}</td>
+                              <td class="govuk-table__cell">{{ log.changeDate | formatDate('long') }}</td>
                             </tr>
                           {% endfor %}
                         </tbody>
@@ -258,7 +258,7 @@
                         </tr>
                         <tr class="govuk-table__row">
                           <th scope="row" class="govuk-table__header">Application submitted</th>
-                          <td class="govuk-table__cell">{{id.applicationSubmittedDate | formatDate }}</td>
+                          <td class="govuk-table__cell">{{id.applicationSubmittedDate | formatDate('long') }}</td>
                         </tr>
                         {% if id.idType.name === "Birth certificate" or id.idType.name  === "Marriage certificate" or id.idType.name  === "Civil partnership certificate" or id.idType.name  === "Adoption certificate"%}
                           <tr class="govuk-table__row">
@@ -319,13 +319,13 @@
                         {% if id.status === 'Accepted' %}
                           <tr class="govuk-table__row">
                             <th scope="row" class="govuk-table__header">Date ID received</th>
-                            <td class="govuk-table__cell">{{ id.dateIdReceived | formatDate }}</td>
+                            <td class="govuk-table__cell">{{ id.dateIdReceived | formatDate('long') }}</td>
                           </tr>
                           <tr class="govuk-table__row">
                             <th scope="row" class="govuk-table__header">Added to personal items</th>
                             <td class="govuk-table__cell">
                               {% if id.isAddedToPersonalItems == true %}
-                                {{ id.addedToPersonalItemsDate | formatDate }}
+                                {{ id.addedToPersonalItemsDate | formatDate('long') }}
                               {% endif %}
                               {% if id.isAddedToPersonalItems == false %}
                             No

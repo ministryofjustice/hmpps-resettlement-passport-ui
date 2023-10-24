@@ -71,7 +71,7 @@
                     </strong>
                     {% if pathway.lastDateChange %}
                       <p class="govuk-body-s">
-                      Updated: {{ pathway.lastDateChange | formatDate }}
+                      Updated:<br />{{ pathway.lastDateChange | formatDate }}
                       </p>
                     {% endif %}
                   </td>
@@ -168,8 +168,8 @@
                   <div class="case-note">
                     <h3>{{ currentPathway.name }}</h3>
                     <p>{{ notes.text | formatFirstSentence | safe }}</p>
-                    <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate}}</span>
-                    <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate }} by {{notes.createdBy}}</span>
+                    <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate('long') }}</span>
+                    <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate('long') }} by {{notes.createdBy}}</span>
                   </div>
                   <hr>
                 {% endfor %}
@@ -291,7 +291,7 @@
             <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
               <h3>Risk assessments and predictors</h3>
               {% if not riskScores.error %}
-                <p class="govuk-body-s">Last updated: {{ riskScores.completedDate | formatDate }}</p>
+                <p class="govuk-body-s">Last updated: {{ riskScores.completedDate | formatDate('long') }}</p>
                 <table class="govuk-table">
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
@@ -373,7 +373,7 @@
               Overall RoSH risk level: <strong
                   class="govuk-tag govuk-tag--{{ overallRoshRiskLevel.color }}">{{ overallRoshRiskLevel.name }}</strong>
                 </h4>
-                <p class="govuk-body-s">Last updated: {{ rosh.assessedOn | formatDate }}</p>
+                <p class="govuk-body-s">Last updated: {{ rosh.assessedOn | formatDate('long') }}</p>
                 <table class="govuk-table">
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
@@ -447,7 +447,7 @@
               <br/>
               <h3>Multi Agency Public Protection Arrangement (MAPPA)</h3>
               {% if not mappa.error %}
-                <p class="govuk-body-s">Last updated: {{ mappa.startDate | formatDate }}</p>
+                <p class="govuk-body-s">Last updated: {{ mappa.startDate | formatDate('long') }}</p>
                 <table class="govuk-table">
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
