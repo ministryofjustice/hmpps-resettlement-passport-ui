@@ -156,6 +156,7 @@
         <input type="hidden" name="applicationSubmittedDay" value="{{ req.query.applicationSubmittedDay }}">
         <input type="hidden" name="idType" value="{{ req.query.idType }}">
         <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+        <input hidden name="existingIdTypes" value="{{ params.existingIdTypes }}"/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
     </div>

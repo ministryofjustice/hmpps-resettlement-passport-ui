@@ -13,7 +13,6 @@
             <form action="/finance-and-id/add-an-id-further/" class="govuk-form"  novalidate>
                 <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.idType }}">
                     <label class="govuk-label" for="idType">Type</label>
-                    {% if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate %}
                         <div class="govuk-!-margin-top-5">
                             {% if errorMsg.idType %}
                                 <p class="govuk-error-message">
@@ -21,18 +20,17 @@
                                 </p>
                             {% endif %}
                         </div>
-                    {% endif %}
                     <select class="govuk-select" id="idType" name="idType">
                         <option value="">Select type</option>
-                        <option value="Birth certificate" {% if params.idType == "Birth certificate" %}selected{% endif %}>Birth certificate</option>
-                        <option value="Marriage certificate" {% if params.idType == "Marriage certificate" %}selected{% endif %}>Replacement marriage certificate</option>
-                        <option value="Civil partnership certificate" {% if params.idType == "Civil partnership certificate" %}selected{% endif %}>Replacement civil partnership certificate</option>
-                        <option value="Adoption certificate" {% if params.idType == "Adoption certificate" %}selected{% endif %}>Adoption certificate</option>
-                        <option value="Divorce decree absolute certificate" {% if params.idType == "Divorce decree absolute certificate" %}selected{% endif %}>Divorce decree absolute certificate</option>
-                        <option value="Driving licence" {% if params.idType == "Driving licence" %}selected{% endif %}>Driving licence</option>
-                        <option value="Biometric residence permit" {% if params.idType == "Biometric residence permit" %}selected{% endif %}>Biometric residence permit</option>
-                        <option value="Deed poll certificate" {% if params.idType == "Deed poll certificate" %}selected{% endif %}>Deed poll certificate</option>
-                        <option value="National Insurance Number letter" {% if params.idType == "National Insurance Number letter" %}selected{% endif %}>National Insurance Number letter</option>
+                        <option value="Birth certificate" {% if params.idType == "Birth certificate" %}selected {% endif %}{% if 'Birth certificate' in params.existingIdTypes %}disabled{% endif %}>Birth certificate</option>
+                        <option value="Marriage certificate" {% if params.idType == "Marriage certificate" %}selected {% endif %}{% if 'Marriage certificate' in params.existingIdTypes %}disabled{% endif %}>Replacement marriage certificate</option>
+                        <option value="Civil partnership certificate" {% if params.idType == "Civil partnership certificate" %}selected{% endif %}{% if 'Civil partnership certificate' in params.existingIdTypes %}disabled{% endif %}>Replacement civil partnership certificate</option>
+                        <option value="Adoption certificate" {% if params.idType == "Adoption certificate" %}selected {% endif %}{% if 'Adoption certificate' in params.existingIdTypes %}disabled{% endif %}>Adoption certificate</option>
+                        <option value="Divorce decree absolute certificate" {% if params.idType == "Divorce decree absolute certificate" %}selected {% endif %}{% if 'Divorce decree absolute certificate' in params.existingIdTypes %}disabled{% endif %}>Divorce decree absolute certificate</option>
+                        <option value="Driving licence" {% if params.idType == "Driving licence" %}selected {% endif %}{% if 'Driving licence' in params.existingIdTypes %}disabled{% endif %}>Driving licence</option>
+                        <option value="Biometric residence permit" {% if params.idType == "Biometric residence permit" %}selected {% endif %}{% if 'Biometric residence permit' in params.existingIdTypes %}disabled{% endif %}>Biometric residence permit</option>
+                        <option value="Deed poll certificate" {% if params.idType == "Deed poll certificate" %}selected {% endif %}{% if 'Deed poll certificate' in params.existingIdTypes %}disabled{% endif %}>Deed poll certificate</option>
+                        <option value="National Insurance Number letter" {% if params.idType == "National Insurance Number letter" %}selected {% endif %}{% if 'National Insurance Number letter' in params.existingIdTypes %}disabled{% endif %}>National Insurance Number letter</option>
                     </select>
 
                 </div>
@@ -99,6 +97,7 @@
                 <input hidden name="isUkNationalBornOverseas" value="{{ params.isUkNationalBornOverseas }}"/>
                 <input hidden name="countryBornIn" value="{{ params.countryBornIn }}"/>
                 <input hidden name="haveGro" value="{{ params.haveGro }}"/>
+                <input hidden name="existingIdTypes" value="{{ params.existingIdTypes }}"/>
                 <button class="govuk-button" type="submit">Submit</button>
             </form>
         </div>
