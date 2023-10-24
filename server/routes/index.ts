@@ -31,6 +31,7 @@ export default function routes(services: Services): Router {
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)
+  drugsAlcoholRouter(router, services)
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
   ************************************** */
@@ -167,7 +168,7 @@ export default function routes(services: Services): Router {
   })
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
-  use('/drugs-and-alcohol', drugsAlcoholRouter)
+  // use('/drugs-and-alcohol', drugsAlcoholRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
   use('/finance-and-id', financeIdRouter)
   use('/finance-and-id/add-an-id', addIdRouter)

@@ -1,13 +1,13 @@
 import { dataAccess } from '../data'
 import UserService from './userService'
-import PrisonService from './prisonService'
+import RpService from './rpService'
 import ComponentService from './componentService'
 
 export const services = () => {
   const { hmppsAuthClient, applicationInfo, rpClient, componentClient } = dataAccess()
 
   const userService = new UserService(hmppsAuthClient)
-  const prisonService = new PrisonService(rpClient)
+  const prisonService = new RpService(rpClient)
   const componentService = new ComponentService(componentClient)
 
   return {

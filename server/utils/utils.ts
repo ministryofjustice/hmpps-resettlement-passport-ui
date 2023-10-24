@@ -146,3 +146,24 @@ export function formatTime(inputTime: string): string {
 
   return formattedTime
 }
+
+export function convertArrayToCommaSeparatedList(inputArray: string[]): string {
+  let commaSeparatedList = ''
+  inputArray.forEach(element => {
+    commaSeparatedList += element
+    commaSeparatedList += ', '
+  })
+
+  return commaSeparatedList.slice(0, -2)
+}
+
+export function createReferralsSubNav(numberOfReferrals: number): { id: string; name: string }[] {
+  const subNav: { id: string; name: string }[] = []
+  if (numberOfReferrals === undefined || numberOfReferrals <= 1) {
+    return [{ name: 'Referral details', id: 'referral-details' }]
+  }
+  for (let i = 1; i <= numberOfReferrals; i += 1) {
+    subNav.push({ name: `Referral ${i} details`, id: `referral-details-${i}` })
+  }
+  return subNav
+}
