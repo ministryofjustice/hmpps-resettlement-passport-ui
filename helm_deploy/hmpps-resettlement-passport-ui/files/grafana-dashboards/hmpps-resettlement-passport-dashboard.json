@@ -283,7 +283,7 @@
           "refId": "A"
         }
       ],
-      "title": " Prisoners Count ( Past Release )  ",
+      "title": " Prisoners Count ( Past & Unknown Release Date)  ",
       "type": "gauge"
     },
     {
@@ -868,7 +868,7 @@
       "type": "piechart"
     }
   ],
-  "refresh": "",
+  "refresh": false,
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -877,8 +877,8 @@
       {
         "current": {
           "selected": true,
-          "text": "hmpps-resettlement-passport-dev",
-          "value": "hmpps-resettlement-passport-dev"
+          "text": "hmpps-resettlement-passport-preprod",
+          "value": "hmpps-resettlement-passport-preprod"
         },
         "datasource": {
           "type": "prometheus",
@@ -1015,7 +1015,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
