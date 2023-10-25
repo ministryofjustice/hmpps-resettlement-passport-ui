@@ -5,7 +5,6 @@ type ErrorMessage = {
   applicationSubmittedDay: null | string
   applicationSubmittedMonth: null | string
   applicationSubmittedYear: null | string
-  futureDate: null | string
   isValidDate: null | string
 }
 
@@ -18,26 +17,11 @@ const addIdFurtherRouter = express.Router().get('/', async (req, res, next) => {
     applicationSubmittedDay: null,
     applicationSubmittedMonth: null,
     applicationSubmittedYear: null,
-    futureDate: null,
     isValidDate: null,
   }
 
   const { idType, applicationSubmittedDay, applicationSubmittedMonth, applicationSubmittedYear } = params
 
-  function isDateInFuture(inputDay: string, inputMonth: string, inputYear: string) {
-    // Create a Date object using the input values
-    const currentDate = new Date()
-    const inputDate = new Date(Number(inputYear), Number(inputMonth) - 1, Number(inputDay)) // Month is zero-based
-
-    // Check if the input date is in the future
-    return inputDate > currentDate
-  }
-
-  const isFutureDate = isDateInFuture(
-    <string>applicationSubmittedDay,
-    <string>applicationSubmittedMonth,
-    <string>applicationSubmittedYear,
-  )
   function isDateValid(dateString: string): boolean {
     const pattern = /^\d{4}-\d{1,2}-\d{1,2}$/
     if (!pattern.test(dateString)) {
@@ -52,14 +36,7 @@ const addIdFurtherRouter = express.Router().get('/', async (req, res, next) => {
     return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
   }
   const isValidDate = isDateValid(`${applicationSubmittedYear}-${applicationSubmittedMonth}-${applicationSubmittedDay}`)
-  if (
-    !idType ||
-    !applicationSubmittedDay ||
-    !applicationSubmittedMonth ||
-    !applicationSubmittedYear ||
-    isFutureDate ||
-    !isValidDate
-  ) {
+  if (!idType || !applicationSubmittedDay || !applicationSubmittedMonth || !applicationSubmittedYear || !isValidDate) {
     const message = 'Select an option'
     const dateFieldMissingMessage = 'The date of application submitted must include a '
     const dateFieldInvalid = 'The date of application submitted must be a real date'
@@ -68,7 +45,6 @@ const addIdFurtherRouter = express.Router().get('/', async (req, res, next) => {
       applicationSubmittedDay: applicationSubmittedDay ? null : `${dateFieldMissingMessage} day`,
       applicationSubmittedMonth: applicationSubmittedMonth ? null : `${dateFieldMissingMessage} month`,
       applicationSubmittedYear: applicationSubmittedYear ? null : `${dateFieldMissingMessage} year`,
-      futureDate: isFutureDate ? 'The date of application submitted must be in the past' : null,
       isValidDate: isValidDate ? null : dateFieldInvalid,
     }
     res.render('pages/add-id', { prisonerData, params, req, errorMsg })
