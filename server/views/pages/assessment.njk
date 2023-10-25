@@ -11,12 +11,12 @@
     <div class="govuk-grid-column-full">
       <h3 class="govuk-heading-m">Finance and ID assessment</h3>
       <form action="/finance-and-id/confirm-assessment/" class="govuk-form" novalidate>
-        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAssessmentDay or errorMsg.dateAssessmentMonth or errorMsg.dateAssessmentYear or errorMsg.futureDate or errorMsg.isValidDate }}">
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAssessmentDay or errorMsg.dateAssessmentMonth or errorMsg.dateAssessmentYear or errorMsg.isValidDate }}">
           <div class="govuk-date-input" id="date-assessment">
             <label class="govuk-label" for="type">
               <b>Date of assessment</b>
             </label><br>
-            {% if errorMsg.dateAssessmentDay or errorMsg.dateAssessmentMonth or errorMsg.dateAssessmentYear or errorMsg.futureDate or errorMsg.isValidDate %}
+            {% if errorMsg.dateAssessmentDay or errorMsg.dateAssessmentMonth or errorMsg.dateAssessmentYear or errorMsg.isValidDate %}
               <div class="govuk-!-margin-top-5">
                 {% if errorMsg.dateAssessmentDay %}
                   <p class="govuk-error-message">
@@ -33,11 +33,6 @@
                     {{ errorMsg.dateAssessmentYear }}
                   </p>
                 {% endif %}
-                {% if errorMsg.futureDate %}
-                  <p class="govuk-error-message">
-                    {{ errorMsg.futureDate }}
-                  </p>
-                {% endif %}
                 {% if errorMsg.isValidDate %}
                   <p class="govuk-error-message">
                     {{ errorMsg.isValidDate }}
@@ -50,7 +45,7 @@
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentDay">
                         Day
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAssessmentDay or errorMsg.futureDate or errorMsg.isValidDate }}" id="dateAssessmentDay" name="dateAssessmentDay" type="text" inputmode="numeric" value="{{ params.dateAssessmentDay if params.dateAssessmentDay | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAssessmentDay or errorMsg.isValidDate }}" id="dateAssessmentDay" name="dateAssessmentDay" type="text" inputmode="numeric" value="{{ params.dateAssessmentDay if params.dateAssessmentDay | length else "" }}">
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -58,7 +53,7 @@
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentMonth">
                         Month
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAssessmentMonth or errorMsg.futureDate or errorMsg.isValidDate }}" id="dateAssessmentMonth" name="dateAssessmentMonth" type="text" inputmode="numeric" value="{{ params.dateAssessmentMonth if params.dateAssessmentMonth | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.dateAssessmentMonth or errorMsg.isValidDate }}" id="dateAssessmentMonth" name="dateAssessmentMonth" type="text" inputmode="numeric" value="{{ params.dateAssessmentMonth if params.dateAssessmentMonth | length else "" }}">
               </div>
             </div>
             <div class="govuk-date-input__item">
@@ -66,7 +61,7 @@
                 <label class="govuk-label govuk-date-input__label" for="dateAssessmentYear">
                         Year
                     </label>
-                <input class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.dateAssessmentYear or errorMsg.futureDate or errorMsg.isValidDate }}" id="dateAssessmentYear" name="dateAssessmentYear" type="text" inputmode="numeric" value="{{ params.dateAssessmentYear if params.dateAssessmentYear | length else "" }}">
+                <input class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.dateAssessmentYear or errorMsg.isValidDate }}" id="dateAssessmentYear" name="dateAssessmentYear" type="text" inputmode="numeric" value="{{ params.dateAssessmentYear if params.dateAssessmentYear | length else "" }}">
               </div>
             </div>
           </div>

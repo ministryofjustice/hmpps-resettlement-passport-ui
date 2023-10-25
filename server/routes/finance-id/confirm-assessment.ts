@@ -6,7 +6,6 @@ type ErrorMessage = {
   dateAssessmentDay: null | string
   dateAssessmentMonth: null | string
   dateAssessmentYear: null | string
-  futureDate: null | string
   isValidDate: null | string
 }
 const confirmAssessmentRouter = express.Router().get('/', async (req: Request, res, next) => {
@@ -18,26 +17,11 @@ const confirmAssessmentRouter = express.Router().get('/', async (req: Request, r
     dateAssessmentDay: null,
     dateAssessmentMonth: null,
     dateAssessmentYear: null,
-    futureDate: null,
     isValidDate: null,
   }
 
   const { isIdRequired, isBankAccountRequired, dateAssessmentDay, dateAssessmentMonth, dateAssessmentYear } = params
 
-  function isDateInFuture(inputDay: string, inputMonth: string, inputYear: string) {
-    // Create a Date object using the input values
-    const currentDate = new Date()
-    const inputDate = new Date(Number(inputYear), Number(inputMonth) - 1, Number(inputDay)) // Month is zero-based
-
-    // Check if the input date is in the future
-    return inputDate > currentDate
-  }
-
-  const isFutureDate = isDateInFuture(
-    <string>dateAssessmentDay,
-    <string>dateAssessmentMonth,
-    <string>dateAssessmentYear,
-  )
   function isDateValid(dateString: string): boolean {
     const pattern = /^\d{4}-\d{1,2}-\d{1,2}$/
     if (!pattern.test(dateString)) {
@@ -59,7 +43,6 @@ const confirmAssessmentRouter = express.Router().get('/', async (req: Request, r
     !dateAssessmentDay ||
     !dateAssessmentMonth ||
     !dateAssessmentYear ||
-    isFutureDate ||
     !isValidDate
   ) {
     const message = 'Select an option'
@@ -71,7 +54,6 @@ const confirmAssessmentRouter = express.Router().get('/', async (req: Request, r
       dateAssessmentDay: dateAssessmentDay ? null : `${dateFieldMissingMessage} day`,
       dateAssessmentMonth: dateAssessmentMonth ? null : `${dateFieldMissingMessage} month`,
       dateAssessmentYear: dateAssessmentYear ? null : `${dateFieldMissingMessage} year`,
-      futureDate: isFutureDate ? 'The date of assessment must be in the past' : null,
       isValidDate: isValidDate ? null : dateFieldInvalid,
     }
     res.render('pages/assessment', { prisonerData, params, req, errorMsg })
