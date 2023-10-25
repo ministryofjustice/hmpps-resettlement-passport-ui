@@ -35,7 +35,7 @@
             Application submitted
         </dt>
             {% set date = params.applicationSubmittedYear + "-" + params.applicationSubmittedMonth + "-" + params.applicationSubmittedDay %}
-            <dd class="govuk-summary-list__value">{{ date | formatDate }}</dd>
+            <dd class="govuk-summary-list__value">{{ date | formatDate('long') }}</dd>
             <input hidden name="applicationSubmittedDate" value="{{ date | formatDateToIso }}"/>
           </dd>
           <dd class="govuk-summary-list__actions">
