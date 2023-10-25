@@ -31,12 +31,268 @@
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 30,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "builder",
+          "expr": "avg by(namespace) (total_prisoners_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Overall Prisoners Count",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 33,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "builder",
+          "expr": "avg by(namespace) (total_prisoners_12Weeks_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": " Prisoners Count (Release in 12 Weeks)  ",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 35,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "builder",
+          "expr": "avg by(namespace) (total_prisoners_24Weeks_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": " Prisoners Count (Release in 24 Weeks)  ",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 34,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "builder",
+          "expr": "avg by(namespace) (total_prisoners_AllTime_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": " Prisoners Count ( Past Release )  ",
+      "type": "gauge"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 16
       },
       "id": 25,
       "panels": [],
@@ -86,7 +342,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 17
       },
       "id": 27,
       "options": {
@@ -95,7 +351,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -164,7 +422,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 17
       },
       "id": 28,
       "options": {
@@ -173,7 +431,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -205,7 +465,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 25
       },
       "id": 18,
       "panels": [],
@@ -273,7 +533,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 26
       },
       "id": 16,
       "options": {
@@ -294,7 +554,7 @@
             "type": "prometheus",
             "uid": "P5DCFC7561CCDE821"
           },
-          "editorMode": "code",
+          "editorMode": "builder",
           "expr": "round (sum by (path, auth_type) (increase(user_activity_count{namespace=~'$namespace', auth_type=~'$authType', path=~'$path', caseload=~'$caseload'}[1m])))",
           "legendFormat": "__auto",
           "range": true,
@@ -331,7 +591,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 21
+        "y": 37
       },
       "id": 20,
       "options": {
@@ -340,7 +600,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -401,7 +663,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 21
+        "y": 37
       },
       "id": 21,
       "options": {
@@ -410,11 +672,15 @@
           "displayMode": "list",
           "placement": "right",
           "showLegend": true,
-          "values": ["percent"]
+          "values": [
+            "percent"
+          ]
         },
         "pieType": "pie",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -469,7 +735,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 21
+        "y": 37
       },
       "id": 22,
       "options": {
@@ -478,11 +744,15 @@
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true,
-          "values": ["percent"]
+          "values": [
+            "percent"
+          ]
         },
         "pieType": "pie",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -550,7 +820,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 21
+        "y": 37
       },
       "id": 23,
       "options": {
@@ -559,11 +829,15 @@
           "displayMode": "list",
           "placement": "right",
           "showLegend": true,
-          "values": ["percent"]
+          "values": [
+            "percent"
+          ]
         },
         "pieType": "pie",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -602,9 +876,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "hmpps-resettlement-passport-prod",
-          "value": "hmpps-resettlement-passport-prod"
+          "selected": true,
+          "text": "hmpps-resettlement-passport-dev",
+          "value": "hmpps-resettlement-passport-dev"
         },
         "datasource": {
           "type": "prometheus",
@@ -631,8 +905,8 @@
         "allValue": ".+|",
         "current": {
           "selected": true,
-          "text": "All",
-          "value": "$__all"
+          "text": "nomis",
+          "value": "nomis"
         },
         "datasource": {
           "type": "prometheus",
@@ -658,7 +932,7 @@
       {
         "allValue": ".+|",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -686,7 +960,7 @@
       {
         "allValue": ".+|",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -710,6 +984,33 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Moorland (HMP & YOI)",
+          "value": "Moorland (HMP & YOI)"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "P5DCFC7561CCDE821"
+        },
+        "definition": "label_values(total_prisoners_count,prison)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Prison",
+        "multi": false,
+        "name": "prison",
+        "options": [],
+        "query": {
+          "query": "label_values(total_prisoners_count,prison)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -718,12 +1019,33 @@
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": ["5s", "10s", "30s", "1m", "5m", "15m", "30m", "1h", "2h", "1d"],
-    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
   },
   "timezone": "browser",
   "title": "HMPPS Resettlement Passport",
   "uid": "fc317542-6db7-11ee-b962-0242ac120002",
-  "version": 6,
+  "version": 9,
   "weekStart": ""
 }
