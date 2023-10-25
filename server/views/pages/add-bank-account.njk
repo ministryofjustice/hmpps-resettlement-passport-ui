@@ -363,9 +363,9 @@
             </select>
           </div>
 
-          <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate }}">
+          <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.isValidDate }}">
             <label class="govuk-label" for="application-submitted">Application submitted</label>
-            {% if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate %}
+            {% if errorMsg.applicationSubmittedDay or errorMsg.applicationSubmittedMonth or errorMsg.applicationSubmittedYear or errorMsg.isValidDate %}
               <div class="govuk-!-margin-top-5">
                 {% if errorMsg.applicationSubmittedDay %}
                   <p class="govuk-error-message">
@@ -382,11 +382,6 @@
                     {{ errorMsg.applicationSubmittedYear }}
                   </p>
                 {% endif %}
-                {% if errorMsg.futureDate %}
-                  <p class="govuk-error-message">
-                    {{ errorMsg.futureDate }}
-                  </p>
-                {% endif %}
                 {% if errorMsg.isValidDate %}
                   <p class="govuk-error-message">
                     {{ errorMsg.isValidDate }}
@@ -399,7 +394,7 @@
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="applicationSubmittedDay">Day</label>
                   <input
-                    class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.applicationSubmittedDay or errorMsg.futureDate or errorMsg.isValidDate }}"
+                    class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.applicationSubmittedDay or errorMsg.isValidDate }}"
                     id="applicationSubmittedDay"
                     name="applicationSubmittedDay"
                     type="text"
@@ -412,7 +407,7 @@
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="applicationSubmittedMonth">Month</label>
                   <input
-                    class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.applicationSubmittedMonth or errorMsg.futureDate or errorMsg.isValidDate }}"
+                    class="govuk-input govuk-date-input__input govuk-input--width-2 {{ "govuk-input--error" if errorMsg.applicationSubmittedMonth or errorMsg.isValidDate }}"
                     id="applicationSubmittedMonth"
                     name="applicationSubmittedMonth"
                     type="text"
@@ -425,7 +420,7 @@
                 <div class="govuk-form-group">
                   <label class="govuk-label govuk-date-input__label" for="applicationSubmittedYear">Year</label>
                   <input
-                    class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.applicationSubmittedYear or errorMsg.futureDate or errorMsg.isValidDate }}"
+                    class="govuk-input govuk-date-input__input govuk-input--width-4 {{ "govuk-input--error" if errorMsg.applicationSubmittedYear or errorMsg.isValidDate }}"
                     id="applicationSubmittedYear"
                     name="applicationSubmittedYear"
                     type="text"
