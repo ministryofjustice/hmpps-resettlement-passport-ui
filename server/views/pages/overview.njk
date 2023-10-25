@@ -283,8 +283,8 @@
           <section id="risk-assessments" class="app-summary-card govuk-!-margin-bottom-8">
             <header class="app-summary-card__header">
               <h3 class="app-summary-card__title">
-            Risk assessments and predictors
-            <span class="govuk-caption-m">Data sourced from Assess Risks and Needs</span>
+                Risk assessments and predictors
+                <span class="govuk-caption-m">Data sourced from Assess Risks and Needs</span>
               </h3>
               <span class="right"></span>
             </header>
@@ -296,68 +296,92 @@
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Risk of Serious Recidivism
-                </th>
+                        Risk of Serious Recidivism
+                      </th>
                       <td class="govuk-table__cell">
                         {% set riskOfSeriousRecidivismScoreLevel = riskScores.riskOfSeriousRecidivismScore.scoreLevel | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ riskOfSeriousRecidivismScoreLevel.color }}">
-                          {{ riskOfSeriousRecidivismScoreLevel.name }}
-                        </strong>
+                        {% if riskOfSeriousRecidivismScoreLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ riskOfSeriousRecidivismScoreLevel.color }}">
+                            {{ riskOfSeriousRecidivismScoreLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                    Offender Group Reconviction Scale (OGRS3)
-                </th>
+                        Offender Group Reconviction Scale (OGRS3)
+                      </th>
                       <td class="govuk-table__cell">
                         {% set ogrs3ScoreLevel = riskScores.groupReconvictionScore.scoreLevel | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ ogrs3ScoreLevel.color }}">
-                          {{ ogrs3ScoreLevel.name }}
-                        </strong>
+                        {% if ogrs3ScoreLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ ogrs3ScoreLevel.color }}">
+                            {{ ogrs3ScoreLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  OASys Violence Predictor (OVP)
-                </th>
+                        OASys Violence Predictor (OVP)
+                      </th>
                       <td class="govuk-table__cell">
                         {% set ovpScoreLevel = riskScores.violencePredictorScore.ovpRisk | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ ovpScoreLevel.color }}">
-                          {{ ovpScoreLevel.name }}
-                        </strong>
+                        {% if ovpScoreLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ ovpScoreLevel.color }}">
+                            {{ ovpScoreLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  OASys General Predictor (OGP)
-                </th>
+                        OASys General Predictor (OGP)
+                      </th>
                       <td class="govuk-table__cell">
                         {% set ogpScoreLevel = riskScores.generalPredictorScore.ogpRisk | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ ogpScoreLevel.color }}">
-                          {{ ogpScoreLevel.name }}
-                        </strong>
+                        {% if ogpScoreLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ ogpScoreLevel.color }}">
+                            {{ ogpScoreLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  OASys sexual predictor/images (OSP/I)
-                </th>
+                        OASys sexual predictor/images (OSP/I)
+                      </th>
                       <td class="govuk-table__cell">
                         {% set ospiScoreLevel = riskScores.sexualPredictorScore.ospIndecentScoreLevel | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ ospiScoreLevel.color }}">
-                          {{ ospiScoreLevel.name }}
-                        </strong>
+                        {% if ospiScoreLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ ospiScoreLevel.color }}">
+                            {{ ospiScoreLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  OASys sexual predictor/contact (OSP/C)
-                </th>
+                        OASys sexual predictor/contact (OSP/C)
+                      </th>
                       <td class="govuk-table__cell">
                         {% set ospcScoreLevel = riskScores.sexualPredictorScore.ospContactScoreLevel | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ ospcScoreLevel.color }}">
-                          {{ ospcScoreLevel.name }}
-                        </strong>
+                        {% if ospcScoreLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ ospcScoreLevel.color }}">
+                            {{ ospcScoreLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                   </tbody>
@@ -370,73 +394,97 @@
               {% if not rosh.error %}
                 {% set overallRoshRiskLevel = rosh.overallRiskLevel | getEnumValue %}
                 <h4>
-              Overall RoSH risk level: <strong
-                  class="govuk-tag govuk-tag--{{ overallRoshRiskLevel.color }}">{{ overallRoshRiskLevel.name }}</strong>
+                  Overall RoSH risk level: 
+                  {% if overallRoshRiskLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ overallRoshRiskLevel.color }}">{{ overallRoshRiskLevel.name }}</strong>
+                  {% else %}
+                    <span>No data</span>
+                  {% endif %}
                 </h4>
                 <p class="govuk-body-s">Last updated: {{ rosh.assessedOn | formatDate }}</p>
                 <table class="govuk-table">
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Risk to
-                </th>
+                        Risk to
+                      </th>
                       <td class="govuk-table__cell">
                         <br/>
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Children
-                </th>
+                        Children
+                      </th>
                       <td class="govuk-table__cell">
                         {% set childrenRiskLevel = rosh.riskInCommunity.CHILDREN | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ childrenRiskLevel.color }}">
-                          {{ childrenRiskLevel.name }}
-                        </strong>
+                        {% if childrenRiskLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ childrenRiskLevel.color }}">
+                            {{ childrenRiskLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Public
-                </th>
+                        Public
+                      </th>
                       <td class="govuk-table__cell">
                         {% set publicRiskLevel = rosh.riskInCommunity.PUBLIC | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ publicRiskLevel.color }}">
-                          {{ publicRiskLevel.name }}
-                        </strong>
+                        {% if publicRiskLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ publicRiskLevel.color }}">
+                            {{ publicRiskLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Known adult
-                </th>
+                        Known adult
+                      </th>
                       <td class="govuk-table__cell">
                         {% set knownAdultRiskLevel = rosh.riskInCommunity.KNOWN_ADULT | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ knownAdultRiskLevel.color }}">
-                          {{ knownAdultRiskLevel.name }}
-                        </strong>
+                        {% if knownAdultRiskLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ knownAdultRiskLevel.color }}">
+                            {{ knownAdultRiskLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Staff
-                </th>
+                        Staff
+                      </th>
                       <td class="govuk-table__cell">
                         {% set staffRiskLevel = rosh.riskInCommunity.STAFF | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ staffRiskLevel.color }}">
-                          {{ staffRiskLevel.name }}
-                        </strong>
+                        {% if staffRiskLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ staffRiskLevel.color }}">
+                            {{ staffRiskLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Prisoners
-                </th>
+                        Prisoners
+                      </th>
                       <td class="govuk-table__cell">
                         {% set prisonersRiskLevel = rosh.riskInCommunity.PRISONERS | getEnumValue %}
-                        <strong class="govuk-tag govuk-tag--{{ prisonersRiskLevel.color }}">
-                          {{ prisonersRiskLevel.name }}
-                        </strong>
+                        {% if prisonersRiskLevel %}
+                          <strong class="govuk-tag govuk-tag--{{ prisonersRiskLevel.color }}">
+                            {{ prisonersRiskLevel.name }}
+                          </strong>
+                        {% else %}
+                          <span>No data</span>
+                        {% endif %}
                       </td>
                     </tr>
                   </tbody>
@@ -452,16 +500,16 @@
                   <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Category
-                </th>
+                        Category
+                      </th>
                       <td class="govuk-table__cell">
                         {{ mappa.category }}
                       </td>
                     </tr>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">
-                  Level
-                </th>
+                        Level
+                      </th>
                       <td class="govuk-table__cell">
                         {{ mappa.level }}
                       </td>
