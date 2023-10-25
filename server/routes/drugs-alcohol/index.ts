@@ -1,8 +1,9 @@
-import express from 'express'
+import { Router } from 'express'
+import { Services } from '../../services'
+import DrugsAlcoholController from './drugsAlcoholController'
 
-const drugsAlcoholRouter = express.Router().get('/', async (req, res, next) => {
-  const { prisonerData } = req
-  res.render('pages/drugs-alcohol', { prisonerData })
-})
+export default (router: Router, services: Services) => {
+  const drugsAlcoholController = new DrugsAlcoholController(services.prisonService)
 
-export default drugsAlcoholRouter
+  router.get('/drugs-and-alcohol', [drugsAlcoholController.getView])
+}

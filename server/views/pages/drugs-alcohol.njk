@@ -8,21 +8,19 @@
     {{ titleAndIntro(pathway) }}
     <!-- Pathway status -->
     <div
-      class="govuk-grid-column-one-third">
+        class="govuk-grid-column-one-third">
       <!-- Pathway status -->
       {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
     </div>
   </div>
   <div
-    class="govuk-grid-row govuk-!-padding-top-4">
+      class="govuk-grid-row govuk-!-padding-top-4">
     <!-- Main content area -->
-    <div
-      class="govuk-grid-column-one-quarter">
-      <!-- Pathway subnav -->
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
+      {{ subNav(crsReferrals.results[0].referrals | createReferralsSubNav) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <p>Information relating to this pathway is not currently available.</p>
-      <p>You can still use the readiness status to track progress.</p>
+      {% include "../partials/crsReferrals.njk" %}
     </div>
   </div>
 {% endblock %}

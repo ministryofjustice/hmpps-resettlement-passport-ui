@@ -81,4 +81,9 @@ const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   },
 }
 
+export const ERROR_DICTIONARY: { [key: string]: string } = {
+  DATA_NOT_FOUND: 'No data available',
+  DATA_UNAVAILABLE: 'Data unavailable - try again later or contact administrator if problem persists',
+}
+
 export default ENUMS_DICTIONARY

@@ -20,6 +20,9 @@ import {
   formatFirstSentence,
   formatDateToIso,
   formatTime,
+  convertArrayToCommaSeparatedList,
+  createReferralsSubNav,
+  createReferralsId,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -77,4 +80,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('formatTime', formatTime)
   njkEnv.addGlobal('dpsUrl', config.dpsHomeUrl)
   njkEnv.addGlobal('phaseName', config.phaseName)
+  njkEnv.addFilter('convertArrayToCommaSeparatedList', convertArrayToCommaSeparatedList)
+  njkEnv.addFilter('createReferralsSubNav', createReferralsSubNav)
+  njkEnv.addFilter('createReferralsId', createReferralsId)
 }

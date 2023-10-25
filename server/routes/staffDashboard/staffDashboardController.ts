@@ -1,10 +1,10 @@
 import { RequestHandler } from 'express'
-import PrisonService from '../../services/prisonService'
+import RpService from '../../services/rpService'
 import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
 
 export default class StaffDashboardController {
-  constructor(private readonly prisonService: PrisonService) {}
+  constructor(private readonly prisonService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const { token } = req.user

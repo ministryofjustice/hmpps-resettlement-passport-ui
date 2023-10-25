@@ -1,4 +1,5 @@
-import { convertToTitleCase, initialiseName } from './utils'
+import { convertToTitleCase, initialiseName, convertArrayToCommaSeparatedList, createReferralsSubNav } from './utils'
+import { CrsReferral } from '../data/model/crsReferralResponse'
 
 describe('convert to title case', () => {
   it.each([
@@ -27,4 +28,42 @@ describe('initialise name', () => {
   ])('%s initialiseName(%s, %s)', (_: string, a: string, expected: string) => {
     expect(initialiseName(a)).toEqual(expected)
   })
+})
+
+describe('covert array to comma separated list', () => {
+  it.each([
+    [null, null, ''],
+    ['Empty array', [], ''],
+    ['Array length 1', ['cat'], 'cat'],
+    ['Array length 2', ['cat', 'dog'], 'cat, dog'],
+    ['Array length 3', ['cat', 'dog', 'bird'], 'cat, dog, bird'],
+  ])('%s convertArrayToCommaSeparatedList(%s, %s)', (_: string, a: string[], expected: string) => {
+    expect(convertArrayToCommaSeparatedList(a)).toEqual(expected)
+  })
+})
+
+describe('Create referrals subNavigation', () => {
+  it.each([
+    ['Undefined', undefined, [{ name: 'Referral', id: 'referral' }]],
+    ['Null', null, [{ name: 'Referral', id: 'referral' }]],
+    ['Empty', [], [{ name: 'Referral', id: 'referral' }]],
+    [
+      '1 referral',
+      [{ contractType: 'The contract type' }],
+      [{ name: 'Referral - The contract type', id: 'referral-the-contract-type' }],
+    ],
+    [
+      '2 referral',
+      [{ contractType: 'The contract type' }, { contractType: 'Another contract type' }],
+      [
+        { name: 'Referral - The contract type', id: 'referral-the-contract-type' },
+        { name: 'Referral - Another contract type', id: 'referral-another-contract-type' },
+      ],
+    ],
+  ])(
+    '%s createReferralsSubNav(%s, %s)',
+    (_: string, input: CrsReferral[], expected: { id: string; name: string }[]) => {
+      expect(createReferralsSubNav(input)).toEqual(expected)
+    },
+  )
 })
