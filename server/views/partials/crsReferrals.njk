@@ -1,0 +1,135 @@
+{% if not crsReferrals.error %}
+  {% for referral in crsReferrals.results[0].referrals %}
+    <section id="{{ referral.contractType | createReferralsId }}" class="app-summary-card govuk-!-margin-bottom-8">
+    <header class="app-summary-card__header">
+      <h3 class="app-summary-card__title">
+          Referral - {{ referral.contractType }}
+        {% if not referral.draft %}
+          <strong class="govuk-tag govuk-tag--green govuk-!-margin-left-2">
+            Referral sent
+          </strong>
+        {% else %}
+          <strong class="govuk-tag govuk-tag--orange govuk-!-margin-left-2">
+            Referral in draft
+          </strong>
+        {% endif %}
+      </h3>
+      <span class="right"></span>
+    </header>
+    <div class="app-summary-card__body">
+      {{ govukTable({
+        firstCellIsHeader: true,
+        rows: [
+          [
+            {
+              text: "Contract Type"
+            },
+            {
+              text: referral.contractType
+            }
+          ],
+          [
+            {
+              text: "Intervention Title"
+            },
+            {
+              text: referral.interventionTitle
+            }
+          ],
+          [
+            {
+              text: "Service Categories"
+            },
+            {
+              text: referral.serviceCategories | convertArrayToCommaSeparatedList
+            }
+          ],
+          [
+            {
+              text: "Service Provider"
+            },
+            {
+              text: referral.serviceProviderName
+            }
+          ],
+          [
+            {
+              text: "Service Provider Location"
+            },
+            {
+              text: referral.serviceProviderLocation
+            }
+          ],
+          [
+            {
+              text: "Service Provider User"
+            },
+            {
+              text: referral.serviceProviderUser
+            }
+          ],
+          [
+            {
+              text: "Referring Officer"
+            },
+            {
+              text: referral.referringOfficer
+            }
+          ],
+          [
+            {
+              text: "Responsible Officer"
+            },
+            {
+              text: referral.responsibleOfficer
+            }
+          ],
+          [
+            {
+              text: "Referral Created"
+            },
+            {
+              text: referral.referralCreatedAt | formatDate
+            }
+          ],
+          [
+            {
+              text: "Referral Sent"
+            },
+            {
+              text: referral.referralSentAt | formatDate
+            }
+          ]
+        ]
+      }) }}
+      </div>
+    </section>
+  {% else %}
+    <section id="referral" class="app-summary-card govuk-!-margin-bottom-8">
+      <header class="app-summary-card__header">
+        <h3 class="app-summary-card__title">
+          Referral
+          <strong class="govuk-tag govuk-tag--red govuk-!-margin-left-2">
+            No referral created
+          </strong>
+        </h3>
+        <span class="right"></span>
+      </header>
+      <div class="app-summary-card__body">
+        <p>{{ crsReferrals.results[0].message }}</p>
+      </div>
+    </section>
+  {% endfor %}
+{% else %}
+  <section id="referral" class="app-summary-card govuk-!-margin-bottom-8">
+    <header class="app-summary-card__header">
+      <h3 class="app-summary-card__title">
+        Referral
+      </h3>
+      <span class="right"></span>
+    </header>
+    <div class="app-summary-card__body">
+      <p>{{ crsReferrals.error }}</p>
+    </div>
+  </section>
+{% endif %}

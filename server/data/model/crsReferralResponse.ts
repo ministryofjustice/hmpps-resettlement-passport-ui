@@ -9,9 +9,9 @@ type CrsReferralsWithPathway = {
   message: string
 }
 
-type CrsReferral = {
+export type CrsReferral = {
   serviceCategories?: string[]
-  contractType?: string
+  contractType: string
   referralCreatedAt?: string
   referralSentAt?: string
   interventionTitle?: string

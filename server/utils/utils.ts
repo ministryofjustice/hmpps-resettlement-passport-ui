@@ -1,5 +1,6 @@
 import { PathwayStatus } from '../@types/express'
 import ENUMS_DICTIONARY, { EnumValue } from './constants'
+import { CrsReferral } from '../data/model/crsReferralResponse'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -158,13 +159,27 @@ export function convertArrayToCommaSeparatedList(inputArray: string[]): string {
   return commaSeparatedList.slice(0, -2)
 }
 
-export function createReferralsSubNav(numberOfReferrals: number): { name: string; id: string }[] {
+export function createReferralsSubNav(crsReferrals: CrsReferral[]): { name: string; id: string }[] {
   const subNav: { id: string; name: string }[] = []
-  if (numberOfReferrals === undefined || numberOfReferrals <= 1) {
-    return [{ name: 'Referral details', id: 'referral-details' }]
-  }
-  for (let i = 1; i <= numberOfReferrals; i += 1) {
-    subNav.push({ name: `Referral ${i} details`, id: `referral-details-${i}` })
+  if (!crsReferrals || crsReferrals.length === 0) {
+    subNav.push({
+      name: 'Referral',
+      id: 'referral',
+    })
+  } else {
+    crsReferrals.forEach(referral => {
+      subNav.push({
+        name: `Referral - ${referral.contractType}`,
+        id: `${createReferralsId(referral.contractType)}`,
+      })
+    })
   }
   return subNav
+}
+
+export function createReferralsId(contractType: string): string {
+  return `referral-${contractType
+    .replace(/([^0-9a-z ])/gi, '')
+    .replace(/\s+/g, '-')
+    .toLowerCase()}`
 }

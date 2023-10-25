@@ -1,4 +1,5 @@
 import { convertToTitleCase, initialiseName, convertArrayToCommaSeparatedList, createReferralsSubNav } from './utils'
+import { CrsReferral } from '../data/model/crsReferralResponse'
 
 describe('convert to title case', () => {
   it.each([
@@ -43,26 +44,26 @@ describe('covert array to comma separated list', () => {
 
 describe('Create referrals subNavigation', () => {
   it.each([
-    ['Undefined', undefined, [{ name: 'Referral details', id: 'referral-details' }]],
-    ['1 referral', 1, [{ name: 'Referral details', id: 'referral-details' }]],
+    ['Undefined', undefined, [{ name: 'Referral', id: 'referral' }]],
+    ['Null', null, [{ name: 'Referral', id: 'referral' }]],
+    ['Empty', [], [{ name: 'Referral', id: 'referral' }]],
     [
-      '2 referrals',
-      2,
-      [
-        { name: 'Referral 1 details', id: 'referral-details-1' },
-        { name: 'Referral 2 details', id: 'referral-details-2' },
-      ],
+      '1 referral',
+      [{ contractType: 'The contract type' }],
+      [{ name: 'Referral - The contract type', id: 'referral-the-contract-type' }],
     ],
     [
-      '3 referrals',
-      3,
+      '2 referral',
+      [{ contractType: 'The contract type' }, { contractType: 'Another contract type' }],
       [
-        { name: 'Referral 1 details', id: 'referral-details-1' },
-        { name: 'Referral 2 details', id: 'referral-details-2' },
-        { name: 'Referral 3 details', id: 'referral-details-3' },
+        { name: 'Referral - The contract type', id: 'referral-the-contract-type' },
+        { name: 'Referral - Another contract type', id: 'referral-another-contract-type' },
       ],
     ],
-  ])('%s createReferralsSubNav(%s, %s)', (_: string, a: number, expected: { id: string; name: string }[]) => {
-    expect(createReferralsSubNav(a)).toEqual(expected)
-  })
+  ])(
+    '%s createReferralsSubNav(%s, %s)',
+    (_: string, input: CrsReferral[], expected: { id: string; name: string }[]) => {
+      expect(createReferralsSubNav(input)).toEqual(expected)
+    },
+  )
 })
