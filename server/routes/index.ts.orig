@@ -33,8 +33,11 @@ export default function routes(services: Services): Router {
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
-  attitudesThinkingBehaviourRouter(router, services)
+<<<<<<< HEAD
   accommodationRouter(router, services)
+=======
+  attitudesThinkingBehaviourRouter(router, services)
+>>>>>>> 5781cea (Changes to router)
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
   ************************************** */
@@ -148,7 +151,31 @@ export default function routes(services: Services): Router {
       appointments,
     })
   })
+<<<<<<< HEAD
+  use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
+=======
+  use('/accommodation', async (req, res, next) => {
+    const { prisonerData } = req
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+    let accommodation: { error?: boolean } = {}
 
+    try {
+      accommodation = await rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/accommodation`,
+      )
+    } catch (err) {
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve accommodation info for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
+      accommodation.error = true
+    }
+
+    res.render('pages/accommodation', {
+      accommodation,
+      prisonerData,
+    })
+  })
+>>>>>>> 5781cea (Changes to router)
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
   use('/finance-and-id', financeIdRouter)
