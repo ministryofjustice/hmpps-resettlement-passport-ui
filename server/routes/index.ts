@@ -6,6 +6,7 @@ import staffDashboard from './staffDashboard'
 import attitudesThinkingBehaviourRouter from './attitudes-thinking-behaviour'
 import childrenFamiliesCommunitiesRouter from './children-families-and-communities'
 import drugsAlcoholRouter from './drugs-alcohol'
+import accommodationRouter from './accommodation'
 import educationSkillsWorkRouter from './education-skills-work'
 import financeIdRouter from './finance-id'
 import addBankAccountRouter from './finance-id/add-bank-account'
@@ -32,6 +33,7 @@ export default function routes(services: Services): Router {
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
+  accommodationRouter(router, services)
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
   ************************************** */
@@ -143,27 +145,6 @@ export default function routes(services: Services): Router {
       selectedPathway,
       staffContacts,
       appointments,
-    })
-  })
-  use('/accommodation', async (req, res, next) => {
-    const { prisonerData } = req
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-    let accommodation: { error?: boolean } = {}
-
-    try {
-      accommodation = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/accommodation`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve accommodation info for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      accommodation.error = true
-    }
-
-    res.render('pages/accommodation', {
-      accommodation,
-      prisonerData,
     })
   })
   use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
