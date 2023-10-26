@@ -7,13 +7,13 @@ export const services = () => {
   const { hmppsAuthClient, applicationInfo, rpClient, componentClient } = dataAccess()
 
   const userService = new UserService(hmppsAuthClient)
-  const prisonService = new RpService(rpClient)
+  const rpService = new RpService(rpClient)
   const componentService = new ComponentService(componentClient)
 
   return {
     applicationInfo,
     userService,
-    prisonService,
+    rpService,
     componentService,
   }
 }
