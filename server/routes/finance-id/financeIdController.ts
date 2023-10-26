@@ -6,7 +6,6 @@ import { AssessmentErrorMessage } from '../../data/model/assessmentErrorMessage'
 import { BankAccountErrorMessage } from '../../data/model/bankAccountErrorMessage'
 import { IdErrorMessage } from '../../data/model/idErrorMessage'
 import { isDateValid } from '../../utils/utils'
-import DrugsAlcoholView from '../drugs-alcohol/drugsAlcoholView'
 import FinanceIdView from './financeIdView'
 
 export default class FinanceIdController {
