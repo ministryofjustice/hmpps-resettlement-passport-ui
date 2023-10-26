@@ -856,34 +856,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
-      },
-      {
-        "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "P5DCFC7561CCDE821"
-        },
-        "definition": "label_values(total_prisoners_count)",
-        "hide": 0,
-        "includeAll": false,
-        "label": "All Prisoners",
-        "multi": false,
-        "name": "allPrisoners",
-        "options": [],
-        "query": {
-          "query": "label_values(total_prisoners_count)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
       }
     ]
   },
