@@ -14,10 +14,16 @@
   </div>
   <div
   class="govuk-grid-row govuk-!-padding-top-4">
-    <div class="govuk-grid-column-three-quarters">
-      <p>Information relating to this pathway is not currently available.</p>
-      <p>You can still use the readiness status to track progress.</p>
-    </div>
+  <!-- Main content area -->
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
+      {{ subNav(crsReferrals.results[0].referrals | createReferralsSubNav) }}
+      </div>
+          <div class="govuk-grid-column-three-quarters">
+            {% include "../partials/crsReferrals.njk" %}
+          </div>
+        </div>
+
+
     {#
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {{ subNav([

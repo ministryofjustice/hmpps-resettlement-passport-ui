@@ -16,6 +16,6 @@ export default class AttitudesThinkingBehaviourController {
     )
 
     const view = new AttitudesThinkingBehaviour(prisonerData, crsReferrals)
-    res.render('pages/attitudes-thinking-and-behaviour', { ...view.renderArgs })
+    res.render('pages/attitudes-thinking-behaviour', { ...view.renderArgs })
   }
 }
