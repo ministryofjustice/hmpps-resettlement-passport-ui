@@ -4,7 +4,7 @@ import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
 
 export default class StaffDashboardController {
-  constructor(private readonly prisonService: RpService) {}
+  constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const { token } = req.user
@@ -22,7 +22,7 @@ export default class StaffDashboardController {
       // TODO add dynamic pagination and sorting
       // Only NOMIS users can access the list prisoners functionality at present
       if (res.locals.user.authSource === 'nomis') {
-        prisonersList = await this.prisonService.getListOfPrisoners(
+        prisonersList = await this.rpService.getListOfPrisoners(
           token,
           userActiveCaseLoad.caseLoadId,
           parseInt(page, 10),

@@ -183,3 +183,17 @@ export function createReferralsId(contractType: string): string {
     .replace(/\s+/g, '-')
     .toLowerCase()}`
 }
+
+export function isDateValid(dateString: string): boolean {
+  const pattern = /^\d{4}-\d{1,2}-\d{1,2}$/
+  if (!pattern.test(dateString)) {
+    return false // Invalid format
+  }
+  const parts = dateString.split('-')
+  const year = parseInt(parts[0], 10)
+  const month = parseInt(parts[1], 10)
+  const day = parseInt(parts[2], 10)
+  const date = new Date(year, month - 1, day)
+
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
+}

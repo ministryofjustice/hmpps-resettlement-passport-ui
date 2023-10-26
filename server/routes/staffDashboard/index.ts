@@ -3,7 +3,7 @@ import { Services } from '../../services'
 import StaffDashboardController from './staffDashboardController'
 
 export default (router: Router, services: Services) => {
-  const staffDashboardController = new StaffDashboardController(services.prisonService)
+  const staffDashboardController = new StaffDashboardController(services.rpService)
 
   router.get('/', [staffDashboardController.getView])
 }

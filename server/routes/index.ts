@@ -9,22 +9,12 @@ import drugsAlcoholRouter from './drugs-alcohol'
 import accommodationRouter from './accommodation'
 import educationSkillsWorkRouter from './education-skills-work'
 import financeIdRouter from './finance-id'
-import addBankAccountRouter from './finance-id/add-bank-account'
 import healthRouter from './health-status'
 import licenceImageRouter from './licence-image'
-import assessmentRouter from './finance-id/assessment'
-import addIdRouter from './finance-id/add-id'
-import confirmBankAccountRouter from './finance-id/confirm-bank-account'
-import confirmIdRouter from './finance-id/confirm-id'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
 import { getEnumByURL, getEnumValue } from '../utils/utils'
 import logger from '../../logger'
-import updateBankAccountStatusRouter from './finance-id/update-status-bank-account'
-import confirmAssessmentRouter from './finance-id/confirm-assessment'
-import addIdFurtherRouter from './finance-id/add-id-further'
-import updateIdStatusRouter from './finance-id/update-status-id'
-import confirmIdStatusRouter from './finance-id/confirm-id-status'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -35,6 +25,7 @@ export default function routes(services: Services): Router {
   drugsAlcoholRouter(router, services)
   attitudesThinkingBehaviourRouter(router, services)
   accommodationRouter(router, services)
+  financeIdRouter(router, services)
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
   ************************************** */
@@ -151,9 +142,6 @@ export default function routes(services: Services): Router {
 
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
-  use('/finance-and-id', financeIdRouter)
-  use('/finance-and-id/add-an-id', addIdRouter)
-  use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
   use('/add-case-note', async (req: Request, res: Response) => {
@@ -237,187 +225,6 @@ export default function routes(services: Services): Router {
       days,
     })
   })
-  use('/finance-and-id/assessment-submit/', async (req: Request, res: Response, next) => {
-    const { prisonerData } = req
-    const params = req.body
-    const { prisonerNumber, assessmentDate, isBankAccountRequired, isIdRequired } = req.body
-    let idDocuments: object | null | undefined = null
-    idDocuments = req.body.idDocuments
-    if (idDocuments === null) {
-      idDocuments = []
-    }
-    if (typeof idDocuments === 'string') {
-      idDocuments = [idDocuments]
-    }
-
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-    try {
-      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
-        assessmentDate,
-        isBankAccountRequired,
-        isIdRequired,
-        idDocuments,
-        nomsId: prisonerNumber,
-      })
-      res.redirect(`/finance-and-id?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error fetching assessment:', error)
-      res.render('pages/assessment-confirmation', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
-    }
-  })
-
-  use('/finance-and-id/bank-account-submit/', async (req: Request, res: Response, next) => {
-    const { prisonerData } = req
-    const params = req.body
-    const { prisonerNumber, applicationDate, bankName } = req.body
-
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-    try {
-      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
-        applicationSubmittedDate: applicationDate,
-        bankName,
-      })
-      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error fetching finance data:', error)
-      res.render('pages/add-bank-account-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
-    }
-  })
-  use('/finance-and-id/id-submit/', async (req: Request, res: Response, next) => {
-    const { prisonerData } = req
-    const params = req.body
-    const {
-      prisonerNumber,
-      idType,
-      applicationSubmittedDate,
-      haveGro,
-      isUkNationalBornOverseas,
-      countryBornIn,
-      isPriorityApplication,
-      caseNumber,
-      courtDetails,
-      driversLicenceType,
-      driversLicenceApplicationMadeAt,
-    } = req.body
-    const costOfApplication = Number(req.body.costOfApplication)
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-    try {
-      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
-        idType,
-        applicationSubmittedDate,
-        isPriorityApplication,
-        costOfApplication,
-        haveGro,
-        isUkNationalBornOverseas,
-        countryBornIn,
-        caseNumber,
-        courtDetails,
-        driversLicenceType,
-        driversLicenceApplicationMadeAt,
-      })
-      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error fetching id data:', error)
-      res.render('pages/add-id-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
-    }
-  })
-
-  use('/finance-and-id/bank-account-update/', async (req: Request, res: Response, next) => {
-    const { prisonerData } = req
-    const params = req.body
-    const {
-      prisonerNumber,
-      applicationId,
-      updatedStatus,
-      bankResponseDate,
-      isAddedToPersonalItems,
-      addedToPersonalItemsDate,
-      resubmissionDate,
-    } = req.body
-
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-    try {
-      await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`, {
-        status: updatedStatus,
-        bankResponseDate,
-        isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
-        addedToPersonalItemsDate,
-        resubmissionDate,
-      })
-      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error updating banking application:', error)
-      res.render('pages/add-bank-account-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
-    }
-  })
-
-  use('/finance-and-id/id-update/', async (req: Request, res: Response, next) => {
-    const { prisonerData } = req
-    const params = req.body
-    const {
-      prisonerNumber,
-      applicationId,
-      isAddedToPersonalItems,
-      addedToPersonalItemsDate,
-      updatedStatus,
-      statusUpdateDate,
-      dateIdReceived,
-    } = req.body
-
-    const refundAmount = Number(req.body.refundAmount)
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-    try {
-      await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, {
-        status: updatedStatus,
-        isAddedToPersonalItems,
-        addedToPersonalItemsDate,
-        statusUpdateDate,
-        dateIdReceived,
-        refundAmount,
-      })
-      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error updating id application:', error)
-      res.render('pages/add-id-update-status-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
-    }
-  })
-
-  use('/finance-and-id', financeIdRouter)
-  use('/finance-and-id/add-an-id', addIdRouter)
-  use('/finance-and-id/add-a-bank-account', addBankAccountRouter)
-  use('/finance-and-id/update-bank-account-status', updateBankAccountStatusRouter)
-  use('/finance-and-id/confirm-assessment', confirmAssessmentRouter)
-  use('/finance-and-id/confirm-add-a-bank-account', confirmBankAccountRouter)
-  use('/finance-and-id/confirm-add-an-id', confirmIdRouter)
-  use('/finance-and-id/assessment', assessmentRouter)
-  use('/finance-and-id/add-an-id-further', addIdFurtherRouter)
-  use('/finance-and-id/update-id-status', updateIdStatusRouter)
-  use('/finance-and-id/confirm-add-an-id-status', confirmIdStatusRouter)
 
   return router
 }
