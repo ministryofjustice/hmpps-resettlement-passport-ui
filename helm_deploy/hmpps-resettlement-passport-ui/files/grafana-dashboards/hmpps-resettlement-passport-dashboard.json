@@ -39,22 +39,16 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
         },
         "overrides": []
       },
@@ -66,7 +60,12 @@
       },
       "id": 30,
       "options": {
-        "orientation": "auto",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "pieType": "donut",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -74,8 +73,10 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "9.2.4",
       "targets": [
@@ -85,206 +86,50 @@
             "uid": "prometheus"
           },
           "editorMode": "builder",
-          "expr": "avg by(namespace) (total_prisoners_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "expr": "max(total_prisoners_count{namespace=~\"$namespace\", prison=\"$prison\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
-        }
-      ],
-      "title": "Overall Prisoners Count",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 33,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
           "editorMode": "builder",
-          "expr": "avg by(namespace) (total_prisoners_12Weeks_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "expr": "max(total_prisoners_12Weeks_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "hide": false,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": " Prisoners Count (Release in 12 Weeks)  ",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "refId": "B"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "id": 35,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
           "editorMode": "builder",
-          "expr": "avg by(namespace) (total_prisoners_24Weeks_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "expr": "max(total_prisoners_24Weeks_count{namespace=\"$namespace\", prison=\"$prison\"})",
+          "hide": false,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": " Prisoners Count (Release in 24 Weeks)  ",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
+          "refId": "C"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 8
-      },
-      "id": 34,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
           "editorMode": "builder",
-          "expr": "avg by(namespace) (total_prisoners_AllTime_count{namespace=~\"$namespace\", prison=\"$prison\"})",
+          "expr": "max(total_prisoners_AllTime_count{namespace=\"$namespace\", prison=\"$prison\"})",
+          "hide": false,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A"
+          "refId": "D"
         }
       ],
-      "title": " Prisoners Count ( Past & Unknown Release Date)  ",
-      "type": "gauge"
+      "title": "Prisoners Count",
+      "type": "piechart"
     },
     {
       "collapsed": false,
@@ -292,7 +137,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 8
       },
       "id": 25,
       "panels": [],
@@ -342,7 +187,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 9
       },
       "id": 27,
       "options": {
@@ -422,7 +267,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 9
       },
       "id": 28,
       "options": {
@@ -465,7 +310,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 17
       },
       "id": 18,
       "panels": [],
@@ -533,7 +378,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 18
       },
       "id": 16,
       "options": {
@@ -591,7 +436,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 37
+        "y": 29
       },
       "id": 20,
       "options": {
@@ -663,7 +508,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 37
+        "y": 29
       },
       "id": 21,
       "options": {
@@ -735,7 +580,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 37
+        "y": 29
       },
       "id": 22,
       "options": {
@@ -820,7 +665,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 37
+        "y": 29
       },
       "id": 23,
       "options": {
@@ -988,8 +833,8 @@
       {
         "current": {
           "selected": true,
-          "text": "Moorland (HMP & YOI)",
-          "value": "Moorland (HMP & YOI)"
+          "text": "Bedford (HMP & YOI)",
+          "value": "Bedford (HMP & YOI)"
         },
         "datasource": {
           "type": "prometheus",
@@ -1004,6 +849,34 @@
         "options": [],
         "query": {
           "query": "label_values(total_prisoners_count,prison)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "P5DCFC7561CCDE821"
+        },
+        "definition": "label_values(total_prisoners_count)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "All Prisoners",
+        "multi": false,
+        "name": "allPrisoners",
+        "options": [],
+        "query": {
+          "query": "label_values(total_prisoners_count)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
