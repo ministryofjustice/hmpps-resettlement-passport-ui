@@ -33,9 +33,7 @@ export default class RpService {
         `/resettlement-passport/prisoner/${prisonerId}/crs-referrals/${pathway}`,
       )) as CrsReferralResponse
     } catch (err) {
-      logger.warn(
-        `Session: ${sessionId} Cannot retrieve Drugs and alcohol CRS info for ${prisonerId} ${err.status} ${err}`,
-      )
+      logger.warn(`Session: ${sessionId} Cannot retrieve ${pathway} CRS info for ${prisonerId} ${err.status} ${err}`)
       if (err.status === 404) {
         crsReferrals = { results: [{ pathway, referrals: [], message: ERROR_DICTIONARY.DATA_NOT_FOUND }] }
       } else {
