@@ -1,8 +1,9 @@
-import express from 'express'
+import { Router } from 'express'
+import { Services } from '../../services'
+import AttitudesThinkingBehaviourController from './attitudesThinkingBehaviourController'
 
-const attitudesThinkingBehaviourRouter = express.Router().get('/', async (req, res, next) => {
-  const { prisonerData } = req
-  res.render('pages/attitudes-thinking-behaviour', { prisonerData })
-})
+export default (router: Router, services: Services) => {
+  const attitudesThinkingBehaviourController = new AttitudesThinkingBehaviourController(services.prisonService)
 
-export default attitudesThinkingBehaviourRouter
+  router.get('/attitudes-thinking-and-behaviour', [attitudesThinkingBehaviourController.getView])
+}

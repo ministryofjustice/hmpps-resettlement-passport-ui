@@ -33,6 +33,7 @@ export default function routes(services: Services): Router {
   router.use(prisonerDetailsMiddleware)
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
+  attitudesThinkingBehaviourRouter(router, services)
   accommodationRouter(router, services)
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
@@ -147,7 +148,7 @@ export default function routes(services: Services): Router {
       appointments,
     })
   })
-  use('/attitudes-thinking-and-behaviour', attitudesThinkingBehaviourRouter)
+
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
   use('/finance-and-id', financeIdRouter)
