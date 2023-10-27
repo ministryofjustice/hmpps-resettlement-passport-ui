@@ -28,6 +28,7 @@ export default function routes(services: Services): Router {
   financeIdRouter(router, services)
   childrenFamiliesCommunitiesRouter(router, services)
   healthStatusRouter(router, services)
+  educationSkillsWorkRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
@@ -143,7 +144,6 @@ export default function routes(services: Services): Router {
     })
   })
 
-  use('/education-skills-and-work', educationSkillsWorkRouter)
   use('/licence-image', licenceImageRouter)
   use('/add-case-note', async (req: Request, res: Response) => {
     const { prisonerData } = req
