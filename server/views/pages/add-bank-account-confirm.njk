@@ -26,7 +26,7 @@
               <dt class="govuk-summary-list__key">Bank</dt>
               <dd class="govuk-summary-list__value">{{ params.bankName }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url | getQueryString }}">Change</a>
               </dd>
               <input hidden name="bankName" value="{{ params.bankName }}" />
             </div>
@@ -35,7 +35,7 @@
               <dt class="govuk-summary-list__key">Application submitted</dt>
               <dd class="govuk-summary-list__value">{{ date | formatDate('long') }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url | getQueryString }}">Change</a>
               </dd>
               <input hidden name="applicationDate" value="{{ date | formatDateToIso }}" />
             </div>
@@ -47,7 +47,7 @@
               <dt class="govuk-summary-list__key">Application resubmitted</dt>
               <dd class="govuk-summary-list__value">{{ resubmissionDate | formatDate('long') }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url | getQueryString }}">Change</a>
               </dd>
               <input hidden name="resubmissionDate" value="{{ resubmissionDate | formatDateToIso }}" />
             </div>
@@ -55,7 +55,7 @@
               <dt class="govuk-summary-list__key">Status</dt>
               <dd class="govuk-summary-list__value">{{ params.status }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url | getQueryString }}">Change</a>
               </dd>
               <input hidden name="updatedStatus" value="{{ params.status }}" />
             </div>
@@ -65,7 +65,7 @@
                 <dt class="govuk-summary-list__key">Date heard back from resubmission</dt>
                 <dd class="govuk-summary-list__value">{{ dateResubmittedHeard | formatDate('long') }}</dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url | getQueryString }}">Change</a>
                 </dd>
                 <input hidden name="bankResponseDate" value="{{ dateResubmittedHeard | formatDateToIso }}" />
               </div>
@@ -76,7 +76,7 @@
                 <dt class="govuk-summary-list__key">Date account opened</dt>
                 <dd class="govuk-summary-list__value">{{ dateAccountOpened | formatDate('long') }}</dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url | getQueryString }}">Change</a>
                 </dd>
                 <input hidden name="bankResponseDate" value="{{ dateAccountOpened | formatDateToIso }}" />
               </div>
@@ -92,7 +92,7 @@
                   {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url }}">Change</a>
+                  <a class="govuk-link" href="/finance-and-id/add-a-bank-account{{ req.url | getQueryString }}">Change</a>
                 </dd>
               </div>
               <input hidden name="isAddedToPersonalItems" value="{{ params.addedToPersonalItems }}" />
@@ -104,7 +104,7 @@
               <dt class="govuk-summary-list__key">Status</dt>
               <dd class="govuk-summary-list__value">{{ params.updatedStatus }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url | getQueryString }}">Change</a>
               </dd>
               <input hidden name="updatedStatus" value="{{ params.updatedStatus }}" />
             </div>
@@ -114,7 +114,7 @@
                 <dt class="govuk-summary-list__key">Date account opened</dt>
                 <dd class="govuk-summary-list__value">{{ dateAccountOpened | formatDate('long') }}</dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url | getQueryString }}">Change</a>
                 </dd>
                 <input hidden name="bankResponseDate" value="{{ dateAccountOpened | formatDateToIso }}" />
               </div>
@@ -130,7 +130,7 @@
                   {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url | getQueryString }}">Change</a>
                 </dd>
               </div>
               <input hidden name="isAddedToPersonalItems" value="{{ params.addedToPersonalItems }}" />
@@ -140,7 +140,7 @@
                 <dt class="govuk-summary-list__key">Date heard back from application</dt>
                 <dd class="govuk-summary-list__value">{{ heardBackDate | formatDate('long') }}</dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url }}">Change</a>
+                  <a class="govuk-link" href="/finance-and-id/update-bank-account-status{{ req.url | getQueryString }}">Change</a>
                 </dd>
                 <input hidden name="bankResponseDate" value="{{ heardBackDate | formatDateToIso }}" />
               </div>

@@ -21,7 +21,7 @@
                 <dd class="govuk-summary-list__value">{{ date | formatDate('long') }}</dd>
                 <input hidden name="assessmentDate" value="{{ date | formatDateToIso }}"/>
                 <dd class="govuk-summary-list__actions">
-                  <a href="/finance-and-id/assessment{{req.url}}">Change<span class="govuk-visually-hidden"> date of assessment</span></a>
+                  <a href="/finance-and-id/assessment{{ req.url | getQueryString }}">Change<span class="govuk-visually-hidden"> date of assessment</span></a>
                 </dd>
               </div>
 
@@ -32,7 +32,7 @@
                 </dd>
                 <input hidden name="isBankAccountRequired" value="{{ params.isBankAccountRequired }}"/>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/assessment{{req.url}}">
+                  <a class="govuk-link" href="/finance-and-id/assessment{{ req.url | getQueryString }}">
                 Change<span class="govuk-visually-hidden"> bank account application</span>
                   </a>
                 </dd>
@@ -45,7 +45,7 @@
                 </dd>
                 <input hidden name="isIdRequired" value="{{ params.isIdRequired }}"/>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/assessment{{req.url}}">
+                  <a class="govuk-link" href="/finance-and-id/assessment{{ req.url | getQueryString }}">
                 Change<span class="govuk-visually-hidden"> ID application</span>
                   </a>
                 </dd>
@@ -71,7 +71,7 @@
                   </ul>
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/assessment{{req.url}}">
+                  <a class="govuk-link" href="/finance-and-id/assessment{{ req.url | getQueryString }}">
                 Change<span class="govuk-visually-hidden"> existing ID</span>
                   </a>
                 </dd>
