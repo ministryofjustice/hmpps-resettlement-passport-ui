@@ -26,6 +26,7 @@ export default function routes(services: Services): Router {
   attitudesThinkingBehaviourRouter(router, services)
   accommodationRouter(router, services)
   financeIdRouter(router, services)
+  childrenFamiliesCommunitiesRouter(router, services)
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
   ************************************** */
@@ -140,7 +141,6 @@ export default function routes(services: Services): Router {
     })
   })
 
-  use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
   use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)

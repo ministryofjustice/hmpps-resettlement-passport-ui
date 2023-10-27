@@ -1,8 +1,9 @@
-import express from 'express'
+import { Router } from 'express'
+import { Services } from '../../services'
+import ChildrenFamiliesCommunitiesController from './childrenFamiliesCommunitiesController'
 
-const childrenFamiliesCommunitiesRouter = express.Router().get('/', async (req, res, next) => {
-  const { prisonerData } = req
-  res.render('pages/children-families-communities', { prisonerData })
-})
+export default (router: Router, services: Services) => {
+  const childrenFamiliesCommunitiesController = new ChildrenFamiliesCommunitiesController(services.rpService)
 
-export default childrenFamiliesCommunitiesRouter
+  router.get('/children-families-and-communities', [childrenFamiliesCommunitiesController.getView])
+}
