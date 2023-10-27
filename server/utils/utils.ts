@@ -197,3 +197,7 @@ export function isDateValid(dateString: string): boolean {
 
   return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
 }
+
+export function getQueryString(url: string): string {
+  return `?${url.split('?')[1]}`
+}
