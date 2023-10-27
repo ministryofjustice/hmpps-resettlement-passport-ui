@@ -1,6 +1,5 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
-import DrugsAlcoholView from '../drugs-alcohol/drugsAlcoholView'
 import HealthStatusView from './healthStatusView'
 
 export default class HealthStatusController {
