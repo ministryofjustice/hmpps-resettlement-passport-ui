@@ -7,9 +7,9 @@ import attitudesThinkingBehaviourRouter from './attitudes-thinking-behaviour'
 import childrenFamiliesCommunitiesRouter from './children-families-and-communities'
 import drugsAlcoholRouter from './drugs-alcohol'
 import accommodationRouter from './accommodation'
+import healthStatusRouter from './health-status'
 import educationSkillsWorkRouter from './education-skills-work'
 import financeIdRouter from './finance-id'
-import healthRouter from './health-status'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
@@ -26,6 +26,7 @@ export default function routes(services: Services): Router {
   attitudesThinkingBehaviourRouter(router, services)
   accommodationRouter(router, services)
   financeIdRouter(router, services)
+  healthStatusRouter(router, services)
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
   ************************************** */
@@ -142,7 +143,6 @@ export default function routes(services: Services): Router {
 
   use('/children-families-and-communities', childrenFamiliesCommunitiesRouter)
   use('/education-skills-and-work', educationSkillsWorkRouter)
-  use('/health-status', healthRouter)
   use('/licence-image', licenceImageRouter)
   use('/add-case-note', async (req: Request, res: Response) => {
     const { prisonerData } = req
