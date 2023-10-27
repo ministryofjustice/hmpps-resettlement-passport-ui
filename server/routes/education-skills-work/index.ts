@@ -1,8 +1,9 @@
-import express from 'express'
+import { Router } from 'express'
+import { Services } from '../../services'
+import EducationSkillsWorkController from './educationSkillsWorkController'
 
-const educationSkillsWorkRouter = express.Router().get('/', async (req, res, next) => {
-  const { prisonerData } = req
-  res.render('pages/education-skills-work', { prisonerData })
-})
+export default (router: Router, services: Services) => {
+  const educationSkillsWorkController = new EducationSkillsWorkController(services.rpService)
 
-export default educationSkillsWorkRouter
+  router.get('/education-skills-and-work', [educationSkillsWorkController.getView])
+}
