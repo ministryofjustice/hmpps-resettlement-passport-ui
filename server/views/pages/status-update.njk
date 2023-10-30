@@ -42,7 +42,7 @@
                   {% set statusInfo = statusItem | getEnumValue %}
                   {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
                   {% set isChecked = false %}
-                  {% if updateSuccessful %}
+                  {% if serverUpdate === 'success' %}
                     {% if state == statusItem %}
                       {% set isChecked = true %}
                     {% endif %}
@@ -85,12 +85,22 @@
               <h3 class="govuk-notification-banner__heading">
                 Pathway status updated successfully
               </h3>
-              {# <p class="govuk-body">Contact <a class="govuk-notification-banner__link" href="mailto:example@digital.justice.gov.uk">example@digital.justice.gov.uk</a> if you think there’s a problem.</p> #}
             {% endset %}
-            {% if updateSuccessful  %}
+            {% set errorNotificationHtml %}
+              <h3 class="govuk-notification-banner__heading">
+                Unable to update - try again later or contact administrator if problem persists.
+              </h3>
+            {% endset %}
+            {% if serverUpdate === 'success'  %}
               {{ govukNotificationBanner({
                 html: successNotificationHtml,
                 type: 'success'
+              }) }}
+            {% endif %}
+            {% if serverUpdate === 'error' %}
+              {{ govukNotificationBanner({
+                html: errorNotificationHtml,
+                type: "error"
               }) }}
             {% endif %}
           </form>
