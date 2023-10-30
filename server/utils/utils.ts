@@ -133,17 +133,12 @@ export function formatTime(inputTime: string): string {
   const hourInt = parseInt(hour, 10)
   const minuteInt = parseInt(minute, 10)
 
-  // Determine whether it's AM or PM
-  const period = hourInt < 12 ? 'am' : 'pm'
-
-  // Calculate the 12-hour format hour with leading zeros
-  const twelveHour = (hourInt % 12 === 0 ? 12 : hourInt % 12).toString().padStart(2, '0')
-
-  // Calculate the minute with leading zeros
+  // Ensure the minutes are formatted with leading zeros
+  const hourStr = hourInt.toString()
   const minuteStr = minuteInt.toString().padStart(2, '0')
 
-  // Create the formatted time string
-  const formattedTime = `${twelveHour}:${minuteStr}${period}`
+  // Create the formatted time string in 24-hour format
+  const formattedTime = `${hourStr}:${minuteStr}`
 
   return formattedTime
 }
