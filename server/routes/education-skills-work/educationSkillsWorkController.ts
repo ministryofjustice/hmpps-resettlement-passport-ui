@@ -15,7 +15,13 @@ export default class EducationSkillsWorkController {
       'EDUCATION_SKILLS_AND_WORK',
     )
 
-    const view = new EducationSkillsWorkView(prisonerData, crsReferrals)
+    const educationSkillsWork = await this.rpService.getEducationSkillsWork(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+    )
+
+    const view = new EducationSkillsWorkView(prisonerData, crsReferrals, educationSkillsWork)
     res.render('pages/education-skills-work', { ...view.renderArgs })
   }
 }

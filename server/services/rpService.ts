@@ -1,6 +1,7 @@
 import { RPClient } from '../data'
 import { PrisonersList } from '../data/model/prisoners'
 import { CrsReferralResponse } from '../data/model/crsReferralResponse'
+import { EducationSkillsWorkResponse } from '../data/model/educationSkillsWorkResponse'
 import logger from '../../logger'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
@@ -62,5 +63,27 @@ export default class RpService {
     }
 
     return accommodation
+  }
+
+  async getEducationSkillsWork(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+
+    let getEducationSkillsWork: EducationSkillsWorkResponse
+    try {
+      getEducationSkillsWork = (await this.rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerId}/work-readiness`,
+      )) as EducationSkillsWorkResponse
+    } catch (err) {
+      logger.warn(
+        `Session: ${sessionId} Cannot retrieve Education, Skills & Work information for ${prisonerId} ${err.status} ${err}`,
+      )
+      if (err.status === 404) {
+        getEducationSkillsWork = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      } else {
+        getEducationSkillsWork = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      }
+    }
+
+    return getEducationSkillsWork
   }
 }
