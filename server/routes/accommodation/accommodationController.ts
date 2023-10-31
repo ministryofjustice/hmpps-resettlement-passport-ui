@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
-import RpService from '../../services/rpService'
 import AccommodationView from './accommodationView'
+import RpService from '../../services/rpService'
 
 export default class AccommodationController {
   constructor(private readonly rpService: RpService) {}

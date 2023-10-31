@@ -15,7 +15,7 @@
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-      {{ subNav([
+      {% set subNavItems = [
       {
           name: "Work interests",
           id: "work-interests"
@@ -40,7 +40,9 @@
           name: "Employability skills",
           id: "employability-skills"
         }
-      ], crsReferrals.results[0].referrals | createReferralsSubNav) }}
+      ] %}
+      {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
+      {{ subNav(subNavItems) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% if not educationSkillsWork.error %}
