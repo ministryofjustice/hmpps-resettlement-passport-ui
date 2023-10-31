@@ -166,7 +166,7 @@ export default function routes(services: Services): Router {
 
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
-    let updateSuccessful = false
+    let serverUpdate = 'none'
     if (state) {
       try {
         await rpClient.patch(`/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`, {
@@ -177,9 +177,10 @@ export default function routes(services: Services): Router {
           pathway: getEnumByURL(selectedPathway),
           text: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
         })
-        updateSuccessful = true
+        serverUpdate = 'success'
       } catch (error) {
         logger.error(error)
+        serverUpdate = 'error'
       }
     }
     let caseNotes: { error?: boolean } = {}
@@ -215,7 +216,7 @@ export default function routes(services: Services): Router {
     res.render('pages/status-update', {
       prisonerData,
       selectedPathway,
-      updateSuccessful,
+      serverUpdate,
       state,
       caseNotes,
       caseNoteCreators,
