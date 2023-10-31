@@ -12,13 +12,13 @@
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by:</h3>
+              <h3 class="govuk-heading-m">Filter by</h3>
             </div>
             <div class="govuk-grid-column-one-quarter">
               <div class="govuk-form-group">
                 <label class="govuk-label" for="releaseTime">
-              Time to release
-            </label>
+                  Time to release
+                </label>
                 <select class="govuk-select" id="releaseTime" name="releaseTime">
                   <option value="84" {% if releaseTime == '84' %} selected {% endif %}>Within 12 weeks</option>
                   <option value="168" {% if releaseTime == '168' %} selected {% endif %}>Within 24 weeks</option>
@@ -26,12 +26,13 @@
                 </select>
               </div>
             </div>
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-third">
               <div class="govuk-form-group">
                 <label class="govuk-label " for="searchInput">
-              Prisoner’s name or ID
-            </label>
-                <input class="govuk-input" id="searchInput" name="searchInput" placeholder="" type="text" value="{{ searchInput }}">
+                  Prisoner’s name or prison number
+                </label>
+                <input class="govuk-input prisoner-name-filter" id="searchInput" name="searchInput" placeholder="" type="text"
+                       value="{{ searchInput }}">
               </div>
             </div>
             <div class="govuk-grid-column-full">
@@ -52,21 +53,28 @@
           <ul class="moj-pagination__list">
             {% if page > 0 %}
               <li class="moj-pagination__item  moj-pagination__item--prev">
-                <a class="moj-pagination__link" href="/?searchInput={{searchInput}}&releaseTime={{releaseTime}}&page={{prevPage}}">Previous<span class="govuk-visually-hidden"> page</span></a>
+                <a class="moj-pagination__link"
+                   href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}">Previous<span
+                      class="govuk-visually-hidden"> page</span></a>
               </li>
             {% endif %}
             {% for i in range(0, totalPages) %}
               {% if page | float === i | float %}
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
+                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page"
+                    aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
               {% else %}
                 <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput={{searchInput}}&releaseTime={{releaseTime}}&page={{i}}" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
+                  <a class="moj-pagination__link"
+                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}"
+                     aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
                 </li>
               {% endif %}
             {%- endfor %}
             {% if prisonersList.last === false %}
               <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput={{searchInput}}&releaseTime={{releaseTime}}&page={{nextPage}}">Next<span class="govuk-visually-hidden"> page</span></a>
+                <a class="moj-pagination__link"
+                   href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}">Next<span
+                      class="govuk-visually-hidden"> page</span></a>
               </li>
             {% endif %}
           </ul>
@@ -76,7 +84,8 @@
           {% else %}
             {% set toPage = totalElements %}
           {% endif %}
-          <p class="moj-pagination__results">Showing <b>{{fromPage}}</b> to <b>{{toPage}}</b> of <b>{{ prisonersList.totalElements }}</b> results</p>
+          <p class="moj-pagination__results">Showing <b>{{ fromPage }}</b> to <b>{{ toPage }}</b> of
+            <b>{{ prisonersList.totalElements }}</b> results</p>
         </nav>
       {% endif %}
     {% endif %}
