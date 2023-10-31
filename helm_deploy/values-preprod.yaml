@@ -74,4 +74,4 @@ generic-service:
     cymulate-3: "52.49.144.209/32"
 
 generic-prometheus-alerts:
-  alertSeverity: digital-prison-service-dev
+  alertSeverity: hmpps-resettlement-passport-non-prod

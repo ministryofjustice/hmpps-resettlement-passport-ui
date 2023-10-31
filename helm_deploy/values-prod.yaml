@@ -16,4 +16,4 @@ generic-service:
     SUPPORT_URL: "https://support.hmpps.service.justice.gov.uk/feedback-and-support"
 
 generic-prometheus-alerts:
-  alertSeverity: digital-prison-service
+  alertSeverity: hmpps-resettlement-passport-prod
