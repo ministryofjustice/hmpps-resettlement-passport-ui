@@ -3,6 +3,7 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+{% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
@@ -36,18 +37,14 @@
           id: "work-and-activities-in-prison"
         },
         {
-          name: "Functional skills level from induction",
-          id: "functional-skills-level-from-induction"
-        },
-        {
           name: "Employability skills",
           id: "employability-skills"
         }
       ]) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      {% if educationSkillsWork.details.workInterests %}
-        <section id="qualifications-goals" class="app-summary-card govuk-!-margin-bottom-8">
+      {% if not educationSkillsWork.error %}
+        <section id="work-interests" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
             Work interests<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
@@ -62,8 +59,7 @@
             </ul>
           </div>
         </section>
-      {% endif %}
-      {% if educationSkillsWork.details.reasonsToNotGetWork %}
+
         <section id="affect-ability-to-work" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
@@ -73,14 +69,13 @@
           </header>
           <div class="app-summary-card__body">
             <ul class="govuk-list govuk-list--bullet">
-              {% for workInterests in educationSkillsWork.details.reasonsToNotGetWork %}
+              {% for reasonsToNotGetWork in educationSkillsWork.details.reasonsToNotGetWork %}
                 <li>{{reasonsToNotGetWork}}</li>
               {% endfor %}
             </ul>
           </div>
         </section>
-      {% endif %}
-      {% if educationSkillsWork.details.volunteeringAndExperience %}
+
         <section id="volunteering-and-experience" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
@@ -90,7 +85,7 @@
           </header>
           <div class="app-summary-card__body">
             {% for volunteeringExperience in educationSkillsWork.details.volunteeringAndExperience %}
-              <h3 class="govuk-heading-s">Qualification {{loop.index if loop.length > 1}}</h3>
+              <h3 class="govuk-heading-s {{'govuk-!-padding-top-8' if loop.length > 1 and loop.index > 1}}">Qualification {{loop.index if loop.length > 1}}</h3>
               <table class="govuk-table">
                 <tbody>
                   <tr class="govuk-table__row">
@@ -120,9 +115,8 @@
             </ul>
           </div>
         </section>
-      {% endif %}
-      {% if educationSkillsWork.details.educationalCoursesAndQualifications %}
-        <section id="education-and-qualifications" class="app-summary-card govuk-!-margin-bottom-8">
+
+        <section id="educational-courses-and-qualifications" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
             Educational courses and qualifications<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
@@ -133,7 +127,7 @@
             {% if educationSkillsWork.details.educationalCoursesAndQualifications.qualifications %}
               <h3 class="govuk-heading-s">Qualifications</h3>
               {% for qualification in educationSkillsWork.details.educationalCoursesAndQualifications.qualifications %}
-                <table class="govuk-table">
+                <table class="govuk-table govuk-!-margin-bottom-8">
                   <tbody>
                     <tr class="govuk-table__row">
                       <th scope="row" class="govuk-table__header">Subject</th>
@@ -153,29 +147,71 @@
             {% endif %}
             {% if educationSkillsWork.details.educationalCoursesAndQualifications.additionalTraining %}
               <h3 class="govuk-heading-s govuk-!-margin-top-8">Additional training</h3>
-              <p>{{educationSkillsWork.details.educationalCoursesAndQualifications.additionalTraining | convertArrayToCommaSeparatedList}}</p>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for training in educationSkillsWork.details.educationalCoursesAndQualifications.additionalTraining %}
+                  <li>{{training}}</li>
+                {% endfor %}
+              </ul>
             {% endif %}
           </div>
         </section>
-      {% endif %}
-      <section id="work-and-activities-in-prison" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
+
+        <section id="work-and-activities-in-prison" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
             Work and activities in prison<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          {% if educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonWork %}
-            <h3 class="govuk-heading-s">Work</h3>
-             <p>{{educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonWork | convertArrayToCommaSeparatedList}}</p>
-          {% endif %}
-          {% if educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonEducation %}
-            <h3 class="govuk-heading-s">Education</h3>
-             <p>{{educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonEducation | convertArrayToCommaSeparatedList}}</p>
-          {% endif %}
-        </div>
-      </section>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonWork %}
+              <h3 class="govuk-heading-s">Work</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for work in educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonWork %}
+                  <li>{{work}}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonEducation %}
+              <h3 class="govuk-heading-s">Education</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for education in educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonEducation %}
+                  <li>{{education}}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </section>
+        <section id="employability-skills" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Employability skills<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.skillsAndInterests.skills %}
+              <h3 class="govuk-heading-s">Skills</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for skills in educationSkillsWork.details.skillsAndInterests.skills %}
+                  <li>{{skills}}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if educationSkillsWork.details.skillsAndInterests.personalInterests %}
+              <h3 class="govuk-heading-s">Personal interests</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for personalInterests in educationSkillsWork.details.skillsAndInterests.personalInterests %}
+                  <li>{{personalInterests}}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        </section>
+      {% else %}
+        <p>{{ errorMessage }}</p>
+      {% endif %}
+
     </div>
   </div>
 {% endblock %}
