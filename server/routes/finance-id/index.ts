@@ -1,82 +1,24 @@
-import express, { Request } from 'express'
-import { RPClient } from '../../data'
-import logger from '../../../logger'
+import { Router } from 'express'
+import { Services } from '../../services'
+import FinanceIdController from './financeIdController'
 
-const financeIdRouter = express.Router().get('/', async (req: Request, res, next) => {
-  const { prisonerData } = req
-  const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
-    req.query
+export default (router: Router, services: Services) => {
+  const financeIdController = new FinanceIdController(services.rpService)
 
-  const apiResponse = new RPClient(req.user.token, req.sessionID, req.user.username)
-  let assessment: { error?: boolean } = {}
-  let assessmentDeleted: { error?: boolean } = {}
-  let finance: { error?: boolean } = {}
-  let financeDeleted: { error?: boolean } = {}
-  let id: { error?: boolean } = {}
-  let idDeleted: { error?: boolean } = {}
-
-  // DELETE ASSESSMENT
-  if (deleteAssessmentConfirmed) {
-    try {
-      assessmentDeleted = await apiResponse.delete(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment/${assessmentId}`,
-      )
-    } catch (err) {
-      logger.warn(`Error deleting assessment`, err)
-      assessmentDeleted.error = true
-    }
-  }
-  // FETCH ASSESSMENT
-  try {
-    assessment = await apiResponse.get(
-      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment`,
-    )
-  } catch (err) {
-    logger.warn(`Error fetching assessment data`, err)
-    assessment.error = true
-  }
-  // DELETE FINANCE
-  if (deleteFinanceConfirmed) {
-    try {
-      financeDeleted = await apiResponse.delete(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication/${financeId}`,
-      )
-    } catch (err) {
-      logger.warn(`Error deleting finance`, err)
-      financeDeleted.error = true
-    }
-  }
-  // FETCH FINANCE
-  try {
-    finance = await apiResponse.get(
-      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication`,
-    )
-  } catch (err) {
-    logger.warn(`Error fetching finance data`, err)
-    finance.error = true
-  }
-  // DELETE ID
-  if (deleteIdConfirmed) {
-    try {
-      idDeleted = await apiResponse.delete(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/${idId}`,
-      )
-    } catch (err) {
-      logger.warn(`Error deleting ID`, err)
-      idDeleted.error = true
-    }
-  }
-  // FETCH ID
-  try {
-    id = await apiResponse.get(
-      `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/all`,
-    )
-  } catch (err) {
-    logger.warn(`Error fetching ID data`, err)
-    id.error = true
-  }
-
-  res.render('pages/finance-id', { assessment, prisonerData, finance, id })
-})
-
-export default financeIdRouter
+  router.get('/finance-and-id', [financeIdController.getView])
+  router.post('/finance-and-id/assessment-submit', [financeIdController.postAssessmentSubmitView])
+  router.post('/finance-and-id/bank-account-submit', [financeIdController.postBankAccountSubmitView])
+  router.post('/finance-and-id/id-submit', [financeIdController.postIdSubmitView])
+  router.post('/finance-and-id/bank-account-update', [financeIdController.postBankAccountUpdateView])
+  router.post('/finance-and-id/id-update', [financeIdController.postIdUpdateView])
+  router.get('/finance-and-id/add-an-id', [financeIdController.getAddAnIdView])
+  router.get('/finance-and-id/add-a-bank-account', [financeIdController.getAddABankAccountView])
+  router.get('/finance-and-id/update-bank-account-status', [financeIdController.getUpdateBankAccountStatusView])
+  router.get('/finance-and-id/confirm-assessment', [financeIdController.getConfirmAssessmentView])
+  router.get('/finance-and-id/confirm-add-a-bank-account', [financeIdController.getConfirmAddABankAccountView])
+  router.get('/finance-and-id/confirm-add-an-id', [financeIdController.getConfirmAddAnIdView])
+  router.get('/finance-and-id/assessment', [financeIdController.getAssessmentView])
+  router.get('/finance-and-id/add-an-id-further', [financeIdController.getAddAnIdFurtherView])
+  router.get('/finance-and-id/update-id-status', [financeIdController.getUpdateIdStatusView])
+  router.get('/finance-and-id/confirm-add-an-id-status', [financeIdController.getConfirmAddAnIdStatusView])
+}

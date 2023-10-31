@@ -23,7 +23,7 @@
             </dd>
             <input hidden name="updatedStatus" value="{{ params.updatedStatus }}"/>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> application status</span></a>
+              <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url | getQueryString }}">Change<span class="govuk-visually-hidden"> application status</span></a>
             </dd>
           </div>
           {% if params.updatedStatus === 'Rejected' and not (params.idType === 'National Insurance Number letter')  %}
@@ -34,7 +34,7 @@
               </dd>
               <input hidden name="refundAmount" value="{{ params.refundAmount or "0" }}"/>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> Application refund</span></a>
+                <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url | getQueryString }}">Change<span class="govuk-visually-hidden"> Application refund</span></a>
               </dd>
             </div>
           {% elif params.updatedStatus === 'Accepted' %}
@@ -46,7 +46,7 @@
               </dd>
               <input hidden name="dateIdReceived" value="{{ dateIdReceived | formatDateToIso }}"/>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> Date ID received</span></a>
+                <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url | getQueryString }}">Change<span class="govuk-visually-hidden"> Date ID received</span></a>
               </dd>
             </div>
               <div class="govuk-summary-list__row">
@@ -60,7 +60,7 @@
                   {% endif %}
                 </dd>
                 <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url }}">Change<span class="govuk-visually-hidden"> Added to personal items</span></a>
+                  <a class="govuk-link" href="/finance-and-id/update-id-status{{ req.url | getQueryString }}">Change<span class="govuk-visually-hidden"> Added to personal items</span></a>
                 </dd>
                 <input hidden name="isAddedToPersonalItems" value="{{ params.isAddedToPersonalItems }}" />
               </div>

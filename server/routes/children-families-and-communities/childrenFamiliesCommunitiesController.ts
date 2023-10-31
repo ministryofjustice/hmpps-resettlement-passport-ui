@@ -1,8 +1,8 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
-import DrugsAlcoholView from './drugsAlcoholView'
+import ChildrenFamiliesCommunitiesView from './childrenFamiliesCommunitiesView'
 
-export default class DrugsAlcoholController {
+export default class ChildrenFamiliesCommunitiesController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
@@ -12,10 +12,10 @@ export default class DrugsAlcoholController {
       token,
       req.sessionID,
       prisonerData.personalDetails.prisonerNumber as string,
-      'DRUGS_AND_ALCOHOL',
+      'CHILDREN_FAMILIES_AND_COMMUNITY',
     )
 
-    const view = new DrugsAlcoholView(prisonerData, crsReferrals)
-    res.render('pages/drugs-alcohol', { ...view.renderArgs })
+    const view = new ChildrenFamiliesCommunitiesView(prisonerData, crsReferrals)
+    res.render('pages/children-families-communities', { ...view.renderArgs })
   }
 }

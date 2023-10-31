@@ -133,17 +133,12 @@ export function formatTime(inputTime: string): string {
   const hourInt = parseInt(hour, 10)
   const minuteInt = parseInt(minute, 10)
 
-  // Determine whether it's AM or PM
-  const period = hourInt < 12 ? 'am' : 'pm'
-
-  // Calculate the 12-hour format hour with leading zeros
-  const twelveHour = (hourInt % 12 === 0 ? 12 : hourInt % 12).toString().padStart(2, '0')
-
-  // Calculate the minute with leading zeros
+  // Ensure the minutes are formatted with leading zeros
+  const hourStr = hourInt.toString()
   const minuteStr = minuteInt.toString().padStart(2, '0')
 
-  // Create the formatted time string
-  const formattedTime = `${twelveHour}:${minuteStr}${period}`
+  // Create the formatted time string in 24-hour format
+  const formattedTime = `${hourStr}:${minuteStr}`
 
   return formattedTime
 }
@@ -182,4 +177,22 @@ export function createReferralsId(contractType: string): string {
     .replace(/([^0-9a-z ])/gi, '')
     .replace(/\s+/g, '-')
     .toLowerCase()}`
+}
+
+export function isDateValid(dateString: string): boolean {
+  const pattern = /^\d{4}-\d{1,2}-\d{1,2}$/
+  if (!pattern.test(dateString)) {
+    return false // Invalid format
+  }
+  const parts = dateString.split('-')
+  const year = parseInt(parts[0], 10)
+  const month = parseInt(parts[1], 10)
+  const day = parseInt(parts[2], 10)
+  const date = new Date(year, month - 1, day)
+
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day
+}
+
+export function getQueryString(url: string): string {
+  return `?${url.split('?')[1]}`
 }

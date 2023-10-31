@@ -12,58 +12,14 @@
       {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
     </div>
   </div>
-  <div class="govuk-grid-row govuk-!-padding-top-4">
-    <div class="govuk-grid-column-three-quarters">
-      <p>Information relating to this pathway is not currently available.</p>
-      <p>You can still use the readiness status to track progress.</p>
-    </div>
-    {#
-    <div
-      class="govuk-grid-column-one-quarter sticky-anchor-links">
-      <!-- Pathway subnav -->
-      {{ subNav([
-        {
-          name: "Emotional wellbeing support referral",
-          id: "ews-referral"
-        }
-      ]) }}
+  <div
+      class="govuk-grid-row govuk-!-padding-top-4">
+    <!-- Main content area -->
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
+      {{ subNav(crsReferrals.results[0].referrals | createReferralsSubNav) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <section id="ews-referral" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Emotional wellbeing support referral<span class="govuk-caption-m">Data sourced from nDelius</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          <table class="govuk-table">
-            <tbody class="govuk-table__body">
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Referral required</th>
-                <td class="govuk-table__cell">Yes</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Status</th>
-                <td class="govuk-table__cell">Completed</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Provider</th>
-                <td class="govuk-table__cell">EWS Provider</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Provider address</th>
-                <td class="govuk-table__cell">123 A Street, Manchester, M5 6FG</td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Provider phone</th>
-                <td class="govuk-table__cell">0161 654 3211</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      {% include "../partials/crsReferrals.njk" %}
     </div>
-    #}
   </div>
 {% endblock %}

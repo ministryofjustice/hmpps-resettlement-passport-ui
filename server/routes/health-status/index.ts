@@ -1,8 +1,9 @@
-import express from 'express'
+import { Router } from 'express'
+import { Services } from '../../services'
+import HealthStatusController from './healthStatusController'
 
-const healthRouter = express.Router().get('/', async (req, res, next) => {
-  const { prisonerData } = req
-  res.render('pages/health', { prisonerData })
-})
+export default (router: Router, services: Services) => {
+  const healthController = new HealthStatusController(services.rpService)
 
-export default healthRouter
+  router.get('/health-status', [healthController.getView])
+}

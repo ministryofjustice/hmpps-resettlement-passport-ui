@@ -40,7 +40,7 @@
           name: "Employability skills",
           id: "employability-skills"
         }
-      ]) }}
+      ], crsReferrals.results[0].referrals | createReferralsSubNav) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% if not educationSkillsWork.error %}
@@ -228,7 +228,7 @@
       {% else %}
         <p>{{ errorMessage }}</p>
       {% endif %}
-
+      {% include "../partials/crsReferrals.njk" %}
     </div>
   </div>
 {% endblock %}

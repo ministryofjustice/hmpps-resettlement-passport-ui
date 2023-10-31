@@ -16,7 +16,7 @@
     class="govuk-grid-row govuk-!-padding-top-4">
     <!-- Main content area -->
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-      {{ subNav([
+      {% set subNavItems = [
         {
           name: "Finance and ID assessment",
           id: "assessment"
@@ -29,7 +29,9 @@
           name: "ID",
           id: "id"
         }
-      ]) }}
+      ] %}
+      {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
+      {{ subNav(subNavItems) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% if assessment.error %}
@@ -367,6 +369,7 @@
           </div>
         </div>
       </section>
+      {% include "../partials/crsReferrals.njk" %}
     </div>
   </div>
 {% endblock %}
