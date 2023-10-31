@@ -52,11 +52,15 @@
             <span class="right"></span>
           </header>
           <div class="app-summary-card__body">
-            <ul class="govuk-list govuk-list--bullet">
-              {% for workInterests in educationSkillsWork.details.workInterests %}
-                <li>{{workInterests}}</li>
-              {% endfor %}
-            </ul>
+            {% if educationSkillsWork.details.workInterests %}
+              <ul class="govuk-list govuk-list--bullet">
+                {% for workInterests in educationSkillsWork.details.workInterests %}
+                  <li>{{workInterests}}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No work interests found</p>
+            {% endif %}
           </div>
         </section>
 
@@ -68,11 +72,15 @@
             <span class="right"></span>
           </header>
           <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.reasonsToNotGetWork %}
             <ul class="govuk-list govuk-list--bullet">
               {% for reasonsToNotGetWork in educationSkillsWork.details.reasonsToNotGetWork %}
                 <li>{{reasonsToNotGetWork}}</li>
               {% endfor %}
             </ul>
+            {% else %}
+            <p>No ability to work data found</p>
+            {% endif %}
           </div>
         </section>
 
@@ -84,8 +92,8 @@
             <span class="right"></span>
           </header>
           <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.volunteeringAndExperience %}
             {% for volunteeringExperience in educationSkillsWork.details.volunteeringAndExperience %}
-              <h3 class="govuk-heading-s {{'govuk-!-padding-top-8' if loop.length > 1 and loop.index > 1}}">Qualification {{loop.index if loop.length > 1}}</h3>
               <table class="govuk-table">
                 <tbody>
                   <tr class="govuk-table__row">
@@ -107,12 +115,9 @@
                 </tbody>
               </table>
             {% endfor %}
-            <h3 class="govuk-heading-s govuk-!-padding-top-8">Education goals</h3>
-            <ul class="govuk-list govuk-list--bullet">
-              <li>Completed current training courses</li>
-              <li>Be ready to apply to Open University</li>
-              <li>Create my own learning plan</li>
-            </ul>
+            {% else %}
+            <p>No volunteering experience found</p>
+            {% endif %}
           </div>
         </section>
 
@@ -144,6 +149,8 @@
                   </tbody>
                 </table>
               {% endfor %}
+              {% else %}
+              <p>No qualifications found</p>
             {% endif %}
             {% if educationSkillsWork.details.educationalCoursesAndQualifications.additionalTraining %}
               <h3 class="govuk-heading-s govuk-!-margin-top-8">Additional training</h3>
@@ -152,6 +159,8 @@
                   <li>{{training}}</li>
                 {% endfor %}
               </ul>
+              {% else %}
+              <p>No additional training found</p>
             {% endif %}
           </div>
         </section>
@@ -171,6 +180,8 @@
                   <li>{{work}}</li>
                 {% endfor %}
               </ul>
+              {% else %}
+              <p>No work activities found</p>
             {% endif %}
             {% if educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonEducation %}
               <h3 class="govuk-heading-s">Education</h3>
@@ -179,6 +190,8 @@
                   <li>{{education}}</li>
                 {% endfor %}
               </ul>
+              {% else %}
+              <p>No education activities found</p>
             {% endif %}
           </div>
         </section>
@@ -197,6 +210,8 @@
                   <li>{{skills}}</li>
                 {% endfor %}
               </ul>
+              {% else %}
+              <p>No skills found</p>
             {% endif %}
             {% if educationSkillsWork.details.skillsAndInterests.personalInterests %}
               <h3 class="govuk-heading-s">Personal interests</h3>
@@ -205,6 +220,8 @@
                   <li>{{personalInterests}}</li>
                 {% endfor %}
               </ul>
+              {% else %}
+              <p>No work personal interests found</p>
             {% endif %}
           </div>
         </section>
