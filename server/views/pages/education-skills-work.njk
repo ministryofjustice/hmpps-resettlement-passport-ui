@@ -2,7 +2,6 @@
 {% set pathway = "Education, skills and work" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
