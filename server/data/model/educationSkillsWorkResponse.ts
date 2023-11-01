@@ -5,5 +5,5 @@ export type EducationSkillsWorkResponse = {
 
 export type EducationSkillsWork = {
   workReadinessStatus: string
-  deatils: string[]
+  details: string[]
 }
