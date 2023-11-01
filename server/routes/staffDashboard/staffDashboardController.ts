@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
-import RpService from '../../services/rpService'
 import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
+import RpService from '../../services/rpService'
 
 export default class StaffDashboardController {
   constructor(private readonly rpService: RpService) {}

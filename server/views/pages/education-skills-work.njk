@@ -2,7 +2,7 @@
 {% set pathway = "Education, skills and work" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
+{% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
@@ -12,13 +12,223 @@
       {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
     </div>
   </div>
-  <div
-      class="govuk-grid-row govuk-!-padding-top-4">
-    <!-- Main content area -->
+  <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-      {{ subNav(crsReferrals.results[0].referrals | createReferralsSubNav) }}
+      {% set subNavItems = [
+      {
+          name: "Work interests",
+          id: "work-interests"
+        },
+        {
+          name: "Things that may affect their ability to work",
+          id: "affect-ability-to-work"
+        },
+        {
+          name: "Volunteering and experience",
+          id: "volunteering-and-experience"
+        },
+        {
+          name: "Educational courses and qualifications",
+          id: "educational-courses-and-qualifications"
+        },
+        {
+          name: "Work and activities in prison",
+          id: "work-and-activities-in-prison"
+        },
+        {
+          name: "Employability skills",
+          id: "employability-skills"
+        }
+      ] %}
+      {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
+      {{ subNav(subNavItems) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
+      {% if not educationSkillsWork.error %}
+        <section id="work-interests" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Work interests<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.workInterests %}
+              <ul class="govuk-list govuk-list--bullet">
+                {% for workInterests in educationSkillsWork.details.workInterests %}
+                  <li>{{workInterests}}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>No work interests found</p>
+            {% endif %}
+          </div>
+        </section>
+
+        <section id="affect-ability-to-work" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Things that may affect their ability to work<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.reasonsToNotGetWork %}
+            <ul class="govuk-list govuk-list--bullet">
+              {% for reasonsToNotGetWork in educationSkillsWork.details.reasonsToNotGetWork %}
+                <li>{{reasonsToNotGetWork}}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p>No ability to work data found</p>
+            {% endif %}
+          </div>
+        </section>
+
+        <section id="volunteering-and-experience" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Volunteering and experience<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.volunteeringAndExperience %}
+            {% for volunteeringExperience in educationSkillsWork.details.volunteeringAndExperience %}
+              <table class="govuk-table">
+                <tbody>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Type</th>
+                    <td class="govuk-table__cell">{{ volunteeringExperience.typeOfWorkExperience }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Other work</th>
+                    <td class="govuk-table__cell">{{ volunteeringExperience.otherWork }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Role</th>
+                    <td class="govuk-table__cell">{{ volunteeringExperience.role }}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Details</th>
+                    <td class="govuk-table__cell">{{ volunteeringExperience.details }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            {% endfor %}
+            {% else %}
+            <p>No volunteering experience found</p>
+            {% endif %}
+          </div>
+        </section>
+
+        <section id="educational-courses-and-qualifications" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Educational courses and qualifications<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.educationalCoursesAndQualifications.qualifications %}
+              <h3 class="govuk-heading-s">Qualifications</h3>
+              {% for qualification in educationSkillsWork.details.educationalCoursesAndQualifications.qualifications %}
+                <table class="govuk-table govuk-!-margin-bottom-8">
+                  <tbody>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Subject</th>
+                      <td class="govuk-table__cell">{{qualification.subject}}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Grade</th>
+                      <td class="govuk-table__cell">{{qualification.grade}}</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">Level</th>
+                      <td class="govuk-table__cell">{{qualification.level}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              {% endfor %}
+              {% else %}
+              <p>No qualifications found</p>
+            {% endif %}
+            {% if educationSkillsWork.details.educationalCoursesAndQualifications.additionalTraining %}
+              <h3 class="govuk-heading-s govuk-!-margin-top-8">Additional training</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for training in educationSkillsWork.details.educationalCoursesAndQualifications.additionalTraining %}
+                  <li>{{training}}</li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <p>No additional training found</p>
+            {% endif %}
+          </div>
+        </section>
+
+        <section id="work-and-activities-in-prison" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Work and activities in prison<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonWork %}
+              <h3 class="govuk-heading-s">Work</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for work in educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonWork %}
+                  <li>{{work}}</li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <p>No work activities found</p>
+            {% endif %}
+            {% if educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonEducation %}
+              <h3 class="govuk-heading-s">Education</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for education in educationSkillsWork.details.inPrisonWorkAndEducation.inPrisonEducation %}
+                  <li>{{education}}</li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <p>No education activities found</p>
+            {% endif %}
+          </div>
+        </section>
+        <section id="employability-skills" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Employability skills<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.details.skillsAndInterests.skills %}
+              <h3 class="govuk-heading-s">Skills</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for skills in educationSkillsWork.details.skillsAndInterests.skills %}
+                  <li>{{skills}}</li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <p>No skills found</p>
+            {% endif %}
+            {% if educationSkillsWork.details.skillsAndInterests.personalInterests %}
+              <h3 class="govuk-heading-s">Personal interests</h3>
+              <ul class="govuk-list govuk-list--bullet">
+                {% for personalInterests in educationSkillsWork.details.skillsAndInterests.personalInterests %}
+                  <li>{{personalInterests}}</li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <p>No work personal interests found</p>
+            {% endif %}
+          </div>
+        </section>
+      {% else %}
+        <p>{{ educationSkillsWork.error }}</p>
+      {% endif %}
       {% include "../partials/crsReferrals.njk" %}
     </div>
   </div>

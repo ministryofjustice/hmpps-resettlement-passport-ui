@@ -1,7 +1,7 @@
 import { dataAccess } from '../data'
 import UserService from './userService'
-import RpService from './rpService'
 import ComponentService from './componentService'
+import RpService from './rpService'
 
 export const services = () => {
   const { hmppsAuthClient, applicationInfo, rpClient, componentClient } = dataAccess()
