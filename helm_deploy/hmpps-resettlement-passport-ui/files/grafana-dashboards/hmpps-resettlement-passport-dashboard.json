@@ -568,7 +568,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -629,7 +629,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -646,7 +646,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -707,7 +707,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1130,7 +1130,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(kube_deployment_metadata_generation, namespace)",
         "hide": 0,
@@ -1158,7 +1158,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(user_activity_count, auth_type)",
         "hide": 0,
@@ -1186,7 +1186,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(user_activity_count, path)",
         "hide": 0,
@@ -1214,7 +1214,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(user_activity_count, caseload)",
         "hide": 0,
