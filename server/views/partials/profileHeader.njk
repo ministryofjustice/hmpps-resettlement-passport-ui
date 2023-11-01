@@ -12,7 +12,7 @@
             </div>
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl">
-                {{ prisonerData.personalDetails.lastName }}, {{ prisonerData.personalDetails.firstName }}
+                {{ prisonerData.personalDetails.lastName | toTitleCase }}, {{ prisonerData.personalDetails.firstName | toTitleCase }}
                 <span class="govuk-caption-l">{{ prisonerData.personalDetails.prisonerNumber }}</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
                   <a href="{{ dpsUrl }}/prisoner/{{ prisonerData.personalDetails.prisonerNumber }}">View full DPS

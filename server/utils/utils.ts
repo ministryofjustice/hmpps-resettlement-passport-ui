@@ -196,3 +196,8 @@ export function isDateValid(dateString: string): boolean {
 export function getQueryString(url: string): string {
   return `?${url.split('?')[1]}`
 }
+
+export function toTitleCase(input: string): string {
+  const firstLetter = input.charAt(0).toUpperCase()
+  return `${firstLetter}${input.toLowerCase().slice(1)}`
+}
