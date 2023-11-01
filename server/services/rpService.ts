@@ -78,7 +78,7 @@ export default class RpService {
         `Session: ${sessionId} Cannot retrieve Education, Skills & Work information for ${prisonerId} ${err.status} ${err}`,
       )
       if (err.status === 404) {
-        getEducationSkillsWork = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+        getEducationSkillsWork = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
         getEducationSkillsWork = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
       }
