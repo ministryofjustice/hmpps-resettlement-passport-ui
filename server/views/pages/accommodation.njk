@@ -2,7 +2,6 @@
 {% set pathway = "Accommodation" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
-{% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}
@@ -94,7 +93,7 @@
               ]
             }) }}
           {% else %}
-            {{ errorMessage }}
+            {{ accommodation.error }}
           {% endif %}
         </div>
       </section>
