@@ -38,9 +38,9 @@
         "x": 0,
         "y": 0
       },
-      "id": 57,
+      "id": 61,
       "panels": [],
-      "title": "People In Prison",
+      "title": "People in Prison",
       "type": "row"
     },
     {
@@ -50,7 +50,7 @@
       },
       "description": "",
       "gridPos": {
-        "h": 3,
+        "h": 4,
         "w": 24,
         "x": 0,
         "y": 1
@@ -62,11 +62,11 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<h3>Overview count on all people in prison categorised based on the release date within 12 & 24 weeks.</h3>",
-        "mode": "html"
+        "content": "Count of all people in the selected prison (_All_ sums up all prisons) based on the their release date. _All Release Dates_ includes the entire prison population including those with no release date and release dates in the past. 12 weeks and 24 weeks include all people in prison with release dates within that window.\n\nThe values given are a snapshot given at the end of the period of time defined in Grafana.",
+        "mode": "markdown"
       },
       "pluginVersion": "9.2.4",
-      "title": "Overview  of prison data",
+      "title": "Overview",
       "transparent": true,
       "type": "text"
     },
@@ -95,10 +95,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 7,
+        "h": 3,
+        "w": 8,
         "x": 0,
-        "y": 4
+        "y": 5
       },
       "id": 30,
       "options": {
@@ -107,9 +107,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
@@ -123,13 +121,13 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"Overall\"})))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "All",
+      "title": "All Release Dates",
       "type": "stat"
     },
     {
@@ -156,10 +154,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 9,
-        "x": 7,
-        "y": 4
+        "h": 3,
+        "w": 8,
+        "x": 8,
+        "y": 5
       },
       "id": 31,
       "options": {
@@ -168,9 +166,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
@@ -184,13 +180,13 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "sum(avg by(prison) (total_prisoners_12Weeks_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"12 Weeks\"})))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Within 12 Weeks",
+      "title": "Within 12 Weeks of Release Date",
       "type": "stat"
     },
     {
@@ -217,10 +213,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
+        "h": 3,
         "w": 8,
         "x": 16,
-        "y": 4
+        "y": 5
       },
       "id": 32,
       "options": {
@@ -229,9 +225,7 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
@@ -245,13 +239,13 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "sum(avg by(prison) (total_prisoners_24Weeks_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
+          "expr": "sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"24 Weeks\"}))",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Within 24 Weeks",
+      "title": "Within 24 Weeks of Release Date",
       "type": "stat"
     },
     {
@@ -264,7 +258,7 @@
       },
       "id": 51,
       "panels": [],
-      "title": "Resettlement Passport - Status",
+      "title": "Pathway Completion Status",
       "type": "row"
     },
     {
@@ -274,7 +268,7 @@
       },
       "description": "",
       "gridPos": {
-        "h": 3,
+        "h": 5,
         "w": 24,
         "x": 0,
         "y": 9
@@ -286,18 +280,18 @@
           "showLineNumbers": false,
           "showMiniMap": false
         },
-        "content": "<h3>People in prison got initiated for resettlement passport process and their counts based on the pathway status Not Started.</h3>",
-        "mode": "html"
+        "content": "Overview of Pathway completion for the selected prison (_All_ sums up the data across all prisons) based on the their release date. All Release Dates includes the entire prison population including those with no release date and release dates in the past. 12 weeks and 24 weeks include all people in prison with release dates within that window.\n\n_Not Started_ means the person in prison has been viewed but all pathways are still in Not Started.\n_In Progress_ means at least one pathway has been moved from Not Started to another status.\n_Done_ means all pathways are in Done.\n\nThe values given are a snapshot given at the end of the period of time defined in Grafana.",
+        "mode": "markdown"
       },
       "pluginVersion": "9.2.4",
-      "title": "Overview  of prison data in Resettlement Passport",
+      "title": "Overview",
       "transparent": true,
       "type": "text"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -311,10 +305,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -322,24 +312,23 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 6,
         "w": 8,
         "x": 0,
-        "y": 12
+        "y": 14
       },
       "id": 46,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
       "pluginVersion": "9.2.4",
@@ -347,22 +336,50 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
-          "editorMode": "builder",
-          "expr": "sum(avg by(prison) (total_inuse_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
-          "legendFormat": "__auto",
-          "range": true,
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "round(sum(avg by(prison) (total_not_started_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"Overall\"})))",
+          "instant": true,
+          "legendFormat": "Not Started",
+          "range": false,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "round(sum(avg by(prison) (total_in_progress_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"Overall\"})))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "In Progress",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "round(sum(avg by(prison) (total_done_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"Overall\"})))",
+          "hide": false,
+          "legendFormat": "Done",
+          "range": true,
+          "refId": "C"
         }
       ],
-      "title": "All - In Progress / Done",
+      "title": "All Release Dates",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -376,10 +393,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -387,24 +400,23 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 6,
         "w": 8,
         "x": 8,
-        "y": 12
+        "y": 14
       },
-      "id": 47,
+      "id": 58,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
       "pluginVersion": "9.2.4",
@@ -412,22 +424,50 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "P5DCFC7561CCDE821"
           },
-          "editorMode": "builder",
-          "expr": "sum(avg by(prison) (total_inuse_prisoners_12Weeks_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
-          "legendFormat": "__auto",
-          "range": true,
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "round(sum(avg by(prison) (total_not_started_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"12 Weeks\"})))",
+          "instant": true,
+          "legendFormat": "Not Started",
+          "range": false,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "round(sum(avg by(prison) (total_in_progress_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"12 Weeks\"})))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "In Progress",
+          "range": false,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "round(sum(avg by(prison) (total_done_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"12 Weeks\"})))",
+          "hide": false,
+          "legendFormat": "Done",
+          "range": true,
+          "refId": "C"
         }
       ],
-      "title": "Within 12 Weeks - In Progress / Done",
+      "title": "Within 12 Weeks of Release Date",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
       "fieldConfig": {
         "defaults": {
@@ -441,10 +481,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -452,85 +488,23 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 6,
         "w": 8,
         "x": 16,
-        "y": 12
+        "y": 14
       },
-      "id": 48,
+      "id": 59,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "builder",
-          "expr": "sum(avg by(prison) (total_inuse_prisoners_24Weeks_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Within 24 Weeks - In Progress / Done",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P5DCFC7561CCDE821"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 0,
-        "y": 15
-      },
-      "id": 40,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
+        "text": {},
         "textMode": "auto"
       },
       "pluginVersion": "9.2.4",
@@ -541,719 +515,605 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "sum(avg by(prison) (total_notstarted_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
-          "legendFormat": "__auto",
-          "range": true,
+          "exemplar": false,
+          "expr": "round(sum(avg by(prison) (total_not_started_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"24 Weeks\"})))",
+          "instant": true,
+          "legendFormat": "Not Started",
+          "range": false,
           "refId": "A"
-        }
-      ],
-      "title": "All - Not Started",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P5DCFC7561CCDE821"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 8,
-        "y": 15
-      },
-      "id": 38,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "sum(avg by(prison) (total_notstarted_prisoners_12Weeks_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Within 12 Weeks - Not Started",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P5DCFC7561CCDE821"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
+          "exemplar": false,
+          "expr": "round(sum(avg by(prison) (total_in_progress_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"24 Weeks\"})))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "In Progress",
+          "range": false,
+          "refId": "B"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 16,
-        "y": 15
-      },
-      "id": 39,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "sum(avg by(prison) (total_notstarted_prisoners_24Weeks_count{namespace=~\"$namespace\", prison=~\"$prison\"}))",
-          "legendFormat": "__auto",
+          "expr": "round(sum(avg by(prison) (total_done_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"24 Weeks\"})))",
+          "hide": false,
+          "legendFormat": "Done",
           "range": true,
-          "refId": "A"
+          "refId": "C"
         }
       ],
-      "title": "Within 24 Weeks - Not Started",
+      "title": "Within 24 Weeks of Release Date",
       "type": "stat"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 20
       },
       "id": 25,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [
-                {
-                  "options": {
-                    "0": {
-                      "color": "red",
-                      "index": 0,
-                      "text": "DOWN"
-                    },
-                    "1": {
-                      "color": "green",
-                      "index": 1,
-                      "text": "UP"
-                    }
-                  },
-                  "type": "value"
-                }
-              ],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 22
-          },
-          "id": 27,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.2.4",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "up{namespace=~'$namespace', service='hmpps-resettlement-passport-api'}",
-              "instant": true,
-              "legendFormat": "{{pod}}",
-              "range": false,
-              "refId": "A"
-            }
-          ],
-          "title": "API Pod Status",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [
-                {
-                  "options": {
-                    "0": {
-                      "color": "red",
-                      "index": 0,
-                      "text": "DOWN"
-                    },
-                    "1": {
-                      "color": "green",
-                      "index": 1,
-                      "text": "UP"
-                    }
-                  },
-                  "type": "value"
-                }
-              ],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 22
-          },
-          "id": 28,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.2.4",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "up{namespace=~'$namespace', service='hmpps-resettlement-passport-ui'}",
-              "instant": true,
-              "legendFormat": "{{pod}}",
-              "range": false,
-              "refId": "A"
-            }
-          ],
-          "title": "UI Pod Status",
-          "type": "stat"
-        }
-      ],
+      "panels": [],
       "title": "Service Status",
       "type": "row"
     },
     {
-      "collapsed": true,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "id": 27,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "up{namespace=~'$namespace', service='hmpps-resettlement-passport-api'}",
+          "instant": true,
+          "legendFormat": "{{pod}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "API Pod Status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "id": 28,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "up{namespace=~'$namespace', service='hmpps-resettlement-passport-ui'}",
+          "instant": true,
+          "legendFormat": "{{pod}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "UI Pod Status",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 29
       },
       "id": 18,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P5DCFC7561CCDE821"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 11,
-            "w": 24,
-            "x": 0,
-            "y": 23
-          },
-          "id": 16,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "P5DCFC7561CCDE821"
-              },
-              "editorMode": "code",
-              "expr": "round (sum by (path, auth_type) (increase(user_activity_count{namespace=~'$namespace', auth_type=~'$authType', path=~'$path', caseload=~'$caseload'}[1m])))",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Page views",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P5DCFC7561CCDE821"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 0,
-            "y": 34
-          },
-          "id": 20,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.2.4",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "P5DCFC7561CCDE821"
-              },
-              "editorMode": "code",
-              "expr": "round(sum(increase(user_activity_count{namespace=~'$namespace', auth_type=~'$authType', path=~'$path', caseload=~'$caseload'}[$__range])))",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Approx. total page hits",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P5DCFC7561CCDE821"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              "mappings": []
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "^Value$"
-                },
-                "properties": [
-                  {
-                    "id": "displayName",
-                    "value": "N/A"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 6,
-            "y": 34
-          },
-          "id": 21,
-          "options": {
-            "displayLabels": [],
-            "legend": {
-              "displayMode": "list",
-              "placement": "right",
-              "showLegend": true,
-              "values": [
-                "percent"
-              ]
-            },
-            "pieType": "pie",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "9.2.4",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "P5DCFC7561CCDE821"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "round(sum by (auth_type) (increase(user_activity_count{namespace=~'$namespace'}[$__range]))) != 0",
-              "format": "time_series",
-              "instant": false,
-              "interval": "",
-              "legendFormat": "{{label_name}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Auth Type",
-          "type": "piechart"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P5DCFC7561CCDE821"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              "mappings": []
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 12,
-            "y": 34
-          },
-          "id": 22,
-          "options": {
-            "displayLabels": [],
-            "legend": {
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true,
-              "values": [
-                "percent"
-              ]
-            },
-            "pieType": "pie",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "9.2.4",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "P5DCFC7561CCDE821"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "round(sum by (path) (increase(user_activity_count{namespace=~'$namespace'}[$__range]))) != 0",
-              "format": "time_series",
-              "instant": false,
-              "interval": "",
-              "legendFormat": "{{label_name}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Paths",
-          "type": "piechart"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "P5DCFC7561CCDE821"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                }
-              },
-              "mappings": []
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byRegexp",
-                  "options": "^Value$"
-                },
-                "properties": [
-                  {
-                    "id": "displayName",
-                    "value": "N/A"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 18,
-            "y": 34
-          },
-          "id": 23,
-          "options": {
-            "displayLabels": [],
-            "legend": {
-              "displayMode": "list",
-              "placement": "right",
-              "showLegend": true,
-              "values": [
-                "percent"
-              ]
-            },
-            "pieType": "pie",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "9.2.4",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "P5DCFC7561CCDE821"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "round(sum by (caseload) (increase(user_activity_count{namespace=~'$namespace'}[$__range]))) != 0",
-              "format": "time_series",
-              "instant": false,
-              "interval": "",
-              "legendFormat": "{{label_name}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Caseload",
-          "type": "piechart"
-        }
-      ],
+      "panels": [],
       "title": "User Stats",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "round (sum by (path, auth_type) (increase(user_activity_count{namespace=~'$namespace', auth_type=~'$authType', path=~'$path', caseload=~'$caseload'}[1m])))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Page views",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 41
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "round(sum(increase(user_activity_count{namespace=~'$namespace', auth_type=~'$authType', path=~'$path', caseload=~'$caseload'}[$__range])))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Approx. total page hits",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "^Value$"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "N/A"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 41
+      },
+      "id": 21,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true,
+          "values": ["percent"]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "round(sum by (auth_type) (increase(user_activity_count{namespace=~'$namespace'}[$__range]))) != 0",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{label_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Auth Type",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 41
+      },
+      "id": 22,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "values": ["percent"]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "round(sum by (path) (increase(user_activity_count{namespace=~'$namespace'}[$__range]))) != 0",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{label_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Paths",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "^Value$"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "N/A"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 41
+      },
+      "id": 23,
+      "options": {
+        "displayLabels": [],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true,
+          "values": ["percent"]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "round(sum by (caseload) (increase(user_activity_count{namespace=~'$namespace'}[$__range]))) != 0",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{label_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Caseload",
+      "type": "piechart"
     }
   ],
   "refresh": "",
@@ -1270,7 +1130,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(kube_deployment_metadata_generation, namespace)",
         "hide": 0,
@@ -1298,7 +1158,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(user_activity_count, auth_type)",
         "hide": 0,
@@ -1326,7 +1186,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(user_activity_count, path)",
         "hide": 0,
@@ -1354,7 +1214,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "prometheus"
+          "uid": "P5DCFC7561CCDE821"
         },
         "definition": "label_values(user_activity_count, caseload)",
         "hide": 0,
@@ -1376,8 +1236,8 @@
       {
         "current": {
           "selected": true,
-          "text": "Moorland (HMP & YOI)",
-          "value": "Moorland (HMP & YOI)"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
@@ -1407,33 +1267,12 @@
     "to": "now"
   },
   "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
+    "refresh_intervals": ["5s", "10s", "30s", "1m", "5m", "15m", "30m", "1h", "2h", "1d"],
+    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
   },
   "timezone": "browser",
   "title": "HMPPS Resettlement Passport",
   "uid": "fc317542-6db7-11ee-b962-0242ac120002",
-  "version": 6,
+  "version": 11,
   "weekStart": ""
 }
