@@ -49,7 +49,7 @@
         <section id="work-interests" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-            Work interests<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            Work interests
             </h3>
             <span class="right"></span>
           </header>
@@ -69,7 +69,7 @@
         <section id="affect-ability-to-work" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-            Things that may affect their ability to work<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            Things that may affect their ability to work
             </h3>
             <span class="right"></span>
           </header>
@@ -89,29 +89,29 @@
         <section id="volunteering-and-experience" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-            Volunteering and experience<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            Volunteering and experience
             </h3>
             <span class="right"></span>
           </header>
           <div class="app-summary-card__body">
             {% if educationSkillsWork.details.volunteeringAndExperience %}
             {% for volunteeringExperience in educationSkillsWork.details.volunteeringAndExperience %}
-              <table class="govuk-table">
+              <table class="govuk-table govuk-!-margin-bottom-8">
                 <tbody>
                   <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Type</th>
+                    <th scope="row" class="govuk-table__header fixed-header-width">Type</th>
                     <td class="govuk-table__cell">{{ volunteeringExperience.typeOfWorkExperience }}</td>
                   </tr>
                   <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Other work</th>
+                    <th scope="row" class="govuk-table__header fixed-header-width">Other work</th>
                     <td class="govuk-table__cell">{{ volunteeringExperience.otherWork }}</td>
                   </tr>
                   <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Role</th>
+                    <th scope="row" class="govuk-table__header fixed-header-width">Role</th>
                     <td class="govuk-table__cell">{{ volunteeringExperience.role }}</td>
                   </tr>
                   <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Details</th>
+                    <th scope="row" class="govuk-table__header fixed-header-width">Details</th>
                     <td class="govuk-table__cell">{{ volunteeringExperience.details }}</td>
                   </tr>
                 </tbody>
@@ -126,7 +126,7 @@
         <section id="educational-courses-and-qualifications" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-            Educational courses and qualifications<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            Educational courses and qualifications
             </h3>
             <span class="right"></span>
           </header>
@@ -137,15 +137,15 @@
                 <table class="govuk-table govuk-!-margin-bottom-8">
                   <tbody>
                     <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Subject</th>
+                      <th scope="row" class="govuk-table__header fixed-header-width">Subject</th>
                       <td class="govuk-table__cell">{{qualification.subject}}</td>
                     </tr>
                     <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Grade</th>
+                      <th scope="row" class="govuk-table__header fixed-header-width">Grade</th>
                       <td class="govuk-table__cell">{{qualification.grade}}</td>
                     </tr>
                     <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Level</th>
+                      <th scope="row" class="govuk-table__header fixed-header-width">Level</th>
                       <td class="govuk-table__cell">{{qualification.level}}</td>
                     </tr>
                   </tbody>
@@ -170,7 +170,7 @@
         <section id="work-and-activities-in-prison" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-            Work and activities in prison<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            Work and activities in prison
             </h3>
             <span class="right"></span>
           </header>
@@ -200,7 +200,7 @@
         <section id="employability-skills" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-            Employability skills<span class="govuk-caption-m">Data sourced from Access and Meganexus</span>
+            Employability skills
             </h3>
             <span class="right"></span>
           </header>
