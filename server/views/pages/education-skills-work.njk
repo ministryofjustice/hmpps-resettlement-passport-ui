@@ -16,7 +16,11 @@
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {% set subNavItems = [
-      {
+        {
+          name: "Current work status",
+          id: "current-work-status"
+        },
+        {
           name: "Work interests",
           id: "work-interests"
         },
@@ -46,6 +50,33 @@
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% if not educationSkillsWork.error %}
+        <section id="current-work-status" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+            Current work status
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            {% if educationSkillsWork.workReadinessStatus or educationSkillsWork.workReadinessStatusLastUpdated %}
+              <table class="govuk-table">
+                <tbody>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Work readiness status</th>
+                    <td class="govuk-table__cell">{{educationSkillsWork.workReadinessStatus}}</td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Last updated</th>
+                    <td class="govuk-table__cell">{{educationSkillsWork.workReadinessStatusLastUpdated | formatDate('long')}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            {% else %}
+              <p>No current work status data found</p>
+            {% endif %}
+          </div>
+        </section>
+
         <section id="work-interests" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
