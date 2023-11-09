@@ -63,11 +63,11 @@
                 <tbody>
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">Work readiness status</th>
-                    <td class="govuk-table__cell">{{educationSkillsWork.workReadinessStatus}}</td>
+                    <td class="govuk-table__cell">{{educationSkillsWork.workReadinessStatus if educationSkillsWork.workReadinessStatus else "No status found"}}</td>
                   </tr>
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">Last updated</th>
-                    <td class="govuk-table__cell">{{educationSkillsWork.workReadinessStatusLastUpdated | formatDate('long')}}</td>
+                    <td class="govuk-table__cell">{{educationSkillsWork.workReadinessStatusLastUpdated | formatDate('long') if educationSkillsWork.workReadinessStatusLastUpdated else "No date found"}}</td>
                   </tr>
                 </tbody>
               </table>
