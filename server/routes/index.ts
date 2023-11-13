@@ -169,14 +169,14 @@ export default function routes(services: Services): Router {
     let serverUpdate = 'none'
     if (state) {
       try {
-        await rpClient.patch(`/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway`, {
-          pathway: getEnumByURL(selectedPathway),
-          status: state,
-        })
-        await rpClient.post(`/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}`, {
-          pathway: getEnumByURL(selectedPathway),
-          text: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
-        })
+        await rpClient.patch(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway-with-case-note`,
+          {
+            pathway: getEnumByURL(selectedPathway),
+            status: state,
+            caseNoteText: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
+          },
+        )
         serverUpdate = 'success'
       } catch (error) {
         logger.error(error)
