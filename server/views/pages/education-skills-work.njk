@@ -17,8 +17,8 @@
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {% set subNavItems = [
         {
-          name: "Current work status",
-          id: "current-work-status"
+          name: "Work status",
+          id: "work-status"
         },
         {
           name: "Work interests",
@@ -50,10 +50,10 @@
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% if not educationSkillsWork.error %}
-        <section id="current-work-status" class="app-summary-card govuk-!-margin-bottom-8">
+        <section id="work-status" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-            Current work status
+              Work status
             </h3>
             <span class="right"></span>
           </header>
@@ -62,7 +62,7 @@
               <table class="govuk-table">
                 <tbody>
                   <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">Work readiness status</th>
+                    <th scope="row" class="govuk-table__header">Current work status</th>
                     <td class="govuk-table__cell">{{educationSkillsWork.workReadinessStatus if educationSkillsWork.workReadinessStatus else "No status found"}}</td>
                   </tr>
                   <tr class="govuk-table__row">
