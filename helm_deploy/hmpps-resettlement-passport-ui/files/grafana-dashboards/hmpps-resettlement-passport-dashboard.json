@@ -48,7 +48,7 @@
         "type": "prometheus",
         "uid": "P5DCFC7561CCDE821"
       },
-      "description": "Shows the count of people in prison with release dates in the past i.e. have been released. Total Population is the total number of people in this category from the Prisoner Search API. Not Started is the number of people with a Resettlement Passport i.e. have been viewed but all the pathways are in Not Started. In Progress is the number of people with at least one pathway In Progress. Done is the number of people with all pathways in Support Not Required, Support Declined or Done.",
+      "description": "Shows the count of people in prison with release dates in the past i.e. have been released. Total Population is not currently available for past prisoners. Not Started is the number of people with a Resettlement Passport i.e. have been viewed but all the pathways are in Not Started. In Progress is the number of people with at least one pathway In Progress. Done is the number of people with all pathways in Support Not Required, Support Declined or Done.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -65,7 +65,34 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Total Population"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "0": {
+                        "index": 0,
+                        "text": "N/A"
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 10,
@@ -96,7 +123,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"All\", releaseDate=\"Past\"})))",
+          "expr": "0",
           "instant": true,
           "legendFormat": "Total Population",
           "range": false,
@@ -139,7 +166,7 @@
           "refId": "D"
         }
       ],
-      "title": "Past Release Dates",
+      "title": "Past Release Dates (All Time)",
       "type": "stat"
     },
     {
@@ -447,6 +474,359 @@
         "x": 0,
         "y": 11
       },
+      "id": 66,
+      "panels": [],
+      "title": "Database Queries",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 68,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "max by (method, repository) (spring_data_repository_invocations_seconds_max{namespace=~\"$namespace\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Max Query Invocation Times",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 71,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "sum by (method, repository) (rate(spring_data_repository_invocations_seconds_count{namespace=~\"$namespace\"}[1m]))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Query Invocation Rate",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 73,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "builder",
+          "expr": "avg by(method, repository) (rate(spring_data_repository_invocations_seconds_sum{namespace=~\"$namespace\"}[1m])) / avg by(method, repository) (rate(spring_data_repository_invocations_seconds_count{namespace=~\"$namespace\"}[1m]))",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Average Query Invocation Times",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P5DCFC7561CCDE821"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "N/A",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 72,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.2.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "(max by (method, repository) (spring_data_repository_invocations_seconds_count{namespace=~\"$namespace\",state!=\"SUCCESS\"}))",
+          "legendFormat": "{{method}}, {{repository}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Failed Queries",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
       "id": 25,
       "panels": [],
       "title": "Service Status",
@@ -495,7 +875,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 12
+        "y": 29
       },
       "id": 27,
       "options": {
@@ -573,7 +953,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 12
+        "y": 29
       },
       "id": 28,
       "options": {
@@ -614,7 +994,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 37
       },
       "id": 18,
       "panels": [],
@@ -682,7 +1062,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 38
       },
       "id": 16,
       "options": {
@@ -740,7 +1120,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 32
+        "y": 49
       },
       "id": 20,
       "options": {
@@ -810,7 +1190,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 32
+        "y": 49
       },
       "id": 21,
       "options": {
@@ -878,7 +1258,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 32
+        "y": 49
       },
       "id": 22,
       "options": {
@@ -959,7 +1339,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 32
+        "y": 49
       },
       "id": 23,
       "options": {
@@ -1160,6 +1540,6 @@
   "timezone": "browser",
   "title": "HMPPS Resettlement Passport",
   "uid": "fc317542-6db7-11ee-b962-0242ac120002",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
