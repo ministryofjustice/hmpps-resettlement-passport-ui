@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
-import userMetricsCounter from '../monitoring/customMetrics'
 import logger from '../../logger'
+import userMetricsCounter from '../monitoring/customMetrics'
 
 const userMetricsAndLoggingMiddleware = (): RequestHandler => {
   return async (req, res, next) => {
