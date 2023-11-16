@@ -26,7 +26,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 129,
+  "id": 6,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -38,79 +38,53 @@
         "x": 0,
         "y": 0
       },
-      "id": 61,
+      "id": 51,
       "panels": [],
-      "title": "People in Prison",
+      "title": "Pathway Completion Summary",
       "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "P5DCFC7561CCDE821"
       },
-      "description": "",
+      "description": "Shows the count of people in prison with release dates in the past i.e. have been released. Total Population is the total number of people in this category from the Prisoner Search API. Not Started is the number of people with a Resettlement Passport i.e. have been viewed but all the pathways are in Not Started. In Progress is the number of people with at least one pathway In Progress. Done is the number of people with all pathways in Support Not Required, Support Declined or Done.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
       "gridPos": {
-        "h": 4,
-        "w": 24,
+        "h": 10,
+        "w": 6,
         "x": 0,
         "y": 1
       },
-      "id": 53,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "Count of all people in the selected prison (_All_ sums up all prisons) based on the their release date. _All Release Dates_ includes the entire prison population including those with no release date and release dates in the past. 12 weeks and 24 weeks include all people in prison with release dates within that window.\n\nThe values given are a snapshot given at the end of the period of time defined in Grafana.",
-        "mode": "markdown"
-      },
-      "pluginVersion": "9.2.4",
-      "title": "Overview",
-      "transparent": true,
-      "type": "text"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P5DCFC7561CCDE821"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 0,
-        "y": 5
-      },
-      "id": 30,
+      "id": 64,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
       "pluginVersion": "9.2.4",
@@ -121,178 +95,59 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"Overall\"})))",
-          "legendFormat": "__auto",
-          "range": true,
+          "exemplar": false,
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"All\", releaseDate=\"Past\"})))",
+          "instant": true,
+          "legendFormat": "Total Population",
+          "range": false,
           "refId": "A"
-        }
-      ],
-      "title": "All Release Dates",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P5DCFC7561CCDE821"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 8,
-        "y": 5
-      },
-      "id": 31,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"12 Weeks\"})))",
-          "legendFormat": "__auto",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"Not Started\", releaseDate=\"Past\"})))",
+          "hide": false,
+          "legendFormat": "Not Started",
           "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Within 12 Weeks of Release Date",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "P5DCFC7561CCDE821"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
+          "refId": "B"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 8,
-        "x": 16,
-        "y": 5
-      },
-      "id": 32,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.2.4",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"24 Weeks\"}))",
-          "legendFormat": "__auto",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"In Progress\", releaseDate=\"Past\"})))",
+          "hide": false,
+          "legendFormat": "In Progress",
           "range": true,
-          "refId": "A"
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"Done\", releaseDate=\"Past\"})))",
+          "hide": false,
+          "legendFormat": "Done",
+          "range": true,
+          "refId": "D"
         }
       ],
-      "title": "Within 24 Weeks of Release Date",
+      "title": "Past Release Dates",
       "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 8
-      },
-      "id": 51,
-      "panels": [],
-      "title": "Pathway Completion Status",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "description": "",
-      "gridPos": {
-        "h": 5,
-        "w": 24,
-        "x": 0,
-        "y": 9
-      },
-      "id": 55,
-      "options": {
-        "code": {
-          "language": "plaintext",
-          "showLineNumbers": false,
-          "showMiniMap": false
-        },
-        "content": "Overview of Pathway completion for the selected prison (_All_ sums up the data across all prisons) based on the their release date. All Release Dates includes the entire prison population including those with no release date and release dates in the past. 12 weeks and 24 weeks include all people in prison with release dates within that window.\n\n_Not Started_ means the person in prison has been viewed but all pathways are still in Not Started.\n_In Progress_ means at least one pathway has been moved from Not Started to another status.\n_Done_ means all pathways are in Done.\n\nThe values given are a snapshot given at the end of the period of time defined in Grafana.",
-        "mode": "markdown"
-      },
-      "pluginVersion": "9.2.4",
-      "title": "Overview",
-      "transparent": true,
-      "type": "text"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "P5DCFC7561CCDE821"
       },
+      "description": "Shows the count of people in prison with release dates in the future or no release date i.e. have been not yet been released. Total Population is the total number of people in this category from the Prisoner Search API. Not Started is the number of people with a Resettlement Passport i.e. have been viewed but all the pathways are in Not Started. In Progress is the number of people with at least one pathway In Progress. Done is the number of people with all pathways in Support Not Required, Support Declined or Done.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -312,10 +167,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 0,
-        "y": 14
+        "h": 10,
+        "w": 6,
+        "x": 6,
+        "y": 1
       },
       "id": 46,
       "options": {
@@ -340,9 +195,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "round(sum(avg by(prison) (total_not_started_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"Overall\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"All\", releaseDate=\"All Future\"})))",
           "instant": true,
-          "legendFormat": "Not Started",
+          "legendFormat": "Total Population",
           "range": false,
           "refId": "A"
         },
@@ -352,12 +207,10 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "round(sum(avg by(prison) (total_in_progress_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"Overall\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"Not Started\", releaseDate=\"All Future\"})))",
           "hide": false,
-          "instant": true,
-          "legendFormat": "In Progress",
-          "range": false,
+          "legendFormat": "Not Started",
+          "range": true,
           "refId": "B"
         },
         {
@@ -366,14 +219,26 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "round(sum(avg by(prison) (total_done_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"Overall\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"In Progress\", releaseDate=\"All Future\"})))",
+          "hide": false,
+          "legendFormat": "In Progress",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"Done\", releaseDate=\"All Future\"})))",
           "hide": false,
           "legendFormat": "Done",
           "range": true,
-          "refId": "C"
+          "refId": "D"
         }
       ],
-      "title": "All Release Dates",
+      "title": "All Future Release Dates",
       "type": "stat"
     },
     {
@@ -381,6 +246,7 @@
         "type": "prometheus",
         "uid": "P5DCFC7561CCDE821"
       },
+      "description": "Shows the count of people in prison with release dates within the next 12 weeks. Total Population is the total number of people in this category from the Prisoner Search API. Not Started is the number of people with a Resettlement Passport i.e. have been viewed but all the pathways are in Not Started. In Progress is the number of people with at least one pathway In Progress. Done is the number of people with all pathways in Support Not Required, Support Declined or Done.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -400,12 +266,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 8,
-        "y": 14
+        "h": 10,
+        "w": 6,
+        "x": 12,
+        "y": 1
       },
-      "id": 58,
+      "id": 62,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -428,9 +294,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "round(sum(avg by(prison) (total_not_started_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"12 Weeks\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"All\", releaseDate=\"12 Weeks\"})))",
           "instant": true,
-          "legendFormat": "Not Started",
+          "legendFormat": "Total Population",
           "range": false,
           "refId": "A"
         },
@@ -440,12 +306,10 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "round(sum(avg by(prison) (total_in_progress_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"12 Weeks\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"Not Started\", releaseDate=\"12 Weeks\"})))",
           "hide": false,
-          "instant": true,
-          "legendFormat": "In Progress",
-          "range": false,
+          "legendFormat": "Not Started",
+          "range": true,
           "refId": "B"
         },
         {
@@ -454,14 +318,26 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "round(sum(avg by(prison) (total_done_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"12 Weeks\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"In Progress\", releaseDate=\"12 Weeks\"})))",
+          "hide": false,
+          "legendFormat": "In Progress",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"Done\", releaseDate=\"12 Weeks\"})))",
           "hide": false,
           "legendFormat": "Done",
           "range": true,
-          "refId": "C"
+          "refId": "D"
         }
       ],
-      "title": "Within 12 Weeks of Release Date",
+      "title": "Release Date Within 12 Weeks",
       "type": "stat"
     },
     {
@@ -469,6 +345,7 @@
         "type": "prometheus",
         "uid": "P5DCFC7561CCDE821"
       },
+      "description": "Shows the count of people in prison with release dates within the next 24 weeks. Total Population is the total number of people in this category from the Prisoner Search API. Not Started is the number of people with a Resettlement Passport i.e. have been viewed but all the pathways are in Not Started. In Progress is the number of people with at least one pathway In Progress. Done is the number of people with all pathways in Support Not Required, Support Declined or Done.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -488,12 +365,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 16,
-        "y": 14
+        "h": 10,
+        "w": 6,
+        "x": 18,
+        "y": 1
       },
-      "id": 59,
+      "id": 63,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -516,9 +393,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "round(sum(avg by(prison) (total_not_started_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"24 Weeks\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"All\", releaseDate=\"24 Weeks\"})))",
           "instant": true,
-          "legendFormat": "Not Started",
+          "legendFormat": "Total Population",
           "range": false,
           "refId": "A"
         },
@@ -528,12 +405,10 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "round(sum(avg by(prison) (total_in_progress_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"24 Weeks\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"Not Started\", releaseDate=\"24 Weeks\"})))",
           "hide": false,
-          "instant": true,
-          "legendFormat": "In Progress",
-          "range": false,
+          "legendFormat": "Not Started",
+          "range": true,
           "refId": "B"
         },
         {
@@ -542,14 +417,26 @@
             "uid": "P5DCFC7561CCDE821"
           },
           "editorMode": "code",
-          "expr": "round(sum(avg by(prison) (total_done_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", releaseDate=\"24 Weeks\"})))",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"In Progress\", releaseDate=\"24 Weeks\"})))",
+          "hide": false,
+          "legendFormat": "In Progress",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "P5DCFC7561CCDE821"
+          },
+          "editorMode": "code",
+          "expr": "round(sum(avg by(prison) (total_prisoners_count{namespace=~\"$namespace\", prison=~\"$prison\", status=\"Done\", releaseDate=\"24 Weeks\"})))",
           "hide": false,
           "legendFormat": "Done",
           "range": true,
-          "refId": "C"
+          "refId": "D"
         }
       ],
-      "title": "Within 24 Weeks of Release Date",
+      "title": "Release Date Within 24 Weeks",
       "type": "stat"
     },
     {
@@ -558,7 +445,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 11
       },
       "id": 25,
       "panels": [],
@@ -608,7 +495,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 12
       },
       "id": 27,
       "options": {
@@ -686,7 +573,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 21
+        "y": 12
       },
       "id": 28,
       "options": {
@@ -727,7 +614,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 20
       },
       "id": 18,
       "panels": [],
@@ -795,7 +682,7 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 21
       },
       "id": 16,
       "options": {
@@ -853,12 +740,12 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 41
+        "y": 32
       },
       "id": 20,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -923,7 +810,7 @@
         "h": 8,
         "w": 6,
         "x": 6,
-        "y": 41
+        "y": 32
       },
       "id": 21,
       "options": {
@@ -991,7 +878,7 @@
         "h": 8,
         "w": 6,
         "x": 12,
-        "y": 41
+        "y": 32
       },
       "id": 22,
       "options": {
@@ -1072,7 +959,7 @@
         "h": 8,
         "w": 6,
         "x": 18,
-        "y": 41
+        "y": 32
       },
       "id": 23,
       "options": {
@@ -1273,6 +1160,6 @@
   "timezone": "browser",
   "title": "HMPPS Resettlement Passport",
   "uid": "fc317542-6db7-11ee-b962-0242ac120002",
-  "version": 11,
+  "version": 1,
   "weekStart": ""
 }
