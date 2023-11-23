@@ -167,8 +167,12 @@ export default function routes(services: Services): Router {
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
     let serverUpdate = 'none'
+    const deliusUserErrorMessage = 'Delius users are currently unable to access the case notes feature'
     if (state) {
       try {
+        if (res.locals.user.authSource === 'delius') {
+          throw new Error(deliusUserErrorMessage)
+        }
         await rpClient.patch(
           `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway-with-case-note`,
           {
@@ -179,8 +183,12 @@ export default function routes(services: Services): Router {
         )
         serverUpdate = 'success'
       } catch (error) {
+        if (error.message === deliusUserErrorMessage) {
+          serverUpdate = 'deliusUserError'
+        } else {
+          serverUpdate = 'error'
+        }
         logger.error(error)
-        serverUpdate = 'error'
       }
     }
     let caseNotes: { error?: boolean } = {}
