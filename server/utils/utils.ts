@@ -1,6 +1,9 @@
+import { Callback } from 'nunjucks'
 import { PathwayStatus } from '../@types/express'
 import ENUMS_DICTIONARY, { EnumValue } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
+import FeatureFlags from '../featureFlag'
+import logger from '../../logger'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -200,4 +203,16 @@ export function getQueryString(url: string): string {
 export function toTitleCase(input: string): string {
   const firstLetter = input.charAt(0).toUpperCase()
   return `${firstLetter}${input.toLowerCase().slice(1)}`
+}
+
+export async function getFeatureFlag(flag: string, callback: Callback<string, boolean>) {
+  const featureFlags = FeatureFlags.getInstance()
+  if (await featureFlags.getFeatureFlags()) {
+    featureFlags.getFeatureFlags().then(res => {
+      callback(null, res.find(feature => feature.feature === flag)?.enabled)
+    })
+  } else {
+    logger.warn(`No feature flags available, returning null for feature [${flag}].`)
+    callback(null, null)
+  }
 }

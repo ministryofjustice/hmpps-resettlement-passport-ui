@@ -17,6 +17,7 @@ generic-service:
     COMPONENT_API_URL: "https://frontend-components-dev.hmpps.service.justice.gov.uk"
     ENVIRONMENT_NAME: "DEV"
     SUPPORT_URL: "https://support-dev.hmpps.service.justice.gov.uk/feedback-and-support"
+    FEATURE_FLAG_PATH_FILENAME: "dev.json"
 
 generic-prometheus-alerts:
   alertSeverity: hmpps-resettlement-passport-non-prod
