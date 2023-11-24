@@ -25,6 +25,7 @@ import {
   createReferralsId,
   getQueryString,
   toTitleCase,
+  getFeatureFlag,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -88,4 +89,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('createReferralsId', createReferralsId)
   njkEnv.addFilter('getQueryString', getQueryString)
   njkEnv.addFilter('toTitleCase', toTitleCase)
+  njkEnv.addFilter('getFeatureFlag', getFeatureFlag, true)
 }

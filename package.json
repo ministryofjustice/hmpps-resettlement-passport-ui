@@ -20,8 +20,8 @@
     "start-feature:dev": "concurrently -k -p \"[{name}]\" -n \"Views,TypeScript,Node,Sass\" -c \"yellow.bold,cyan.bold,green.bold,blue.bold\" \"npm run watch-views\" \"npm run watch-ts\" \"npm run watch-node-feature\" \"npm run watch-sass\"",
     "lint": "eslint . --cache --max-warnings 0",
     "typecheck": "tsc && tsc -p integration_tests",
-    "test": "jest",
-    "test:ci": "jest --runInBand",
+    "test": "FEATURE_FLAG_ENABLED=false jest",
+    "test:ci": "FEATURE_FLAG_ENABLED=false jest --runInBand",
     "security_audit": "npx audit-ci --config audit-ci.json",
     "int-test": "cypress run --config video=false",
     "int-test-ui": "cypress open",
@@ -91,6 +91,7 @@
     ]
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.456.0",
     "@ministryofjustice/frontend": "^1.8.0",
     "agentkeepalive": "^4.3.0",
     "applicationinsights": "^2.7.2",
@@ -110,6 +111,8 @@
     "jwt-decode": "^3.1.2",
     "nocache": "^4.0.0",
     "nunjucks": "^3.2.4",
+    "node-ts-cache": "^4.4.0",
+    "node-ts-cache-storage-memory": "^4.4.0",
     "passport": "^0.6.0",
     "passport-oauth2": "^1.7.0",
     "prom-client": "^14.2.0",
