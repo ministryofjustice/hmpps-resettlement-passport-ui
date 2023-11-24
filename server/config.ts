@@ -1,7 +1,6 @@
 const production = process.env.NODE_ENV === 'production'
 const environment = process.env.ENVIRONMENT || 'local'
 const enableApplicationInsights = environment !== 'local'
-console.log(enableApplicationInsights)
 function get<T>(name: string, fallback: T, options = { requireInProduction: false }): T | string {
   if (process.env[name]) {
     return process.env[name]
