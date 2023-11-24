@@ -36,7 +36,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
 
   app.locals.asset_path = '/assets/'
   app.locals.applicationName = 'Prepare someone for release'
-
+  app.locals.applicationInsightsConnectionString = process.env.APPLICATIONINSIGHTS_CONNECTION_STRING || ''
+  app.locals.enableApplicationInsights = config.enableApplicationInsights
   // Cachebusting version string
   if (production) {
     // Version only changes with new commits

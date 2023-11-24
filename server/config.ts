@@ -1,5 +1,6 @@
 const production = process.env.NODE_ENV === 'production'
-
+const environment = process.env.ENVIRONMENT || 'local'
+const enableApplicationInsights = environment !== 'local'
 function get<T>(name: string, fallback: T, options = { requireInProduction: false }): T | string {
   if (process.env[name]) {
     return process.env[name]
@@ -95,6 +96,7 @@ export default {
     },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
+  enableApplicationInsights,
   dpsHomeUrl: get('DPS_URL', '#', requiredInProduction),
   phaseName: get('PHASE_NAME', 'BETA'),
   supportUrl: get('SUPPORT_URL', '', requiredInProduction),
