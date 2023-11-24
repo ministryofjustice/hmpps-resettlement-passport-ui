@@ -42,7 +42,9 @@ services:
     build: .
     networks:
       - hmpps
-    depends_on: [redis]
+    depends_on:
+      - redis
+      - localstack
     ports:
       - "3000:3000"
     environment:
@@ -54,6 +56,9 @@ services:
       - API_CLIENT_SECRET=client-secret
       - SYSTEM_CLIENT_ID=system-client-id
       - SYSTEM_CLIENT_SECRET=system-client-secret
+      - AWS_ACCESS_KEY_ID=foobar
+      - AWS_SECRET_ACCESS_KEY=foobar
+      - AWS_ENDPOINT_URL=http://localstack:4566
 
 networks:
   hmpps:
