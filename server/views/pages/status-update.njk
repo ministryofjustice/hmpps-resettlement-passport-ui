@@ -35,7 +35,8 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          <form method="POST" action="/status-update#case-notes" novalidate>
+          {% set actionURL = "/status-update#case-notes" if isPrisonUser else "/status-update" %}
+          <form method="POST" action="{{actionURL}}" novalidate>
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
