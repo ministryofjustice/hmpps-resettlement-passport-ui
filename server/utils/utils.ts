@@ -212,7 +212,7 @@ export async function getFeatureFlag(flag: string, callback: Callback<string, bo
       callback(null, res.find(feature => feature.feature === flag)?.enabled)
     })
   } else {
-    logger.warn(`No feature flags available, returning null for feature [${flag}].`)
-    callback(null, null)
+    logger.warn(`No feature flags available, returning undefined for feature [${flag}].`)
+    callback(null, undefined)
   }
 }
