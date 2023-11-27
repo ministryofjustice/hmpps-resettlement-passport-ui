@@ -107,7 +107,7 @@ export default {
       region: get('FEATURE_FLAG_AWS_REGION', 'eu-west-2'),
       bucketName: get('FEATURE_FLAG_BUCKET', 'hmpps-resettlement-passport-ui-config'),
       path: get('FEATURE_FLAG_PATH', 'feature-flags'),
-      filename: get('FEATURE_FLAG_PATH_FILENAME', 'local.json'),
+      filename: get('FEATURE_FLAG_PATH_FILENAME', 'flags.json'),
     },
   },
 }
