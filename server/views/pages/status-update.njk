@@ -35,7 +35,7 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          {% set actionURL = "/status-update#case-notes" if isPrisonUser else "/status-update" %}
+          {% set actionURL = "/status-update#case-notes" if serverUpdate === "success" else "/status-update#caseNotesUpdateError" %}
           <form method="POST" action="{{actionURL}}" novalidate>
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
@@ -95,13 +95,15 @@
             {% if serverUpdate === 'error' %}
               {{ govukNotificationBanner({
                 html: errorNotificationHtml,
-                type: "error"
+                type: "error",
+                titleId: "caseNotesUpdateError"
               }) }}
             {% endif %}
             {% if serverUpdate === 'deliusUserError' %}
               {{ govukNotificationBanner({
                 html: deliusUserErrorHtml,
-                type: "error"
+                type: "error",
+                titleId: "caseNotesUpdateError"
               }) }}
             {% endif %}
           </form>
