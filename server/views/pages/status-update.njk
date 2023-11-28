@@ -35,7 +35,7 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          {% set actionURL = "/status-update#case-notes" if isPrisonUser else "/status-update" %}
+          {% set actionURL = "/status-update#case-notes" if isPrisonUser else "/status-update#deliusUserError" %}
           <form method="POST" action="{{actionURL}}" novalidate>
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
@@ -93,7 +93,7 @@
               </h3>
             {% endset %}
             {% set deliusUserErrorHtml %}
-              <h3 class="govuk-notification-banner__heading">
+              <h3 class="govuk-notification-banner__heading" id="deliusUserError">
                 Delius users are currently unable to access the case notes feature. If this feature would be useful for you, use the <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta" rel="noreferrer noopener" target="_blank">feedback form</a> to let us know.
               </h3>
             {% endset %}
