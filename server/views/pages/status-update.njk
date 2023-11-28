@@ -97,12 +97,6 @@
                 Delius users are currently unable to access the case notes feature. If this feature would be useful for you, use the <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta" rel="noreferrer noopener" target="_blank">feedback form</a> to let us know.
               </h3>
             {% endset %}
-            {% if serverUpdate === 'success'  %}
-              {{ govukNotificationBanner({
-                html: successNotificationHtml,
-                type: 'success'
-              }) }}
-            {% endif %}
             {% if serverUpdate === 'error' %}
               {{ govukNotificationBanner({
                 html: errorNotificationHtml,
