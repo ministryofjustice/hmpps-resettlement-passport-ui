@@ -82,6 +82,11 @@
             <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
             <button class="govuk-button" type="submit">Update</button>
+            {% set successNotificationHtml %}
+              <h3 class="govuk-notification-banner__heading">
+                Pathway status updated successfully
+              </h3>
+            {% endset %}
             {% set errorNotificationHtml %}
               <h3 class="govuk-notification-banner__heading">
                 Unable to update - try again later or contact administrator if problem persists.
@@ -92,6 +97,12 @@
                 Delius users are currently unable to access the case notes feature. If this feature would be useful for you, use the <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta" rel="noreferrer noopener" target="_blank">feedback form</a> to let us know.
               </h3>
             {% endset %}
+            {% if serverUpdate === 'success'  %}
+              {{ govukNotificationBanner({
+                html: successNotificationHtml,
+                type: 'success'
+              }) }}
+            {% endif %}
             {% if serverUpdate === 'error' %}
               {{ govukNotificationBanner({
                 html: errorNotificationHtml,
