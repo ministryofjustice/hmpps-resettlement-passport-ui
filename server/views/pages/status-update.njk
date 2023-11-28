@@ -35,7 +35,7 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          {% set actionURL = "/status-update#case-notes" if isPrisonUser else "/status-update#deliusUserError" %}
+          {% set actionURL = "/status-update#case-notes" if serverUpdate === "success" else "/status-update#caseNotesUpdateError" %}
           <form method="POST" action="{{actionURL}}" novalidate>
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
@@ -82,37 +82,28 @@
             <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
             <button class="govuk-button" type="submit">Update</button>
-            {% set successNotificationHtml %}
-              <h3 class="govuk-notification-banner__heading">
-                Pathway status updated successfully
-              </h3>
-            {% endset %}
             {% set errorNotificationHtml %}
               <h3 class="govuk-notification-banner__heading">
                 Unable to update - try again later or contact administrator if problem persists.
               </h3>
             {% endset %}
             {% set deliusUserErrorHtml %}
-              <h3 class="govuk-notification-banner__heading" id="deliusUserError">
+              <h3 class="govuk-notification-banner__heading">
                 Delius users are currently unable to access the case notes feature. If this feature would be useful for you, use the <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta" rel="noreferrer noopener" target="_blank">feedback form</a> to let us know.
               </h3>
             {% endset %}
-            {% if serverUpdate === 'success'  %}
-              {{ govukNotificationBanner({
-                html: successNotificationHtml,
-                type: 'success'
-              }) }}
-            {% endif %}
             {% if serverUpdate === 'error' %}
               {{ govukNotificationBanner({
                 html: errorNotificationHtml,
-                type: "error"
+                type: "error",
+                titleId: "caseNotesUpdateError"
               }) }}
             {% endif %}
             {% if serverUpdate === 'deliusUserError' %}
               {{ govukNotificationBanner({
                 html: deliusUserErrorHtml,
-                type: "error"
+                type: "error",
+                titleId: "caseNotesUpdateError"
               }) }}
             {% endif %}
           </form>
