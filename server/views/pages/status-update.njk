@@ -35,7 +35,7 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          {% set actionURL = "/status-update#case-notes" if serverUpdate === "success" else "/status-update#caseNotesUpdateError" %}
+          {% set actionURL = "/status-update#content" %}
           <form method="POST" action="{{actionURL}}" novalidate>
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
@@ -92,6 +92,9 @@
                 Delius users are currently unable to access the case notes feature. If this feature would be useful for you, use the <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta" rel="noreferrer noopener" target="_blank">feedback form</a> to let us know.
               </h3>
             {% endset %}
+            {% if serverUpdate === 'error' or serverUpdate === 'deliusUserError' %}
+              <div id='content'></div>
+            {% endif %}
             {% if serverUpdate === 'error' %}
               {{ govukNotificationBanner({
                 html: errorNotificationHtml,
@@ -102,14 +105,16 @@
             {% if serverUpdate === 'deliusUserError' %}
               {{ govukNotificationBanner({
                 html: deliusUserErrorHtml,
-                type: "error",
-                titleId: "caseNotesUpdateError"
+                type: "error"
               }) }}
             {% endif %}
           </form>
         </div>
       </section>
       <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
+        {% if serverUpdate === 'success' %}
+          <div id='content'></div>
+        {% endif %}
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">{{ pathway }} case notes</h3>
         </header>
