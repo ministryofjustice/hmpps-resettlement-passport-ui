@@ -5,21 +5,12 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 {% block content %}
-  {# TODO - remove once finished testing feature flags on dev #}
-  {% if "feature1" | getFeatureFlag is not defined %}
-    <p>TESTING - Feature 1 is undefined</p>
-  {% endif %}
+  {# TODO - remove once finished testing feature flags #}
   {% if "feature1" | getFeatureFlag %}
     <p>TESTING - Feature 1 is enabled</p>
   {% endif %}
-  {% if "feature2" | getFeatureFlag is not defined %}
-    <p>TESTING - Feature 2 is undefined</p>
-  {% endif %}
   {% if "feature2" | getFeatureFlag %}
     <p>TESTING - Feature 2 is enabled</p>
-  {% endif %}
-  {% if "feature3" | getFeatureFlag is not defined %}
-    <p>TESTING - Feature 3 is undefined</p>
   {% endif %}
   {% if "feature3" | getFeatureFlag %}
     <p>TESTING - Feature 3 is enabled</p>

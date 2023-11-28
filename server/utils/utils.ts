@@ -209,10 +209,15 @@ export async function getFeatureFlag(flag: string, callback: Callback<string, bo
   const featureFlags = FeatureFlags.getInstance()
   if (await featureFlags.getFeatureFlags()) {
     featureFlags.getFeatureFlags().then(res => {
-      callback(null, res.find(feature => feature.feature === flag)?.enabled)
+      const featureEnabled = res.find(feature => feature.feature === flag)?.enabled
+      if (featureEnabled !== undefined) {
+        callback(null, featureEnabled)
+      } else {
+        callback(null, false) // If feature is missing from map send back false
+      }
     })
   } else {
-    logger.warn(`No feature flags available, returning undefined for feature [${flag}].`)
-    callback(null, undefined)
+    logger.warn(`No feature flags available, returning false for feature [${flag}].`)
+    callback(null, false)
   }
 }
