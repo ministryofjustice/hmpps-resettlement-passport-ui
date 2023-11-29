@@ -13,7 +13,8 @@ export default class StaffDashboardController {
       searchInput = '',
       releaseTime = '84',
       page = '0',
-    } = req.query as { searchInput: string; releaseTime: string; page: string }
+      pathwayView = '',
+    } = req.query as { searchInput: string; releaseTime: string; page: string; pathwayView: string }
 
     const errors: ErrorMessage[] = []
     let prisonersList = null
@@ -31,6 +32,7 @@ export default class StaffDashboardController {
           'ASC',
           <string>searchInput,
           <string>releaseTime,
+          <string>pathwayView,
         )
       }
       const view = new StaffDashboardView(prisonersList, errors, searchInput, releaseTime, page)
