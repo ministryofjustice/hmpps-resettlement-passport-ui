@@ -42,14 +42,14 @@
                   Pathway view
                 </label>
                 <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option value="">All pathways</option>
-                  <option value="ACCOMMODATION">Accommodation</option>
-                  <option value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option value="FINANCE_AND_ID">Finance and ID</option>
-                  <option value="HEALTH">Health</option>
+                  <option {% if pathwayView == "" %} selected {% endif %} value="">All pathways</option>
+                  <option {% if pathwayView == "ACCOMMODATION" %} selected {% endif %} value="ACCOMMODATION">Accommodation</option>
+                  <option {% if pathwayView == "ATTITUDES_THINKING_AND_BEHAVIOUR" %} selected {% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option {% if pathwayView == "CHILDREN_FAMILIES_AND_COMMUNITY" %} selected {% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option {% if pathwayView == "DRUGS_AND_ALCOHOL" %} selected {% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option {% if pathwayView == "EDUCATION_SKILLS_AND_WORK" %} selected {% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option {% if pathwayView == "FINANCE_AND_ID" %} selected {% endif %} value="FINANCE_AND_ID">Finance and ID</option>
+                  <option {% if pathwayView == "HEALTH" %} selected {% endif %} value="HEALTH">Health</option>
                 </select>
               </div>
             </div>
