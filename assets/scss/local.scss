@@ -807,10 +807,11 @@ div.sticky {
   padding-top:0;
 }
 
-.prisoner-name-filter {
-  max-width: 280px;
-}
-
 th.fixed-header-width {
   width: 200px;
+}
+
+.filter-input {
+  width: 100%;
+  min-width: unset;
 }

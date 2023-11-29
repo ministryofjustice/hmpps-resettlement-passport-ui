@@ -13,7 +13,21 @@ export default class StaffDashboardController {
       searchInput = '',
       releaseTime = '84',
       page = '0',
-    } = req.query as { searchInput: string; releaseTime: string; page: string }
+      pathwayView = '',
+      pathwayStatus = '',
+    } = req.query as {
+      searchInput: string
+      releaseTime: string
+      page: string
+      pathwayView: string
+      pathwayStatus: string
+    }
+
+    // Only submit pathway status if pathwayView is applied
+    let modifiedPathwayStatus = pathwayStatus
+    if (pathwayView === '') {
+      modifiedPathwayStatus = ''
+    }
 
     const errors: ErrorMessage[] = []
     let prisonersList = null
@@ -31,9 +45,19 @@ export default class StaffDashboardController {
           'ASC',
           <string>searchInput,
           <string>releaseTime,
+          <string>pathwayView,
+          <string>modifiedPathwayStatus,
         )
       }
-      const view = new StaffDashboardView(prisonersList, errors, searchInput, releaseTime, page)
+      const view = new StaffDashboardView(
+        prisonersList,
+        errors,
+        searchInput,
+        releaseTime,
+        page,
+        pathwayView,
+        modifiedPathwayStatus,
+      )
       res.render('pages/staff-dashboard', { ...view.renderArgs })
     } catch (err) {
       next(err)

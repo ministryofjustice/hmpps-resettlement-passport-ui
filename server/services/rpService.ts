@@ -18,10 +18,12 @@ export default class RpService {
     sortDirection: string,
     searchInput: string,
     releaseTime: string,
+    pathwayView: string,
+    pathwayStatus: string,
   ) {
     await this.rpClient.setToken(token)
     return (await this.rpClient.get(
-      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}`,
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}`,
     )) as Promise<PrisonersList>
   }
 
