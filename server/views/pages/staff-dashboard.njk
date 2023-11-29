@@ -84,7 +84,7 @@
       </form>
     </div>
     {% if prisonersList %}
-      {{ prisonersTable(prisonersList.content) }}
+      {{ prisonersTable(prisonersList.content, pathwayView) }}
       {% if prisonersList.content | length %}
         {% set nextPage = page | float + 1 | float %}
         {% set prevPage = page | float - 1 | float %}
