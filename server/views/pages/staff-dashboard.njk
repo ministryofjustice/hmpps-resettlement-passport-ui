@@ -53,21 +53,23 @@
                 </select>
               </div>
             </div>
-            <div class="govuk-grid-column-one-quarter">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">
-                  Pathway status
-                </label>
-                <select class="govuk-select filter-input" id="sort" name="filterfamilystatus">
-                  <option value="all">All statuses</option>
-                  <option value="unbegun">Not started</option>
-                  <option value="unrequired">Support not required</option>
-                  <option value="declined">Support declined</option>
-                  <option value="progress">In progress</option>
-                  <option value="done">Done</option>
-                </select>
+            {% if pathwayView %}
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="releaseTime">
+                    Pathway status
+                  </label>
+                  <select class="govuk-select filter-input" id="sort" name="filterfamilystatus">
+                    <option value="all">All statuses</option>
+                    <option value="unbegun">Not started</option>
+                    <option value="unrequired">Support not required</option>
+                    <option value="declined">Support declined</option>
+                    <option value="progress">In progress</option>
+                    <option value="done">Done</option>
+                  </select>
+                </div>
               </div>
-            </div>
+            {% endif %}
             <div class="govuk-grid-column-one-quarter">
               <div class="govuk-form-group">
                 <label class="govuk-label " for="searchInput">
