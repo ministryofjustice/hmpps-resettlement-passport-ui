@@ -35,7 +35,7 @@ export default class StaffDashboardController {
           <string>pathwayView,
         )
       }
-      const view = new StaffDashboardView(prisonersList, errors, searchInput, releaseTime, page)
+      const view = new StaffDashboardView(prisonersList, errors, searchInput, releaseTime, page, pathwayView)
       res.render('pages/staff-dashboard', { ...view.renderArgs })
     } catch (err) {
       next(err)
