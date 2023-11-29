@@ -22,12 +22,17 @@ export default function setUpWebSecurity(): Router {
   // page by an attacker.
   const scriptSrc = ["'self'", (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`]
   const styleSrc = ["'self'", (_req: Request, res: Response) => `'nonce-${res.locals.cspNonce}'`]
+  const connectSrc = ["'self'"]
   const imgSrc = ["'self'", 'data:']
   const fontSrc = ["'self'"]
   const formAction = [`'self' ${config.apis.hmppsAuth.externalUrl} ${config.dpsHomeUrl}`]
 
   if (config.apis.frontendComponents.url) {
     scriptSrc.push(config.apis.frontendComponents.url)
+    scriptSrc.push('js.monitor.azure.com')
+    connectSrc.push('js.monitor.azure.com')
+    connectSrc.push('dc.services.visualstudio.com')
+    connectSrc.push('northeurope-0.in.applicationinsights.azure.com//v2/track')
     styleSrc.push(config.apis.frontendComponents.url)
     imgSrc.push(config.apis.frontendComponents.url)
     fontSrc.push(config.apis.frontendComponents.url)
@@ -43,6 +48,7 @@ export default function setUpWebSecurity(): Router {
           fontSrc,
           imgSrc,
           formAction,
+          connectSrc,
         },
       },
       crossOriginEmbedderPolicy: true,
