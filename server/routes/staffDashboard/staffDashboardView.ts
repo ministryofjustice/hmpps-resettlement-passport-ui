@@ -9,6 +9,7 @@ export default class StaffDashboardView implements View {
     private readonly releaseTime: string,
     private readonly page: string,
     private readonly pathwayView: string,
+    private readonly pathwayStatus: string,
   ) {}
 
   get renderArgs(): {
@@ -18,6 +19,7 @@ export default class StaffDashboardView implements View {
     releaseTime: string
     page: string
     pathwayView: string
+    pathwayStatus: string
   } {
     return {
       prisonersList: this.prisonersList,
@@ -26,6 +28,7 @@ export default class StaffDashboardView implements View {
       releaseTime: this.releaseTime,
       page: this.page,
       pathwayView: this.pathwayView,
+      pathwayStatus: this.pathwayStatus,
     }
   }
 }

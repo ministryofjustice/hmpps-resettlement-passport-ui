@@ -38,7 +38,7 @@
             </div>
             <div class="govuk-grid-column-one-quarter">
               <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">
+                <label class="govuk-label" for="pathwayView">
                   Pathway view
                 </label>
                 <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
@@ -56,16 +56,16 @@
             {% if pathwayView %}
               <div class="govuk-grid-column-one-quarter">
                 <div class="govuk-form-group">
-                  <label class="govuk-label" for="releaseTime">
+                  <label class="govuk-label" for="pathwayStatus">
                     Pathway status
                   </label>
-                  <select class="govuk-select filter-input" id="sort" name="filterfamilystatus">
-                    <option value="all">All statuses</option>
-                    <option value="unbegun">Not started</option>
-                    <option value="unrequired">Support not required</option>
-                    <option value="declined">Support declined</option>
-                    <option value="progress">In progress</option>
-                    <option value="done">Done</option>
+                  <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
+                    <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
+                    <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">Not started</option>
+                    <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">Support not required</option>
+                    <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">Support declined</option>
+                    <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">In progress</option>
+                    <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">Done</option>
                   </select>
                 </div>
               </div>
@@ -97,7 +97,7 @@
             {% if page > 0 %}
               <li class="moj-pagination__item  moj-pagination__item--prev">
                 <a class="moj-pagination__link"
-                   href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}&pathwayView={{ pathwayView }}">Previous<span
+                   href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}">Previous<span
                       class="govuk-visually-hidden"> page</span></a>
               </li>
             {% endif %}
@@ -108,7 +108,7 @@
               {% else %}
                 <li class="moj-pagination__item">
                   <a class="moj-pagination__link"
-                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}&pathwayView={{ pathwayView }}"
+                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}"
                      aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
                 </li>
               {% endif %}
@@ -116,7 +116,7 @@
             {% if prisonersList.last === false %}
               <li class="moj-pagination__item  moj-pagination__item--next">
                 <a class="moj-pagination__link"
-                   href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}&pathwayView={{ pathwayView }}">Next<span
+                   href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}">Next<span
                       class="govuk-visually-hidden"> page</span></a>
               </li>
             {% endif %}
