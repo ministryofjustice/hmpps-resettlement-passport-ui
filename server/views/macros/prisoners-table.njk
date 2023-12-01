@@ -28,13 +28,14 @@
           prisoner.pathwayStatus,
           prisoner.paroleEligibilityDate,
           prisoner.homeDetentionCurfewEligibilityDate,
-          pathwayView
+          pathwayView,
+          prisoner.lastUpdatedDate
         )}}
       {% endfor %}
     </tbody>
   </table>
 {% endmacro %}
-{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, pathwayView) %}
+{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, pathwayView, lastUpdatedDate) %}
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">
       <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName | toTitleCase }}, {{ firstName | toTitleCase }}</a>
@@ -135,14 +136,14 @@
     <td class="govuk-table__cell">
       <span id="lastUpdated">
         {% if statuses %}
-          <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">
-            {{ lastUpdatedDates | getMostRecentDate | formatDate }}
+          <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}#status">
+            {{ lastUpdatedDates | getMostRecentDate | formatDate('long') }}
           </a>
         {% endif %}
         {% if pathwayStatus %}
           {% set pathwayValues = pathwayView | getEnumValue %}
           <a href="/{{ pathwayValues.url }}/?prisonerNumber={{ prisonerNumber }}">
-            {{ lastUpdatedDate | formatDate }}
+            {{ lastUpdatedDate | formatDate('long') }}
           </a>
         {% endif %}
       </span>
