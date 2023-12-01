@@ -1,5 +1,6 @@
 import View, { ErrorMessage } from '../view'
 import { PrisonersList } from '../../data/model/prisoners'
+import { PrisonerCountMetrics } from '../../data/model/metrics'
 
 export default class StaffDashboardView implements View {
   constructor(
@@ -10,6 +11,8 @@ export default class StaffDashboardView implements View {
     private readonly page: string,
     private readonly pathwayView: string,
     private readonly pathwayStatus: string,
+    private readonly prisonerCountMetrics: PrisonerCountMetrics,
+    private readonly reportType: string,
   ) {}
 
   get renderArgs(): {
@@ -20,6 +23,8 @@ export default class StaffDashboardView implements View {
     page: string
     pathwayView: string
     pathwayStatus: string
+    prisonerCountMetrics: PrisonerCountMetrics
+    reportType: string
   } {
     return {
       prisonersList: this.prisonersList,
@@ -29,6 +34,8 @@ export default class StaffDashboardView implements View {
       page: this.page,
       pathwayView: this.pathwayView,
       pathwayStatus: this.pathwayStatus,
+      prisonerCountMetrics: this.prisonerCountMetrics,
+      reportType: this.reportType,
     }
   }
 }

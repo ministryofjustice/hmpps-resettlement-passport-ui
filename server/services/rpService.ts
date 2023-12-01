@@ -5,6 +5,7 @@ import { EducationSkillsWorkResponse } from '../data/model/educationSkillsWorkRe
 import logger from '../../logger'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
+import { PrisonerCountMetrics } from '../data/model/metrics'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -87,5 +88,25 @@ export default class RpService {
     }
 
     return getEducationSkillsWork
+  }
+
+  async getPrisonerCountMetrics(token: string, sessionId: string, prisonId: string) {
+    await this.rpClient.setToken(token)
+
+    let prisonerCountMetrics: PrisonerCountMetrics
+    try {
+      prisonerCountMetrics = (await this.rpClient.get(
+        `/resettlement-passport/metrics/prisoner-counts?prisonId=${prisonId}`,
+      )) as PrisonerCountMetrics
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve prisoner count metrics for ${prisonId} ${err.status} ${err}`)
+      if (err.status === 404) {
+        prisonerCountMetrics = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
+      } else {
+        prisonerCountMetrics = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      }
+    }
+
+    return prisonerCountMetrics
   }
 }

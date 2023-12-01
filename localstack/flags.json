@@ -1,10 +1,6 @@
 [
   {
-    "feature": "feature1",
+    "feature": "reporting",
     "enabled": true
-  },
-  {
-    "feature": "feature2",
-    "enabled": false
   }
 ]

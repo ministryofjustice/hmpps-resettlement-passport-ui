@@ -3,134 +3,346 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
+{% set reportingEnabled = features.REPORTING | getFeatureFlag %}
 {% block content %}
-  {# TODO - remove once finished testing feature flags #}
-  {% if "feature1" | getFeatureFlag %}
-    <p>TESTING - Feature 1 is enabled</p>
-  {% endif %}
-  {% if "feature2" | getFeatureFlag %}
-    <p>TESTING - Feature 2 is enabled</p>
-  {% endif %}
-  {% if "feature3" | getFeatureFlag %}
-    <p>TESTING - Feature 3 is enabled</p>
-  {% endif %}
   {# Only NOMIS users can access the list prisoners functionality at present #}
   {% if isPrisonUser %}
-    <div class="filters govuk-!-margin-bottom-4">
-      <form action="/" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-full">
+    {% set prisonersTabHtml %}
+      <div class="filters govuk-!-margin-bottom-4">
+        <form action="/" method="GET" novalidate>
+          <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-quarter">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">
-                  Time to release
-                </label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84" {% if releaseTime == '84' %} selected {% endif %}>Within 12 weeks</option>
-                  <option value="168" {% if releaseTime == '168' %} selected {% endif %}>Within 24 weeks</option>
-                  <option value="0" {% if releaseTime == '0' %} selected {% endif %}>All prisoners</option>
-                </select>
+              <div class="govuk-grid-column-full">
+                <h3 class="govuk-heading-m">Filter by</h3>
               </div>
-            </div>
-            <div class="govuk-grid-column-one-quarter">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">
-                  Pathway view
-                </label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option {% if pathwayView == "" %} selected {% endif %} value="">All pathways</option>
-                  <option {% if pathwayView == "ACCOMMODATION" %} selected {% endif %} value="ACCOMMODATION">Accommodation</option>
-                  <option {% if pathwayView == "ATTITUDES_THINKING_AND_BEHAVIOUR" %} selected {% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option {% if pathwayView == "CHILDREN_FAMILIES_AND_COMMUNITY" %} selected {% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option {% if pathwayView == "DRUGS_AND_ALCOHOL" %} selected {% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option {% if pathwayView == "EDUCATION_SKILLS_AND_WORK" %} selected {% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option {% if pathwayView == "FINANCE_AND_ID" %} selected {% endif %} value="FINANCE_AND_ID">Finance and ID</option>
-                  <option {% if pathwayView == "HEALTH" %} selected {% endif %} value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            {% if pathwayView %}
               <div class="govuk-grid-column-one-quarter">
                 <div class="govuk-form-group">
-                  <label class="govuk-label" for="pathwayStatus">
-                    Pathway status
+                  <label class="govuk-label" for="releaseTime">
+                    Time to release
                   </label>
-                  <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
-                    <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
-                    <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">Not started</option>
-                    <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">Support not required</option>
-                    <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">Support declined</option>
-                    <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">In progress</option>
-                    <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">Done</option>
+                  <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                    <option value="84" {% if releaseTime == '84' %} selected {% endif %}>Within 12 weeks</option>
+                    <option value="168" {% if releaseTime == '168' %} selected {% endif %}>Within 24 weeks</option>
+                    <option value="0" {% if releaseTime == '0' %} selected {% endif %}>All prisoners</option>
                   </select>
                 </div>
               </div>
-            {% endif %}
-            <div class="govuk-grid-column-one-quarter">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">
-                  Prisoner name or number
-                </label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="{{ searchInput }}">
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="pathwayView">
+                    Pathway view
+                  </label>
+                  <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                    <option {% if pathwayView == "" %} selected {% endif %} value="">All pathways</option>
+                    <option {% if pathwayView == "ACCOMMODATION" %} selected {% endif %} value="ACCOMMODATION">
+                      Accommodation
+                    </option>
+                    <option {% if pathwayView == "ATTITUDES_THINKING_AND_BEHAVIOUR" %} selected {% endif %}
+                        value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour
+                    </option>
+                    <option {% if pathwayView == "CHILDREN_FAMILIES_AND_COMMUNITY" %} selected {% endif %}
+                        value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities
+                    </option>
+                    <option {% if pathwayView == "DRUGS_AND_ALCOHOL" %} selected {% endif %} value="DRUGS_AND_ALCOHOL">
+                      Drugs and alcohol
+                    </option>
+                    <option {% if pathwayView == "EDUCATION_SKILLS_AND_WORK" %} selected {% endif %}
+                        value="EDUCATION_SKILLS_AND_WORK">Education, skills and work
+                    </option>
+                    <option {% if pathwayView == "FINANCE_AND_ID" %} selected {% endif %} value="FINANCE_AND_ID">Finance
+                      and ID
+                    </option>
+                    <option {% if pathwayView == "HEALTH" %} selected {% endif %} value="HEALTH">Health</option>
+                  </select>
+                </div>
+              </div>
+              {% if pathwayView %}
+                <div class="govuk-grid-column-one-quarter">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayStatus">
+                      Pathway status
+                    </label>
+                    <select class="govuk-select filter-input" id="pathwayStatus"
+                            name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
+                      <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
+                      <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">Not
+                        started
+                      </option>
+                      <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %}
+                          value="SUPPORT_NOT_REQUIRED">Support not required
+                      </option>
+                      <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %}
+                          value="SUPPORT_DECLINED">Support declined
+                      </option>
+                      <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">In
+                        progress
+                      </option>
+                      <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">Done</option>
+                    </select>
+                  </div>
+                </div>
+              {% endif %}
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <label class="govuk-label " for="searchInput">
+                    Prisoner name or number
+                  </label>
+                  <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text"
+                         value="{{ searchInput }}">
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <button class="govuk-button" type="submit">Apply filters</button>
               </div>
             </div>
-            <div class="govuk-grid-column-full">
-              <button class="govuk-button" type="submit">Apply filters</button>
-            </div>
           </div>
-        </div>
-      </form>
-    </div>
-    {% if prisonersList %}
-      {{ prisonersTable(prisonersList.content, pathwayView) }}
-      {% if prisonersList.content | length %}
-        {% set nextPage = page | float + 1 | float %}
-        {% set prevPage = page | float - 1 | float %}
-        {% set size = 20 %}
-        {% set totalPages = (prisonersList.totalElements / size) | roundNumberUp %}
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            {% if page > 0 %}
-              <li class="moj-pagination__item  moj-pagination__item--prev">
-                <a class="moj-pagination__link"
-                   href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}">Previous<span
-                      class="govuk-visually-hidden"> page</span></a>
-              </li>
-            {% endif %}
-            {% for i in range(0, totalPages) %}
-              {% if page | float === i | float %}
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page"
-                    aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
-              {% else %}
-                <li class="moj-pagination__item">
+        </form>
+      </div>
+      {% if prisonersList %}
+        {{ prisonersTable(prisonersList.content, pathwayView) }}
+        {% if prisonersList.content | length %}
+          {% set nextPage = page | float + 1 | float %}
+          {% set prevPage = page | float - 1 | float %}
+          {% set size = 20 %}
+          {% set totalPages = (prisonersList.totalElements / size) | roundNumberUp %}
+          <nav class="moj-pagination" aria-label="Pagination navigation">
+            <ul class="moj-pagination__list">
+              {% if page > 0 %}
+                <li class="moj-pagination__item  moj-pagination__item--prev">
                   <a class="moj-pagination__link"
-                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}"
-                     aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
+                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}">Previous<span
+                        class="govuk-visually-hidden"> page</span></a>
                 </li>
               {% endif %}
-            {%- endfor %}
+              {% for i in range(0, totalPages) %}
+                {% if page | float === i | float %}
+                  <li class="moj-pagination__item moj-pagination__item--active" aria-current="page"
+                      aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
+                {% else %}
+                  <li class="moj-pagination__item">
+                    <a class="moj-pagination__link"
+                       href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}"
+                       aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
+                  </li>
+                {% endif %}
+              {%- endfor %}
+              {% if prisonersList.last === false %}
+                <li class="moj-pagination__item  moj-pagination__item--next">
+                  <a class="moj-pagination__link"
+                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}">Next<span
+                        class="govuk-visually-hidden"> page</span></a>
+                </li>
+              {% endif %}
+            </ul>
+            {% set fromPage = (page | float + 1 | float) * (size | float) - 19 | float %}
             {% if prisonersList.last === false %}
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link"
-                   href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}">Next<span
-                      class="govuk-visually-hidden"> page</span></a>
-              </li>
+              {% set toPage = (page | float + 1 | float) * size | float %}
+            {% else %}
+              {% set toPage = totalElements %}
             {% endif %}
-          </ul>
-          {% set fromPage = (page | float + 1 | float) * (size | float) - 19 | float %}
-          {% if prisonersList.last === false %}
-            {% set toPage = (page | float + 1 | float) * size | float %}
-          {% else %}
-            {% set toPage = totalElements %}
-          {% endif %}
-          <p class="moj-pagination__results">Showing <b>{{ fromPage }}</b> to <b>{{ toPage }}</b> of
-            <b>{{ prisonersList.totalElements }}</b> results</p>
-        </nav>
+            <p class="moj-pagination__results">Showing <b>{{ fromPage }}</b> to <b>{{ toPage }}</b> of
+              <b>{{ prisonersList.totalElements }}</b> results</p>
+          </nav>
+        {% endif %}
       {% endif %}
+    {% endset %}
+    {% if reportingEnabled %}
+      {% set reportsTabHtml %}
+        <div class="filters govuk-!-margin-bottom-4">
+          <form action="/#reports-tab" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-full">
+                  <h2 class="govuk-heading-m">Select a report</h2>
+                </div>
+                <div class="govuk-grid-column-one-quarter">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="reportType">
+                      Report type
+                    </label>
+                    <select class="govuk-select filter-input" id="reportType" name="reportType">
+                      <option value="pathway-summary">Pathway summary</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="govuk-grid-column-full">
+                  <button class="govuk-button" type="submit">Select report</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        {% if reportType === 'pathway-summary' %}
+          <h3 class="govuk-heading-l">Pathway summary</h3>
+          {% if not prisonerCountMetrics.error %}
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                {{ govukTable({
+                  caption: "Release date within 12 weeks",
+                  captionClasses: "govuk-table__caption--m",
+                  firstCellIsHeader: true,
+                  rows: [
+                    [
+                      {
+                        text: "Due for release",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.twelveWeeks.totalPopulation
+                      }
+                    ],
+                    [
+                      {
+                        text: "Not started",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.twelveWeeks.notStarted
+                      }
+                    ],
+                    [
+                      {
+                        text: "In progress",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.twelveWeeks.inProgress
+                      }
+                    ],
+                    [
+                      {
+                        text: "Done",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.twelveWeeks.done
+                      }
+                    ]
+                  ]
+                }) }}
+              </div>
+            </div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                {{ govukTable({
+                  caption: "Release date within 24 weeks",
+                  captionClasses: "govuk-table__caption--m",
+                  firstCellIsHeader: true,
+                  rows: [
+                    [
+                      {
+                        text: "Due for release",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.twentyFourWeeks.totalPopulation
+                      }
+                    ],
+                    [
+                      {
+                        text: "Not started",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.twentyFourWeeks.notStarted
+                      }
+                    ],
+                    [
+                      {
+                        text: "In progress",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.twentyFourWeeks.inProgress
+                      }
+                    ],
+                    [
+                      {
+                        text: "Done",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.twentyFourWeeks.done
+                      }
+                    ]
+                  ]
+                }) }}
+              </div>
+            </div>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                {{ govukTable({
+                  caption: "All future release dates",
+                  captionClasses: "govuk-table__caption--m",
+                  firstCellIsHeader: true,
+                  rows: [
+                    [
+                      {
+                        text: "Due for release",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.allFuture.totalPopulation
+                      }
+                    ],
+                    [
+                      {
+                        text: "Not started",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.allFuture.notStarted
+                      }
+                    ],
+                    [
+                      {
+                        text: "In progress",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.allFuture.inProgress
+                      }
+                    ],
+                    [
+                      {
+                        text: "Done",
+                        classes: "fixed-header-width-1000"
+                      },
+                      {
+                        text: prisonerCountMetrics.allFuture.done
+                      }
+                    ]
+                  ]
+                }) }}
+              </div>
+            </div>
+          {% else %}
+            <p>{{ prisonerCountMetrics.error }}</p>
+          {% endif %}
+        {% endif %}
+      {% endset %}
+      {{ govukTabs({
+        items: [
+          {
+            label: "Prisoners",
+            id: "prisoners-tab",
+            panel: {
+            html: prisonersTabHtml
+          }
+          },
+          {
+            label: "Reports",
+            id: "reports-tab",
+            panel: {
+            html: reportsTabHtml
+          }
+          }
+        ]
+      }) }}
+    {% else %}
+      {{ prisonersTabHtml | safe }}
     {% endif %}
   {% else %}
     <p>This functionality is only currently available for NOMIS users. Please log in as a NOMIS user and try again.</p>

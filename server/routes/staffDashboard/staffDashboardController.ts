@@ -15,12 +15,14 @@ export default class StaffDashboardController {
       page = '0',
       pathwayView = '',
       pathwayStatus = '',
+      reportType = 'pathway-summary',
     } = req.query as {
       searchInput: string
       releaseTime: string
       page: string
       pathwayView: string
       pathwayStatus: string
+      reportType: string
     }
 
     // Only submit pathway status if pathwayView is applied
@@ -31,6 +33,7 @@ export default class StaffDashboardController {
 
     const errors: ErrorMessage[] = []
     let prisonersList = null
+    let prisonerCountMetrics = null
 
     try {
       // TODO add dynamic pagination and sorting
@@ -48,6 +51,13 @@ export default class StaffDashboardController {
           <string>pathwayView,
           <string>modifiedPathwayStatus,
         )
+        if (reportType === 'pathway-summary') {
+          prisonerCountMetrics = await this.rpService.getPrisonerCountMetrics(
+            token,
+            req.sessionID,
+            userActiveCaseLoad.caseLoadId,
+          )
+        }
       }
       const view = new StaffDashboardView(
         prisonersList,
@@ -57,6 +67,8 @@ export default class StaffDashboardController {
         page,
         pathwayView,
         modifiedPathwayStatus,
+        prisonerCountMetrics,
+        reportType,
       )
       res.render('pages/staff-dashboard', { ...view.renderArgs })
     } catch (err) {

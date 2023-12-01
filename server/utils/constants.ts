@@ -87,3 +87,7 @@ export const ERROR_DICTIONARY: { [key: string]: string } = {
 }
 
 export default ENUMS_DICTIONARY
+
+export const FEATURE_FLAGS: { [key: string]: string } = {
+  REPORTING: 'reporting',
+}
