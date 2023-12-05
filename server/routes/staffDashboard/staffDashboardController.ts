@@ -15,6 +15,8 @@ export default class StaffDashboardController {
       page = '0',
       pathwayView = '',
       pathwayStatus = '',
+      sortField = 'releaseDate',
+      sortDirection = 'ASC',
       reportType = 'pathway-summary',
     } = req.query as {
       searchInput: string
@@ -22,6 +24,8 @@ export default class StaffDashboardController {
       page: string
       pathwayView: string
       pathwayStatus: string
+      sortField: string
+      sortDirection: string
       reportType: string
     }
 
@@ -44,8 +48,8 @@ export default class StaffDashboardController {
           userActiveCaseLoad.caseLoadId,
           parseInt(page, 10),
           20,
-          'releaseDate',
-          'ASC',
+          <string>sortField,
+          <string>sortDirection,
           <string>searchInput,
           <string>releaseTime,
           <string>pathwayView,
@@ -67,6 +71,8 @@ export default class StaffDashboardController {
         page,
         pathwayView,
         modifiedPathwayStatus,
+        sortField,
+        sortDirection,
         prisonerCountMetrics,
         reportType,
       )
