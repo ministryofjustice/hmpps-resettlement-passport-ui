@@ -135,6 +135,16 @@
                 </a>
               </th>
               <th scope="col" class="govuk-table__header">
+                <a
+                  aria-sort="{% if sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}"
+                  href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseOnTemporaryLicenceDate&sortDirection={{ 'DESC' if (sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC') else 'ASC' }}#prisonersFilter"
+                >
+                  <button>
+                    Release on temporary licence
+                  </button>
+                </a>
+              </th>
+              <th scope="col" class="govuk-table__header">
                 {% if pathwayView %}
                   {% set pathwayValues = pathwayView | getEnumValue %}
                   <a

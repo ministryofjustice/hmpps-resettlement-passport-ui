@@ -11,13 +11,14 @@
         prisoner.pathwayStatus,
         prisoner.paroleEligibilityDate,
         prisoner.homeDetentionCurfewEligibilityDate,
+        prisoner.releaseOnTemporaryLicenceDate,
         pathwayView,
         prisoner.lastUpdatedDate
       )}}
     {% endfor %}
   </tbody>
 {% endmacro %}
-{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, pathwayView, lastUpdatedDate) %}
+{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseOnTemporaryLicenceDate, pathwayView, lastUpdatedDate) %}
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">
       <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName | toTitleCase }}, {{ firstName | toTitleCase }}</a>
@@ -46,6 +47,15 @@
       {% if homeDetentionCurfewEligibilityDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
       <span class="govuk-body-s" id="releaseeligibilityType">
         HDCED
+      </span>
+      {% endif %}
+    </td>
+    <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
+      {% if releaseOnTemporaryLicenceDate|length %}
+        {{ releaseOnTemporaryLicenceDate | formatDate }} <br/>
+        {% if releaseOnTemporaryLicenceDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
+        <span class="govuk-body-s" id="releaseOnTemporaryLicenceType">
+        {{ releaseOnTemporaryLicenceType }}
       </span>
       {% endif %}
     </td>
