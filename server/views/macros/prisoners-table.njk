@@ -28,7 +28,7 @@
       </span>
     </td>
     <td class="govuk-table__cell" id="releaseDate">
-      {{ releaseDate | formatDate }} <br/>
+      <span class="no-wrap">{{ releaseDate | formatDate }}</span> <br/>
       {% if releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
       <span class="govuk-body-s" id="releaseType">
         {{ releaseType }}
@@ -129,13 +129,13 @@
       <span id="lastUpdated">
         {% if statuses %}
           <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}#status">
-            {{ lastUpdatedDates | getMostRecentDate | formatDate('long') }}
+            {{ lastUpdatedDates | getMostRecentDate | formatDate('short') }}
           </a>
         {% endif %}
         {% if pathwayStatus %}
           {% set pathwayValues = pathwayView | getEnumValue %}
           <a href="/{{ pathwayValues.url }}/?prisonerNumber={{ prisonerNumber }}">
-            {{ lastUpdatedDate | formatDate('long') }}
+            {{ lastUpdatedDate | formatDate('short') }}
           </a>
         {% endif %}
       </span>
