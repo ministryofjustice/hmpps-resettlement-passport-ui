@@ -1,39 +1,21 @@
 {% macro prisonersTable(prisoners, pathwayView) %}
-  <table class="govuk-table" id="myTable">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Name</th>
-        <th scope="col" class="govuk-table__header">Release</th>
-        <th scope="col" class="govuk-table__header">Release eligibility</th>
-        <th scope="col" class="govuk-table__header">
-          {% if pathwayView %}
-            {% set pathwayValues = pathwayView | getEnumValue %}
-            {{ pathwayValues.name }} status
-          {% else %}
-            Resettlement statuses
-          {% endif %}
-        </th>
-        <th scope="col" class="govuk-table__header">Last updated</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      {% for prisoner in prisoners %}
-        {{ prisonerRow(
-          prisoner.firstName,
-          prisoner.lastName,
-          prisoner.prisonerNumber,
-          prisoner.releaseDate,
-          prisoner.releaseType,
-          prisoner.status,
-          prisoner.pathwayStatus,
-          prisoner.paroleEligibilityDate,
-          prisoner.homeDetentionCurfewEligibilityDate,
-          pathwayView,
-          prisoner.lastUpdatedDate
-        )}}
-      {% endfor %}
-    </tbody>
-  </table>
+  <tbody class="govuk-table__body">
+    {% for prisoner in prisoners %}
+      {{ prisonerRow(
+        prisoner.firstName,
+        prisoner.lastName,
+        prisoner.prisonerNumber,
+        prisoner.releaseDate,
+        prisoner.releaseType,
+        prisoner.status,
+        prisoner.pathwayStatus,
+        prisoner.paroleEligibilityDate,
+        prisoner.homeDetentionCurfewEligibilityDate,
+        pathwayView,
+        prisoner.lastUpdatedDate
+      )}}
+    {% endfor %}
+  </tbody>
 {% endmacro %}
 {% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, pathwayView, lastUpdatedDate) %}
   <tr class="govuk-table__row">

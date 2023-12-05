@@ -11,6 +11,8 @@ export default class StaffDashboardView implements View {
     private readonly page: string,
     private readonly pathwayView: string,
     private readonly pathwayStatus: string,
+    private readonly sortField: string,
+    private readonly sortDirection: string,
     private readonly prisonerCountMetrics: PrisonerCountMetrics,
     private readonly reportType: string,
   ) {}
@@ -23,6 +25,8 @@ export default class StaffDashboardView implements View {
     page: string
     pathwayView: string
     pathwayStatus: string
+    sortField: string
+    sortDirection: string
     prisonerCountMetrics: PrisonerCountMetrics
     reportType: string
   } {
@@ -34,6 +38,8 @@ export default class StaffDashboardView implements View {
       page: this.page,
       pathwayView: this.pathwayView,
       pathwayStatus: this.pathwayStatus,
+      sortField: this.sortField,
+      sortDirection: this.sortDirection,
       prisonerCountMetrics: this.prisonerCountMetrics,
       reportType: this.reportType,
     }

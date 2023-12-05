@@ -10,8 +10,8 @@
   {# Only NOMIS users can access the list prisoners functionality at present #}
   {% if isPrisonUser %}
     {% set prisonersTabHtml %}
-      <div class="filters govuk-!-margin-bottom-4">
-        <form action="/" method="GET" novalidate>
+      <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+        <form action="/#prisonersFilter" method="GET" novalidate>
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
               <div class="govuk-grid-column-full">
@@ -101,7 +101,68 @@
         </form>
       </div>
       {% if prisonersList %}
-        {{ prisonersTable(prisonersList.content, pathwayView) }}
+        <table class="govuk-table" id="prisonersTable" data-module="moj-sortable-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">
+                <a
+                  aria-sort="{% if sortField == 'name' and sortDirection == 'ASC' %}ascending{% elif sortField == 'name' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}"
+                  href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=name&sortDirection={{ 'DESC' if (sortField == 'name' and sortDirection == 'ASC') else 'ASC' }}#prisonersFilter"
+                >
+                  <button>
+                    Name
+                  </button>
+                </a>
+              </th>
+              <th scope="col" class="govuk-table__header">
+                <a
+                  aria-sort="{% if sortField == 'releaseDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}"
+                  href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseDate&sortDirection={{ 'DESC' if (sortField == 'releaseDate' and sortDirection == 'ASC') else 'ASC' }}#prisonersFilter"
+                >
+                  <button>
+                    Release
+                  </button>
+                </a>
+              </th>
+              <th scope="col" class="govuk-table__header">
+                <a
+                  aria-sort="{% if sortField == 'paroleEligibilityDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'paroleEligibilityDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}"
+                  href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=paroleEligibilityDate&sortDirection={{ 'DESC' if (sortField == 'paroleEligibilityDate' and sortDirection == 'ASC') else 'ASC' }}#prisonersFilter"
+                >
+                  <button>
+                    Release eligibility
+                  </button>
+                </a>
+              </th>
+              <th scope="col" class="govuk-table__header">
+                {% if pathwayView %}
+                  {% set pathwayValues = pathwayView | getEnumValue %}
+                  <a
+                    aria-sort="{% if sortField == 'pathwayStatus' and sortDirection == 'ASC' %}ascending{% elif sortField == 'pathwayStatus' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}"
+                    href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=pathwayStatus&sortDirection={{ 'DESC' if (sortField == 'pathwayStatus' and sortDirection == 'ASC') else 'ASC' }}#prisonersFilter"
+                  >
+                    <button>
+                      {{ pathwayValues.name }} status
+                    </button>
+                  </a>
+                {% else %}
+                  Resettlement statuses
+                {% endif %}
+              </th>
+              <th scope="col" class="govuk-table__header">
+                <a
+                  aria-sort="{% if sortField == 'lastUpdatedDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'lastUpdatedDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}"
+                  href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=lastUpdatedDate&sortDirection={{ 'DESC' if (sortField == 'lastUpdatedDate' and sortDirection == 'ASC') else 'ASC' }}#prisonersFilter"
+                >
+                  <button>
+                    Last updated
+                  </button>
+                </a>
+              </th>
+            </tr>
+          </thead>
+          {{ prisonersTable(prisonersList.content, pathwayView) }}
+        </table>
         {% if prisonersList.content | length %}
           {% set nextPage = page | float + 1 | float %}
           {% set prevPage = page | float - 1 | float %}
@@ -112,7 +173,7 @@
               {% if page > 0 %}
                 <li class="moj-pagination__item  moj-pagination__item--prev">
                   <a class="moj-pagination__link"
-                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}">Previous<span
+                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}">Previous<span
                         class="govuk-visually-hidden"> page</span></a>
                 </li>
               {% endif %}
@@ -123,7 +184,7 @@
                 {% else %}
                   <li class="moj-pagination__item">
                     <a class="moj-pagination__link"
-                       href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}"
+                       href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}"
                        aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
                   </li>
                 {% endif %}
@@ -131,7 +192,7 @@
               {% if prisonersList.last === false %}
                 <li class="moj-pagination__item  moj-pagination__item--next">
                   <a class="moj-pagination__link"
-                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}">Next<span
+                     href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}">Next<span
                         class="govuk-visually-hidden"> page</span></a>
                 </li>
               {% endif %}
