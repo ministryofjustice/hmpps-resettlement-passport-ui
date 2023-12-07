@@ -11,8 +11,8 @@ type Prisoners = {
   releaseDate?: Date
   releaseType: string
   lastUpdatedDate?: Date
-  status?: any
-  pathwayStatus?: any
+  status?: string[]
+  pathwayStatus?: string
   homeDetentionCurfewEligibilityDate?: Date
   paroleEligibilityDate?: Date
   releaseEligibilityDate?: Date
