@@ -69,10 +69,10 @@ export default {
     rpClient: {
       url: get('RESETTLEMENT_PASSPORT_API_URL', 'http://localhost:8080'),
       timeout: {
-        response: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 6000)),
+        response: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 8000)),
         deadline: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_DEADLINE', 10000)),
       },
-      agent: new AgentConfig(Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 6000))),
+      agent: new AgentConfig(Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 8000))),
       enabled: get('RESETTLEMENT_PASSPORT_API_ENABLED', 'true') === 'true',
     },
     nomisUserRolesClient: {
