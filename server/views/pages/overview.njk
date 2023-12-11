@@ -6,6 +6,7 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
+{% set addAppointmentEnabled = features.ADD_APPOINTMENTS | getFeatureFlag %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
@@ -172,15 +173,16 @@
                     <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate('long') }} by {{notes.createdBy}}</span>
                   </div>
                   <hr>
-                {% endfor %}
-                {% set totalPages = (caseNotes.totalElements / size) | roundNumberUp %}
-                {% set nextPage = page | float + 1 | float%}
-                {% set prevPage = page | float - 1 | float%}
-                {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber%}
-                {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
-              {% else %}
-                <p>{{ errorMessage }}</p>
-                {% endif%}
+                  {% endfor %}
+                    {% set totalPages = (caseNotes.totalElements / size) | roundNumberUp %}
+                    {% set nextPage = page | float + 1 | float%}
+                    {% set prevPage = page | float - 1 | float%}
+                    {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber%}
+                    {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
+                  {% else %}
+                    <p>{{ errorMessage }}</p>
+                  {% endif%}
+                </div>
               </div>
             </div>
           </section>
@@ -191,6 +193,11 @@
                 Appointments
                 <span class="govuk-caption-m">Post-release appointments</span>
               </h3>
+              {% if addAppointmentEnabled %}
+                <span class="right">
+                  <a href="/add-appointment?prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" class="govuk-button">Add appointment</a>
+                </span>
+              {% endif %}
             </header>
             <div class="app-summary-card__body">
               {% if not appointments.error %}
@@ -394,7 +401,7 @@
               {% if not rosh.error %}
                 {% set overallRoshRiskLevel = rosh.overallRiskLevel | getEnumValue %}
                 <h4>
-                  Overall RoSH risk level: 
+                  Overall RoSH risk level:
                   {% if overallRoshRiskLevel %}
                     <strong class="govuk-tag govuk-tag--{{ overallRoshRiskLevel.color }}">{{ overallRoshRiskLevel.name }}</strong>
                   {% else %}

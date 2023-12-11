@@ -15,6 +15,7 @@ import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
 import { getEnumByURL, getEnumValue } from '../utils/utils'
 import logger from '../../logger'
+import addAppointmentRouter from './add-appointment'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -29,6 +30,7 @@ export default function routes(services: Services): Router {
   childrenFamiliesCommunitiesRouter(router, services)
   healthStatusRouter(router, services)
   educationSkillsWorkRouter(router, services)
+  addAppointmentRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
