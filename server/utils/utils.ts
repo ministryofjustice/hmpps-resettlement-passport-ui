@@ -120,7 +120,7 @@ export function formatFirstSentence(inputString: string): string {
     const parts = inputString.split('.')
     if (parts.length > 1) {
       const beforePeriod = `${parts[0]}.`
-      const afterPeriod = parts.slice(1).join('.')
+      const afterPeriod = parts.slice(1).join('.').replace(/\n/g, '<br />')
       // Format the part before the period as bold
       return `<strong>${beforePeriod}</strong><div>${afterPeriod}</div>`
     }
