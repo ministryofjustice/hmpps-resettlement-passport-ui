@@ -13,9 +13,10 @@ import financeIdRouter from './finance-id'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
-import { getEnumByURL, getEnumValue } from '../utils/utils'
+import { getEnumByURL, getEnumValue, getFeatureFlagBoolean } from '../utils/utils'
 import logger from '../../logger'
 import addAppointmentRouter from './add-appointment'
+import { FEATURE_FLAGS } from '../utils/constants'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -170,9 +171,10 @@ export default function routes(services: Services): Router {
 
     let serverUpdate = 'none'
     const deliusUserErrorMessage = 'Delius users are currently unable to access the case notes feature'
+    const isnDeliusCaseNotesEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.DELIUS_CASE_NOTES)
     if (state) {
       try {
-        if (res.locals.user.authSource === 'delius') {
+        if (res.locals.user.authSource === 'delius' && !isnDeliusCaseNotesEnabled) {
           throw new Error(deliusUserErrorMessage)
         }
         await rpClient.patch(

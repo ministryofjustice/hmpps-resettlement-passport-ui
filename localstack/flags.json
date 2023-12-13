@@ -6,5 +6,9 @@
   {
     "feature": "addAppointments",
     "enabled": true
+  },
+  {
+    "feature": "nDeliusCaseNotes",
+    "enabled": true
   }
 ]

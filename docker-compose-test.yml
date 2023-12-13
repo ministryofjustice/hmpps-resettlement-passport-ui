@@ -8,6 +8,20 @@ services:
     ports:
       - '6379:6379'
 
+  localstack:
+    image: localstack/localstack:3
+    networks:
+      - hmpps_int
+    container_name: localstack-resettlement-passport-ui
+    ports:
+      - "4565:4566"
+    environment:
+      - SERVICES=s3
+      - DEBUG=1
+    volumes:
+      - "./localstack:/etc/localstack/init/ready.d"
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+
   wiremock:
     image: wiremock/wiremock
     networks:

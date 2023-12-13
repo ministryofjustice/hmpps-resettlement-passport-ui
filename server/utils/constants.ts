@@ -91,4 +91,5 @@ export default ENUMS_DICTIONARY
 export const FEATURE_FLAGS: { [key: string]: string } = {
   REPORTING: 'reporting',
   ADD_APPOINTMENTS: 'addAppointments',
+  DELIUS_CASE_NOTES: 'nDeliusCaseNotes',
 }
