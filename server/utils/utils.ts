@@ -206,18 +206,19 @@ export function toTitleCase(input: string): string {
 }
 
 export async function getFeatureFlag(flag: string, callback: Callback<string, boolean>) {
+  callback(null, await getFeatureFlagBoolean(flag))
+}
+
+export async function getFeatureFlagBoolean(flag: string) {
   const featureFlags = FeatureFlags.getInstance()
-  if (await featureFlags.getFeatureFlags()) {
-    featureFlags.getFeatureFlags().then(res => {
-      const featureEnabled = res.find(feature => feature.feature === flag)?.enabled
-      if (featureEnabled !== undefined) {
-        callback(null, featureEnabled)
-      } else {
-        callback(null, false) // If feature is missing from map send back false
-      }
-    })
-  } else {
-    logger.warn(`No feature flags available, returning false for feature [${flag}].`)
-    callback(null, false)
+  const res = await featureFlags.getFeatureFlags()
+  if (res) {
+    const featureEnabled = res.find(feature => feature.feature === flag)?.enabled
+    if (featureEnabled !== undefined) {
+      return featureEnabled
+    }
+    return false // If feature is missing from map send back false
   }
+  logger.warn(`No feature flags available, returning false for feature [${flag}].`)
+  return false
 }
