@@ -220,11 +220,7 @@
                           <td class="govuk-table__cell">{{ appointment.date | formatDate }}</td>
                           <td class="govuk-table__cell">{{ appointment.time | formatTime }}</td>
                           <td class="govuk-table__cell">
-                            {{ appointment.location.buildingNumber}} {{ appointment.location.streetName}}{{ ',' if appointment.location.buildingNumber or appointment.location.streetName}}
-                            <br />
-                            {{ appointment.location.town + ',' if appointment.location.town }}
-                            <br />
-                            {{ appointment.location.postcode }}
+                            {{ appointment.locationString }}
                           </td>
                         </tr>
                       {% endfor %}
