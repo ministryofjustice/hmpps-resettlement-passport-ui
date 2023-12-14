@@ -173,12 +173,16 @@
                     <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate('long') }} by {{notes.createdBy}}</span>
                   </div>
                   <hr>
+                  {% else %}
+                      <p>No case notes found</p>
                   {% endfor %}
                     {% set totalPages = (caseNotes.totalElements / size) | roundNumberUp %}
                     {% set nextPage = page | float + 1 | float%}
                     {% set prevPage = page | float - 1 | float%}
                     {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber%}
-                    {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
+                    {% if caseNotes.totalElements != 0 %}
+                      {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
+                    {% endif %}
                   {% else %}
                     <p>{{ errorMessage }}</p>
                   {% endif%}
