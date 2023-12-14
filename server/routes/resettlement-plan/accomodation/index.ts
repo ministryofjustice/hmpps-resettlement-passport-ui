@@ -9,12 +9,13 @@ export default class ResettlementPlanAccomodationController {
         const { answer1, answer2 } = req.body
         if (answer1 === true) return 'page2'
         if (answer2 === true) return 'page3'
-        return null
+        return 'page1'
       },
     },
     {
       pathway: 'Accomodation',
       currentPage: 'page2',
+      // eslint-disable-next-line no-use-before-define
       nextPage: (req: Request) => {
         return 'page4'
       },

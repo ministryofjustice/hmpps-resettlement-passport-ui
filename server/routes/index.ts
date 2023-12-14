@@ -32,7 +32,7 @@ export default function routes(services: Services): Router {
   healthStatusRouter(router, services)
   educationSkillsWorkRouter(router, services)
   addAppointmentRouter(router, services)
-  resettlementPlanRouter(router, services)
+  resettlementPlanRouter(router)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
