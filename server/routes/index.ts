@@ -16,6 +16,7 @@ import { RPClient } from '../data'
 import { getEnumByURL, getEnumValue } from '../utils/utils'
 import logger from '../../logger'
 import addAppointmentRouter from './add-appointment'
+import resettlementPlanRouter from './resettlement-plan/resettlementPlanRouter'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -31,6 +32,7 @@ export default function routes(services: Services): Router {
   healthStatusRouter(router, services)
   educationSkillsWorkRouter(router, services)
   addAppointmentRouter(router, services)
+  resettlementPlanRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
