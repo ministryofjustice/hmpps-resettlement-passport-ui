@@ -15,7 +15,7 @@ export default class ResettlementPlanAccomodationController {
     {
       pathway: 'Accomodation',
       currentPage: 'page2',
-      // eslint-disable-next-line no-use-before-define
+      // eslint-disable-next-line
       nextPage: (req: Request) => {
         return 'page4'
       },
