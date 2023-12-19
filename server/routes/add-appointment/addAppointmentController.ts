@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import AddAppointmentView from './addAppointmentView'
 import { AppointmentErrorMessage } from '../../data/model/appointmentErrorMessage'
-import { RPClient } from '../../data'
+// import { RPClient } from '../../data'
 import logger from '../../../logger'
 
 export default class AddAppointmentController {
@@ -64,14 +64,14 @@ export default class AddAppointmentController {
     const params = req.body
     const {
       prisonerNumber,
-      appointmentType,
-      appointmentTitle,
-      appointmentOrganisation,
-      appointmentContact,
-      dateAndTime,
-      appointmentDuration,
+      // appointmentType,
+      // appointmentTitle,
+      // appointmentOrganisation,
+      // appointmentContact,
+      // dateAndTime,
+      // appointmentDuration,
     } = req.body
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+    // const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
       // await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`, {
       //   appointmentType,
