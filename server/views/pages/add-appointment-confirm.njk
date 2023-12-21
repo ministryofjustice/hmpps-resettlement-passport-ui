@@ -11,6 +11,9 @@
       <h2 class="govuk-heading-m">Check your answers before adding an appointment</h2>
     </div>
   </div>
+  {% if errorMessage %}
+    <h1>{{ errorMessage }}</h1>
+  {% endif %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
       <form action="/add-appointment-submit" method="post" novalidate>
@@ -34,19 +37,19 @@
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">Organisation</dt>
-            <dd class="govuk-summary-list__value">{{ params.appointmentOrganisation }}</dd>
+            <dd class="govuk-summary-list__value">{{ params.organisation }}</dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#organisation">Change</a>
             </dd>
-            <input hidden name="appointmentOrganisation" value="{{ params.appointmentOrganisation }}" />
+            <input hidden name="organisation" value="{{ params.organisation }}" />
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">Contact</dt>
-            <dd class="govuk-summary-list__value">{{ params.appointmentContact }}</dd>
+            <dd class="govuk-summary-list__value">{{ params.contact }}</dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#contact">Change</a>
             </dd>
-            <input hidden name="appointmentContact" value="{{ params.appointmentContact }}" />
+            <input hidden name="contact" value="{{ params.contact }}" />
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">Date</dt>
@@ -54,7 +57,7 @@
             {% set datePart = dateTimeArray[0] %}
             <dd class="govuk-summary-list__value">{{ datePart | formatDate('long') }}</dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}">Change</a>
+              <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#date-time">Change</a>
             </dd>
             <input hidden name="dateAndTime" value="{{ params.dateAndTime }}" />
           </div>
@@ -64,14 +67,14 @@
             {% set timePart = dateTimeArray[1] %}
             <dd class="govuk-summary-list__value">{{ timePart | formatTime }}</dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}">Change</a>
+              <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#date-time">Change</a>
             </dd>
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">Duration</dt>
             <dd class="govuk-summary-list__value">{{ params.appointmentDuration }}</dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}">Change</a>
+              <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#duration">Change</a>
             </dd>
             <input hidden name="appointmentDuration" value="{{ params.appointmentDuration }}" />
           </div>
@@ -80,7 +83,7 @@
               <dt class="govuk-summary-list__key">Notes</dt>
               <dd class="govuk-summary-list__value">{{ params.notes }}</dd>
               <dd class="govuk-summary-list__actions">
-                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}">Change</a>
+                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#notes">Change</a>
               </dd>
               <input hidden name="notes" value="{{ params.notes }}" />
             </div>

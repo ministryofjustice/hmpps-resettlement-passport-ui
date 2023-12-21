@@ -36,23 +36,23 @@
           {% endif %}
           <input class="govuk-input" id="appointment-title" name="appointmentTitle" type="text" placeholder="Enter the title of the appointment" value="{{ params.appointmentTitle if params.appointmentTitle else '' }}">
         </div>
-        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentOrganisation }}" id="organisation">
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.organisation }}" id="organisation">
           <label class="govuk-label" for="appointment-organisation">Organisation</label>
-          {% if errorMsg.appointmentOrganisation %}
+          {% if errorMsg.organisation %}
             <p id="national-insurance-number-error" class="govuk-error-message">
               <span class="govuk-visually-hidden">Error:</span> Enter an organisation
             </p>
           {% endif %}
-          <input class="govuk-input" id="appointment-organisation" name="appointmentOrganisation" type="text" placeholder="Enter organisation" value="{{ params.appointmentOrganisation if params.appointmentOrganisation else '' }}">
+          <input class="govuk-input" id="appointment-organisation" name="organisation" type="text" placeholder="Enter organisation" value="{{ params.organisation if params.organisation else '' }}">
         </div>
-        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentContact }}" id="contact">
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.contact }}" id="contact">
           <label class="govuk-label" for="appointment-contact">Contact</label>
-          {% if errorMsg.appointmentContact %}
+          {% if errorMsg.contact %}
             <p id="national-insurance-number-error" class="govuk-error-message">
               <span class="govuk-visually-hidden">Error:</span> Enter an appointment contact
             </p>
           {% endif %}
-          <input class="govuk-input" id="appointment-contact" name="appointmentContact" type="text" placeholder="Enter contact information" value="{{ params.appointmentContact if params.appointmentContact else '' }}">
+          <input class="govuk-input" id="appointment-contact" name="contact" type="text" placeholder="Enter contact information" value="{{ params.contact if params.contact else '' }}">
         </div>
 
         <div class="govuk-form-group" id="building-name">
@@ -84,7 +84,7 @@
           <input class="govuk-input" id="postcode" name="postcode" type="text" placeholder="Enter postcode" value="{{ params.postcode if params.postcode else '' }}">
         </div>
 
-        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAndTime }}">
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAndTime }}" id="date-time">
           <label class="govuk-label" for="appointment-date-time">Date and Time</label>
           {% if errorMsg.dateAndTime %}
             <p id="national-insurance-number-error" class="govuk-error-message">
@@ -93,14 +93,14 @@
           {% endif %}
           <input class="govuk-input" id="appointment-date-time" name="dateAndTime" type="datetime-local" value="{{ params.dateAndTime if params.dateAndTime else '' }}">
         </div>
-        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentDuration }}">
-          <label class="govuk-label" for="appointment-duration">Duration</label>
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentDuration }}" id="duration">
+          <label class="govuk-label" for="appointment-duration">Duration in minutes</label>
           {% if errorMsg.appointmentDuration %}
             <p id="national-insurance-number-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> Enter the appointment duration
+              <span class="govuk-visually-hidden">Error:</span> Enter the appointment duration in minutes
             </p>
           {% endif %}
-          <input class="govuk-input" id="appointment-duration" name="appointmentDuration" type="number" placeholder="Enter duration in minutes" value="{{ params.appointmentDuration if params.appointmentDuration else '' }}">
+          <input class="govuk-input govuk-input--width-2" id="appointment-duration" name="appointmentDuration" type="number" value="{{ params.appointmentDuration if params.appointmentDuration else '' }}">
         </div>
 
         {##################################
@@ -127,11 +127,11 @@
         </div> #}
 
         
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="notes">
+        <div class="govuk-form-group" id="notes">
+          <label class="govuk-label" for="appointment-notes">
             Notes
           </label>
-          <textarea class="govuk-textarea" id="notes" name="notes" rows="5" style="margin-bottom: 0px;">{{ params.notes if params.notes else '' }}</textarea>
+          <textarea class="govuk-textarea" id="appointment-notes" name="notes" rows="5" style="margin-bottom: 0px;">{{ params.notes if params.notes else '' }}</textarea>
         </div>
 
         <input name="prisonerNumber" value="{{prisonerData.personalDetails.prisonerNumber}}" hidden />

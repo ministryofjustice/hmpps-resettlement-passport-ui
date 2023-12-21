@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import AddAppointmentView from './addAppointmentView'
 import { AppointmentErrorMessage } from '../../data/model/appointmentErrorMessage'
-// import { RPClient } from '../../data'
+import { RPClient } from '../../data'
 import logger from '../../../logger'
 
 export default class AddAppointmentController {
@@ -21,34 +21,20 @@ export default class AddAppointmentController {
     let errorMsg: AppointmentErrorMessage = {
       appointmentType: null,
       appointmentTitle: null,
-      appointmentOrganisation: null,
-      appointmentContact: null,
+      organisation: null,
+      contact: null,
       dateAndTime: null,
       appointmentDuration: null,
     }
 
-    const {
-      appointmentType,
-      appointmentTitle,
-      appointmentOrganisation,
-      appointmentContact,
-      dateAndTime,
-      appointmentDuration,
-    } = params
+    const { appointmentType, appointmentTitle, organisation, contact, dateAndTime, appointmentDuration } = params
 
-    if (
-      !appointmentType ||
-      !appointmentTitle ||
-      !appointmentOrganisation ||
-      !appointmentContact ||
-      !dateAndTime ||
-      !appointmentDuration
-    ) {
+    if (!appointmentType || !appointmentTitle || !organisation || !contact || !dateAndTime || !appointmentDuration) {
       errorMsg = {
         appointmentType: appointmentType ? null : true,
         appointmentTitle: appointmentTitle ? null : true,
-        appointmentOrganisation: appointmentOrganisation ? null : true,
-        appointmentContact: appointmentContact ? null : true,
+        organisation: organisation ? null : true,
+        contact: contact ? null : true,
         dateAndTime: dateAndTime ? null : true,
         appointmentDuration: appointmentDuration ? null : true,
       }
@@ -64,27 +50,30 @@ export default class AddAppointmentController {
     const params = req.body
     const {
       prisonerNumber,
-      // appointmentType,
-      // appointmentTitle,
-      // appointmentOrganisation,
-      // appointmentContact,
-      // dateAndTime,
-      // appointmentDuration,
+      appointmentType,
+      appointmentTitle,
+      organisation,
+      contact,
+      dateAndTime,
+      appointmentDuration,
+      notes,
     } = req.body
-    // const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      // await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`, {
-      //   appointmentType,
-      //   appointmentTitle,
-      //   appointmentOrganisation,
-      //   appointmentContact,
-      //   dateAndTime,
-      //   appointmentDuration,
-      // })
+      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`, {
+        appointmentType,
+        appointmentTitle,
+        organisation,
+        contact,
+        dateAndTime,
+        appointmentDuration,
+        notes,
+        location: {},
+      })
       res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#appointments`)
     } catch (error) {
       const errorMessage = error.message
-      logger.error('Error fetching id data:', error)
+      logger.error('Error posting appointment data:', error)
       res.render('pages/add-appointment-confirm', {
         errorMessage,
         prisonerData,
