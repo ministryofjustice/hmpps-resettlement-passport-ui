@@ -11,9 +11,6 @@
       <h2 class="govuk-heading-m">Check your answers before adding an appointment</h2>
     </div>
   </div>
-  {% if errorMessage %}
-    <h1>{{ errorMessage }}</h1>
-  {% endif %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters">
       <form action="/add-appointment-submit" method="post" novalidate>
@@ -51,6 +48,76 @@
             </dd>
             <input hidden name="contact" value="{{ params.contact }}" />
           </div>
+          {% if params.buildingName %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Building name</dt>
+              <dd class="govuk-summary-list__value">{{ params.buildingName }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#building-name">Change</a>
+              </dd>
+              <input hidden name="buildingName" value="{{ params.buildingName }}" />
+            </div>
+          {% endif %}
+          {% if params.buildingNumber %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Building number</dt>
+              <dd class="govuk-summary-list__value">{{ params.buildingNumber }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#building-number">Change</a>
+              </dd>
+              <input hidden name="buildingNumber" value="{{ params.buildingNumber }}" />
+            </div>
+          {% endif %}
+          {% if params.streetName %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Street name</dt>
+              <dd class="govuk-summary-list__value">{{ params.streetName }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#street-name">Change</a>
+              </dd>
+              <input hidden name="streetName" value="{{ params.streetName }}" />
+            </div>
+          {% endif %}
+          {% if params.district %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">District</dt>
+              <dd class="govuk-summary-list__value">{{ params.district }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#location-district">Change</a>
+              </dd>
+              <input hidden name="district" value="{{ params.district }}" />
+            </div>
+          {% endif %}
+          {% if params.town %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Town</dt>
+              <dd class="govuk-summary-list__value">{{ params.town }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#location-town">Change</a>
+              </dd>
+              <input hidden name="town" value="{{ params.town }}" />
+            </div>
+          {% endif %}
+          {% if params.county %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">County</dt>
+              <dd class="govuk-summary-list__value">{{ params.county }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#location-county">Change</a>
+              </dd>
+              <input hidden name="county" value="{{ params.county }}" />
+            </div>
+          {% endif %}
+          {% if params.postcode %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">Postcode</dt>
+              <dd class="govuk-summary-list__value">{{ params.postcode }}</dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/add-appointment{{ req.url | getQueryString }}#location-postcode">Change</a>
+              </dd>
+              <input hidden name="postcode" value="{{ params.county }}" />
+            </div>
+          {% endif %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">Date</dt>
             {% set dateTimeArray = params.dateAndTime.split('T') %}

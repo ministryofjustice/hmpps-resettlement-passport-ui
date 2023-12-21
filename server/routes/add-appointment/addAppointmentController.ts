@@ -57,6 +57,13 @@ export default class AddAppointmentController {
       dateAndTime,
       appointmentDuration,
       notes,
+      buildingName,
+      buildingNumber,
+      streetName,
+      district,
+      town,
+      county,
+      postcode,
     } = req.body
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
@@ -68,7 +75,15 @@ export default class AddAppointmentController {
         dateAndTime,
         appointmentDuration,
         notes,
-        location: {},
+        location: {
+          buildingName,
+          buildingNumber,
+          streetName,
+          district,
+          town,
+          county,
+          postcode,
+        },
       })
       res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#appointments`)
     } catch (error) {
