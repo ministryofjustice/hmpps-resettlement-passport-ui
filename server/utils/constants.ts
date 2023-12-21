@@ -38,6 +38,9 @@ const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     url: 'health-status',
     description: 'Ensure that the physical and mental health needs of prison leavers are met.',
   },
+  BENEFITS: {
+    name: 'Benefits',
+  },
   NOT_STARTED: {
     name: 'Not started',
     color: 'red',

@@ -25,6 +25,7 @@
             <option {% if params.appointmentType == "EDUCATION_SKILLS_AND_WORK" %}selected{% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
             <option {% if params.appointmentType == "FINANCE_AND_ID" %}selected{% endif %} value="FINANCE_AND_ID">Finance and ID</option>
             <option {% if params.appointmentType == "HEALTH" %}selected{% endif %} value="HEALTH">Health</option>
+            <option {% if params.appointmentType == "BENEFITS" %}selected{% endif %} value="BENEFITS">Benefits</option>
           </select>
         </div>
         <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentTitle }}" id="title">
