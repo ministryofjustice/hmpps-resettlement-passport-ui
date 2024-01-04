@@ -24,11 +24,13 @@ export default class AddAppointmentController {
       organisation: null,
       contact: null,
       dateAndTime: null,
+      dateIsPast: null,
       appointmentDuration: null,
     }
 
     const { appointmentType, appointmentTitle, organisation, contact, dateAndTime, appointmentDuration } = params
-
+    const isDateInPast = new Date(dateAndTime.toLocaleString()).getTime() < Date.now()
+    console.log('hello', isDateInPast)
     if (!appointmentType || !appointmentTitle || !organisation || !contact || !dateAndTime || !appointmentDuration) {
       errorMsg = {
         appointmentType: appointmentType ? null : true,
@@ -36,13 +38,15 @@ export default class AddAppointmentController {
         organisation: organisation ? null : true,
         contact: contact ? null : true,
         dateAndTime: dateAndTime ? null : true,
+        dateIsPast: isDateInPast,
         appointmentDuration: appointmentDuration ? null : true,
       }
-      res.render('pages/add-appointment', { prisonerData, params, req, errorMsg })
+      const view = new AddAppointmentView(prisonerData)
+      res.render('pages/add-appointment', { ...view.renderArgs, params, req, errorMsg })
       return
     }
-
-    res.render('pages/add-appointment-confirm', { prisonerData, params, req })
+    const view = new AddAppointmentView(prisonerData)
+    res.render('pages/add-appointment-confirm', { ...view.renderArgs, params, req })
   }
 
   postAppointmentView: RequestHandler = async (req, res, next): Promise<void> => {

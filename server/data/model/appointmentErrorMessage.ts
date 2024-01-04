@@ -1,8 +1,9 @@
 export type AppointmentErrorMessage = {
-  appointmentType: null | boolean
-  appointmentTitle: null | boolean
-  organisation: null | boolean
-  contact: null | boolean
-  dateAndTime: null | boolean
-  appointmentDuration: null | boolean
+  appointmentType?: boolean
+  appointmentTitle?: boolean
+  organisation?: boolean
+  contact?: boolean
+  dateAndTime?: boolean
+  dateIsPast?: boolean
+  appointmentDuration?: boolean
 }

@@ -8,7 +8,7 @@
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-one-half">
-      <form action="/add-appointment-confirm?prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" method="get">
+      <form action="/add-appointment-confirm?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" method="get">
         <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentType }}" id="type">
           <label class="govuk-label" for="appointment-type">Appointment Type</label>
           {% if errorMsg.appointmentType %}
@@ -85,11 +85,16 @@
           <input class="govuk-input" id="postcode" name="postcode" type="text" placeholder="Enter postcode" value="{{ params.postcode if params.postcode else '' }}">
         </div>
 
-        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAndTime }}" id="date-time">
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAndTime or errorMsg.dateIsPast }}" id="date-time">
           <label class="govuk-label" for="appointment-date-time">Date and Time</label>
           {% if errorMsg.dateAndTime %}
             <p id="national-insurance-number-error" class="govuk-error-message">
               <span class="govuk-visually-hidden">Error:</span> Select a date and time
+            </p>
+          {% endif %}
+          {% if errorMsg.dateIsPast %}
+            <p id="national-insurance-number-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Date must be in the future
             </p>
           {% endif %}
           <input class="govuk-input" id="appointment-date-time" name="dateAndTime" type="datetime-local" value="{{ params.dateAndTime if params.dateAndTime else '' }}">
@@ -103,30 +108,6 @@
           {% endif %}
           <input class="govuk-input govuk-input--width-2" id="appointment-duration" name="appointmentDuration" type="number" value="{{ params.appointmentDuration if params.appointmentDuration else '' }}">
         </div>
-
-        {##################################
-          APPOINTMENT DURATION VERSION 2
-         ##################################}
-        {# <div class="govuk-form-group">
-          <label class="govuk-label" for="appointmentDurationHours">Duration</label>
-          <div class="govuk-date-input">
-            <div>
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="appointmentDurationHours">Hours</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="appointmentDurationHours" name="appointmentDurationHours" type="number" value="">
-                </div>
-              </div>
-              <div class="govuk-date-input__item">
-                <div class="govuk-form-group">
-                  <label class="govuk-label govuk-date-input__label" for="appointmentDurationMinutes">Minutes</label>
-                  <input class="govuk-input govuk-date-input__input govuk-input--width-2" id="appointmentDurationMinutes" name="appointmentDurationMinutes" type="number" value="">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> #}
-
         
         <div class="govuk-form-group" id="notes">
           <label class="govuk-label" for="appointment-notes">
@@ -135,7 +116,7 @@
           <textarea class="govuk-textarea" id="appointment-notes" name="notes" rows="5" style="margin-bottom: 0px;">{{ params.notes if params.notes else '' }}</textarea>
         </div>
 
-        <input name="prisonerNumber" value="{{prisonerData.personalDetails.prisonerNumber}}" hidden />
+        <input name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" hidden />
 
         <button class="govuk-button" type="submit">Create appointment</button>
       </form>
