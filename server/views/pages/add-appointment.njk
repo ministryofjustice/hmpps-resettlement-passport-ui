@@ -10,10 +10,10 @@
     <div class="govuk-grid-column-one-half">
       <form action="/add-appointment-confirm?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" method="get">
         <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentType }}" id="type">
-          <label class="govuk-label" for="appointment-type">Appointment Type</label>
+          <label class="govuk-label" for="appointment-type">Appointment type</label>
           {% if errorMsg.appointmentType %}
             <p id="national-insurance-number-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> Select an appointment Type
+              <span class="govuk-visually-hidden">Error:</span> Select an appointment type
             </p>
           {% endif %}
           <select name="appointmentType" class="govuk-select" id="appointment-type">
@@ -32,28 +32,28 @@
           <label class="govuk-label" for="appointment-title">Appointment title</label>
           {% if errorMsg.appointmentTitle %}
             <p id="national-insurance-number-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> Enter the title of the appointment
+              <span class="govuk-visually-hidden">Error:</span> Enter appointment title
             </p>
           {% endif %}
-          <input class="govuk-input" id="appointment-title" name="appointmentTitle" type="text" placeholder="Enter the title of the appointment" value="{{ params.appointmentTitle if params.appointmentTitle else '' }}">
+          <input class="govuk-input" id="appointment-title" name="appointmentTitle" type="text" placeholder="Enter appointment title" value="{{ params.appointmentTitle if params.appointmentTitle else '' }}">
         </div>
         <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.organisation }}" id="organisation">
           <label class="govuk-label" for="appointment-organisation">Organisation</label>
           {% if errorMsg.organisation %}
             <p id="national-insurance-number-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> Enter an organisation
+              <span class="govuk-visually-hidden">Error:</span> Enter name of organisation
             </p>
           {% endif %}
-          <input class="govuk-input" id="appointment-organisation" name="organisation" type="text" placeholder="Enter organisation" value="{{ params.organisation if params.organisation else '' }}">
+          <input class="govuk-input" id="appointment-organisation" name="organisation" type="text" placeholder="Enter name of organisation" value="{{ params.organisation if params.organisation else '' }}">
         </div>
         <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.contact }}" id="contact">
           <label class="govuk-label" for="appointment-contact">Contact</label>
           {% if errorMsg.contact %}
             <p id="national-insurance-number-error" class="govuk-error-message">
-              <span class="govuk-visually-hidden">Error:</span> Enter an appointment contact
+              <span class="govuk-visually-hidden">Error:</span> Enter a contact
             </p>
           {% endif %}
-          <input class="govuk-input" id="appointment-contact" name="contact" type="text" placeholder="Enter contact information" value="{{ params.contact if params.contact else '' }}">
+          <input class="govuk-input" id="appointment-contact" name="contact" type="text" placeholder="Enter a contact" value="{{ params.contact if params.contact else '' }}">
         </div>
 
         <div class="govuk-form-group" id="building-name">
