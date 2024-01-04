@@ -30,7 +30,6 @@ export default class AddAppointmentController {
 
     const { appointmentType, appointmentTitle, organisation, contact, dateAndTime, appointmentDuration } = params
     const isDateInPast = new Date(dateAndTime.toLocaleString()).getTime() < Date.now()
-    console.log('hello', isDateInPast)
     if (!appointmentType || !appointmentTitle || !organisation || !contact || !dateAndTime || !appointmentDuration) {
       errorMsg = {
         appointmentType: appointmentType ? null : true,
