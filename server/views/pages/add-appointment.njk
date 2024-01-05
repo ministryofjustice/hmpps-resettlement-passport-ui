@@ -1,17 +1,125 @@
 {% extends "../partials/layout.njk" %}
-{% set pathway = "Resettlement overview" %}
-{% set pageTitle = applicationName + " - " + pathway + " - Add an appointment" %}
+{% set pathway = "Add an appointment" %}
+{% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
-    <div class="govuk-grid-column-full">
-      <h2>Add an appointment</h2>
-      <p>Placeholder for form.</p>
+    <div class="govuk-grid-column-one-half">
+      <form action="/add-appointment-confirm?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" method="get">
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentType }}" id="type">
+          <label class="govuk-label" for="appointment-type">Appointment type</label>
+          {% if errorMsg.appointmentType %}
+            <p id="national-insurance-number-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Select an appointment type
+            </p>
+          {% endif %}
+          <select name="appointmentType" class="govuk-select" id="appointment-type">
+            <option {% if params.appointmentType == "" %}selected{% endif %} value="">Select an appointment type</option>
+            <option {% if params.appointmentType == "ACCOMMODATION" %}selected{% endif %} value="ACCOMMODATION">Accommodation</option>
+            <option {% if params.appointmentType == "ATTITUDES_THINKING_AND_BEHAVIOUR" %}selected{% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+            <option {% if params.appointmentType == "CHILDREN_FAMILIES_AND_COMMUNITY" %}selected{% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+            <option {% if params.appointmentType == "DRUGS_AND_ALCOHOL" %}selected{% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+            <option {% if params.appointmentType == "EDUCATION_SKILLS_AND_WORK" %}selected{% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+            <option {% if params.appointmentType == "FINANCE_AND_ID" %}selected{% endif %} value="FINANCE_AND_ID">Finance and ID</option>
+            <option {% if params.appointmentType == "HEALTH" %}selected{% endif %} value="HEALTH">Health</option>
+            <option {% if params.appointmentType == "BENEFITS" %}selected{% endif %} value="BENEFITS">Benefits</option>
+          </select>
+        </div>
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentTitle }}" id="title">
+          <label class="govuk-label" for="appointment-title">Appointment title</label>
+          {% if errorMsg.appointmentTitle %}
+            <p id="national-insurance-number-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Enter appointment title
+            </p>
+          {% endif %}
+          <input class="govuk-input" id="appointment-title" name="appointmentTitle" type="text" placeholder="Enter appointment title" value="{{ params.appointmentTitle if params.appointmentTitle else '' }}">
+        </div>
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.organisation }}" id="organisation">
+          <label class="govuk-label" for="appointment-organisation">Organisation</label>
+          {% if errorMsg.organisation %}
+            <p id="national-insurance-number-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Enter name of organisation
+            </p>
+          {% endif %}
+          <input class="govuk-input" id="appointment-organisation" name="organisation" type="text" placeholder="Enter name of organisation" value="{{ params.organisation if params.organisation else '' }}">
+        </div>
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.contact }}" id="contact">
+          <label class="govuk-label" for="appointment-contact">Contact</label>
+          {% if errorMsg.contact %}
+            <p id="national-insurance-number-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Enter a contact
+            </p>
+          {% endif %}
+          <input class="govuk-input" id="appointment-contact" name="contact" type="text" placeholder="Enter a contact" value="{{ params.contact if params.contact else '' }}">
+        </div>
+
+        <div class="govuk-form-group" id="building-name">
+          <label class="govuk-label" for="buildingName">Building name</label>
+          <input class="govuk-input" id="buildingName" name="buildingName" type="text" placeholder="Enter building name" value="{{ params.buildingName if params.buildingName else '' }}">
+        </div>
+        <div class="govuk-form-group" id="building-number">
+          <label class="govuk-label" for="buildingNumber">Building number</label>
+          <input class="govuk-input" id="buildingNumber" name="buildingNumber" type="text" placeholder="Enter building number" value="{{ params.buildingNumber if params.buildingNumber else '' }}">
+        </div>
+        <div class="govuk-form-group" id="street-name">
+          <label class="govuk-label" for="streetName">Street name</label>
+          <input class="govuk-input" id="streetName" name="streetName" type="text" placeholder="Enter street name" value="{{ params.streetName if params.streetName else '' }}">
+        </div>
+        <div class="govuk-form-group" id="location-district">
+          <label class="govuk-label" for="district">District</label>
+          <input class="govuk-input" id="district" name="district" type="text" placeholder="Enter district" value="{{ params.district if params.district else '' }}">
+        </div>
+        <div class="govuk-form-group" id="location-town">
+          <label class="govuk-label" for="town">Town</label>
+          <input class="govuk-input" id="town" name="town" type="text" placeholder="Enter town" value="{{ params.town if params.town else '' }}">
+        </div>
+        <div class="govuk-form-group" id="location-county">
+          <label class="govuk-label" for="county">County</label>
+          <input class="govuk-input" id="county" name="county" type="text" placeholder="Enter county" value="{{ params.county if params.county else '' }}">
+        </div>
+        <div class="govuk-form-group" id="location-postcode">
+          <label class="govuk-label" for="postcode">Postcode</label>
+          <input class="govuk-input" id="postcode" name="postcode" type="text" placeholder="Enter postcode" value="{{ params.postcode if params.postcode else '' }}">
+        </div>
+
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.dateAndTime or errorMsg.dateIsPast }}" id="date-time">
+          <label class="govuk-label" for="appointment-date-time">Date and Time</label>
+          {% if errorMsg.dateAndTime %}
+            <p id="national-insurance-number-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Select a date and time
+            </p>
+          {% endif %}
+          {% if errorMsg.dateIsPast %}
+            <p id="national-insurance-number-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Date must be in the future
+            </p>
+          {% endif %}
+          <input class="govuk-input" id="appointment-date-time" name="dateAndTime" type="datetime-local" value="{{ params.dateAndTime if params.dateAndTime else '' }}">
+        </div>
+        <div class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.appointmentDuration }}" id="duration">
+          <label class="govuk-label" for="appointment-duration">Duration in minutes</label>
+          {% if errorMsg.appointmentDuration %}
+            <p id="national-insurance-number-error" class="govuk-error-message">
+              <span class="govuk-visually-hidden">Error:</span> Enter the appointment duration in minutes
+            </p>
+          {% endif %}
+          <input class="govuk-input govuk-input--width-2" id="appointment-duration" name="appointmentDuration" type="number" value="{{ params.appointmentDuration if params.appointmentDuration else '' }}">
+        </div>
+        
+        <div class="govuk-form-group" id="notes">
+          <label class="govuk-label" for="appointment-notes">
+            Notes
+          </label>
+          <textarea class="govuk-textarea" id="appointment-notes" name="notes" rows="5" style="margin-bottom: 0px;">{{ params.notes if params.notes else '' }}</textarea>
+        </div>
+
+        <input name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" hidden />
+
+        <button class="govuk-button" type="submit">Create appointment</button>
+      </form>
     </div>
   </div>
-
 {% endblock %}
