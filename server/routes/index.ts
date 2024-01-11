@@ -18,6 +18,9 @@ import logger from '../../logger'
 import addAppointmentRouter from './add-appointment'
 import { FEATURE_FLAGS } from '../utils/constants'
 
+import { createRedisClient } from '../data/redisClient'
+import AssessmentStore from '../data/assessmentStore'
+
 export default function routes(services: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -157,6 +160,14 @@ export default function routes(services: Services): Router {
   use('/status-update/', async (req: Request, res: Response, next) => {
     const { prisonerData } = req
     let { state, selectedPathway, _csrf }: { state?: string; selectedPathway?: string; _csrf?: string } = req.query
+    const store = new AssessmentStore(createRedisClient())
+    store.setAssessment(
+      req.session.id,
+      `${prisonerData.personalDetails.prisonerNumber}`,
+      selectedPathway,
+      { QUESTION_1: 'ANSWER' },
+      600,
+    )
     // If query parameters are not provided, try to get values from the request body
     if (!state || !selectedPathway || !_csrf) {
       const { state: bodyState, selectedPathway: bodyPathway, _csrf: bodyCsrf } = req.body
