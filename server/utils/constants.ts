@@ -89,6 +89,17 @@ export const ERROR_DICTIONARY: { [key: string]: string } = {
   DATA_UNAVAILABLE: 'Data unavailable - try again later or contact administrator if problem persists',
 }
 
+export const ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
+  NOT_STARTED: {
+    name: 'Not started',
+    color: 'grey',
+  },
+  COMPLETE: {
+    name: 'Completed',
+    color: 'green',
+  },
+}
+
 export default ENUMS_DICTIONARY
 
 export const FEATURE_FLAGS: { [key: string]: string } = {

@@ -1,0 +1,37 @@
+{% extends "../partials/layout.njk" %}
+{% from "../macros/breadCrumb.njk" import breadCrumb %}
+{% set pathway = "Prepare someone for release" %}
+{% set pageTitle = applicationName + " - " + pathway %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block header %}
+  {% if feComponents.header %}
+    {{ feComponents.header | safe }}
+  {% else %}
+    {% include "./header.njk" %}
+  {% endif %}
+
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: {
+        text: phaseName
+      },
+      html: feedbackText
+    }) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <main class="govuk-!-padding-top-8" id="main-content" role="main">
+    <div class="govuk-grid-row ">
+      <div class="govuk-grid-column-three-quarters">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">
+            BCST2 assessment completed
+          </h1>
+        </div>
+        <a href="/prisoner-overview/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-link">Return to overview</a>
+      </div>
+    </div>
+  </main>
+{% endblock %}
