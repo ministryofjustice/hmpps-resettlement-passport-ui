@@ -1,0 +1,87 @@
+{% extends "../partials/layout.njk" %}
+{% from "../macros/breadCrumb.njk" import breadCrumb %}
+{% set pathway = "Prepare someone for release" %}
+{% set pageTitle = applicationName + " - " + pathway %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block header %}
+  {% if feComponents.header %}
+    {{ feComponents.header | safe }}
+  {% else %}
+    {% include "./header.njk" %}
+  {% endif %}
+
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: {
+        text: phaseName
+      },
+      html: feedbackText
+    }) }}
+    {% if isPrisonUser %}
+      {% set topLevelBreadcrumb = 'Digital Prison Services' %}
+    {% else %}
+      {% set topLevelBreadcrumb = 'HMPPS Digital Services' %}
+    {% endif %}
+    {% if prisonerData %}
+      {% set breadcrumbItems = [
+        {
+          text: topLevelBreadcrumb,
+          href: dpsUrl
+        },
+        {
+          text: "Prepare someone for release",
+          href: '/'
+        },
+        {
+          text: ' ' ~ prisonerData.personalDetails.lastName ~ ', ' ~ prisonerData.personalDetails.firstName ~ ' (' ~ prisonerData.personalDetails.prisonerNumber ~ ')',
+          href: '/prisoner-overview/?prisonerNumber=' ~ prisonerData.personalDetails.prisonerNumber
+        }
+      ] %}
+      {% set pageHeading = "Resettlement record" %}
+    {% else %}
+      {% set breadcrumbItems = [
+        {
+          text: topLevelBreadcrumb,
+          href: dpsUrl
+        }
+      ] %}
+    {% endif %}
+
+    {{ breadCrumb(breadcrumbItems) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(pathway) }}
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-three-quarters">
+      <p>Complete each of the resettlement pathway by entering the answers gathered in the assessment and setting a status to indicate whether the prisoner needs and accepts support. </p>
+      <p class="govuk-!-padding-bottom-4">Case notes can also be added, which will display in DPS and nDelius.</p>
+      <h2>BCST2 assessment</h2>
+      <table class="govuk-table">
+        <tbody>
+          {% for assessment in assessmentStatuses %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                {% set pathway =  assessment.pathway | getEnumValue %}
+                {% set status =  assessment.assessmentStatus | getAssessmentEnumValue %}
+                <a href="/BCST2-form/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ pathway.name }}</a>
+              </th>
+              <td class="govuk-table__cell">
+                <strong class="govuk-tag govuk-tag--{{ status.color }}">{{ status.name }}</strong>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="govuk-button-group">
+        <button type="submit" {% if not BCST2Completed %}disabled{% endif %} aria-disabled="true" class="govuk-button" data-module="govuk-button">
+          Submit assessment
+        </button>
+      </div>
+    </div>
+  </div>
+{% endblock %}

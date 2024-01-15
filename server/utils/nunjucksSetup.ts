@@ -26,6 +26,7 @@ import {
   getQueryString,
   toTitleCase,
   getFeatureFlag,
+  getAssessmentEnumValue,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -74,6 +75,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('isFriday', isFriday)
   njkEnv.addFilter('filterByPathway', filterByPathway)
   njkEnv.addFilter('getEnumValue', getEnumValue)
+  njkEnv.addFilter('getAssessmentEnumValue', getAssessmentEnumValue)
   njkEnv.addFilter('getUrlFromName', getUrlFromName)
   njkEnv.addFilter('getNameFromUrl', getNameFromUrl)
   njkEnv.addFilter('getEnumByName', getEnumByName)

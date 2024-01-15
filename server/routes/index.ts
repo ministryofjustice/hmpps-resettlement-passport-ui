@@ -16,6 +16,9 @@ import { RPClient } from '../data'
 import { getEnumByURL, getEnumValue, getFeatureFlagBoolean } from '../utils/utils'
 import logger from '../../logger'
 import addAppointmentRouter from './add-appointment'
+import assessmentTaskListRouter from './assessment-task-list'
+import bcst2FormRouter from './BCST2-form'
+import assessmentCompleteRouter from './assessment-complete'
 import { FEATURE_FLAGS } from '../utils/constants'
 
 export default function routes(services: Services): Router {
@@ -32,6 +35,9 @@ export default function routes(services: Services): Router {
   healthStatusRouter(router, services)
   educationSkillsWorkRouter(router, services)
   addAppointmentRouter(router, services)
+  assessmentTaskListRouter(router, services)
+  bcst2FormRouter(router, services)
+  assessmentCompleteRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
