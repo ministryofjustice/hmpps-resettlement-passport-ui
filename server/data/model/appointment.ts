@@ -1,11 +1,11 @@
 export type Appointment = {
-  appointmentType?: string
-  appointmentTitle?: string
-  organisation?: string
-  contact?: string
-  dateAndTime?: string
-  appointmentDuration?: string
-  notes?: string
+  title: string
+  contact: string
+  date?: string
+  location?: AppointmentLocation
+}
+
+export type AppointmentLocation = {
   buildingName?: string
   buildingNumber?: string
   streetName?: string
@@ -13,4 +13,10 @@ export type Appointment = {
   town?: string
   county?: string
   postcode?: string
+  description?: string
+}
+
+export type Appointments = {
+  results?: Appointment[]
+  error?: string
 }
