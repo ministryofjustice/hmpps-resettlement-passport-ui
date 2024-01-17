@@ -27,6 +27,7 @@ import {
   toTitleCase,
   getFeatureFlag,
   getAssessmentEnumValue,
+  formatAddress,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -94,4 +95,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('toTitleCase', toTitleCase)
   njkEnv.addFilter('getFeatureFlag', getFeatureFlag, true)
   njkEnv.addGlobal('features', FEATURE_FLAGS)
+  njkEnv.addFilter('formatAddress', formatAddress)
 }

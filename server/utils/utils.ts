@@ -4,6 +4,7 @@ import ENUMS_DICTIONARY, { ASSESSMENT_ENUMS_DICTIONARY, EnumValue } from './cons
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
+import { AppointmentLocation } from '../data/model/appointment'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -225,4 +226,31 @@ export async function getFeatureFlagBoolean(flag: string) {
   }
   logger.warn(`No feature flags available, returning false for feature [${flag}].`)
   return false
+}
+
+export function formatAddress(location: AppointmentLocation): string {
+  let address = ''
+  const lineSeparator = ',<br />'
+
+  if (location) {
+    if (location.buildingNumber) {
+      address += location.buildingNumber
+    }
+    if (location.streetName) {
+      address += ' '
+      address += location.streetName
+    }
+    if (location.town) {
+      address += lineSeparator
+      address += location.town
+    }
+    if (location.postcode) {
+      address += lineSeparator
+      address += location.postcode
+    }
+    if (address.startsWith(lineSeparator)) {
+      address = address.substring(lineSeparator.length, address.length)
+    }
+  }
+  return address.trim()
 }

@@ -19,7 +19,8 @@ import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
 import bcst2FormRouter from './BCST2-form'
 import assessmentCompleteRouter from './assessment-complete'
-import { FEATURE_FLAGS } from '../utils/constants'
+import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
+import { Appointments } from '../data/model/appointment'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -62,7 +63,7 @@ export default function routes(services: Services): Router {
     let mappa: { error?: boolean } = {}
     let caseNotes: { error?: boolean } = {}
     let staffContacts: { error?: boolean } = {}
-    let appointments: { error?: boolean } = {}
+    let appointments: Appointments
     try {
       licenceConditions = await rpClient.get(
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
@@ -126,14 +127,14 @@ export default function routes(services: Services): Router {
       staffContacts.error = true
     }
     try {
-      appointments = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/appointments?page=0&size=1000`,
-      )
+      appointments = (await rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/appointments`,
+      )) as Appointments
     } catch (err) {
       logger.warn(
         `Session: ${req.sessionID} Cannot retrieve appointments for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
       )
-      appointments.error = true
+      appointments = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
     }
 
     res.render('pages/overview', {

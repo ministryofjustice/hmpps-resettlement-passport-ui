@@ -1,5 +1,12 @@
-import { convertToTitleCase, initialiseName, convertArrayToCommaSeparatedList, createReferralsSubNav } from './utils'
+import {
+  convertToTitleCase,
+  initialiseName,
+  convertArrayToCommaSeparatedList,
+  createReferralsSubNav,
+  formatAddress,
+} from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
+import { AppointmentLocation } from '../data/model/appointment'
 
 describe('convert to title case', () => {
   it.each([
@@ -66,4 +73,109 @@ describe('Create referrals subNavigation', () => {
       expect(createReferralsSubNav(input)).toEqual(expected)
     },
   )
+})
+
+describe('format address', () => {
+  it.each([
+    [null, null, ''],
+    ['All blank', {}, ''],
+    [
+      'All populated',
+      {
+        buildingName: 'My Building Name',
+        buildingNumber: '1234',
+        streetName: 'Main Street',
+        district: 'West Park',
+        town: 'Leeds',
+        county: 'West Yorkshire',
+        postcode: 'LS1 1AA',
+        description: 'Testing',
+      },
+      '1234 Main Street,<br />Leeds,<br />LS1 1AA',
+    ],
+    [
+      'Relevant fields populated',
+      {
+        buildingNumber: '1234',
+        streetName: 'Main Street',
+        town: 'Leeds',
+        postcode: 'LS1 1AA',
+      },
+      '1234 Main Street,<br />Leeds,<br />LS1 1AA',
+    ],
+    [
+      'Just building number populated',
+      {
+        buildingNumber: '1234',
+      },
+      '1234',
+    ],
+    [
+      'Just street name populated',
+      {
+        streetName: 'Main Street',
+      },
+      'Main Street',
+    ],
+    [
+      'Just town populated',
+      {
+        town: 'Leeds',
+      },
+      'Leeds',
+    ],
+    [
+      'Just postcode populated',
+      {
+        postcode: 'LS1 1AA',
+      },
+      'LS1 1AA',
+    ],
+    [
+      'Just building number and street name populated',
+      {
+        buildingNumber: '1234',
+        streetName: 'Main Street',
+      },
+      '1234 Main Street',
+    ],
+    [
+      'Just building number, street name and town populated',
+      {
+        buildingNumber: '1234',
+        streetName: 'Main Street',
+        town: 'Leeds',
+      },
+      '1234 Main Street,<br />Leeds',
+    ],
+    [
+      'Just building number, street name and postcode populated',
+      {
+        buildingNumber: '1234',
+        streetName: 'Main Street',
+        postcode: 'LS1 1AA',
+      },
+      '1234 Main Street,<br />LS1 1AA',
+    ],
+    [
+      'Just street name, town and postcode populated',
+      {
+        streetName: 'Main Street',
+        town: 'Leeds',
+        postcode: 'LS1 1AA',
+      },
+      'Main Street,<br />Leeds,<br />LS1 1AA',
+    ],
+    [
+      'Just building number, town and postcode populated',
+      {
+        buildingNumber: '1234',
+        town: 'Leeds',
+        postcode: 'LS1 1AA',
+      },
+      '1234,<br />Leeds,<br />LS1 1AA',
+    ],
+  ])('%s: formatAddress(%s)', (_: string, a: AppointmentLocation, expected: string) => {
+    expect(formatAddress(a)).toEqual(expected)
+  })
 })
