@@ -8,44 +8,19 @@ export default class AssessmentTaskListController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const { prisonerData } = req
+    const { token } = req.user
 
-    // FETCH PATHWAY ASSESSMENT STATUSES
-    const assessmentStatuses: AssessmentStatus[] = [
-      {
-        pathway: 'ACCOMMODATION',
-        assessmentStatus: 'NOT_STARTED',
-      },
-      {
-        pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR',
-        assessmentStatus: 'COMPLETE',
-      },
-      {
-        pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY',
-        assessmentStatus: 'COMPLETE',
-      },
-      {
-        pathway: 'DRUGS_AND_ALCOHOL',
-        assessmentStatus: 'COMPLETE',
-      },
-      {
-        pathway: 'EDUCATION_SKILLS_AND_WORK',
-        assessmentStatus: 'COMPLETE',
-      },
-      {
-        pathway: 'FINANCE_AND_ID',
-        assessmentStatus: 'COMPLETE',
-      },
-      {
-        pathway: 'HEALTH',
-        assessmentStatus: 'COMPLETE',
-      },
-    ]
+    const assessmentsSummary = await this.rpService.getAssessmentsSummary(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+    )
 
-    const BCST2Completed = assessmentStatuses.every(
+    const BCST2Completed = assessmentsSummary.every(
       (status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE',
     )
 
-    const view = new AssessmentTaskListView(prisonerData, assessmentStatuses, BCST2Completed)
+    const view = new AssessmentTaskListView(prisonerData, assessmentsSummary, BCST2Completed)
     res.render('pages/assessment-task-list', { ...view.renderArgs })
   }
 }

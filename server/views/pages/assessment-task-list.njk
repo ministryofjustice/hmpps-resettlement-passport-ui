@@ -63,7 +63,7 @@
       <h2>BCST2 assessment</h2>
       <table class="govuk-table">
         <tbody>
-          {% for assessment in assessmentStatuses %}
+          {% for assessment in assessmentsSummary %}
             <tr class="govuk-table__row">
               <th scope="row" class="govuk-table__header">
                 {% set pathway =  assessment.pathway | getEnumValue %}
