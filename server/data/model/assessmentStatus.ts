@@ -3,4 +3,7 @@ export type AssessmentStatus = {
   assessmentStatus: string
 }
 
-export type AssessmentsSummary = AssessmentStatus[]
+export type AssessmentsSummary = {
+  error?: string
+  results?: AssessmentStatus[]
+}

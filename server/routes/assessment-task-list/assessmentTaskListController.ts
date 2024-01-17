@@ -16,9 +16,9 @@ export default class AssessmentTaskListController {
       prisonerData.personalDetails.prisonerNumber as string,
     )
 
-    const BCST2Completed = assessmentsSummary.every(
-      (status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE',
-    )
+    const BCST2Completed: boolean = assessmentsSummary.results
+      ? assessmentsSummary.results.every((status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE')
+      : null
 
     const view = new AssessmentTaskListView(prisonerData, assessmentsSummary, BCST2Completed)
     res.render('pages/assessment-task-list', { ...view.renderArgs })

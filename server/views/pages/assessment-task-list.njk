@@ -61,27 +61,39 @@
       <p>Complete each of the resettlement pathway by entering the answers gathered in the assessment and setting a status to indicate whether the prisoner needs and accepts support. </p>
       <p class="govuk-!-padding-bottom-4">Case notes can also be added, which will display in DPS and nDelius.</p>
       <h2>BCST2 assessment</h2>
-      <table class="govuk-table">
-        <tbody>
-          {% for assessment in assessmentsSummary %}
-            <tr class="govuk-table__row">
-              <th scope="row" class="govuk-table__header">
-                {% set pathway =  assessment.pathway | getEnumValue %}
-                {% set status =  assessment.assessmentStatus | getAssessmentEnumValue %}
-                <a href="/BCST2-form/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ pathway.name }}</a>
-              </th>
-              <td class="govuk-table__cell">
-                <strong class="govuk-tag govuk-tag--{{ status.color }}">{{ status.name }}</strong>
-              </td>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <div class="govuk-button-group">
-        <button type="submit" {% if not BCST2Completed %}disabled{% endif %} aria-disabled="true" class="govuk-button" data-module="govuk-button">
-          Submit assessment
-        </button>
-      </div>
+      {% if assessmentsSummary.error %}
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">
+              There is a problem
+            </h2>
+            <div class="govuk-error-summary__body">{{ assessmentsSummary.error }}</div>
+          </div>
+        </div>
+      {% endif %}
+      {% if not assessmentsSummary.error %}
+        <table class="govuk-table">
+          <tbody>
+            {% for assessment in assessmentsSummary.results %}
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  {% set pathway =  assessment.pathway | getEnumValue %}
+                  {% set status =  assessment.assessmentStatus | getAssessmentEnumValue %}
+                  <a href="/BCST2-form/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ pathway.name }}</a>
+                </th>
+                <td class="govuk-table__cell">
+                  <strong class="govuk-tag govuk-tag--{{ status.color }}">{{ status.name }}</strong>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <div class="govuk-button-group">
+          <button type="submit" {% if not BCST2Completed %}disabled{% endif %} aria-disabled="true" class="govuk-button" data-module="govuk-button">
+            Submit assessment
+          </button>
+        </div>
+      {% endif %}
     </div>
   </div>
 {% endblock %}

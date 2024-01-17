@@ -6,7 +6,7 @@ import logger from '../../logger'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
-import { AssessmentsSummary } from '../data/model/assessmentStatus'
+import { AssessmentStatus, AssessmentsSummary } from '../data/model/assessmentStatus'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -116,15 +116,16 @@ export default class RpService {
 
     let assessmentsSummary: AssessmentsSummary
     try {
-      assessmentsSummary = (await this.rpClient.get(
+      const assessmentSummaryResponse = (await this.rpClient.get(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/summary`,
-      )) as AssessmentsSummary
+      )) as AssessmentStatus[]
+      assessmentsSummary = { results: assessmentSummaryResponse }
     } catch (err) {
       logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
       if (err.status === 404) {
-        // assessmentsSummary = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
+        assessmentsSummary = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
-        // assessmentsSummary = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+        assessmentsSummary = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
       }
     }
 
