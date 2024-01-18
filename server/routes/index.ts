@@ -21,6 +21,7 @@ import bcst2FormRouter from './BCST2-form'
 import assessmentCompleteRouter from './assessment-complete'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
+import { AssessmentStatus, AssessmentsSummary } from '../data/model/assessmentStatus'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -64,6 +65,7 @@ export default function routes(services: Services): Router {
     let caseNotes: { error?: boolean } = {}
     let staffContacts: { error?: boolean } = {}
     let appointments: Appointments
+    let assessmentsSummary: AssessmentsSummary
     try {
       licenceConditions = await rpClient.get(
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
@@ -137,6 +139,22 @@ export default function routes(services: Services): Router {
       appointments = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
     }
 
+    try {
+      const assessmentsSummaryResponse = (await rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/resettlement-assessment/summary`,
+      )) as AssessmentStatus[]
+      assessmentsSummary = { results: assessmentsSummaryResponse }
+    } catch (err) {
+      logger.warn(
+        `Session: ${req.sessionID} Cannot retrieve assessments summary for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+      )
+      assessmentsSummary = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+    }
+
+    const BCST2Completed: boolean = assessmentsSummary.results
+      ? assessmentsSummary.results.every((status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE')
+      : null
+
     res.render('pages/overview', {
       licenceConditions,
       prisonerData,
@@ -151,6 +169,8 @@ export default function routes(services: Services): Router {
       selectedPathway,
       staffContacts,
       appointments,
+      assessmentsSummary,
+      BCST2Completed,
     })
   })
 
