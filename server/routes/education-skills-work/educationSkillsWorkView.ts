@@ -6,6 +6,7 @@ import { EducationSkillsWorkResponse } from '../../data/model/educationSkillsWor
 export default class EducationSkillsWorkView implements View {
   constructor(
     private readonly prisonerData: PrisonerData,
+    private readonly BCST2Completed: boolean,
     private readonly crsReferrals: CrsReferralResponse,
     private readonly educationSkillsWork: EducationSkillsWorkResponse,
     private readonly errors: ErrorMessage[] = [],
@@ -13,12 +14,14 @@ export default class EducationSkillsWorkView implements View {
 
   get renderArgs(): {
     prisonerData: PrisonerData
+    BCST2Completed: boolean
     crsReferrals: CrsReferralResponse
     educationSkillsWork: EducationSkillsWorkResponse
     errors: ErrorMessage[]
   } {
     return {
       prisonerData: this.prisonerData,
+      BCST2Completed: this.BCST2Completed,
       crsReferrals: this.crsReferrals,
       educationSkillsWork: this.educationSkillsWork,
       errors: this.errors.length !== 0 ? this.errors : null,

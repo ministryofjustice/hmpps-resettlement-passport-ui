@@ -3,375 +3,377 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+{% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
+
 {% block content %}
-  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-    {{ titleAndIntro(pathway) }}
-    <div
-    class="govuk-grid-column-one-third">
-      <!-- Pathway status -->
-      {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
+  {% if not resettlementAssessmentEnabled or (resettlementAssessmentEnabled and BCST2Completed) %}
+    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+      {{ titleAndIntro(pathway) }}
+      <div class="govuk-grid-column-one-third">
+        {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
+      </div>
     </div>
-  </div>
-  <div
-    class="govuk-grid-row govuk-!-padding-top-4">
-    <!-- Main content area -->
-    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-      {% set subNavItems = [
-        {
-          name: "Finance and ID assessment",
-          id: "assessment"
-        },
-        {
-          name: "Finance",
-          id: "finance"
-        },
-        {
-          name: "ID",
-          id: "id"
-        }
-      ] %}
-      {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
-      {{ subNav(subNavItems) }}
-    </div>
-    <div class="govuk-grid-column-three-quarters">
-      {% if assessment.error %}
-        <div id="assessment" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-          <div class="govuk-notification-banner__header">
-            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-            Important
-        </h2>
+    <div class="govuk-grid-row govuk-!-padding-top-4">
+      <div class="govuk-grid-column-one-quarter sticky-anchor-links">
+        {% set subNavItems = [
+          {
+            name: "Finance and ID assessment",
+            id: "assessment"
+          },
+          {
+            name: "Finance",
+            id: "finance"
+          },
+          {
+            name: "ID",
+            id: "id"
+          }
+        ] %}
+        {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
+        {{ subNav(subNavItems) }}
+      </div>
+      <div class="govuk-grid-column-three-quarters">
+        {% if assessment.error %}
+          <div id="assessment" class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+            <div class="govuk-notification-banner__header">
+              <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+              Important
+          </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+              <p class="govuk-notification-banner__heading">
+                {{ prisonerData.personalDetails.firstName | capitalize }}
+                {{ prisonerData.personalDetails.lastName | capitalize }} does not have a completed Finance and ID assessment.<br>
+                <a class="govuk-notification-banner__link" href="/finance-and-id/assessment/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Complete assessment now</a>.
+            </p>
+            </div>
           </div>
-          <div class="govuk-notification-banner__content">
-            <p class="govuk-notification-banner__heading">
-              {{ prisonerData.personalDetails.firstName | capitalize }}
-              {{ prisonerData.personalDetails.lastName | capitalize }} does not have a completed Finance and ID assessment.<br>
-              <a class="govuk-notification-banner__link" href="/finance-and-id/assessment/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Complete assessment now</a>.
-          </p>
-          </div>
-        </div>
-      {% else %}
-        <section id="assessment" class="app-summary-card govuk-!-margin-bottom-8">
+        {% else %}
+          <section id="assessment" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+              <h3 class="app-summary-card__title">
+                Finance and ID assessment
+              </h3>
+            </header>
+            <div class="app-summary-card__body">
+              <table class="govuk-table">
+                <tbody class=" govuk-table__body">
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Date of assessment</th>
+                    <td class="govuk-table__cell">{{assessment.assessmentDate | formatDate('long') }}
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Requires a bank account application</th>
+                    <td class="govuk-table__cell capitalise">
+                      {% if assessment.isBankAccountRequired and true %}Yes{% else %}No{% endif %}
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Requires an ID application</th>
+                    <td class="govuk-table__cell capitalise">
+                      {% if assessment.isIdRequired and true %}Yes{% else %}No{% endif %}
+                    </td>
+                  </tr>
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">Existing ID</th>
+                    <td class="govuk-table__cell">
+                      <ul class="govuk-list">
+                        {% for document in assessment.idDocuments %}
+                          <li>{{ document.name }}</li>
+                        {% endfor %}
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <br/>
+              <button class="ghost-button delete-assessment-button">Delete assessment</button>
+              <div class="confirm-delete-assessment-form" hidden>
+                <div class="govuk-button-group">
+                  <form action action="/finance-and-id/" method="GET" novalidate>
+                    <button class="govuk-button govuk-button--warning" type="submit">Confirm delete assessment</button>
+                    <input hidden name="deleteAssessmentConfirmed" value="true"/>
+                    <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                    <input hidden name="assessmentId" value="{{ assessment.id }}">
+                  </form>
+                  <button class="ghost-button cancel-delete-assessment-button" hidden>Cancel delete assessment</button>
+                </div>
+              </div>
+            </div>
+          </section>
+        {% endif %}
+        <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
             <h3 class="app-summary-card__title">
-              Finance and ID assessment
+              Finance
             </h3>
+            {% if finance.error %}
+              <span class="right">
+                <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-button">Add a bank account application</a>
+              </span>
+            {% endif %}
           </header>
           <div class="app-summary-card__body">
-            <table class="govuk-table">
-              <tbody class=" govuk-table__body">
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">Date of assessment</th>
-                  <td class="govuk-table__cell">{{assessment.assessmentDate | formatDate('long') }}
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">Requires a bank account application</th>
-                  <td class="govuk-table__cell capitalise">
-                    {% if assessment.isBankAccountRequired and true %}Yes{% else %}No{% endif %}
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">Requires an ID application</th>
-                  <td class="govuk-table__cell capitalise">
-                    {% if assessment.isIdRequired and true %}Yes{% else %}No{% endif %}
-                  </td>
-                </tr>
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">Existing ID</th>
-                  <td class="govuk-table__cell">
-                    <ul class="govuk-list">
-                      {% for document in assessment.idDocuments %}
-                        <li>{{ document.name }}</li>
-                      {% endfor %}
-                    </ul>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <br/>
-            <button class="ghost-button delete-assessment-button">Delete assessment</button>
-            <div class="confirm-delete-assessment-form" hidden>
-              <div class="govuk-button-group">
-                <form action action="/finance-and-id/" method="GET" novalidate>
-                  <button class="govuk-button govuk-button--warning" type="submit">Confirm delete assessment</button>
-                  <input hidden name="deleteAssessmentConfirmed" value="true"/>
-                  <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-                  <input hidden name="assessmentId" value="{{ assessment.id }}">
-                </form>
-                <button class="ghost-button cancel-delete-assessment-button" hidden>Cancel delete assessment</button>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                {% if finance.error %}
+                  <p>No current applications</p>
+                {% else %}
+                  <h3 class="govuk-heading-s">Bank account</h3>
+                  <table class="govuk-table">
+                    <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Bank</th>
+                        <td class="govuk-table__cell">{{ finance.bankName }}</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application submitted</th>
+                        <td class="govuk-table__cell">{{ finance.applicationSubmittedDate | formatDate('long') }}</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Status</th>
+                        <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
+                      </tr>
+                      {% if finance.bankResponseDate and finance.currentStatus !== 'Returned incomplete' and finance.currentStatus !== 'Returned inaccurate' %}
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Date {{ finance.currentStatus }}</th>
+                          <td class="govuk-table__cell">{{ finance.bankResponseDate | formatDate('long') }}</td>
+                        </tr>
+                      {% endif %}
+                      {% if finance.currentStatus === "Account opened" %}
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Added to personal items</th>
+                          <td class="govuk-table__cell">
+                            {% if finance.isAddedToPersonalItems %}
+                              {{ finance.addedToPersonalItemsDate | formatDate('long') }}
+                            {% endif %}
+                            {% if finance.isAddedToPersonalItems == false %}
+                              No
+                            {% endif %}
+                          </td>
+                        </tr>
+                      {% endif %}
+                    </tbody>
+                  </table>
+                  <br>
+                  {% if finance.currentStatus === 'Pending' %}
+                    <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
+                      <button class="govuk-button govuk-button--secondary">
+                        Update application
+                      </button>
+                    </a>
+                    <br>
+                  {% endif %}
+                  {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
+                    <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}&applicationType=resubmit">
+                      <button class="govuk-button">
+                        Resubmit application
+                      </button>
+                    </a>
+                    <br>
+                  {% endif %}
+                  <button class="ghost-button delete-finance-button">Delete application</button>
+                  <div class="confirm-delete-finance-form" hidden>
+                    <div class="govuk-button-group">
+                      <form action action="/finance-and-id/#finance" method="GET" novalidate>
+                        <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application</button>
+                        <input hidden name="deleteFinanceConfirmed" value="true"/>
+                        <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                        <input hidden name="financeId" value="{{ finance.id }}">
+                      </form>
+                      <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
+                    </div>
+                  </div>
+                  {% set showDetails = false %}
+                  {% for log in finance.logs %}
+                    {% if log.status === 'Returned inaccurate' or log.status === 'Returned incomplete' %}
+                      {% set showDetails = true %}
+                    {% endif %}
+                  {% endfor %}
+                  {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' or showDetails %}
+                    <details class="govuk-details govuk-!-padding-top-6">
+                      <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                          Application history
+                        </span>
+                      </summary>
+                      <div class="govuk-details__text">
+                        <table class="govuk-table">
+                          <tbody class="govuk-table__body">
+                            {% for log in finance.logs %}
+                              <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header">
+                                  {% if log.status === "Pending" %}
+                                    Application submitted
+                                  {% elif log.status === "Account resubmitted" %}
+                                    Application resubmitted
+                                  {% elif log.status === "Account declined" %}
+                                    Application declined
+                                  {% elif log.status === "Account opened" %}
+                                    Date account opened
+                                  {% else %}
+                                    {{ log.status }}
+                                  {% endif %}
+                                </th>
+                                <td class="govuk-table__cell">{{ log.changeDate | formatDate('long') }}</td>
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </details>
+                  {% endif %}
+                {% endif %}
               </div>
             </div>
           </div>
         </section>
-      {% endif %}
-      <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Finance
-          </h3>
-          {% if finance.error %}
+        <section id="id" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              ID
+            </h3>
+            {% set existingIdTypes = [] %}
+            {% for id in id %}
+            {% set existingIdTypes = existingIdTypes.concat([id.idType.name]) %}
+            {% endfor %}
             <span class="right">
-              <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-button">Add a bank account application</a>
+              <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&existingIdTypes={{existingIdTypes}}">
+                Add an ID application
+              </a>
             </span>
-          {% endif %}
-        </header>
-        <div class="app-summary-card__body">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full">
-              {% if finance.error %}
-                <p>No current applications</p>
-              {% else %}
-                <h3 class="govuk-heading-s">Bank account</h3>
-                <table class="govuk-table">
-                  <tbody class="govuk-table__body">
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Bank</th>
-                      <td class="govuk-table__cell">{{ finance.bankName }}</td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Application submitted</th>
-                      <td class="govuk-table__cell">{{ finance.applicationSubmittedDate | formatDate('long') }}</td>
-                    </tr>
-                    <tr class="govuk-table__row">
-                      <th scope="row" class="govuk-table__header">Status</th>
-                      <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
-                    </tr>
-                    {% if finance.bankResponseDate and finance.currentStatus !== 'Returned incomplete' and finance.currentStatus !== 'Returned inaccurate' %}
-                      <tr class="govuk-table__row">
-                        <th scope="row" class="govuk-table__header">Date {{ finance.currentStatus }}</th>
-                        <td class="govuk-table__cell">{{ finance.bankResponseDate | formatDate('long') }}</td>
-                      </tr>
-                    {% endif %}
-                    {% if finance.currentStatus === "Account opened" %}
-                      <tr class="govuk-table__row">
-                        <th scope="row" class="govuk-table__header">Added to personal items</th>
-                        <td class="govuk-table__cell">
-                          {% if finance.isAddedToPersonalItems %}
-                            {{ finance.addedToPersonalItemsDate | formatDate('long') }}
-                          {% endif %}
-                          {% if finance.isAddedToPersonalItems == false %}
-                            No
-                          {% endif %}
-                        </td>
-                      </tr>
-                    {% endif %}
-                  </tbody>
-                </table>
-                <br>
-                {% if finance.currentStatus === 'Pending' %}
-                  <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
-                    <button class="govuk-button govuk-button--secondary">
-                      Update application
-                    </button>
-                  </a>
-                  <br>
-                {% endif %}
-                {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
-                  <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}&applicationType=resubmit">
-                    <button class="govuk-button">
-                      Resubmit application
-                    </button>
-                  </a>
-                  <br>
-                {% endif %}
-                <button class="ghost-button delete-finance-button">Delete application</button>
-                <div class="confirm-delete-finance-form" hidden>
-                  <div class="govuk-button-group">
-                    <form action action="/finance-and-id/#finance" method="GET" novalidate>
-                      <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application</button>
-                      <input hidden name="deleteFinanceConfirmed" value="true"/>
-                      <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-                      <input hidden name="financeId" value="{{ finance.id }}">
-                    </form>
-                    <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
-                  </div>
-                </div>
-                {% set showDetails = false %}
-                {% for log in finance.logs %}
-                  {% if log.status === 'Returned inaccurate' or log.status === 'Returned incomplete' %}
-                    {% set showDetails = true %}
-                  {% endif %}
-                {% endfor %}
-                {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' or showDetails %}
-                  <details class="govuk-details govuk-!-padding-top-6">
-                    <summary class="govuk-details__summary">
-                      <span class="govuk-details__summary-text">
-                        Application history
-                      </span>
-                    </summary>
-                    <div class="govuk-details__text">
+          </header>
+          <div class="app-summary-card__body">
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-full">
+                {% if id.error %}
+                  <p>No current applications</p>
+                {% elif not(id.length) %}
+                  <p>No current applications</p>
+                {% else %}
+                  {% for id in id %}
+                    <div class="{{ 'govuk-!-margin-bottom-8' if loop.length > 1 and not loop.last }}">
+                      <h3 class="govuk-heading-s">ID {{loop.index if loop.length > 1}}</h3>
                       <table class="govuk-table">
                         <tbody class="govuk-table__body">
-                          {% for log in finance.logs %}
-                            <tr class="govuk-table__row">
-                              <th scope="row" class="govuk-table__header">
-                                {% if log.status === "Pending" %}
-                                  Application submitted
-                                {% elif log.status === "Account resubmitted" %}
-                                  Application resubmitted
-                                {% elif log.status === "Account declined" %}
-                                  Application declined
-                                {% elif log.status === "Account opened" %}
-                                  Date account opened
-                                {% else %}
-                                  {{ log.status }}
-                                {% endif %}
-                              </th>
-                              <td class="govuk-table__cell">{{ log.changeDate | formatDate('long') }}</td>
-                            </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
-                  </details>
-                {% endif %}
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="id" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            ID
-          </h3>
-          {% set existingIdTypes = [] %}
-          {% for id in id %}
-          {% set existingIdTypes = existingIdTypes.concat([id.idType.name]) %}
-          {% endfor %}
-          <span class="right">
-            <a class="govuk-button" href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&existingIdTypes={{existingIdTypes}}">
-              Add an ID application
-            </a>
-          </span>
-        </header>
-        <div class="app-summary-card__body">
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full">
-              {% if id.error %}
-                <p>No current applications</p>
-              {% elif not(id.length) %}
-                <p>No current applications</p>
-              {% else %}
-                {% for id in id %}
-                  <div class="{{ 'govuk-!-margin-bottom-8' if loop.length > 1 and not loop.last }}">
-                    <h3 class="govuk-heading-s">ID {{loop.index if loop.length > 1}}</h3>
-                    <table class="govuk-table">
-                      <tbody class="govuk-table__body">
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">Type</th>
-                          <td class="govuk-table__cell">{{id.idType.name}}</td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">Application submitted</th>
-                          <td class="govuk-table__cell">{{id.applicationSubmittedDate | formatDate('long') }}</td>
-                        </tr>
-                        {% if id.idType.name === "Birth certificate" or id.idType.name  === "Marriage certificate" or id.idType.name  === "Civil partnership certificate" or id.idType.name  === "Adoption certificate"%}
                           <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Has the GRO number?</th>
-                            <td class="govuk-table__cell">
-                              {% if id.haveGro === true %}Yes{% else %}No{% endif %}
-                            </td>
+                            <th scope="row" class="govuk-table__header">Type</th>
+                            <td class="govuk-table__cell">{{id.idType.name}}</td>
                           </tr>
-                          {% if not(id.idType.name === "Adoption certificate") %}
+                          <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Application submitted</th>
+                            <td class="govuk-table__cell">{{id.applicationSubmittedDate | formatDate('long') }}</td>
+                          </tr>
+                          {% if id.idType.name === "Birth certificate" or id.idType.name  === "Marriage certificate" or id.idType.name  === "Civil partnership certificate" or id.idType.name  === "Adoption certificate"%}
                             <tr class="govuk-table__row">
-                              <th scope="row" class="govuk-table__header">Was a UK national born overseas?</th>
+                              <th scope="row" class="govuk-table__header">Has the GRO number?</th>
                               <td class="govuk-table__cell">
-                                {% if id.isUkNationalBornOverseas === true %}Yes ({{id.countryBornIn}}){% else %}No{% endif %}
+                                {% if id.haveGro === true %}Yes{% else %}No{% endif %}
+                              </td>
+                            </tr>
+                            {% if not(id.idType.name === "Adoption certificate") %}
+                              <tr class="govuk-table__row">
+                                <th scope="row" class="govuk-table__header">Was a UK national born overseas?</th>
+                                <td class="govuk-table__cell">
+                                  {% if id.isUkNationalBornOverseas === true %}Yes ({{id.countryBornIn}}){% else %}No{% endif %}
+                                </td>
+                              </tr>
+                            {% endif %}
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Priority application</th>
+                              <td class="govuk-table__cell">
+                                {% if id.isPriorityApplication === true %}Yes{% else %}No{% endif %}
+                              </td>
+                            </tr>
+                          {% elif id.idType.name === "Divorce decree absolute certificate"%}
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Case number</th>
+                              <td class="govuk-table__cell">{{ id.caseNumber }}</td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Court details</th>
+                              <td class="govuk-table__cell">{{ id.courtDetails }}</td>
+                            </tr>
+                          {% elif id.idType.name === "Driving licence" %}
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Driving licence type</th>
+                              <td class="govuk-table__cell">{{id.driversLicenceType}}</td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Driving licence application location</th>
+                              <td class="govuk-table__cell">{{id.driversLicenceApplicationMadeAt}}</td>
+                            </tr>
+                          {% endif %}
+                          {% if not(id.idType.name === "National Insurance Number Number letter") %}
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Cost of application</th>
+                              <td class="govuk-table__cell">£{{id.costOfApplication}}</td>
+                            </tr>
+                          {% endif %}
+                          <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Application status</th>
+                            <td class="govuk-table__cell">{{ id.status | capitalize }}</td>
+                          </tr>
+                          {% if id.status === 'Rejected' and not(id.idType.name === "National Insurance Number Number letter") %}
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Application refund</th>
+                              <td class="govuk-table__cell">£{{ id.refundAmount }}</td>
+                            </tr>
+                          {% endif %}
+                          {% if id.status === 'Accepted' %}
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Date ID received</th>
+                              <td class="govuk-table__cell">{{ id.dateIdReceived | formatDate('long') }}</td>
+                            </tr>
+                            <tr class="govuk-table__row">
+                              <th scope="row" class="govuk-table__header">Added to personal items</th>
+                              <td class="govuk-table__cell">
+                                {% if id.isAddedToPersonalItems == true %}
+                                  {{ id.addedToPersonalItemsDate | formatDate('long') }}
+                                {% endif %}
+                                {% if id.isAddedToPersonalItems == false %}
+                              No
+                            {% endif %}
                               </td>
                             </tr>
                           {% endif %}
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Priority application</th>
-                            <td class="govuk-table__cell">
-                              {% if id.isPriorityApplication === true %}Yes{% else %}No{% endif %}
-                            </td>
-                          </tr>
-                        {% elif id.idType.name === "Divorce decree absolute certificate"%}
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Case number</th>
-                            <td class="govuk-table__cell">{{ id.caseNumber }}</td>
-                          </tr>
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Court details</th>
-                            <td class="govuk-table__cell">{{ id.courtDetails }}</td>
-                          </tr>
-                        {% elif id.idType.name === "Driving licence" %}
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Driving licence type</th>
-                            <td class="govuk-table__cell">{{id.driversLicenceType}}</td>
-                          </tr>
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Driving licence application location</th>
-                            <td class="govuk-table__cell">{{id.driversLicenceApplicationMadeAt}}</td>
-                          </tr>
-                        {% endif %}
-                        {% if not(id.idType.name === "National Insurance Number Number letter") %}
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Cost of application</th>
-                            <td class="govuk-table__cell">£{{id.costOfApplication}}</td>
-                          </tr>
-                        {% endif %}
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">Application status</th>
-                          <td class="govuk-table__cell">{{ id.status | capitalize }}</td>
-                        </tr>
-                        {% if id.status === 'Rejected' and not(id.idType.name === "National Insurance Number Number letter") %}
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Application refund</th>
-                            <td class="govuk-table__cell">£{{ id.refundAmount }}</td>
-                          </tr>
-                        {% endif %}
-                        {% if id.status === 'Accepted' %}
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Date ID received</th>
-                            <td class="govuk-table__cell">{{ id.dateIdReceived | formatDate('long') }}</td>
-                          </tr>
-                          <tr class="govuk-table__row">
-                            <th scope="row" class="govuk-table__header">Added to personal items</th>
-                            <td class="govuk-table__cell">
-                              {% if id.isAddedToPersonalItems == true %}
-                                {{ id.addedToPersonalItemsDate | formatDate('long') }}
-                              {% endif %}
-                              {% if id.isAddedToPersonalItems == false %}
-                            No
-                          {% endif %}
-                            </td>
-                          </tr>
-                        {% endif %}
-                      </tbody>
-                    </table>
-                    <br>
-                    {% if id.status === 'pending' %}
-                      <a href="/finance-and-id/update-id-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ id.id }}&idType={{id.idType.name}}&applicationSubmittedDate={{id.applicationSubmittedDate}}">
-                        <button class="govuk-button govuk-button--secondary">
-                    Update application
-                  </button>
-                      </a>
+                        </tbody>
+                      </table>
                       <br>
-                    {% endif %}
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action action="/finance-and-id/#id" method="GET" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application</button>
-                          <input hidden name="deleteIdConfirmed" value="true"/>
-                          <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-                          <input hidden name="idId" value="{{ id.id }}">
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                      {% if id.status === 'pending' %}
+                        <a href="/finance-and-id/update-id-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ id.id }}&idType={{id.idType.name}}&applicationSubmittedDate={{id.applicationSubmittedDate}}">
+                          <button class="govuk-button govuk-button--secondary">
+                      Update application
+                    </button>
+                        </a>
+                        <br>
+                      {% endif %}
+                      <button class="ghost-button delete-id-button">Delete application</button>
+                      <div class="confirm-delete-id-form" hidden>
+                        <div class="govuk-button-group">
+                          <form action action="/finance-and-id/#id" method="GET" novalidate>
+                            <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application</button>
+                            <input hidden name="deleteIdConfirmed" value="true"/>
+                            <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                            <input hidden name="idId" value="{{ id.id }}">
+                          </form>
+                          <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                {% endfor %}
-              {% endif %}
+                  {% endfor %}
+                {% endif %}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      {% include "../partials/crsReferrals.njk" %}
+        </section>
+        {% include "../partials/crsReferrals.njk" %}
+      </div>
     </div>
-  </div>
+  {% else %}
+    {{ incompleteBCST2(pathway, prisonerData) }}
+  {% endif %}
 {% endblock %}
 {% block bodyEnd %}
   {{ super() }}

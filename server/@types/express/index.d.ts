@@ -1,3 +1,5 @@
+import { AssessmentsSummary } from '../../data/model/assessmentStatus'
+
 export default {}
 
 declare module 'express-session' {
@@ -21,6 +23,8 @@ export declare global {
       id: string
       logout(done: (err: unknown) => void): void
       prisonerData: PrisonerData
+      assessmentsSummary: AssessmentsSummary
+      BCST2Completed: boolean
     }
   }
 }

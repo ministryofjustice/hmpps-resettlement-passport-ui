@@ -21,13 +21,14 @@ import bcst2FormRouter from './BCST2-form'
 import assessmentCompleteRouter from './assessment-complete'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
-import { AssessmentStatus, AssessmentsSummary } from '../data/model/assessmentStatus'
+import assessmentsSummaryMiddleware from './assessmentsSummaryMiddleware'
 
 export default function routes(services: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware)
+  router.use(assessmentsSummaryMiddleware)
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
   attitudesThinkingBehaviourRouter(router, services)
@@ -54,7 +55,7 @@ export default function routes(services: Services): Router {
     }
   })
   use('/prisoner-overview', async (req, res, next) => {
-    const { prisonerData } = req
+    const { prisonerData, BCST2Completed } = req
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
@@ -65,7 +66,6 @@ export default function routes(services: Services): Router {
     let caseNotes: { error?: boolean } = {}
     let staffContacts: { error?: boolean } = {}
     let appointments: Appointments
-    let assessmentsSummary: AssessmentsSummary
     try {
       licenceConditions = await rpClient.get(
         `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
@@ -139,22 +139,6 @@ export default function routes(services: Services): Router {
       appointments = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
     }
 
-    try {
-      const assessmentsSummaryResponse = (await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/resettlement-assessment/summary`,
-      )) as AssessmentStatus[]
-      assessmentsSummary = { results: assessmentsSummaryResponse }
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve assessments summary for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      assessmentsSummary = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
-    }
-
-    const BCST2Completed: boolean = assessmentsSummary.results
-      ? assessmentsSummary.results.every((status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE')
-      : null
-
     res.render('pages/overview', {
       licenceConditions,
       prisonerData,
@@ -169,7 +153,6 @@ export default function routes(services: Services): Router {
       selectedPathway,
       staffContacts,
       appointments,
-      assessmentsSummary,
       BCST2Completed,
     })
   })

@@ -3,187 +3,25 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
+{% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
+
 {% block content %}
+  {% if not resettlementAssessmentEnabled or (resettlementAssessmentEnabled and BCST2Completed) %}
     <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-        {{ titleAndIntro(pathway) }}
-        <div
-                class="govuk-grid-column-one-third">
-            <!-- Pathway status -->
-            {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
-        </div>
-    </div>
-    <div
-            class="govuk-grid-row govuk-!-padding-top-4">
-        <!-- Main content area -->
+      {{ titleAndIntro(pathway) }}
+      <div class="govuk-grid-column-one-third">
+        {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
+      </div>
+      <div class="govuk-grid-row govuk-!-padding-top-4">
         <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-            {{ subNav(crsReferrals.results[0].referrals | createReferralsSubNav) }}
+          {{ subNav(crsReferrals.results[0].referrals | createReferralsSubNav) }}
         </div>
         <div class="govuk-grid-column-three-quarters">
-            {% include "../partials/crsReferrals.njk" %}
+          {% include "../partials/crsReferrals.njk" %}
         </div>
+      </div>
     </div>
-
-
-    {#
-    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-      {{ subNav([
-        {
-          name: "Risk assessment",
-          id: "risk-assessment"
-        },
-        {
-          name: "Individual risks",
-          id: "individual-risks"
-        },
-        {
-          name: "Other risks",
-          id: "other-risks"
-        }
-      ]) }}
-    </div>
-    <div class="govuk-grid-column-three-quarters">
-      <section id="risk-assessment" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Risk assessment<span class="govuk-caption-m">Data sourced from OASys</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          {{ govukTable({
-                    firstCellIsHeader: true,
-                    rows: [
-                      [
-                        {
-                          text: "Risk to others"
-                        },
-                        {
-                          text: "No"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Risk to children"
-                        },
-                        {
-                          text: "No"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Risk to self"
-                        },
-                        {
-                          text: "No"
-                        }
-                        ],
-                        [
-                        {
-                          text: "Convicted offences"
-                        },
-                        {
-                          text: "Grievous bodily harm"
-                        }
-                        ]
-                      ]
-                  }) }}
-        </div>
-      </section>
-      <section id="individual-risks" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Individual risks<span class="govuk-caption-m">Data sourced from OASys</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          {{ govukTable({
-                    firstCellIsHeader: true,
-                    rows: [
-                      [
-                        {
-                          text: "Risk of suicide"
-                        },
-                        {
-                          text: "No"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Risk of self harm"
-                        },
-                        {
-                          text: "No"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Coping in custody"
-                        },
-                        {
-                          text: "No"
-                        }
-                        ],
-                        [
-                        {
-                          text: "Vulnerable"
-                        },
-                        {
-                          text: "No"
-                        }
-                        ]
-                      ]
-                  }) }}
-        </div>
-      </section>
-      <section id="other-risks" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Other risks<span class="govuk-caption-m">Data sourced from OASys</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          {{ govukTable({
-                    firstCellIsHeader: true,
-                    rows: [
-                      [
-                        {
-                          text: "Escape/abscondment risk"
-                        },
-                        {
-                          text: "No"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Control issues"
-                        },
-                        {
-                          text: "Yes"
-                        }
-                      ],
-                      [
-                        {
-                          text: "Breach of trust"
-                        },
-                        {
-                          text: "Yes"
-                        }
-                        ],
-                        [
-                        {
-                          text: "Risk to other prisoners"
-                        },
-                        {
-                          text: "No"
-                        }
-                        ]
-                      ]
-                  }) }}
-        </div>
-      </section>
-    </div>
-    #}
-    </div>
+  {% else %}
+    {{ incompleteBCST2(pathway, prisonerData) }}
+  {% endif %}
 {% endblock %}
