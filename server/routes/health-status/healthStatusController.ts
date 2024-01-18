@@ -6,7 +6,7 @@ export default class HealthStatusController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
+    const { prisonerData, BCST2Completed } = req
     const { token } = req.user
     const crsReferrals = await this.rpService.getCrsReferrals(
       token,
@@ -15,7 +15,7 @@ export default class HealthStatusController {
       'HEALTH',
     )
 
-    const view = new HealthStatusView(prisonerData, crsReferrals)
+    const view = new HealthStatusView(prisonerData, BCST2Completed, crsReferrals)
     res.render('pages/health', { ...view.renderArgs })
   }
 }

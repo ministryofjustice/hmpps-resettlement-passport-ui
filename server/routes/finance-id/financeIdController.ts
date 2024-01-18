@@ -12,7 +12,7 @@ export default class FinanceIdController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
+    const { prisonerData, BCST2Completed } = req
     const { token } = req.user
     const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
       req.query
@@ -93,7 +93,7 @@ export default class FinanceIdController {
       'FINANCE_AND_ID',
     )
 
-    const view = new FinanceIdView(prisonerData, crsReferrals)
+    const view = new FinanceIdView(prisonerData, BCST2Completed, crsReferrals)
     res.render('pages/finance-id', { ...view.renderArgs, assessment, finance, id })
   }
 
