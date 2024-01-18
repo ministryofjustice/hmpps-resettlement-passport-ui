@@ -6,7 +6,7 @@ export default class AttitudesThinkingBehaviourController {
   constructor(private readonly prisonService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
+    const { prisonerData, BCST2Completed } = req
     const { token } = req.user
     const crsReferrals = await this.prisonService.getCrsReferrals(
       token,
@@ -15,7 +15,7 @@ export default class AttitudesThinkingBehaviourController {
       'ATTITUDES_THINKING_AND_BEHAVIOUR',
     )
 
-    const view = new AttitudesThinkingBehaviour(prisonerData, crsReferrals)
+    const view = new AttitudesThinkingBehaviour(prisonerData, BCST2Completed, crsReferrals)
     res.render('pages/attitudes-thinking-behaviour', { ...view.renderArgs })
   }
 }

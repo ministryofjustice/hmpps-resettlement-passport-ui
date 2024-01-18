@@ -21,12 +21,14 @@ import bcst2FormRouter from './BCST2-form'
 import assessmentCompleteRouter from './assessment-complete'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
+import assessmentsSummaryMiddleware from './assessmentsSummaryMiddleware'
 
 export default function routes(services: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware)
+  router.use(assessmentsSummaryMiddleware)
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
   attitudesThinkingBehaviourRouter(router, services)
@@ -53,7 +55,7 @@ export default function routes(services: Services): Router {
     }
   })
   use('/prisoner-overview', async (req, res, next) => {
-    const { prisonerData } = req
+    const { prisonerData, BCST2Completed } = req
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
@@ -151,6 +153,7 @@ export default function routes(services: Services): Router {
       selectedPathway,
       staffContacts,
       appointments,
+      BCST2Completed,
     })
   })
 
