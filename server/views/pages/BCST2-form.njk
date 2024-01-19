@@ -22,8 +22,10 @@
   <main class="govuk-!-padding-top-8" id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
-        <a class="govuk-link" href="/">Back</a>
-        <p class="govuk-heading-l govuk-!-margin-top-6">Dynamic form questions here (macros)</p>
+        <a class="govuk-link govuk-link--no-visited-state" href="/assessment-task-list/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back</a>
+        {% if not assessmentPage.error %}
+          <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-2">{{ assessmentPage.title }}</h1>
+        {% endif %}
       </div>
     </div>
   </main>
