@@ -22,7 +22,7 @@ export default async function assessmentsSummaryMiddleware(req: Request, res: Re
     assessmentsSummary = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
   }
   const BCST2Completed: boolean = assessmentsSummary.results
-    ? assessmentsSummary.results.every((status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE')
+    ? assessmentsSummary.results.every((status: AssessmentStatus) => status.assessmentStatus === 'SUBMITTED')
     : null
 
   req.assessmentsSummary = assessmentsSummary
