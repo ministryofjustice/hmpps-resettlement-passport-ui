@@ -6,6 +6,10 @@ import { ERROR_DICTIONARY } from '../utils/constants'
 
 export default async function assessmentsSummaryMiddleware(req: Request, res: Response, next: NextFunction) {
   const { prisonerNumber } = req.query
+  if (!prisonerNumber) {
+    return next()
+  }
+
   let assessmentsSummary: AssessmentsSummary
 
   const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
@@ -27,5 +31,5 @@ export default async function assessmentsSummaryMiddleware(req: Request, res: Re
 
   req.assessmentsSummary = assessmentsSummary
   req.BCST2Completed = BCST2Completed
-  next()
+  return next()
 }
