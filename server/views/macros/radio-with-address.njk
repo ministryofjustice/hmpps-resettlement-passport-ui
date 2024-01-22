@@ -1,0 +1,20 @@
+{% macro radioWithAddress(questionAndAnswer) %}
+  <div class="govuk-radios" data-module="govuk-radios">
+    {% for option in questionAndAnswer.question.options %}
+      <div class="govuk-radios__item">
+        <input
+          class="govuk-radios__input"
+          id="{{ option.id }}"
+          name="{{ questionAndAnswer.question.id }}"
+          type="radio"
+          value="{{ option.id }}"
+          data-aria-controls="conditional-accommodation-type-3"
+          checked=""
+        />
+        <label class="govuk-label govuk-radios__label" for="{{ option.id }}">{{ option.displayText }}</label>
+      </div>
+    {% endfor %}
+    <input name="WHERE_WILL_THEY_LIVE" />
+    <input name="WHERE_WILL_THEY_LIVE" value="hello" />
+  </div>
+{% endmacro %}

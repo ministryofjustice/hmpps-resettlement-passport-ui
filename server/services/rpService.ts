@@ -6,7 +6,7 @@ import logger from '../../logger'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
-import { AssessmentPage, NextPage } from '../data/model/BCST2Form'
+import { AssessmentPage, NextPage, QuestionsAndAnswers } from '../data/model/BCST2Form'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -127,26 +127,25 @@ export default class RpService {
         assessmentPage = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
       }
     }
-    console.log(assessmentPage)
 
     return assessmentPage
   }
 
-  async getNextPage(token: string, sessionId: string, prisonerId: string, pathway: string) {
+  async getNextPage(token: string, sessionId: string, prisonerId: string, pathway: string, questionsAndAnswers: any) {
     await this.rpClient.setToken(token)
 
     let nextQuestion
     try {
       nextQuestion = (await this.rpClient.post(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=BCST2`,
-        {
-          questionsAndAnswers: null,
-        },
+        questionsAndAnswers,
       )) as NextPage
+      console.log(nextQuestion)
     } catch (err) {
       logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
       if (err.status === 404) {
         nextQuestion = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
+        console.log(err)
       } else {
         nextQuestion = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
       }

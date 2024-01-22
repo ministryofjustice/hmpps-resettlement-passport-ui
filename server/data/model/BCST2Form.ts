@@ -11,14 +11,13 @@ export type QuestionOptions = {
 
 export type QuestionsAndAnswers = {
   question: {
-    '@class': string
     id: string
     title?: string
     subTitle?: string
-    type: string
-    options: QuestionOptions[]
+    type?: string
+    options?: QuestionOptions[]
   }
-  answer: null
+  answer?: any
 }
 
 export type AssessmentPage = {

@@ -1,7 +1,9 @@
 {% extends "../partials/layout.njk" %}
-{% set pathway = "BCST2 Form" %}
-{% set pageTitle = applicationName + " - " + pathway %}
+{% set pathwayName = "BCST2 Form" %}
+{% set pageTitle = applicationName + " - " + pathwayName %}
 {% set mainClasses = "app-container govuk-body" %}
+{% from "../macros/radio-with-address.njk" import radioWithAddress %}
+
 {% block header %}
   {% if feComponents.header %}
     {{ feComponents.header | safe }}
@@ -23,8 +25,23 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
         <a class="govuk-link govuk-link--no-visited-state" href="/assessment-task-list/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back</a>
+        
         {% if not assessmentPage.error %}
-          <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-2">{{ assessmentPage.title }}</h1>
+          <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.title }}</h1>
+          <form action="/BCST2-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" method="post">
+          
+            {% for questionAndAnswer in assessmentPage.questionsAndAnswers %}
+              {% if questionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
+                {{ radioWithAddress(questionAndAnswer) }}
+              {% endif %}
+            {% endfor %}
+            
+            <input type="hidden" name="pathway" value="{{ pathway }}"/>
+            <input type="hidden" name="pageID" value="{{ assessmentPage.id }}"/>
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Continue</button>
+          </form>
+          
         {% endif %}
       </div>
     </div>
