@@ -43,18 +43,18 @@
               {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber) }}
             {% endif %}
 
-            {% for questionAndAnswer in assessmentPage.questionsAndAnswers %}
-              {% if questionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
-                {{ radioWithAddress(questionAndAnswer) }}
+            {% for currentQuestionAndAnswer in assessmentPage.questionsAndAnswers %}
+              {% if currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
+                {{ radioWithAddress(currentQuestionAndAnswer, allQuestionsAndAnswers) }}
               {% endif %}
-              {% if questionAndAnswer.question.type === 'RADIO' %}
-                {{ radio(questionAndAnswer) }}
+              {% if currentQuestionAndAnswer.question.type === 'RADIO' %}
+                {{ radio(currentQuestionAndAnswer, allQuestionsAndAnswers) }}
               {% endif %}
-              {% if questionAndAnswer.question.type === 'LONG_TEXT' %}
-                {{ longText(questionAndAnswer) }}
+              {% if currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
+                {{ longText(currentQuestionAndAnswer) }}
               {% endif %}
-              {% if questionAndAnswer.question.type === 'DROPDOWN' %}
-                {{ dropDown(questionAndAnswer) }}
+              {% if currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
+                {{ dropDown(currentQuestionAndAnswer) }}
               {% endif %}
             {% endfor %}
 
