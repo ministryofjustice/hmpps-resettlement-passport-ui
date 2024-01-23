@@ -1,0 +1,16 @@
+{% macro checkAnswers(allQuestionsAndAnswers, pathway, prisonerNumber) %}
+  {% set enumValue = pathway | getEnumValue %}
+   <h1 class="govuk-heading-l">Check your answers before submitting the {{ enumValue.name }} assessment</h1>
+   <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+    <h2 class="govuk-heading-m">{{ enumValue.name }} assessment</h2>
+    {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">{{ questionAnswer.question }}</dt>
+        <dd class="govuk-summary-list__value">{{ questionAnswer.answer.answer }}</dd>
+        <dd class="govuk-summary-list__actions">
+          <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
+        </dd>
+      </div>
+    {% endfor %}
+  </dl>
+{% endmacro %}

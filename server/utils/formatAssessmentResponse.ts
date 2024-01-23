@@ -10,13 +10,15 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
   const filteredQuestionsAndAnswers = pageData.questionsAndAnswers
     .filter(questionAndAnswer => {
       const { id } = questionAndAnswer.question
-      return reqBody[id] !== null && reqBody[id] !== undefined
+      return reqBody[id] !== null && reqBody[id] !== undefined // only return questions which contain an answer
     })
     .map(questionAndAnswer => {
-      const { id } = questionAndAnswer.question
+      const { id, title } = questionAndAnswer.question
 
       return {
         question: id,
+        questionTitle: title,
+        pageId: pageData.id,
         answer: {
           answer: reqBody[id],
           '@class': 'StringAnswer',

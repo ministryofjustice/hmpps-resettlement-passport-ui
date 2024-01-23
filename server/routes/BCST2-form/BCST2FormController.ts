@@ -37,7 +37,7 @@ export default class BCST2FormController {
     const { pathway, currentPageId } = req.body
     const store = new AssessmentStore(createRedisClient())
 
-    // format current Q&A's from req body
+    // prepare current Q&A's from req body for post request
     const dataToSubmit = formatAssessmentResponse(
       await store.getCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
       req.body,
@@ -50,7 +50,7 @@ export default class BCST2FormController {
 
     // append current Q&A's to previous Q&A's
     if (allQuestionsAndAnswers) {
-      allQuestionsAndAnswers.questionsAndAnswers.push(dataToSubmit.questionsAndAnswers)
+      allQuestionsAndAnswers.questionsAndAnswers.push(...dataToSubmit.questionsAndAnswers)
     }
 
     await store.setAssessment(
@@ -87,7 +87,6 @@ export default class BCST2FormController {
       pathway as string,
       currentPageId,
     )
-    console.log(assessmentPage)
 
     const store = new AssessmentStore(createRedisClient())
     store.setCurrentPage(
@@ -98,7 +97,14 @@ export default class BCST2FormController {
       3600,
     )
 
-    const view = new BCST2FormView(prisonerData, assessmentPage, pathway)
+    // send all Q&A's to frontend for check answers page
+    const allQuestionsAndAnswers = JSON.parse(
+      await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+    )
+    // console.log(JSON.stringify(assessmentPage, null, 2))
+    // console.log(JSON.stringify(allQuestionsAndAnswers, null, 2))
+
+    const view = new BCST2FormView(prisonerData, assessmentPage, pathway, allQuestionsAndAnswers)
     res.render('pages/BCST2-form', { ...view.renderArgs })
   }
 }

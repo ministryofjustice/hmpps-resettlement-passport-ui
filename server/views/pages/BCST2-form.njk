@@ -7,6 +7,7 @@
 {% from "../macros/longText.njk" import longText %}
 {% from "../macros/dropDown.njk" import dropDown %}
 {% from "../macros/assessmentSummary.njk" import assessmentSummary %}
+{% from "../macros/checkAnswers.njk" import checkAnswers %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -36,6 +37,10 @@
             
             {% if assessmentPage.id === "ASSESSMENT_SUMMARY" %}
               {{ assessmentSummary(pathway) }}
+            {% endif %}
+
+            {% if assessmentPage.id === "CHECK_ANSWERS" %}
+              {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber) }}
             {% endif %}
 
             {% for questionAndAnswer in assessmentPage.questionsAndAnswers %}
