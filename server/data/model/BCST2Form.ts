@@ -12,7 +12,7 @@ export type QuestionOptions = {
 export type AnswerType = 'StringAnswer' | 'MapAnswer' | 'ListAnswer'
 
 export type Answer = {
-  answer?: any
+  answer?: string | string[]
   '@class'?: AnswerType
 }
 
@@ -32,4 +32,13 @@ export type AssessmentPage = {
   id?: string
   title?: string
   questionsAndAnswers?: QuestionsAndAnswers[]
+}
+
+export type SubmittedQuestionAndAnswer = {
+  question: string
+  answer: Answer
+}
+
+export type SubmittedInput = {
+  questionsAndAnswers?: SubmittedQuestionAndAnswer[]
 }

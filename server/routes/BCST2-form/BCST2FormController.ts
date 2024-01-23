@@ -4,7 +4,7 @@ import BCST2FormView from './BCST2FormView'
 import formatAssessmentResponse from '../../utils/formatAssessmentResponse'
 import { createRedisClient } from '../../data/redisClient'
 import AssessmentStore from '../../data/assessmentStore'
-import { AssessmentPage } from '../../data/model/BCST2Form'
+import { AssessmentPage, SubmittedInput } from '../../data/model/BCST2Form'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}
@@ -47,6 +47,8 @@ export default class BCST2FormController {
     const allQuestionsAndAnswers = JSON.parse(
       await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
     )
+
+    // append current Q&A's to previous Q&A's
     if (allQuestionsAndAnswers) {
       allQuestionsAndAnswers.questionsAndAnswers.push(dataToSubmit.questionsAndAnswers)
     }
@@ -64,7 +66,7 @@ export default class BCST2FormController {
       req.sessionID,
       prisonerData.personalDetails.prisonerNumber as string,
       pathway as string,
-      dataToSubmit,
+      dataToSubmit as SubmittedInput,
       currentPageId,
     )
     const { nextPageId } = nextPage
@@ -88,7 +90,6 @@ export default class BCST2FormController {
 
     const store = new AssessmentStore(createRedisClient())
     store.setCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, assessmentPage, 600)
-    console.log(assessmentPage.questionsAndAnswers)
 
     const view = new BCST2FormView(prisonerData, assessmentPage, pathway)
     res.render('pages/BCST2-form', { ...view.renderArgs })

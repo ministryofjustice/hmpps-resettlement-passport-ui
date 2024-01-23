@@ -1,6 +1,10 @@
 import { AssessmentPage } from '../data/model/BCST2Form'
 
-const formatAssessmentResponse = (currentPage: string, reqBody: any) => {
+type RequestBody = {
+  [key: string]: string
+}
+
+const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => {
   const pageData: AssessmentPage = JSON.parse(currentPage)
 
   const filteredQuestionsAndAnswers = pageData.questionsAndAnswers

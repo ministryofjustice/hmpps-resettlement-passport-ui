@@ -6,7 +6,7 @@ import logger from '../../logger'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
-import { AssessmentPage, NextPage, QuestionsAndAnswers } from '../data/model/BCST2Form'
+import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -136,7 +136,7 @@ export default class RpService {
     sessionId: string,
     prisonerId: string,
     pathway: string,
-    questionsAndAnswers: any,
+    questionsAndAnswers: SubmittedInput,
     currentPageId: string,
   ) {
     await this.rpClient.setToken(token)

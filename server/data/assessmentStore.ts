@@ -1,7 +1,7 @@
 import type { RedisClient } from './redisClient'
 
 import logger from '../../logger'
-import { AssessmentPage } from './model/BCST2Form'
+import { AssessmentPage, SubmittedInput } from './model/BCST2Form'
 
 export default class AssessmentStore {
   private readonly assessmentPrefix = 'assessment:'
@@ -24,7 +24,7 @@ export default class AssessmentStore {
     sessionId: string,
     nomisId: string,
     pathway: string,
-    questionsAndAnswers: any,
+    questionsAndAnswers: SubmittedInput,
     durationSeconds: number,
   ): Promise<void> {
     await this.ensureConnected()
