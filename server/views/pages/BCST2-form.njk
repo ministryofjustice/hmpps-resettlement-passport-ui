@@ -1,7 +1,12 @@
 {% extends "../partials/layout.njk" %}
-{% set pathway = "BCST2 Form" %}
-{% set pageTitle = applicationName + " - " + pathway %}
+{% set pathwayName = "BCST2 Form" %}
+{% set pageTitle = applicationName + " - " + pathwayName %}
 {% set mainClasses = "app-container govuk-body" %}
+{% from "../macros/radio-with-address.njk" import radioWithAddress %}
+{% from "../macros/radio.njk" import radio %}
+{% from "../macros/longText.njk" import longText %}
+{% from "../macros/dropDown.njk" import dropDown %}
+
 {% block header %}
   {% if feComponents.header %}
     {{ feComponents.header | safe }}
@@ -22,8 +27,34 @@
   <main class="govuk-!-padding-top-8" id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
-        <a class="govuk-link" href="/">Back</a>
-        <p class="govuk-heading-l govuk-!-margin-top-6">Dynamic form questions here (macros)</p>
+        <a class="govuk-link govuk-link--no-visited-state" href="/assessment-task-list/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back</a>
+        
+        {% if not assessmentPage.error %}
+          <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.title }}</h1>
+          <form action="/BCST2-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" method="post">
+          
+            {% for questionAndAnswer in assessmentPage.questionsAndAnswers %}
+              {% if questionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
+                {{ radioWithAddress(questionAndAnswer) }}
+              {% endif %}
+              {% if questionAndAnswer.question.type === 'RADIO' %}
+                {{ radio(questionAndAnswer) }}
+              {% endif %}
+              {% if questionAndAnswer.question.type === 'LONG_TEXT' %}
+                {{ longText(questionAndAnswer) }}
+              {% endif %}
+              {% if questionAndAnswer.question.type === 'DROPDOWN' %}
+                {{ dropDown(questionAndAnswer) }}
+              {% endif %}
+            {% endfor %}
+            
+            <input type="hidden" name="pathway" value="{{ pathway }}"/>
+            <input type="hidden" name="currentPageId" value="{{ assessmentPage.id }}"/>
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Continue</button>
+          </form>
+          
+        {% endif %}
       </div>
     </div>
   </main>

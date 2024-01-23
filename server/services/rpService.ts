@@ -6,7 +6,7 @@ import logger from '../../logger'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
-import { AssessmentStatus, AssessmentsSummary } from '../data/model/assessmentStatus'
+import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -111,24 +111,52 @@ export default class RpService {
     return prisonerCountMetrics
   }
 
-  async getAssessmentsSummary(token: string, sessionId: string, prisonerId: string) {
+  async getAssessmentPage(token: string, sessionId: string, prisonerId: string, pathway: string, pageId: string) {
     await this.rpClient.setToken(token)
 
-    let assessmentsSummary: AssessmentsSummary
+    let assessmentPage
     try {
-      const assessmentSummaryResponse = (await this.rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/summary`,
-      )) as AssessmentStatus[]
-      assessmentsSummary = { results: assessmentSummaryResponse }
+      assessmentPage = (await this.rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=BCST2`,
+      )) as AssessmentPage
     } catch (err) {
       logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
       if (err.status === 404) {
-        assessmentsSummary = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
+        assessmentPage = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
-        assessmentsSummary = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+        assessmentPage = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
       }
     }
 
-    return assessmentsSummary
+    return assessmentPage
+  }
+
+  async fetchNextPage(
+    token: string,
+    sessionId: string,
+    prisonerId: string,
+    pathway: string,
+    questionsAndAnswers: SubmittedInput,
+    currentPageId: string,
+  ) {
+    await this.rpClient.setToken(token)
+    let nextQuestion
+    try {
+      nextQuestion = (await this.rpClient.post(
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=BCST2${
+          currentPageId ? `&currentPage=${currentPageId}` : ''
+        }`,
+        questionsAndAnswers,
+      )) as NextPage
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
+      if (err.status === 404) {
+        nextQuestion = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
+      } else {
+        nextQuestion = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      }
+    }
+
+    return nextQuestion
   }
 }
