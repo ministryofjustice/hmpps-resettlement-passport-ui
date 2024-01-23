@@ -131,16 +131,23 @@ export default class RpService {
     return assessmentPage
   }
 
-  async getNextPage(token: string, sessionId: string, prisonerId: string, pathway: string, questionsAndAnswers: any) {
+  async fetchNextPage(
+    token: string,
+    sessionId: string,
+    prisonerId: string,
+    pathway: string,
+    questionsAndAnswers: any,
+    currentPageId: string,
+  ) {
     await this.rpClient.setToken(token)
-
     let nextQuestion
     try {
       nextQuestion = (await this.rpClient.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=BCST2`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=BCST2${
+          currentPageId ? `&currentPage=${currentPageId}` : ''
+        }`,
         questionsAndAnswers,
       )) as NextPage
-      console.log(nextQuestion)
     } catch (err) {
       logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
       if (err.status === 404) {

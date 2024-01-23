@@ -7,5 +7,5 @@ export default (router: Router, services: Services) => {
 
   router.get('/BCST2-next-page', [bcst2FormController.getNextPage])
   router.post('/BCST2-next-page', [bcst2FormController.saveAnswerAndGetNextPage])
-  router.get('/BCST2-assessment/pathway/:pathway/page/:pageId', [bcst2FormController.getView])
+  router.get('/BCST2-assessment/pathway/:pathway/page/:currentPageId', [bcst2FormController.getView])
 }

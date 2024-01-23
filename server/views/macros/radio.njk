@@ -1,4 +1,4 @@
-{% macro radioWithAddress(questionAndAnswer) %}
+{% macro radio(questionAndAnswer) %}
   <b>{{ questionAndAnswer.question.title }}</b>
   <div class="govuk-radios" data-module="govuk-radios">
     {% for option in questionAndAnswer.question.options %}

@@ -9,6 +9,13 @@ export type QuestionOptions = {
   description?: string
 }
 
+export type AnswerType = 'StringAnswer' | 'MapAnswer' | 'ListAnswer'
+
+export type Answer = {
+  answer?: any
+  '@class'?: AnswerType
+}
+
 export type QuestionsAndAnswers = {
   question: {
     id: string
@@ -17,7 +24,7 @@ export type QuestionsAndAnswers = {
     type?: string
     options?: QuestionOptions[]
   }
-  answer?: any
+  answer?: Answer
 }
 
 export type AssessmentPage = {
