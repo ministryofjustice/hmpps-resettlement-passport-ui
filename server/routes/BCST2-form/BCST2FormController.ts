@@ -4,7 +4,7 @@ import BCST2FormView from './BCST2FormView'
 import formatAssessmentResponse from '../../utils/formatAssessmentResponse'
 import { createRedisClient } from '../../data/redisClient'
 import AssessmentStore from '../../data/assessmentStore'
-import { AssessmentPage, SubmittedInput } from '../../data/model/BCST2Form'
+import { SubmittedInput } from '../../data/model/BCST2Form'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}

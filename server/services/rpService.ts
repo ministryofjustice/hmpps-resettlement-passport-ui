@@ -152,7 +152,6 @@ export default class RpService {
       logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
       if (err.status === 404) {
         nextQuestion = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
-        console.log(err)
       } else {
         nextQuestion = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
       }
