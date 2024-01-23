@@ -43,6 +43,12 @@ export default class AssessmentStore {
     return this.client.get(key)
   }
 
+  public async deleteAssessment(sessionId: string, nomisId: string, pathway: string) {
+    await this.ensureConnected()
+    const key = `${this.assessmentPrefix}${sessionId}${nomisId}${pathway}`
+    await this.client.del(key)
+  }
+
   public async setCurrentPage(
     sessionId: string,
     nomisId: string,

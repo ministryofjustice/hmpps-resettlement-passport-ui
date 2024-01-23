@@ -58,7 +58,7 @@ export default class BCST2FormController {
       `${prisonerData.personalDetails.prisonerNumber}`,
       pathway,
       allQuestionsAndAnswers || dataToSubmit,
-      600,
+      3600,
     )
 
     const nextPage = await this.rpService.fetchNextPage(
@@ -89,7 +89,13 @@ export default class BCST2FormController {
     )
 
     const store = new AssessmentStore(createRedisClient())
-    store.setCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, assessmentPage, 600)
+    store.setCurrentPage(
+      req.session.id,
+      `${prisonerData.personalDetails.prisonerNumber}`,
+      pathway,
+      assessmentPage,
+      3600,
+    )
 
     const view = new BCST2FormView(prisonerData, assessmentPage, pathway)
     res.render('pages/BCST2-form', { ...view.renderArgs })
