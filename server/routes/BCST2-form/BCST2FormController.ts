@@ -87,6 +87,7 @@ export default class BCST2FormController {
       pathway as string,
       currentPageId,
     )
+    console.log(assessmentPage)
 
     const store = new AssessmentStore(createRedisClient())
     store.setCurrentPage(

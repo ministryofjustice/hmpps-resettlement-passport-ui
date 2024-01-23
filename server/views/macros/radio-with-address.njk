@@ -13,6 +13,7 @@
           checked=""
         />
         <label class="govuk-label govuk-radios__label" for="{{ option.id }}">{{ option.displayText }}</label>
+        <div class="govuk-hint govuk-radios__hint">{{ option.description }}</div>
       </div>
     {% endfor %}
   </div>

@@ -1,5 +1,5 @@
 {% macro longText(questionAndAnswer) %}
-  <div class="govuk-form-group">
+  <div class="govuk-form-group govuk-!-padding-top-6">
     <b>{{ questionAndAnswer.question.title }}</b>
     <label class="govuk-label" for="{{ questionAndAnswer.question.id }}">{{ questionAndAnswer.question.subTitle }}</label>
     <textarea class="govuk-textarea" id="{{ questionAndAnswer.question.id }}" name="{{ questionAndAnswer.question.id }}" rows="5" aria-describedby="more-detail-hint"></textarea>
