@@ -126,11 +126,11 @@ jobs:
           command: npm i
       - run:
           name: Run cucumber tests
-          env:
-            BASEURL: ${secrets.DEV_BASEURL}
-            USERNAME: ${secrets.E2E_DEV_USERNAME}
-            PASSWORD: ${secrets.E2E_DEV_PASSWORD}
-            BROWSER: ${secrets.E2E_DEV_BROWSER}
+          environment:
+            BASEURL: ${DEV_BASEURL}
+            USERNAME: ${E2E_DEV_USERNAME}
+            PASSWORD: ${E2E_DEV_PASSWORD}
+            BROWSER: ${E2E_DEV_BROWSER}
           command: npm run end-to-end-test
       - store_test_results:
           path: test_results
