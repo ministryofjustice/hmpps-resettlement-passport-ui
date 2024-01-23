@@ -110,9 +110,9 @@
     "http-errors": "^2.0.0",
     "jwt-decode": "^3.1.2",
     "nocache": "^4.0.0",
-    "nunjucks": "^3.2.4",
     "node-ts-cache": "^4.4.0",
     "node-ts-cache-storage-memory": "^4.4.0",
+    "nunjucks": "^3.2.4",
     "passport": "^0.6.0",
     "passport-oauth2": "^1.7.0",
     "prom-client": "^14.2.0",
@@ -169,7 +169,7 @@
     "sass": "^1.63.6",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
   },
   "overrides": {
     "semver": "^7.5.3",
