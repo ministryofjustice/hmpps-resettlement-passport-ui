@@ -111,7 +111,7 @@ jobs:
       - store_artifacts:
           path: integration-tests/screenshots
 
-  end-to-end_test:
+  end-to-end-test:
     executor:
       name: hmpps/node_redis
       node_tag: << pipeline.parameters.node-version >>
@@ -172,15 +172,14 @@ workflows:
             - integration_test
             - build_docker
           helm_timeout: 5m
-      - end-to-end_test:
-          name: end_to_end_tests
-          env: "dev"
+      - end-to-end-test:
+          name: end-to-end-test
           requires:
             - deploy_dev
       - request-preprod-approval:
           type: approval
           requires:
-            - deploy_dev
+            - end-to-end-test
       - hmpps/deploy_env:
           name: deploy_preprod
           env: "preprod"
