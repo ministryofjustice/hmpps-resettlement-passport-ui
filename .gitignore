@@ -124,6 +124,9 @@ dist/
 test_results/
 integration_tests/videos/
 integration_tests/screenshots/
+E2E_Tests/playwright-report/
+E2E_Tests/playwright/.cache/
+test-results/
 */*.iml
 **/Chart.lock
 cypress/

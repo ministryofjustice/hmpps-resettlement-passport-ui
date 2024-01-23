@@ -4,3 +4,4 @@ assets
 cypress.json
 reporter-config.json
 dist/
+E2E_Tests

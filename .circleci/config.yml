@@ -55,6 +55,7 @@ jobs:
             - build
             - dist
             - .cache/Cypress
+            - .cache/playwright
 
   unit_test:
     executor:
@@ -110,6 +111,30 @@ jobs:
       - store_artifacts:
           path: integration-tests/screenshots
 
+  end-to-end-test:
+    executor:
+      name: hmpps/node_redis
+      node_tag: << pipeline.parameters.node-version >>
+      redis_tag: "7.0"
+    steps:
+      - checkout
+      - run:
+          name: Install Playwright browsers
+          command: npx playwright install --with-deps
+      - run:
+          name: Install Playwright dependencies
+          command: npm i
+      - run:
+          name: Run cucumber tests
+          environment:
+            BASEURL: ${DEV_BASEURL}
+            USERNAME: ${E2E_DEV_USERNAME}
+            PASSWORD: ${E2E_DEV_PASSWORD}
+            BROWSER: ${E2E_DEV_BROWSER}
+          command: npm run end-to-end-test
+      - store_test_results:
+          path: test_results
+
 workflows:
   version: 2
   build-test-and-deploy:
@@ -147,10 +172,14 @@ workflows:
             - integration_test
             - build_docker
           helm_timeout: 5m
+      - end-to-end-test:
+          name: end-to-end-test
+          requires:
+            - deploy_dev
       - request-preprod-approval:
           type: approval
           requires:
-            - deploy_dev
+            - end-to-end-test
       - hmpps/deploy_env:
           name: deploy_preprod
           env: "preprod"
