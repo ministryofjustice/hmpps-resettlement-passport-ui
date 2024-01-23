@@ -22,6 +22,7 @@ parameters:
 
 jobs:
   build:
+    circleci_ip_ranges: true
     executor:
       name: hmpps/node
       tag: << pipeline.parameters.node-version >>

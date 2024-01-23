@@ -19,14 +19,5 @@ generic-service:
     ENVIRONMENT_NAME: "PRE-PRODUCTION"
     SUPPORT_URL: "https://support-preprod.hmpps.service.justice.gov.uk/feedback-and-support"
 
-  allowlist:
-    cymulate-1: 54.217.50.18/32
-    cymulate-2: 52.208.202.111/32
-    cymulate-3: 52.49.144.209/32
-    groups:
-      - internal
-      - prisons
-      - private_prisons
-
 generic-prometheus-alerts:
   alertSeverity: hmpps-resettlement-passport-non-prod
