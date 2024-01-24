@@ -31,7 +31,7 @@ import {
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
-import { FEATURE_FLAGS } from './constants'
+import { FEATURE_FLAGS, FEEDBACK_URL } from './constants'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -96,4 +96,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getFeatureFlag', getFeatureFlag, true)
   njkEnv.addGlobal('features', FEATURE_FLAGS)
   njkEnv.addFilter('formatAddress', formatAddress)
+  njkEnv.addGlobal('feedbackUrl', FEEDBACK_URL)
 }
