@@ -44,17 +44,21 @@
             {% endif %}
 
             {% for currentQuestionAndAnswer in assessmentPage.questionsAndAnswers %}
+
+              {# get answer to current question #}
+              {% set existingAnswer = currentQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
+
               {% if currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
-                {{ radioWithAddress(currentQuestionAndAnswer, allQuestionsAndAnswers) }}
+                {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer) }}
               {% endif %}
               {% if currentQuestionAndAnswer.question.type === 'RADIO' %}
-                {{ radio(currentQuestionAndAnswer, allQuestionsAndAnswers) }}
+                {{ radio(currentQuestionAndAnswer, existingAnswer) }}
               {% endif %}
               {% if currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
-                {{ longText(currentQuestionAndAnswer) }}
+                {{ longText(currentQuestionAndAnswer, existingAnswer) }}
               {% endif %}
               {% if currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
-                {{ dropDown(currentQuestionAndAnswer) }}
+                {{ dropDown(currentQuestionAndAnswer, existingAnswer) }}
               {% endif %}
             {% endfor %}
 

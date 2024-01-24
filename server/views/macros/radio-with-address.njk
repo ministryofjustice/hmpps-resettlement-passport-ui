@@ -1,13 +1,4 @@
-{% macro radioWithAddress(currentQuestionAndAnswer, allQuestionsAndAnswers) %}
-
-  {# find existing answer to current question #}
-  {% set existingAnswer = null %}
-  {% for qa in allQuestionsAndAnswers.questionsAndAnswers %}
-    {% if qa.question === currentQuestionAndAnswer.question.id %}
-      {% set existingAnswer = qa.answer.answer %}
-    {% endif %}
-  {% endfor %}
-
+{% macro radioWithAddress(currentQuestionAndAnswer, existingAnswer) %}
   <b>{{ currentQuestionAndAnswer.question.title }}</b>
   <div class="govuk-radios" data-module="govuk-radios">
     {% for option in currentQuestionAndAnswer.question.options %}
@@ -18,7 +9,7 @@
           name="{{ currentQuestionAndAnswer.question.id }}"
           type="radio"
           value="{{ option.id }}"
-          {% if existingAnswer == option.id %}
+          {% if existingAnswer.answer == option.id %}
             checked
           {% endif %}
         />
