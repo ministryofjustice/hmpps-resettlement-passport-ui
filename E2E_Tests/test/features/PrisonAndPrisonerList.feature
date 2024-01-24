@@ -6,7 +6,7 @@
 #    Given The User navigates to the list of prisons page and the time to release filter of "All prisoners" has been applied with prisoner "Smith, John" entered as prisoner name
 
 
-  @test@regression@prison@pathwayStatus
+#  @test@regression@prison@pathwayStatus
 #  Scenario: PrisonerList: To verify the user is able to select a prison, select a prisoner and verify the prisoner name, number, release date, release condition and friday release state is displayed.
 #    To also verify that on selecting a prisoner name link, the application navigates to the resettlement overview page.
 #   And the prisoner "Arran, Mcclean" is with a prisoner number of "A3775DZ", release date of "31Mar2024", release conditions of "CRD" and the friday release date is "false"
@@ -14,7 +14,7 @@
 #   And the prisoner "Smith, John" is selected
 #   And the resettlement overview page is displayed
 
-  @test@regression@pathwayStatus
+#  @test@regression@pathwayStatus
 #  Scenario: PrisonerList: To verify Accommodation pathway status
 #    And I click on the resettlement status link to see the various pathway statuses for "Clemence, Chrisy"
 #    And I see the accommodation pathway status displayed for "Clemence, Chrisy" in the prisoners page pathway status is the same as that displayed in the prisoners page
@@ -55,7 +55,7 @@
 #    And the first prisoner name in the prisoners list is "Smith, John" with release conditions "29Mar2024⚠️FridayCRD"
 
 
-  @regression@prison
+#  @regression@prison
 #  Scenario: PrisonerList: To verify the release date are calculated as expected
 ## This test is to be DELETED. Need to test via pagination as the prisoner search bar does not work in Dev
 #  #######NEWMAN, Nancy approvedParoleDate": "2034-04-07",

@@ -9,7 +9,7 @@
 # ###############################FINANCE AND ID----- BANK  ########################################################################
 # ############################################################################################################################
 #
-  @test@resettlement@regression@financeID@bank
+#  @test@resettlement@regression@financeID@bank
 #  Scenario: Bank: To verify the user can click on all navigation links of the Finance and ID Resettlement Overview Tab. To verify the user can make an initial bank account application and contents are displayed in the Finance and ID Resettlement Overview Tab
 #  And The Finance and ID Tab selected
 #  And The Finance and ID page is displayed via the Finance Page
@@ -184,7 +184,7 @@
 #####################################################################################
 
 
-  @test@resettlement@regression@financeID@bank@error
+#  @test@resettlement@regression@financeID@bank@error
 #   Scenario: Bank:To verify the error dialogs when a status of Account opened is selected and the submitted is selected.
 #   And The Finance and ID Tab with a bank application for bank "HSBC" with application submitted date of "12/04/2021" and status pending
 #   And the user clicks on the Update application button in the Finance section and the Apply for bank account update application status page is displayed
@@ -234,7 +234,7 @@
 #      ####################################################################################
 
 
-  @test@resettlement@regression@financeID@bank
+#  @test@resettlement@regression@financeID@bank
 # Scenario:Bank: To verify the application status journey after an application has been returned as either incomplete or inaccurate and the account is opened. To also verify the user is able to change reapplication status from opened to declined
 # And The Finance and ID Tab with a bank application for bank "HSBC" with application submitted date of "12/04/2000" and the application has been returned as "Returned incomplete" on date heard back as "12/04/2001"
 # And the resubmit application button is selected and the bank application resubmitted page is displayed
@@ -269,7 +269,7 @@
 
 
 
-  @test@resettlement@regression@financeID@bank
+#  @test@resettlement@regression@financeID@bank
 #  Scenario: Bank:To verify the application status journey after an application has been returned as either incomplete or inaccurate and the account is declined. To also verify the user is able to change reapplication status from declined to opened
 #    And The Finance and ID Tab with a bank application for bank "NatWest" with application submitted date of "12/04/2005" and the application has been returned as "Returned incomplete" on date heard back as "12/05/2005"
 #    And the resubmit application button is selected and the bank application resubmitted page is displayed
@@ -300,7 +300,7 @@
 
 
 
-  @test@resettlement@regression@financeID@bank
+#  @test@resettlement@regression@financeID@bank
 #  Scenario: Bank:To verify the status can be changed fromm accepted to declined and vice versa
 #    And The Finance and ID Tab with a bank application for bank "NatWest" with application submitted date of "12/04/2005" and the application has been returned as "Returned incomplete" on date heard back as "12/05/2005"
 #    And the resubmit application button is selected and the bank application resubmitted page is displayed
@@ -326,7 +326,7 @@
     ############# ERROR DIALOGS FOR RESUBMITTED BANK ACCOUNT #######################
     ####################################################################################
 
-  @test@resettlement@regression@financeID@bank@error
+#  @test@resettlement@regression@financeID@bank@error
 #  Scenario: Bank: To verify the error dialogs on the re-submitted bank application route when an application has been opened
 #  And The Finance and ID Tab with a bank application for bank "HSBC" with application submitted date of "12/04/2000" and the application has been returned as "Returned incomplete" on date heard back as "12/04/2001"
 #  And the resubmit application button is selected and the bank application resubmitted page is displayed
@@ -372,7 +372,7 @@
 
 
 
-  @test@resettlement@regression@financeID@bank@error
+#  @test@resettlement@regression@financeID@bank@error
 #  Scenario: Bank: To verify the error dialogs on the re-submitted bank application route when an application has been declined
 #    And The Finance and ID Tab with a bank application for bank "HSBC" with application submitted date of "12/04/2000" and the application has been returned as "Returned incomplete" on date heard back as "12/04/2001"
 #    And the resubmit application button is selected and the bank application resubmitted page is displayed
