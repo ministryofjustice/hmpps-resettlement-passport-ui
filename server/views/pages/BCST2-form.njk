@@ -50,18 +50,16 @@
 
               {% if currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
                 {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer) }}
-              {% endif %}
-              {% if currentQuestionAndAnswer.question.type === 'RADIO' %}
+              {% elif currentQuestionAndAnswer.question.type === 'RADIO' %}
                 {{ radio(currentQuestionAndAnswer, existingAnswer) }}
-              {% endif %}
-              {% if currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
+              {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
                 {{ longText(currentQuestionAndAnswer, existingAnswer) }}
-              {% endif %}
-              {% if currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
+              {% elif currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
                 {{ dropDown(currentQuestionAndAnswer, existingAnswer) }}
+              {% else %}
+                <p class="govuk-error-message">Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
               {% endif %}
             {% endfor %}
-
             
             <input type="hidden" name="pathway" value="{{ pathway }}"/>
             <input type="hidden" name="currentPageId" value="{{ assessmentPage.id }}"/>
