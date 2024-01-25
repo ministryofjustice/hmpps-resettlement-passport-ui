@@ -22,14 +22,14 @@ export default class AssessmentStore {
 
   public async setAssessment(
     sessionId: string,
-    nomisId: string,
+    nomsId: string,
     pathway: string,
     questionsAndAnswers: SubmittedInput,
     durationSeconds: number,
   ): Promise<void> {
     await this.ensureConnected()
     await this.client.set(
-      `${this.assessmentPrefix}${sessionId}${nomisId}${pathway}`,
+      `${this.assessmentPrefix}${sessionId}${nomsId}${pathway}`,
       JSON.stringify(questionsAndAnswers),
       {
         EX: durationSeconds,
@@ -37,34 +37,34 @@ export default class AssessmentStore {
     )
   }
 
-  public async getAssessment(sessionId: string, nomisId: string, pathway: string): Promise<string> {
+  public async getAssessment(sessionId: string, nomsId: string, pathway: string): Promise<string> {
     await this.ensureConnected()
-    const key = `${this.assessmentPrefix}${sessionId}${nomisId}${pathway}`
+    const key = `${this.assessmentPrefix}${sessionId}${nomsId}${pathway}`
     return this.client.get(key)
   }
 
-  public async deleteAssessment(sessionId: string, nomisId: string, pathway: string) {
+  public async deleteAssessment(sessionId: string, nomsId: string, pathway: string) {
     await this.ensureConnected()
-    const key = `${this.assessmentPrefix}${sessionId}${nomisId}${pathway}`
+    const key = `${this.assessmentPrefix}${sessionId}${nomsId}${pathway}`
     await this.client.del(key)
   }
 
   public async setCurrentPage(
     sessionId: string,
-    nomisId: string,
+    nomsId: string,
     pathway: string,
     currentPage: AssessmentPage,
     durationSeconds: number,
   ): Promise<void> {
     await this.ensureConnected()
-    await this.client.set(`${this.currentPagePrefix}${sessionId}${nomisId}${pathway}`, JSON.stringify(currentPage), {
+    await this.client.set(`${this.currentPagePrefix}${sessionId}${nomsId}${pathway}`, JSON.stringify(currentPage), {
       EX: durationSeconds,
     })
   }
 
-  public async getCurrentPage(sessionId: string, nomisId: string, pathway: string): Promise<string> {
+  public async getCurrentPage(sessionId: string, nomsId: string, pathway: string): Promise<string> {
     await this.ensureConnected()
-    const key = `${this.currentPagePrefix}${sessionId}${nomisId}${pathway}`
+    const key = `${this.currentPagePrefix}${sessionId}${nomsId}${pathway}`
     return this.client.get(key)
   }
 }

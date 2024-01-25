@@ -101,8 +101,6 @@ export default class BCST2FormController {
     const allQuestionsAndAnswers = JSON.parse(
       await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
     )
-    // console.log(JSON.stringify(assessmentPage, null, 2))
-    // console.log(JSON.stringify(allQuestionsAndAnswers, null, 2))
 
     const view = new BCST2FormView(prisonerData, assessmentPage, pathway, allQuestionsAndAnswers)
     res.render('pages/BCST2-form', { ...view.renderArgs })
