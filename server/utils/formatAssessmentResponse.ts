@@ -13,7 +13,14 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
       return reqBody[id] !== null && reqBody[id] !== undefined // only return questions which contain an answer
     })
     .map(questionAndAnswer => {
-      const { id, title } = questionAndAnswer.question
+      const { id, title, type } = questionAndAnswer.question
+
+      let displayText
+      if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
+        displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id]).displayText
+      } else {
+        displayText = ''
+      }
 
       return {
         question: id,
@@ -21,6 +28,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
         pageId: pageData.id,
         answer: {
           answer: reqBody[id],
+          displayText: displayText || reqBody[id],
           '@class': 'StringAnswer',
         },
       }

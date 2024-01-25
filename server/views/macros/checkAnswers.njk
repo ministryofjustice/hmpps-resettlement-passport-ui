@@ -6,7 +6,7 @@
     {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">{{ questionAnswer.question }}</dt>
-        <dd class="govuk-summary-list__value">{{ questionAnswer.answer.answer }}</dd>
+        <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
         <dd class="govuk-summary-list__actions">
           <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
         </dd>
