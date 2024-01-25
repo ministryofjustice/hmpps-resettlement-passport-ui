@@ -108,3 +108,5 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   DELIUS_CASE_NOTES: 'nDeliusCaseNotes',
   RESETTLEMENT_ASSESSMENT: 'resettlementAssessment',
 }
+
+export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'

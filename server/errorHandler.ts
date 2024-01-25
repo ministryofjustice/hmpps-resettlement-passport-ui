@@ -19,11 +19,11 @@ export default function createErrorHandler(production: boolean) {
       res.locals.message = error.customMessage
     } else {
       if (production) {
-        res.locals.message = 'Something went wrong. The error has been logged. Please try again'
+        res.locals.message = 'Something went wrong'
       } else {
         res.locals.message = error.message
       }
-      res.locals.status = error.status
+      res.locals.status = production ? null : error.status
       res.locals.stack = production ? null : error.stack
     }
 
