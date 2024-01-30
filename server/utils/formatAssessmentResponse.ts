@@ -39,8 +39,6 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
     questionsAndAnswers: filteredQuestionsAndAnswers,
   }
 
-  console.log(formattedResponse.questionsAndAnswers)
-
   return formattedResponse
 }
 
