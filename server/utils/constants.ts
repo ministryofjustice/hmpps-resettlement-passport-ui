@@ -98,6 +98,18 @@ export const ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     name: 'Completed',
     color: 'green',
   },
+  SUPPORT_REQUIRED: {
+    name: 'Support required',
+    color: 'orange',
+  },
+  SUPPORT_DECLINED: {
+    name: 'Support declined',
+    color: 'green',
+  },
+  SUPPORT_NOT_REQUIRED: {
+    name: 'Support not required',
+    color: 'green',
+  },
 }
 
 export default ENUMS_DICTIONARY

@@ -34,7 +34,14 @@
         
         {% if not assessmentPage.error %}
           <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.title }}</h1>
-          <form action="/BCST2-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" method="post">
+          <form
+            {% if assessmentPage.id == 'CHECK_ANSWERS' %}
+              action="/BCST2/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+            {% else %}
+              action="/BCST2-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+            {% endif %}
+            method="post"
+          >
             
             {% if assessmentPage.id === "ASSESSMENT_SUMMARY" %}
               {{ assessmentSummary(pathway) }}

@@ -159,4 +159,30 @@ export default class RpService {
 
     return nextQuestion
   }
+
+  async completeAssessment(
+    token: string,
+    sessionId: string,
+    prisonerId: string,
+    pathway: string,
+    questionsAndAnswers: SubmittedInput,
+  ) {
+    await this.rpClient.setToken(token)
+    let response
+    try {
+      response = await this.rpClient.post(
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/complete?assessmentType=BCST2`,
+        questionsAndAnswers,
+      )
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
+      if (err.status === 404) {
+        response = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
+      } else {
+        response = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      }
+    }
+
+    return response
+  }
 }
