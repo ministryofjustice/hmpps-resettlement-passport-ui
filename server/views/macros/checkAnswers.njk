@@ -1,16 +1,41 @@
 {% macro checkAnswers(allQuestionsAndAnswers, pathway, prisonerNumber) %}
   {% set enumValue = pathway | getEnumValue %}
-   <h1 class="govuk-heading-l">Check your answers before submitting the {{ enumValue.name }} assessment</h1>
-   <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+  <h1 class="govuk-heading-l">Check your answers before submitting the {{ enumValue.name }} assessment</h1>
+  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
     <h2 class="govuk-heading-m">{{ enumValue.name }} assessment</h2>
     {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">{{ questionAnswer.question }}</dt>
-        <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
-        </dd>
-      </div>
+      {% if questionAnswer.question !== 'SUPPORT_NEEDS' and questionAnswer.question !== 'CASE_NOTE_SUMMARY' %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">{{ questionAnswer.pageTitle }}</dt>
+          <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
+          </dd>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </dl>
+  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+    <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
+    {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
+      {% if questionAnswer.question === 'SUPPORT_NEEDS' %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">{{ enumValue.name }} support status</dt>
+          <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
+          </dd>
+        </div>
+      {% endif %}
+      {% if questionAnswer.question === 'CASE_NOTE_SUMMARY' %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Support needs summary</dt>
+          <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
+          <dd class="govuk-summary-list__actions">
+            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
+          </dd>
+        </div>
+      {% endif %}
     {% endfor %}
   </dl>
 {% endmacro %}

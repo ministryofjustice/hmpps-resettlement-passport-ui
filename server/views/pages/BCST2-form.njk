@@ -61,6 +61,7 @@
               {% endif %}
             {% endfor %}
             
+            <input type="hidden" name="pageTitle" value="{{ assessmentPage.title }}"/>
             <input type="hidden" name="pathway" value="{{ pathway }}"/>
             <input type="hidden" name="currentPageId" value="{{ assessmentPage.id }}"/>
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>

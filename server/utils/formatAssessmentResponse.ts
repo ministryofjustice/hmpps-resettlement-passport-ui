@@ -26,6 +26,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
         question: id,
         questionTitle: title,
         pageId: pageData.id,
+        pageTitle: pageData.title,
         answer: {
           answer: reqBody[id],
           displayText: displayText || reqBody[id],
@@ -37,6 +38,8 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
   const formattedResponse: SubmittedInput = {
     questionsAndAnswers: filteredQuestionsAndAnswers,
   }
+
+  console.log(formattedResponse.questionsAndAnswers)
 
   return formattedResponse
 }
