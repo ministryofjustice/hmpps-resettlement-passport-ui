@@ -27,7 +27,7 @@ export default class BCST2FormController {
     const { nextPageId } = nextPage
 
     res.redirect(
-      `/BCST2-assessment/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+      `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
     )
   }
 
@@ -85,7 +85,7 @@ export default class BCST2FormController {
     const { nextPageId } = nextPage
 
     res.redirect(
-      `/BCST2-assessment/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+      `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
     )
   }
 
@@ -117,5 +117,30 @@ export default class BCST2FormController {
 
     const view = new BCST2FormView(prisonerData, assessmentPage, pathway, allQuestionsAndAnswers)
     res.render('pages/BCST2-form', { ...view.renderArgs })
+  }
+
+  completeAssessment: RequestHandler = async (req, res, next): Promise<void> => {
+    const { prisonerData } = req
+    const { token } = req.user
+    const { pathway } = req.params
+    const store = new AssessmentStore(createRedisClient())
+
+    const dataToSubmit = JSON.parse(
+      await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+    )
+
+    const submitAssessment = (await this.rpService.completeAssessment(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+      pathway as string,
+      dataToSubmit as SubmittedInput,
+    )) as { error?: string }
+
+    if (submitAssessment.error) {
+      res.render('pages/error')
+    } else {
+      res.redirect(`/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
+    }
   }
 }

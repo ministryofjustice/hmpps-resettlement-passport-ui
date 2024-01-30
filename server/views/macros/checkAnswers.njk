@@ -9,7 +9,7 @@
           <dt class="govuk-summary-list__key">{{ questionAnswer.pageTitle }}</dt>
           <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
+            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
           </dd>
         </div>
       {% endif %}
@@ -18,12 +18,17 @@
   <dl class="govuk-summary-list govuk-!-margin-bottom-9">
     <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
     {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
+      {% set statusValue = questionAnswer.answer.answer | getAssessmentEnumValue %}
       {% if questionAnswer.question === 'SUPPORT_NEEDS' %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">{{ enumValue.name }} support status</dt>
-          <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
+          <dd class="govuk-summary-list__value">
+            <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
+              {{ statusValue.name }}
+            </strong>
+          </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
+            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
           </dd>
         </div>
       {% endif %}
@@ -32,7 +37,7 @@
           <dt class="govuk-summary-list__key">Support needs summary</dt>
           <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2-assessment/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
+            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
           </dd>
         </div>
       {% endif %}
