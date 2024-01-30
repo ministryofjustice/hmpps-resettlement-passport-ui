@@ -36,7 +36,13 @@ export type AssessmentPage = {
 
 export type SubmittedQuestionAndAnswer = {
   question: string
-  answer: Answer
+  questionTitle: string
+  pageId: string
+  answer: {
+    answer: string | string[]
+    displayText: string
+    '@class': AnswerType
+  }
 }
 
 export type SubmittedInput = {

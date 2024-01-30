@@ -1,4 +1,4 @@
-import { AssessmentPage } from '../data/model/BCST2Form'
+import { AnswerType, AssessmentPage, SubmittedInput } from '../data/model/BCST2Form'
 
 type RequestBody = {
   [key: string]: string
@@ -29,12 +29,12 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
         answer: {
           answer: reqBody[id],
           displayText: displayText || reqBody[id],
-          '@class': 'StringAnswer',
+          '@class': 'StringAnswer' as AnswerType,
         },
       }
     })
 
-  const formattedResponse = {
+  const formattedResponse: SubmittedInput = {
     questionsAndAnswers: filteredQuestionsAndAnswers,
   }
 
