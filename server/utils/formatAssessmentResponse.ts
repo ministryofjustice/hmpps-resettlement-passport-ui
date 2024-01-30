@@ -1,4 +1,4 @@
-import { AssessmentPage } from '../data/model/BCST2Form'
+import { AnswerType, AssessmentPage, SubmittedInput } from '../data/model/BCST2Form'
 
 type RequestBody = {
   [key: string]: string
@@ -10,21 +10,32 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
   const filteredQuestionsAndAnswers = pageData.questionsAndAnswers
     .filter(questionAndAnswer => {
       const { id } = questionAndAnswer.question
-      return reqBody[id] !== null && reqBody[id] !== undefined
+      return reqBody[id] !== null && reqBody[id] !== undefined // only return questions which contain an answer
     })
     .map(questionAndAnswer => {
-      const { id } = questionAndAnswer.question
+      const { id, title, type } = questionAndAnswer.question
+
+      let displayText
+      if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
+        displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id]).displayText
+      } else {
+        displayText = ''
+      }
 
       return {
         question: id,
+        questionTitle: title,
+        pageId: pageData.id,
+        pageTitle: pageData.title,
         answer: {
           answer: reqBody[id],
-          '@class': 'StringAnswer',
+          displayText: displayText || reqBody[id],
+          '@class': 'StringAnswer' as AnswerType,
         },
       }
     })
 
-  const formattedResponse = {
+  const formattedResponse: SubmittedInput = {
     questionsAndAnswers: filteredQuestionsAndAnswers,
   }
 

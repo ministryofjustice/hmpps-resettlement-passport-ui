@@ -1,7 +1,7 @@
-{% macro longText(questionAndAnswer) %}
-  <div class="govuk-form-group">
-    <b>{{ questionAndAnswer.question.title }}</b>
-    <label class="govuk-label" for="{{ questionAndAnswer.question.id }}">{{ questionAndAnswer.question.subTitle }}</label>
-    <textarea class="govuk-textarea" id="{{ questionAndAnswer.question.id }}" name="{{ questionAndAnswer.question.id }}" rows="5" aria-describedby="more-detail-hint"></textarea>
+{% macro longText(currentQuestionAndAnswer, existingAnswer) %}
+  <div class="govuk-form-group govuk-!-padding-top-6">
+    <b>{{ currentQuestionAndAnswer.question.title }}</b>
+    <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.subTitle }}</label>
+    <textarea class="govuk-textarea" id="{{ currentQuestionAndAnswer.question.id }}" name="{{ currentQuestionAndAnswer.question.id }}" rows="5" aria-describedby="more-detail-hint">{{ existingAnswer.answer if existingAnswer }}</textarea>
   </div>
 {% endmacro %}

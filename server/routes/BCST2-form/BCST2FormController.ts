@@ -4,7 +4,7 @@ import BCST2FormView from './BCST2FormView'
 import formatAssessmentResponse from '../../utils/formatAssessmentResponse'
 import { createRedisClient } from '../../data/redisClient'
 import AssessmentStore from '../../data/assessmentStore'
-import { SubmittedInput } from '../../data/model/BCST2Form'
+import { SubmittedInput, SubmittedQuestionAndAnswer } from '../../data/model/BCST2Form'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}
@@ -37,8 +37,8 @@ export default class BCST2FormController {
     const { pathway, currentPageId } = req.body
     const store = new AssessmentStore(createRedisClient())
 
-    // format current Q&A's from req body
-    const dataToSubmit = formatAssessmentResponse(
+    // prepare current Q&A's from req body for post request
+    const dataToSubmit: SubmittedInput = formatAssessmentResponse(
       await store.getCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
       req.body,
     )
@@ -48,9 +48,22 @@ export default class BCST2FormController {
       await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
     )
 
-    // append current Q&A's to previous Q&A's
     if (allQuestionsAndAnswers) {
-      allQuestionsAndAnswers.questionsAndAnswers.push(dataToSubmit.questionsAndAnswers)
+      dataToSubmit.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
+        const index = allQuestionsAndAnswers.questionsAndAnswers.findIndex(
+          (existingQandA: SubmittedQuestionAndAnswer) => {
+            return existingQandA.question === newQandA.question
+          },
+        )
+
+        if (index !== -1) {
+          // Replace the existing question with the new one
+          allQuestionsAndAnswers.questionsAndAnswers[index] = newQandA
+        } else {
+          // Add the new question if it doesn't exist
+          allQuestionsAndAnswers.questionsAndAnswers.push(newQandA)
+        }
+      })
     }
 
     await store.setAssessment(
@@ -58,7 +71,7 @@ export default class BCST2FormController {
       `${prisonerData.personalDetails.prisonerNumber}`,
       pathway,
       allQuestionsAndAnswers || dataToSubmit,
-      600,
+      3600,
     )
 
     const nextPage = await this.rpService.fetchNextPage(
@@ -89,9 +102,20 @@ export default class BCST2FormController {
     )
 
     const store = new AssessmentStore(createRedisClient())
-    store.setCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, assessmentPage, 600)
+    store.setCurrentPage(
+      req.session.id,
+      `${prisonerData.personalDetails.prisonerNumber}`,
+      pathway,
+      assessmentPage,
+      3600,
+    )
 
-    const view = new BCST2FormView(prisonerData, assessmentPage, pathway)
+    // send all Q&A's to frontend for check answers page
+    const allQuestionsAndAnswers = JSON.parse(
+      await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+    )
+
+    const view = new BCST2FormView(prisonerData, assessmentPage, pathway, allQuestionsAndAnswers)
     res.render('pages/BCST2-form', { ...view.renderArgs })
   }
 }
