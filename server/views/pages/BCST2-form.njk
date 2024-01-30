@@ -65,7 +65,13 @@
             <input type="hidden" name="pathway" value="{{ pathway }}"/>
             <input type="hidden" name="currentPageId" value="{{ assessmentPage.id }}"/>
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Continue</button>
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">
+              {% if assessmentPage.id === 'CHECK_ANSWERS' %}
+                Confirm
+              {% else %}
+                Continue
+              {% endif %}
+            </button>
           </form>
           
         {% endif %}
