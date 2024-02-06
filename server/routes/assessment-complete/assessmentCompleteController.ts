@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express'
-import type { HTTPError } from 'superagent'
 import RpService from '../../services/rpService'
 import AssessmentCompleteView from './assessmentCompleteView'
 
