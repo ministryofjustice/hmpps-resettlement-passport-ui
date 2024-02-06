@@ -55,7 +55,7 @@ export default function routes(services: Services): Router {
     }
   })
   use('/prisoner-overview', async (req, res, next) => {
-    const { prisonerData, BCST2Completed } = req
+    const { prisonerData, BCST2Submitted } = req
     const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
     const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
@@ -153,7 +153,7 @@ export default function routes(services: Services): Router {
       selectedPathway,
       staffContacts,
       appointments,
-      BCST2Completed,
+      BCST2Submitted,
     })
   })
 

@@ -129,7 +129,7 @@ export default class BCST2FormController {
       await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
     )
 
-    const submitAssessment = (await this.rpService.completeAssessment(
+    const completeAssessment = (await this.rpService.completeAssessment(
       token,
       req.sessionID,
       prisonerData.personalDetails.prisonerNumber as string,
@@ -137,8 +137,12 @@ export default class BCST2FormController {
       dataToSubmit as SubmittedInput,
     )) as { error?: string }
 
-    if (submitAssessment.error) {
-      res.render('pages/error')
+    if (completeAssessment.error) {
+      next(
+        new Error(
+          `Error completing assessment for prisoner ${prisonerData.personalDetails.prisonerNumber} pathway ${pathway}`,
+        ),
+      )
     } else {
       res.redirect(`/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
     }

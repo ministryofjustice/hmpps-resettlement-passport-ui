@@ -6,4 +6,5 @@ export default (router: Router, services: Services) => {
   const assessmentCompleteController = new AssessmentCompleteController(services.rpService)
 
   router.get('/assessment-complete', [assessmentCompleteController.getView])
+  router.post('/assessment-complete', [assessmentCompleteController.postView])
 }

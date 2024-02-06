@@ -24,6 +24,7 @@ export declare global {
       logout(done: (err: unknown) => void): void
       prisonerData: PrisonerData
       assessmentsSummary: AssessmentsSummary
+      BCST2Submitted: boolean
       BCST2Completed: boolean
     }
   }

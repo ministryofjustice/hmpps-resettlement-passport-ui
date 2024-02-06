@@ -88,11 +88,15 @@
             {% endfor %}
           </tbody>
         </table>
+      <form action="/assessment-complete" method="post" novalidate>
         <div class="govuk-button-group">
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+          <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
           <button type="submit" {% if not BCST2Completed %}disabled{% endif %} aria-disabled="true" class="govuk-button" data-module="govuk-button">
             Submit assessment
           </button>
         </div>
+      </form>
       {% endif %}
     </div>
   </div>

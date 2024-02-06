@@ -6,7 +6,7 @@ import { Accommodation } from '../../data/model/accommodation'
 export default class AccommodationView implements View {
   constructor(
     private readonly prisonerData: PrisonerData,
-    private readonly BCST2Completed: boolean,
+    private readonly BCST2Submitted: boolean,
     private readonly crsReferrals: CrsReferralResponse,
     private readonly accommodation: Accommodation,
     private readonly errors: ErrorMessage[] = [],
@@ -14,14 +14,14 @@ export default class AccommodationView implements View {
 
   get renderArgs(): {
     prisonerData: PrisonerData
-    BCST2Completed: boolean
+    BCST2Submitted: boolean
     crsReferrals: CrsReferralResponse
     accommodation: Accommodation
     errors: ErrorMessage[]
   } {
     return {
       prisonerData: this.prisonerData,
-      BCST2Completed: this.BCST2Completed,
+      BCST2Submitted: this.BCST2Submitted,
       crsReferrals: this.crsReferrals,
       accommodation: this.accommodation,
       errors: this.errors.length !== 0 ? this.errors : null,

@@ -6,9 +6,9 @@ export default class AssessmentTaskListController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData, assessmentsSummary, BCST2Completed } = req
+    const { prisonerData, assessmentsSummary, BCST2Submitted, BCST2Completed } = req
 
-    const view = new AssessmentTaskListView(prisonerData, assessmentsSummary, BCST2Completed)
+    const view = new AssessmentTaskListView(prisonerData, assessmentsSummary, BCST2Submitted, BCST2Completed)
     res.render('pages/assessment-task-list', { ...view.renderArgs })
   }
 }

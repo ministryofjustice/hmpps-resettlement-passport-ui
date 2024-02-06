@@ -175,12 +175,30 @@ export default class RpService {
         questionsAndAnswers,
       )
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${sessionId} Cannot complete assessment for ${prisonerId} pathway ${pathway} ${err.status} ${err}`,
+      )
       if (err.status === 404) {
         response = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
         response = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
       }
+    }
+
+    return response
+  }
+
+  async submitAssessment(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+    let response: { error?: boolean }
+    try {
+      response = await this.rpClient.post(
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=BCST2`,
+        null,
+      )
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot submit assessments for ${prisonerId} ${err.status} ${err}`)
+      response = { error: true }
     }
 
     return response
