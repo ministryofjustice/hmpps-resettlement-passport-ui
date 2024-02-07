@@ -6,7 +6,7 @@ export default class AccommodationController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData, BCST2Completed } = req
+    const { prisonerData, BCST2Submitted } = req
     const { token } = req.user
     const crsReferrals = await this.rpService.getCrsReferrals(
       token,
@@ -21,7 +21,7 @@ export default class AccommodationController {
       prisonerData.personalDetails.prisonerNumber as string,
     )
 
-    const view = new AccommodationView(prisonerData, BCST2Completed, crsReferrals, accommodation)
+    const view = new AccommodationView(prisonerData, BCST2Submitted, crsReferrals, accommodation)
     res.render('pages/accommodation', { ...view.renderArgs })
   }
 }

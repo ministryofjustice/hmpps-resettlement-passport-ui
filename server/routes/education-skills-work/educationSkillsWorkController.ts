@@ -6,7 +6,7 @@ export default class EducationSkillsWorkController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData, BCST2Completed } = req
+    const { prisonerData, BCST2Submitted } = req
     const { token } = req.user
     const crsReferrals = await this.rpService.getCrsReferrals(
       token,
@@ -21,7 +21,7 @@ export default class EducationSkillsWorkController {
       prisonerData.personalDetails.prisonerNumber as string,
     )
 
-    const view = new EducationSkillsWorkView(prisonerData, BCST2Completed, crsReferrals, educationSkillsWork)
+    const view = new EducationSkillsWorkView(prisonerData, BCST2Submitted, crsReferrals, educationSkillsWork)
     res.render('pages/education-skills-work', { ...view.renderArgs })
   }
 }
