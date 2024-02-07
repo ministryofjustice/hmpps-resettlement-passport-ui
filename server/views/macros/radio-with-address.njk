@@ -1,5 +1,7 @@
-{% macro radioWithAddress(currentQuestionAndAnswer, existingAnswer) %}
-  <b>{{ currentQuestionAndAnswer.question.title }}</b>
+{% macro radioWithAddress(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
+  {% if not isFirstQuestionOnPage %}
+    <b>{{ currentQuestionAndAnswer.question.title }}</b>
+  {% endif %}
   <div class="govuk-radios" data-module="govuk-radios">
     {% for option in currentQuestionAndAnswer.question.options %}
       <div class="govuk-radios__item">
