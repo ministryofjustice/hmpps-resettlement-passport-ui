@@ -1,5 +1,7 @@
-{% macro listOfPeople(currentQuestionAndAnswer, existingAnswer) %}
-  <b>{{ currentQuestionAndAnswer.question.title }}</b>
+{% macro listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
+  {% if not isFirstQuestionOnPage %}
+    <b>{{ currentQuestionAndAnswer.question.title }}</b>
+  {% endif %}
   <div class="govuk-radios" data-module="govuk-radios">
     <div class="govuk-form-group">
       <label class="govuk-label" for="event-name">Resident 1 name</label>

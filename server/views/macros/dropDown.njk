@@ -1,5 +1,7 @@
-{% macro dropDown(questionAndAnswer, existingAnswer) %}
-  <b>{{ questionAndAnswer.question.title }}</b>
+{% macro dropDown(questionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
+  {% if not isFirstQuestionOnPage %}
+    <b>{{ currentQuestionAndAnswer.question.title }}</b>
+  {% endif %}
   <div class="govuk-form-group">
     <label class="govuk-label" for="{{ questionAndAnswer.question.id }}">{{ questionAndAnswer.question.title }}</label>
     <select class="govuk-select" id="{{ questionAndAnswer.question.id }}" name="{{ questionAndAnswer.question.id }}">

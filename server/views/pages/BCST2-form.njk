@@ -33,7 +33,7 @@
         <a class="govuk-link govuk-link--no-visited-state" href="/assessment-task-list/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back</a>
         
         {% if not assessmentPage.error %}
-          <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.title }}</h1>
+          <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.questionsAndAnswers[0].question.title }}</h1>
           <form
             {% if assessmentPage.id == 'CHECK_ANSWERS' %}
               action="/BCST2/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
@@ -56,16 +56,20 @@
               {# get answer to current question #}
               {% set existingAnswer = currentQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
 
+              {% if loop.index == 1 %}
+                {% set isFirstQuestionOnPage = true %}
+              {% endif %}
+
               {% if currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
-                {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer) }}
+                {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif currentQuestionAndAnswer.question.type === 'RADIO' %}
-                {{ radio(currentQuestionAndAnswer, existingAnswer) }}
+                {{ radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
-                {{ longText(currentQuestionAndAnswer, existingAnswer) }}
+                {{ longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
-                {{ dropDown(currentQuestionAndAnswer, existingAnswer) }}
+                {{ dropDown(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif currentQuestionAndAnswer.question.type === 'LIST_OF_PEOPLE' %}
-                {{ listOfPeople(currentQuestionAndAnswer, existingAnswer) }}
+                {{ listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% else %}
                 <p class="govuk-error-message govuk-!-padding-top-6">There was a problem getting the next question.<br /> Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
               {% endif %}
