@@ -7,7 +7,7 @@
 {% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 
 {% block content %}
-  {% if not resettlementAssessmentEnabled or (resettlementAssessmentEnabled and BCST2Submitted) %}
+  {% if not resettlementAssessmentEnabled or (resettlementAssessmentEnabled and not prisonerData.assessmentRequired) %}
     <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
       {{ titleAndIntro(pathway) }}
       <div class="govuk-grid-column-one-third">

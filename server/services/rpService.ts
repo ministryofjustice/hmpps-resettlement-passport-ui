@@ -7,6 +7,7 @@ import { ERROR_DICTIONARY } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
+import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -202,5 +203,22 @@ export default class RpService {
     }
 
     return response
+  }
+
+  async getAssessmentSummary(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+    let assessmentsSummary: AssessmentsSummary
+
+    try {
+      const assessmentsSummaryResponse = (await this.rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/summary`,
+      )) as AssessmentStatus[]
+      assessmentsSummary = { results: assessmentsSummaryResponse }
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
+      assessmentsSummary = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+    }
+
+    return assessmentsSummary
   }
 }

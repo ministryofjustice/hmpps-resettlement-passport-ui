@@ -1,4 +1,4 @@
-{% macro prisonersTable(prisoners, pathwayView) %}
+{% macro prisonersTable(prisoners, pathwayView, resettlementAssessmentEnabled) %}
   <tbody class="govuk-table__body">
   {% for prisoner in prisoners %}
     {{ prisonerRow(
@@ -15,12 +15,15 @@
       prisoner.releaseEligibilityType,
       prisoner.releaseOnTemporaryLicenceDate,
       pathwayView,
-      prisoner.lastUpdatedDate
+      prisoner.lastUpdatedDate,
+      prisoner.assessmentRequired,
+      resettlementAssessmentEnabled
     )}}
   {% endfor %}
   </tbody>
 {% endmacro %}
-{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseEligibilityDate, releaseEligibilityType, releaseOnTemporaryLicenceDate, pathwayView, lastUpdatedDate) %}
+{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseEligibilityDate, releaseEligibilityType, releaseOnTemporaryLicenceDate, pathwayView, lastUpdatedDate, assessmentRequired, resettlementAssessmentEnabled) %}
+  {% set lastUpdatedDates = [] %}
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">
       <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName | toTitleCase }}, {{ firstName | toTitleCase }}</a>
@@ -52,7 +55,7 @@
       </span>
       {% endif %}
     </td>
-    {% if statuses %}
+    {% if statuses and (not assessmentRequired or not resettlementAssessmentEnabled) %}
       {% set notStarted = 0 %}
       {% set inProgress = 0 %}
       {% set done = 0 %}
@@ -90,7 +93,6 @@
           <div class="govuk-details__text">
             <table>
               <tbody>
-              {% set lastUpdatedDates = [] %}
               {% for pathway in statuses %}
                 <tr>
                   <td>
@@ -109,6 +111,14 @@
           </div>
         </details>
       </td>
+    {% else %}
+      {% if not pathwayView %}
+        <td class="govuk-table__cell">
+          <strong class="govuk-tag govuk-tag--red">
+            Assessment required
+          </strong>
+        </td>
+      {% endif %}
     {% endif %}
     {% if pathwayStatus %}
       <td class="govuk-table__cell">

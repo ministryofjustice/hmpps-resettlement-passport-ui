@@ -6,6 +6,7 @@
 {% from "govuk/components/tabs/macro.njk" import govukTabs %}
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 {% set reportingEnabled = features.REPORTING | getFeatureFlag %}
+{% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 {% block content %}
     {# Only NOMIS users can access the list prisoners functionality at present #}
     {% if isPrisonUser %}
@@ -192,7 +193,7 @@
                         </th>
                     </tr>
                     </thead>
-                    {{ prisonersTable(prisonersList.content, pathwayView) }}
+                    {{ prisonersTable(prisonersList.content, pathwayView, resettlementAssessmentEnabled) }}
                 </table>
                 {% if prisonersList.content | length %}
                     {% set nextPage = page | float + 1 | float %}

@@ -6,7 +6,7 @@ export default class ChildrenFamiliesCommunitiesController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData, BCST2Submitted } = req
+    const { prisonerData } = req
     const { token } = req.user
     const crsReferrals = await this.rpService.getCrsReferrals(
       token,
@@ -15,7 +15,7 @@ export default class ChildrenFamiliesCommunitiesController {
       'CHILDREN_FAMILIES_AND_COMMUNITY',
     )
 
-    const view = new ChildrenFamiliesCommunitiesView(prisonerData, BCST2Submitted, crsReferrals)
+    const view = new ChildrenFamiliesCommunitiesView(prisonerData, crsReferrals)
     res.render('pages/children-families-communities', { ...view.renderArgs })
   }
 }
