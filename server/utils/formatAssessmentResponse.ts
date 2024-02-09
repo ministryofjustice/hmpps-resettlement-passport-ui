@@ -6,34 +6,46 @@ type RequestBody = {
 
 const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => {
   const pageData: AssessmentPage = JSON.parse(currentPage)
+  let radioWithAddressValue: string
 
-  const filteredQuestionsAndAnswers = pageData.questionsAndAnswers
-    .filter(questionAndAnswer => {
-      const { id } = questionAndAnswer.question
-      return reqBody[id] !== null && reqBody[id] !== undefined // only return questions which contain an answer
-    })
-    .map(questionAndAnswer => {
-      const { id, title, type } = questionAndAnswer.question
+  function getAddressValuesFromBody() {
+    return [
+      {
+        [`addressLine1_${radioWithAddressValue}`]: reqBody[`addressLine1_${radioWithAddressValue}`],
+        [`addressLine2_${radioWithAddressValue}`]: reqBody[`addressLine2_${radioWithAddressValue}`],
+        [`addressTown_${radioWithAddressValue}`]: reqBody[`addressTown_${radioWithAddressValue}`],
+        [`addressCounty_${radioWithAddressValue}`]: reqBody[`addressCounty_${radioWithAddressValue}`],
+        [`addressPostcode_${radioWithAddressValue}`]: reqBody[`addressPostcode_${radioWithAddressValue}`],
+      },
+    ]
+  }
 
-      let displayText
-      if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
-        displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id]).displayText
-      } else {
-        displayText = ''
-      }
+  const filteredQuestionsAndAnswers = pageData.questionsAndAnswers.map(questionAndAnswer => {
+    const { id, title, type } = questionAndAnswer.question
 
-      return {
-        question: id,
-        questionTitle: title,
-        pageId: pageData.id,
-        pageTitle: pageData.title,
-        answer: {
-          answer: reqBody[id],
-          displayText: displayText || reqBody[id],
-          '@class': 'StringAnswer' as AnswerType,
-        },
-      }
-    })
+    let displayText
+    if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
+      displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id]).displayText
+    } else {
+      displayText = ''
+    }
+
+    if (type === 'RADIO_WITH_ADDRESS') {
+      radioWithAddressValue = reqBody[id]
+    }
+
+    return {
+      question: id,
+      questionTitle: title,
+      questionType: type,
+      pageId: pageData.id,
+      answer: {
+        answer: type === 'ADDRESS' ? getAddressValuesFromBody() : reqBody[id],
+        displayText: displayText || reqBody[id],
+        '@class': (type === 'ADDRESS' ? 'MapAnswer' : 'StringAnswer') as AnswerType,
+      },
+    }
+  })
 
   const formattedResponse: SubmittedInput = {
     questionsAndAnswers: filteredQuestionsAndAnswers,
