@@ -12,7 +12,7 @@ export type QuestionOptions = {
 export type AnswerType = 'StringAnswer' | 'MapAnswer' | 'ListAnswer'
 
 export type Answer = {
-  answer?: string | string[]
+  answer?: string | string[] | { [key: string]: string }[]
   '@class'?: AnswerType
 }
 
@@ -39,7 +39,7 @@ export type SubmittedQuestionAndAnswer = {
   questionTitle: string
   pageId: string
   answer: {
-    answer: string | string[]
+    answer: string | string[] | { [key: string]: string }[]
     displayText: string
     '@class': AnswerType
   }

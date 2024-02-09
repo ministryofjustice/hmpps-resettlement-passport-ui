@@ -55,13 +55,16 @@
 
               {# get answer to current question #}
               {% set existingAnswer = currentQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
-
-              {% if loop.index == 1 %}
+              {% set currentIndex = loop.index %}
+              {% if currentIndex == 1 %}
                 {% set isFirstQuestionOnPage = true %}
               {% endif %}
 
               {% if currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
-                {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                {# get the next question and answer (ADDRESS) item in the array #}
+                {% set nextQuestionAndAnswer = assessmentPage.questionsAndAnswers[currentIndex] %}
+                {% set nextQuestionExistingAnswer = nextQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
+                {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, nextQuestionAndAnswer, nextQuestionExistingAnswer) }}
               {% elif currentQuestionAndAnswer.question.type === 'RADIO' %}
                 {{ radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
@@ -70,7 +73,7 @@
                 {{ dropDown(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif currentQuestionAndAnswer.question.type === 'LIST_OF_PEOPLE' %}
                 {{ listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
-              {% else %}
+              {% elif not currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
                 <p class="govuk-error-message govuk-!-padding-top-6">There was a problem getting the next question.<br /> Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
               {% endif %}
             {% endfor %}
