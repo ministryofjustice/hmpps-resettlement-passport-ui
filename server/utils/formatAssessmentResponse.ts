@@ -37,6 +37,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
     return {
       question: id,
       questionTitle: title,
+      questionType: type,
       pageId: pageData.id,
       answer: {
         answer: type === 'ADDRESS' ? getAddressValuesFromBody() : reqBody[id],

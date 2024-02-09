@@ -7,7 +7,17 @@
       {% if questionAnswer.question !== 'SUPPORT_NEEDS' and questionAnswer.question !== 'CASE_NOTE_SUMMARY' %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
-          <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText }}</dd>
+          <dd class="govuk-summary-list__value">
+            {% if questionAnswer.questionType === 'ADDRESS' %}
+              {% for key, value in questionAnswer.answer.answer[0] %}
+                {% if value %}
+                  {{ value }}<br />
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              {{ questionAnswer.answer.displayText }}
+            {% endif %}
+          </dd>
           <dd class="govuk-summary-list__actions">
             <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}">Change</a>
           </dd>
