@@ -6,7 +6,6 @@ export default class AssessmentTaskListView implements View {
   constructor(
     private readonly prisonerData: PrisonerData,
     private readonly assessmentsSummary: AssessmentsSummary,
-    private readonly BCST2Submitted: boolean,
     private readonly BCST2Completed: boolean,
     private readonly errors: ErrorMessage[] = [],
   ) {}
@@ -14,14 +13,12 @@ export default class AssessmentTaskListView implements View {
   get renderArgs(): {
     prisonerData: PrisonerData
     assessmentsSummary: AssessmentsSummary
-    BCST2Submitted: boolean
     BCST2Completed: boolean
     errors: ErrorMessage[]
   } {
     return {
       prisonerData: this.prisonerData,
       assessmentsSummary: this.assessmentsSummary,
-      BCST2Submitted: this.BCST2Submitted,
       BCST2Completed: this.BCST2Completed,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
