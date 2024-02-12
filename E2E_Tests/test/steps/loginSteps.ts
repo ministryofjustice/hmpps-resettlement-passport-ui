@@ -1,10 +1,12 @@
 import { Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
 import { pageFixture } from '../../hooks/pageFixtures'
+import CommonPage from '../../pageObjects/commonPage'
 import LoginPage from '../../pageObjects/loginPageObject'
 import { pageTitles } from '../../hooks/pageTitles'
 
 let loginPage: LoginPage
+let commonPage: CommonPage
 
 setDefaultTimeout(100000)
 
@@ -24,6 +26,12 @@ Given('User enter the password as {string}', async function (password) {
 
 When('User click on the login button', async function () {
   await loginPage.clickOnSubmitButton()
+})
+
+Given('User logs in as dev user', async function () {
+  commonPage = new CommonPage(pageFixture.page)
+
+  await commonPage.logIn()
 })
 
 Then('Login should be success', async function () {
