@@ -15,7 +15,6 @@ import {
   getEnumByName,
   getDescriptionFromName,
   getMostRecentDate,
-  getEnumByURL,
   roundNumberUp,
   formatFirstSentence,
   formatDateToIso,
@@ -81,7 +80,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getUrlFromName', getUrlFromName)
   njkEnv.addFilter('getNameFromUrl', getNameFromUrl)
   njkEnv.addFilter('getEnumByName', getEnumByName)
-  njkEnv.addFilter('getEnumByURL', getEnumByURL)
   njkEnv.addFilter('getDescriptionFromName', getDescriptionFromName)
   njkEnv.addFilter('roundNumberUp', roundNumberUp)
   njkEnv.addFilter('formatFirstSentence', formatFirstSentence)

@@ -1,6 +1,6 @@
 export type EnumValue = { name: string; url?: string; description?: string; color?: string }
 
-const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
+export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   ACCOMMODATION: {
     name: 'Accommodation',
     url: 'accommodation',
@@ -84,6 +84,14 @@ const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   },
 }
 
+export const ENUMS_DICTIONARY_RESETTLEMENT_ASSESSMENT_ENABLED_OVERRIDE: { [key: string]: EnumValue } = {
+  NOT_STARTED: {
+    name: 'Assessment required',
+    color: 'red',
+    description: 'assessment required',
+  },
+}
+
 export const ERROR_DICTIONARY: { [key: string]: string } = {
   DATA_NOT_FOUND: 'No data available',
   DATA_UNAVAILABLE: 'Data unavailable - try again later or contact administrator if problem persists',
@@ -111,8 +119,6 @@ export const ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     color: 'green',
   },
 }
-
-export default ENUMS_DICTIONARY
 
 export const FEATURE_FLAGS: { [key: string]: string } = {
   REPORTING: 'reporting',

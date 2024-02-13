@@ -25,7 +25,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
 
     let displayText
     if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
-      displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id]).displayText
+      displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
     } else {
       displayText = ''
     }
