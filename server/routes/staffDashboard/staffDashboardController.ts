@@ -15,6 +15,7 @@ export default class StaffDashboardController {
       page = '0',
       pathwayView = '',
       pathwayStatus = '',
+      assessmentRequired = '',
       sortField = 'releaseDate',
       sortDirection = 'ASC',
       reportType = 'pathway-summary',
@@ -24,6 +25,7 @@ export default class StaffDashboardController {
       page: string
       pathwayView: string
       pathwayStatus: string
+      assessmentRequired: string
       sortField: string
       sortDirection: string
       reportType: string
@@ -54,6 +56,7 @@ export default class StaffDashboardController {
           <string>releaseTime,
           <string>pathwayView,
           <string>modifiedPathwayStatus,
+          <string>assessmentRequired,
         )
         if (reportType === 'pathway-summary') {
           prisonerCountMetrics = await this.rpService.getPrisonerCountMetrics(
@@ -75,6 +78,7 @@ export default class StaffDashboardController {
         sortDirection,
         prisonerCountMetrics,
         reportType,
+        assessmentRequired,
       )
       res.render('pages/staff-dashboard', { ...view.renderArgs })
     } catch (err) {

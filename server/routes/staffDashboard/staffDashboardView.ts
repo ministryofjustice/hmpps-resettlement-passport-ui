@@ -15,6 +15,7 @@ export default class StaffDashboardView implements View {
     private readonly sortDirection: string,
     private readonly prisonerCountMetrics: PrisonerCountMetrics,
     private readonly reportType: string,
+    private readonly assessmentRequired: string,
   ) {}
 
   get renderArgs(): {
@@ -29,6 +30,7 @@ export default class StaffDashboardView implements View {
     sortDirection: string
     prisonerCountMetrics: PrisonerCountMetrics
     reportType: string
+    assessmentRequired: string
   } {
     return {
       prisonersList: this.prisonersList,
@@ -42,6 +44,7 @@ export default class StaffDashboardView implements View {
       sortDirection: this.sortDirection,
       prisonerCountMetrics: this.prisonerCountMetrics,
       reportType: this.reportType,
+      assessmentRequired: this.assessmentRequired,
     }
   }
 }
