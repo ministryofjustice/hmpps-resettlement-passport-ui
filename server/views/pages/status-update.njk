@@ -3,9 +3,13 @@
 {% from "../macros/pagination.njk" import pagination %}
 {% set pathway = selectedPathway | getNameFromUrl %}
 {% set pageTitle = applicationName + " - " + pathway %}
-{% set statuses = ["NOT_STARTED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
+{% if resettlementAssessmentEnabled %}
+  {% set statuses = ["SUPPORT_REQUIRED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
+{% else %}
+  {% set statuses = ["NOT_STARTED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
+{% endif %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-row govuk-!-padding-bottom-4">
@@ -64,18 +68,10 @@
                       {% if isChecked %}checked{% endif %}
                     >
                     <label class="govuk-label govuk-radios__label" for="{{ statusItem }}">
-                      {% if statusItem == 'NOT_STARTED' and resettlementAssessmentEnabled %} {# Temporary fix - remove once SUPPORT_REQUIRED status is implemented #}
-                        Support required
-                      {% else %}
-                        {{ statusInfo.name }}
-                      {% endif %}
+                      {{ statusInfo.name }}
                     </label>
                     <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
-                      {% if statusItem == 'NOT_STARTED' and resettlementAssessmentEnabled %} {# Temporary fix - remove once SUPPORT_REQUIRED status is implemented #}
-                        support required
-                      {% else %}
-                        {{ statusInfo.description }}
-                      {% endif %}
+                      {{ statusInfo.description }}
                     </div>
                   </div>
                   <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="caseNote_{{statusItem}}">

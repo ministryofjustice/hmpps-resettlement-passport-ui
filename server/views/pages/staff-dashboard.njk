@@ -50,6 +50,9 @@
                     <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
                       <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
                       <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">{{ ("NOT_STARTED" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
+                      {% if resettlementAssessmentEnabled %}
+                        <option {% if pathwayStatus == "SUPPORT_REQUIRED" %} selected {% endif %} value="SUPPORT_REQUIRED">{{ ("SUPPORT_REQUIRED" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
+                      {% endif %}
                       <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">{{ ("IN_PROGRESS" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
                       <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">{{ ("SUPPORT_NOT_REQUIRED" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
                       <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">{{ ("SUPPORT_DECLINED" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
@@ -58,7 +61,7 @@
                   </div>
                 </div>
               {% endif %}
-              {% if not pathwayView %}
+              {% if not pathwayView and resettlementAssessmentEnabled %}
                 <div class="govuk-grid-column-one-quarter">
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="assessmentRequired">BCST2 assessment</label>
