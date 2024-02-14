@@ -13,6 +13,6 @@
   },
   {
     "feature": "resettlementAssessment",
-    "enabled": false
+    "enabled": true
   }
 ]
