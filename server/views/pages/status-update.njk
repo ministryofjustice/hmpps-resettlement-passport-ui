@@ -5,6 +5,7 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set statuses = ["NOT_STARTED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
+{% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-row govuk-!-padding-bottom-4">
@@ -40,7 +41,7 @@
             <div class="govuk-form-group">
               <div class="govuk-radios" data-module="govuk-radios">
                 {% for statusItem in statuses %}
-                  {% set statusInfo = statusItem | getEnumValue %}
+                  {% set statusInfo = statusItem | getEnumValue(resettlementAssessmentEnabled) %}
                   {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
                   {% set isChecked = false %}
                   {% if serverUpdate === 'success' %}
@@ -63,10 +64,18 @@
                       {% if isChecked %}checked{% endif %}
                     >
                     <label class="govuk-label govuk-radios__label" for="{{ statusItem }}">
-                      {{ statusInfo.name }}
+                      {% if statusItem == 'NOT_STARTED' and resettlementAssessmentEnabled %} {# Temporary fix - remove once SUPPORT_REQUIRED status is implemented #}
+                        Support required
+                      {% else %}
+                        {{ statusInfo.name }}
+                      {% endif %}
                     </label>
                     <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
-                      {{ statusInfo.description }}
+                      {% if statusItem == 'NOT_STARTED' and resettlementAssessmentEnabled %} {# Temporary fix - remove once SUPPORT_REQUIRED status is implemented #}
+                        support required
+                      {% else %}
+                        {{ statusInfo.description }}
+                      {% endif %}
                     </div>
                   </div>
                   <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="caseNote_{{statusItem}}">

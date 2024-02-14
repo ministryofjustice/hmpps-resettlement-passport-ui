@@ -184,12 +184,17 @@ export default function routes(services: Services): Router {
         if (res.locals.user.authSource === 'delius' && !isnDeliusCaseNotesEnabled) {
           throw new Error(deliusUserErrorMessage)
         }
+        const resettlementAssessmentEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESETTLEMENT_ASSESSMENT)
+        const status =
+          state === 'NOT_STARTED' && resettlementAssessmentEnabled // Temporary fix - remove once SUPPORT_REQUIRED status is implemented
+            ? 'Support required'
+            : getEnumValue(state, resettlementAssessmentEnabled).name
         await rpClient.patch(
           `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway-with-case-note`,
           {
             pathway: getEnumByURL(selectedPathway),
             status: state,
-            caseNoteText: `Resettlement status set to: ${getEnumValue(state).name}. ${caseNoteInput || ''}`,
+            caseNoteText: `Resettlement status set to: ${status}. ${caseNoteInput || ''}`,
           },
         )
         serverUpdate = 'success'

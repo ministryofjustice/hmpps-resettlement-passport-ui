@@ -49,11 +49,11 @@
                     <label class="govuk-label" for="pathwayStatus">Pathway status</label>
                     <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
                       <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
-                      <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">Not started</option>
-                      <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">Support not required</option>
-                      <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">Support declined</option>
-                      <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">In progress</option>
-                      <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">Done</option>
+                      <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">{{ ("NOT_STARTED" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
+                      <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">{{ ("IN_PROGRESS" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
+                      <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">{{ ("SUPPORT_NOT_REQUIRED" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
+                      <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">{{ ("SUPPORT_DECLINED" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
+                      <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">{{ ("DONE" | getEnumValue(resettlementAssessmentEnabled)).name }}</option>
                     </select>
                   </div>
                 </div>

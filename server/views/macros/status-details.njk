@@ -1,10 +1,16 @@
-{% macro statusDetails(pathwayData, prisonerNumber, pathway) %}
+{% macro statusDetails(pathwayData, prisonerNumber, pathway, resettlementAssessmentEnabled) %}
   <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
         Resettlement status:
-        {% set statusValue = pathwayData.status | getEnumValue %}
-        <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">{{ statusValue.name }}</strong>
+        {% set statusValue = pathwayData.status | getEnumValue(resettlementAssessmentEnabled) %}
+        {% if pathwayData.status == 'NOT_STARTED' and resettlementAssessmentEnabled %} {# Temporary fix - remove once SUPPORT_REQUIRED status is implemented #}
+          <strong class="govuk-tag govuk-tag--orange">support required</strong>
+        {% else %}
+          <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
+            {{ statusValue.name }}
+          </strong>
+        {% endif %}
       </h3>
     </header>
     <div class="app-summary-card__body">
