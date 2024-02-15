@@ -185,10 +185,7 @@ export default function routes(services: Services): Router {
           throw new Error(deliusUserErrorMessage)
         }
         const resettlementAssessmentEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESETTLEMENT_ASSESSMENT)
-        const status =
-          state === 'NOT_STARTED' && resettlementAssessmentEnabled // Temporary fix - remove once SUPPORT_REQUIRED status is implemented
-            ? 'Support required'
-            : getEnumValue(state, resettlementAssessmentEnabled).name
+        const status = getEnumValue(state, resettlementAssessmentEnabled).name
         await rpClient.patch(
           `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway-with-case-note`,
           {

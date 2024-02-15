@@ -25,9 +25,11 @@ export default class RpService {
     pathwayStatus: string,
     assessmentRequired: string,
   ) {
+    // If pathwayView is set then set assessmentRequired to blank
+    const assessmentRequiredValue = !pathwayView ? assessmentRequired : ''
     await this.rpClient.setToken(token)
     return (await this.rpClient.get(
-      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&assessmentRequired=${assessmentRequired}`,
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&assessmentRequired=${assessmentRequiredValue}`,
     )) as Promise<PrisonersList>
   }
 

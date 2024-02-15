@@ -46,6 +46,11 @@ export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     color: 'red',
     description: 'no work has begun',
   },
+  SUPPORT_REQUIRED: {
+    name: 'Support required',
+    color: 'orange',
+    description: 'support need identified, no work has begun',
+  },
   IN_PROGRESS: {
     name: 'In progress',
     color: 'blue',
