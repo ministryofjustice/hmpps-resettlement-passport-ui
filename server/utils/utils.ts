@@ -278,3 +278,16 @@ export function getAnswerToCurrentQuestion(
   )
   return qaObject?.answer || null
 }
+
+export function getAnswerValueFromArrayOfMaps(answer: Answer, key: string) {
+  if (answer) {
+    const answers = answer.answer as { [key: string]: string }[]
+    const result = Object.entries(answers)
+      .map(it => it[1])
+      .find(it => it[key])
+    if (result) {
+      return result[key]
+    }
+  }
+  return ''
+}

@@ -31,23 +31,23 @@
                   </legend>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="address-line-1-{{ option.id }}">Address line 1</label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="address-line-1-{{ option.id }}" name="addressLine1_{{ option.id }}" type="text" autocomplete="address-line1" value="{{ nextQuestionExistingAnswer.answer[0]['addressLine1_' + option.id] }}">
+                    <input class="govuk-input govuk-!-width-two-thirds" id="address-line-1-{{ option.id }}" name="addressLine1_{{ option.id }}" type="text" autocomplete="address-line1" value="{{ nextQuestionExistingAnswer | getAnswerValueFromArrayOfMaps('addressLine1_' + option.id) }}">
                   </div>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="address-line-2-{{ option.id }}">Address line 2 (optional)</label>
-                    <input class="govuk-input govuk-!-width-two-thirds" id="address-line-2-{{ option.id }}" name="addressLine2_{{ option.id }}" type="text" autocomplete="address-line2" value="{{ nextQuestionExistingAnswer.answer[0]['addressLine2_' + option.id] }}">
+                    <input class="govuk-input govuk-!-width-two-thirds" id="address-line-2-{{ option.id }}" name="addressLine2_{{ option.id }}" type="text" autocomplete="address-line2" value="{{ nextQuestionExistingAnswer | getAnswerValueFromArrayOfMaps('addressLine2_' + option.id) }}">
                   </div>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="address-town-{{ option.id }}">Town or city</label>
-                    <input class="govuk-input govuk-!-width-one-half" id="address-town-{{ option.id }}" name="addressTown_{{ option.id }}" type="text" autocomplete="address-level2" value="{{ nextQuestionExistingAnswer.answer[0]['addressTown_' + option.id] }}">
+                    <input class="govuk-input govuk-!-width-one-half" id="address-town-{{ option.id }}" name="addressTown_{{ option.id }}" type="text" autocomplete="address-level2" value="{{ nextQuestionExistingAnswer | getAnswerValueFromArrayOfMaps('addressTown_' + option.id) }}">
                   </div>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="address-county-{{ option.id }}">County (optional)</label>
-                    <input class="govuk-input govuk-!-width-one-half" id="address-county-{{ option.id }}" name="addressCounty_{{ option.id }}" type="text" value="{{ nextQuestionExistingAnswer.answer[0]['addressCounty_' + option.id] }}">
+                    <input class="govuk-input govuk-!-width-one-half" id="address-county-{{ option.id }}" name="addressCounty_{{ option.id }}" type="text" value="{{ nextQuestionExistingAnswer | getAnswerValueFromArrayOfMaps('addressCounty_' + option.id) }}">
                   </div>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="address-postcode-{{ option.id }}">Postcode</label>
-                    <input class="govuk-input govuk-input--width-10" id="address-postcode-{{ option.id }}" name="addressPostcode_{{ option.id }}" type="text" autocomplete="postal-code" value="{{ nextQuestionExistingAnswer.answer[0]['addressPostcode_' + option.id] }}">
+                    <input class="govuk-input govuk-input--width-10" id="address-postcode-{{ option.id }}" name="addressPostcode_{{ option.id }}" type="text" autocomplete="postal-code" value="{{ nextQuestionExistingAnswer | getAnswerValueFromArrayOfMaps('addressPostcode_' + option.id) }}">
                   </div>
                 </fieldset>
               </div>
