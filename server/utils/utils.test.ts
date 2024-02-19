@@ -4,9 +4,11 @@ import {
   convertArrayToCommaSeparatedList,
   createReferralsSubNav,
   formatAddress,
+  getAnswerValueFromArrayOfMaps,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
+import { Answer } from '../data/model/BCST2Form'
 
 describe('convert to title case', () => {
   it.each([
@@ -177,5 +179,82 @@ describe('format address', () => {
     ],
   ])('%s: formatAddress(%s)', (_: string, a: AppointmentLocation, expected: string) => {
     expect(formatAddress(a)).toEqual(expected)
+  })
+})
+
+describe('getValueFromArrayOfMaps', () => {
+  it.each([
+    [
+      'happy path 1',
+      {
+        answer: [
+          {
+            key2: 'value2',
+            addressLine2_SOCIAL_HOUSING: 'City Centre',
+            'something else1': 'some value1',
+          },
+          {
+            key1: 'value1',
+            addressLine1_SOCIAL_HOUSING: '56 Main Street',
+            'something else': 'some value',
+          },
+        ],
+      },
+      'addressLine1_SOCIAL_HOUSING',
+      '56 Main Street',
+    ],
+    [
+      'happy path 2',
+      {
+        answer: [
+          {
+            addressLine1_SOCIAL_HOUSING: '12 Street Lane',
+          },
+          {
+            addressLine2_SOCIAL_HOUSING: 'City Centre',
+          },
+          {
+            addressTown_SOCIAL_HOUSING: 'Leeds',
+          },
+          {
+            addressCounty_SOCIAL_HOUSING: 'West Yorkshire',
+          },
+          {
+            addressPostcode_SOCIAL_HOUSING: 'LS1 2AB',
+          },
+        ],
+      },
+      'addressTown_SOCIAL_HOUSING',
+      'Leeds',
+    ],
+    [
+      'nothing found',
+      {
+        answer: [
+          {
+            addressLine1_SOCIAL_HOUSING: '12 Street Lane',
+          },
+          {
+            addressLine2_SOCIAL_HOUSING: 'City Centre',
+          },
+          {
+            addressTown_SOCIAL_HOUSING: 'Leeds',
+          },
+          {
+            addressCounty_SOCIAL_HOUSING: 'West Yorkshire',
+          },
+          {
+            addressPostcode_SOCIAL_HOUSING: 'LS1 2AB',
+          },
+        ],
+      },
+      'addressCity_SOCIAL_HOUSING',
+      '',
+    ],
+    ['null input', null, 'addressTown_SOCIAL_HOUSING', ''],
+    ['undefined input', undefined, 'addressTown_SOCIAL_HOUSING', ''],
+    ['wrong type of answer', { answer: 'string' }, 'addressTown_SOCIAL_HOUSING', ''],
+  ])('%s getValueFromArrayOfMaps(%s, %s, %s)', (_: string, answer: Answer, key: string, expected: string) => {
+    expect(getAnswerValueFromArrayOfMaps(answer, key)).toEqual(expected)
   })
 })

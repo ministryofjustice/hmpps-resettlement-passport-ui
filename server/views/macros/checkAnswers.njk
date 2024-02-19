@@ -9,10 +9,12 @@
           <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
           <dd class="govuk-summary-list__value">
             {% if questionAnswer.questionType === 'ADDRESS' %}
-              {% for key, value in questionAnswer.answer.answer[0] %}
-                {% if value %}
-                  {{ value }}<br />
-                {% endif %}
+              {% for item in questionAnswer.answer.answer %}
+                {% for key, value in item %}
+                  {% if value %}
+                    {{ value }}<br />
+                  {% endif %}
+                {% endfor %}
               {% endfor %}
             {% else %}
               {{ questionAnswer.answer.displayText }}
