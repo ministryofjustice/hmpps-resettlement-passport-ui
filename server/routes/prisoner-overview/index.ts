@@ -1,8 +1,9 @@
 import { Router } from 'express'
+import { Services } from '../../services'
+import PrisonerOverviewController from './prisonerOverviewController'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const prisonerOverviewRouter = Router().get('/', async (req, res, next) => {
-  // TODO - move code into here from router index
-})
+export default (router: Router, services: Services) => {
+  const prisonerOverviewController = new PrisonerOverviewController(services.rpService)
 
-export default prisonerOverviewRouter
+  router.get('/prisoner-overview', [prisonerOverviewController.getView])
+}

@@ -19,8 +19,8 @@ import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
 import bcst2FormRouter from './BCST2-form'
 import assessmentCompleteRouter from './assessment-complete'
-import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
-import { Appointments } from '../data/model/appointment'
+import { FEATURE_FLAGS } from '../utils/constants'
+import prisonerOverviewRouter from './prisoner-overview'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -39,9 +39,10 @@ export default function routes(services: Services): Router {
   assessmentTaskListRouter(router, services)
   bcst2FormRouter(router, services)
   assessmentCompleteRouter(router, services)
+  prisonerOverviewRouter(router, services)
 
   /* ************************************
-    REFACTOR USING prisonerOverviewRouter 
+    REFACTOR USING prisonerOverviewRouter
   ************************************** */
   // RP2-622 Temporary redirect for access from Delius
   get('/resettlement', async (req, res, next) => {
@@ -51,107 +52,6 @@ export default function routes(services: Services): Router {
     } else {
       next()
     }
-  })
-  use('/prisoner-overview', async (req, res, next) => {
-    const { prisonerData } = req
-    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-
-    let licenceConditions: { error?: boolean } = {}
-    let riskScores: { error?: boolean } = {}
-    let rosh: { error?: boolean } = {}
-    let mappa: { error?: boolean } = {}
-    let caseNotes: { error?: boolean } = {}
-    let staffContacts: { error?: boolean } = {}
-    let appointments: Appointments
-    try {
-      licenceConditions = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve licence conditions for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      licenceConditions.error = true
-    }
-    try {
-      riskScores = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/scores`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve risk scores for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      riskScores.error = true
-    }
-
-    try {
-      rosh = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/rosh`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve RoSH for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      rosh.error = true
-    }
-
-    try {
-      mappa = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/mappa`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve MAPPA for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      mappa.error = true
-    }
-    try {
-      caseNotes = await rpClient.get(
-        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway}`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      caseNotes.error = true
-    }
-    try {
-      staffContacts = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/staff-contacts`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve Staff Contacts for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      staffContacts.error = true
-    }
-    try {
-      appointments = (await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/appointments`,
-      )) as Appointments
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve appointments for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      appointments = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
-    }
-
-    res.render('pages/overview', {
-      licenceConditions,
-      prisonerData,
-      caseNotes,
-      riskScores,
-      rosh,
-      mappa,
-      page,
-      size,
-      sort,
-      days,
-      selectedPathway,
-      staffContacts,
-      appointments,
-    })
   })
 
   use('/licence-image', licenceImageRouter)

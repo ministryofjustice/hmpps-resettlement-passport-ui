@@ -8,6 +8,7 @@ import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
+import { Appointments } from '../data/model/appointment'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -223,5 +224,102 @@ export default class RpService {
     }
 
     return assessmentsSummary
+  }
+
+  async getLicenceConditions(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+    let licenceConditions: { error?: boolean } = {}
+    try {
+      licenceConditions = await this.rpClient.get(`/resettlement-passport/prisoner/${prisonerId}/licence-condition`)
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve licence conditions for ${prisonerId} ${err.status} ${err}`)
+      licenceConditions.error = true
+    }
+    return licenceConditions
+  }
+
+  async getRiskScores(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+    let riskScores: { error?: boolean } = {}
+    try {
+      riskScores = await this.rpClient.get(`/resettlement-passport/prisoner/${prisonerId}/risk/scores`)
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve risk scores for ${prisonerId} ${err.status} ${err}`)
+      riskScores.error = true
+    }
+    return riskScores
+  }
+
+  async getRosh(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+    let rosh: { error?: boolean } = {}
+    try {
+      rosh = await this.rpClient.get(`/resettlement-passport/prisoner/${prisonerId}/risk/rosh`)
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve RoSH for ${prisonerId} ${err.status} ${err}`)
+      rosh.error = true
+    }
+    return rosh
+  }
+
+  async getMappa(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+    let mappa: { error?: boolean } = {}
+    try {
+      mappa = await this.rpClient.get(`/resettlement-passport/prisoner/${prisonerId}/risk/mappa`)
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve MAPPA for ${prisonerId} ${err.status} ${err}`)
+      mappa.error = true
+    }
+    return mappa
+  }
+
+  async getCaseNotes(
+    token: string,
+    sessionId: string,
+    prisonerId: string,
+    page: number,
+    size: number,
+    sort: string,
+    days: number,
+    pathway: string,
+  ) {
+    await this.rpClient.setToken(token)
+    let caseNotes: { error?: boolean } = {}
+    try {
+      caseNotes = await this.rpClient.get(
+        `/resettlement-passport/case-notes/${prisonerId}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${pathway}`,
+      )
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve Case Notes for ${prisonerId} ${err.status} ${err}`)
+      caseNotes.error = true
+    }
+    return caseNotes
+  }
+
+  async getStaffContacts(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+    let staffContacts: { error?: boolean } = {}
+    try {
+      staffContacts = await this.rpClient.get(`/resettlement-passport/prisoner/${prisonerId}/staff-contacts`)
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve Staff Contacts for ${prisonerId} ${err.status} ${err}`)
+      staffContacts.error = true
+    }
+    return staffContacts
+  }
+
+  async getAppointments(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+    let appointments: Appointments
+    try {
+      appointments = (await this.rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerId}/appointments`,
+      )) as Appointments
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve appointments for ${prisonerId} ${err.status} ${err}`)
+      appointments = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+    }
+    return appointments
   }
 }
