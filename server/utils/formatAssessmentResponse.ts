@@ -7,7 +7,6 @@ type RequestBody = {
 const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => {
   const pageData: AssessmentPage = JSON.parse(currentPage)
   let radioWithAddressValue: string
-  console.log(reqBody)
 
   function getAddressValuesFromBody() {
     return [
@@ -32,12 +31,21 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
   const filteredQuestionsAndAnswers = pageData.questionsAndAnswers.map(questionAndAnswer => {
     const { id, title, type } = questionAndAnswer.question
 
+    let checkboxAnswers: string[]
+    // Check if the value is a string, if so, convert it to an array with a single element
+    if (typeof reqBody[questionAndAnswer.question.id] === 'string') {
+      checkboxAnswers = [reqBody[questionAndAnswer.question.id]]
+    } else {
+      // If it's already an array, use it directly
+      checkboxAnswers = [...reqBody[questionAndAnswer.question.id]]
+    }
+
     let displayText
     if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
       displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
     } else if (type === 'CHECKBOX') {
       displayText = questionAndAnswer.question.options
-        .filter(option => reqBody[questionAndAnswer.question.id].includes(option.id))
+        .filter(option => checkboxAnswers.includes(option.id))
         ?.map(option => option.displayText)
     } else {
       displayText = ''
@@ -52,6 +60,15 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
       answerType = 'StringAnswer'
     }
 
+    let answer
+    if (type === 'ADDRESS') {
+      answer = getAddressValuesFromBody()
+    } else if (type === 'CHECKBOX') {
+      answer = checkboxAnswers
+    } else {
+      answer = reqBody[id]
+    }
+
     if (type === 'RADIO_WITH_ADDRESS') {
       radioWithAddressValue = reqBody[id]
     }
@@ -62,7 +79,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
       questionType: type,
       pageId: pageData.id,
       answer: {
-        answer: type === 'ADDRESS' ? getAddressValuesFromBody() : reqBody[id],
+        answer,
         displayText: displayText || reqBody[id],
         '@class': answerType,
       },
