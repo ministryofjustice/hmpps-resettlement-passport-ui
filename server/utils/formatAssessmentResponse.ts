@@ -7,6 +7,7 @@ type RequestBody = {
 const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => {
   const pageData: AssessmentPage = JSON.parse(currentPage)
   let radioWithAddressValue: string
+  console.log(reqBody)
 
   function getAddressValuesFromBody() {
     return [
@@ -34,8 +35,21 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
     let displayText
     if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
       displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
+    } else if (type === 'CHECKBOX') {
+      displayText = questionAndAnswer.question.options
+        .filter(option => reqBody[questionAndAnswer.question.id].includes(option.id))
+        ?.map(option => option.displayText)
     } else {
       displayText = ''
+    }
+
+    let answerType: AnswerType
+    if (type === 'ADDRESS') {
+      answerType = 'MapAnswer'
+    } else if (type === 'CHECKBOX') {
+      answerType = 'ListAnswer'
+    } else {
+      answerType = 'StringAnswer'
     }
 
     if (type === 'RADIO_WITH_ADDRESS') {
@@ -50,7 +64,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
       answer: {
         answer: type === 'ADDRESS' ? getAddressValuesFromBody() : reqBody[id],
         displayText: displayText || reqBody[id],
-        '@class': (type === 'ADDRESS' ? 'MapAnswer' : 'StringAnswer') as AnswerType,
+        '@class': answerType,
       },
     }
   })

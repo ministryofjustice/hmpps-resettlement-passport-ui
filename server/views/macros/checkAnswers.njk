@@ -16,6 +16,10 @@
                   {% endif %}
                 {% endfor %}
               {% endfor %}
+            {% elif questionAnswer.questionType === 'CHECKBOX' %}
+              {% for item in questionAnswer.answer.displayText %}
+                {{ item }}<br />
+              {% endfor %}
             {% else %}
               {{ questionAnswer.answer.displayText }}
             {% endif %}
