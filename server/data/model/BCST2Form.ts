@@ -40,7 +40,7 @@ export type SubmittedQuestionAndAnswer = {
   pageId: string
   answer: {
     answer: string | string[] | { [key: string]: string }[]
-    displayText: string
+    displayText: string | string[]
     '@class': AnswerType
   }
 }

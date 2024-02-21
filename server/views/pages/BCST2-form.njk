@@ -8,6 +8,7 @@
 {% from "../macros/dropDown.njk" import dropDown %}
 {% from "../macros/assessmentSummary.njk" import assessmentSummary %}
 {% from "../macros/checkAnswers.njk" import checkAnswers %}
+{% from "../macros/checkbox.njk" import checkbox %}
 {% from "../macros/listOfPeople.njk" import listOfPeople %}
 
 {% block header %}
@@ -71,6 +72,8 @@
                 {{ longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
                 {{ dropDown(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+              {% elif currentQuestionAndAnswer.question.type === 'CHECKBOX' %}
+                {{ checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif currentQuestionAndAnswer.question.type === 'LIST_OF_PEOPLE' %}
                 {{ listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
               {% elif not currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}

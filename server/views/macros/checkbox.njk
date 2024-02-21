@@ -1,0 +1,23 @@
+{% macro checkbox(questionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
+  {% if not isFirstQuestionOnPage %}
+    <b>{{ currentQuestionAndAnswer.question.title }}</b>
+  {% endif %}
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+      <div id="waste-hint" class="govuk-hint">Select all that apply.</div>
+      <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+        {% for option in questionAndAnswer.question.options %}
+          {% if option.exclusive%}
+            <div class="govuk-checkboxes__divider">or</div>
+          {% endif %}
+          <div class="govuk-checkboxes__item">
+            <input class="govuk-checkboxes__input" id="{{ option.id }}" name="{{ questionAndAnswer.question.id }}" value="{{ option.id }}" type="checkbox" {% if option.id in existingAnswer.answer %}checked{% endif %} {% if option.exclusive %} data-behaviour="exclusive" {% endif %}>
+            <label class="govuk-label govuk-checkboxes__label" for="{{ option.id }}">
+              {{ option.displayText }}
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+    </fieldset>
+  </div>
+{% endmacro %}
