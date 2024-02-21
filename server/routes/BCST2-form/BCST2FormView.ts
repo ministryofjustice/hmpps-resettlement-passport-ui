@@ -8,6 +8,7 @@ export default class BCST2FormView implements View {
     private readonly assessmentPage: AssessmentPage,
     private readonly pathway: string,
     private readonly allQuestionsAndAnswers: SubmittedInput,
+    private readonly edit: boolean,
     private readonly errors: ErrorMessage[] = [],
   ) {}
 
@@ -16,6 +17,7 @@ export default class BCST2FormView implements View {
     assessmentPage: AssessmentPage
     pathway: string
     allQuestionsAndAnswers: SubmittedInput
+    edit: boolean
     errors: ErrorMessage[]
   } {
     return {
@@ -23,6 +25,7 @@ export default class BCST2FormView implements View {
       assessmentPage: this.assessmentPage,
       pathway: this.pathway,
       allQuestionsAndAnswers: this.allQuestionsAndAnswers,
+      edit: this.edit,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }
