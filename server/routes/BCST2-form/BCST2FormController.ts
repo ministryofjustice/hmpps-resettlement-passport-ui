@@ -182,7 +182,7 @@ export default class BCST2FormController {
       )
     }
 
-    const view = new BCST2FormView(prisonerData, assessmentPage, pathway, questionsAndAnswersFromCache, edit)
+    const view = new BCST2FormView(prisonerData, assessmentPage, pathway, questionsAndAnswersFromCache)
     return res.render('pages/BCST2-form', { ...view.renderArgs })
   }
 
