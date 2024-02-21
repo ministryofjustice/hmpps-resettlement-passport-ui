@@ -11,7 +11,7 @@
             <div class="govuk-checkboxes__divider">or</div>
           {% endif %}
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="{{ option.id }}" name="{{ questionAndAnswer.question.id }}" value="{{ option.id }}" type="checkbox" {% if option.id in existingAnswer.answer %}checked{% endif %} {% if option.exclusive %} data-behaviour="exclusive" {% endif %}>
+            <input class="govuk-checkboxes__input" id="{{ option.id }}" name="{{ questionAndAnswer.question.id }}" value="{{ option.id }}" type="checkbox" {% if existingAnswer and option.id in existingAnswer.answer %}checked{% endif %} {% if option.exclusive %} data-behaviour="exclusive" {% endif %}>
             <label class="govuk-label govuk-checkboxes__label" for="{{ option.id }}">
               {{ option.displayText }}
             </label>
