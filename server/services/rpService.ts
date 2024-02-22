@@ -8,6 +8,7 @@ import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
+import { AssessmentsInformation } from '../data/model/assessmentInformation'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -51,6 +52,26 @@ export default class RpService {
     }
 
     return crsReferrals
+  }
+
+  async getAssessmentInformation(token: string, sessionId: string, prisonerId: string, pathway: string) {
+    await this.rpClient.setToken(token)
+
+    let assessmentInformation: AssessmentsInformation
+    try {
+      assessmentInformation = (await this.rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/latest`,
+      )) as AssessmentsInformation
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve ${pathway} CRS info for ${prisonerId} ${err.status} ${err}`)
+      if (err.status === 404) {
+        assessmentInformation = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
+      } else {
+        assessmentInformation = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      }
+    }
+
+    return assessmentInformation
   }
 
   async getAccommodation(token: string, sessionId: string, prisonerId: string) {

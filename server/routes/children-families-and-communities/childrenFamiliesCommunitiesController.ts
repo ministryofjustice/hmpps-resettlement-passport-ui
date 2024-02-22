@@ -15,7 +15,14 @@ export default class ChildrenFamiliesCommunitiesController {
       'CHILDREN_FAMILIES_AND_COMMUNITY',
     )
 
-    const view = new ChildrenFamiliesCommunitiesView(prisonerData, crsReferrals)
+    const assessmentData = await this.rpService.getAssessmentInformation(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+      'CHILDREN_FAMILIES_AND_COMMUNITY',
+    )
+
+    const view = new ChildrenFamiliesCommunitiesView(prisonerData, crsReferrals, assessmentData)
     res.render('pages/children-families-communities', { ...view.renderArgs })
   }
 }

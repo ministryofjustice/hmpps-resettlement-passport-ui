@@ -1,4 +1,5 @@
 {% extends "../partials/layout.njk" %}
+{% from "../macros/assessmentInformation.njk" import assessmentInformation %}
 {% set pathway = "Health" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -19,6 +20,7 @@
       </div>
       <div class="govuk-grid-column-three-quarters">
         {% include "../partials/crsReferrals.njk" %}
+        {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
       </div>
     </div>
   {% else %}

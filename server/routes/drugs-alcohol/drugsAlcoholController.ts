@@ -15,7 +15,14 @@ export default class DrugsAlcoholController {
       'DRUGS_AND_ALCOHOL',
     )
 
-    const view = new DrugsAlcoholView(prisonerData, crsReferrals)
+    const assessmentData = await this.rpService.getAssessmentInformation(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+      'DRUGS_AND_ALCOHOL',
+    )
+
+    const view = new DrugsAlcoholView(prisonerData, crsReferrals, assessmentData)
     res.render('pages/drugs-alcohol', { ...view.renderArgs })
   }
 }

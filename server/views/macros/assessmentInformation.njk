@@ -1,0 +1,31 @@
+{% macro assessmentInformation(assessmentData, prisonerNumber, pathway) %}
+  {% if assessmentData.error %}
+    <div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">There is a problem</h2>
+        <div class="govuk-error-summary__body">{{ assessmentData.error }}</div>
+      </div>
+    </div>
+  {% else %}
+    <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
+      <header class="app-summary-card__header">
+        <h3 class="app-summary-card__title">Assessment information</h3>
+        <span class="right"></span>
+      </header>
+      <div class="app-summary-card__body">
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            {% for questionAnswer in assessmentData.questionsAndAnswers %}
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
+                <td class="govuk-table__cell">{{ questionAnswer.answer }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <p class="app-summary-card__hint">Last updated: {{ assessmentData.lastUpdated | formatDate('long') }} by {{ assessmentData.updatedBy }}</p>
+      </div>
+    </section>
+  {% endif %}
+{% endmacro %}
+

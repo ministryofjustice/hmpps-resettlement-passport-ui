@@ -15,7 +15,14 @@ export default class AttitudesThinkingBehaviourController {
       'ATTITUDES_THINKING_AND_BEHAVIOUR',
     )
 
-    const view = new AttitudesThinkingBehaviour(prisonerData, crsReferrals)
+    const assessmentData = await this.prisonService.getAssessmentInformation(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+      'ATTITUDES_THINKING_AND_BEHAVIOUR',
+    )
+
+    const view = new AttitudesThinkingBehaviour(prisonerData, crsReferrals, assessmentData)
     res.render('pages/attitudes-thinking-behaviour', { ...view.renderArgs })
   }
 }
