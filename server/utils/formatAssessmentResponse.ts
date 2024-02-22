@@ -33,11 +33,13 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
 
     let checkboxAnswers: string[]
     // Check if the value is a string, if so, convert it to an array with a single element
-    if (typeof reqBody[questionAndAnswer.question.id] === 'string') {
-      checkboxAnswers = [reqBody[questionAndAnswer.question.id]]
-    } else {
-      // If it's already an array, use it directly
-      checkboxAnswers = [...reqBody[questionAndAnswer.question.id]]
+    if (type === 'CHECKBOX') {
+      if (typeof reqBody[questionAndAnswer.question.id] === 'string') {
+        checkboxAnswers = [reqBody[questionAndAnswer.question.id]]
+      } else {
+        // If it's already an array, use it directly
+        checkboxAnswers = [...reqBody[questionAndAnswer.question.id]]
+      }
     }
 
     let displayText
