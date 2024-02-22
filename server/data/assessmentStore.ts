@@ -8,6 +8,8 @@ export default class AssessmentStore {
 
   private readonly currentPagePrefix = 'currentPage:'
 
+  private readonly editedQuestionPrefix = 'edit:'
+
   constructor(private readonly client: RedisClient) {
     client.on('error', error => {
       logger.error(error, `Redis error`)
@@ -25,7 +27,7 @@ export default class AssessmentStore {
     nomsId: string,
     pathway: string,
     questionsAndAnswers: SubmittedInput,
-    durationSeconds: number,
+    durationSeconds = 3600,
   ): Promise<void> {
     await this.ensureConnected()
     await this.client.set(
@@ -66,5 +68,27 @@ export default class AssessmentStore {
     await this.ensureConnected()
     const key = `${this.currentPagePrefix}${sessionId}${nomsId}${pathway}`
     return this.client.get(key)
+  }
+
+  public async setEditedQuestionList(
+    sessionId: string,
+    nomsId: string,
+    pathway: string,
+    questionIds: string[],
+  ): Promise<void> {
+    await this.ensureConnected()
+    await this.client.set(`${this.editedQuestionPrefix}${sessionId}${nomsId}${pathway}`, JSON.stringify(questionIds))
+  }
+
+  async getEditedQuestionList(sessionId: string, nomsId: string, pathway: string): Promise<string> {
+    await this.ensureConnected()
+    const key = `${this.editedQuestionPrefix}${sessionId}${nomsId}${pathway}`
+    return this.client.get(key)
+  }
+
+  public async deleteEditedQuestionList(sessionId: string, nomsId: string, pathway: string) {
+    await this.ensureConnected()
+    const key = `${this.editedQuestionPrefix}${sessionId}${nomsId}${pathway}`
+    await this.client.del(key)
   }
 }
