@@ -21,7 +21,14 @@ export default class AccommodationController {
       prisonerData.personalDetails.prisonerNumber as string,
     )
 
-    const view = new AccommodationView(prisonerData, crsReferrals, accommodation)
+    const assessmentData = await this.rpService.getAssessmentInformation(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+      'ACCOMMODATION',
+    )
+
+    const view = new AccommodationView(prisonerData, crsReferrals, accommodation, assessmentData)
     res.render('pages/accommodation', { ...view.renderArgs })
   }
 }

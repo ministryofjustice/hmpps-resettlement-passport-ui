@@ -93,7 +93,14 @@ export default class FinanceIdController {
       'FINANCE_AND_ID',
     )
 
-    const view = new FinanceIdView(prisonerData, crsReferrals)
+    const assessmentData = await this.rpService.getAssessmentInformation(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+      'FINANCE_AND_ID',
+    )
+
+    const view = new FinanceIdView(prisonerData, crsReferrals, assessmentData)
     res.render('pages/finance-id', { ...view.renderArgs, assessment, finance, id })
   }
 

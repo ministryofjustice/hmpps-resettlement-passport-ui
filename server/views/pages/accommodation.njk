@@ -3,6 +3,7 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
 {% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
+{% from "../macros/assessmentInformation.njk" import assessmentInformation %}
 
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}
@@ -98,6 +99,7 @@
           </div>
         </section>
         {% include "../partials/crsReferrals.njk" %}
+        {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
       </div>
     </div>
   {% else %}

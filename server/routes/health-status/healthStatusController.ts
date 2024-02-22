@@ -15,7 +15,14 @@ export default class HealthStatusController {
       'HEALTH',
     )
 
-    const view = new HealthStatusView(prisonerData, crsReferrals)
+    const assessmentData = await this.rpService.getAssessmentInformation(
+      token,
+      req.sessionID,
+      prisonerData.personalDetails.prisonerNumber as string,
+      'HEALTH',
+    )
+
+    const view = new HealthStatusView(prisonerData, crsReferrals, assessmentData)
     res.render('pages/health', { ...view.renderArgs })
   }
 }
