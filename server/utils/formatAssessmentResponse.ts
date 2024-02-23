@@ -43,7 +43,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
     }
 
     let displayText
-    if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS') {
+    if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
       displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
     } else if (type === 'CHECKBOX') {
       displayText = questionAndAnswer.question.options
@@ -98,7 +98,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
 export function getDisplayTextFromQandA(questionAndAnswer: QuestionsAndAnswers) {
   let displayText
   const { type } = questionAndAnswer.question
-  if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS') {
+  if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
     displayText = questionAndAnswer.question.options.find(
       answer => answer.id === questionAndAnswer.answer?.answer,
     )?.displayText
