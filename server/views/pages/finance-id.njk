@@ -28,6 +28,10 @@
           {
             name: "ID",
             id: "id"
+          },
+          {
+            name: "Assessment information",
+            id: "assessment-information"
           }
         ] %}
         {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
@@ -369,8 +373,8 @@
             </div>
           </div>
         </section>
-        {% include "../partials/crsReferrals.njk" %}
         {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+        {% include "../partials/crsReferrals.njk" %}
       </div>
     </div>
   {% else %}

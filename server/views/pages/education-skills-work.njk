@@ -45,6 +45,10 @@
           {
             name: "Employability skills",
             id: "employability-skills"
+          },
+          {
+            name: "Assessment information",
+            id: "assessment-information"
           }
         ] %}
         {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
@@ -263,8 +267,8 @@
         {% else %}
           <p>{{ educationSkillsWork.error }}</p>
         {% endif %}
-        {% include "../partials/crsReferrals.njk" %}
         {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+        {% include "../partials/crsReferrals.njk" %}
       </div>
     </div>
   {% else %}
