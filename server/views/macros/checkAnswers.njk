@@ -1,8 +1,7 @@
 {% macro checkAnswers(allQuestionsAndAnswers, pathway, prisonerNumber) %}
   {% set enumValue = pathway | getEnumValue %}
-  <h1 class="govuk-heading-l govuk-!-margin-bottom-9">Check your answers before submitting the {{ enumValue.name }} assessment</h1>
+  <h2 class="govuk-heading-m">{{ enumValue.name }} assessment</h2>
   <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-    <h2 class="govuk-heading-m">{{ enumValue.name }} assessment</h2>
     {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
       {% if questionAnswer.question !== 'SUPPORT_NEEDS' and questionAnswer.question !== 'CASE_NOTE_SUMMARY' %}
         <div class="govuk-summary-list__row">
@@ -31,8 +30,8 @@
       {% endif %}
     {% endfor %}
   </dl>
+  <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
   <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-    <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
     {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
       {% set statusValue = questionAnswer.answer.answer | getAssessmentEnumValue %}
       {% if questionAnswer.question === 'SUPPORT_NEEDS' %}

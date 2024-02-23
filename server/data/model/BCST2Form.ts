@@ -25,6 +25,7 @@ export type QuestionsAndAnswers = {
     options?: QuestionOptions[]
   }
   answer?: Answer
+  originalPageId: string
 }
 
 export type AssessmentPage = {
@@ -38,6 +39,7 @@ export type SubmittedQuestionAndAnswer = {
   question: string
   questionTitle: string
   pageId: string
+  questionType: string
   answer: {
     answer: string | string[] | { [key: string]: string }[]
     displayText: string | string[]

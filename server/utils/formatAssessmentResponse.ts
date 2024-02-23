@@ -1,4 +1,4 @@
-import { AnswerType, AssessmentPage, SubmittedInput } from '../data/model/BCST2Form'
+import { AnswerType, AssessmentPage, QuestionsAndAnswers, SubmittedInput } from '../data/model/BCST2Form'
 
 type RequestBody = {
   [key: string]: string
@@ -43,7 +43,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
     }
 
     let displayText
-    if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
+    if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS') {
       displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
     } else if (type === 'CHECKBOX') {
       displayText = questionAndAnswer.question.options
@@ -93,6 +93,25 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
   }
 
   return formattedResponse
+}
+
+export function getDisplayTextFromQandA(questionAndAnswer: QuestionsAndAnswers) {
+  let displayText
+  const { type } = questionAndAnswer.question
+  if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS') {
+    displayText = questionAndAnswer.question.options.find(
+      answer => answer.id === questionAndAnswer.answer?.answer,
+    )?.displayText
+  } else if (type === 'CHECKBOX') {
+    displayText = questionAndAnswer.question.options
+      .filter(option => (questionAndAnswer.answer?.answer as string[]).includes(option.id))
+      ?.map(option => option.displayText)
+  } else if (questionAndAnswer.answer && questionAndAnswer.answer['@class'] === 'StringAnswer') {
+    displayText = questionAndAnswer.answer?.answer as string
+  } else {
+    displayText = ''
+  }
+  return displayText
 }
 
 export default formatAssessmentResponse
