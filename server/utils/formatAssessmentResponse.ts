@@ -104,7 +104,7 @@ export function getDisplayTextFromQandA(questionAndAnswer: QuestionsAndAnswers) 
     )?.displayText
   } else if (type === 'CHECKBOX') {
     displayText = questionAndAnswer.question.options
-      .filter(option => (questionAndAnswer.answer?.answer as string[]).includes(option.id))
+      .filter(option => (questionAndAnswer.answer?.answer as string[])?.includes(option.id))
       ?.map(option => option.displayText)
   } else if (questionAndAnswer.answer && questionAndAnswer.answer['@class'] === 'StringAnswer') {
     displayText = questionAndAnswer.answer?.answer as string

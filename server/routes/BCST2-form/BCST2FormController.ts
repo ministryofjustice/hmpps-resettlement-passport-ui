@@ -208,11 +208,13 @@ export default class BCST2FormController {
               questionTitle: qAndA.question.title,
               pageId: qAndA.originalPageId,
               questionType: qAndA.question.type,
-              answer: {
-                answer: qAndA.answer ? qAndA.answer.answer : '',
-                displayText: getDisplayTextFromQandA(qAndA),
-                '@class': qAndA.answer ? qAndA.answer['@class'] : 'StringAnswer',
-              },
+              answer: qAndA.answer
+                ? {
+                    answer: qAndA.answer.answer,
+                    displayText: getDisplayTextFromQandA(qAndA),
+                    '@class': qAndA.answer['@class'],
+                  }
+                : null,
             })
           }
         })
