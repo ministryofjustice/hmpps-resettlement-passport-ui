@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import BCST2FormView from './BCST2FormView'
-import formatAssessmentResponse from '../../utils/formatAssessmentResponse'
+import formatAssessmentResponse, { getDisplayTextFromQandA } from '../../utils/formatAssessmentResponse'
 import { createRedisClient } from '../../data/redisClient'
 import AssessmentStore from '../../data/assessmentStore'
 import { SubmittedInput, SubmittedQuestionAndAnswer } from '../../data/model/BCST2Form'
@@ -81,11 +81,16 @@ export default class BCST2FormController {
       dataToSubmit as SubmittedInput,
       currentPageId,
     )
-    const { nextPageId } = nextPage
 
-    res.redirect(
-      `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
-    )
+    if (!nextPage.error) {
+      const { nextPageId } = nextPage
+
+      res.redirect(
+        `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+      )
+    } else {
+      next(new Error(nextPage.error))
+    }
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
@@ -104,85 +109,128 @@ export default class BCST2FormController {
       pathway as string,
       currentPageId,
     )
+    const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
 
-    await store.setCurrentPage(
-      req.session.id,
-      `${prisonerData.personalDetails.prisonerNumber}`,
-      pathway,
-      assessmentPage,
-      3600,
-    )
-
-    // get all Q&A's currently in cache
-    const questionsAndAnswersFromCache = JSON.parse(
-      await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-    ) as SubmittedInput
-
-    // Get any edited questions from cache
-    const editedQuestionIds = JSON.parse(
-      await store.getEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-    ) as string[]
-
-    // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
-    if (editedQuestionIds) {
-      // Get the question ids for the next page
-      const nextPageQuestionIds = assessmentPage.questionsAndAnswers.map(it => it.question.id)
-      // Get all question ids currently in cache
-      const allQuestionIdsInCache = questionsAndAnswersFromCache.questionsAndAnswers.map(it => it.question)
-      // If all the questions on the next page are in the cache we have converged
-      if (nextPageQuestionIds.every(it => allQuestionIdsInCache.includes(it))) {
-        // Get the start and end index of questionsAndAnswersFromCache where we diverged and converged
-        const editedQuestionsStartIndex = questionsAndAnswersFromCache.questionsAndAnswers.findIndex(
-          it => it.question === editedQuestionIds[0],
-        )
-        const editedQuestionsEndIndex = questionsAndAnswersFromCache.questionsAndAnswers.findIndex(
-          it => it.question === nextPageQuestionIds[0],
-        )
-        // Get the question ids from the indexes
-        const questionIdsPreDivergence = questionsAndAnswersFromCache.questionsAndAnswers
-          .map(it => it.question)
-          .slice(0, editedQuestionsStartIndex)
-        const questionIdsPostConvergence = questionsAndAnswersFromCache.questionsAndAnswers
-          .map(it => it.question)
-          .slice(editedQuestionsEndIndex, questionsAndAnswersFromCache.questionsAndAnswers.length)
-        // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
-        const newQuestionIds = [
-          ...questionIdsPreDivergence,
-          ...editedQuestionIds,
-          ...questionIdsPostConvergence,
-        ].filter((item, pos, arr) => {
-          return arr.indexOf(item) === pos
-        })
-        // Convert back to questionsAndAnswers and overwrite the assessment in the cache
-        const newQuestionsAndAnswers = newQuestionIds.map(q =>
-          questionsAndAnswersFromCache.questionsAndAnswers.find(it => it.question === q),
-        )
-        await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
-          questionsAndAnswers: newQuestionsAndAnswers,
-        })
-        // Delete the edited question list from cache
-        await store.deleteEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway)
-        // Redirect to check answers page
-        return res.redirect(
-          `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
-        )
-      }
-    }
-
-    // If we are in edit mode add the current question id to the edited question list in cache
-    if (edit || editedQuestionIds) {
-      const questionList = editedQuestionIds
-        ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
-        : assessmentPage.questionsAndAnswers.map(it => it.question.id)
-      await store.setEditedQuestionList(
+    if (!assessmentPage.error) {
+      await store.setCurrentPage(
         req.session.id,
         `${prisonerData.personalDetails.prisonerNumber}`,
         pathway,
-        questionList,
+        assessmentPage,
+        3600,
       )
+
+      // get all Q&A's currently in cache
+      const questionsAndAnswersFromCache = JSON.parse(
+        await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+      ) as SubmittedInput
+
+      // Get any edited questions from cache
+      const editedQuestionIds = JSON.parse(
+        await store.getEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+      ) as string[]
+
+      // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
+      if (editedQuestionIds) {
+        // Get the question ids for the next page
+        const nextPageQuestionIds = assessmentPage.questionsAndAnswers.map(it => it.question.id)
+        // Get all question ids currently in cache
+        const allQuestionIdsInCache = questionsAndAnswersFromCache?.questionsAndAnswers.map(it => it.question)
+        // If all the questions on the next page are in the cache we have converged
+        if (nextPageQuestionIds.every(it => allQuestionIdsInCache?.includes(it))) {
+          // Get the start and end index of questionsAndAnswersFromCache where we diverged and converged
+          const editedQuestionsStartIndex = questionsAndAnswersFromCache.questionsAndAnswers.findIndex(
+            it => it.question === editedQuestionIds[0],
+          )
+          const editedQuestionsEndIndex = questionsAndAnswersFromCache.questionsAndAnswers.findIndex(
+            it => it.question === nextPageQuestionIds[0],
+          )
+          // Get the question ids from the indexes
+          const questionIdsPreDivergence = questionsAndAnswersFromCache.questionsAndAnswers
+            .map(it => it.question)
+            .slice(0, editedQuestionsStartIndex)
+          const questionIdsPostConvergence = questionsAndAnswersFromCache.questionsAndAnswers
+            .map(it => it.question)
+            .slice(editedQuestionsEndIndex, questionsAndAnswersFromCache.questionsAndAnswers.length)
+          // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
+          const newQuestionIds = [
+            ...questionIdsPreDivergence,
+            ...editedQuestionIds,
+            ...questionIdsPostConvergence,
+          ].filter((item, pos, arr) => {
+            return arr.indexOf(item) === pos
+          })
+          // Convert back to questionsAndAnswers and overwrite the assessment in the cache
+          const newQuestionsAndAnswers = newQuestionIds.map(q =>
+            questionsAndAnswersFromCache.questionsAndAnswers.find(it => it.question === q),
+          )
+          await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
+            questionsAndAnswers: newQuestionsAndAnswers,
+          })
+          // Delete the edited question list from cache
+          await store.deleteEditedQuestionList(
+            req.session.id,
+            `${prisonerData.personalDetails.prisonerNumber}`,
+            pathway,
+          )
+          // Redirect to check answers page
+          return res.redirect(
+            `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+          )
+        }
+      }
+
+      // If we are in edit mode add the current question id to the edited question list in cache
+      if (edit || editedQuestionIds) {
+        const questionList = editedQuestionIds
+          ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
+          : assessmentPage.questionsAndAnswers.map(it => it.question.id)
+        await store.setEditedQuestionList(
+          req.session.id,
+          `${prisonerData.personalDetails.prisonerNumber}`,
+          pathway,
+          questionList,
+        )
+      }
+
+      // Merge together answers from API and cache
+      if (assessmentPage.questionsAndAnswers.length !== 0) {
+        assessmentPage.questionsAndAnswers.forEach(qAndA => {
+          const questionAndAnswerFromCache = questionsAndAnswersFromCache?.questionsAndAnswers.find(
+            it => it.question === qAndA.question.id,
+          )
+          // Cache always takes precedence
+          if (questionAndAnswerFromCache) {
+            mergedQuestionsAndAnswers.push(questionAndAnswerFromCache)
+          } else {
+            mergedQuestionsAndAnswers.push({
+              question: qAndA.question.id,
+              questionTitle: qAndA.question.title,
+              pageId: qAndA.originalPageId,
+              questionType: qAndA.question.type,
+              answer: {
+                answer: qAndA.answer ? qAndA.answer.answer : '',
+                displayText: getDisplayTextFromQandA(qAndA),
+                '@class': qAndA.answer ? qAndA.answer['@class'] : 'StringAnswer',
+              },
+            })
+          }
+        })
+      } else {
+        mergedQuestionsAndAnswers.push(...questionsAndAnswersFromCache.questionsAndAnswers)
+      }
+
+      // If we are about to render the check answers page - update the cache with the current question/answer set
+      if (currentPageId === 'CHECK_ANSWERS') {
+        await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
+          questionsAndAnswers: mergedQuestionsAndAnswers,
+        })
+      }
     }
 
-    const view = new BCST2FormView(prisonerData, assessmentPage, pathway, questionsAndAnswersFromCache)
+    const view = new BCST2FormView(prisonerData, assessmentPage, pathway, {
+      questionsAndAnswers: mergedQuestionsAndAnswers,
+    })
     return res.render('pages/BCST2-form', { ...view.renderArgs })
   }
 

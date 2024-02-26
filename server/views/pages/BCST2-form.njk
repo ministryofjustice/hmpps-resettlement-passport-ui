@@ -8,7 +8,6 @@
 {% from "../macros/dropDown.njk" import dropDown %}
 {% from "../macros/assessmentSummary.njk" import assessmentSummary %}
 {% from "../macros/checkAnswers.njk" import checkAnswers %}
-{% from "../macros/checkbox.njk" import checkbox %}
 {% from "../macros/listOfPeople.njk" import listOfPeople %}
 
 {% block header %}
@@ -34,7 +33,11 @@
         <a class="govuk-link govuk-link--no-visited-state" href="/assessment-task-list/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back</a>
         
         {% if not assessmentPage.error %}
-          <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.questionsAndAnswers[0].question.title }}</h1>
+          {% if assessmentPage.id === "CHECK_ANSWERS" %}
+            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Check your answers before submitting the {{ (pathway | getEnumValue).name }} assessment</h1>
+          {% else %}
+            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.questionsAndAnswers[0].question.title }}</h1>
+          {% endif %}
           <form
             {% if assessmentPage.id == 'CHECK_ANSWERS' %}
               action="/BCST2/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
@@ -43,43 +46,43 @@
             {% endif %}
             method="post"
           >
-            
-            {% if assessmentPage.id === "ASSESSMENT_SUMMARY" %}
-              {{ assessmentSummary(pathway) }}
-            {% endif %}
 
             {% if assessmentPage.id === "CHECK_ANSWERS" %}
               {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber) }}
+            {% else %}
+              {% if assessmentPage.id === "ASSESSMENT_SUMMARY" %}
+                {{ assessmentSummary(pathway) }}
+              {% endif %}
+
+              {% for currentQuestionAndAnswer in assessmentPage.questionsAndAnswers %}
+
+                {# get answer to current question #}
+                {% set existingAnswer = currentQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
+                {% set currentIndex = loop.index %}
+                {% if currentIndex == 1 %}
+                  {% set isFirstQuestionOnPage = true %}
+                {% endif %}
+
+                {% if currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
+                  {# get the next question and answer (ADDRESS) item in the array #}
+                  {% set nextQuestionAndAnswer = assessmentPage.questionsAndAnswers[currentIndex] %}
+                  {% set nextQuestionExistingAnswer = nextQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
+                  {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, nextQuestionAndAnswer, nextQuestionExistingAnswer) }}
+                {% elif currentQuestionAndAnswer.question.type === 'RADIO' %}
+                  {{ radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
+                  {{ longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                {% elif currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
+                  {{ dropDown(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                {% elif currentQuestionAndAnswer.question.type === 'CHECKBOX' %}
+                  {{ checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                {% elif currentQuestionAndAnswer.question.type === 'LIST_OF_PEOPLE' %}
+                  {{ listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                {% elif not currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
+                  <p class="govuk-error-message govuk-!-padding-top-6">There was a problem getting the next question.<br /> Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
+                {% endif %}
+              {% endfor %}
             {% endif %}
-
-            {% for currentQuestionAndAnswer in assessmentPage.questionsAndAnswers %}
-
-              {# get answer to current question #}
-              {% set existingAnswer = currentQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
-              {% set currentIndex = loop.index %}
-              {% if currentIndex == 1 %}
-                {% set isFirstQuestionOnPage = true %}
-              {% endif %}
-
-              {% if currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
-                {# get the next question and answer (ADDRESS) item in the array #}
-                {% set nextQuestionAndAnswer = assessmentPage.questionsAndAnswers[currentIndex] %}
-                {% set nextQuestionExistingAnswer = nextQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
-                {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, nextQuestionAndAnswer, nextQuestionExistingAnswer) }}
-              {% elif currentQuestionAndAnswer.question.type === 'RADIO' %}
-                {{ radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
-              {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
-                {{ longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
-              {% elif currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
-                {{ dropDown(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
-              {% elif currentQuestionAndAnswer.question.type === 'CHECKBOX' %}
-                {{ checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
-              {% elif currentQuestionAndAnswer.question.type === 'LIST_OF_PEOPLE' %}
-                {{ listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
-              {% elif not currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
-                <p class="govuk-error-message govuk-!-padding-top-6">There was a problem getting the next question.<br /> Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
-              {% endif %}
-            {% endfor %}
             
             <input type="hidden" name="pageTitle" value="{{ assessmentPage.title }}"/>
             <input type="hidden" name="pathway" value="{{ pathway }}"/>
@@ -93,7 +96,9 @@
               {% endif %}
             </button>
           </form>
-          
+        {% else %}
+          <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Something went wrong</h1>
+          <p>There was a problem loading the assessment. Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
         {% endif %}
       </div>
     </div>
