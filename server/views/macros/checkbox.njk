@@ -1,6 +1,6 @@
 {% macro checkbox(questionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
   {% if not isFirstQuestionOnPage %}
-    <b>{{ currentQuestionAndAnswer.question.title }}</b>
+    <b>{{ questionAndAnswer.question.title }}</b>
   {% endif %}
   <div class="govuk-form-group">
     <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
