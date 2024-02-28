@@ -6,24 +6,24 @@ type RequestBody = {
 
 const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => {
   const pageData: AssessmentPage = JSON.parse(currentPage)
-  let radioWithAddressValue: string
+  let addressPostfix = ''
 
   function getAddressValuesFromBody() {
     return [
       {
-        [`addressLine1_${radioWithAddressValue}`]: reqBody[`addressLine1_${radioWithAddressValue}`],
+        [`addressLine1${addressPostfix}`]: reqBody[`addressLine1${addressPostfix}`],
       },
       {
-        [`addressLine2_${radioWithAddressValue}`]: reqBody[`addressLine2_${radioWithAddressValue}`],
+        [`addressLine2${addressPostfix}`]: reqBody[`addressLine2${addressPostfix}`],
       },
       {
-        [`addressTown_${radioWithAddressValue}`]: reqBody[`addressTown_${radioWithAddressValue}`],
+        [`addressTown${addressPostfix}`]: reqBody[`addressTown${addressPostfix}`],
       },
       {
-        [`addressCounty_${radioWithAddressValue}`]: reqBody[`addressCounty_${radioWithAddressValue}`],
+        [`addressCounty${addressPostfix}`]: reqBody[`addressCounty${addressPostfix}`],
       },
       {
-        [`addressPostcode_${radioWithAddressValue}`]: reqBody[`addressPostcode_${radioWithAddressValue}`],
+        [`addressPostcode${addressPostfix}`]: reqBody[`addressPostcode${addressPostfix}`],
       },
     ]
   }
@@ -72,7 +72,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
     }
 
     if (type === 'RADIO_WITH_ADDRESS') {
-      radioWithAddressValue = reqBody[id]
+      addressPostfix = `_${reqBody[id]}`
     }
 
     return {

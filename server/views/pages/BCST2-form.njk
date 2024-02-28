@@ -10,6 +10,8 @@
 {% from "../macros/checkAnswers.njk" import checkAnswers %}
 {% from "../macros/listOfPeople.njk" import listOfPeople %}
 {% from "../macros/checkbox.njk" import checkbox %}
+{% from "../macros/address.njk" import address %}
+{% from "../macros/shortText.njk" import shortText %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -37,7 +39,7 @@
           {% if assessmentPage.id === "CHECK_ANSWERS" %}
             <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Check your answers before submitting the {{ (pathway | getEnumValue).name }} assessment</h1>
           {% else %}
-            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.questionsAndAnswers[0].question.title }}</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.title or assessmentPage.questionsAndAnswers[0].question.title }}</h1>
           {% endif %}
           <form
             {% if assessmentPage.id == 'CHECK_ANSWERS' %}
@@ -79,7 +81,13 @@
                   {{ checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
                 {% elif currentQuestionAndAnswer.question.type === 'LIST_OF_PEOPLE' %}
                   {{ listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
-                {% elif not currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
+                {% elif currentQuestionAndAnswer.question.type === 'SHORT_TEXT' %}
+                  {{ shortText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                {% elif currentQuestionAndAnswer.question.type === 'ADDRESS' %}
+                  {% if not nextQuestionAndAnswer %}
+                    {{ address(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                  {% endif %}
+                {% else %}
                   <p class="govuk-error-message govuk-!-padding-top-6">There was a problem getting the next question.<br /> Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
                 {% endif %}
               {% endfor %}

@@ -1,0 +1,7 @@
+{% macro shortText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
+  <div class="govuk-form-group govuk-!-padding-top-3">
+    <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
+    <div id="{{ currentQuestionAndAnswer.question.id }}-hint" class='govuk-hint'>{{ currentQuestionAndAnswer.question.subTitle }}</div>
+    <input class="govuk-input govuk-!-width-two-thirds" id="{{ currentQuestionAndAnswer.question.id }}" name="{{ currentQuestionAndAnswer.question.id }}" type="text" value="{{ existingAnswer.answer if existingAnswer }}" />
+  </div>
+{% endmacro %}
