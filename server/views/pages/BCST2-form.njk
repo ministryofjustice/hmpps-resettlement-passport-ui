@@ -2,7 +2,6 @@
 {% set pathwayName = "BCST2 Form" %}
 {% set pageTitle = applicationName + " - " + pathwayName %}
 {% set mainClasses = "app-container govuk-body" %}
-{% from "../macros/radio-with-address.njk" import radioWithAddress %}
 {% from "../macros/radio.njk" import radio %}
 {% from "../macros/longText.njk" import longText %}
 {% from "../macros/dropDown.njk" import dropDown %}
@@ -66,12 +65,7 @@
                   {% set isFirstQuestionOnPage = true %}
                 {% endif %}
 
-                {% if currentQuestionAndAnswer.question.type === 'RADIO_WITH_ADDRESS' %}
-                  {# get the next question and answer (ADDRESS) item in the array #}
-                  {% set nextQuestionAndAnswer = assessmentPage.questionsAndAnswers[currentIndex] %}
-                  {% set nextQuestionExistingAnswer = nextQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
-                  {{ radioWithAddress(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, nextQuestionAndAnswer, nextQuestionExistingAnswer) }}
-                {% elif currentQuestionAndAnswer.question.type === 'RADIO' %}
+                {% if currentQuestionAndAnswer.question.type === 'RADIO' %}
                   {{ radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
                 {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
                   {{ longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}

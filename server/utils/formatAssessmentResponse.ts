@@ -6,24 +6,23 @@ type RequestBody = {
 
 const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => {
   const pageData: AssessmentPage = JSON.parse(currentPage)
-  let addressPostfix = ''
 
   function getAddressValuesFromBody() {
     return [
       {
-        [`addressLine1${addressPostfix}`]: reqBody[`addressLine1${addressPostfix}`],
+        addressLine1: reqBody.addressLine1,
       },
       {
-        [`addressLine2${addressPostfix}`]: reqBody[`addressLine2${addressPostfix}`],
+        addressLine2: reqBody.addressLine2,
       },
       {
-        [`addressTown${addressPostfix}`]: reqBody[`addressTown${addressPostfix}`],
+        addressTown: reqBody.addressTown,
       },
       {
-        [`addressCounty${addressPostfix}`]: reqBody[`addressCounty${addressPostfix}`],
+        addressCounty: reqBody.addressCounty,
       },
       {
-        [`addressPostcode${addressPostfix}`]: reqBody[`addressPostcode${addressPostfix}`],
+        addressPostcode: reqBody.addressPostcode,
       },
     ]
   }
@@ -43,7 +42,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
     }
 
     let displayText
-    if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
+    if (type === 'RADIO' || type === 'DROPDOWN') {
       displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
     } else if (type === 'CHECKBOX') {
       displayText = questionAndAnswer.question.options
@@ -71,10 +70,6 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
       answer = reqBody[id]
     }
 
-    if (type === 'RADIO_WITH_ADDRESS') {
-      addressPostfix = `_${reqBody[id]}`
-    }
-
     return {
       question: id,
       questionTitle: title,
@@ -98,7 +93,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
 export function getDisplayTextFromQandA(questionAndAnswer: QuestionsAndAnswers) {
   let displayText
   const { type } = questionAndAnswer.question
-  if (type === 'RADIO' || type === 'RADIO_WITH_ADDRESS' || type === 'DROPDOWN') {
+  if (type === 'RADIO' || type === 'DROPDOWN') {
     displayText = questionAndAnswer.question.options.find(
       answer => answer.id === questionAndAnswer.answer?.answer,
     )?.displayText
