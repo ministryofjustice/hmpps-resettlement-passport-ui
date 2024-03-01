@@ -24,12 +24,16 @@
           {
             name: "Main address",
             id: "main-address"
-          },
-          {
-            name: "Assessment information",
-            id: "assessment-information"
           }
         ] %}
+        {% if resettlementAssessmentEnabled %}
+          {% set subNavItems = subNavItems.concat([
+            {
+              name: "Assessment information",
+              id: "assessment-information"
+            }
+          ]) %}
+        {% endif %}
         {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
         {{ subNav(subNavItems) }}
       </div>
@@ -102,7 +106,9 @@
             {% endif %}
           </div>
         </section>
-        {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+        {% if resettlementAssessmentEnabled %}
+          {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+        {% endif %}
         {% include "../partials/crsReferrals.njk" %}
       </div>
     </div>

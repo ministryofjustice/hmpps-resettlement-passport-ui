@@ -15,17 +15,22 @@
       </div>
       <div class="govuk-grid-row govuk-!-padding-top-4">
         <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-          {% set subNavItems = [
-            {
-              name: "Assessment information",
-              id: "assessment-information"
-            }
-          ] %}
+          {% set subNavItems = [] %}
+          {% if resettlementAssessmentEnabled %}
+            {% set subNavItems = subNavItems.concat([
+              {
+                name: "Assessment information",
+                id: "assessment-information"
+              }
+            ]) %}
+          {% endif %}
           {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
           {{ subNav(subNavItems) }}
         </div>
         <div class="govuk-grid-column-three-quarters">
-          {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+          {% if resettlementAssessmentEnabled %}
+            {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+          {% endif %}
           {% include "../partials/crsReferrals.njk" %}
         </div>
       </div>
