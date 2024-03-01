@@ -5,6 +5,7 @@ import {
   createReferralsSubNav,
   formatAddress,
   getAnswerValueFromArrayOfMaps,
+  formatCaseNoteText,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -256,5 +257,26 @@ describe('getValueFromArrayOfMaps', () => {
     ['wrong type of answer', { answer: 'string' }, 'addressTown_SOCIAL_HOUSING', ''],
   ])('%s getValueFromArrayOfMaps(%s, %s, %s)', (_: string, answer: Answer, key: string, expected: string) => {
     expect(getAnswerValueFromArrayOfMaps(answer, key)).toEqual(expected)
+  })
+})
+
+describe('formatCaseNoteText', () => {
+  it.each([
+    ['null input', null, ''],
+    ['empty input', '', ''],
+    ['input with no line breaks', 'This is a case note.', 'This is a case note.'],
+    ['input with some line breaks', 'This is\na case\n\nnote.', 'This is<br />a case<br /><br />note.'],
+    [
+      'input with only resettlement status',
+      'Resettlement status set to: In Progress.',
+      '<strong>Resettlement status set to: In Progress.</strong>',
+    ],
+    [
+      'input with some line breaks and resettlement status',
+      'Resettlement status set to: In Progress. This is\na case\n\nnote.',
+      '<strong>Resettlement status set to: In Progress.</strong><div>This is<br />a case<br /><br />note.</div>',
+    ],
+  ])('%s formatCaseNoteText(%s)', (_: string, caseNoteText: string, expected: string) => {
+    expect(formatCaseNoteText(caseNoteText)).toEqual(expected)
   })
 })

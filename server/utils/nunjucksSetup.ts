@@ -16,7 +16,7 @@ import {
   getDescriptionFromName,
   getMostRecentDate,
   roundNumberUp,
-  formatFirstSentence,
+  formatCaseNoteText,
   formatDateToIso,
   formatTime,
   convertArrayToCommaSeparatedList,
@@ -83,7 +83,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getEnumByName', getEnumByName)
   njkEnv.addFilter('getDescriptionFromName', getDescriptionFromName)
   njkEnv.addFilter('roundNumberUp', roundNumberUp)
-  njkEnv.addFilter('formatFirstSentence', formatFirstSentence)
+  njkEnv.addFilter('formatCaseNoteText', formatCaseNoteText)
   njkEnv.addFilter('formatDateToIso', formatDateToIso)
   njkEnv.addFilter('formatTime', formatTime)
   njkEnv.addGlobal('dpsUrl', config.dpsHomeUrl)
