@@ -120,11 +120,11 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install project dependencies
+          command: npm i
+      - run:
           name: Install Playwright browsers
           command: npx playwright install --with-deps
-      - run:
-          name: Install Playwright dependencies
-          command: npm i
       - run:
           name: Run cucumber tests
           command: | 
