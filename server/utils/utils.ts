@@ -133,19 +133,22 @@ export function roundNumberUp(number: number): number | undefined {
   return Math.ceil(number)
 }
 
-export function formatFirstSentence(inputString: string): string {
+export function formatCaseNoteText(caseNoteText: string): string {
+  // Replace line breaks with <br />
+  const formattedInputString = caseNoteText?.replace(/\n/g, '<br />')
   // Check if the first sentence matches the pattern
-  if (inputString.startsWith('Resettlement status set to:')) {
+  if (formattedInputString?.startsWith('Resettlement status set to:')) {
     // Split the first sentence into two parts: before and after the period
-    const parts = inputString.split('.')
+    const parts = formattedInputString.split('.')
     if (parts.length > 1) {
-      const beforePeriod = `${parts[0]}.`
-      const afterPeriod = parts.slice(1).join('.').replace(/\n/g, '<br />')
+      const beforePeriod = `${parts[0]}.`.trim()
+      const afterPeriod = parts.slice(1).join('.').trim()
+      const bodyText = afterPeriod ? `<div>${afterPeriod}</div>` : ''
       // Format the part before the period as bold
-      return `<strong>${beforePeriod}</strong><div>${afterPeriod}</div>`
+      return `<strong>${beforePeriod}</strong>${bodyText}`
     }
   }
-  return inputString
+  return formattedInputString || ''
 }
 
 export function formatTime(inputTime: string): string {
