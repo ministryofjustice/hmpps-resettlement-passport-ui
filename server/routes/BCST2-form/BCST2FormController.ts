@@ -9,88 +9,100 @@ import { SubmittedInput, SubmittedQuestionAndAnswer } from '../../data/model/BCS
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}
 
-  getNextPage: RequestHandler = async (req, res, next): Promise<void> => {
+  getNextPage: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const { token } = req.user
     const { pathway } = req.query
 
-    const nextPage = await this.rpService.fetchNextPage(
-      token,
-      req.sessionID,
-      prisonerData.personalDetails.prisonerNumber as string,
-      pathway as string,
-      {
-        questionsAndAnswers: null,
-      },
-      null,
+    Promise.resolve(
+      this.rpService.fetchNextPage(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        pathway as string,
+        {
+          questionsAndAnswers: null,
+        },
+        null,
+      ),
     )
-    const { nextPageId } = nextPage
-
-    res.redirect(
-      `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
-    )
+      .then(nextPage => {
+        const { nextPageId } = nextPage
+        res.redirect(
+          `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+        )
+      })
+      .catch(next)
   }
 
-  saveAnswerAndGetNextPage: RequestHandler = async (req, res, next): Promise<void> => {
+  saveAnswerAndGetNextPage: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const { token } = req.user
     const { pathway, currentPageId } = req.body
     const store = new AssessmentStore(createRedisClient())
 
-    // prepare current Q&A's from req body for post request
-    const dataToSubmit: SubmittedInput = formatAssessmentResponse(
-      await store.getCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-      req.body,
-    )
+    Promise.resolve(store.getCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway))
+      .then(currentPage => {
+        // prepare current Q&A's from req body for post request
+        const dataToSubmit: SubmittedInput = formatAssessmentResponse(currentPage, req.body)
+        return Promise.all([
+          dataToSubmit,
+          store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+        ])
+      })
+      .then(([dataToSubmit, allQuestionsAndAnswersString]) => {
+        // get previous Q&A's
+        const allQuestionsAndAnswers = JSON.parse(allQuestionsAndAnswersString)
 
-    // get previous Q&A's
-    const allQuestionsAndAnswers = JSON.parse(
-      await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-    )
+        if (allQuestionsAndAnswers) {
+          dataToSubmit.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
+            const index = allQuestionsAndAnswers.questionsAndAnswers.findIndex(
+              (existingQandA: SubmittedQuestionAndAnswer) => {
+                return existingQandA.question === newQandA.question
+              },
+            )
 
-    if (allQuestionsAndAnswers) {
-      dataToSubmit.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
-        const index = allQuestionsAndAnswers.questionsAndAnswers.findIndex(
-          (existingQandA: SubmittedQuestionAndAnswer) => {
-            return existingQandA.question === newQandA.question
-          },
+            if (index !== -1) {
+              // Replace the existing question with the new one
+              allQuestionsAndAnswers.questionsAndAnswers[index] = newQandA
+            } else {
+              // Add the new question if it doesn't exist
+              allQuestionsAndAnswers.questionsAndAnswers.push(newQandA)
+            }
+          })
+        }
+        return Promise.all([
+          dataToSubmit,
+          store.setAssessment(
+            req.session.id,
+            `${prisonerData.personalDetails.prisonerNumber}`,
+            pathway,
+            allQuestionsAndAnswers || dataToSubmit,
+          ),
+        ])
+      })
+      .then(([dataToSubmit]) => {
+        return this.rpService.fetchNextPage(
+          token,
+          req.sessionID,
+          prisonerData.personalDetails.prisonerNumber as string,
+          pathway as string,
+          dataToSubmit as SubmittedInput,
+          currentPageId,
         )
+      })
+      .then(nextPage => {
+        if (!nextPage.error) {
+          const { nextPageId } = nextPage
 
-        if (index !== -1) {
-          // Replace the existing question with the new one
-          allQuestionsAndAnswers.questionsAndAnswers[index] = newQandA
+          res.redirect(
+            `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+          )
         } else {
-          // Add the new question if it doesn't exist
-          allQuestionsAndAnswers.questionsAndAnswers.push(newQandA)
+          next(new Error(nextPage.error))
         }
       })
-    }
-
-    await store.setAssessment(
-      req.session.id,
-      `${prisonerData.personalDetails.prisonerNumber}`,
-      pathway,
-      allQuestionsAndAnswers || dataToSubmit,
-    )
-
-    const nextPage = await this.rpService.fetchNextPage(
-      token,
-      req.sessionID,
-      prisonerData.personalDetails.prisonerNumber as string,
-      pathway as string,
-      dataToSubmit as SubmittedInput,
-      currentPageId,
-    )
-
-    if (!nextPage.error) {
-      const { nextPageId } = nextPage
-
-      res.redirect(
-        `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
-      )
-    } else {
-      next(new Error(nextPage.error))
-    }
+      .catch(next)
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {

@@ -5,13 +5,13 @@ import AssessmentCompleteView from './assessmentCompleteView'
 export default class AssessmentCompleteController {
   constructor(private readonly rpService: RpService) {}
 
-  getView: RequestHandler = async (req, res, next): Promise<void> => {
+  getView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const view = new AssessmentCompleteView(prisonerData)
     res.render('pages/assessment-complete', { ...view.renderArgs })
   }
 
-  postView: RequestHandler = async (req, res, next): Promise<void> => {
+  postView: RequestHandler = async (req, res, next) => {
     const { prisonerData } = req
     const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
     const response = await this.rpService.submitAssessment(req.user.token, req.sessionID, prisonerNumber)

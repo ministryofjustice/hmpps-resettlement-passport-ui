@@ -164,6 +164,7 @@ export default class RpService {
     questionsAndAnswers: SubmittedInput,
     currentPageId: string,
   ) {
+    // throw Error('this is an error')
     await this.rpClient.setToken(token)
     let nextQuestion
     try {
