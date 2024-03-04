@@ -9,13 +9,13 @@ import { SubmittedInput, SubmittedQuestionAndAnswer } from '../../data/model/BCS
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}
 
-  getNextPage: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
-    const { token } = req.user
-    const { pathway } = req.query
+  getNextPage: RequestHandler = async (req, res, next): Promise<void> => {
+    try {
+      const { prisonerData } = req
+      const { token } = req.user
+      const { pathway } = req.query
 
-    Promise.resolve(
-      this.rpService.fetchNextPage(
+      const nextPage = await this.rpService.fetchNextPage(
         token,
         req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
@@ -24,256 +24,260 @@ export default class BCST2FormController {
           questionsAndAnswers: null,
         },
         null,
-      ),
-    )
-      .then(nextPage => {
-        const { nextPageId } = nextPage
-        res.redirect(
-          `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
-        )
-      })
-      .catch(next)
+      )
+      const { nextPageId } = nextPage
+
+      res.redirect(
+        `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+      )
+    } catch (err) {
+      next(err)
+    }
   }
 
-  saveAnswerAndGetNextPage: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
-    const { token } = req.user
-    const { pathway, currentPageId } = req.body
-    const store = new AssessmentStore(createRedisClient())
+  saveAnswerAndGetNextPage: RequestHandler = async (req, res, next): Promise<void> => {
+    try {
+      const { prisonerData } = req
+      const { token } = req.user
+      const { pathway, currentPageId } = req.body
+      const store = new AssessmentStore(createRedisClient())
 
-    Promise.resolve(store.getCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway))
-      .then(currentPage => {
-        // prepare current Q&A's from req body for post request
-        const dataToSubmit: SubmittedInput = formatAssessmentResponse(currentPage, req.body)
-        return Promise.all([
-          dataToSubmit,
-          store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-        ])
-      })
-      .then(([dataToSubmit, allQuestionsAndAnswersString]) => {
-        // get previous Q&A's
-        const allQuestionsAndAnswers = JSON.parse(allQuestionsAndAnswersString)
+      // prepare current Q&A's from req body for post request
+      const dataToSubmit: SubmittedInput = formatAssessmentResponse(
+        await store.getCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+        req.body,
+      )
 
-        if (allQuestionsAndAnswers) {
-          dataToSubmit.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
-            const index = allQuestionsAndAnswers.questionsAndAnswers.findIndex(
-              (existingQandA: SubmittedQuestionAndAnswer) => {
-                return existingQandA.question === newQandA.question
-              },
-            )
+      // get previous Q&A's
+      const allQuestionsAndAnswers = JSON.parse(
+        await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+      )
 
-            if (index !== -1) {
-              // Replace the existing question with the new one
-              allQuestionsAndAnswers.questionsAndAnswers[index] = newQandA
-            } else {
-              // Add the new question if it doesn't exist
-              allQuestionsAndAnswers.questionsAndAnswers.push(newQandA)
-            }
-          })
-        }
-        return Promise.all([
-          dataToSubmit,
-          store.setAssessment(
-            req.session.id,
-            `${prisonerData.personalDetails.prisonerNumber}`,
-            pathway,
-            allQuestionsAndAnswers || dataToSubmit,
-          ),
-        ])
-      })
-      .then(([dataToSubmit]) => {
-        return this.rpService.fetchNextPage(
-          token,
-          req.sessionID,
-          prisonerData.personalDetails.prisonerNumber as string,
-          pathway as string,
-          dataToSubmit as SubmittedInput,
-          currentPageId,
-        )
-      })
-      .then(nextPage => {
-        if (!nextPage.error) {
-          const { nextPageId } = nextPage
-
-          res.redirect(
-            `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+      if (allQuestionsAndAnswers) {
+        dataToSubmit.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
+          const index = allQuestionsAndAnswers.questionsAndAnswers.findIndex(
+            (existingQandA: SubmittedQuestionAndAnswer) => {
+              return existingQandA.question === newQandA.question
+            },
           )
-        } else {
-          next(new Error(nextPage.error))
-        }
-      })
-      .catch(next)
-  }
 
-  getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const { token } = req.user
-    const { pathway, currentPageId } = req.params
-    const edit = (req.query.edit || false) as boolean
+          if (index !== -1) {
+            // Replace the existing question with the new one
+            allQuestionsAndAnswers.questionsAndAnswers[index] = newQandA
+          } else {
+            // Add the new question if it doesn't exist
+            allQuestionsAndAnswers.questionsAndAnswers.push(newQandA)
+          }
+        })
+      }
 
-    const store = new AssessmentStore(createRedisClient())
-
-    // Get the assessment page from the API and set in the cache
-    const assessmentPage = await this.rpService.getAssessmentPage(
-      token,
-      req.sessionID,
-      prisonerData.personalDetails.prisonerNumber as string,
-      pathway as string,
-      currentPageId,
-    )
-    const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
-
-    if (!assessmentPage.error) {
-      await store.setCurrentPage(
+      await store.setAssessment(
         req.session.id,
         `${prisonerData.personalDetails.prisonerNumber}`,
         pathway,
-        assessmentPage,
-        3600,
+        allQuestionsAndAnswers || dataToSubmit,
       )
 
-      // get all Q&A's currently in cache
-      const questionsAndAnswersFromCache = JSON.parse(
-        await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-      ) as SubmittedInput
+      const nextPage = await this.rpService.fetchNextPage(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        pathway as string,
+        dataToSubmit as SubmittedInput,
+        currentPageId,
+      )
 
-      // Get any edited questions from cache
-      const editedQuestionIds = JSON.parse(
-        await store.getEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-      ) as string[]
+      if (!nextPage.error) {
+        const { nextPageId } = nextPage
 
-      // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
-      if (editedQuestionIds) {
-        // Get the question ids for the next page
-        const nextPageQuestionIds = assessmentPage.questionsAndAnswers.map(it => it.question.id)
-        // Get all question ids currently in cache
-        const allQuestionIdsInCache = questionsAndAnswersFromCache?.questionsAndAnswers.map(it => it.question)
-        // If all the questions on the next page are in the cache we have converged
-        if (nextPageQuestionIds.every(it => allQuestionIdsInCache?.includes(it))) {
-          // Get the start and end index of questionsAndAnswersFromCache where we diverged and converged
-          const editedQuestionsStartIndex = questionsAndAnswersFromCache.questionsAndAnswers.findIndex(
-            it => it.question === editedQuestionIds[0],
-          )
-          const editedQuestionsEndIndex = questionsAndAnswersFromCache.questionsAndAnswers.findIndex(
-            it => it.question === nextPageQuestionIds[0],
-          )
-          // Get the question ids from the indexes
-          const questionIdsPreDivergence = questionsAndAnswersFromCache.questionsAndAnswers
-            .map(it => it.question)
-            .slice(0, editedQuestionsStartIndex)
-          const questionIdsPostConvergence = questionsAndAnswersFromCache.questionsAndAnswers
-            .map(it => it.question)
-            .slice(editedQuestionsEndIndex, questionsAndAnswersFromCache.questionsAndAnswers.length)
-          // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
-          const newQuestionIds = [
-            ...questionIdsPreDivergence,
-            ...editedQuestionIds,
-            ...questionIdsPostConvergence,
-          ].filter((item, pos, arr) => {
-            return arr.indexOf(item) === pos
-          })
-          // Convert back to questionsAndAnswers and overwrite the assessment in the cache
-          const newQuestionsAndAnswers = newQuestionIds.map(q =>
-            questionsAndAnswersFromCache.questionsAndAnswers.find(it => it.question === q),
-          )
-          await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
-            questionsAndAnswers: newQuestionsAndAnswers,
-          })
-          // Delete the edited question list from cache
-          await store.deleteEditedQuestionList(
-            req.session.id,
-            `${prisonerData.personalDetails.prisonerNumber}`,
-            pathway,
-          )
-          // Redirect to check answers page
-          return res.redirect(
-            `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
-          )
-        }
+        res.redirect(
+          `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+        )
+      } else {
+        next(new Error(nextPage.error))
       }
+    } catch (err) {
+      next(err)
+    }
+  }
 
-      // If we are in edit mode add the current question id to the edited question list in cache
-      if (edit || editedQuestionIds) {
-        const questionList = editedQuestionIds
-          ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
-          : assessmentPage.questionsAndAnswers.map(it => it.question.id)
-        await store.setEditedQuestionList(
+  getView: RequestHandler = async (req, res, next): Promise<void> => {
+    try {
+      const { prisonerData } = req
+      const { token } = req.user
+      const { pathway, currentPageId } = req.params
+      const edit = (req.query.edit || false) as boolean
+
+      const store = new AssessmentStore(createRedisClient())
+
+      // Get the assessment page from the API and set in the cache
+      const assessmentPage = await this.rpService.getAssessmentPage(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        pathway as string,
+        currentPageId,
+      )
+      const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
+
+      if (!assessmentPage.error) {
+        await store.setCurrentPage(
           req.session.id,
           `${prisonerData.personalDetails.prisonerNumber}`,
           pathway,
-          questionList,
+          assessmentPage,
+          3600,
         )
-      }
 
-      // Merge together answers from API and cache
-      if (assessmentPage.questionsAndAnswers.length !== 0) {
-        assessmentPage.questionsAndAnswers.forEach(qAndA => {
-          const questionAndAnswerFromCache = questionsAndAnswersFromCache?.questionsAndAnswers.find(
-            it => it.question === qAndA.question.id,
-          )
-          // Cache always takes precedence
-          if (questionAndAnswerFromCache) {
-            mergedQuestionsAndAnswers.push(questionAndAnswerFromCache)
-          } else {
-            mergedQuestionsAndAnswers.push({
-              question: qAndA.question.id,
-              questionTitle: qAndA.question.title,
-              pageId: qAndA.originalPageId,
-              questionType: qAndA.question.type,
-              answer: qAndA.answer
-                ? {
-                    answer: qAndA.answer.answer,
-                    displayText: getDisplayTextFromQandA(qAndA),
-                    '@class': qAndA.answer['@class'],
-                  }
-                : null,
+        // get all Q&A's currently in cache
+        const questionsAndAnswersFromCache = JSON.parse(
+          await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+        ) as SubmittedInput
+
+        // Get any edited questions from cache
+        const editedQuestionIds = JSON.parse(
+          await store.getEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+        ) as string[]
+
+        // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
+        if (editedQuestionIds) {
+          // Get the question ids for the next page
+          const nextPageQuestionIds = assessmentPage.questionsAndAnswers.map(it => it.question.id)
+          // Get all question ids currently in cache
+          const allQuestionIdsInCache = questionsAndAnswersFromCache?.questionsAndAnswers.map(it => it.question)
+          // If all the questions on the next page are in the cache we have converged
+          if (nextPageQuestionIds.every(it => allQuestionIdsInCache?.includes(it))) {
+            // Get the start and end index of questionsAndAnswersFromCache where we diverged and converged
+            const editedQuestionsStartIndex = questionsAndAnswersFromCache.questionsAndAnswers.findIndex(
+              it => it.question === editedQuestionIds[0],
+            )
+            const editedQuestionsEndIndex = questionsAndAnswersFromCache.questionsAndAnswers.findIndex(
+              it => it.question === nextPageQuestionIds[0],
+            )
+            // Get the question ids from the indexes
+            const questionIdsPreDivergence = questionsAndAnswersFromCache.questionsAndAnswers
+              .map(it => it.question)
+              .slice(0, editedQuestionsStartIndex)
+            const questionIdsPostConvergence = questionsAndAnswersFromCache.questionsAndAnswers
+              .map(it => it.question)
+              .slice(editedQuestionsEndIndex, questionsAndAnswersFromCache.questionsAndAnswers.length)
+            // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
+            const newQuestionIds = [
+              ...questionIdsPreDivergence,
+              ...editedQuestionIds,
+              ...questionIdsPostConvergence,
+            ].filter((item, pos, arr) => {
+              return arr.indexOf(item) === pos
             })
+            // Convert back to questionsAndAnswers and overwrite the assessment in the cache
+            const newQuestionsAndAnswers = newQuestionIds.map(q =>
+              questionsAndAnswersFromCache.questionsAndAnswers.find(it => it.question === q),
+            )
+            await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
+              questionsAndAnswers: newQuestionsAndAnswers,
+            })
+            // Delete the edited question list from cache
+            await store.deleteEditedQuestionList(
+              req.session.id,
+              `${prisonerData.personalDetails.prisonerNumber}`,
+              pathway,
+            )
+            // Redirect to check answers page
+            return res.redirect(
+              `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+            )
           }
-        })
-      } else {
-        mergedQuestionsAndAnswers.push(...questionsAndAnswersFromCache.questionsAndAnswers)
+        }
+
+        // If we are in edit mode add the current question id to the edited question list in cache
+        if (edit || editedQuestionIds) {
+          const questionList = editedQuestionIds
+            ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
+            : assessmentPage.questionsAndAnswers.map(it => it.question.id)
+          await store.setEditedQuestionList(
+            req.session.id,
+            `${prisonerData.personalDetails.prisonerNumber}`,
+            pathway,
+            questionList,
+          )
+        }
+
+        // Merge together answers from API and cache
+        if (assessmentPage.questionsAndAnswers.length !== 0) {
+          assessmentPage.questionsAndAnswers.forEach(qAndA => {
+            const questionAndAnswerFromCache = questionsAndAnswersFromCache?.questionsAndAnswers.find(
+              it => it.question === qAndA.question.id,
+            )
+            // Cache always takes precedence
+            if (questionAndAnswerFromCache) {
+              mergedQuestionsAndAnswers.push(questionAndAnswerFromCache)
+            } else {
+              mergedQuestionsAndAnswers.push({
+                question: qAndA.question.id,
+                questionTitle: qAndA.question.title,
+                pageId: qAndA.originalPageId,
+                questionType: qAndA.question.type,
+                answer: qAndA.answer
+                  ? {
+                      answer: qAndA.answer.answer,
+                      displayText: getDisplayTextFromQandA(qAndA),
+                      '@class': qAndA.answer['@class'],
+                    }
+                  : null,
+              })
+            }
+          })
+        } else {
+          mergedQuestionsAndAnswers.push(...questionsAndAnswersFromCache.questionsAndAnswers)
+        }
+
+        // If we are about to render the check answers page - update the cache with the current question/answer set
+        if (currentPageId === 'CHECK_ANSWERS') {
+          await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
+            questionsAndAnswers: mergedQuestionsAndAnswers,
+          })
+        }
       }
 
-      // If we are about to render the check answers page - update the cache with the current question/answer set
-      if (currentPageId === 'CHECK_ANSWERS') {
-        await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
-          questionsAndAnswers: mergedQuestionsAndAnswers,
-        })
-      }
+      const view = new BCST2FormView(prisonerData, assessmentPage, pathway, {
+        questionsAndAnswers: mergedQuestionsAndAnswers,
+      })
+      return res.render('pages/BCST2-form', { ...view.renderArgs })
+    } catch (err) {
+      return next(err)
     }
-
-    const view = new BCST2FormView(prisonerData, assessmentPage, pathway, {
-      questionsAndAnswers: mergedQuestionsAndAnswers,
-    })
-    return res.render('pages/BCST2-form', { ...view.renderArgs })
   }
 
   completeAssessment: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const { token } = req.user
-    const { pathway } = req.params
-    const store = new AssessmentStore(createRedisClient())
+    try {
+      const { prisonerData } = req
+      const { token } = req.user
+      const { pathway } = req.params
+      const store = new AssessmentStore(createRedisClient())
 
-    const dataToSubmit = JSON.parse(
-      await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-    )
-
-    const completeAssessment = (await this.rpService.completeAssessment(
-      token,
-      req.sessionID,
-      prisonerData.personalDetails.prisonerNumber as string,
-      pathway as string,
-      dataToSubmit as SubmittedInput,
-    )) as { error?: string }
-
-    if (completeAssessment.error) {
-      next(
-        new Error(
-          `Error completing assessment for prisoner ${prisonerData.personalDetails.prisonerNumber} pathway ${pathway}`,
-        ),
+      const dataToSubmit = JSON.parse(
+        await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
       )
-    } else {
-      res.redirect(`/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
+
+      const completeAssessment = (await this.rpService.completeAssessment(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        pathway as string,
+        dataToSubmit as SubmittedInput,
+      )) as { error?: string }
+
+      if (completeAssessment.error) {
+        next(
+          new Error(
+            `Error completing assessment for prisoner ${prisonerData.personalDetails.prisonerNumber} pathway ${pathway}`,
+          ),
+        )
+      } else {
+        res.redirect(`/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
+      }
+    } catch (err) {
+      next(err)
     }
   }
 }
