@@ -1,23 +1,34 @@
-{% macro radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
+{% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
+
+{% macro radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+  {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
+
   {% if not isFirstQuestionOnPage %}
     <b>{{ currentQuestionAndAnswer.question.title }}</b>
   {% endif %}
-  <div class="govuk-radios" data-module="govuk-radios">
-    {% for option in currentQuestionAndAnswer.question.options %}
-      <div class="govuk-radios__item">
-        <input
-          class="govuk-radios__input"
-          id="{{ option.id }}"
-          name="{{ currentQuestionAndAnswer.question.id }}"
-          type="radio"
-          value="{{ option.id }}"
-          {% if existingAnswer.answer == option.id %}
-            checked
-          {% endif %}
-        />
-        <label class="govuk-label govuk-radios__label" for="{{ option.id }}">{{ option.displayText }}</label>
-        <div class="govuk-hint govuk-radios__hint">{{ option.description }}</div>
-      </div>
-    {% endfor %}
+  
+  <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
+    <div class="govuk-radios" data-module="govuk-radios">
+      {% if validationError %}
+        {{ validationErrorMessage(validationError.validationType)  }}
+      {% endif %}
+
+      {% for option in currentQuestionAndAnswer.question.options %}
+        <div class="govuk-radios__item">
+          <input
+            class="govuk-radios__input"
+            id="{{ option.id }}"
+            name="{{ currentQuestionAndAnswer.question.id }}"
+            type="radio"
+            value="{{ option.id }}"
+            {% if existingAnswer.answer == option.id %}
+              checked
+            {% endif %}
+          />
+          <label class="govuk-label govuk-radios__label" for="{{ option.id }}">{{ option.displayText }}</label>
+          <div class="govuk-hint govuk-radios__hint">{{ option.description }}</div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 {% endmacro %}

@@ -1,9 +1,17 @@
-{% macro dropDown(questionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
+{% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
+
+{% macro dropDown(questionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+  {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
+
   {% if not isFirstQuestionOnPage %}
     <b>{{ questionAndAnswer.question.title }}</b>
   {% endif %}
-  <div class="govuk-form-group">
+    
+  <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
     <label class="govuk-label" for="{{ questionAndAnswer.question.id }}">{{ questionAndAnswer.question.title }}</label>
+    {% if validationError %}
+      {{ validationErrorMessage(validationError.validationType)  }}
+    {% endif %}
     <select class="govuk-select" id="{{ questionAndAnswer.question.id }}" name="{{ questionAndAnswer.question.id }}">
       <option value=""></option>
       {% for option in questionAndAnswer.question.options %}

@@ -16,6 +16,15 @@ export type Answer = {
   '@class'?: AnswerType
 }
 
+export type ValidationTypes = 'MANDATORY' | 'MAX_CHARACTER_LIMIT_SHORT_TEXT' | 'MAX_CHARACTER_LIMIT_LONG_TEXT'
+
+export type ValidationError = {
+  validationType: ValidationTypes
+  questionId: string
+}
+
+export type ValidationErrors = ValidationError[] | null
+
 export type QuestionsAndAnswers = {
   question: {
     id: string
@@ -23,6 +32,7 @@ export type QuestionsAndAnswers = {
     subTitle?: string
     type?: string
     options?: QuestionOptions[]
+    validationType?: ValidationTypes
   }
   answer?: Answer
   originalPageId: string

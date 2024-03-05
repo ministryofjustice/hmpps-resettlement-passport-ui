@@ -10,7 +10,7 @@ import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
 import { AppointmentLocation } from '../data/model/appointment'
-import { Answer, QuestionsAndAnswers, SubmittedInput } from '../data/model/BCST2Form'
+import { Answer, QuestionsAndAnswers, SubmittedInput, ValidationErrors } from '../data/model/BCST2Form'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -293,4 +293,10 @@ export function getAnswerValueFromArrayOfMaps(answer: Answer, key: string) {
     }
   }
   return ''
+}
+
+export function getValidationError(validationErrors: ValidationErrors, questionId: string) {
+  if (!validationErrors) return null
+  const isQuestionInArray = validationErrors.find(item => item.questionId === questionId)
+  return isQuestionInArray
 }

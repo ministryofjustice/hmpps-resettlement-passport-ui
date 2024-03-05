@@ -4,7 +4,8 @@ import BCST2FormView from './BCST2FormView'
 import formatAssessmentResponse, { getDisplayTextFromQandA } from '../../utils/formatAssessmentResponse'
 import { createRedisClient } from '../../data/redisClient'
 import AssessmentStore from '../../data/assessmentStore'
-import { SubmittedInput, SubmittedQuestionAndAnswer } from '../../data/model/BCST2Form'
+import { SubmittedInput, SubmittedQuestionAndAnswer, ValidationErrors } from '../../data/model/BCST2Form'
+import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}
@@ -36,12 +37,16 @@ export default class BCST2FormController {
     const { token } = req.user
     const { pathway, currentPageId } = req.body
     const store = new AssessmentStore(createRedisClient())
+    const currentPage = await store.getCurrentPage(
+      req.session.id,
+      `${prisonerData.personalDetails.prisonerNumber}`,
+      pathway,
+    )
+
+    const validationErrors: ValidationErrors = validateAssessmentResponse(currentPage, req.body)
 
     // prepare current Q&A's from req body for post request
-    const dataToSubmit: SubmittedInput = formatAssessmentResponse(
-      await store.getCurrentPage(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-      req.body,
-    )
+    const dataToSubmit: SubmittedInput = formatAssessmentResponse(currentPage, req.body)
 
     // get previous Q&A's
     const allQuestionsAndAnswers = JSON.parse(
@@ -82,15 +87,22 @@ export default class BCST2FormController {
       currentPageId,
     )
 
+    if (validationErrors) {
+      const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
+      return res.redirect(
+        `/BCST2/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}`,
+      )
+    }
+
     if (!nextPage.error) {
       const { nextPageId } = nextPage
 
-      res.redirect(
+      return res.redirect(
         `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
       )
-    } else {
-      next(new Error(nextPage.error))
     }
+
+    return next(new Error(nextPage.error))
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
@@ -98,6 +110,10 @@ export default class BCST2FormController {
     const { token } = req.user
     const { pathway, currentPageId } = req.params
     const edit = (req.query.edit || false) as boolean
+    const validationErrorsString = req.query.validationErrors as string
+    const validationErrors: ValidationErrors = validationErrorsString
+      ? JSON.parse(decodeURIComponent(validationErrorsString))
+      : null
 
     const store = new AssessmentStore(createRedisClient())
 
@@ -230,9 +246,15 @@ export default class BCST2FormController {
       }
     }
 
-    const view = new BCST2FormView(prisonerData, assessmentPage, pathway, {
-      questionsAndAnswers: mergedQuestionsAndAnswers,
-    })
+    const view = new BCST2FormView(
+      prisonerData,
+      assessmentPage,
+      pathway,
+      {
+        questionsAndAnswers: mergedQuestionsAndAnswers,
+      },
+      validationErrors,
+    )
     return res.render('pages/BCST2-form', { ...view.renderArgs })
   }
 

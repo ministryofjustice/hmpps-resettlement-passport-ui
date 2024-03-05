@@ -1,0 +1,14 @@
+{% macro validationErrorMessage(validationType) %}
+  <p class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span> 
+    {% if validationType === 'MANDATORY' %}
+      This field is required
+    {% endif %}
+    {% if validationType === 'MAX_CHARACTER_LIMIT_SHORT_TEXT' %}
+      This field must be 500 characters or less
+    {% endif %}
+    {% if validationType === 'MAX_CHARACTER_LIMIT_LONG_TEXT' %}
+      This field must be 3,000 characters or less
+    {% endif %}
+  </p>
+{% endmacro %}

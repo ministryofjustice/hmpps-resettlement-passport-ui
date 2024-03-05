@@ -1,17 +1,26 @@
-{% macro checkbox(questionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
+{% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
+
+{% macro checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+  {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
+
   {% if not isFirstQuestionOnPage %}
-    <b>{{ questionAndAnswer.question.title }}</b>
+    <b>{{ currentQuestionAndAnswer.question.title }}</b>
   {% endif %}
-  <div class="govuk-form-group">
+
+
+  <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
     <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
       <div id="waste-hint" class="govuk-hint">Select all that apply.</div>
+    {% if validationError %}
+      {{ validationErrorMessage(validationError.validationType)  }}
+    {% endif %}
       <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-        {% for option in questionAndAnswer.question.options %}
+        {% for option in currentQuestionAndAnswer.question.options %}
           {% if option.exclusive%}
             <div class="govuk-checkboxes__divider">or</div>
           {% endif %}
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="{{ option.id }}" name="{{ questionAndAnswer.question.id }}" value="{{ option.id }}" type="checkbox" {% if existingAnswer and option.id in existingAnswer.answer %}checked{% endif %} {% if option.exclusive %} data-behaviour="exclusive" {% endif %}>
+            <input class="govuk-checkboxes__input" id="{{ option.id }}" name="{{ currentQuestionAndAnswer.question.id }}" value="{{ option.id }}" type="checkbox" {% if existingAnswer and option.id in existingAnswer.answer %}checked{% endif %} {% if option.exclusive %} data-behaviour="exclusive" {% endif %}>
             <label class="govuk-label govuk-checkboxes__label" for="{{ option.id }}">
               {{ option.displayText }}
             </label>

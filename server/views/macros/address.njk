@@ -1,8 +1,15 @@
-{% macro address(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) %}
-  <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{{ currentQuestionAndAnswer.question.title }}</legend>
-  <div id="{{ currentQuestionAndAnswer.question.id }}-hint" class="govuk-hint"> {{ currentQuestionAndAnswer.question.subTitle }}</div>
-  <div class="govuk-form-group">
+{% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
+
+{% macro address(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+  {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
+
+  <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{{ currentQuestionAndAnswer.question.title }}</legend>
     <fieldset class="govuk-fieldset">
+      <div id="{{ currentQuestionAndAnswer.question.id }}-hint" class="govuk-hint"> {{ currentQuestionAndAnswer.question.subTitle }}</div>
+      {% if validationError %}
+        {{ validationErrorMessage(validationError.validationType)  }}
+      {% endif %}
       <div class="govuk-form-group">
         <label class="govuk-label" for="address-line-1">Address line 1</label>
         <input class="govuk-input govuk-!-width-two-thirds" id="address-line-1"
