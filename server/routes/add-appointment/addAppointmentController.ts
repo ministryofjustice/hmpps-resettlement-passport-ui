@@ -8,14 +8,14 @@ import logger from '../../../logger'
 export default class AddAppointmentController {
   constructor(private readonly rpService: RpService) {}
 
-  getAddAppointmentView: RequestHandler = async (req, res, next): Promise<void> => {
+  getAddAppointmentView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
     const view = new AddAppointmentView(prisonerData)
     res.render('pages/add-appointment', { ...view.renderArgs, params })
   }
 
-  getConfirmAppointmentView: RequestHandler = async (req, res, next): Promise<void> => {
+  getConfirmAppointmentView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
     let errorMsg: AppointmentErrorMessage = {

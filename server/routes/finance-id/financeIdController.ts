@@ -275,25 +275,25 @@ export default class FinanceIdController {
     }
   }
 
-  getAddAnIdView: RequestHandler = async (req, res, next): Promise<void> => {
+  getAddAnIdView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
     res.render('pages/add-id', { prisonerData, params })
   }
 
-  getAddABankAccountView: RequestHandler = async (req, res, next): Promise<void> => {
+  getAddABankAccountView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
     res.render('pages/add-bank-account', { prisonerData, params })
   }
 
-  getUpdateBankAccountStatusView: RequestHandler = async (req, res, next): Promise<void> => {
+  getUpdateBankAccountStatusView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
     res.render('pages/add-bank-account-update-status', { prisonerData, params, req })
   }
 
-  getConfirmAssessmentView: RequestHandler = async (req, res, next): Promise<void> => {
+  getConfirmAssessmentView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
     let errorMsg: AssessmentErrorMessage = {
@@ -335,7 +335,7 @@ export default class FinanceIdController {
     res.render('pages/assessment-confirmation', { prisonerData, params, req })
   }
 
-  getConfirmAddABankAccountView: RequestHandler = async (req, res, next): Promise<void> => {
+  getConfirmAddABankAccountView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
 
@@ -566,7 +566,7 @@ export default class FinanceIdController {
     }
   }
 
-  getConfirmAddAnIdView: RequestHandler = async (req, res, next): Promise<void> => {
+  getConfirmAddAnIdView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
 
@@ -660,13 +660,13 @@ export default class FinanceIdController {
     res.render('pages/add-id-confirm', { prisonerData, params, req })
   }
 
-  getAssessmentView: RequestHandler = async (req, res, next): Promise<void> => {
+  getAssessmentView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
     res.render('pages/assessment', { prisonerData, params })
   }
 
-  getAddAnIdFurtherView: RequestHandler = async (req, res, next): Promise<void> => {
+  getAddAnIdFurtherView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
 
@@ -710,13 +710,13 @@ export default class FinanceIdController {
     res.render('pages/add-id-further', { prisonerData, params, req })
   }
 
-  getUpdateIdStatusView: RequestHandler = async (req, res, next): Promise<void> => {
+  getUpdateIdStatusView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
     res.render('pages/add-id-update-status', { prisonerData, params, req })
   }
 
-  getConfirmAddAnIdStatusView: RequestHandler = async (req, res, next): Promise<void> => {
+  getConfirmAddAnIdStatusView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req
     const params = req.query
 
