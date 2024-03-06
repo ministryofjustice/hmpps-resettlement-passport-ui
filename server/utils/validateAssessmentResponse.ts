@@ -1,11 +1,11 @@
 import { AssessmentPage, QuestionsAndAnswers, ValidationError, ValidationErrors } from '../data/model/BCST2Form'
 
-type RequestBody = {
+export type RequestBody = {
   [key: string]: string
 }
 
-const validateAssessmentResponse = (currentPage: string, reqBody: RequestBody) => {
-  const pageData: AssessmentPage = JSON.parse(currentPage)
+const validateAssessmentResponse = (currentPage: AssessmentPage, reqBody: RequestBody) => {
+  const pageData: AssessmentPage = currentPage
 
   let validationErrors: ValidationErrors = null
 
@@ -26,7 +26,7 @@ const validateAssessmentResponse = (currentPage: string, reqBody: RequestBody) =
     return !answerInBody(questionAndAnswer)
   }
 
-  pageData.questionsAndAnswers.forEach(questionAndAnswer => {
+  pageData?.questionsAndAnswers?.forEach(questionAndAnswer => {
     if (questionAndAnswer.question.validationType === 'MANDATORY') {
       const isMissingAnswer = isMissingRequiredField(questionAndAnswer)
       if (isMissingAnswer) {

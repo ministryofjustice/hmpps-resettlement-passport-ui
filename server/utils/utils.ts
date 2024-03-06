@@ -296,7 +296,7 @@ export function getAnswerValueFromArrayOfMaps(answer: Answer, key: string) {
 }
 
 export function getValidationError(validationErrors: ValidationErrors, questionId: string) {
-  if (!validationErrors) return null
+  if (!validationErrors || !questionId) return null
   const isQuestionInArray = validationErrors.find(item => item.questionId === questionId)
   return isQuestionInArray
 }

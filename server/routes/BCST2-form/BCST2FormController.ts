@@ -48,7 +48,7 @@ export default class BCST2FormController {
         pathway,
       )
 
-      const validationErrors: ValidationErrors = validateAssessmentResponse(currentPage, req.body)
+      const validationErrors: ValidationErrors = validateAssessmentResponse(JSON.parse(currentPage), req.body)
 
       // prepare current Q&A's from req body for post request
       const dataToSubmit: SubmittedInput = formatAssessmentResponse(currentPage, req.body)
