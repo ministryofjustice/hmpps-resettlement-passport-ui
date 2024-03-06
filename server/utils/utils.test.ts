@@ -6,10 +6,11 @@ import {
   formatAddress,
   getAnswerValueFromArrayOfMaps,
   formatCaseNoteText,
+  getValidationError,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
-import { Answer } from '../data/model/BCST2Form'
+import { Answer, ValidationError, ValidationErrors } from '../data/model/BCST2Form'
 
 describe('convert to title case', () => {
   it.each([
@@ -279,4 +280,32 @@ describe('formatCaseNoteText', () => {
   ])('%s formatCaseNoteText(%s)', (_: string, caseNoteText: string, expected: string) => {
     expect(formatCaseNoteText(caseNoteText)).toEqual(expected)
   })
+})
+
+describe('get validation data from array by question id', () => {
+  it.each([
+    [null, null, null, null],
+    ['Empty array', [], 'QUESTION_1', undefined],
+    ['No question Id', [{ validationType: 'OPTIONAL', questionId: 'QUESTION_2' }], undefined, null],
+    [
+      'Array length 1',
+      [{ validationType: 'MANDATORY', questionId: 'QUESTION_1' }],
+      'QUESTION_1',
+      { validationType: 'MANDATORY', questionId: 'QUESTION_1' },
+    ],
+    [
+      'Array length 2',
+      [
+        { validationType: 'MANDATORY', questionId: 'QUESTION_1' },
+        { validationType: 'OPTIONAL', questionId: 'QUESTION_2' },
+      ],
+      'QUESTION_2',
+      { validationType: 'OPTIONAL', questionId: 'QUESTION_2' },
+    ],
+  ])(
+    '%s getValidationError(%s, %s)',
+    (_: string, validationErrors: ValidationErrors, questionId: string, expected: ValidationError) => {
+      expect(getValidationError(validationErrors, questionId)).toEqual(expected)
+    },
+  )
 })

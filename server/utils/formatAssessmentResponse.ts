@@ -30,9 +30,9 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
   const filteredQuestionsAndAnswers = pageData.questionsAndAnswers.map(questionAndAnswer => {
     const { id, title, type } = questionAndAnswer.question
 
-    let checkboxAnswers: string[]
+    let checkboxAnswers: string[] = []
     // Check if the value is a string, if so, convert it to an array with a single element
-    if (type === 'CHECKBOX') {
+    if (type === 'CHECKBOX' && reqBody[questionAndAnswer.question.id]) {
       if (typeof reqBody[questionAndAnswer.question.id] === 'string') {
         checkboxAnswers = [reqBody[questionAndAnswer.question.id]]
       } else {
@@ -46,7 +46,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
       displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
     } else if (type === 'CHECKBOX') {
       displayText = questionAndAnswer.question.options
-        .filter(option => checkboxAnswers.includes(option.id))
+        .filter(option => checkboxAnswers?.includes(option.id))
         ?.map(option => option.displayText)
     } else {
       displayText = ''

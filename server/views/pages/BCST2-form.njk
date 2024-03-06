@@ -66,20 +66,20 @@
                 {% endif %}
 
                 {% if currentQuestionAndAnswer.question.type === 'RADIO' %}
-                  {{ radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                  {{ radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
-                  {{ longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                  {{ longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
-                  {{ dropDown(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                  {{ dropDown(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'CHECKBOX' %}
-                  {{ checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                  {{ checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'LIST_OF_PEOPLE' %}
                   {{ listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
                 {% elif currentQuestionAndAnswer.question.type === 'SHORT_TEXT' %}
-                  {{ shortText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                  {{ shortText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'ADDRESS' %}
                   {% if not nextQuestionAndAnswer %}
-                    {{ address(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                    {{ address(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
                   {% endif %}
                 {% else %}
                   <p class="govuk-error-message govuk-!-padding-top-6">There was a problem getting the next question.<br /> Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
