@@ -5,7 +5,6 @@
 {% from "../macros/radio.njk" import radio %}
 {% from "../macros/longText.njk" import longText %}
 {% from "../macros/dropDown.njk" import dropDown %}
-{% from "../macros/assessmentSummary.njk" import assessmentSummary %}
 {% from "../macros/checkAnswers.njk" import checkAnswers %}
 {% from "../macros/listOfPeople.njk" import listOfPeople %}
 {% from "../macros/checkbox.njk" import checkbox %}
@@ -52,9 +51,6 @@
             {% if assessmentPage.id === "CHECK_ANSWERS" %}
               {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber) }}
             {% else %}
-              {% if assessmentPage.id === "ASSESSMENT_SUMMARY" %}
-                {{ assessmentSummary(pathway) }}
-              {% endif %}
 
               {% for currentQuestionAndAnswer in assessmentPage.questionsAndAnswers %}
 

@@ -6,6 +6,7 @@ import { createRedisClient } from '../../data/redisClient'
 import AssessmentStore from '../../data/assessmentStore'
 import { SubmittedInput, SubmittedQuestionAndAnswer, ValidationErrors } from '../../data/model/BCST2Form'
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
+import { getEnumValue } from '../../utils/utils'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}
@@ -275,6 +276,7 @@ export default class BCST2FormController {
       const { token } = req.user
       const { pathway } = req.params
       const store = new AssessmentStore(createRedisClient())
+      const isAlreadySubmitted = !prisonerData.assessmentRequired
 
       const dataToSubmit = JSON.parse(
         await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
@@ -294,6 +296,9 @@ export default class BCST2FormController {
             `Error completing assessment for prisoner ${prisonerData.personalDetails.prisonerNumber} pathway ${pathway}`,
           ),
         )
+      } else if (isAlreadySubmitted) {
+        const { url } = getEnumValue(pathway)
+        res.redirect(`/${url}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
       } else {
         res.redirect(`/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
       }
