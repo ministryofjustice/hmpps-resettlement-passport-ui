@@ -4,38 +4,33 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway("DRUGS_AND_ALCOHOL") %}
-{% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 
 {% block content %}
-  {% if not resettlementAssessmentEnabled or (resettlementAssessmentEnabled and not prisonerData.assessmentRequired) %}
-    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-      {{ titleAndIntro(pathway) }}
-      <div class="govuk-grid-column-one-third">
-        {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway, resettlementAssessmentEnabled) }}
-      </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(pathway) }}
+    <div class="govuk-grid-column-one-third">
+      {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway, resettlementAssessmentEnabled) }}
     </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-      <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-        {% set subNavItems = [] %}
-        {% if resettlementAssessmentEnabled %}
-          {% set subNavItems = subNavItems.concat([
-            {
-              name: "Assessment information",
-              id: "assessment-information"
-            }
-          ]) %}
-        {% endif %}
-        {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
-        {{ subNav(subNavItems) }}
-      </div>
-      <div class="govuk-grid-column-three-quarters">
-        {% if resettlementAssessmentEnabled %}
-          {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
-        {% endif %}
-        {% include "../partials/crsReferrals.njk" %}
-      </div>
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
+      {% set subNavItems = [] %}
+      {% if not prisonerData.assessmentRequired %}
+        {% set subNavItems = subNavItems.concat([
+          {
+            name: "Assessment information",
+            id: "assessment-information"
+          }
+        ]) %}
+      {% endif %}
+      {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
+      {{ subNav(subNavItems) }}
     </div>
-  {% else %}
-    {{ incompleteBCST2(pathway, prisonerData) }}
-  {% endif %}
+    <div class="govuk-grid-column-three-quarters">
+      {% if not prisonerData.assessmentRequired %}
+        {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+      {% endif %}
+      {% include "../partials/crsReferrals.njk" %}
+    </div>
+  </div>
 {% endblock %}

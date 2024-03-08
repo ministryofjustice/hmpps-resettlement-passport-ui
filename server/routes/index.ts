@@ -184,8 +184,7 @@ export default function routes(services: Services): Router {
         if (res.locals.user.authSource === 'delius' && !isnDeliusCaseNotesEnabled) {
           throw new Error(deliusUserErrorMessage)
         }
-        const resettlementAssessmentEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESETTLEMENT_ASSESSMENT)
-        const status = getEnumValue(state, resettlementAssessmentEnabled).name
+        const status = getEnumValue(state).name
         await rpClient.patch(
           `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway-with-case-note`,
           {

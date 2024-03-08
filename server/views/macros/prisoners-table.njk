@@ -1,4 +1,4 @@
-{% macro prisonersTable(prisoners, pathwayView, resettlementAssessmentEnabled) %}
+{% macro prisonersTable(prisoners, pathwayView) %}
   <tbody class="govuk-table__body">
   {% for prisoner in prisoners %}
     {{ prisonerRow(
@@ -15,14 +15,12 @@
       prisoner.releaseEligibilityType,
       prisoner.releaseOnTemporaryLicenceDate,
       pathwayView,
-      prisoner.lastUpdatedDate,
-      prisoner.assessmentRequired,
-      resettlementAssessmentEnabled
+      prisoner.lastUpdatedDate
     )}}
   {% endfor %}
   </tbody>
 {% endmacro %}
-{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseEligibilityDate, releaseEligibilityType, releaseOnTemporaryLicenceDate, pathwayView, lastUpdatedDate, assessmentRequired, resettlementAssessmentEnabled) %}
+{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseEligibilityDate, releaseEligibilityType, releaseOnTemporaryLicenceDate, pathwayView, lastUpdatedDate) %}
   {% set lastUpdatedDates = [] %}
   <tr class="govuk-table__row">
     <td class="govuk-table__cell">
@@ -55,47 +53,53 @@
       </span>
       {% endif %}
     </td>
-    {% if statuses and (not assessmentRequired or not resettlementAssessmentEnabled) %}
-      {% set notStarted = 0 %}
-      {% set supportRequired = 0 %}
-      {% set inProgress = 0 %}
-      {% set done = 0 %}
-      {% for status in statuses %}
-        {% if status.status === 'NOT_STARTED' %}
-          {% set notStarted = notStarted + 1 %}
-        {% endif %}
-        {% if status.status === 'SUPPORT_REQUIRED' %}
-          {% set supportRequired = supportRequired + 1 %}
-        {% endif %}
-        {% if status.status === 'IN_PROGRESS' %}
-          {% set inProgress = inProgress + 1 %}
-        {% endif %}
-        {% if status.status === 'DONE'  or status.status === 'SUPPORT_NOT_REQUIRED' or status.status === 'SUPPORT_DECLINED' %}
-          {% set done = done + 1 %}
-        {% endif %}
-      {% endfor %}
+    {% set notStarted = 0 %}
+    {% set supportRequired = 0 %}
+    {% set inProgress = 0 %}
+    {% set done = 0 %}
+    {% for status in statuses %}
+      {% if status.status === 'NOT_STARTED' %}
+        {% set notStarted = notStarted + 1 %}
+      {% endif %}
+      {% if status.status === 'SUPPORT_REQUIRED' %}
+        {% set supportRequired = supportRequired + 1 %}
+      {% endif %}
+      {% if status.status === 'IN_PROGRESS' %}
+        {% set inProgress = inProgress + 1 %}
+      {% endif %}
+      {% if status.status === 'DONE'  or status.status === 'SUPPORT_NOT_REQUIRED' or status.status === 'SUPPORT_DECLINED' %}
+        {% set done = done + 1 %}
+      {% endif %}
+    {% endfor %}
+    {% if not pathwayStatus %}
       <td class="govuk-table__cell">
-        {% if not resettlementAssessmentEnabled %}
+        {% if notStarted > 0 %}
           <strong class="govuk-tag govuk-tag--red">
             <b>{{ notStarted }}</b>
             not started
           </strong>
-        {% else %}
+          &nbsp;
+        {% endif %}
+        {% if supportRequired > 0 %}
           <strong class="govuk-tag govuk-tag--orange">
             <b>{{ supportRequired }}</b>
             support required
           </strong>
+          &nbsp;
         {% endif %}
-        &nbsp;
-        <strong class="govuk-tag govuk-tag--blue">
-          <b>{{ inProgress }}</b>
-          in progress
-        </strong>
-        &nbsp;
-        <strong class="govuk-tag govuk-tag--green">
-          <b>{{ done }}</b>
-          done
-        </strong>
+        {% if inProgress > 0 %}
+          <strong class="govuk-tag govuk-tag--blue">
+            <b>{{ inProgress }}</b>
+            in progress
+          </strong>
+          &nbsp;
+        {% endif %}
+        {% if done > 0 %}
+          <strong class="govuk-tag govuk-tag--green">
+            <b>{{ done }}</b>
+            done
+          </strong>
+        {% endif %}
         <br/>
         <details class="govuk-details govuk-body-s" data-module="govuk-details">
           <summary class="govuk-details__summary">
@@ -108,7 +112,7 @@
                 <tr>
                   <td>
                     {% set enumValue = pathway.pathway | getEnumValue %}
-                    {% set statusValue = pathway.status | getEnumValue(resettlementAssessmentEnabled) %}
+                    {% set statusValue = pathway.status | getEnumValue %}
                     {% set lastUpdatedDates = (lastUpdatedDates.push(pathway.lastDateChange), lastUpdatedDates) %} {# ADD lastDateChange DATES TO ARRAY #}
                     <a href="/{{ enumValue.url }}/?prisonerNumber={{ prisonerNumber }}">{{ enumValue.name }}</a>:
                   </td>
@@ -123,17 +127,8 @@
         </details>
       </td>
     {% else %}
-      {% if not pathwayView %}
-        <td class="govuk-table__cell">
-          <strong class="govuk-tag govuk-tag--red">
-            Assessment required
-          </strong>
-        </td>
-      {% endif %}
-    {% endif %}
-    {% if pathwayStatus %}
       <td class="govuk-table__cell">
-        {% set statusValues = pathwayStatus | getEnumValue(resettlementAssessmentEnabled) %}
+        {% set statusValues = pathwayStatus | getEnumValue %}
         <strong class="govuk-tag govuk-tag--{{ statusValues.color }}">
           <b>{{ statusValues.name }}</b>
         </strong>

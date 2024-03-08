@@ -128,7 +128,7 @@
               </th>
             </tr>
           </thead>
-          {{ prisonersTable(prisonersList.content, pathwayView, resettlementAssessmentEnabled) }}
+          {{ prisonersTable(prisonersList.content, pathwayView) }}
         </table>
         {% if prisonersList.content | length %}
           {% set nextPage = page | float + 1 | float %}

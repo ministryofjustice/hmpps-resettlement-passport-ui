@@ -9,532 +9,549 @@
 {% set addAppointmentEnabled = features.ADD_APPOINTMENTS | getFeatureFlag %}
 {% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 {% block content %}
-  {% if not resettlementAssessmentEnabled or (resettlementAssessmentEnabled and not prisonerData.assessmentRequired) %}
-    <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-      {{ titleAndIntro(pathway) }}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    {{ titleAndIntro(pathway) }}
+  </div>
+  {% if resettlementAssessmentEnabled and prisonerData.assessmentRequired %}
+    {{ incompleteBCST2(pathway, prisonerData) }}
+  {% endif %}
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
+      {{ subNav([
+        {
+          name: "Resettlement statuses",
+          id: "status"
+        },
+        {
+          name: "Staff contacts",
+          id: "staff-contacts"
+        },
+        {
+          name: "Case notes",
+          id: "case-notes"
+        },
+        {
+          name: "Licence conditions",
+          id: "licence-summary"
+        },
+        {
+          name: "Appointments",
+          id: "appointments"
+        },
+        {
+          name: "Risk assessments and predictors",
+          id: "risk-assessments"
+        }
+      ]) }}
     </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-      <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-        {{ subNav([
-          {
-            name: "Resettlement statuses",
-            id: "status"
-          },
-          {
-            name: "Staff contacts",
-            id: "staff-contacts"
-          },
-          {
-            name: "Case notes",
-            id: "case-notes"
-          },
-          {
-            name: "Licence conditions",
-            id: "licence-summary"
-          },
-          {
-            name: "Appointments",
-            id: "appointments"
-          },
-          {
-            name: "Risk assessments and predictors",
-            id: "risk-assessments"
-          }
-        ]) }}
-      </div>
-      <div class="govuk-grid-column-three-quarters">
-        <section id="status" class="app-summary-card govuk-!-margin-bottom-8">
-          <header class="app-summary-card__header">
-            <h3 class="app-summary-card__title">
-              Resettlement statuses
-              <span class="govuk-caption-m">These statuses reflect the completion of activities in each pathway to prepare someone for release</span>
-            </h3>
-          </header>
-          <div class="app-summary-card__body">
+    <div class="govuk-grid-column-three-quarters">
+      <section id="status" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Resettlement statuses
+            <span class="govuk-caption-m">These statuses reflect the completion of activities in each pathway to prepare someone for release</span>
+          </h3>
+        </header>
+        <div class="app-summary-card__body">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Pathway</th>
+              <th scope="col" class="govuk-table__header">Status</th>
+            </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+            {% for pathway in prisonerData.pathways %}
+              {% set currentPathway = pathway.pathway | getEnumValue %}
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ currentPathway.name }}</a>
+                  <span class="govuk-caption-m">{{ currentPathway.description }}</span>
+                </th>
+                <td class="govuk-table__cell">
+                  {% set statusValue = pathway.status | getEnumValue(resettlementAssessmentEnabled) %}
+                  <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
+                    {{ statusValue.name }}
+                  </strong>
+                  {% if pathway.lastDateChange %}
+                    <p class="govuk-body-s">
+                      Updated:<br />{{ pathway.lastDateChange | formatDate }}
+                    </p>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+          <br></div>
+      </section>
+      {# Staff contacts #}
+      <section id="staff-contacts" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Staff contacts
+          </h3>
+        </header>
+        <div class="app-summary-card__body govuk-!-padding-top-4">
+          {% if not staffContacts.error %}
             <table class="govuk-table">
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th scope="col" class="govuk-table__header">Pathway</th>
-                  <th scope="col" class="govuk-table__header">Status</th>
-                </tr>
-              </thead>
               <tbody class="govuk-table__body">
-                {% for pathway in prisonerData.pathways %}
-                  {% set currentPathway = pathway.pathway | getEnumValue %}
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Key worker</th>
+                <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.keyWorker["name"] if staffContacts.keyWorker["name"] | length else "-" }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Prison Offender Manager</th>
+                <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.primaryPom["name"] if staffContacts.primaryPom["name"] | length else "-" }}</td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">Community Offender Manager</th>
+                <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.com["name"] if staffContacts.com["name"] | length else "-" }}</td>
+              </tr>
+              </tbody>
+            </table>
+          {% else %}
+            <p>{{ errorMessage }}</p>
+          {% endif %}
+          <br>
+        </div>
+      </section>
+      <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
+          </h3>
+          <span class="right">
+                <a href="/add-case-note?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                   class="govuk-button">Add a case note</a>
+              </span>
+        </header>
+        <div class="app-summary-card__body govuk-!-padding-top-4">
+          <div class="govuk-grid-row">
+            <form action="/prisoner-overview/#case-notes" method="GET" novalidate>
+              <input name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" hidden />
+              <div class="govuk-grid-column-one-third">
+                <label class="govuk-label" for="pathway-select">Filter by pathway</label>
+                <select name="selectedPathway" class="govuk-select" id="pathway-select">
+                  <option {% if selectedPathway == "All" %}selected{% endif %} value="All">All pathways</option>
+                  <option {% if selectedPathway == "ACCOMMODATION" %}selected{% endif %} value="ACCOMMODATION">
+                    Accommodation
+                  </option>
+                  <option {% if selectedPathway == "ATTITUDES_THINKING_AND_BEHAVIOUR" %}selected{% endif %}
+                          value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour
+                  </option>
+                  <option {% if selectedPathway == "CHILDREN_FAMILIES_AND_COMMUNITY" %}selected{% endif %}
+                          value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities
+                  </option>
+                  <option {% if selectedPathway == "DRUGS_AND_ALCOHOL" %}selected{% endif %} value="DRUGS_AND_ALCOHOL">
+                    Drugs and alcohol
+                  </option>
+                  <option {% if selectedPathway == "EDUCATION_SKILLS_AND_WORK" %}selected{% endif %}
+                          value="EDUCATION_SKILLS_AND_WORK">Education, skills and work
+                  </option>
+                  <option {% if selectedPathway == "FINANCE_AND_ID" %}selected{% endif %} value="FINANCE_AND_ID">Finance
+                    and ID
+                  </option>
+                  <option {% if selectedPathway == "HEALTH" %}selected{% endif %} value="HEALTH">Health</option>
+                </select>
+              </div>
+              <div class="govuk-grid-column-one-third">
+                <label class="govuk-label" for="date-range-select">Filter by date range</label>
+                <select name="days" class="govuk-select" id="date-range-select">
+                  <option value="0" {% if days == "0" %}selected{% endif %}>All time</option>
+                  <option value="7" {% if days == "7" %}selected{% endif %}>Last week</option>
+                  <option value="30" {% if days == "30" %}selected{% endif %}>Last 4 weeks</option>
+                  <option value="84" {% if days == "84" %}selected{% endif %}>Last 12 weeks</option>
+                </select>
+              </div>
+              <div class="govuk-grid-column-one-third">
+                <label class="govuk-label" for="sort-by-select">Sort by</label>
+                <select name="sort" class="govuk-select" id="sort-by-select">
+                  <option {% if sort == "occurenceDateTime,DESC" %}selected{% endif %} value="occurenceDateTime,DESC">
+                    Created (most recent)
+                  </option>
+                  <option {% if sort == "pathway,ASC" %}selected{% endif %} value="pathway,ASC">Pathway</option>
+                </select>
+              </div>
+              <div class="govuk-grid-column-one-third">
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="govuk-grid-row govuk-!-padding-top-8">
+            <div class="govuk-grid-column-full" id="case-notes-container">
+              <hr>
+              {% if not caseNotes.error %}
+                {% for notes in caseNotes.content %}
+                  {% set currentPathway = notes.pathway | getEnumValue %}
+                  <div class="case-note">
+                    <h3>{{ currentPathway.name }}</h3>
+                    <p>{{ notes.text | formatCaseNoteText | safe }}</p>
+                    <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate('long') }}</span>
+                    <span
+                        class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate('long') }} by {{ notes.createdBy }}</span>
+                  </div>
+                  <hr>
+                {% else %}
+                  <p>No case notes found</p>
+                {% endfor %}
+                {% set totalPages = (caseNotes.totalElements / size) | roundNumberUp %}
+                {% set nextPage = page | float + 1 | float %}
+                {% set prevPage = page | float - 1 | float %}
+                {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber %}
+                {% if caseNotes.totalElements != 0 %}
+                  {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
+                {% endif %}
+              {% else %}
+                <p>{{ errorMessage }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="appointments" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Appointments
+            <span class="govuk-caption-m">Post-release appointments</span>
+          </h3>
+          {% if addAppointmentEnabled %}
+            <span class="right">
+                      <a href="/add-appointment?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                         class="govuk-button">Add an appointment</a>
+                    </span>
+          {% endif %}
+        </header>
+        <div class="app-summary-card__body">
+          {% if not appointments.error %}
+            {% if appointments.results | length %}
+              <table class="govuk-table">
+                <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th scope="col" class="govuk-table__header">Title</th>
+                  <th scope="col" class="govuk-table__header">Contact</th>
+                  <th scope="col" class="govuk-table__header">Date</th>
+                  <th scope="col" class="govuk-table__header">Time</th>
+                  <th scope="col" class="govuk-table__header">Location</th>
+                </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                {% for appointment in appointments.results %}
                   <tr class="govuk-table__row">
-                    <th scope="row" class="govuk-table__header">
-                      <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ currentPathway.name }}</a>
-                      <span class="govuk-caption-m">{{ currentPathway.description }}</span>
-                    </th>
+                    <td class="govuk-table__cell">{{ appointment.title }}</td>
+                    <td class="govuk-table__cell">{{ appointment.contact }}</td>
+                    <td class="govuk-table__cell">{{ appointment.date | formatDate }}</td>
+                    <td class="govuk-table__cell">{{ appointment.time | formatTime }}</td>
                     <td class="govuk-table__cell">
-                      {% set statusValue = pathway.status | getEnumValue(resettlementAssessmentEnabled) %}
-                      <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
-                        {{ statusValue.name }}
-                      </strong>
-                      {% if pathway.lastDateChange %}
-                        <p class="govuk-body-s">
-                        Updated:<br />{{ pathway.lastDateChange | formatDate }}
-                        </p>
-                      {% endif %}
+                      {{ appointment.location | formatAddress | safe }}
                     </td>
                   </tr>
                 {% endfor %}
-              </tbody>
-            </table>
-            <br></div>
-        </section>
-        {# Staff contacts #}
-        <section id="staff-contacts" class="app-summary-card govuk-!-margin-bottom-8">
-          <header class="app-summary-card__header">
-            <h3 class="app-summary-card__title">
-              Staff contacts
-          </h3>
-          </header>
-          <div class="app-summary-card__body govuk-!-padding-top-4">
-            {% if not staffContacts.error %}
-              <table class="govuk-table">
-                <tbody class="govuk-table__body">
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Key worker</th>
-                    <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.keyWorker["name"] if staffContacts.keyWorker["name"] | length else "-" }}</td>
-                  </tr>
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Prison Offender Manager</th>
-                    <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.primaryPom["name"] if staffContacts.primaryPom["name"] | length else "-" }}</td>
-                  </tr>
-                  <tr class="govuk-table__row">
-                    <th class="govuk-table__header" scope="row">Community Offender Manager</th>
-                    <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.com["name"] if staffContacts.com["name"] | length else "-" }}</td>
-                  </tr>
                 </tbody>
               </table>
             {% else %}
-              <p>{{ errorMessage }}</p>
-            {% endif%}
-            <br>
-          </div>
-        </section>
-        <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
-            <header class="app-summary-card__header">
-              <h3 class="app-summary-card__title">
-                Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
-              </h3>
-              <span class="right">
-                <a href="/add-case-note?prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" class="govuk-button">Add a case note</a>
-              </span>
-            </header>
-            <div class="app-summary-card__body govuk-!-padding-top-4">
-              <div class="govuk-grid-row">
-                <form action="/prisoner-overview/#case-notes" method="GET" novalidate>
-                  <input name="prisonerNumber" value="{{prisonerData.personalDetails.prisonerNumber}}" hidden />
-                  <div class="govuk-grid-column-one-third">
-                    <label class="govuk-label" for="pathway-select">Filter by pathway</label>
-                    <select name="selectedPathway" class="govuk-select" id="pathway-select">
-                      <option {% if selectedPathway == "All" %}selected{% endif %} value="All">All pathways</option>
-                      <option {% if selectedPathway == "ACCOMMODATION" %}selected{% endif %} value="ACCOMMODATION">Accommodation</option>
-                      <option {% if selectedPathway == "ATTITUDES_THINKING_AND_BEHAVIOUR" %}selected{% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                      <option {% if selectedPathway == "CHILDREN_FAMILIES_AND_COMMUNITY" %}selected{% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                      <option {% if selectedPathway == "DRUGS_AND_ALCOHOL" %}selected{% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                      <option {% if selectedPathway == "EDUCATION_SKILLS_AND_WORK" %}selected{% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                      <option {% if selectedPathway == "FINANCE_AND_ID" %}selected{% endif %} value="FINANCE_AND_ID">Finance and ID</option>
-                      <option {% if selectedPathway == "HEALTH" %}selected{% endif %} value="HEALTH">Health</option>
-                    </select>
-                  </div>
-                  <div class="govuk-grid-column-one-third">
-                    <label class="govuk-label" for="date-range-select">Filter by date range</label>
-                    <select name="days" class="govuk-select" id="date-range-select">
-                      <option value="0" {% if days == "0" %}selected{% endif %}>All time</option>
-                      <option value="7" {% if days == "7" %}selected{% endif %}>Last week</option>
-                      <option value="30" {% if days == "30" %}selected{% endif %}>Last 4 weeks</option>
-                      <option value="84" {% if days == "84" %}selected{% endif %}>Last 12 weeks</option>
-                    </select>
-                  </div>
-                  <div class="govuk-grid-column-one-third">
-                    <label class="govuk-label" for="sort-by-select">Sort by</label>
-                    <select name="sort" class="govuk-select" id="sort-by-select">
-                      <option {% if sort == "occurenceDateTime,DESC" %}selected{% endif %} value="occurenceDateTime,DESC">Created (most recent)</option>
-                      <option {% if sort == "pathway,ASC" %}selected{% endif %} value="pathway,ASC">Pathway</option>
-                    </select>
-                  </div>
-                  <div class="govuk-grid-column-one-third">
-                    <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
-                  </div>
-                </form>
-              </div>
-              <div class="govuk-grid-row govuk-!-padding-top-8">
-                <div class="govuk-grid-column-full" id="case-notes-container">
-                  <hr>
-                  {% if not caseNotes.error %}
-                    {% for notes in caseNotes.content %}
-                      {% set currentPathway = notes.pathway | getEnumValue %}
-                      <div class="case-note">
-                        <h3>{{ currentPathway.name }}</h3>
-                        <p>{{ notes.text | formatCaseNoteText | safe }}</p>
-                        <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate('long') }}</span>
-                        <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate('long') }} by {{notes.createdBy}}</span>
-                      </div>
-                      <hr>
-                      {% else %}
-                          <p>No case notes found</p>
-                      {% endfor %}
-                        {% set totalPages = (caseNotes.totalElements / size) | roundNumberUp %}
-                        {% set nextPage = page | float + 1 | float%}
-                        {% set prevPage = page | float - 1 | float%}
-                        {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber%}
-                        {% if caseNotes.totalElements != 0 %}
-                          {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
-                        {% endif %}
-                      {% else %}
-                        <p>{{ errorMessage }}</p>
-                      {% endif%}
-                    </div>
-                  </div>
-                </div>
-              </section>
+              <p>No current appointments</p>
+            {% endif %}
+          {% else %}
+            <p>{{ appointments.error }}</p>
+          {% endif %}
+          <br>
+        </div>
+      </section>
 
-              <section id="appointments" class="app-summary-card govuk-!-margin-bottom-8">
-                <header class="app-summary-card__header">
-                  <h3 class="app-summary-card__title">
-                    Appointments
-                    <span class="govuk-caption-m">Post-release appointments</span>
-                  </h3>
-                  {% if addAppointmentEnabled %}
-                    <span class="right">
-                      <a href="/add-appointment?prisonerNumber={{prisonerData.personalDetails.prisonerNumber}}" class="govuk-button">Add an appointment</a>
-                    </span>
-                  {% endif %}
-                </header>
-                <div class="app-summary-card__body">
-                  {% if not appointments.error %}
-                    {% if appointments.results | length %}
-                      <table class="govuk-table">
-                        <thead class="govuk-table__head">
-                          <tr class="govuk-table__row">
-                            <th scope="col" class="govuk-table__header">Title</th>
-                            <th scope="col" class="govuk-table__header">Contact</th>
-                            <th scope="col" class="govuk-table__header">Date</th>
-                            <th scope="col" class="govuk-table__header">Time</th>
-                            <th scope="col" class="govuk-table__header">Location</th>
-                          </tr>
-                        </thead>
-                        <tbody class="govuk-table__body">
-                          {% for appointment in appointments.results %}
-                            <tr class="govuk-table__row">
-                              <td class="govuk-table__cell">{{ appointment.title }}</td>
-                              <td class="govuk-table__cell">{{ appointment.contact }}</td>
-                              <td class="govuk-table__cell">{{ appointment.date | formatDate }}</td>
-                              <td class="govuk-table__cell">{{ appointment.time | formatTime }}</td>
-                              <td class="govuk-table__cell">
-                                {{ appointment.location | formatAddress | safe }}
-                              </td>
-                            </tr>
-                          {% endfor %}
-                        </tbody>
-                      </table>
-                    {% else %}
-                      <p>No current appointments</p>
+
+      <section id="licence-summary" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Licence conditions<span class="govuk-caption-m">Data sourced from CVL</span>
+          </h3>
+          <span class="right"></span>
+        </header>
+        <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
+          {% if not licenceConditions.error %}
+            {% set conditions %}
+              <ol class="govuk-list govuk-list--number govuk-list--spaced">
+                {% for condition in licenceConditions.standardLicenceConditions %}
+                  <li>{{ condition.text }}
+                    {% if condition.image %}
+                      <a
+                          href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                          rel="noreferrer noopener"
+                          target="_blank">View map (opens in new tab)</a>
                     {% endif %}
-                  {% else %}
-                    <p>{{ appointments.error }}</p>
-                  {% endif %}
-                  <br>
-                </div>
-              </section>
-
-
-              <section id="licence-summary" class="app-summary-card govuk-!-margin-bottom-8">
-                <header class="app-summary-card__header">
-                  <h3 class="app-summary-card__title">
-                  Licence conditions<span class="govuk-caption-m">Data sourced from CVL</span>
-                  </h3>
-                  <span class="right"></span>
-                </header>
-                <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
-                  {% if not licenceConditions.error %}
-                    {% set conditions %}
-                    <ol class="govuk-list govuk-list--number govuk-list--spaced">
-                      {% for condition in licenceConditions.standardLicenceConditions %}
-                        <li>{{ condition.text }}
-                          {% if condition.image %}
-                            <a
-                              href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
-                              rel="noreferrer noopener"
-                              target="_blank">View map (opens in new tab)</a>
-                          {% endif %}
-                        </li>
-                      {% endfor %}
-                    </ol>
-                    {% endset -%}
-                    {{ govukDetails({
-                  summaryText: "Standard licence conditions",
-                  html: conditions
-                }) }}
-                    {% if licenceConditions.otherLicenseConditions.length %}
-                      <h3 class="govuk-heading-s">Additional and bespoke licence conditions</h3>
-                      <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6"
-                      start="{{ licenceConditions.standardLicenceConditions.length + 1 }}">
-                        {% for condition in licenceConditions.otherLicenseConditions %}
-                          <li>{{ condition.text }}
-                            {% if condition.image %}
-                              <a
-                              href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
-                              rel="noreferrer noopener"
-                              target="_blank">View map (opens in new tab)</a>
-                            {% endif %}
-                          </li>
-                        {% endfor %}
-                      </ol>
+                  </li>
+                {% endfor %}
+              </ol>
+            {% endset -%}
+            {{ govukDetails({
+              summaryText: "Standard licence conditions",
+              html: conditions
+            }) }}
+            {% if licenceConditions.otherLicenseConditions.length %}
+              <h3 class="govuk-heading-s">Additional and bespoke licence conditions</h3>
+              <ol class="govuk-list govuk-list--number govuk-list--spaced govuk-!-padding-left-6"
+                  start="{{ licenceConditions.standardLicenceConditions.length + 1 }}">
+                {% for condition in licenceConditions.otherLicenseConditions %}
+                  <li>{{ condition.text }}
+                    {% if condition.image %}
+                      <a
+                          href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                          rel="noreferrer noopener"
+                          target="_blank">View map (opens in new tab)</a>
                     {% endif %}
+                  </li>
+                {% endfor %}
+              </ol>
+            {% endif %}
+          {% else %}
+            <p>{{ errorMessage }}</p>
+          {% endif %}
+        </div>
+      </section>
+      <section id="risk-assessments" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
+            Risk assessments and predictors
+            <span class="govuk-caption-m">Data sourced from Assess Risks and Needs</span>
+          </h3>
+          <span class="right"></span>
+        </header>
+        <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
+          <h3>Risk assessments and predictors</h3>
+          {% if not riskScores.error %}
+            <p class="govuk-body-s">Last updated: {{ riskScores.completedDate | formatDate('long') }}</p>
+            <table class="govuk-table">
+              <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Risk of Serious Recidivism
+                </th>
+                <td class="govuk-table__cell">
+                  {% set riskOfSeriousRecidivismScoreLevel = riskScores.riskOfSeriousRecidivismScore.scoreLevel | getEnumValue %}
+                  {% if riskOfSeriousRecidivismScoreLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ riskOfSeriousRecidivismScoreLevel.color }}">
+                      {{ riskOfSeriousRecidivismScoreLevel.name }}
+                    </strong>
                   {% else %}
-                    <p>{{ errorMessage }}</p>
+                    <span>No data</span>
                   {% endif %}
-                </div>
-              </section>
-              <section id="risk-assessments" class="app-summary-card govuk-!-margin-bottom-8">
-                <header class="app-summary-card__header">
-                  <h3 class="app-summary-card__title">
-                    Risk assessments and predictors
-                    <span class="govuk-caption-m">Data sourced from Assess Risks and Needs</span>
-                  </h3>
-                  <span class="right"></span>
-                </header>
-                <div class="app-summary-card__body govuk-!-padding-top-4 govuk-!-padding-left-10">
-                  <h3>Risk assessments and predictors</h3>
-                  {% if not riskScores.error %}
-                    <p class="govuk-body-s">Last updated: {{ riskScores.completedDate | formatDate('long') }}</p>
-                    <table class="govuk-table">
-                      <tbody class="govuk-table__body">
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Risk of Serious Recidivism
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set riskOfSeriousRecidivismScoreLevel = riskScores.riskOfSeriousRecidivismScore.scoreLevel | getEnumValue %}
-                            {% if riskOfSeriousRecidivismScoreLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ riskOfSeriousRecidivismScoreLevel.color }}">
-                                {{ riskOfSeriousRecidivismScoreLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Offender Group Reconviction Scale (OGRS3)
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set ogrs3ScoreLevel = riskScores.groupReconvictionScore.scoreLevel | getEnumValue %}
-                            {% if ogrs3ScoreLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ ogrs3ScoreLevel.color }}">
-                                {{ ogrs3ScoreLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            OASys Violence Predictor (OVP)
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set ovpScoreLevel = riskScores.violencePredictorScore.ovpRisk | getEnumValue %}
-                            {% if ovpScoreLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ ovpScoreLevel.color }}">
-                                {{ ovpScoreLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            OASys General Predictor (OGP)
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set ogpScoreLevel = riskScores.generalPredictorScore.ogpRisk | getEnumValue %}
-                            {% if ogpScoreLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ ogpScoreLevel.color }}">
-                                {{ ogpScoreLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            OASys sexual predictor/images (OSP/I)
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set ospiScoreLevel = riskScores.sexualPredictorScore.ospIndecentScoreLevel | getEnumValue %}
-                            {% if ospiScoreLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ ospiScoreLevel.color }}">
-                                {{ ospiScoreLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            OASys sexual predictor/contact (OSP/C)
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set ospcScoreLevel = riskScores.sexualPredictorScore.ospContactScoreLevel | getEnumValue %}
-                            {% if ospcScoreLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ ospcScoreLevel.color }}">
-                                {{ ospcScoreLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Offender Group Reconviction Scale (OGRS3)
+                </th>
+                <td class="govuk-table__cell">
+                  {% set ogrs3ScoreLevel = riskScores.groupReconvictionScore.scoreLevel | getEnumValue %}
+                  {% if ogrs3ScoreLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ ogrs3ScoreLevel.color }}">
+                      {{ ogrs3ScoreLevel.name }}
+                    </strong>
                   {% else %}
-                    <p>{{ errorMessage }}</p>
+                    <span>No data</span>
                   {% endif %}
-                  <br/>
-                  <h3>Risk of serious harm</h3>
-                  {% if not rosh.error %}
-                    {% set overallRoshRiskLevel = rosh.overallRiskLevel | getEnumValue %}
-                    <h4>
-                      Overall RoSH risk level:
-                      {% if overallRoshRiskLevel %}
-                        <strong class="govuk-tag govuk-tag--{{ overallRoshRiskLevel.color }}">{{ overallRoshRiskLevel.name }}</strong>
-                      {% else %}
-                        <span>No data</span>
-                      {% endif %}
-                    </h4>
-                    <p class="govuk-body-s">Last updated: {{ rosh.assessedOn | formatDate('long') }}</p>
-                    <table class="govuk-table">
-                      <tbody class="govuk-table__body">
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Risk to
-                          </th>
-                          <td class="govuk-table__cell">
-                            <br/>
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Children
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set childrenRiskLevel = rosh.riskInCommunity.CHILDREN | getEnumValue %}
-                            {% if childrenRiskLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ childrenRiskLevel.color }}">
-                                {{ childrenRiskLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Public
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set publicRiskLevel = rosh.riskInCommunity.PUBLIC | getEnumValue %}
-                            {% if publicRiskLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ publicRiskLevel.color }}">
-                                {{ publicRiskLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Known adult
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set knownAdultRiskLevel = rosh.riskInCommunity.KNOWN_ADULT | getEnumValue %}
-                            {% if knownAdultRiskLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ knownAdultRiskLevel.color }}">
-                                {{ knownAdultRiskLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Staff
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set staffRiskLevel = rosh.riskInCommunity.STAFF | getEnumValue %}
-                            {% if staffRiskLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ staffRiskLevel.color }}">
-                                {{ staffRiskLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Prisoners
-                          </th>
-                          <td class="govuk-table__cell">
-                            {% set prisonersRiskLevel = rosh.riskInCommunity.PRISONERS | getEnumValue %}
-                            {% if prisonersRiskLevel %}
-                              <strong class="govuk-tag govuk-tag--{{ prisonersRiskLevel.color }}">
-                                {{ prisonersRiskLevel.name }}
-                              </strong>
-                            {% else %}
-                              <span>No data</span>
-                            {% endif %}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  OASys Violence Predictor (OVP)
+                </th>
+                <td class="govuk-table__cell">
+                  {% set ovpScoreLevel = riskScores.violencePredictorScore.ovpRisk | getEnumValue %}
+                  {% if ovpScoreLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ ovpScoreLevel.color }}">
+                      {{ ovpScoreLevel.name }}
+                    </strong>
                   {% else %}
-                    <p>{{ errorMessage }}</p>
+                    <span>No data</span>
                   {% endif %}
-                  <br/>
-                  <h3>Multi Agency Public Protection Arrangement (MAPPA)</h3>
-                  {% if not mappa.error %}
-                    <p class="govuk-body-s">Last updated: {{ mappa.startDate | formatDate('long') }}</p>
-                    <table class="govuk-table">
-                      <tbody class="govuk-table__body">
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Category
-                          </th>
-                          <td class="govuk-table__cell">
-                            {{ mappa.category }}
-                          </td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                          <th scope="row" class="govuk-table__header">
-                            Level
-                          </th>
-                          <td class="govuk-table__cell">
-                            {{ mappa.level }}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  OASys General Predictor (OGP)
+                </th>
+                <td class="govuk-table__cell">
+                  {% set ogpScoreLevel = riskScores.generalPredictorScore.ogpRisk | getEnumValue %}
+                  {% if ogpScoreLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ ogpScoreLevel.color }}">
+                      {{ ogpScoreLevel.name }}
+                    </strong>
                   {% else %}
-                    <p>{{ errorMessage }}</p>
+                    <span>No data</span>
                   {% endif %}
-                </div>
-              </section>
-            </div>
-      </div>
-  {% else %}
-    {{ incompleteBCST2(pathway, prisonerData) }}
-  {% endif %}
-
-  {% endblock %}
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  OASys sexual predictor/images (OSP/I)
+                </th>
+                <td class="govuk-table__cell">
+                  {% set ospiScoreLevel = riskScores.sexualPredictorScore.ospIndecentScoreLevel | getEnumValue %}
+                  {% if ospiScoreLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ ospiScoreLevel.color }}">
+                      {{ ospiScoreLevel.name }}
+                    </strong>
+                  {% else %}
+                    <span>No data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  OASys sexual predictor/contact (OSP/C)
+                </th>
+                <td class="govuk-table__cell">
+                  {% set ospcScoreLevel = riskScores.sexualPredictorScore.ospContactScoreLevel | getEnumValue %}
+                  {% if ospcScoreLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ ospcScoreLevel.color }}">
+                      {{ ospcScoreLevel.name }}
+                    </strong>
+                  {% else %}
+                    <span>No data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          {% else %}
+            <p>{{ errorMessage }}</p>
+          {% endif %}
+          <br />
+          <h3>Risk of serious harm</h3>
+          {% if not rosh.error %}
+            {% set overallRoshRiskLevel = rosh.overallRiskLevel | getEnumValue %}
+            <h4>
+              Overall RoSH risk level:
+              {% if overallRoshRiskLevel %}
+                <strong
+                    class="govuk-tag govuk-tag--{{ overallRoshRiskLevel.color }}">{{ overallRoshRiskLevel.name }}</strong>
+              {% else %}
+                <span>No data</span>
+              {% endif %}
+            </h4>
+            <p class="govuk-body-s">Last updated: {{ rosh.assessedOn | formatDate('long') }}</p>
+            <table class="govuk-table">
+              <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Risk to
+                </th>
+                <td class="govuk-table__cell">
+                  <br />
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Children
+                </th>
+                <td class="govuk-table__cell">
+                  {% set childrenRiskLevel = rosh.riskInCommunity.CHILDREN | getEnumValue %}
+                  {% if childrenRiskLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ childrenRiskLevel.color }}">
+                      {{ childrenRiskLevel.name }}
+                    </strong>
+                  {% else %}
+                    <span>No data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Public
+                </th>
+                <td class="govuk-table__cell">
+                  {% set publicRiskLevel = rosh.riskInCommunity.PUBLIC | getEnumValue %}
+                  {% if publicRiskLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ publicRiskLevel.color }}">
+                      {{ publicRiskLevel.name }}
+                    </strong>
+                  {% else %}
+                    <span>No data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Known adult
+                </th>
+                <td class="govuk-table__cell">
+                  {% set knownAdultRiskLevel = rosh.riskInCommunity.KNOWN_ADULT | getEnumValue %}
+                  {% if knownAdultRiskLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ knownAdultRiskLevel.color }}">
+                      {{ knownAdultRiskLevel.name }}
+                    </strong>
+                  {% else %}
+                    <span>No data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Staff
+                </th>
+                <td class="govuk-table__cell">
+                  {% set staffRiskLevel = rosh.riskInCommunity.STAFF | getEnumValue %}
+                  {% if staffRiskLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ staffRiskLevel.color }}">
+                      {{ staffRiskLevel.name }}
+                    </strong>
+                  {% else %}
+                    <span>No data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Prisoners
+                </th>
+                <td class="govuk-table__cell">
+                  {% set prisonersRiskLevel = rosh.riskInCommunity.PRISONERS | getEnumValue %}
+                  {% if prisonersRiskLevel %}
+                    <strong class="govuk-tag govuk-tag--{{ prisonersRiskLevel.color }}">
+                      {{ prisonersRiskLevel.name }}
+                    </strong>
+                  {% else %}
+                    <span>No data</span>
+                  {% endif %}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          {% else %}
+            <p>{{ errorMessage }}</p>
+          {% endif %}
+          <br />
+          <h3>Multi Agency Public Protection Arrangement (MAPPA)</h3>
+          {% if not mappa.error %}
+            <p class="govuk-body-s">Last updated: {{ mappa.startDate | formatDate('long') }}</p>
+            <table class="govuk-table">
+              <tbody class="govuk-table__body">
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Category
+                </th>
+                <td class="govuk-table__cell">
+                  {{ mappa.category }}
+                </td>
+              </tr>
+              <tr class="govuk-table__row">
+                <th scope="row" class="govuk-table__header">
+                  Level
+                </th>
+                <td class="govuk-table__cell">
+                  {{ mappa.level }}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          {% else %}
+            <p>{{ errorMessage }}</p>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+  </div>
+{% endblock %}
