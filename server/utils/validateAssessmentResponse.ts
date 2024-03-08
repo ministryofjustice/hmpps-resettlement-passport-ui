@@ -38,6 +38,22 @@ const validateAssessmentResponse = (currentPage: AssessmentPage, reqBody: Reques
       }
     }
 
+    if (questionAndAnswer.question.type === 'ADDRESS') {
+      if (
+        (reqBody.addressLine1 && reqBody.addressLine1.length > 500) ||
+        (reqBody.addressLine2 && reqBody.addressLine2.length > 500) ||
+        (reqBody.addressTown && reqBody.addressTown.length > 500) ||
+        (reqBody.addressCounty && reqBody.addressCounty.length > 500) ||
+        (reqBody.addressPostcode && reqBody.addressPostcode.length > 500)
+      ) {
+        const newValidationError: ValidationError = {
+          validationType: 'MAX_CHARACTER_LIMIT_ADDRESS',
+          questionId: questionAndAnswer.question.id,
+        }
+        validationErrors = validationErrors ? [...validationErrors, newValidationError] : [newValidationError]
+      }
+    }
+
     if (questionAndAnswer.question.type === 'SHORT_TEXT' && answerInBody(questionAndAnswer)) {
       if (answerInBody(questionAndAnswer).length > 500) {
         const newValidationError: ValidationError = {
