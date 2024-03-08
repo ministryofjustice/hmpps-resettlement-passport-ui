@@ -16,7 +16,11 @@ export type Answer = {
   '@class'?: AnswerType
 }
 
-export type ValidationTypes = 'MANDATORY' | 'MAX_CHARACTER_LIMIT_SHORT_TEXT' | 'MAX_CHARACTER_LIMIT_LONG_TEXT'
+export type ValidationTypes =
+  | 'MANDATORY'
+  | 'MAX_CHARACTER_LIMIT_SHORT_TEXT'
+  | 'MAX_CHARACTER_LIMIT_LONG_TEXT'
+  | 'MAX_CHARACTER_LIMIT_ADDRESS'
 
 export type ValidationError = {
   validationType: ValidationTypes

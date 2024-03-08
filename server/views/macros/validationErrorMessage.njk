@@ -10,5 +10,8 @@
     {% if validationType === 'MAX_CHARACTER_LIMIT_LONG_TEXT' %}
       This field must be 3,000 characters or less
     {% endif %}
+    {% if validationType === 'MAX_CHARACTER_LIMIT_ADDRESS' %}
+      Each field must be 500 characters or less
+    {% endif %}
   </p>
 {% endmacro %}
