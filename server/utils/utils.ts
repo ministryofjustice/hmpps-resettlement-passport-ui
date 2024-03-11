@@ -1,11 +1,6 @@
 import { Callback } from 'nunjucks'
 import { PathwayStatus } from '../@types/express'
-import {
-  ASSESSMENT_ENUMS_DICTIONARY,
-  ENUMS_DICTIONARY,
-  ENUMS_DICTIONARY_RESETTLEMENT_ASSESSMENT_ENABLED_OVERRIDE,
-  EnumValue,
-} from './constants'
+import { ASSESSMENT_ENUMS_DICTIONARY, ENUMS_DICTIONARY, EnumValue } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
@@ -85,16 +80,8 @@ export const filterByPathway = (arrayData: PathwayStatus[], condition: string): 
   return arrayData.find(item => item.pathway === condition)
 }
 
-const getEnumDictionary = (resettlementAssessmentEnabled: boolean) => {
-  if (resettlementAssessmentEnabled) {
-    return { ...ENUMS_DICTIONARY, ...ENUMS_DICTIONARY_RESETTLEMENT_ASSESSMENT_ENABLED_OVERRIDE }
-  }
-  return ENUMS_DICTIONARY
-}
-
-export const getEnumValue = (pathwayStatusEnum: string, resettlementAssessmentEnabled = true) => {
-  const enumDictionary = getEnumDictionary(resettlementAssessmentEnabled)
-  return enumDictionary[pathwayStatusEnum]
+export const getEnumValue = (pathwayStatusEnum: string) => {
+  return ENUMS_DICTIONARY[pathwayStatusEnum]
 }
 
 export const getAssessmentEnumValue = (pathwayStatusEnum: string): EnumValue => {
@@ -102,31 +89,26 @@ export const getAssessmentEnumValue = (pathwayStatusEnum: string): EnumValue => 
 }
 
 export function getEnumByName(name: string, resettlementAssessmentEnabled = true) {
-  const enumDictionary = getEnumDictionary(resettlementAssessmentEnabled)
-  return Object.keys(enumDictionary).find(enumKey => enumDictionary[enumKey].name === name)
+  return Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
 }
 
 export function getEnumByURL(url: unknown, resettlementAssessmentEnabled = true) {
-  const enumDictionary = getEnumDictionary(resettlementAssessmentEnabled)
-  return Object.keys(enumDictionary).find(enumKey => enumDictionary[enumKey].url === url)
+  return Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
 }
 
 export function getUrlFromName(pathwayName: string, resettlementAssessmentEnabled = true) {
-  const enumDictionary = getEnumDictionary(resettlementAssessmentEnabled)
-  const key = Object.keys(enumDictionary).find(enumKey => enumDictionary[enumKey].name === pathwayName)
-  return key ? enumDictionary[key].url : undefined
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === pathwayName)
+  return key ? ENUMS_DICTIONARY[key].url : undefined
 }
 
 export function getNameFromUrl(url: string, resettlementAssessmentEnabled = true) {
-  const enumDictionary = getEnumDictionary(resettlementAssessmentEnabled)
-  const key = Object.keys(enumDictionary).find(enumKey => enumDictionary[enumKey].url === url)
-  return key ? enumDictionary[key].name : undefined
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
+  return key ? ENUMS_DICTIONARY[key].name : undefined
 }
 
 export async function getDescriptionFromName(name: string, resettlementAssessmentEnabled = true) {
-  const enumDictionary = getEnumDictionary(resettlementAssessmentEnabled)
-  const key = Object.keys(enumDictionary).find(enumKey => enumDictionary[enumKey].name === name)
-  return key ? enumDictionary[key].description : undefined
+  const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
+  return key ? ENUMS_DICTIONARY[key].description : undefined
 }
 
 export function roundNumberUp(number: number): number | undefined {

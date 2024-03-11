@@ -6,7 +6,7 @@
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 {% if resettlementAssessmentEnabled %}
-  {% set statuses = ["SUPPORT_REQUIRED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
+  {% set statuses = ["NOT_STARTED", "SUPPORT_REQUIRED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
 {% else %}
   {% set statuses = ["NOT_STARTED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
 {% endif %}
@@ -173,6 +173,7 @@
             {% else %}
             <p>{{ errorMessage }}</p>
           {% endif%}
+        </div>
       </section>
     </div>
   </div>
