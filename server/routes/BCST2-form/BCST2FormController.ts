@@ -210,8 +210,9 @@ export default class BCST2FormController {
 
         // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
         if (editedQuestionIds) {
-          // Get the question ids for the next page
-          const nextPageQuestionIds = assessmentPage.questionsAndAnswers.map(it => it.question.id)
+          // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
+          const nextPageQuestionIds =
+            assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []
           // Get all question ids currently in cache
           const allQuestionIdsInCache = existingAssessment?.questionsAndAnswers.map(it => it.question)
           // If all the questions on the next page are in the cache we have converged
@@ -253,13 +254,13 @@ export default class BCST2FormController {
             )
             // Redirect to check answers page
             return res.redirect(
-              `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+              `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true`,
             )
           }
         }
 
-        // If we are in edit mode add the current question id to the edited question list in cache
-        if (edit || editedQuestionIds) {
+        // If we are in edit mode (but not on CHECK_ANSWERS add the current question id to the edited question list in cache
+        if ((edit || editedQuestionIds) && assessmentPage.id !== 'CHECK_ANSWERS') {
           const questionList = editedQuestionIds
             ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
             : assessmentPage.questionsAndAnswers.map(it => it.question.id)
@@ -272,7 +273,8 @@ export default class BCST2FormController {
         }
 
         // Merge together answers from API and cache
-        if (assessmentPage.questionsAndAnswers.length !== 0) {
+        // If this is an edit and CHECK_ANSWERS then we need to use only the cache to define the questions as these may be different now
+        if (assessmentPage.questionsAndAnswers.length !== 0 && !(edit && assessmentPage.id === 'CHECK_ANSWERS')) {
           assessmentPage.questionsAndAnswers.forEach(qAndA => {
             const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
               it => it?.question === qAndA.question.id,
