@@ -1,13 +1,12 @@
 {% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
 
-{% macro radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+{% macro radio(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) %}
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
-
-  {% if not isFirstQuestionOnPage %}
-    <b>{{ currentQuestionAndAnswer.question.title }}</b>
-  {% endif %}
-  
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
+    {% if multipleQuestionsOnPage %}
+      <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
+    {% endif %}
+    <div class="govuk-hint" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     <div class="govuk-radios" data-module="govuk-radios">
       {% if validationError %}
         {{ validationErrorMessage(validationError.validationType)  }}

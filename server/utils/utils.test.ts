@@ -7,6 +7,7 @@ import {
   getAnswerValueFromArrayOfMaps,
   formatCaseNoteText,
   getValidationError,
+  secondsUntilMidnight,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'

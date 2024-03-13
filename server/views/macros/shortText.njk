@@ -1,14 +1,16 @@
 {% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
 
-{% macro shortText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+{% macro shortText(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) %}
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
 
   <div class="govuk-form-group govuk-!-padding-top-3 {{ 'govuk-form-group--error' if validationError }}">
-    <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
+    {% if multipleQuestionsOnPage %}
+      <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
+    {% endif %}
+    <div id="{{ currentQuestionAndAnswer.question.id }}-hint" class='govuk-hint'>{{ currentQuestionAndAnswer.question.subTitle }}</div>
     {% if validationError %}
       {{ validationErrorMessage(validationError.validationType)  }}
     {% endif %}
-    <div id="{{ currentQuestionAndAnswer.question.id }}-hint" class='govuk-hint'>{{ currentQuestionAndAnswer.question.subTitle }}</div>
     <input class="govuk-input govuk-!-width-two-thirds" id="{{ currentQuestionAndAnswer.question.id }}" name="{{ currentQuestionAndAnswer.question.id }}" type="text" value="{{ existingAnswer.answer if existingAnswer }}" />
   </div>
 {% endmacro %}

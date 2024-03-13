@@ -1,6 +1,6 @@
 {% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
 
-{% macro address(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+{% macro address(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) %}
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
 
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
