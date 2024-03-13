@@ -31,7 +31,8 @@
   <main class="govuk-!-padding-top-8" id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
-        <a class="govuk-link govuk-link--no-visited-state" href="/assessment-task-list/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back</a>
+
+        <button class="govuk-back-link assessment-back-button">Back</button>
         
         {% if not assessmentPage.error %}
           {% if assessmentPage.id === "CHECK_ANSWERS" %}
@@ -103,4 +104,8 @@
     </div>
   </main>
  
+{% endblock %}
+{% block bodyEnd %}
+  {{ super() }}
+  <script src="/assets/js/assessment-back-button.js"></script>
 {% endblock %}
