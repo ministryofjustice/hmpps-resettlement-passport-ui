@@ -7,19 +7,23 @@ export default class AssessmentTaskListController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
+    try {
+      const { prisonerData } = req
 
-    const assessmentsSummary = await this.rpService.getAssessmentSummary(
-      req.user.token,
-      req.sessionID,
-      prisonerData.personalDetails.prisonerNumber as string,
-    )
+      const assessmentsSummary = await this.rpService.getAssessmentSummary(
+        req.user.token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+      )
 
-    const BCST2Completed: boolean = assessmentsSummary.results
-      ? assessmentsSummary.results.every((status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE')
-      : null
+      const BCST2Completed: boolean = assessmentsSummary.results
+        ? assessmentsSummary.results.every((status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE')
+        : null
 
-    const view = new AssessmentTaskListView(prisonerData, assessmentsSummary, BCST2Completed)
-    res.render('pages/assessment-task-list', { ...view.renderArgs })
+      const view = new AssessmentTaskListView(prisonerData, assessmentsSummary, BCST2Completed)
+      res.render('pages/assessment-task-list', { ...view.renderArgs })
+    } catch (err) {
+      next(err)
+    }
   }
 }
