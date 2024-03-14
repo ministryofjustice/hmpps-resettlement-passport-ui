@@ -2,6 +2,7 @@ import type { RedisClient } from './redisClient'
 
 import logger from '../../logger'
 import { AssessmentPage, SubmittedInput } from './model/BCST2Form'
+import { secondsUntilMidnight } from '../utils/utils'
 
 export default class AssessmentStore {
   private readonly assessmentPrefix = 'assessment:'
@@ -27,7 +28,7 @@ export default class AssessmentStore {
     nomsId: string,
     pathway: string,
     questionsAndAnswers: SubmittedInput,
-    durationSeconds = 3600,
+    durationSeconds = secondsUntilMidnight(),
   ): Promise<void> {
     await this.ensureConnected()
     await this.client.set(
@@ -56,7 +57,7 @@ export default class AssessmentStore {
     nomsId: string,
     pathway: string,
     currentPage: AssessmentPage,
-    durationSeconds: number,
+    durationSeconds: number = secondsUntilMidnight(),
   ): Promise<void> {
     await this.ensureConnected()
     await this.client.set(`${this.currentPagePrefix}${sessionId}${nomsId}${pathway}`, JSON.stringify(currentPage), {
@@ -75,9 +76,12 @@ export default class AssessmentStore {
     nomsId: string,
     pathway: string,
     questionIds: string[],
+    durationSeconds: number = secondsUntilMidnight(),
   ): Promise<void> {
     await this.ensureConnected()
-    await this.client.set(`${this.editedQuestionPrefix}${sessionId}${nomsId}${pathway}`, JSON.stringify(questionIds))
+    await this.client.set(`${this.editedQuestionPrefix}${sessionId}${nomsId}${pathway}`, JSON.stringify(questionIds), {
+      EX: durationSeconds,
+    })
   }
 
   async getEditedQuestionList(sessionId: string, nomsId: string, pathway: string): Promise<string> {

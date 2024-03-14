@@ -47,113 +47,121 @@ export default function routes(services: Services): Router {
   ************************************** */
   // RP2-622 Temporary redirect for access from Delius
   get('/resettlement', (req, res, next) => {
-    const { noms } = req.query
-    if (noms) {
-      res.redirect(`/prisoner-overview/?prisonerNumber=${noms}`)
-    } else {
-      next()
+    try {
+      const { noms } = req.query
+      if (noms) {
+        res.redirect(`/prisoner-overview/?prisonerNumber=${noms}`)
+      } else {
+        next()
+      }
+    } catch (err) {
+      next(err)
     }
   })
   use('/prisoner-overview', async (req, res, next) => {
-    const { prisonerData } = req
-    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+    try {
+      const { prisonerData } = req
+      const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
-    let licenceConditions: { error?: boolean } = {}
-    let riskScores: { error?: boolean } = {}
-    let rosh: { error?: boolean } = {}
-    let mappa: { error?: boolean } = {}
-    let caseNotes: { error?: boolean } = {}
-    let staffContacts: { error?: boolean } = {}
-    let appointments: Appointments
-    try {
-      licenceConditions = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve licence conditions for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      licenceConditions.error = true
-    }
-    try {
-      riskScores = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/scores`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve risk scores for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      riskScores.error = true
-    }
+      let licenceConditions: { error?: boolean } = {}
+      let riskScores: { error?: boolean } = {}
+      let rosh: { error?: boolean } = {}
+      let mappa: { error?: boolean } = {}
+      let caseNotes: { error?: boolean } = {}
+      let staffContacts: { error?: boolean } = {}
+      let appointments: Appointments
+      try {
+        licenceConditions = await rpClient.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
+        )
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve licence conditions for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        licenceConditions.error = true
+      }
+      try {
+        riskScores = await rpClient.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/scores`,
+        )
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve risk scores for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        riskScores.error = true
+      }
 
-    try {
-      rosh = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/rosh`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve RoSH for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      rosh.error = true
-    }
+      try {
+        rosh = await rpClient.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/rosh`,
+        )
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve RoSH for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        rosh.error = true
+      }
 
-    try {
-      mappa = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/mappa`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve MAPPA for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      mappa.error = true
-    }
-    try {
-      caseNotes = await rpClient.get(
-        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway}`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      caseNotes.error = true
-    }
-    try {
-      staffContacts = await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/staff-contacts`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve Staff Contacts for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      staffContacts.error = true
-    }
-    try {
-      appointments = (await rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/appointments`,
-      )) as Appointments
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve appointments for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      appointments = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
-    }
+      try {
+        mappa = await rpClient.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/risk/mappa`,
+        )
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve MAPPA for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        mappa.error = true
+      }
+      try {
+        caseNotes = await rpClient.get(
+          `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway}`,
+        )
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        caseNotes.error = true
+      }
+      try {
+        staffContacts = await rpClient.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/staff-contacts`,
+        )
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve Staff Contacts for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        staffContacts.error = true
+      }
+      try {
+        appointments = (await rpClient.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/appointments`,
+        )) as Appointments
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve appointments for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        appointments = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      }
 
-    res.render('pages/overview', {
-      licenceConditions,
-      prisonerData,
-      caseNotes,
-      riskScores,
-      rosh,
-      mappa,
-      page,
-      size,
-      sort,
-      days,
-      selectedPathway,
-      staffContacts,
-      appointments,
-    })
+      res.render('pages/overview', {
+        licenceConditions,
+        prisonerData,
+        caseNotes,
+        riskScores,
+        rosh,
+        mappa,
+        page,
+        size,
+        sort,
+        days,
+        selectedPathway,
+        staffContacts,
+        appointments,
+      })
+    } catch (err) {
+      next(err)
+    }
   })
 
   use('/licence-image', licenceImageRouter)
@@ -164,90 +172,94 @@ export default function routes(services: Services): Router {
     })
   })
   use('/status-update/', async (req: Request, res: Response, next) => {
-    const { prisonerData } = req
-    let { state, selectedPathway, _csrf }: { state?: string; selectedPathway?: string; _csrf?: string } = req.query
-    // If query parameters are not provided, try to get values from the request body
-    if (!state || !selectedPathway || !_csrf) {
-      const { state: bodyState, selectedPathway: bodyPathway, _csrf: bodyCsrf } = req.body
-      // Use the values from the request body if they exist
-      state = state || bodyState
-      selectedPathway = selectedPathway || bodyPathway
-      _csrf = _csrf || bodyCsrf
-    }
-    const caseNoteInput = req.body[`caseNoteInput_${state}`] || null
-
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-
-    let serverUpdate = 'none'
-    const deliusUserErrorMessage = 'Delius users are currently unable to access the case notes feature'
-    const isnDeliusCaseNotesEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.DELIUS_CASE_NOTES)
-    if (state) {
-      try {
-        if (res.locals.user.authSource === 'delius' && !isnDeliusCaseNotesEnabled) {
-          throw new Error(deliusUserErrorMessage)
-        }
-        const status = getEnumValue(state).name
-        await rpClient.patch(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway-with-case-note`,
-          {
-            pathway: getEnumByURL(selectedPathway),
-            status: state,
-            caseNoteText: `Resettlement status set to: ${status}. ${caseNoteInput || ''}`,
-          },
-        )
-        serverUpdate = 'success'
-      } catch (error) {
-        if (error.message === deliusUserErrorMessage) {
-          serverUpdate = 'deliusUserError'
-        } else {
-          serverUpdate = 'error'
-        }
-        logger.error(error)
+    try {
+      const { prisonerData } = req
+      let { state, selectedPathway, _csrf }: { state?: string; selectedPathway?: string; _csrf?: string } = req.query
+      // If query parameters are not provided, try to get values from the request body
+      if (!state || !selectedPathway || !_csrf) {
+        const { state: bodyState, selectedPathway: bodyPathway, _csrf: bodyCsrf } = req.body
+        // Use the values from the request body if they exist
+        state = state || bodyState
+        selectedPathway = selectedPathway || bodyPathway
+        _csrf = _csrf || bodyCsrf
       }
-    }
-    let caseNotes: { error?: boolean } = {}
-    const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, createdByUserId = 0 } = req.query
-    try {
-      caseNotes = await rpClient.get(
-        `/resettlement-passport/case-notes/${
-          prisonerData.personalDetails.prisonerNumber
-        }?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${getEnumByURL(
-          selectedPathway,
-        )}&createdByUserId=${createdByUserId}`,
-      )
-    } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      caseNotes.error = true
-    }
+      const caseNoteInput = req.body[`caseNoteInput_${state}`] || null
 
-    let caseNoteCreators: { error?: boolean } = {}
-    try {
-      caseNoteCreators = await rpClient.get(
-        `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}/creators/${getEnumByURL(
-          selectedPathway,
-        )}`,
-      )
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+
+      let serverUpdate = 'none'
+      const deliusUserErrorMessage = 'Delius users are currently unable to access the case notes feature'
+      const isnDeliusCaseNotesEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.DELIUS_CASE_NOTES)
+      if (state) {
+        try {
+          if (res.locals.user.authSource === 'delius' && !isnDeliusCaseNotesEnabled) {
+            throw new Error(deliusUserErrorMessage)
+          }
+          const status = getEnumValue(state).name
+          await rpClient.patch(
+            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway-with-case-note`,
+            {
+              pathway: getEnumByURL(selectedPathway),
+              status: state,
+              caseNoteText: `Resettlement status set to: ${status}. ${caseNoteInput || ''}`,
+            },
+          )
+          serverUpdate = 'success'
+        } catch (error) {
+          if (error.message === deliusUserErrorMessage) {
+            serverUpdate = 'deliusUserError'
+          } else {
+            serverUpdate = 'error'
+          }
+          logger.error(error)
+        }
+      }
+      let caseNotes: { error?: boolean } = {}
+      const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, createdByUserId = 0 } = req.query
+      try {
+        caseNotes = await rpClient.get(
+          `/resettlement-passport/case-notes/${
+            prisonerData.personalDetails.prisonerNumber
+          }?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${getEnumByURL(
+            selectedPathway,
+          )}&createdByUserId=${createdByUserId}`,
+        )
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        caseNotes.error = true
+      }
+
+      let caseNoteCreators: { error?: boolean } = {}
+      try {
+        caseNoteCreators = await rpClient.get(
+          `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}/creators/${getEnumByURL(
+            selectedPathway,
+          )}`,
+        )
+      } catch (err) {
+        logger.warn(
+          `Session: ${req.sessionID} Cannot retrieve Case Notes creators for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        caseNoteCreators.error = true
+      }
+      res.render('pages/status-update', {
+        prisonerData,
+        selectedPathway,
+        serverUpdate,
+        state,
+        caseNotes,
+        caseNoteCreators,
+        createdByUserId,
+        size,
+        page,
+        sort,
+        days,
+      })
     } catch (err) {
-      logger.warn(
-        `Session: ${req.sessionID} Cannot retrieve Case Notes creators for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-      )
-      caseNoteCreators.error = true
+      next(err)
     }
-    res.render('pages/status-update', {
-      prisonerData,
-      selectedPathway,
-      serverUpdate,
-      state,
-      caseNotes,
-      caseNoteCreators,
-      createdByUserId,
-      size,
-      page,
-      sort,
-      days,
-    })
   })
 
   return router

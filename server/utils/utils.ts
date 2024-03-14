@@ -303,3 +303,9 @@ export function getValidationError(validationErrors: ValidationErrors, questionI
   const isQuestionInArray = validationErrors.find(item => item.questionId === questionId)
   return isQuestionInArray
 }
+
+export function secondsUntilMidnight() {
+  const midnight = new Date()
+  midnight.setHours(24, 0, 0, 0)
+  return Math.round((midnight.getTime() - new Date().getTime()) / 1000)
+}
