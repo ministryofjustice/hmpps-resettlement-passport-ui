@@ -118,7 +118,7 @@ dist
 
 
 assets/stylesheets/*.css
-assets/.DS_Store
+
 .idea
 .vscode
 dist/
