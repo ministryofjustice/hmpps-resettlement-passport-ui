@@ -6,13 +6,9 @@ export default class AssessmentCompleteController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const view = new AssessmentCompleteView(prisonerData)
-      res.render('pages/assessment-complete', { ...view.renderArgs })
-    } catch (err) {
-      next(err)
-    }
+    const { prisonerData } = req
+    const view = new AssessmentCompleteView(prisonerData)
+    res.render('pages/assessment-complete', { ...view.renderArgs })
   }
 
   postView: RequestHandler = async (req, res, next) => {

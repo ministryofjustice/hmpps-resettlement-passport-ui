@@ -300,79 +300,63 @@ export default class FinanceIdController {
   }
 
   getAddAnIdView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
-      res.render('pages/add-id', { prisonerData, params })
-    } catch (err) {
-      next(err)
-    }
+    const { prisonerData } = req
+    const params = req.query
+    res.render('pages/add-id', { prisonerData, params })
   }
 
   getAddABankAccountView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
-      res.render('pages/add-bank-account', { prisonerData, params })
-    } catch (err) {
-      next(err)
-    }
+    const { prisonerData } = req
+    const params = req.query
+    res.render('pages/add-bank-account', { prisonerData, params })
   }
 
   getUpdateBankAccountStatusView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
-      res.render('pages/add-bank-account-update-status', { prisonerData, params, req })
-    } catch (err) {
-      next(err)
-    }
+    const { prisonerData } = req
+    const params = req.query
+    res.render('pages/add-bank-account-update-status', { prisonerData, params, req })
   }
 
   getConfirmAssessmentView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
-      let errorMsg: AssessmentErrorMessage = {
-        idRequired: null,
-        bankAccountRequired: null,
-        dateAssessmentDay: null,
-        dateAssessmentMonth: null,
-        dateAssessmentYear: null,
-        isValidDate: null,
-      }
-
-      const { isIdRequired, isBankAccountRequired, dateAssessmentDay, dateAssessmentMonth, dateAssessmentYear } = params
-
-      const isValidDate = isDateValid(`${dateAssessmentYear}-${dateAssessmentMonth}-${dateAssessmentDay}`)
-
-      if (
-        !isIdRequired ||
-        !isBankAccountRequired ||
-        !dateAssessmentDay ||
-        !dateAssessmentMonth ||
-        !dateAssessmentYear ||
-        !isValidDate
-      ) {
-        const message = 'Select an option'
-        const dateFieldMissingMessage = 'The date of assessment must include a '
-        const dateFieldInvalid = 'The date of assessment must be a real date'
-        errorMsg = {
-          idRequired: isIdRequired ? null : message,
-          bankAccountRequired: isBankAccountRequired ? null : message,
-          dateAssessmentDay: dateAssessmentDay ? null : `${dateFieldMissingMessage} day`,
-          dateAssessmentMonth: dateAssessmentMonth ? null : `${dateFieldMissingMessage} month`,
-          dateAssessmentYear: dateAssessmentYear ? null : `${dateFieldMissingMessage} year`,
-          isValidDate: isValidDate ? null : dateFieldInvalid,
-        }
-        res.render('pages/assessment', { prisonerData, params, req, errorMsg })
-        return
-      }
-
-      res.render('pages/assessment-confirmation', { prisonerData, params, req })
-    } catch (err) {
-      next(err)
+    const { prisonerData } = req
+    const params = req.query
+    let errorMsg: AssessmentErrorMessage = {
+      idRequired: null,
+      bankAccountRequired: null,
+      dateAssessmentDay: null,
+      dateAssessmentMonth: null,
+      dateAssessmentYear: null,
+      isValidDate: null,
     }
+
+    const { isIdRequired, isBankAccountRequired, dateAssessmentDay, dateAssessmentMonth, dateAssessmentYear } = params
+
+    const isValidDate = isDateValid(`${dateAssessmentYear}-${dateAssessmentMonth}-${dateAssessmentDay}`)
+
+    if (
+      !isIdRequired ||
+      !isBankAccountRequired ||
+      !dateAssessmentDay ||
+      !dateAssessmentMonth ||
+      !dateAssessmentYear ||
+      !isValidDate
+    ) {
+      const message = 'Select an option'
+      const dateFieldMissingMessage = 'The date of assessment must include a '
+      const dateFieldInvalid = 'The date of assessment must be a real date'
+      errorMsg = {
+        idRequired: isIdRequired ? null : message,
+        bankAccountRequired: isBankAccountRequired ? null : message,
+        dateAssessmentDay: dateAssessmentDay ? null : `${dateFieldMissingMessage} day`,
+        dateAssessmentMonth: dateAssessmentMonth ? null : `${dateFieldMissingMessage} month`,
+        dateAssessmentYear: dateAssessmentYear ? null : `${dateFieldMissingMessage} year`,
+        isValidDate: isValidDate ? null : dateFieldInvalid,
+      }
+      res.render('pages/assessment', { prisonerData, params, req, errorMsg })
+      return
+    }
+
+    res.render('pages/assessment-confirmation', { prisonerData, params, req })
   }
 
   getConfirmAddABankAccountView: RequestHandler = (req, res, next) => {
@@ -708,71 +692,59 @@ export default class FinanceIdController {
   }
 
   getAssessmentView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
-      res.render('pages/assessment', { prisonerData, params })
-    } catch (err) {
-      next(err)
-    }
+    const { prisonerData } = req
+    const params = req.query
+    res.render('pages/assessment', { prisonerData, params })
   }
 
   getAddAnIdFurtherView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
+    const { prisonerData } = req
+    const params = req.query
 
-      let errorMsg: IdErrorMessage = {
-        idType: null,
-        applicationSubmittedDay: null,
-        applicationSubmittedMonth: null,
-        applicationSubmittedYear: null,
-        isValidDate: null,
-      }
-
-      const { idType, applicationSubmittedDay, applicationSubmittedMonth, applicationSubmittedYear } = params
-
-      const isValidDate = isDateValid(
-        `${applicationSubmittedYear}-${applicationSubmittedMonth}-${applicationSubmittedDay}`,
-      )
-      if (
-        !idType ||
-        !applicationSubmittedDay ||
-        !applicationSubmittedMonth ||
-        !applicationSubmittedYear ||
-        !isValidDate
-      ) {
-        const message = 'Select an option'
-        const dateFieldMissingMessage = 'The date of application submitted must include a '
-        const dateFieldInvalid = 'The date of application submitted must be a real date'
-        errorMsg = {
-          idType: idType ? null : message,
-          applicationSubmittedDay: applicationSubmittedDay ? null : `${dateFieldMissingMessage} day`,
-          applicationSubmittedMonth: applicationSubmittedMonth ? null : `${dateFieldMissingMessage} month`,
-          applicationSubmittedYear: applicationSubmittedYear ? null : `${dateFieldMissingMessage} year`,
-          isValidDate: isValidDate ? null : dateFieldInvalid,
-        }
-        res.render('pages/add-id', { prisonerData, params, req, errorMsg })
-        return
-      }
-      if (params.idType === 'National Insurance Number letter') {
-        res.render('pages/add-id-confirm', { prisonerData, params, req })
-        return
-      }
-      res.render('pages/add-id-further', { prisonerData, params, req })
-    } catch (err) {
-      next(err)
+    let errorMsg: IdErrorMessage = {
+      idType: null,
+      applicationSubmittedDay: null,
+      applicationSubmittedMonth: null,
+      applicationSubmittedYear: null,
+      isValidDate: null,
     }
+
+    const { idType, applicationSubmittedDay, applicationSubmittedMonth, applicationSubmittedYear } = params
+
+    const isValidDate = isDateValid(
+      `${applicationSubmittedYear}-${applicationSubmittedMonth}-${applicationSubmittedDay}`,
+    )
+    if (
+      !idType ||
+      !applicationSubmittedDay ||
+      !applicationSubmittedMonth ||
+      !applicationSubmittedYear ||
+      !isValidDate
+    ) {
+      const message = 'Select an option'
+      const dateFieldMissingMessage = 'The date of application submitted must include a '
+      const dateFieldInvalid = 'The date of application submitted must be a real date'
+      errorMsg = {
+        idType: idType ? null : message,
+        applicationSubmittedDay: applicationSubmittedDay ? null : `${dateFieldMissingMessage} day`,
+        applicationSubmittedMonth: applicationSubmittedMonth ? null : `${dateFieldMissingMessage} month`,
+        applicationSubmittedYear: applicationSubmittedYear ? null : `${dateFieldMissingMessage} year`,
+        isValidDate: isValidDate ? null : dateFieldInvalid,
+      }
+      res.render('pages/add-id', { prisonerData, params, req, errorMsg })
+      return
+    }
+    if (params.idType === 'National Insurance Number letter') {
+      res.render('pages/add-id-confirm', { prisonerData, params, req })
+      return
+    }
+    res.render('pages/add-id-further', { prisonerData, params, req })
   }
 
   getUpdateIdStatusView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
-      res.render('pages/add-id-update-status', { prisonerData, params, req })
-    } catch (err) {
-      next(err)
-    }
+    const { prisonerData } = req
+    const params = req.query
+    res.render('pages/add-id-update-status', { prisonerData, params, req })
   }
 
   getConfirmAddAnIdStatusView: RequestHandler = (req, res, next) => {
@@ -781,85 +753,81 @@ export default class FinanceIdController {
       return regex.test(str)
     }
 
-    try {
-      const { prisonerData } = req
-      const params = req.query
+    const { prisonerData } = req
+    const params = req.query
 
-      const {
-        updatedStatus,
-        isAddedToPersonalItems,
-        addedToPersonalItemsDateDay,
-        addedToPersonalItemsDateMonth,
-        addedToPersonalItemsDateYear,
-        dateIdReceivedDay,
-        dateIdReceivedMonth,
-        dateIdReceivedYear,
-        refundAmount,
-      } = params
+    const {
+      updatedStatus,
+      isAddedToPersonalItems,
+      addedToPersonalItemsDateDay,
+      addedToPersonalItemsDateMonth,
+      addedToPersonalItemsDateYear,
+      dateIdReceivedDay,
+      dateIdReceivedMonth,
+      dateIdReceivedYear,
+      refundAmount,
+    } = params
 
-      const costIsValid: boolean = checkIsValidCurrency(<string>refundAmount)
-      const isValidDateIdReceivedDate = isDateValid(`${dateIdReceivedYear}-${dateIdReceivedMonth}-${dateIdReceivedDay}`)
-      const isValidAddedToPersonalItemsDate = isDateValid(
-        `${addedToPersonalItemsDateYear}-${addedToPersonalItemsDateMonth}-${addedToPersonalItemsDateDay}`,
-      )
+    const costIsValid: boolean = checkIsValidCurrency(<string>refundAmount)
+    const isValidDateIdReceivedDate = isDateValid(`${dateIdReceivedYear}-${dateIdReceivedMonth}-${dateIdReceivedDay}`)
+    const isValidAddedToPersonalItemsDate = isDateValid(
+      `${addedToPersonalItemsDateYear}-${addedToPersonalItemsDateMonth}-${addedToPersonalItemsDateDay}`,
+    )
 
-      if (updatedStatus === 'Rejected' && (!refundAmount || !updatedStatus || !costIsValid)) {
-        const refundMessage = 'Enter a refund amount'
-        const statusMessage = 'Please choose a status'
-        const costIsNotValidMessage = 'Refund amount can only include pounds and pence'
-        const errorMsg = {
-          refundAmount: refundAmount ? null : `${refundMessage}`,
-          updatedStatus: updatedStatus ? null : `${statusMessage}`,
-          costIsValid: costIsValid ? null : `${costIsNotValidMessage}`,
-        }
-        res.render('pages/add-id-update-status', { prisonerData, params, req, errorMsg })
-        return
+    if (updatedStatus === 'Rejected' && (!refundAmount || !updatedStatus || !costIsValid)) {
+      const refundMessage = 'Enter a refund amount'
+      const statusMessage = 'Please choose a status'
+      const costIsNotValidMessage = 'Refund amount can only include pounds and pence'
+      const errorMsg = {
+        refundAmount: refundAmount ? null : `${refundMessage}`,
+        updatedStatus: updatedStatus ? null : `${statusMessage}`,
+        costIsValid: costIsValid ? null : `${costIsNotValidMessage}`,
       }
-      if (
-        updatedStatus !== 'Rejected' &&
-        (!updatedStatus ||
-          !isAddedToPersonalItems ||
-          !isValidDateIdReceivedDate ||
-          !dateIdReceivedDay ||
-          !dateIdReceivedMonth ||
-          !dateIdReceivedYear)
-      ) {
-        const statusMessage = 'Please choose a status'
-        const addedToPIMessage = 'Select an option'
-        const dateFieldInvalid = 'The date must be a real date'
-        const dateFieldMissingMessage = 'The date must include a'
-        const errorMsg = {
-          updatedStatus: updatedStatus ? null : `${statusMessage}`,
-          isAddedToPersonalItems: isAddedToPersonalItems ? null : `${addedToPIMessage}`,
-          dateIdReceivedDay: dateIdReceivedDay ? null : `${dateFieldMissingMessage} day`,
-          dateIdReceivedMonth: dateIdReceivedMonth ? null : `${dateFieldMissingMessage} month`,
-          dateIdReceivedYear: dateIdReceivedYear ? null : `${dateFieldMissingMessage} year`,
-          isValidDateIdReceivedDate: isValidDateIdReceivedDate ? null : `${dateFieldInvalid}`,
-        }
-        res.render('pages/add-id-update-status', { prisonerData, params, req, errorMsg })
-        return
-      }
-      if (
-        isAddedToPersonalItems === 'true' &&
-        (!isValidAddedToPersonalItemsDate ||
-          !addedToPersonalItemsDateMonth ||
-          !addedToPersonalItemsDateYear ||
-          !addedToPersonalItemsDateDay)
-      ) {
-        const dateFieldInvalid = 'The date must be a real date'
-        const dateFieldMissingMessage = 'The date must include a'
-        const errorMsg = {
-          addedToPersonalItemsDateDay: addedToPersonalItemsDateDay ? null : `${dateFieldMissingMessage} day`,
-          addedToPersonalItemsDateMonth: addedToPersonalItemsDateMonth ? null : `${dateFieldMissingMessage} month`,
-          addedToPersonalItemsDateYear: addedToPersonalItemsDateYear ? null : `${dateFieldMissingMessage} year`,
-          isValidAddedToPersonalItemsDate: isValidAddedToPersonalItemsDate ? null : `${dateFieldInvalid}`,
-        }
-        res.render('pages/add-id-update-status', { prisonerData, params, req, errorMsg })
-        return
-      }
-      res.render('pages/add-id-update-status-confirm', { prisonerData, params, req })
-    } catch (err) {
-      next(err)
+      res.render('pages/add-id-update-status', { prisonerData, params, req, errorMsg })
+      return
     }
+    if (
+      updatedStatus !== 'Rejected' &&
+      (!updatedStatus ||
+        !isAddedToPersonalItems ||
+        !isValidDateIdReceivedDate ||
+        !dateIdReceivedDay ||
+        !dateIdReceivedMonth ||
+        !dateIdReceivedYear)
+    ) {
+      const statusMessage = 'Please choose a status'
+      const addedToPIMessage = 'Select an option'
+      const dateFieldInvalid = 'The date must be a real date'
+      const dateFieldMissingMessage = 'The date must include a'
+      const errorMsg = {
+        updatedStatus: updatedStatus ? null : `${statusMessage}`,
+        isAddedToPersonalItems: isAddedToPersonalItems ? null : `${addedToPIMessage}`,
+        dateIdReceivedDay: dateIdReceivedDay ? null : `${dateFieldMissingMessage} day`,
+        dateIdReceivedMonth: dateIdReceivedMonth ? null : `${dateFieldMissingMessage} month`,
+        dateIdReceivedYear: dateIdReceivedYear ? null : `${dateFieldMissingMessage} year`,
+        isValidDateIdReceivedDate: isValidDateIdReceivedDate ? null : `${dateFieldInvalid}`,
+      }
+      res.render('pages/add-id-update-status', { prisonerData, params, req, errorMsg })
+      return
+    }
+    if (
+      isAddedToPersonalItems === 'true' &&
+      (!isValidAddedToPersonalItemsDate ||
+        !addedToPersonalItemsDateMonth ||
+        !addedToPersonalItemsDateYear ||
+        !addedToPersonalItemsDateDay)
+    ) {
+      const dateFieldInvalid = 'The date must be a real date'
+      const dateFieldMissingMessage = 'The date must include a'
+      const errorMsg = {
+        addedToPersonalItemsDateDay: addedToPersonalItemsDateDay ? null : `${dateFieldMissingMessage} day`,
+        addedToPersonalItemsDateMonth: addedToPersonalItemsDateMonth ? null : `${dateFieldMissingMessage} month`,
+        addedToPersonalItemsDateYear: addedToPersonalItemsDateYear ? null : `${dateFieldMissingMessage} year`,
+        isValidAddedToPersonalItemsDate: isValidAddedToPersonalItemsDate ? null : `${dateFieldInvalid}`,
+      }
+      res.render('pages/add-id-update-status', { prisonerData, params, req, errorMsg })
+      return
+    }
+    res.render('pages/add-id-update-status-confirm', { prisonerData, params, req })
   }
 }

@@ -9,51 +9,43 @@ export default class AddAppointmentController {
   constructor(private readonly rpService: RpService) {}
 
   getAddAppointmentView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
-      const view = new AddAppointmentView(prisonerData)
-      res.render('pages/add-appointment', { ...view.renderArgs, params })
-    } catch (err) {
-      next(err)
-    }
+    const { prisonerData } = req
+    const params = req.query
+    const view = new AddAppointmentView(prisonerData)
+    res.render('pages/add-appointment', { ...view.renderArgs, params })
   }
 
   getConfirmAppointmentView: RequestHandler = (req, res, next) => {
-    try {
-      const { prisonerData } = req
-      const params = req.query
-      let errorMsg: AppointmentErrorMessage = {
-        appointmentType: null,
-        appointmentTitle: null,
-        organisation: null,
-        contact: null,
-        dateAndTime: null,
-        dateIsPast: null,
-        appointmentDuration: null,
-      }
+    const { prisonerData } = req
+    const params = req.query
+    let errorMsg: AppointmentErrorMessage = {
+      appointmentType: null,
+      appointmentTitle: null,
+      organisation: null,
+      contact: null,
+      dateAndTime: null,
+      dateIsPast: null,
+      appointmentDuration: null,
+    }
 
-      const { appointmentType, appointmentTitle, organisation, contact, dateAndTime, appointmentDuration } = params
-      const isDateInPast = new Date(dateAndTime.toLocaleString()).getTime() < Date.now()
-      if (!appointmentType || !appointmentTitle || !organisation || !contact || !dateAndTime || !appointmentDuration) {
-        errorMsg = {
-          appointmentType: appointmentType ? null : true,
-          appointmentTitle: appointmentTitle ? null : true,
-          organisation: organisation ? null : true,
-          contact: contact ? null : true,
-          dateAndTime: dateAndTime ? null : true,
-          dateIsPast: isDateInPast,
-          appointmentDuration: appointmentDuration ? null : true,
-        }
-        const view = new AddAppointmentView(prisonerData)
-        res.render('pages/add-appointment', { ...view.renderArgs, params, req, errorMsg })
-        return
+    const { appointmentType, appointmentTitle, organisation, contact, dateAndTime, appointmentDuration } = params
+    const isDateInPast = new Date(dateAndTime.toLocaleString()).getTime() < Date.now()
+    if (!appointmentType || !appointmentTitle || !organisation || !contact || !dateAndTime || !appointmentDuration) {
+      errorMsg = {
+        appointmentType: appointmentType ? null : true,
+        appointmentTitle: appointmentTitle ? null : true,
+        organisation: organisation ? null : true,
+        contact: contact ? null : true,
+        dateAndTime: dateAndTime ? null : true,
+        dateIsPast: isDateInPast,
+        appointmentDuration: appointmentDuration ? null : true,
       }
       const view = new AddAppointmentView(prisonerData)
-      res.render('pages/add-appointment-confirm', { ...view.renderArgs, params, req })
-    } catch (err) {
-      next(err)
+      res.render('pages/add-appointment', { ...view.renderArgs, params, req, errorMsg })
+      return
     }
+    const view = new AddAppointmentView(prisonerData)
+    res.render('pages/add-appointment-confirm', { ...view.renderArgs, params, req })
   }
 
   postAppointmentView: RequestHandler = async (req, res, next): Promise<void> => {
