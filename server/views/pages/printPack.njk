@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <style type="text/css" nonce="{{ cspNonce }}">
+ 
+      body {
+        margin: 0;
+        font-family: "Source Sans Pro", sans-serif;
+        background: white;
+      }
+      .main-wrapper {
+        min-height: 400px;
+        padding-top: 0;
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+      .nomargin{
+        margin: 0px;
+      }
+      .row {
+        display: flex;
+        clear: both;
+      }
+      .appointment {
+        clear: both;
+        padding-bottom: 15px;
+      }
+      .column1 {
+        flex: 50%;
+      }
+
+      .column2 {
+        flex: 30%;
+      }
+
+      .two-thirds {
+        width: 66%;
+      }
+      .one-thirds {
+        width: 33%;
+      }
+
+      .header__container {
+        margin: 0;
+        background-color: #f3f2f1;
+        height: 150px;
+        margin-bottom: 20px;
+        padding: 30px 30px 10px;
+      }
+      .text {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+      .text-l {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        line-height: 1.5;
+      }
+      .code-text {
+        padding-left: 20px;
+      }
+      .code-xl {
+        font-weight: bold;
+        font-size: 32pt;
+        margin-top: 0;
+      }
+      .text-xl {
+        margin-bottom: 10px;
+      }
+      ul.numbered-list {
+        list-style-type: decimal;
+      }
+      .codebox {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        width: 100%;
+        background-color: #f3f2f1;
+        height: 140px;
+        padding: 5px;
+      }
+      .center {
+        text-align: center;
+      }
+      .page-end {
+        height: 90px;
+        display: block;
+      }
+      .appointments-break {
+        height: 160px;
+        display: block;
+      }
+    </style>
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <!-- First Page -->
+    {% include "../partials/printPackHeader.njk" %}
+
+    <div class="main-wrapper">
+      <div class="row">
+        <div class="two-thirds">
+          <h2 class="text-l">
+          Go to www.plan-your-future.gov.uk for information and support to help you in the days after your release.
+        </h2>
+          <p class="text">
+        You will need to log in to:
+      </p>
+          <ul>
+            <li class="text">See your licence conditions</li>
+            <li class="text">Keep track of your appointments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="two-thirds">
+          <p class="text">
+        To log in you will need a mobile phone and and email address.
+      </p>
+          <ul class="numbered-list">
+            <li class="text">Go to www.plan-your-future.gov.uk and select 'Start'</li>
+            <li class="text">Follow the instructions</li>
+            <li class="text">When prompted enter your personal login code</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="codebox">
+        <p class="code-text">
+          Your personal login code is:
+        </p>
+        <p class="code-xl center">
+            {{ otpData.otp }}
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="two-thirds">
+          <p class="text">
+            <b>Important</b>
+          </p>
+          <p class="text">
+          Your appointments may change, so log in regularly to keep up to date.
+        </p>
+          <p class="text">
+          Do not try to log in if you are not allowed to use the internet.
+        </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="page-end">
+    </div>
+
+    <!-- Second Page -->
+    {% include "../partials/printPackHeader.njk" %}
+
+    <div class="main-wrapper">
+      <div class="row">
+        <div class="two-thirds">
+          <h2 class="text-l">
+            Appointments
+          </h2>
+          <p class="text">
+            Here are your next 8 appointments. Any of these appointments may have changed since this was printed. <br>
+            Please check in advance that the details are still correct.
+          </p>
+        </div>
+      </div>
+      
+      {% for appointment in appointments %}
+      <!-- appointment -->
+      <div class="appointment">
+        <div class="one-thirds">
+          <h3 class="text-xl">
+          {{appointment.date | formatDateExtended}}
+        </h3>
+          <p class="">
+            <p class="nomargin">
+            <b>{{appointment.time | formatTimeWithDuration }}
+            {% if appointment.duration > 0 %}
+             to {{ appointment.time | formatTimeWithDuration(appointment.duration) }}
+            {% endif %}
+            </b>
+            </p>
+            <p class="nomargin">
+              <b>{{appointment.title}}</b>
+            </p>
+            <p class="nomargin">
+            {{ appointment.location | formatAddress | safe}}
+            </p>
+            Contact: {{appointment.contact}}
+            {% if appointment.contactEmail %}
+                (email: {{appointment.contactEmail}})
+            {% endif %}
+          </p>
+        </div>
+      </div>
+      {% if loop.index == 3 %}
+        <div class="appointments-break">
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    </div>
+  </body>
+</html>

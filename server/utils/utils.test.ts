@@ -7,6 +7,7 @@ import {
   getAnswerValueFromArrayOfMaps,
   formatCaseNoteText,
   getValidationError,
+  formatTimeWithDuration,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -308,4 +309,30 @@ describe('get validation data from array by question id', () => {
       expect(getValidationError(validationErrors, questionId)).toEqual(expected)
     },
   )
+})
+
+describe('formatTimeWithDuration', () => {
+  it.each([
+    ['14:00:00', '02:00 PM'],
+    ['14:01', '02:01 PM'],
+    ['12:00:00', '12:00 PM'],
+    ['09:01:00', '09:01 AM'],
+    ['13:50:23', '01:50 PM'],
+    [null, null],
+    ['', null],
+  ])('formatTimeWithDuration(%s)', (input: string, expected: string) => {
+    expect(formatTimeWithDuration(input)).toEqual(expected)
+  })
+
+  it.each([
+    ['14:00:00', '02:50 PM'],
+    ['14:01', '02:51 PM'],
+    ['12:00:00', '12:50 PM'],
+    ['09:01:00', '09:51 AM'],
+    ['13:50:23', '02:40 PM'],
+    [null, null],
+    ['', null],
+  ])('it should add 50 minutes to formatTimeWithDuration(%s)', (input: string, expected: string) => {
+    expect(formatTimeWithDuration(input, 50)).toEqual(expected)
+  })
 })

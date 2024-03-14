@@ -4,6 +4,7 @@ import express from 'express'
 import path from 'path'
 import {
   formatDate,
+  formatDateExtended,
   getAgeFromDate,
   getDaysFromDate,
   filterByPathway,
@@ -19,6 +20,7 @@ import {
   formatCaseNoteText,
   formatDateToIso,
   formatTime,
+  formatTimeWithDuration,
   convertArrayToCommaSeparatedList,
   createReferralsSubNav,
   createReferralsId,
@@ -72,6 +74,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
 
   njkEnv.addFilter('initialiseName', initialiseName)
   njkEnv.addFilter('formatDate', formatDate)
+  njkEnv.addFilter('formatDateExtended', formatDateExtended)
   njkEnv.addFilter('getAgeFromDate', getAgeFromDate)
   njkEnv.addFilter('getDaysFromDate', getDaysFromDate)
   njkEnv.addFilter('getMostRecentDate', getMostRecentDate)
@@ -87,6 +90,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('formatCaseNoteText', formatCaseNoteText)
   njkEnv.addFilter('formatDateToIso', formatDateToIso)
   njkEnv.addFilter('formatTime', formatTime)
+  njkEnv.addFilter('formatTimeWithDuration', formatTimeWithDuration)
   njkEnv.addGlobal('dpsUrl', config.dpsHomeUrl)
   njkEnv.addGlobal('phaseName', config.phaseName)
   njkEnv.addFilter('convertArrayToCommaSeparatedList', convertArrayToCommaSeparatedList)
