@@ -1,15 +1,12 @@
 {% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
 
-{% macro checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+{% macro checkbox(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) %}
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
-
-  {% if not isFirstQuestionOnPage %}
-    <b>{{ currentQuestionAndAnswer.question.title }}</b>
-  {% endif %}
-
-
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
     <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+      {% if multipleQuestionsOnPage %}
+        <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
+      {% endif %}
       <div id="waste-hint" class="govuk-hint">Select all that apply.</div>
     {% if validationError %}
       {{ validationErrorMessage(validationError.validationType)  }}
