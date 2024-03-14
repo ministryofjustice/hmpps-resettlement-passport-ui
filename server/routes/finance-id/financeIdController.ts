@@ -12,266 +12,290 @@ export default class FinanceIdController {
   constructor(private readonly rpService: RpService) {}
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const { token } = req.user
-    const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
-      req.query
+    try {
+      const { prisonerData } = req
+      const { token } = req.user
+      const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
+        req.query
 
-    const apiResponse = new RPClient(req.user.token, req.sessionID, req.user.username)
-    let assessment: { error?: boolean } = {}
-    let assessmentDeleted: { error?: boolean } = {}
-    let finance: { error?: boolean } = {}
-    let financeDeleted: { error?: boolean } = {}
-    let id: { error?: boolean } = {}
-    let idDeleted: { error?: boolean } = {}
+      const apiResponse = new RPClient(req.user.token, req.sessionID, req.user.username)
+      let assessment: { error?: boolean } = {}
+      let assessmentDeleted: { error?: boolean } = {}
+      let finance: { error?: boolean } = {}
+      let financeDeleted: { error?: boolean } = {}
+      let id: { error?: boolean } = {}
+      let idDeleted: { error?: boolean } = {}
 
-    // DELETE ASSESSMENT
-    if (deleteAssessmentConfirmed) {
+      // DELETE ASSESSMENT
+      if (deleteAssessmentConfirmed) {
+        try {
+          assessmentDeleted = await apiResponse.delete(
+            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment/${assessmentId}`,
+          )
+        } catch (err) {
+          logger.warn(`Error deleting assessment`, err)
+          assessmentDeleted.error = true
+        }
+      }
+      // FETCH ASSESSMENT
       try {
-        assessmentDeleted = await apiResponse.delete(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment/${assessmentId}`,
+        assessment = await apiResponse.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment`,
         )
       } catch (err) {
-        logger.warn(`Error deleting assessment`, err)
-        assessmentDeleted.error = true
+        logger.warn(`Error fetching assessment data`, err)
+        assessment.error = true
       }
-    }
-    // FETCH ASSESSMENT
-    try {
-      assessment = await apiResponse.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment`,
-      )
-    } catch (err) {
-      logger.warn(`Error fetching assessment data`, err)
-      assessment.error = true
-    }
-    // DELETE FINANCE
-    if (deleteFinanceConfirmed) {
+      // DELETE FINANCE
+      if (deleteFinanceConfirmed) {
+        try {
+          financeDeleted = await apiResponse.delete(
+            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication/${financeId}`,
+          )
+        } catch (err) {
+          logger.warn(`Error deleting finance`, err)
+          financeDeleted.error = true
+        }
+      }
+      // FETCH FINANCE
       try {
-        financeDeleted = await apiResponse.delete(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication/${financeId}`,
+        finance = await apiResponse.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication`,
         )
       } catch (err) {
-        logger.warn(`Error deleting finance`, err)
-        financeDeleted.error = true
+        logger.warn(`Error fetching finance data`, err)
+        finance.error = true
       }
-    }
-    // FETCH FINANCE
-    try {
-      finance = await apiResponse.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication`,
-      )
-    } catch (err) {
-      logger.warn(`Error fetching finance data`, err)
-      finance.error = true
-    }
-    // DELETE ID
-    if (deleteIdConfirmed) {
+      // DELETE ID
+      if (deleteIdConfirmed) {
+        try {
+          idDeleted = await apiResponse.delete(
+            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/${idId}`,
+          )
+        } catch (err) {
+          logger.warn(`Error deleting ID`, err)
+          idDeleted.error = true
+        }
+      }
+      // FETCH ID
       try {
-        idDeleted = await apiResponse.delete(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/${idId}`,
+        id = await apiResponse.get(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/all`,
         )
       } catch (err) {
-        logger.warn(`Error deleting ID`, err)
-        idDeleted.error = true
+        logger.warn(`Error fetching ID data`, err)
+        id.error = true
       }
-    }
-    // FETCH ID
-    try {
-      id = await apiResponse.get(
-        `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/all`,
+      // CRS Referrals
+      const crsReferrals = await this.rpService.getCrsReferrals(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        'FINANCE_AND_ID',
       )
+
+      const assessmentData = await this.rpService.getAssessmentInformation(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        'FINANCE_AND_ID',
+      )
+
+      const view = new FinanceIdView(prisonerData, crsReferrals, assessmentData)
+      res.render('pages/finance-id', { ...view.renderArgs, assessment, finance, id })
     } catch (err) {
-      logger.warn(`Error fetching ID data`, err)
-      id.error = true
+      next(err)
     }
-    // CRS Referrals
-    const crsReferrals = await this.rpService.getCrsReferrals(
-      token,
-      req.sessionID,
-      prisonerData.personalDetails.prisonerNumber as string,
-      'FINANCE_AND_ID',
-    )
-
-    const assessmentData = await this.rpService.getAssessmentInformation(
-      token,
-      req.sessionID,
-      prisonerData.personalDetails.prisonerNumber as string,
-      'FINANCE_AND_ID',
-    )
-
-    const view = new FinanceIdView(prisonerData, crsReferrals, assessmentData)
-    res.render('pages/finance-id', { ...view.renderArgs, assessment, finance, id })
   }
 
   postAssessmentSubmitView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const params = req.body
-    const { prisonerNumber, assessmentDate, isBankAccountRequired, isIdRequired } = req.body
-    let idDocuments: object | null | undefined = null
-    idDocuments = req.body.idDocuments
-    if (idDocuments === null) {
-      idDocuments = []
-    }
-    if (typeof idDocuments === 'string') {
-      idDocuments = [idDocuments]
-    }
-
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
-        assessmentDate,
-        isBankAccountRequired,
-        isIdRequired,
-        idDocuments,
-        nomsId: prisonerNumber,
-      })
-      res.redirect(`/finance-and-id?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error fetching assessment:', error)
-      res.render('pages/assessment-confirmation', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
+      const { prisonerData } = req
+      const params = req.body
+      const { prisonerNumber, assessmentDate, isBankAccountRequired, isIdRequired } = req.body
+      let idDocuments: object | null | undefined = null
+      idDocuments = req.body.idDocuments
+      if (idDocuments === null) {
+        idDocuments = []
+      }
+      if (typeof idDocuments === 'string') {
+        idDocuments = [idDocuments]
+      }
+
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+      try {
+        await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
+          assessmentDate,
+          isBankAccountRequired,
+          isIdRequired,
+          idDocuments,
+          nomsId: prisonerNumber,
+        })
+        res.redirect(`/finance-and-id?prisonerNumber=${prisonerNumber}`)
+      } catch (error) {
+        const errorMessage = error.message
+        logger.error('Error fetching assessment:', error)
+        res.render('pages/assessment-confirmation', {
+          errorMessage,
+          prisonerData,
+          params,
+        })
+      }
+    } catch (err) {
+      next(err)
     }
   }
 
   postBankAccountSubmitView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const params = req.body
-    const { prisonerNumber, applicationDate, bankName } = req.body
-
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
-        applicationSubmittedDate: applicationDate,
-        bankName,
-      })
-      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error fetching finance data:', error)
-      res.render('pages/add-bank-account-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
+      const { prisonerData } = req
+      const params = req.body
+      const { prisonerNumber, applicationDate, bankName } = req.body
+
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+      try {
+        await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
+          applicationSubmittedDate: applicationDate,
+          bankName,
+        })
+        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+      } catch (error) {
+        const errorMessage = error.message
+        logger.error('Error fetching finance data:', error)
+        res.render('pages/add-bank-account-confirm', {
+          errorMessage,
+          prisonerData,
+          params,
+        })
+      }
+    } catch (err) {
+      next(err)
     }
   }
 
   postIdSubmitView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const params = req.body
-    const {
-      prisonerNumber,
-      idType,
-      applicationSubmittedDate,
-      haveGro,
-      isUkNationalBornOverseas,
-      countryBornIn,
-      isPriorityApplication,
-      caseNumber,
-      courtDetails,
-      driversLicenceType,
-      driversLicenceApplicationMadeAt,
-    } = req.body
-    const costOfApplication = Number(req.body.costOfApplication)
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
+      const { prisonerData } = req
+      const params = req.body
+      const {
+        prisonerNumber,
         idType,
         applicationSubmittedDate,
-        isPriorityApplication,
-        costOfApplication,
         haveGro,
         isUkNationalBornOverseas,
         countryBornIn,
+        isPriorityApplication,
         caseNumber,
         courtDetails,
         driversLicenceType,
         driversLicenceApplicationMadeAt,
-      })
-      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error fetching id data:', error)
-      res.render('pages/add-id-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
+      } = req.body
+      const costOfApplication = Number(req.body.costOfApplication)
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+      try {
+        await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
+          idType,
+          applicationSubmittedDate,
+          isPriorityApplication,
+          costOfApplication,
+          haveGro,
+          isUkNationalBornOverseas,
+          countryBornIn,
+          caseNumber,
+          courtDetails,
+          driversLicenceType,
+          driversLicenceApplicationMadeAt,
+        })
+        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+      } catch (error) {
+        const errorMessage = error.message
+        logger.error('Error fetching id data:', error)
+        res.render('pages/add-id-confirm', {
+          errorMessage,
+          prisonerData,
+          params,
+        })
+      }
+    } catch (err) {
+      next(err)
     }
   }
 
   postBankAccountUpdateView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const params = req.body
-    const {
-      prisonerNumber,
-      applicationId,
-      updatedStatus,
-      bankResponseDate,
-      isAddedToPersonalItems,
-      addedToPersonalItemsDate,
-      resubmissionDate,
-    } = req.body
-
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`, {
-        status: updatedStatus,
+      const { prisonerData } = req
+      const params = req.body
+      const {
+        prisonerNumber,
+        applicationId,
+        updatedStatus,
         bankResponseDate,
-        isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+        isAddedToPersonalItems,
         addedToPersonalItemsDate,
         resubmissionDate,
-      })
-      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error updating banking application:', error)
-      res.render('pages/add-bank-account-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
+      } = req.body
+
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+      try {
+        await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`, {
+          status: updatedStatus,
+          bankResponseDate,
+          isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+          addedToPersonalItemsDate,
+          resubmissionDate,
+        })
+        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+      } catch (error) {
+        const errorMessage = error.message
+        logger.error('Error updating banking application:', error)
+        res.render('pages/add-bank-account-confirm', {
+          errorMessage,
+          prisonerData,
+          params,
+        })
+      }
+    } catch (err) {
+      next(err)
     }
   }
 
   postIdUpdateView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const params = req.body
-    const {
-      prisonerNumber,
-      applicationId,
-      isAddedToPersonalItems,
-      addedToPersonalItemsDate,
-      updatedStatus,
-      statusUpdateDate,
-      dateIdReceived,
-    } = req.body
-
-    const refundAmount = Number(req.body.refundAmount)
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, {
-        status: updatedStatus,
+      const { prisonerData } = req
+      const params = req.body
+      const {
+        prisonerNumber,
+        applicationId,
         isAddedToPersonalItems,
         addedToPersonalItemsDate,
+        updatedStatus,
         statusUpdateDate,
         dateIdReceived,
-        refundAmount,
-      })
-      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error updating id application:', error)
-      res.render('pages/add-id-update-status-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
+      } = req.body
+
+      const refundAmount = Number(req.body.refundAmount)
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+      try {
+        await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, {
+          status: updatedStatus,
+          isAddedToPersonalItems,
+          addedToPersonalItemsDate,
+          statusUpdateDate,
+          dateIdReceived,
+          refundAmount,
+        })
+        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+      } catch (error) {
+        const errorMessage = error.message
+        logger.error('Error updating id application:', error)
+        res.render('pages/add-id-update-status-confirm', {
+          errorMessage,
+          prisonerData,
+          params,
+        })
+      }
+    } catch (err) {
+      next(err)
     }
   }
 
@@ -554,15 +578,18 @@ export default class FinanceIdController {
         res.render('pages/add-bank-account-confirm', { prisonerData, params, req })
       }
     }
-
-    if (confirmationType === 'addAccount') {
-      validateNewAccount()
-    }
-    if (confirmationType === 'resubmit' || applicationType === 'resubmit') {
-      validateResubmit()
-    }
-    if (confirmationType === 'updateStatus') {
-      validateUpdate()
+    try {
+      if (confirmationType === 'addAccount') {
+        validateNewAccount()
+      }
+      if (confirmationType === 'resubmit' || applicationType === 'resubmit') {
+        validateResubmit()
+      }
+      if (confirmationType === 'updateStatus') {
+        validateUpdate()
+      }
+    } catch (err) {
+      next(err)
     }
   }
 
@@ -588,76 +615,80 @@ export default class FinanceIdController {
       return regex.test(str)
     }
 
-    const costIsValid: boolean = checkIsValidCurrency(<string>costOfApplication)
+    try {
+      const costIsValid: boolean = checkIsValidCurrency(<string>costOfApplication)
 
-    if (!costOfApplication || !costIsValid) {
-      const costMessage = 'Enter the cost of application'
-      const costIsNotValidMessage = 'Application cost can only include pounds and pence'
-      const errorMsg = {
-        costOfApplication: costOfApplication ? null : `${costMessage}`,
-        costIsValid: costIsValid ? null : `${costIsNotValidMessage}`,
+      if (!costOfApplication || !costIsValid) {
+        const costMessage = 'Enter the cost of application'
+        const costIsNotValidMessage = 'Application cost can only include pounds and pence'
+        const errorMsg = {
+          costOfApplication: costOfApplication ? null : `${costMessage}`,
+          costIsValid: costIsValid ? null : `${costIsNotValidMessage}`,
+        }
+        res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
+        return
       }
-      res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
-      return
-    }
-    if (
-      (idType === 'Birth certificate' ||
-        idType === 'Marriage certificate' ||
-        idType === 'Civil partnership certificate') &&
-      (!haveGro || !isUkNationalBornOverseas || !isPriorityApplication)
-    ) {
-      const message = 'Select an option'
-      const errorMsg = {
-        haveGro: haveGro ? null : `${message}`,
-        isUkNationalBornOverseas: isUkNationalBornOverseas ? null : `${message}`,
-        isPriorityApplication: isPriorityApplication ? null : `${message}`,
+      if (
+        (idType === 'Birth certificate' ||
+          idType === 'Marriage certificate' ||
+          idType === 'Civil partnership certificate') &&
+        (!haveGro || !isUkNationalBornOverseas || !isPriorityApplication)
+      ) {
+        const message = 'Select an option'
+        const errorMsg = {
+          haveGro: haveGro ? null : `${message}`,
+          isUkNationalBornOverseas: isUkNationalBornOverseas ? null : `${message}`,
+          isPriorityApplication: isPriorityApplication ? null : `${message}`,
+        }
+        res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
+        return
       }
-      res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
-      return
-    }
-    if (
-      (idType === 'Birth certificate' ||
-        idType === 'Marriage certificate' ||
-        idType === 'Civil partnership certificate') &&
-      isUkNationalBornOverseas === 'true' &&
-      countryBornIn === ''
-    ) {
-      const countryBornMessage = 'Select a country'
-      const errorMsg = {
-        countryBornIn: countryBornIn ? null : `${countryBornMessage}`,
+      if (
+        (idType === 'Birth certificate' ||
+          idType === 'Marriage certificate' ||
+          idType === 'Civil partnership certificate') &&
+        isUkNationalBornOverseas === 'true' &&
+        countryBornIn === ''
+      ) {
+        const countryBornMessage = 'Select a country'
+        const errorMsg = {
+          countryBornIn: countryBornIn ? null : `${countryBornMessage}`,
+        }
+        res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
+        return
       }
-      res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
-      return
-    }
-    if (idType === 'Adoption certificate' && (!haveGro || !isPriorityApplication)) {
-      const message = 'Select an option'
-      const errorMsg = {
-        haveGro: haveGro ? null : `${message}`,
-        isPriorityApplication: isPriorityApplication ? null : `${message}`,
+      if (idType === 'Adoption certificate' && (!haveGro || !isPriorityApplication)) {
+        const message = 'Select an option'
+        const errorMsg = {
+          haveGro: haveGro ? null : `${message}`,
+          isPriorityApplication: isPriorityApplication ? null : `${message}`,
+        }
+        res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
+        return
       }
-      res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
-      return
-    }
-    if (idType === 'Divorce decree absolute certificate' && (!caseNumber || !courtDetails)) {
-      const caseNumberMessage = 'Enter a case number'
-      const courtDetailMessage = 'Enter court details'
-      const errorMsg = {
-        caseNumber: caseNumber ? null : `${caseNumberMessage}`,
-        courtDetails: courtDetails ? null : `${courtDetailMessage}`,
+      if (idType === 'Divorce decree absolute certificate' && (!caseNumber || !courtDetails)) {
+        const caseNumberMessage = 'Enter a case number'
+        const courtDetailMessage = 'Enter court details'
+        const errorMsg = {
+          caseNumber: caseNumber ? null : `${caseNumberMessage}`,
+          courtDetails: courtDetails ? null : `${courtDetailMessage}`,
+        }
+        res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
+        return
       }
-      res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
-      return
-    }
-    if (idType === 'Driving licence' && (!driversLicenceApplicationMadeAt || !driversLicenceType)) {
-      const errorMsg = {
-        driversLicenceType: driversLicenceType === '' ? 'Choose a driving licence type' : null,
-        driversLicenceApplicationMadeAt:
-          driversLicenceApplicationMadeAt !== '' ? null : 'Choose where application was made',
+      if (idType === 'Driving licence' && (!driversLicenceApplicationMadeAt || !driversLicenceType)) {
+        const errorMsg = {
+          driversLicenceType: driversLicenceType === '' ? 'Choose a driving licence type' : null,
+          driversLicenceApplicationMadeAt:
+            driversLicenceApplicationMadeAt !== '' ? null : 'Choose where application was made',
+        }
+        res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
+        return
       }
-      res.render('pages/add-id-further', { prisonerData, params, req, errorMsg })
-      return
+      res.render('pages/add-id-confirm', { prisonerData, params, req })
+    } catch (err) {
+      next(err)
     }
-    res.render('pages/add-id-confirm', { prisonerData, params, req })
   }
 
   getAssessmentView: RequestHandler = (req, res, next) => {
@@ -717,6 +748,11 @@ export default class FinanceIdController {
   }
 
   getConfirmAddAnIdStatusView: RequestHandler = (req, res, next) => {
+    function checkIsValidCurrency(str: string): boolean {
+      const regex = /^[0-9]+(\.[0-9]{2})?$/
+      return regex.test(str)
+    }
+
     const { prisonerData } = req
     const params = req.query
 
@@ -731,11 +767,6 @@ export default class FinanceIdController {
       dateIdReceivedYear,
       refundAmount,
     } = params
-
-    function checkIsValidCurrency(str: string): boolean {
-      const regex = /^[0-9]+(\.[0-9]{2})?$/
-      return regex.test(str)
-    }
 
     const costIsValid: boolean = checkIsValidCurrency(<string>refundAmount)
     const isValidDateIdReceivedDate = isDateValid(`${dateIdReceivedYear}-${dateIdReceivedMonth}-${dateIdReceivedDay}`)

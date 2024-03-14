@@ -12,13 +12,17 @@ export default class AssessmentCompleteController {
   }
 
   postView: RequestHandler = async (req, res, next) => {
-    const { prisonerData } = req
-    const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
-    const response = await this.rpService.submitAssessment(req.user.token, req.sessionID, prisonerNumber)
-    if (response.error) {
-      next(new Error())
-    } else {
-      res.redirect(`/assessment-complete?prisonerNumber=${prisonerNumber}`)
+    try {
+      const { prisonerData } = req
+      const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
+      const response = await this.rpService.submitAssessment(req.user.token, req.sessionID, prisonerNumber)
+      if (response.error) {
+        next(new Error())
+      } else {
+        res.redirect(`/assessment-complete?prisonerNumber=${prisonerNumber}`)
+      }
+    } catch (err) {
+      next(err)
     }
   }
 }

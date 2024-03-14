@@ -49,28 +49,11 @@ export default class AddAppointmentController {
   }
 
   postAppointmentView: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const params = req.body
-    const {
-      prisonerNumber,
-      appointmentType,
-      appointmentTitle,
-      organisation,
-      contact,
-      dateAndTime,
-      appointmentDuration,
-      notes,
-      buildingName,
-      buildingNumber,
-      streetName,
-      district,
-      town,
-      county,
-      postcode,
-    } = req.body
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     try {
-      await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`, {
+      const { prisonerData } = req
+      const params = req.body
+      const {
+        prisonerNumber,
         appointmentType,
         appointmentTitle,
         organisation,
@@ -78,25 +61,46 @@ export default class AddAppointmentController {
         dateAndTime,
         appointmentDuration,
         notes,
-        location: {
-          buildingName,
-          buildingNumber,
-          streetName,
-          district,
-          town,
-          county,
-          postcode,
-        },
-      })
-      res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#appointments`)
-    } catch (error) {
-      const errorMessage = error.message
-      logger.error('Error posting appointment data:', error)
-      res.render('pages/add-appointment-confirm', {
-        errorMessage,
-        prisonerData,
-        params,
-      })
+        buildingName,
+        buildingNumber,
+        streetName,
+        district,
+        town,
+        county,
+        postcode,
+      } = req.body
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+      try {
+        await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`, {
+          appointmentType,
+          appointmentTitle,
+          organisation,
+          contact,
+          dateAndTime,
+          appointmentDuration,
+          notes,
+          location: {
+            buildingName,
+            buildingNumber,
+            streetName,
+            district,
+            town,
+            county,
+            postcode,
+          },
+        })
+        res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#appointments`)
+      } catch (error) {
+        const errorMessage = error.message
+        logger.error('Error posting appointment data:', error)
+        res.render('pages/add-appointment-confirm', {
+          errorMessage,
+          prisonerData,
+          params,
+        })
+      }
+    } catch (err) {
+      next(err)
     }
   }
 }
