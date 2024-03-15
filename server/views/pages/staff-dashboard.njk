@@ -64,10 +64,10 @@
               {% if not pathwayView and resettlementAssessmentEnabled %}
                 <div class="govuk-grid-column-one-quarter">
                   <div class="govuk-form-group">
-                    <label class="govuk-label" for="assessmentRequired">BCST2 assessment</label>
+                    <label class="govuk-label" for="assessmentRequired">BCST2 report</label>
                     <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
                       <option {% if assessmentRequired == "" %} selected {% endif %} value="">All statuses</option>
-                      <option {% if assessmentRequired == "true" %} selected {% endif %} value="true">Assessment required</option>
+                      <option {% if assessmentRequired == "true" %} selected {% endif %} value="true">Report required</option>
                     </select>
                   </div>
                 </div>

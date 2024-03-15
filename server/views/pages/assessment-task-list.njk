@@ -58,9 +58,9 @@
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
-      <p>Complete each of the resettlement pathway by entering the answers gathered in the assessment and setting a status to indicate whether the prisoner needs and accepts support. </p>
+      <p>Complete each of the resettlement pathway by entering the answers gathered in the report and setting a status to indicate whether the prisoner needs and accepts support. </p>
       <p class="govuk-!-padding-bottom-4">Case notes can also be added, which will display in DPS and nDelius.</p>
-      <h2>BCST2 assessment</h2>
+      <h2>BCST2 report</h2>
       {% if assessmentsSummary.error %}
         <div class="govuk-error-summary" data-module="govuk-error-summary">
           <div role="alert">
@@ -93,7 +93,7 @@
           <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
           <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
           <button type="submit" {% if not BCST2Completed %}disabled{% endif %} aria-disabled="true" class="govuk-button" data-module="govuk-button">
-            Submit assessment
+            Submit report
           </button>
         </div>
       </form>
