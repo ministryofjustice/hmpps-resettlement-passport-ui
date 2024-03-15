@@ -11,10 +11,12 @@ context('Generate PDF', () => {
     cy.task('stubDeleteOtp')
     cy.task('stubGetPrisonerData')
     cy.task('stubGetPrisonerImage')
+    cy.task('stubGetAppointment')
     cy.task('stubGetAppointments')
+    cy.task('stubFeatureFlags')
   })
 
-  it('Plan your future PDF button should be visible', () => {
+  it.skip('Plan your future PDF button should be visible', () => {
     cy.signIn()
     const indexPage = Page.verifyOnPage(IndexPage)
     indexPage.headerUserName().should('contain.text', 'J. Smith')

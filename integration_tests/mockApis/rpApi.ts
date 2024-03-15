@@ -206,6 +206,19 @@ const stubGetAppointments = () =>
     },
   })
 
+const stubGetAppointment = () =>
+  stubFor({
+    request: {
+      method: 'GET',
+      url: `/rpApi/resettlement-passport/prisoner/G4161UF/appointment`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: mockedAppointmentsResponse(getTomorrowsDate())[0],
+    },
+  })
+
 const stubDeleteOtp = () =>
   stubFor({
     request: {
@@ -235,6 +248,7 @@ const stubCreateOtp = () =>
 export default {
   stubGetPrisoners,
   stubGetAppointments,
+  stubGetAppointment,
   stubDeleteOtp,
   stubCreateOtp,
   stubGetPrisonerData,

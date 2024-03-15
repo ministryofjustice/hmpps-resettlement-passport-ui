@@ -1,23 +1,27 @@
 {% macro tasksDetails(prisonerNumber, tasksViewEnabled) %}
-  <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-      <h3 class="app-summary-card__title">
+  {% if tasksViewEnabled == true %}
+    <div class="govuk-grid-column-one-third">
+      <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
+        <header class="app-summary-card__header">
+          <h3 class="app-summary-card__title">
         Actions:
       </h3>
-    </header>
-    <div class="app-summary-card__body">
-      <div class="govuk-form-group govuk-!-margin-0">
-        <input type="hidden" id="updated" name="updated" value="today">
-        <input type="hidden" id="pathway" name="pathway" value="attitudes">
-        <a id="generate-pdf-task-btn"  class="govuk-button govuk-button--primary" href="/print/packPdf?prisonerNumber={{prisonerNumber}}" target="_blank">
+        </header>
+        <div class="app-summary-card__body">
+          <div class="govuk-form-group govuk-!-margin-0">
+            <input type="hidden" id="updated" name="updated" value="today">
+            <input type="hidden" id="pathway" name="pathway" value="attitudes">
+            <a id="generate-pdf-task-btn"  class="govuk-button govuk-button--primary" href="/print/packPdf?prisonerNumber={{prisonerNumber}}" target="_blank">
           Plan Your Future pack PDF
         </a>
-      </div>
-      <div class="govuk-form-group govuk-!-margin-0">
-        <a id="generate-otp-task-btn" class="govuk-button govuk-button--primary" href="/print/otp?prisonerNumber={{prisonerNumber}}">
+          </div>
+          <div class="govuk-form-group govuk-!-margin-0">
+            <a id="generate-otp-task-btn" class="govuk-button govuk-button--primary" href="/print/otp?prisonerNumber={{prisonerNumber}}">
           Generate new OTP
         </a>
-      </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
+  {% endif %}
 {% endmacro %}

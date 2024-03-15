@@ -8,20 +8,6 @@ services:
     ports:
       - '6379:6379'
 
-  localstack:
-    image: localstack/localstack:3
-    networks:
-      - hmpps_int
-    container_name: localstack-resettlement-passport-ui
-    ports:
-      - "4565:4566"
-    environment:
-      - SERVICES=s3
-      - DEBUG=1
-    volumes:
-      - "./localstack:/etc/localstack/init/ready.d"
-      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
-
   wiremock:
     image: wiremock/wiremock
     networks:
@@ -31,23 +17,5 @@ services:
     ports:
       - "9091:8080"
   
-  gotenberg:
-    image: gotenberg/gotenberg:7.7.0
-    networks:
-      - hmpps_int
-    container_name: gotenberg_int
-    ports:
-      - "3001:3001"
-    command:
-      - "gotenberg"
-      - "--api-port=3001"
-      - "--chromium-ignore-certificate-errors"
-      - "--api-timeout=30s"
-      - "--pdfengines-engines=pdftk"
-      - "--uno-listener-restart-threshold=0" #disables uno listener
-    restart: always
-    healthcheck:
-      test: [ 'CMD', 'curl', '-f', 'http://localhost:3001/health' ]
-
 networks:
   hmpps_int:
