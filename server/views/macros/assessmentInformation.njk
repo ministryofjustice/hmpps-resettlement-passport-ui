@@ -15,7 +15,7 @@
       <div class="app-summary-card__body">
         <table class="govuk-table">
           <tbody class="govuk-table__body">
-            {% for questionAnswer in assessmentData.questionsAndAnswers %}
+            {% for questionAnswer in assessmentData.latestAssessment.questionsAndAnswers %}
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
                 <td class="govuk-table__cell">{{ questionAnswer.answer }}</td>
@@ -26,7 +26,30 @@
             {% endfor %}
           </tbody>
         </table>
-        <p class="app-summary-card__hint">Last updated: {{ assessmentData.lastUpdated | formatDate('long') }} by {{ assessmentData.updatedBy }}</p>
+        <p class="app-summary-card__hint">{% if assessmentData.originalAssessment %}Last updated:{% else %}Submitted:{% endif %} {{ assessmentData.latestAssessment.lastUpdated | formatDate('long') }} by {{ assessmentData.latestAssessment.updatedBy }}</p>
+        {% if assessmentData.originalAssessment %}
+          <details class="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">
+                View original version
+              </span>
+            </summary>
+            <div class="govuk-details__text">
+              <h3 class="govuk-!-margin-bottom-3">Original assessment information</h3>
+              <table class="govuk-table">
+                <tbody class="govuk-table__body">
+                {% for questionAnswer in assessmentData.originalAssessment.questionsAndAnswers %}
+                  <tr class="govuk-table__row">
+                    <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
+                    <td class="govuk-table__cell">{{ questionAnswer.answer }}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <p class="app-summary-card__hint">Submitted: {{ assessmentData.originalAssessment.lastUpdated | formatDate('long') }} by {{ assessmentData.originalAssessment.updatedBy }}</p>
+            </div>
+          </details>
+        {% endif %}
       </div>
     </section>
   {% endif %}

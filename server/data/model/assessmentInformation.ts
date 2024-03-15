@@ -1,11 +1,18 @@
 type QuestionsAndAnswers = {
   questionTitle: string
-  answer: string
+  answer?: string
+  originalPageId: string
 }
 
 export type AssessmentsInformation = {
   error?: string
-  lastUpdated?: string
-  updatedBy?: string
-  questionsAndAnswers?: QuestionsAndAnswers[]
+  originalAssessment?: Assessment
+  latestAssessment?: Assessment
+}
+
+type Assessment = {
+  assessmentType: string
+  lastUpdated: string
+  updatedBy: string
+  questionsAndAnswers: QuestionsAndAnswers[]
 }
