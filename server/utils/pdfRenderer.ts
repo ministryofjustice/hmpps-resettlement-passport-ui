@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from 'express'
 import GotenbergClient, { PdfOptions } from '../data/gotenbergClient'
 import logger from '../../logger'
@@ -9,19 +10,14 @@ import logger from '../../logger'
  * callback function to pass rendered HTML view into the Gotenberg client
  * to produce and return a PDF document.
  */
-
-// TODO: Revisit to fully define these types for the "any" placeholders
 export default function pdfRenderer(client: GotenbergClient) {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   return (req: Request, res: Response, next: NextFunction) => {
     res.renderPDF = (
       view: string,
-      // Define the pageData as - { url: string, report: report, otherData: type? }
       pageData: Record<string, unknown>,
       options: { filename: string; pdfOptions: PdfOptions } = { filename: 'document.pdf', pdfOptions: {} },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): any => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       res.render(view, pageData, (error: any, html: any) => {
         if (error) {
           throw error

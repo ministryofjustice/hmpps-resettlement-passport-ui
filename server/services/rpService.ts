@@ -253,7 +253,7 @@ export default class RpService {
 
     try {
       return (await this.rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerId}/appointments`,
+        `/resettlement-passport/prisoner/${prisonerId}/appointments?futureOnly=true`,
       )) as Promise<Appointments>
     } catch (err) {
       logger.warn(`Session: ${sessionId} Cannot retrieve appointments info for ${prisonerId} ${err.status} ${err}`)
@@ -271,6 +271,18 @@ export default class RpService {
       return (await this.rpClient.get(`/resettlement-passport/popUser/${prisonerId}/otp`)) as Promise<OtpDetails>
     } catch (err) {
       logger.warn(`Session: ${sessionId} Cannot retrieve otp info for ${prisonerId} ${err.status} ${err}`)
+      return null
+    }
+  }
+
+  async recreateOtp(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+
+    try {
+      await this.rpClient.delete(`/resettlement-passport/popUser/${prisonerId}/otp`)
+      return (await this.rpClient.post(`/resettlement-passport/popUser/${prisonerId}/otp`, {})) as Promise<OtpDetails>
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot recreate otp for ${prisonerId} ${err.status} ${err}`)
       return null
     }
   }

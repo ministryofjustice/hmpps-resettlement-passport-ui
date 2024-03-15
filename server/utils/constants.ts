@@ -122,6 +122,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   ADD_APPOINTMENTS: 'addAppointments',
   DELIUS_CASE_NOTES: 'nDeliusCaseNotes',
   RESETTLEMENT_ASSESSMENT: 'resettlementAssessment',
+  TASKS_VIEW: 'tasksView',
 }
 
 export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'

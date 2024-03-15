@@ -101,6 +101,12 @@ Or run tests with the cypress UI:
 
 `npm run int-test-ui`
 
+
+### Some useful commands
+`npm run format` automatically lint check and format all TS files
+`./int-test` run integrations tests
+
+
 ## Change log
 
 A changelog for the service is available [here](./CHANGELOG.md)

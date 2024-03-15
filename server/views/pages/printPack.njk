@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8"/>
     <style type="text/css" nonce="{{ cspNonce }}">
- 
+
       body {
         margin: 0;
-        font-family: "Source Sans Pro", sans-serif;
+        font-family: sans-serif;
         background: white;
       }
       .main-wrapper {
@@ -15,8 +15,8 @@
         margin-left: 30px;
         margin-right: 30px;
       }
-      .nomargin{
-        margin: 0px;
+      .nomargin {
+        margin: 0;
       }
       .row {
         display: flex;
@@ -43,8 +43,9 @@
 
       .header__container {
         margin: 0;
-        background-color: #f3f2f1;
-        height: 150px;
+        border-bottom: 5px solid #1d70b8;
+        border-bottom-style: solid;
+        height: 130px;
         margin-bottom: 20px;
         padding: 30px 30px 10px;
       }
@@ -59,6 +60,7 @@
       }
       .code-text {
         padding-left: 20px;
+        padding-right: 20px;
       }
       .code-xl {
         font-weight: bold;
@@ -76,23 +78,24 @@
         margin-bottom: 20px;
         width: 100%;
         background-color: #f3f2f1;
-        height: 140px;
+        height: 250px;
         padding: 5px;
       }
       .center {
         text-align: center;
       }
       .page-end {
-        height: 90px;
+        height: 72px;
         display: block;
+      }
+      .page-number-text {
+        margin-left: 30px;
       }
       .appointments-break {
         height: 160px;
         display: block;
       }
     </style>
-
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 
   </head>
 
@@ -102,16 +105,15 @@
 
     <div class="main-wrapper">
       <div class="row">
-        <div class="two-thirds">
+        <div class="">
           <h2 class="text-l">
-          Go to www.plan-your-future.gov.uk for information and support to help you in the days after your release.
+          Plan your future - online
         </h2>
-          <p class="text">
-        You will need to log in to:
-      </p>
+          <p>Plan your future is an online service for prison leavers allowing you to view:
+          </p>
           <ul>
-            <li class="text">See your licence conditions</li>
-            <li class="text">Keep track of your appointments</li>
+            <li class="text">details of your appointments</li>
+            <li class="text">any licence conditions you have</li>
           </ul>
         </div>
       </div>
@@ -119,35 +121,45 @@
       <div class="row">
         <div class="two-thirds">
           <p class="text">
-        To log in you will need a mobile phone and and email address.
+            <b>Get started</b>
+          </p>
+          <p class="text">
+            Go to: <u>www.plan-you-future.gov.uk</u></p>
+          <p class="text">
+        To sign in you’ll need:
       </p>
-          <ul class="numbered-list">
-            <li class="text">Go to www.plan-your-future.gov.uk and select 'Start'</li>
-            <li class="text">Follow the instructions</li>
-            <li class="text">When prompted enter your personal login code</li>
+          <ul>
+            <li class="text">a mobile phone to receive security codes</li>
+            <li class="text">an email address</li>
+            <li class="text">your login code</li>
           </ul>
         </div>
       </div>
 
       <div class="codebox">
         <p class="code-text">
-          Your personal login code is:
+          <b>Your login code:</b>
         </p>
         <p class="code-xl center">
-            {{ otpData.otp }}
+          {{ otpData.otp }}
+        </p>
+        <p class="code-text">
+           This code expires on {{otpData.expiryDate | formatDateExtended }}.
+        </p>
+        <p class="code-text">
+          <b>Login code not working:</b>
+          <br>
+          If this login code has expired or is not working, your Offender Manager will be able to give you a new one. 
         </p>
       </div>
 
       <div class="row">
-        <div class="two-thirds">
+        <div class="">
           <p class="text">
             <b>Important</b>
           </p>
           <p class="text">
-          Your appointments may change, so log in regularly to keep up to date.
-        </p>
-          <p class="text">
-          Do not try to log in if you are not allowed to use the internet.
+          Only use Plan your future online if you are allowed to use the internet.
         </p>
         </div>
       </div>
@@ -155,6 +167,7 @@
     </div>
 
     <div class="page-end">
+      <p class="page-number-text">1 of 3</p>
     </div>
 
     <!-- Second Page -->
@@ -167,46 +180,51 @@
             Appointments
           </h2>
           <p class="text">
-            Here are your next 8 appointments. Any of these appointments may have changed since this was printed. <br>
+            {{appointments[0].date | formatDate}} to {{appointments[appointments.length - 1].date | formatDate}}
+          </p>
+          <p class="text">
+            Any of these appointments may have changed since this was printed. <br>
             Please check in advance that the details are still correct.
           </p>
         </div>
       </div>
-      
+
       {% for appointment in appointments %}
-      <!-- appointment -->
-      <div class="appointment">
-        <div class="one-thirds">
-          <h3 class="text-xl">
-          {{appointment.date | formatDateExtended}}
-        </h3>
-          <p class="">
-            <p class="nomargin">
-            <b>{{appointment.time | formatTimeWithDuration }}
-            {% if appointment.duration > 0 %}
+        <!-- appointment -->
+        <div class="appointment">
+          <div class="one-thirds">
+            <h3 class="text-xl">
+              {{appointment.date | formatDateExtended}}
+            </h3>
+            <p class="">
+              <p class="nomargin">
+                <b>{{appointment.time | formatTimeWithDuration }}
+                  {% if appointment.duration > 0 %}
              to {{ appointment.time | formatTimeWithDuration(appointment.duration) }}
-            {% endif %}
-            </b>
-            </p>
-            <p class="nomargin">
-              <b>{{appointment.title}}</b>
-            </p>
-            <p class="nomargin">
-            {{ appointment.location | formatAddress | safe}}
-            </p>
+                  {% endif %}
+                </b>
+              </p>
+              <p class="nomargin">
+                <b>{{appointment.title}}</b>
+              </p>
+              <p class="nomargin">
+                {{ appointment.location | formatAddress | safe}}
+              </p>
             Contact: {{appointment.contact}}
-            {% if appointment.contactEmail %}
+              {% if appointment.contactEmail %}
                 (email: {{appointment.contactEmail}})
             {% endif %}
-          </p>
+            </p>
+          </div>
         </div>
-      </div>
-      {% if loop.index == 3 %}
-        <div class="appointments-break">
-        </div>
-      {% endif %}
-    {% endfor %}
+        {% if loop.index == 3 %}
+          <div class="appointments-break">
+            <p>2 of 3</p>
+          </div>
+        {% endif %}
+      {% endfor %}
 
     </div>
+    <p class="page-number-text">3 of 3</p>
   </body>
 </html>
