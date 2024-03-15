@@ -8,6 +8,7 @@
 {% from "../macros/checkbox.njk" import checkbox %}
 {% from "../macros/address.njk" import address %}
 {% from "../macros/shortText.njk" import shortText %}
+{% from "../macros/reportSummary.njk" import reportSummary %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -52,6 +53,10 @@
             {% if assessmentPage.id === "CHECK_ANSWERS" %}
               {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber) }}
             {% else %}
+
+              {% if assessmentPage.id === "ASSESSMENT_SUMMARY" %}
+                {{ reportSummary(pathway) }}
+              {% endif %}
 
               {% if assessmentPage.questionsAndAnswers.length > 1 %}
                 {% set multipleQuestionsOnPage = true %}
