@@ -1,0 +1,8 @@
+{% macro reportSummary(pathway) %}
+  {% set enumValue = pathway | getEnumValue %}
+  <h1 class="govuk-heading-l">{{ enumValue.name }} report summary</h1>
+  <div class="govuk-!-padding-top-6">
+    <b>{{ enumValue.name }} support needs</b>
+    <p class="govuk-hint">Select one option.</p>
+  </div>
+{% endmacro %}
