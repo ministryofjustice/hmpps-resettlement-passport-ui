@@ -29,11 +29,14 @@
   <main class="govuk-!-padding-top-8" id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
-        <a class="govuk-link govuk-link--no-visited-state" href="/assessment-task-list/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back</a>
+
+        {% if submitted or not edit %}
+          <button class="govuk-back-link assessment-back-button">Back</button>
+        {% endif %}
         
         {% if not assessmentPage.error %}
           {% if assessmentPage.id === "CHECK_ANSWERS" %}
-            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Check your answers before submitting the {{ (pathway | getEnumValue).name }} assessment</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Check your answers before submitting the {{ (pathway | getEnumValue).name }} report</h1>
           {% else %}
             <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.title or assessmentPage.questionsAndAnswers[0].question.title }}</h1>
           {% endif %}
@@ -93,10 +96,14 @@
           </form>
         {% else %}
           <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Something went wrong</h1>
-          <p>There was a problem loading the assessment. Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
+          <p>There was a problem loading the report. Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
         {% endif %}
       </div>
     </div>
   </main>
  
+{% endblock %}
+{% block bodyEnd %}
+  {{ super() }}
+  <script src="/assets/js/assessment-back-button.js"></script>
 {% endblock %}

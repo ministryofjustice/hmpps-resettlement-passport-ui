@@ -1,3 +1,17 @@
+.assessment-back-button {
+  display: none;
+  background: transparent;
+  border: none;
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration-thickness: 3px;
+  }
+}
+
+
 div.sticky {
   position: -webkit-sticky;
   position: sticky !important;

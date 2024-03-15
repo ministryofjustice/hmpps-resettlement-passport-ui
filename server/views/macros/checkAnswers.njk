@@ -8,7 +8,7 @@
     {% endif %}
   {% endfor %}
 
-  <h2 class="govuk-heading-m">{{ enumValue.name }} assessment</h2>
+  <h2 class="govuk-heading-m">{{ enumValue.name }} report</h2>
   <dl class="govuk-summary-list govuk-!-margin-bottom-9">
     {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
       {% if questionAnswer.question !== 'SUPPORT_NEEDS' and questionAnswer.question !== 'CASE_NOTE_SUMMARY' %}
