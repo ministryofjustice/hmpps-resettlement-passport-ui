@@ -42,7 +42,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
     }
 
     let displayText
-    if (type === 'RADIO' || type === 'DROPDOWN') {
+    if (type === 'RADIO') {
       displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
     } else if (type === 'CHECKBOX') {
       displayText = questionAndAnswer.question.options
@@ -93,7 +93,7 @@ const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => 
 export function getDisplayTextFromQandA(questionAndAnswer: QuestionsAndAnswers) {
   let displayText
   const { type } = questionAndAnswer.question
-  if (type === 'RADIO' || type === 'DROPDOWN') {
+  if (type === 'RADIO') {
     displayText = questionAndAnswer.question.options.find(
       answer => answer.id === questionAndAnswer.answer?.answer,
     )?.displayText

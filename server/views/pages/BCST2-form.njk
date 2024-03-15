@@ -4,9 +4,7 @@
 {% set mainClasses = "app-container govuk-body" %}
 {% from "../macros/radio.njk" import radio %}
 {% from "../macros/longText.njk" import longText %}
-{% from "../macros/dropDown.njk" import dropDown %}
 {% from "../macros/checkAnswers.njk" import checkAnswers %}
-{% from "../macros/listOfPeople.njk" import listOfPeople %}
 {% from "../macros/checkbox.njk" import checkbox %}
 {% from "../macros/address.njk" import address %}
 {% from "../macros/shortText.njk" import shortText %}
@@ -53,30 +51,27 @@
               {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber) }}
             {% else %}
 
+              {% if assessmentPage.questionsAndAnswers.length > 1 %}
+                {% set multipleQuestionsOnPage = true %}
+              {% endif %}
+
               {% for currentQuestionAndAnswer in assessmentPage.questionsAndAnswers %}
 
                 {# get answer to current question #}
                 {% set existingAnswer = currentQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
                 {% set currentIndex = loop.index %}
-                {% if currentIndex == 1 %}
-                  {% set isFirstQuestionOnPage = true %}
-                {% endif %}
 
                 {% if currentQuestionAndAnswer.question.type === 'RADIO' %}
-                  {{ radio(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
+                  {{ radio(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
-                  {{ longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
-                {% elif currentQuestionAndAnswer.question.type === 'DROPDOWN' %}
-                  {{ dropDown(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
+                  {{ longText(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'CHECKBOX' %}
-                  {{ checkbox(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
-                {% elif currentQuestionAndAnswer.question.type === 'LIST_OF_PEOPLE' %}
-                  {{ listOfPeople(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage) }}
+                  {{ checkbox(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'SHORT_TEXT' %}
-                  {{ shortText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
+                  {{ shortText(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'ADDRESS' %}
                   {% if not nextQuestionAndAnswer %}
-                    {{ address(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) }}
+                    {{ address(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
                   {% endif %}
                 {% else %}
                   <p class="govuk-error-message govuk-!-padding-top-6">There was a problem getting the next question.<br /> Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
@@ -88,6 +83,7 @@
             <input type="hidden" name="pathway" value="{{ pathway }}"/>
             <input type="hidden" name="currentPageId" value="{{ assessmentPage.id }}"/>
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+            <input type="hidden" name="edit" value="{{ edit }}"/>
             <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">
               {% if assessmentPage.id === 'CHECK_ANSWERS' %}
                 Confirm

@@ -1,14 +1,13 @@
 {% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
 
-{% macro longText(currentQuestionAndAnswer, existingAnswer, isFirstQuestionOnPage, validationErrors) %}
+{% macro longText(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) %}
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
 
-  <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }} govuk-!-padding-top-6">
-    {% if not isFirstQuestionOnPage %}
-      <b>{{ currentQuestionAndAnswer.question.title }}</b>
+  <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }} govuk-!-padding-top-3">
+    {% if multipleQuestionsOnPage %}
+      <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
     {% endif %}
-    
-    <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.subTitle }}</label>
+    <div class="govuk-hint" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     {% if validationError %}
       {{ validationErrorMessage(validationError.validationType)  }}
     {% endif %}
