@@ -13,7 +13,6 @@ context('Generate PDF', () => {
     cy.task('stubGetPrisonerImage')
     cy.task('stubGetAppointment')
     cy.task('stubGetAppointments')
-    cy.task('stubFeatureFlags')
   })
 
   it.skip('Plan your future PDF button should be visible', () => {

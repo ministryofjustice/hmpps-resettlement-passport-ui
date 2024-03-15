@@ -13,8 +13,6 @@ context('Generate Otp', () => {
     cy.task('stubGetPrisonerImage')
     cy.task('stubGetAppointment')
     cy.task('stubGetAppointments')
-    cy.task('stubFeatureFlags')
-    cy.task('stubFeatureFlags')
   })
 
   it('Otp can be generated successfully on user request', () => {
