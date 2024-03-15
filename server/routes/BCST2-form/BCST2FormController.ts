@@ -319,6 +319,7 @@ export default class BCST2FormController {
         },
         validationErrors,
         edit,
+        submitted,
       )
       return res.render('pages/BCST2-form', { ...view.renderArgs })
     } catch (err) {

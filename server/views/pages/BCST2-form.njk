@@ -30,7 +30,9 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
 
-        <button class="govuk-back-link assessment-back-button">Back</button>
+        {% if submitted or not edit %}
+          <button class="govuk-back-link assessment-back-button">Back</button>
+        {% endif %}
         
         {% if not assessmentPage.error %}
           {% if assessmentPage.id === "CHECK_ANSWERS" %}

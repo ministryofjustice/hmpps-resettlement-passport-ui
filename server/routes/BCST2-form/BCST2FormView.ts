@@ -10,6 +10,7 @@ export default class BCST2FormView implements View {
     private readonly allQuestionsAndAnswers: SubmittedInput,
     private readonly validationErrors: ValidationErrors,
     private readonly edit: boolean,
+    private readonly submitted: boolean,
     private readonly errors: ErrorMessage[] = [],
   ) {}
 
@@ -20,6 +21,7 @@ export default class BCST2FormView implements View {
     allQuestionsAndAnswers: SubmittedInput
     validationErrors: ValidationErrors
     edit: boolean
+    submitted: boolean
     errors: ErrorMessage[]
   } {
     return {
@@ -29,6 +31,7 @@ export default class BCST2FormView implements View {
       allQuestionsAndAnswers: this.allQuestionsAndAnswers,
       validationErrors: this.validationErrors,
       edit: this.edit,
+      submitted: this.submitted,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }
