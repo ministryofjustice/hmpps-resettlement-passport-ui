@@ -209,7 +209,7 @@ export default class BCST2FormController {
         ) as string[]
 
         // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
-        if (editedQuestionIds) {
+        if (editedQuestionIds && !validationErrors) {
           // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
           const nextPageQuestionIds =
             assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []
