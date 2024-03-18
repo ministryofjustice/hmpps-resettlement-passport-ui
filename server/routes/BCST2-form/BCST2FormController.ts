@@ -51,6 +51,8 @@ export default class BCST2FormController {
       const { token } = req.user
       const { pathway, currentPageId } = req.body
       const edit = req.body.edit === 'true'
+      const backButton = req.query.backButton === 'true'
+
       const store = new AssessmentStore(createRedisClient())
       const currentPage = await store.getCurrentPage(
         req.session.id,
@@ -105,7 +107,7 @@ export default class BCST2FormController {
       if (validationErrors) {
         const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
         return res.redirect(
-          `/BCST2/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}`,
+          `/BCST2/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}&backButton=${backButton}`,
         )
       }
 
@@ -113,7 +115,7 @@ export default class BCST2FormController {
         const { nextPageId } = nextPage
 
         return res.redirect(
-          `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}${editQueryString}`,
+          `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}${editQueryString}&backButton=${backButton}`,
         )
       }
       return next(new Error(nextPage.error))
@@ -129,6 +131,7 @@ export default class BCST2FormController {
       const { pathway, currentPageId } = req.params
       const edit = req.query.edit === 'true'
       const submitted = req.query.submitted === 'true'
+      const backButton = req.query.backButton === 'true'
       const validationErrorsString = req.query.validationErrors as string
       const validationErrors: ValidationErrors = validationErrorsString
         ? JSON.parse(decodeURIComponent(validationErrorsString))
@@ -320,6 +323,7 @@ export default class BCST2FormController {
         validationErrors,
         edit,
         submitted,
+        backButton,
       )
       return res.render('pages/BCST2-form', { ...view.renderArgs })
     } catch (err) {

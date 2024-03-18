@@ -31,7 +31,7 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
 
-        {% if submitted or not edit %}
+        {% if submitted or backButton or not edit %}
           <button class="govuk-back-link assessment-back-button">Back</button>
         {% endif %}
         
@@ -45,7 +45,7 @@
             {% if assessmentPage.id == 'CHECK_ANSWERS' %}
               action="/BCST2/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
             {% else %}
-              action="/BCST2-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+              action="/BCST2-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&backButton={{true if backButton or submitted}}"
             {% endif %}
             method="post"
           >
