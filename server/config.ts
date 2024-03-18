@@ -93,6 +93,9 @@ export default {
       agent: new AgentConfig(Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('COMPONENT_API_ENABLED', 'true') === 'true',
     },
+    gotenberg: {
+      apiUrl: get('GOTENBERG_API_URL', 'http://localhost:3005', requiredInProduction),
+    },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),
   enableApplicationInsights,

@@ -9,6 +9,8 @@ import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
 import { AssessmentsInformation } from '../data/model/assessmentInformation'
+import { Appointments } from '../data/model/appointment'
+import { OtpDetails } from '../data/model/otp'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {}
@@ -244,5 +246,44 @@ export default class RpService {
     }
 
     return assessmentsSummary
+  }
+
+  async getAppointments(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+
+    try {
+      return (await this.rpClient.get(
+        `/resettlement-passport/prisoner/${prisonerId}/appointments?futureOnly=true`,
+      )) as Promise<Appointments>
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve appointments info for ${prisonerId} ${err.status} ${err}`)
+      if (err.status === 404) {
+        return { error: ERROR_DICTIONARY.DATA_NOT_FOUND, results: [] }
+      }
+      return { error: ERROR_DICTIONARY.DATA_UNAVAILABLE, results: [] }
+    }
+  }
+
+  async getOtp(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+
+    try {
+      return (await this.rpClient.get(`/resettlement-passport/popUser/${prisonerId}/otp`)) as Promise<OtpDetails>
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve otp info for ${prisonerId} ${err.status} ${err}`)
+      return null
+    }
+  }
+
+  async recreateOtp(token: string, sessionId: string, prisonerId: string) {
+    await this.rpClient.setToken(token)
+
+    try {
+      await this.rpClient.delete(`/resettlement-passport/popUser/${prisonerId}/otp`)
+      return (await this.rpClient.post(`/resettlement-passport/popUser/${prisonerId}/otp`, {})) as Promise<OtpDetails>
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot recreate otp for ${prisonerId} ${err.status} ${err}`)
+      return null
+    }
   }
 }

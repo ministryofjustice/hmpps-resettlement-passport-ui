@@ -19,6 +19,7 @@ import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
 import bcst2FormRouter from './BCST2-form'
 import assessmentCompleteRouter from './assessment-complete'
+import printRouter from './print'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
 
@@ -39,6 +40,7 @@ export default function routes(services: Services): Router {
   assessmentTaskListRouter(router, services)
   bcst2FormRouter(router, services)
   assessmentCompleteRouter(router, services)
+  printRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 

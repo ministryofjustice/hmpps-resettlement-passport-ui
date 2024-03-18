@@ -1,4 +1,5 @@
 import { Callback } from 'nunjucks'
+import { addMinutes, format } from 'date-fns'
 import { PathwayStatus } from '../@types/express'
 import { ASSESSMENT_ENUMS_DICTIONARY, ENUMS_DICTIONARY, EnumValue } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
@@ -36,6 +37,26 @@ export const formatDate = (dateString: string, monthStyle: 'short' | 'long' = 's
   const date = new Date(dateString)
   const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: monthStyle, year: 'numeric' }
   return date.toLocaleDateString('en-GB', options)
+}
+
+export const formatDateExtended = (dateString: string): string => {
+  if (!dateString) return null
+  const date = new Date(dateString)
+  const options: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }
+  return date.toLocaleDateString('en-GB', options)
+}
+
+export function formatTimeWithDuration(inputTime: string, duration = 0): string {
+  if (!inputTime || inputTime?.length < 1) return null
+  const [hours, minutes, seconds] = inputTime.split(':').map(Number)
+
+  const dateObj = new Date()
+  dateObj.setHours(hours || 0)
+  dateObj.setMinutes(minutes || 0)
+  dateObj.setSeconds(seconds || 0)
+  const updatedDate = addMinutes(dateObj, duration)
+
+  return format(updatedDate, 'hh:mm a')
 }
 
 export const formatDateToIso = (dateString: string): string => {

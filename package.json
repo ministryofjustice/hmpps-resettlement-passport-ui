@@ -19,6 +19,10 @@
     "watch-node-feature": "export $(cat feature.env) && nodemon --watch dist/ $NODE_DEBUG_OPTION dist/server.js | bunyan -o short",
     "start-feature:dev": "concurrently -k -p \"[{name}]\" -n \"Views,TypeScript,Node,Sass\" -c \"yellow.bold,cyan.bold,green.bold,blue.bold\" \"npm run watch-views\" \"npm run watch-ts\" \"npm run watch-node-feature\" \"npm run watch-sass\"",
     "lint": "eslint . --cache --max-warnings 0",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "npx prettier 'server/**/*.ts' --check",
+    "prettier:fix": "npm run prettier -- --write",
+    "format": "npm run prettier:fix && npm run lint:fix",
     "typecheck": "tsc && tsc -p integration_tests",
     "test": "FEATURE_FLAG_ENABLED=false jest",
     "test:ci": "FEATURE_FLAG_ENABLED=false jest --runInBand",
@@ -93,7 +97,9 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.456.0",
+    "@cucumber/cucumber": "^9.3.0",
     "@ministryofjustice/frontend": "^1.8.0",
+    "@playwright/test": "^1.37.0",
     "agentkeepalive": "^4.3.0",
     "applicationinsights": "^2.7.2",
     "body-parser": "^1.20.2",
@@ -103,6 +109,7 @@
     "connect-flash": "^0.1.1",
     "connect-redis": "^7.1.0",
     "csurf": "^1.11.0",
+    "date-fns": "^3.4.0",
     "express": "^4.18.2",
     "express-prom-bundle": "^6.6.0",
     "express-session": "^1.17.3",
@@ -119,11 +126,9 @@
     "prom-client": "^14.2.0",
     "redis": "^4.6.7",
     "superagent": "^8.0.9",
+    "ts-node": "^10.9.1",
     "url-value-parser": "^2.2.0",
-    "uuid": "^9.0.0",
-    "@cucumber/cucumber": "^9.3.0",
-    "@playwright/test": "^1.37.0",
-    "ts-node": "^10.9.1"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/bunyan": "^1.8.8",

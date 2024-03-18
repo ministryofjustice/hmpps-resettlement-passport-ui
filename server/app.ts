@@ -15,12 +15,14 @@ import setUpStaticResources from './middleware/setUpStaticResources'
 import setUpWebRequestParsing from './middleware/setupRequestParsing'
 import setUpWebSecurity from './middleware/setUpWebSecurity'
 import setUpWebSession from './middleware/setUpWebSession'
-
+import GotenbergClient from './data/gotenbergClient'
+import pdfRenderer from './utils/pdfRenderer'
 import routes from './routes'
 import type { Services } from './services'
 import getFrontendComponents from './middleware/setUpFrontendComponents'
 import setUpEnvironmentName from './middleware/setUpEnvironmentName'
 import userMetricsAndLoggingMiddleware from './middleware/userMetricsAndLoggingMiddleware'
+import config from './config'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -44,6 +46,8 @@ export default function createApp(services: Services): express.Application {
   app.use(userMetricsAndLoggingMiddleware())
 
   app.get('*', getFrontendComponents(services))
+
+  app.use(pdfRenderer(new GotenbergClient(config.apis.gotenberg.apiUrl)))
   app.use(routes(services))
 
   app.use((req, res, next) => next(createError(404, 'Not found')))

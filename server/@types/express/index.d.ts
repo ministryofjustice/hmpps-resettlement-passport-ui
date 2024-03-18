@@ -22,6 +22,11 @@ export declare global {
       logout(done: (err: unknown) => void): void
       prisonerData: PrisonerData
     }
+
+    interface Response {
+      internalRedirect(url: string): void
+      renderPDF(view: string, pageData: Record<string, unknown>, options: Record<string, unknown>): void
+    }
   }
 }
 

@@ -14,5 +14,9 @@
   {
     "feature": "resettlementAssessment",
     "enabled": true
+  },
+  {
+    "feature": "tasksView",
+    "enabled": true
   }
 ]
