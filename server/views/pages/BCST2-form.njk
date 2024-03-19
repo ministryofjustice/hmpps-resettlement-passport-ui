@@ -37,7 +37,7 @@
         
         {% if not assessmentPage.error %}
           {% if assessmentPage.id === "CHECK_ANSWERS" %}
-            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Check your answers before submitting the {{ (pathway | getEnumValue).name }} report</h1>
+            <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Check your answers</h1>
           {% else %}
             <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">{{ assessmentPage.title or assessmentPage.questionsAndAnswers[0].question.title }}</h1>
           {% endif %}
