@@ -124,7 +124,8 @@
             <b>Get started</b>
           </p>
           <p class="text">
-            Go to: <u>www.plan-you-future.gov.uk</u></p>
+            Go to: <u>www.plan-you-future.gov.uk</u>
+          </p>
           <p class="text">
         To sign in you’ll need:
       </p>
@@ -167,7 +168,13 @@
     </div>
 
     <div class="page-end">
-      <p class="page-number-text">1 of 3</p>
+      <p class="page-number-text">
+        {% if appointments.length < 4 %}
+        1 of 2
+        {% else %}
+        1 of 3
+        {% endif %}
+      </p>
     </div>
 
     <!-- Second Page -->
@@ -179,13 +186,21 @@
           <h2 class="text-l">
             Appointments
           </h2>
-          <p class="text">
-            {{appointments[0].date | formatDateExtended}} to {{appointments[appointments.length - 1].date | formatDateExtended}}
-          </p>
-          <p class="text">
-            Any of these appointments may have changed since this was printed. <br>
-            Please check in advance that the details are still correct.
-          </p>
+
+          {% if appointments.length < 1 %}
+            <p class="text">
+                You have no appointments at the moment. <br>
+            </p>
+          {% else %}
+            <p class="text">
+              {{appointments[0].date | formatDateExtended}} to {{appointments[appointments.length - 1].date | formatDateExtended}}
+            </p>
+            <p class="text">
+                Any of these appointments may have changed since this was printed. <br>
+                Please check in advance that the details are still correct.
+              </p>
+          {% endif %}
+
         </div>
       </div>
 
@@ -196,6 +211,7 @@
             <h3 class="text-xl">
               {{appointment.date | formatDateExtended}}
             </h3>
+
             <p class="">
               <p class="nomargin">
                 <b>{{appointment.time | formatTimeWithDuration }}
@@ -204,6 +220,7 @@
                   {% endif %}
                 </b>
               </p>
+
               <p class="nomargin">
                 <b>{{appointment.title}}</b>
               </p>
@@ -219,12 +236,23 @@
         </div>
         {% if loop.index == 3 %}
           <div class="appointments-break">
-            <p>2 of 3</p>
+            {% if appointments.length > 3 %}
+              <p>2 of 3</p>
+            {% else %}
+              <p>2 of 2</p>
+            {% endif %}
+
           </div>
         {% endif %}
       {% endfor %}
 
     </div>
-    <p class="page-number-text">3 of 3</p>
+    {% if appointments.length == 0 %}
+      <p class="page-number-text">2 of 2</p>
+    {% endif %}
+    {% if appointments.length > 3 %}
+      <p class="page-number-text">3 of 3</p>
+    {% endif %}
+
   </body>
 </html>
