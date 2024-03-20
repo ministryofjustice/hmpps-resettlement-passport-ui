@@ -279,7 +279,6 @@ export default class RpService {
     await this.rpClient.setToken(token)
 
     try {
-      await this.rpClient.delete(`/resettlement-passport/popUser/${prisonerId}/otp`)
       return (await this.rpClient.post(`/resettlement-passport/popUser/${prisonerId}/otp`, {})) as Promise<OtpDetails>
     } catch (err) {
       logger.warn(`Session: ${sessionId} Cannot recreate otp for ${prisonerId} ${err.status} ${err}`)
