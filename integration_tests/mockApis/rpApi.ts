@@ -219,19 +219,6 @@ const stubGetAppointment = () =>
     },
   })
 
-const stubDeleteOtp = () =>
-  stubFor({
-    request: {
-      method: 'DELETE',
-      url: `/rpApi/resettlement-passport/popUser/G4161UF/otp`,
-    },
-    response: {
-      status: 200,
-      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-      jsonBody: {},
-    },
-  })
-
 const stubCreateOtp = () =>
   stubFor({
     request: {
@@ -249,7 +236,6 @@ export default {
   stubGetPrisoners,
   stubGetAppointments,
   stubGetAppointment,
-  stubDeleteOtp,
   stubCreateOtp,
   stubGetPrisonerData,
   stubGetPrisonerImage,

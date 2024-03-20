@@ -8,7 +8,6 @@ context('Generate PDF', () => {
     cy.task('stubAuthUser')
     cy.task('getUserActiveCaseLoad')
     cy.task('stubGetPrisoners')
-    cy.task('stubDeleteOtp')
     cy.task('stubGetPrisonerData')
     cy.task('stubGetPrisonerImage')
     cy.task('stubGetAppointment')
