@@ -274,6 +274,10 @@ export function formatAddress(location: AppointmentLocation): string {
   return address.trim()
 }
 
+export function formatAddressAndCheckboxAnswers(answer: string): string {
+  return (answer ?? '').split('\n').join('<br>')
+}
+
 export function getAnswerToCurrentQuestion(
   currentQuestionAndAnswer: QuestionsAndAnswers,
   allQuestionsAndAnswers: SubmittedInput,

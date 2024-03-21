@@ -18,7 +18,7 @@
             {% for questionAnswer in assessmentData.latestAssessment.questionsAndAnswers %}
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
-                <td class="govuk-table__cell">{{ questionAnswer.answer }}</td>
+                <td class="govuk-table__cell">{{ questionAnswer.answer | formatAddressAndCheckboxAnswers | safe }}</td>
                 <td class="govuk-table__cell">
                   <a href="/BCST2/pathway/{{ pathway | getEnumByName }}/page/{{ questionAnswer.originalPageId }}?prisonerNumber={{ prisonerNumber }}&edit=true&submitted=true">Change</a>
                 </td>
@@ -41,7 +41,7 @@
                 {% for questionAnswer in assessmentData.originalAssessment.questionsAndAnswers %}
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
-                    <td class="govuk-table__cell">{{ questionAnswer.answer }}</td>
+                    <td class="govuk-table__cell">{{ questionAnswer.answer | formatAddressAndCheckboxAnswers | safe  }}</td>
                   </tr>
                 {% endfor %}
                 </tbody>
@@ -54,4 +54,3 @@
     </section>
   {% endif %}
 {% endmacro %}
-
