@@ -1,6 +1,4 @@
 {% macro assessmentInformation(assessmentData, prisonerNumber, pathway) %}
-{% from "../macros/display-address.njk" import displayAddress %}
-
   {% if assessmentData.error %}
     <div class="govuk-error-summary" data-module="govuk-error-summary">
       <div role="alert">
@@ -15,30 +13,19 @@
         <span class="right"></span>
       </header>
       <div class="app-summary-card__body">
-       <table class="govuk-table">
-                 <tbody class="govuk-table__body">
-                 eduhoue
-                   {% for questionAnswer in assessmentData.latestAssessment.questionsAndAnswers %}
-                     <tr class="govuk-table__row">
-                       <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
-                       {% if questionAnswer.questionTitle === "Enter the address" %}
-                        <td class="govuk-table__cell">{{
-                           displayAddress(questionAnswer.answer.split("\n"))
-                           }}
-                        </td>
-                        {% elif questionAnswer.questionTitle === "What ID documents does the person in prison have?" %}
-                       <td class="govuk-table__cell">{{
-                            displayAddress(questionAnswer.answer.split("\n"))
-                            }}
-                       </td>
-                       {% endif %}
-                       <td class="govuk-table__cell">
-                         <a href="/BCST2/pathway/{{ pathway | getEnumByName }}/page/{{ questionAnswer.originalPageId }}?prisonerNumber={{ prisonerNumber }}&edit=true&submitted=true">Change</a>
-                       </td>
-                     </tr>
-                   {% endfor %}
-                 </tbody>
-               </table>
+        <table class="govuk-table">
+          <tbody class="govuk-table__body">
+            {% for questionAnswer in assessmentData.latestAssessment.questionsAndAnswers %}
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
+                <td class="govuk-table__cell">{{ questionAnswer.answer | formatAddressAndCheckboxAnswers | safe }}</td>
+                <td class="govuk-table__cell">
+                  <a href="/BCST2/pathway/{{ pathway | getEnumByName }}/page/{{ questionAnswer.originalPageId }}?prisonerNumber={{ prisonerNumber }}&edit=true&submitted=true">Change</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
         <p class="app-summary-card__hint">{% if assessmentData.originalAssessment %}Last updated:{% else %}Submitted:{% endif %} {{ assessmentData.latestAssessment.lastUpdated | formatDate('long') }} by {{ assessmentData.latestAssessment.updatedBy }}</p>
         {% if assessmentData.originalAssessment %}
           <details class="govuk-details">
@@ -54,14 +41,7 @@
                 {% for questionAnswer in assessmentData.originalAssessment.questionsAndAnswers %}
                   <tr class="govuk-table__row">
                     <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
-                    {% if questionAnswer.questionTitle === "Enter the address" %}
-                      <td class="govuk-table__cell">{{
-                        displayAddress(questionAnswer.answer.split("\n"))
-                        }}
-                      </td>
-                      {% else %}
-                    <td class="govuk-table__cell">{{ questionAnswer.answer }}</td>
-                    {% endif %}
+                    <td class="govuk-table__cell">{{ questionAnswer.answer | formatAddressAndCheckboxAnswers | safe  }}</td>
                   </tr>
                 {% endfor %}
                 </tbody>
