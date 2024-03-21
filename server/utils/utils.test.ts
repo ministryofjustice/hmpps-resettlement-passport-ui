@@ -8,6 +8,7 @@ import {
   formatCaseNoteText,
   getValidationError,
   formatTimeWithDuration,
+  formatAddressAndCheckboxAnswers,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -182,6 +183,18 @@ describe('format address', () => {
     ],
   ])('%s: formatAddress(%s)', (_: string, a: AppointmentLocation, expected: string) => {
     expect(formatAddress(a)).toEqual(expected)
+  })
+})
+
+describe('format address and checkbox answers to include line breaks', () => {
+  it.each([
+    ['Null input', null, ''],
+    ['No newline character in string', 'This is a test string', 'This is a test string'],
+    ['Single address information', '123 Main St\nApt 1\nCity', '123 Main St<br>Apt 1<br>City'],
+    ['Individual checkbox options', 'Option 1\nOption 2\nOption 3', 'Option 1<br>Option 2<br>Option 3'],
+    ['Empty string', '', ''],
+  ])('formats address and checkbox answers (%s)', (_: string, a: string, expected: string) => {
+    expect(formatAddressAndCheckboxAnswers(a)).toEqual(expected)
   })
 })
 
