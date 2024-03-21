@@ -1,0 +1,8 @@
+{% macro displayAddress(addressData) %}
+
+{% for line in addressData %}
+{{ line }}
+<br>
+{% endfor %}
+
+{% endmacro %}
