@@ -91,6 +91,8 @@
             <input type="hidden" name="currentPageId" value="{{ assessmentPage.id }}"/>
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
             <input type="hidden" name="edit" value="{{ edit }}"/>
+            <input type="hidden" name="assessmentType" value="{{ assessmentType }}"/>
+
             <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">
               {% if assessmentPage.id === 'CHECK_ANSWERS' %}
                 Confirm

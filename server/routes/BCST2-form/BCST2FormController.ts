@@ -7,6 +7,7 @@ import AssessmentStore from '../../data/assessmentStore'
 import { SubmittedInput, SubmittedQuestionAndAnswer, ValidationErrors } from '../../data/model/BCST2Form'
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 import { getEnumValue } from '../../utils/utils'
+import { AssessmentType } from '../../data/model/assessmentInformation'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}
@@ -16,6 +17,7 @@ export default class BCST2FormController {
       const { prisonerData } = req
       const { token } = req.user
       const pathway = req.query.pathway as string
+      const assessmentType = req.query.type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
 
       // Reset the cache at the point as starting new journey through the form
       const store = new AssessmentStore(createRedisClient())
@@ -34,11 +36,12 @@ export default class BCST2FormController {
           questionsAndAnswers: null,
         },
         null,
+        assessmentType,
       )
       const { nextPageId } = nextPage
 
       res.redirect(
-        `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`,
+        `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
       )
     } catch (err) {
       next(err)
@@ -49,6 +52,7 @@ export default class BCST2FormController {
     try {
       const { prisonerData } = req
       const { token } = req.user
+      const assessmentType = req.body.assessmentType === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
       const { pathway, currentPageId } = req.body
       const edit = req.body.edit === 'true'
       const backButton = req.query.backButton === 'true'
@@ -102,12 +106,13 @@ export default class BCST2FormController {
         pathway as string,
         dataToSubmit as SubmittedInput,
         currentPageId,
+        assessmentType,
       )
 
       if (validationErrors) {
         const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
         return res.redirect(
-          `/BCST2/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}&backButton=${backButton}`,
+          `/BCST2/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
         )
       }
 
@@ -115,7 +120,7 @@ export default class BCST2FormController {
         const { nextPageId } = nextPage
 
         return res.redirect(
-          `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}${editQueryString}&backButton=${backButton}`,
+          `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
         )
       }
       return next(new Error(nextPage.error))
@@ -130,6 +135,7 @@ export default class BCST2FormController {
       const { token } = req.user
       const { pathway, currentPageId } = req.params
       const edit = req.query.edit === 'true'
+      const assessmentType = req.query.type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
       const submitted = req.query.submitted === 'true'
       const backButton = req.query.backButton === 'true'
       const validationErrorsString = req.query.validationErrors as string
@@ -153,6 +159,7 @@ export default class BCST2FormController {
           prisonerData.personalDetails.prisonerNumber as string,
           pathway as string,
           'CHECK_ANSWERS',
+          assessmentType,
         )
         const questionsAndAnswers = {
           questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
@@ -184,7 +191,7 @@ export default class BCST2FormController {
       // If there is nothing in the cache at this point, something has gone wrong so redirect back to the start of the form
       if (!existingAssessment) {
         return res.redirect(
-          `/BCST2-next-page?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&pathway=${pathway}`,
+          `/BCST2-next-page?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&pathway=${pathway}?type=${assessmentType}`,
         )
       }
 
@@ -195,6 +202,7 @@ export default class BCST2FormController {
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         currentPageId,
+        assessmentType,
       )
       const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
 
@@ -257,7 +265,7 @@ export default class BCST2FormController {
             )
             // Redirect to check answers page
             return res.redirect(
-              `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true`,
+              `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true?type=${assessmentType}`,
             )
           }
         }
@@ -325,7 +333,7 @@ export default class BCST2FormController {
         submitted,
         backButton,
       )
-      return res.render('pages/BCST2-form', { ...view.renderArgs })
+      return res.render('pages/BCST2-form', { ...view.renderArgs, assessmentType })
     } catch (err) {
       return next(err)
     }
@@ -336,6 +344,7 @@ export default class BCST2FormController {
       const { prisonerData } = req
       const { token } = req.user
       const { pathway } = req.params
+      const assessmentType = req.body.assessmentType === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
       const store = new AssessmentStore(createRedisClient())
       const isAlreadySubmitted = !prisonerData.assessmentRequired
 
@@ -349,6 +358,7 @@ export default class BCST2FormController {
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         dataToSubmit as SubmittedInput,
+        assessmentType,
       )) as { error?: string }
 
       // Clear cache for a completed assessment
@@ -365,7 +375,9 @@ export default class BCST2FormController {
         const { url } = getEnumValue(pathway)
         res.redirect(`/${url}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
       } else {
-        res.redirect(`/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
+        res.redirect(
+          `/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
+        )
       }
     } catch (err) {
       next(err)

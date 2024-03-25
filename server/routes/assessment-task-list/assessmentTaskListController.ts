@@ -10,7 +10,7 @@ export default class AssessmentTaskListController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { type } = req.params
+      const { type } = req.query
       const assessmentType: AssessmentType = type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
 
       const assessmentsSummary = await this.rpService.getAssessmentSummary(
