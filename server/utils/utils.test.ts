@@ -9,6 +9,7 @@ import {
   getValidationError,
   formatTimeWithDuration,
   formatAddressAndCheckboxAnswers,
+  formatSummaryNotes,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -195,6 +196,22 @@ describe('format address and checkbox answers to include line breaks', () => {
     ['Empty string', '', ''],
   ])('formats address and checkbox answers (%s)', (_: string, a: string, expected: string) => {
     expect(formatAddressAndCheckboxAnswers(a)).toEqual(expected)
+  })
+})
+
+describe('format summary notes to insert breaks between paragraphs or sections', () => {
+  it.each([
+    [
+      'should replace newlines with <br>',
+      'This is a summary.\nThis is a new line.',
+      'This is a summary.<br>This is a new line.',
+    ],
+    ['should handle multiple new lines', 'Paragraph 1.\n\nParagraph 2.', 'Paragraph 1.<br><br>Paragraph 2.'],
+    ['should handle empty input', '', ''],
+    ['should handle input without new lines', 'This is a single line input.', 'This is a single line input.'],
+    ['should handle input with only new lines', '\n\n\n', '<br><br><br>'],
+  ])('formats summary notes (%s)', (_: string, a: string, expected: string) => {
+    expect(formatSummaryNotes(a)).toEqual(expected)
   })
 })
 
