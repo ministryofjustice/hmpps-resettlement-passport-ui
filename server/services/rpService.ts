@@ -8,7 +8,7 @@ import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
-import { AssessmentsInformation } from '../data/model/assessmentInformation'
+import { AssessmentsInformation, AssessmentType } from '../data/model/assessmentInformation'
 import { Appointments } from '../data/model/appointment'
 import { OtpDetails } from '../data/model/otp'
 
@@ -231,13 +231,13 @@ export default class RpService {
     return response
   }
 
-  async getAssessmentSummary(token: string, sessionId: string, prisonerId: string) {
+  async getAssessmentSummary(token: string, sessionId: string, prisonerId: string, type: AssessmentType) {
     await this.rpClient.setToken(token)
     let assessmentsSummary: AssessmentsSummary
 
     try {
       const assessmentsSummaryResponse = (await this.rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/summary`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/summary?assessmentType=${type}`,
       )) as AssessmentStatus[]
       assessmentsSummary = { results: assessmentsSummaryResponse }
     } catch (err) {
