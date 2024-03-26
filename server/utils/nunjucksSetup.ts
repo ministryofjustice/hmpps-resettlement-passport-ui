@@ -33,6 +33,7 @@ import {
   getAnswerValueFromArrayOfMaps,
   getValidationError,
   formatAddressAndCheckboxAnswers,
+  formatSummaryNotes,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -103,6 +104,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('features', FEATURE_FLAGS)
   njkEnv.addFilter('formatAddress', formatAddress)
   njkEnv.addFilter('formatAddressAndCheckboxAnswers', formatAddressAndCheckboxAnswers)
+  njkEnv.addFilter('formatSummaryNotes', formatSummaryNotes)
   njkEnv.addFilter('getAnswerToCurrentQuestion', getAnswerToCurrentQuestion)
   njkEnv.addGlobal('feedbackUrl', FEEDBACK_URL)
   njkEnv.addFilter('getAnswerValueFromArrayOfMaps', getAnswerValueFromArrayOfMaps)

@@ -278,6 +278,10 @@ export function formatAddressAndCheckboxAnswers(answer: string): string {
   return (answer ?? '').split('\n').join('<br>')
 }
 
+export function formatSummaryNotes(answer: string): string {
+  return answer.replace(/\n/g, '<br>')
+}
+
 export function getAnswerToCurrentQuestion(
   currentQuestionAndAnswer: QuestionsAndAnswers,
   allQuestionsAndAnswers: SubmittedInput,
