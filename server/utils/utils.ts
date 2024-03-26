@@ -7,6 +7,7 @@ import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
 import { AppointmentLocation } from '../data/model/appointment'
 import { Answer, QuestionsAndAnswers, SubmittedInput, ValidationErrors } from '../data/model/BCST2Form'
+import { AssessmentType } from '../data/model/assessmentInformation'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -316,4 +317,8 @@ export function secondsUntilMidnight() {
   const midnight = new Date()
   midnight.setHours(24, 0, 0, 0)
   return Math.round((midnight.getTime() - new Date().getTime()) / 1000)
+}
+
+export function parseAssessmentType(type: unknown): AssessmentType {
+  return type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
 }

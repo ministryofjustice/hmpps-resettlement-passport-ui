@@ -1,6 +1,7 @@
 import View, { ErrorMessage } from '../view'
 import { PrisonerData } from '../../@types/express'
 import { AssessmentPage, SubmittedInput, ValidationErrors } from '../../data/model/BCST2Form'
+import { AssessmentType } from '../../data/model/assessmentInformation'
 
 export default class BCST2FormView implements View {
   constructor(
@@ -12,6 +13,7 @@ export default class BCST2FormView implements View {
     private readonly edit: boolean,
     private readonly submitted: boolean,
     private readonly backButton: boolean,
+    private readonly assessmentType: AssessmentType,
     private readonly errors: ErrorMessage[] = [],
   ) {}
 
@@ -24,6 +26,7 @@ export default class BCST2FormView implements View {
     edit: boolean
     submitted: boolean
     backButton: boolean
+    assessmentType: AssessmentType
     errors: ErrorMessage[]
   } {
     return {
@@ -35,6 +38,7 @@ export default class BCST2FormView implements View {
       edit: this.edit,
       submitted: this.submitted,
       backButton: this.backButton,
+      assessmentType: this.assessmentType,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

@@ -11,8 +11,10 @@ export type AssessmentsInformation = {
 }
 
 type Assessment = {
-  assessmentType: string
+  assessmentType: AssessmentType
   lastUpdated: string
   updatedBy: string
   questionsAndAnswers: QuestionsAndAnswers[]
 }
+
+export type AssessmentType = 'BCST2' | 'RESETTLEMENT_PLAN'

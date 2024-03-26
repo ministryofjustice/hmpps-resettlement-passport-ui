@@ -8,7 +8,7 @@ import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
-import { AssessmentsInformation } from '../data/model/assessmentInformation'
+import { AssessmentsInformation, AssessmentType } from '../data/model/assessmentInformation'
 import { Appointments } from '../data/model/appointment'
 import { OtpDetails } from '../data/model/otp'
 
@@ -138,13 +138,20 @@ export default class RpService {
     return prisonerCountMetrics
   }
 
-  async getAssessmentPage(token: string, sessionId: string, prisonerId: string, pathway: string, pageId: string) {
+  async getAssessmentPage(
+    token: string,
+    sessionId: string,
+    prisonerId: string,
+    pathway: string,
+    pageId: string,
+    assessmentType: AssessmentType,
+  ) {
     await this.rpClient.setToken(token)
 
     let assessmentPage
     try {
       assessmentPage = (await this.rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=BCST2`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=${assessmentType}`,
       )) as AssessmentPage
     } catch (err) {
       logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
@@ -165,12 +172,13 @@ export default class RpService {
     pathway: string,
     questionsAndAnswers: SubmittedInput,
     currentPageId: string,
+    assessmentType: AssessmentType,
   ) {
     await this.rpClient.setToken(token)
     let nextQuestion
     try {
       nextQuestion = (await this.rpClient.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=BCST2${
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=${assessmentType}${
           currentPageId ? `&currentPage=${currentPageId}` : ''
         }`,
         questionsAndAnswers,
@@ -193,12 +201,13 @@ export default class RpService {
     prisonerId: string,
     pathway: string,
     questionsAndAnswers: SubmittedInput,
+    assessmentType: AssessmentType,
   ) {
     await this.rpClient.setToken(token)
     let response
     try {
       response = await this.rpClient.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/complete?assessmentType=BCST2`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/complete?assessmentType=${assessmentType}`,
         questionsAndAnswers,
       )
     } catch (err) {
@@ -215,12 +224,12 @@ export default class RpService {
     return response
   }
 
-  async submitAssessment(token: string, sessionId: string, prisonerId: string) {
+  async submitAssessment(token: string, sessionId: string, prisonerId: string, assessmentType: AssessmentType) {
     await this.rpClient.setToken(token)
     let response: { error?: boolean }
     try {
       response = await this.rpClient.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=BCST2`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=${assessmentType}`,
         null,
       )
     } catch (err) {
@@ -231,13 +240,13 @@ export default class RpService {
     return response
   }
 
-  async getAssessmentSummary(token: string, sessionId: string, prisonerId: string) {
+  async getAssessmentSummary(token: string, sessionId: string, prisonerId: string, type: AssessmentType) {
     await this.rpClient.setToken(token)
     let assessmentsSummary: AssessmentsSummary
 
     try {
       const assessmentsSummaryResponse = (await this.rpClient.get(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/summary`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/summary?assessmentType=${type}`,
       )) as AssessmentStatus[]
       assessmentsSummary = { results: assessmentsSummaryResponse }
     } catch (err) {
