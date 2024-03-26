@@ -12,7 +12,7 @@ export default class AssessmentTaskListController {
     try {
       const { prisonerData } = req
       const { type } = req.query
-      const assessmentType: AssessmentType = parseAssessmentType(type as string)
+      const assessmentType: AssessmentType = parseAssessmentType(type)
 
       const assessmentsSummary = await this.rpService.getAssessmentSummary(
         req.user.token,

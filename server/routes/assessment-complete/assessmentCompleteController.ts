@@ -9,7 +9,8 @@ export default class AssessmentCompleteController {
 
   getView: RequestHandler = (req, res, _) => {
     const { prisonerData } = req
-    const view = new AssessmentCompleteView(prisonerData)
+    const assessmentType = parseAssessmentType(req.query.type)
+    const view = new AssessmentCompleteView(prisonerData, assessmentType)
     res.render('pages/assessment-complete', { ...view.renderArgs })
   }
 
@@ -27,7 +28,7 @@ export default class AssessmentCompleteController {
       if (response.error) {
         next(new Error())
       } else {
-        res.redirect(`/assessment-complete?prisonerNumber=${prisonerNumber}`)
+        res.redirect(`/assessment-complete?prisonerNumber=${prisonerNumber}&type=${assessmentType}`)
       }
     } catch (err) {
       next(err)

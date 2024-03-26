@@ -16,7 +16,7 @@ export default class BCST2FormController {
       const { prisonerData } = req
       const { token } = req.user
       const pathway = req.query.pathway as string
-      const assessmentType = parseAssessmentType(req.query.type as string)
+      const assessmentType = parseAssessmentType(req.query.type)
 
       // Reset the cache at the point as starting new journey through the form
       const store = new AssessmentStore(createRedisClient())
@@ -134,7 +134,7 @@ export default class BCST2FormController {
       const { token } = req.user
       const { pathway, currentPageId } = req.params
       const edit = req.query.edit === 'true'
-      const assessmentType = parseAssessmentType(req.query.type as string)
+      const assessmentType = parseAssessmentType(req.query.type)
       const submitted = req.query.submitted === 'true'
       const backButton = req.query.backButton === 'true'
       const validationErrorsString = req.query.validationErrors as string
@@ -371,7 +371,7 @@ export default class BCST2FormController {
             `Error completing assessment for prisoner ${prisonerData.personalDetails.prisonerNumber} pathway ${pathway}`,
           ),
         )
-      } else if (isAlreadySubmitted) {
+      } else if (isAlreadySubmitted && assessmentType === 'BCST2') {
         const { url } = getEnumValue(pathway)
         res.redirect(`/${url}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
       } else {

@@ -315,6 +315,6 @@ export function secondsUntilMidnight() {
   return Math.round((midnight.getTime() - new Date().getTime()) / 1000)
 }
 
-export function parseAssessmentType(typeString: string): AssessmentType {
-  return typeString === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
+export function parseAssessmentType(type: unknown): AssessmentType {
+  return type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
 }
