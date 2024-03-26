@@ -3,6 +3,7 @@ import RpService from '../../services/rpService'
 import AssessmentTaskListView from './assessmentTaskListView'
 import { AssessmentStatus } from '../../data/model/assessmentStatus'
 import { AssessmentType } from '../../data/model/assessmentInformation'
+import { parseAssessmentType } from '../../utils/utils'
 
 export default class AssessmentTaskListController {
   constructor(private readonly rpService: RpService) {}
@@ -11,7 +12,7 @@ export default class AssessmentTaskListController {
     try {
       const { prisonerData } = req
       const { type } = req.query
-      const assessmentType: AssessmentType = type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
+      const assessmentType: AssessmentType = parseAssessmentType(type as string)
 
       const assessmentsSummary = await this.rpService.getAssessmentSummary(
         req.user.token,

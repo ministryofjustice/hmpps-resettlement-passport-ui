@@ -6,8 +6,7 @@ import { createRedisClient } from '../../data/redisClient'
 import AssessmentStore from '../../data/assessmentStore'
 import { SubmittedInput, SubmittedQuestionAndAnswer, ValidationErrors } from '../../data/model/BCST2Form'
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
-import { getEnumValue } from '../../utils/utils'
-import { AssessmentType } from '../../data/model/assessmentInformation'
+import { getEnumValue, parseAssessmentType } from '../../utils/utils'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {}
@@ -17,7 +16,7 @@ export default class BCST2FormController {
       const { prisonerData } = req
       const { token } = req.user
       const pathway = req.query.pathway as string
-      const assessmentType = req.query.type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
+      const assessmentType = parseAssessmentType(req.query.type as string)
 
       // Reset the cache at the point as starting new journey through the form
       const store = new AssessmentStore(createRedisClient())
@@ -52,7 +51,7 @@ export default class BCST2FormController {
     try {
       const { prisonerData } = req
       const { token } = req.user
-      const assessmentType = req.body.assessmentType === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
+      const assessmentType = parseAssessmentType(req.body.assessmentType)
       const { pathway, currentPageId } = req.body
       const edit = req.body.edit === 'true'
       const backButton = req.query.backButton === 'true'
@@ -135,7 +134,7 @@ export default class BCST2FormController {
       const { token } = req.user
       const { pathway, currentPageId } = req.params
       const edit = req.query.edit === 'true'
-      const assessmentType = req.query.type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
+      const assessmentType = parseAssessmentType(req.query.type as string)
       const submitted = req.query.submitted === 'true'
       const backButton = req.query.backButton === 'true'
       const validationErrorsString = req.query.validationErrors as string
@@ -332,8 +331,9 @@ export default class BCST2FormController {
         edit,
         submitted,
         backButton,
+        assessmentType,
       )
-      return res.render('pages/BCST2-form', { ...view.renderArgs, assessmentType })
+      return res.render('pages/BCST2-form', { ...view.renderArgs })
     } catch (err) {
       return next(err)
     }
@@ -344,7 +344,7 @@ export default class BCST2FormController {
       const { prisonerData } = req
       const { token } = req.user
       const { pathway } = req.params
-      const assessmentType = req.body.assessmentType === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
+      const assessmentType = parseAssessmentType(req.body.assessmentType)
       const store = new AssessmentStore(createRedisClient())
       const isAlreadySubmitted = !prisonerData.assessmentRequired
 
