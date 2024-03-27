@@ -16,18 +16,11 @@ export default class HealthStatusController {
     try {
       const { prisonerData, sessionID } = req
       const { token } = req.user
-      const appointmentData = await this.rpService.getAppointments(
-        token,
-        sessionID,
-        prisonerData.personalDetails.prisonerNumber as string,
-      )
+      const { prisonerNumber } = prisonerData.personalDetails
+      const appointmentData = await this.rpService.getAppointments(token, sessionID, prisonerNumber as string)
 
-      const otpData = await this.rpService.getOtp(
-        token,
-        sessionID,
-        prisonerData.personalDetails.prisonerNumber as string,
-      )
-      const filename = 'plan-your-future-pack.pdf'
+      const otpData = await this.rpService.getOtp(token, sessionID, prisonerNumber as string)
+      const filename = `plan-your-future-pack-${prisonerNumber}.pdf`
       const fullName = `${prisonerData.personalDetails.firstName} ${prisonerData.personalDetails.lastName}`
       const view = new PrintView(prisonerData, fullName, appointmentData.results.slice(0, 8), otpData)
       res.renderPDF('pages/printPack', { ...view.renderArgs }, { filename, pdfOptions: { ...pdfOptions } })
@@ -48,7 +41,7 @@ export default class HealthStatusController {
       )
       let error
       if (!otpData?.otp) {
-        error = 'Error recreating OTP, please try again later'
+        error = 'Error recreating login code, please try again later'
       }
       res.render('pages/printOtpSuccess', { prisonerData, otpData, error })
     } catch (err) {

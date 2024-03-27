@@ -31,8 +31,8 @@
     {% else %}
   
     {{ govukPanel({
-        titleText: "Otp generated",
-        html: "Your new otp<br><strong>" + otpData.otp + "</strong><br> is valid until <br> " + otpData.expiryDate | formatDate
+        titleText: "Login code generated",
+        html: "<strong>" + otpData.otp + "</strong><br><br>This code is valid until <br> " + otpData.expiryDate | formatDate
       }) }}
       
     {% endif %}
