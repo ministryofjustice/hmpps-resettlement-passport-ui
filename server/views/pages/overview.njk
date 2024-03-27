@@ -2,6 +2,8 @@
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {% from "../macros/pagination.njk" import pagination %}
+{%from "../macros/preReleaseRequired.njk" import preReleaseRequired %}
+{%from "../macros/preReleaseComplete.njk" import preReleaseComplete %}
 {% set pathway = "Resettlement overview" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -14,14 +16,19 @@
     {{ titleAndIntro(pathway) }}
       {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled) }}
   </div>
+ {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
   {% if resettlementAssessmentEnabled and prisonerData.assessmentRequired %}
     {{ incompleteBCST2(pathway, prisonerData) }}
+    {% elif resettlementAssessmentEnabled and releaseDateDays.daysDiff <= 12 and prisonerData.resettlementReviewAvailable === true %}
+{{preReleaseRequired(pathway, prisonerData)}}
+{% elif resettlementAssessmentEnabled and prisonerData.resettlementReviewAvailable === false %}
+{{preReleaseComplete(pathway, prisonerData)}}
   {% endif %}
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {{ subNav([
         {
-          name: "Resettlement statuses",
+          name: "Resettlement statuses hi peter",
           id: "status"
         },
         {
