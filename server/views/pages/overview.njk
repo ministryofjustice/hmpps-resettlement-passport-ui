@@ -19,7 +19,7 @@
  {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
   {% if resettlementAssessmentEnabled and prisonerData.assessmentRequired %}
     {{ incompleteBCST2(pathway, prisonerData) }}
-    {% elif resettlementAssessmentEnabled and releaseDateDays.daysDiff <= 12 and prisonerData.resettlementReviewAvailable === true %}
+    {% elif resettlementAssessmentEnabled and releaseDateDays.daysDiff <= 84 and prisonerData.resettlementReviewAvailable === true %}
 {{preReleaseRequired(pathway, prisonerData)}}
 {% elif resettlementAssessmentEnabled and prisonerData.resettlementReviewAvailable === false %}
 {{preReleaseComplete(pathway, prisonerData)}}
