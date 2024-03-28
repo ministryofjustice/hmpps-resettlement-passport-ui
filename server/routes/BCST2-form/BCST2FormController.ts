@@ -134,7 +134,7 @@ export default class BCST2FormController {
       const { token } = req.user
       const { pathway, currentPageId } = req.params
       const assessmentType = parseAssessmentType(req.query.type)
-      const edit = req.query.edit === 'true' || assessmentType === 'RESETTLEMENT_PLAN'
+      const edit = req.query.edit === 'true'
       const submitted = req.query.submitted === 'true'
       const backButton = req.query.backButton === 'true'
       const validationErrorsString = req.query.validationErrors as string
@@ -144,8 +144,8 @@ export default class BCST2FormController {
 
       const store = new AssessmentStore(createRedisClient())
 
-      // If this is not an edit, ensure there are nothing in the cache for editedQuestionList
-      if (!edit) {
+      // If this is not an edit (inc. a resettlement plan), ensure there are nothing in the cache for editedQuestionList
+      if (!(edit || assessmentType === 'RESETTLEMENT_PLAN')) {
         await store.deleteEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway)
       }
 
@@ -269,8 +269,11 @@ export default class BCST2FormController {
           }
         }
 
-        // If we are in edit mode (but not on CHECK_ANSWERS add the current question id to the edited question list in cache
-        if ((edit || editedQuestionIds) && assessmentPage.id !== 'CHECK_ANSWERS') {
+        // If we are in edit mode (inc. a resettlement plan but not on CHECK_ANSWERS) add the current question id to the edited question list in cache
+        if (
+          (edit || assessmentType === 'RESETTLEMENT_PLAN' || editedQuestionIds) &&
+          assessmentPage.id !== 'CHECK_ANSWERS'
+        ) {
           const questionList = editedQuestionIds
             ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
             : assessmentPage.questionsAndAnswers.map(it => it.question.id)
