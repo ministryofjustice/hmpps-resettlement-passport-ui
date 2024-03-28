@@ -238,9 +238,14 @@ export default class BCST2FormController {
             const questionIdsPreDivergence = existingAssessment.questionsAndAnswers
               .map(it => it.question)
               .slice(0, editedQuestionsStartIndex)
-            const questionIdsPostConvergence = existingAssessment.questionsAndAnswers
-              .map(it => it.question)
-              .slice(editedQuestionsEndIndex, existingAssessment.questionsAndAnswers.length)
+            // If editedQuestionsEndIndex === -1, it means the next page has no questions on it. In this case we can set the questionIdsPostConvergence to empty.
+            const questionIdsPostConvergence =
+              editedQuestionsEndIndex !== -1
+                ? existingAssessment.questionsAndAnswers
+                    .map(it => it.question)
+                    .slice(editedQuestionsEndIndex, existingAssessment.questionsAndAnswers.length)
+                : []
+
             // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
             const newQuestionIds = [
               ...questionIdsPreDivergence,
