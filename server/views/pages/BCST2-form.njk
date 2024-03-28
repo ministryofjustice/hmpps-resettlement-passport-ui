@@ -1,5 +1,10 @@
 {% extends "../partials/layout.njk" %}
-{% set pathwayName = "BCST2 Form" %}
+{% if assessmentType === "BCST2" %}
+  {% set formType = "BCST2" %}
+{% elif assessmentType === "RESETTLEMENT_PLAN" %}
+  {% set formType = "Pre-release" %}
+{% endif %}
+{% set pathwayName = formType + " report form" %}
 {% set pageTitle = applicationName + " - " + pathwayName %}
 {% set mainClasses = "app-container govuk-body" %}
 {% from "../macros/radio.njk" import radio %}
@@ -51,7 +56,7 @@
           >
 
             {% if assessmentPage.id === "CHECK_ANSWERS" %}
-              {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber) }}
+              {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber, assessmentType) }}
             {% else %}
 
               {% if assessmentPage.id === "ASSESSMENT_SUMMARY" %}
