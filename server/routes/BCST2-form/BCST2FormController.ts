@@ -144,7 +144,7 @@ export default class BCST2FormController {
 
       const store = new AssessmentStore(createRedisClient())
 
-      // If this is not an edit, ensure there are nothing in the cache for editedQuestionList
+      // If this is not an edit (inc. a resettlement plan), ensure there are nothing in the cache for editedQuestionList
       if (!(edit || assessmentType === 'RESETTLEMENT_PLAN')) {
         await store.deleteEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway)
       }
@@ -269,7 +269,7 @@ export default class BCST2FormController {
           }
         }
 
-        // If we are in edit mode (but not on CHECK_ANSWERS add the current question id to the edited question list in cache
+        // If we are in edit mode (inc. a resettlement plan but not on CHECK_ANSWERS) add the current question id to the edited question list in cache
         if (
           (edit || assessmentType === 'RESETTLEMENT_PLAN' || editedQuestionIds) &&
           assessmentPage.id !== 'CHECK_ANSWERS'
