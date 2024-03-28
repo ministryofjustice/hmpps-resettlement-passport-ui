@@ -133,8 +133,8 @@ export default class BCST2FormController {
       const { prisonerData } = req
       const { token } = req.user
       const { pathway, currentPageId } = req.params
-      const edit = req.query.edit === 'true'
       const assessmentType = parseAssessmentType(req.query.type)
+      const edit = req.query.edit === 'true' || assessmentType === 'RESETTLEMENT_PLAN'
       const submitted = req.query.submitted === 'true'
       const backButton = req.query.backButton === 'true'
       const validationErrorsString = req.query.validationErrors as string
@@ -190,7 +190,7 @@ export default class BCST2FormController {
       // If there is nothing in the cache at this point, something has gone wrong so redirect back to the start of the form
       if (!existingAssessment) {
         return res.redirect(
-          `/BCST2-next-page?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&pathway=${pathway}?type=${assessmentType}`,
+          `/BCST2-next-page?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&pathway=${pathway}&type=${assessmentType}`,
         )
       }
 
@@ -264,7 +264,7 @@ export default class BCST2FormController {
             )
             // Redirect to check answers page
             return res.redirect(
-              `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true?type=${assessmentType}`,
+              `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
             )
           }
         }
