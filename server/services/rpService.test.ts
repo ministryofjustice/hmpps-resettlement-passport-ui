@@ -41,7 +41,6 @@ describe('RpService', () => {
     })
     const otpDetails = await service.getOtp('token', 'sessionId', nomsId)
     expect(otpDetails.otp).toBe('123456')
-    expect(loggerSpy).toHaveBeenCalledWith(`Session: sessionId Cannot get otp for ${nomsId} ${error.status} ${error}, 
-    creating a new otp instead`)
+    expect(loggerSpy).toHaveBeenCalledWith(`Session: sessionId Cannot get otp for ${nomsId} ${error.status} ${error}`)
   })
 })
