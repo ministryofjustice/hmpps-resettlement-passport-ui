@@ -12,23 +12,32 @@
 {% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 {% set tasksViewEnabled = features.TASKS_VIEW | getFeatureFlag %}
 {% block content %}
-  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
-    {{ titleAndIntro(pathway) }}
-      {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled) }}
-  </div>
- {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
-  {% if resettlementAssessmentEnabled and prisonerData.assessmentRequired %}
-    {{ incompleteBCST2(pathway, prisonerData) }}
+<div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
+    <h2 class="govuk-heading-l">
+      {{ pathway }}
+    </h2>
+    {% if pathway | getDescriptionFromName | length %}
+      <p class="govuk-body-l">
+        {{ pathway | getDescriptionFromName }}
+      </p>
+    {% endif %}
+    {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
+    {% if resettlementAssessmentEnabled and prisonerData.assessmentRequired %}
+        {{ incompleteBCST2(pathway, prisonerData) }}
     {% elif resettlementAssessmentEnabled and releaseDateDays.daysDiff <= 84 and prisonerData.resettlementReviewAvailable === true %}
-{{preReleaseRequired(pathway, prisonerData)}}
-{% elif resettlementAssessmentEnabled and prisonerData.resettlementReviewAvailable === false %}
-{{preReleaseComplete(pathway, prisonerData)}}
-  {% endif %}
+        {{preReleaseRequired(pathway, prisonerData)}}
+    {% elif resettlementAssessmentEnabled and prisonerData.resettlementReviewAvailable === false %}
+        {{preReleaseComplete(pathway, prisonerData)}}
+    {% endif %}
+    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled) }}
+</div>
+
+
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {{ subNav([
         {
-          name: "Resettlement statuses hi peter",
+          name: "Resettlement statuses",
           id: "status"
         },
         {
