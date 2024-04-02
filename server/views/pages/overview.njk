@@ -13,14 +13,7 @@
 {% set tasksViewEnabled = features.TASKS_VIEW | getFeatureFlag %}
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
-    <h2 class="govuk-heading-l">
-      {{ pathway }}
-    </h2>
-    {% if pathway | getDescriptionFromName | length %}
-      <p class="govuk-body-l">
-        {{ pathway | getDescriptionFromName }}
-      </p>
-    {% endif %}
+    {{ titleAndIntro(pathway) }}
     {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
     {% if resettlementAssessmentEnabled and prisonerData.assessmentRequired %}
         {{ incompleteBCST2(pathway, prisonerData) }}
