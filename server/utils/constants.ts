@@ -117,7 +117,7 @@ export const ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   },
   IN_PROGRESS: {
     name: 'In progress',
-    color: 'green',
+    color: 'blue',
   },
   DONE: {
     name: 'Done',
