@@ -115,6 +115,14 @@ export const ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     name: 'Support not required',
     color: 'green',
   },
+  IN_PROGRESS: {
+    name: 'In progress',
+    color: 'green',
+  },
+  DONE: {
+    name: 'Done',
+    color: 'green',
+  },
 }
 
 export const FEATURE_FLAGS: { [key: string]: string } = {
