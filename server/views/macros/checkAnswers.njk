@@ -11,7 +11,7 @@
   <h2 class="govuk-heading-m">{{ enumValue.name }} report</h2>
   <dl class="govuk-summary-list govuk-!-margin-bottom-9">
     {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-      {% if questionAnswer.question !== 'SUPPORT_NEEDS' and questionAnswer.question !== 'CASE_NOTE_SUMMARY' %}
+      {% if questionAnswer.question !== 'SUPPORT_NEEDS' and questionAnswer.question !== 'SUPPORT_NEEDS_PRERELEASE' and questionAnswer.question !== 'CASE_NOTE_SUMMARY' %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
           <dd class="govuk-summary-list__value">
@@ -44,7 +44,7 @@
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
         {% set statusValue = questionAnswer.answer.answer | getAssessmentEnumValue %}
-        {% if questionAnswer.question === 'SUPPORT_NEEDS' %}
+        {% if questionAnswer.question === 'SUPPORT_NEEDS' or questionAnswer.question === 'SUPPORT_NEEDS_PRERELEASE' %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">{{ enumValue.name }} support status</dt>
             <dd class="govuk-summary-list__value">

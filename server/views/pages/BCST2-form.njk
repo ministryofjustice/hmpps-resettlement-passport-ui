@@ -59,7 +59,7 @@
               {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber, assessmentType) }}
             {% else %}
 
-              {% if assessmentPage.id === "ASSESSMENT_SUMMARY" %}
+              {% if assessmentPage.id === "ASSESSMENT_SUMMARY" or assessmentPage.id === "PRERELEASE_ASSESSMENT_SUMMARY" %}
                 {{ reportSummary(pathway) }}
               {% endif %}
 
