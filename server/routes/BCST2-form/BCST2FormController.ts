@@ -354,7 +354,8 @@ export default class BCST2FormController {
       const { pathway } = req.params
       const assessmentType = parseAssessmentType(req.body.assessmentType)
       const store = new AssessmentStore(createRedisClient())
-      const isAlreadySubmitted = !prisonerData.assessmentRequired
+      const isBcst2AlreadySubmitted = !prisonerData.assessmentRequired
+      const isResettlementPlanAlreadySubmitted = !prisonerData.resettlementReviewAvailable
 
       const dataToSubmit = JSON.parse(
         await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
@@ -379,7 +380,10 @@ export default class BCST2FormController {
             `Error completing assessment for prisoner ${prisonerData.personalDetails.prisonerNumber} pathway ${pathway}`,
           ),
         )
-      } else if (isAlreadySubmitted && assessmentType === 'BCST2') {
+      } else if (
+        (isBcst2AlreadySubmitted && assessmentType === 'BCST2') ||
+        (isResettlementPlanAlreadySubmitted && assessmentType === 'RESETTLEMENT_PLAN')
+      ) {
         const { url } = getEnumValue(pathway)
         res.redirect(`/${url}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
       } else {
