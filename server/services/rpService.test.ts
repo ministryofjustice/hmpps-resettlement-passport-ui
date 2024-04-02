@@ -32,7 +32,7 @@ describe('RpService', () => {
   it('should create a new Otp when get Otp fails', async () => {
     const nomsId = 'A8731DY'
     const error = {
-      status: 404
+      status: 404,
     }
     rpClient.setToken.mockResolvedValue()
     rpClient.get.mockRejectedValue(error)
@@ -41,6 +41,7 @@ describe('RpService', () => {
     })
     const otpDetails = await service.getOtp('token', 'sessionId', nomsId)
     expect(otpDetails.otp).toBe('123456')
-    expect(loggerSpy).toHaveBeenCalledWith(`Session: sessionId Cannot get otp for ${nomsId} ${error.status} ${error}, creating a new otp instead`)
+    expect(loggerSpy).toHaveBeenCalledWith(`Session: sessionId Cannot get otp for ${nomsId} ${error.status} ${error}, 
+    creating a new otp instead`)
   })
 })

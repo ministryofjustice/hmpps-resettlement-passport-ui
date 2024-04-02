@@ -279,7 +279,8 @@ export default class RpService {
     try {
       return (await this.rpClient.get(`/resettlement-passport/popUser/${prisonerId}/otp`)) as Promise<OtpDetails>
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot get otp for ${prisonerId} ${err.status} ${err}, creating a new otp instead`)
+      logger.warn(`Session: ${sessionId} Cannot get otp for ${prisonerId} ${err.status} ${err}, 
+      creating a new otp instead`)
       return this.recreateOtp(token, sessionId, prisonerId)
     }
   }
