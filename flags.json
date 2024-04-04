@@ -1,0 +1,22 @@
+[
+  {
+    "feature": "reporting",
+    "enabled": true
+  },
+  {
+    "feature": "addAppointments",
+    "enabled": true
+  },
+  {
+    "feature": "nDeliusCaseNotes",
+    "enabled": true
+  },
+  {
+    "feature": "resettlementAssessment",
+    "enabled": true
+  },
+  {
+    "feature": "tasksView",
+    "enabled": true
+  }
+]

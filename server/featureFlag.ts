@@ -1,6 +1,7 @@
 import { S3 } from '@aws-sdk/client-s3'
 import { Cache, CacheContainer } from 'node-ts-cache'
 import { MemoryStorage } from 'node-ts-cache-storage-memory'
+import { readFile } from 'node:fs/promises'
 import logger from '../logger'
 import config from './config'
 
@@ -21,6 +22,10 @@ export default class FeatureFlags {
   @Cache(featureFlagCache, { ttl: 120 })
   public async getFeatureFlags(): Promise<Feature[]> {
     if (!config.s3.featureFlag.enabled) {
+      if (config.local.featureFlag.enabled) {
+        logger.warn('Using local feature flags')
+        return loadLocalFlags()
+      }
       logger.warn('Feature flags are disabled! Returning null.')
       return null
     }
@@ -42,4 +47,9 @@ export default class FeatureFlags {
 interface Feature {
   feature: string
   enabled: boolean
+}
+
+async function loadLocalFlags(): Promise<Array<Feature>> {
+  const localFlags = await readFile(config.local.featureFlag.filename, { encoding: 'utf-8' })
+  return JSON.parse(localFlags)
 }

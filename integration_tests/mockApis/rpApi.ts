@@ -1,4 +1,5 @@
-import { stubFor } from './wiremock'
+import { readFileSync } from 'fs'
+import { stubFor, importStubs } from './wiremock'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -232,6 +233,8 @@ const stubCreateOtp = () =>
     },
   })
 
+const stubJohnSmithPreRelease = () => importStubs('john-smith-pre-release-report.json')
+
 export default {
   stubGetPrisoners,
   stubGetAppointments,
@@ -239,4 +242,5 @@ export default {
   stubCreateOtp,
   stubGetPrisonerData,
   stubGetPrisonerImage,
+  stubJohnSmithPreRelease,
 }

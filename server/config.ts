@@ -112,4 +112,10 @@ export default {
       filename: get('FEATURE_FLAG_PATH_FILENAME', 'flags.json'),
     },
   },
+  local: {
+    featureFlag: {
+      enabled: get('LOCAL_FEATURE_FLAG_ENABLED', 'false') === 'true',
+      filename: get('LOCAL_FEATURE_FLAG_PATH_FILENAME', 'flags.json'),
+    },
+  },
 }
