@@ -1,4 +1,5 @@
 import superagent, { SuperAgentRequest, Response } from 'superagent'
+import { readFileSync } from 'fs'
 
 const url = 'http://localhost:9091/__admin'
 
@@ -10,4 +11,7 @@ const getMatchingRequests = body => superagent.post(`${url}/requests/find`).send
 const resetStubs = (): Promise<Array<Response>> =>
   Promise.all([superagent.delete(`${url}/mappings`), superagent.delete(`${url}/requests`)])
 
-export { stubFor, getMatchingRequests, resetStubs }
+const importStubs = (fixture: string): SuperAgentRequest =>
+  superagent.post(`${url}/mappings/import`).send(readFileSync(`integration_tests/fixtures/${fixture}`))
+
+export { stubFor, getMatchingRequests, resetStubs, importStubs }
