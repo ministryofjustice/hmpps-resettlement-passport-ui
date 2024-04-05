@@ -1,5 +1,19 @@
-import { readFileSync } from 'fs'
-import { stubFor, importStubs } from './wiremock'
+import { stubFor } from './wiremock'
+import {
+  johnSmithAccommodationNextPage1,
+  johnSmithAssessmentSummary,
+  johnSmithCheckAnswers,
+  johnSmithConfirm,
+  johnSmithNextPage2,
+  johnSmithNextPage3,
+  johnSmithNextPage4,
+  johnSmithTaskList,
+  johnSmithTaskListAfterComplete,
+  johnSmithWhereDidTheyLive,
+  johnSmithWhereWillTheyLive2,
+  stubJohnSmithPrisonerDetails,
+} from './scenarios/john-smith/john-smith-pre-release'
+import { johnSmithDefaults } from './scenarios/john-smith/john-smith'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -233,7 +247,23 @@ const stubCreateOtp = () =>
     },
   })
 
-const stubJohnSmithPreRelease = () => importStubs('john-smith-pre-release-report.json')
+const stubJohnSmithPreRelease = () => {
+  return Promise.all([
+    ...johnSmithDefaults(),
+    stubJohnSmithPrisonerDetails(),
+    johnSmithTaskList(),
+    johnSmithTaskListAfterComplete(),
+    johnSmithAccommodationNextPage1(),
+    johnSmithNextPage2(),
+    johnSmithNextPage3(),
+    johnSmithNextPage4(),
+    johnSmithWhereDidTheyLive(),
+    johnSmithWhereWillTheyLive2(),
+    johnSmithAssessmentSummary(),
+    johnSmithCheckAnswers(),
+    johnSmithConfirm(),
+  ])
+}
 
 export default {
   stubGetPrisoners,
