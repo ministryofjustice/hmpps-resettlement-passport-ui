@@ -15,6 +15,7 @@
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet" />
+  <script src="/assets/js/jquery.min.js"></script>
   {% if enableApplicationInsights %}
     {% include "./applicationInsightsScript.njk" %}
   {% endif %}
