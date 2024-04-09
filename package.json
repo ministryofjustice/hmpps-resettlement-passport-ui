@@ -154,6 +154,7 @@
     "concurrently": "^8.2.0",
     "cookie-session": "^2.0.0",
     "cypress": "^12.16.0",
+    "cypress-downloadfile": "^1.2.3",
     "cypress-multi-reporters": "^1.6.3",
     "dotenv": "^16.3.1",
     "eslint": "^8.44.0",

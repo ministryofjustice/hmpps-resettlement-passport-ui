@@ -74,6 +74,15 @@ jobs:
           path: test_results/unit-test-reports.html
 
   integration_test:
+   docker:
+      - image: 'gotenberg/gotenberg:7.7.0'
+        command:
+          - "gotenberg"
+          - "--api-port=3005"
+          - "--chromium-ignore-certificate-errors"
+          - "--api-timeout=30s"
+          - "--pdfengines-engines=pdftk"
+          - "--uno-listener-restart-threshold=0"  
     executor:
       name: hmpps/node_redis
       node_tag: << pipeline.parameters.node-version >>

@@ -1,7 +1,7 @@
 import IndexPage from '../pages/index'
 import Page from '../pages/page'
 
-context('Generate Login Code', () => {
+context('Generate First-time ID code', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
@@ -14,7 +14,7 @@ context('Generate Login Code', () => {
     cy.task('stubGetAppointments')
   })
 
-  it('Login Code can be generated successfully on user request', () => {
+  it('First-time ID code can be generated successfully on user request', () => {
     cy.task('stubCreateOtp')
     cy.signIn()
     const indexPage = Page.verifyOnPage(IndexPage)
@@ -22,19 +22,19 @@ context('Generate Login Code', () => {
     // go to print otp page
     cy.visit('print/otp?prisonerNumber=G4161UF')
     // should see the new otp generated
-    cy.get('.govuk-panel__title').contains('Login code generated')
+    cy.get('.govuk-panel__title').contains('First-time ID code')
     // And back btn should exist
     cy.get('.govuk-back-link').should('exist')
   })
 
-  it('Login Code generation shows error on user request', () => {
+  it('First-time ID code generation shows error on user request', () => {
     cy.signIn()
     const indexPage = Page.verifyOnPage(IndexPage)
     indexPage.headerUserName().should('contain.text', 'J. Smith')
     // go to print otp page
     cy.visit('print/otp?prisonerNumber=G4161UF')
     // should see the error summary message
-    cy.get('.govuk-error-summary').contains('Error recreating login code, please try again later')
+    cy.get('.govuk-error-summary').contains('Error recreating First-time ID code, please try again later')
     // And back btn should exist
     cy.get('.govuk-back-link').should('exist')
   })

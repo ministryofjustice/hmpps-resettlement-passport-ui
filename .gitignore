@@ -132,3 +132,4 @@ test-results/
 **/Chart.lock
 cypress/
 volume/
+test.pdf

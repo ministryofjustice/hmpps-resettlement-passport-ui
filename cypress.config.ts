@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress'
+import { downloadFile } from 'cypress-downloadfile/lib/addPlugin'
 import { resetStubs } from './integration_tests/mockApis/wiremock'
 import auth from './integration_tests/mockApis/auth'
 import tokenVerification from './integration_tests/mockApis/tokenVerification'
@@ -27,6 +28,7 @@ export default defineConfig({
         ...rpApi,
         stubSignIn: () => auth.stubSignIn(['ROLE_RESETTLEMENT_PASSPORT_EDIT']),
         ...tokenVerification,
+        downloadFile,
       })
     },
     baseUrl: 'http://localhost:3007',

@@ -40,9 +40,9 @@ const mockedPrisonerData = {
   personalDetails: {
     prisonerNumber: 'G4161UF',
     prisonId: 'MDI',
-    firstName: 'CHRISY',
+    firstName: 'John',
     middleNames: null,
-    lastName: 'CLEMENCE',
+    lastName: 'Smith',
     releaseDate: '2024-08-01',
     releaseType: 'CRD',
     dateOfBirth: '1974-05-30',
@@ -247,6 +247,19 @@ const stubCreateOtp = () =>
     },
   })
 
+const stubGetOtp = () =>
+  stubFor({
+    request: {
+      method: 'GET',
+      url: `/rpApi/resettlement-passport/popUser/G4161UF/otp`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: mockedOtpResponse,
+    },
+  })
+
 const stubJohnSmithPreRelease = () => {
   return Promise.all([
     ...johnSmithDefaults(),
@@ -270,6 +283,7 @@ export default {
   stubGetAppointments,
   stubGetAppointment,
   stubCreateOtp,
+  stubGetOtp,
   stubGetPrisonerData,
   stubGetPrisonerImage,
   stubJohnSmithPreRelease,
