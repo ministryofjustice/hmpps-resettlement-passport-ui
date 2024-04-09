@@ -112,6 +112,9 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
+          name: Install Dependencies
+          command: npm ci --no-audit
+      - run:
           name: Get wiremock
           command: curl -o wiremock.jar https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/2.27.1/wiremock-standalone-2.27.1.jar
       - run:
@@ -127,9 +130,7 @@ jobs:
           command: sleep 5
       - run:
           name: integration tests
-          command: |
-            TESTFILES=$(circleci tests glob "integration_tests/integration/*.cy.ts" | circleci tests split | paste -sd ',')
-            npm run int-test -- --spec ${TESTFILES}
+          command: npm run int-test
       - store_test_results:
           path: test_results
       - store_artifacts:
