@@ -7,7 +7,7 @@
   "scripts": {
     "prepare": "husky install",
     "copy-views": "cp -R server/views dist/server/",
-    "compile-sass": "sass --quiet-deps --no-source-map --load-path=node_modules/govuk-frontend --load-path=node_modules/@ministryofjustice/frontend --load-path=. assets/scss/application.scss:./assets/stylesheets/application.css assets/scss/application-ie8.scss:./assets/stylesheets/application-ie8.css --style compressed",
+    "compile-sass": "sass --quiet-deps --no-source-map --load-path=node_modules/govuk-frontend/dist --load-path=node_modules/@ministryofjustice/frontend --load-path=. assets/scss/application.scss:./assets/stylesheets/application.css --style compressed",
     "watch-ts": "tsc -w",
     "watch-views": "nodemon --watch server/views -e html,njk -x npm run copy-views",
     "watch-node": "DEBUG=gov-starter-server* nodemon -r dotenv/config --watch dist/ dist/server.js | bunyan -o short",
@@ -98,7 +98,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.456.0",
     "@cucumber/cucumber": "^9.3.0",
-    "@ministryofjustice/frontend": "^1.8.0",
+    "@ministryofjustice/frontend": "^2.1.2",
     "@playwright/test": "^1.37.0",
     "agentkeepalive": "^4.3.0",
     "applicationinsights": "^2.7.2",
@@ -113,9 +113,10 @@
     "express": "^4.19.2",
     "express-prom-bundle": "^6.6.0",
     "express-session": "^1.17.3",
-    "govuk-frontend": "^4.7.0",
+    "govuk-frontend": "^5.3.0",
     "helmet": "^7.0.0",
     "http-errors": "^2.0.0",
+    "jquery": "^3.7.1",
     "jwt-decode": "^3.1.2",
     "nocache": "^4.0.0",
     "node-ts-cache": "^4.4.0",
@@ -178,7 +179,7 @@
     "sass": "^1.63.6",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.3"
   },
   "overrides": {
     "semver": "^7.5.3",

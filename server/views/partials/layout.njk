@@ -15,12 +15,11 @@
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet" />
+  <script src="/assets/js/jquery.min.js"></script>
   {% if enableApplicationInsights %}
     {% include "./applicationInsightsScript.njk" %}
   {% endif %}
   <!--<![endif]-->
-  <!-- [if lt IE 9]> <link href='/assets/stylesheets/application-ie8.css?{{ version }}' rel='stylesheet'/> <script
-  src='/assets/js/html5shiv-3.7.3.min.js'></script> <![endif] -->
   {% if feComponents.jsIncludes %}
     {% for js in feComponents.jsIncludes %}
       <script src="{{ js }}" nonce="{{ cspNonce }}"></script>
@@ -94,9 +93,9 @@
 {% block bodyEnd %}
   {# Run JavaScript at end of the
     <body>, to avoid blocking the initial render. #}
-  <script src="/assets/govuk/all.js"></script>
-  <script src="/assets/govukFrontendInit.js"></script>
+  <script type="module" src="/assets/govukFrontendInit.js"></script>
   <script src="/assets/moj/all.js"></script>
+  <script src="/assets/mojFrontendInit.js"></script>
 {% endblock %}
 
 {% block footer %}
