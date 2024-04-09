@@ -11,7 +11,9 @@ export default class EducationSkillsWorkView implements View {
     private readonly educationSkillsWork: EducationSkillsWorkResponse,
     private readonly assessmentData: AssessmentsInformation,
     private readonly errors: ErrorMessage[] = [],
-  ) {}
+  ) {
+    // no op
+  }
 
   get renderArgs(): {
     prisonerData: PrisonerData

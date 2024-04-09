@@ -11,7 +11,9 @@ export default class AccommodationView implements View {
     private readonly accommodation: Accommodation,
     private readonly assessmentData: AssessmentsInformation,
     private readonly errors: ErrorMessage[] = [],
-  ) {}
+  ) {
+    // no op
+  }
 
   get renderArgs(): {
     prisonerData: PrisonerData

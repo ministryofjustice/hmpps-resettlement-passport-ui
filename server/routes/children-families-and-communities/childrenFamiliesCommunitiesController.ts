@@ -3,7 +3,9 @@ import RpService from '../../services/rpService'
 import ChildrenFamiliesCommunitiesView from './childrenFamiliesCommunitiesView'
 
 export default class ChildrenFamiliesCommunitiesController {
-  constructor(private readonly rpService: RpService) {}
+  constructor(private readonly rpService: RpService) {
+    // no op
+  }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {

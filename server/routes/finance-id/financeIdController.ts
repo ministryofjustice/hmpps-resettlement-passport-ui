@@ -9,7 +9,9 @@ import { isDateValid } from '../../utils/utils'
 import FinanceIdView from './financeIdView'
 
 export default class FinanceIdController {
-  constructor(private readonly rpService: RpService) {}
+  constructor(private readonly rpService: RpService) {
+    // no op
+  }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
