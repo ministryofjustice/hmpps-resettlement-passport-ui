@@ -74,7 +74,11 @@ jobs:
           path: test_results/unit-test-reports.html
 
   integration_test:
-   docker:
+    executor:
+      name: hmpps/node_redis
+      node_tag: << pipeline.parameters.node-version >>
+      redis_tag: "7.0"
+      docker:
       - image: 'gotenberg/gotenberg:7.7.0'
         command:
           - "gotenberg"
@@ -83,10 +87,6 @@ jobs:
           - "--api-timeout=30s"
           - "--pdfengines-engines=pdftk"
           - "--uno-listener-restart-threshold=0"  
-    executor:
-      name: hmpps/node_redis
-      node_tag: << pipeline.parameters.node-version >>
-      redis_tag: "7.0"
     steps:
       - checkout
       - attach_workspace:
