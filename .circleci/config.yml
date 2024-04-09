@@ -23,7 +23,6 @@ parameters:
 executors:
   integration-tests-executor:
     docker:
-      - image: 'cimg/node:<<parameters.node_tag>>'
       - image: 'cimg/redis:<<parameters.redis_tag>>'
       - image: 'gotenberg/gotenberg:<<parameters.gotenberg_tag>>'
         command:
@@ -36,9 +35,6 @@ executors:
     parameters:
       resource_class:
         default: medium
-        type: string
-      node_tag:
-        default: << pipeline.parameters.node-version >>
         type: string
       redis_tag:
         default: "7.0"
@@ -101,19 +97,7 @@ jobs:
           path: test_results/unit-test-reports.html
 
   integration_test:
-    executor:
-      name: hmpps/node_redis
-      node_tag: << pipeline.parameters.node-version >>
-      redis_tag: "7.0"
-      docker:
-      - image: 'gotenberg/gotenberg:7.7.0'
-        command:
-          - "gotenberg"
-          - "--api-port=3001"
-          - "--chromium-ignore-certificate-errors"
-          - "--api-timeout=30s"
-          - "--pdfengines-engines=pdftk"
-          - "--uno-listener-restart-threshold=0"
+    executor: integration-tests-executor
       
     steps:
       - checkout
