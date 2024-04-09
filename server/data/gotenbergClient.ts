@@ -17,18 +17,37 @@ export default class GotenbergClient {
     this.gotenbergHost = gotenbergHost
   }
 
-  async renderPdfFromHtml(html: string, options: PdfOptions = {}): Promise<Buffer> {
+  async renderPdfFromHtml(html: string, headerHtml: string, options: PdfOptions = {}): Promise<Buffer> {
     const { marginBottom, marginLeft, marginRight, marginTop } = options
+
+    const footerHtml = `
+    <html>
+    <head>
+        <style>
+        body {
+            font-size: 12px;
+            margin: auto 20px;
+        }
+        </style>
+    </head>
+    <body>
+    <p><span class="pageNumber"></span> of <span class="totalPages"></span></p>
+    </body>
+    </html> 
+    `
 
     try {
       const request = superagent
         .post(`${this.gotenbergHost}/forms/chromium/convert/html`)
         .attach('files', Buffer.from(html), 'index.html')
+        .attach('files', Buffer.from(headerHtml), 'header.html')
+        .attach('files', Buffer.from(footerHtml), 'footer.html')
         .responseType('blob')
 
       // Set paper size to A4. Page size and margins specified in inches
       request.field('paperWidth', 8.27)
       request.field('paperHeight', 11.7)
+      request.field('singlePage', false)
       if (marginTop) request.field('marginTop', marginTop)
       if (marginBottom) request.field('marginBottom', marginBottom)
       if (marginLeft) request.field('marginLeft', marginLeft)

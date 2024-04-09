@@ -15,6 +15,7 @@ export default function pdfRenderer(client: GotenbergClient) {
   return (req: Request, res: Response, next: NextFunction) => {
     res.renderPDF = (
       view: string,
+      headerHtml: string,
       pageData: Record<string, unknown>,
       options: { filename: string; pdfOptions: PdfOptions } = { filename: 'document.pdf', pdfOptions: {} },
     ): any => {
@@ -28,7 +29,7 @@ export default function pdfRenderer(client: GotenbergClient) {
         res.header('Content-Disposition', `inline; filename=${options.filename}`)
 
         return client
-          .renderPdfFromHtml(html, options?.pdfOptions)
+          .renderPdfFromHtml(html, headerHtml, options?.pdfOptions)
           .then(buffer => res.send(buffer))
           .catch(reason => {
             logger.warn(reason)

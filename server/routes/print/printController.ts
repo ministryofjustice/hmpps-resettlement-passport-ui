@@ -1,10 +1,11 @@
 import { RequestHandler } from 'express'
+import nunjucks from 'nunjucks'
 import RpService from '../../services/rpService'
 import PrintView from './printView'
 
 const pdfOptions = {
-  marginTop: '0.0',
-  marginBottom: '0.1',
+  marginTop: '2.4',
+  marginBottom: '1',
   marginLeft: '0.0',
   marginRight: '0.0',
 }
@@ -25,7 +26,9 @@ export default class HealthStatusController {
       const filename = `plan-your-future-pack-${prisonerNumber}.pdf`
       const fullName = `${prisonerData.personalDetails.firstName} ${prisonerData.personalDetails.lastName}`
       const view = new PrintView(prisonerData, fullName, appointmentData.results.slice(0, 8), otpData)
-      res.renderPDF('pages/printPack', { ...view.renderArgs }, { filename, pdfOptions: { ...pdfOptions } })
+
+      const headerHtml = await nunjucks.render('pages/printPackHeader.njk', { ...view.renderArgs })
+      res.renderPDF('pages/printPack', headerHtml, { ...view.renderArgs }, { filename, pdfOptions: { ...pdfOptions } })
     } catch (err) {
       next(err)
     }
@@ -43,7 +46,7 @@ export default class HealthStatusController {
       )
       let error
       if (!otpData?.otp) {
-        error = 'Error recreating login code, please try again later'
+        error = 'Error recreating First-time ID code, please try again later'
       }
       res.render('pages/printOtpSuccess', { prisonerData, otpData, error })
     } catch (err) {
