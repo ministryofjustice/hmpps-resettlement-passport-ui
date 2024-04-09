@@ -24,6 +24,7 @@ executors:
   integration-tests-executor:
     docker:
       - image: 'cimg/node:<<parameters.node_tag>>'
+      - image: 'cimg/redis:<<parameters.redis_tag>>'
       - image: 'gotenberg/gotenberg:<<parameters.gotenberg_tag>>'
         command:
           - "gotenberg"
@@ -32,20 +33,19 @@ executors:
           - "--api-timeout=30s"
           - "--pdfengines-engines=pdftk"
           - "--uno-listener-restart-threshold=0"
-      parameters:
-        resource_class:
-          default: medium
-          type: string
-        node_tag:
-          default: << pipeline.parameters.node-version >>
-          type: string
-        redis_tag:
-          default: "6.2"
-          type: string
-        gotenberg_tag:
-          default: "7.7.0"
-          type: string
-
+    parameters:
+      resource_class:
+        default: medium
+        type: string
+      node_tag:
+        default: << pipeline.parameters.node-version >>
+        type: string
+      redis_tag:
+        default: "7.0"
+        type: string
+      gotenberg_tag:
+        default: "7.7.0"
+        type: string
 
 jobs:
   build:
