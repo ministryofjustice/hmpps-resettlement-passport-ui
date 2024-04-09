@@ -5,7 +5,9 @@ import { AssessmentType } from '../../data/model/assessmentInformation'
 import { parseAssessmentType } from '../../utils/utils'
 
 export default class AssessmentCompleteController {
-  constructor(private readonly rpService: RpService) {}
+  constructor(private readonly rpService: RpService) {
+    // no op
+  }
 
   getView: RequestHandler = (req, res, _) => {
     const { prisonerData } = req

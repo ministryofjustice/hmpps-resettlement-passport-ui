@@ -9,7 +9,9 @@ export default class PrintView implements View {
     private readonly fullName: string,
     private readonly appointments: Appointment[],
     private readonly otpData: OtpDetails,
-  ) {}
+  ) {
+    // no op
+  }
 
   get renderArgs(): {
     prisonerData: PrisonerData

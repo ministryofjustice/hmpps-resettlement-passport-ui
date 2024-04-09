@@ -11,7 +11,9 @@ const pdfOptions = {
 }
 
 export default class HealthStatusController {
-  constructor(private readonly rpService: RpService) {}
+  constructor(private readonly rpService: RpService) {
+    // no op
+  }
 
   printPackPdf: RequestHandler = async (req, res, next): Promise<void> => {
     try {
