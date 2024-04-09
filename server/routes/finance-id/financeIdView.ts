@@ -9,7 +9,9 @@ export default class FinanceIdView implements View {
     private readonly crsReferrals: CrsReferralResponse,
     private readonly assessmentData: AssessmentsInformation,
     private readonly errors: ErrorMessage[] = [],
-  ) {}
+  ) {
+    // no op
+  }
 
   get renderArgs(): {
     prisonerData: PrisonerData

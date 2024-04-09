@@ -7,7 +7,9 @@ export default class AssessmentCompleteView implements View {
     private readonly prisonerData: PrisonerData,
     private readonly assessmentType: AssessmentType,
     private readonly errors: ErrorMessage[] = [],
-  ) {}
+  ) {
+    // no op
+  }
 
   get renderArgs(): {
     prisonerData: PrisonerData

@@ -16,7 +16,9 @@ export default class StaffDashboardView implements View {
     private readonly prisonerCountMetrics: PrisonerCountMetrics,
     private readonly reportType: string,
     private readonly assessmentRequired: string,
-  ) {}
+  ) {
+    // no op
+  }
 
   get renderArgs(): {
     prisonersList: PrisonersList

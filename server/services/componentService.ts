@@ -2,7 +2,9 @@ import ComponentClient, { AvailableComponent } from '../data/componentClient'
 import { Component } from '../data/model/component'
 
 export default class ComponentService {
-  constructor(private readonly componentClient: ComponentClient) {}
+  constructor(private readonly componentClient: ComponentClient) {
+    // no op
+  }
 
   async getComponents<T extends AvailableComponent[]>(
     components: T,

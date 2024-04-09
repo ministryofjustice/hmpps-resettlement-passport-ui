@@ -3,7 +3,9 @@ import RpService from '../../services/rpService'
 import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
 
 export default class AttitudesThinkingBehaviourController {
-  constructor(private readonly prisonService: RpService) {}
+  constructor(private readonly prisonService: RpService) {
+    // no op
+  }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {

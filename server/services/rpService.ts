@@ -13,7 +13,9 @@ import { Appointments } from '../data/model/appointment'
 import { OtpDetails } from '../data/model/otp'
 
 export default class RpService {
-  constructor(private readonly rpClient: RPClient) {}
+  constructor(private readonly rpClient: RPClient) {
+    // noop
+  }
 
   async getListOfPrisoners(
     token: string,
