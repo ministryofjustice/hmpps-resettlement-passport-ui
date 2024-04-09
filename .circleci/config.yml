@@ -105,6 +105,15 @@ jobs:
       name: hmpps/node_redis
       node_tag: << pipeline.parameters.node-version >>
       redis_tag: "7.0"
+      docker:
+      - image: 'gotenberg/gotenberg:7.7.0'
+        command:
+          - "gotenberg"
+          - "--api-port=3001"
+          - "--chromium-ignore-certificate-errors"
+          - "--api-timeout=30s"
+          - "--pdfengines-engines=pdftk"
+          - "--uno-listener-restart-threshold=0"
       
     steps:
       - checkout
