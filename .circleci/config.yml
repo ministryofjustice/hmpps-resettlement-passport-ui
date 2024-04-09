@@ -20,34 +20,6 @@ parameters:
     type: string
     default: 18.15-browsers
 
-executors:
-  integration-tests-executor:
-    executor:
-      name: hmpps/node
-      tag: << pipeline.parameters.node-version >>
-    docker:
-      - image: 'cimg/redis:<<parameters.redis_tag>>'
-      - image: 'gotenberg/gotenberg:<<parameters.gotenberg_tag>>'
-        command:
-          - "gotenberg"
-          - "--api-port=3001"
-          - "--chromium-ignore-certificate-errors"
-          - "--api-timeout=30s"
-          - "--pdfengines-engines=pdftk"
-          - "--uno-listener-restart-threshold=0"
-    parameters:
-      resource_class:
-        default: medium
-        type: string
-      node_tag:
-        default: << pipeline.parameters.node-version >>
-        type: string
-      redis_tag:
-        default: "7.0"
-        type: string
-      gotenberg_tag:
-        default: "7.7.0"
-        type: string
 
 jobs:
   build:
@@ -103,7 +75,10 @@ jobs:
           path: test_results/unit-test-reports.html
 
   integration_test:
-    executor: integration-tests-executor
+    executor:
+      name: hmpps/node_redis
+      node_tag: << pipeline.parameters.node-version >>
+      redis_tag: "7.0"
     steps:
       - checkout
       - attach_workspace:
@@ -113,9 +88,6 @@ jobs:
           command: sudo apt-get install libxss1
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-          name: Install Dependencies
-          command: npm ci --no-audit
       - run:
           name: Get wiremock
           command: curl -o wiremock.jar https://repo1.maven.org/maven2/com/github/tomakehurst/wiremock-standalone/2.27.1/wiremock-standalone-2.27.1.jar
