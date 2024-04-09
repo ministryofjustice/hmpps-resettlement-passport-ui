@@ -1,5 +1,5 @@
 import { stubFor } from '../../wiremock'
-import responseHeaders from '../../headers'
+import { responseHeaders } from '../../headers'
 
 export const johnSmithImage = () =>
   stubFor({

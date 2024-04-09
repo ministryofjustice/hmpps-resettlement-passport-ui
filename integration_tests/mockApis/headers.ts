@@ -1,4 +1,4 @@
-const responseHeaders = {
+export const responseHeaders = {
   'Keep-Alive': 'timeout=60',
   'X-Frame-Options': 'DENY',
   'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate',
@@ -11,4 +11,4 @@ const responseHeaders = {
   'Content-Type': 'application/json',
 }
 
-export default responseHeaders
+export const { 'Content-Type': _, ...submitHeaders } = responseHeaders
