@@ -23,17 +23,17 @@ services:
     networks:
       - hmpps_int
     ports:
-      - "3005:3005"
+      - "3001:3001"
     command:
       - "gotenberg"
-      - "--api-port=3005"
+      - "--api-port=3001"
       - "--chromium-ignore-certificate-errors"
       - "--api-timeout=30s"
       - "--pdfengines-engines=pdftk"
       - "--uno-listener-restart-threshold=0" #disables uno listener
     restart: on-failure
     healthcheck:
-      test: [ 'CMD', 'curl', '-f', 'http://localhost:3005/health' ]
+      test: [ 'CMD', 'curl', '-f', 'http://localhost:3001/health' ]
 
 networks:
   hmpps_int:
