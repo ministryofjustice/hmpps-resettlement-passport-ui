@@ -23,7 +23,6 @@ parameters:
 executors:
   integration-tests-executor:
     docker:
-      - image: 'cimg/node:<<parameters.node_tag>>'
       - image: 'cimg/redis:<<parameters.redis_tag>>'
       - image: 'gotenberg/gotenberg:<<parameters.gotenberg_tag>>'
         command:
