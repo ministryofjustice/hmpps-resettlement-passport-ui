@@ -101,7 +101,10 @@ jobs:
           path: test_results/unit-test-reports.html
 
   integration_test:
-    executor: integration-tests-executor
+    executor:
+      name: hmpps/node_redis
+      node_tag: << pipeline.parameters.node-version >>
+      redis_tag: "7.0"
       
     steps:
       - checkout
