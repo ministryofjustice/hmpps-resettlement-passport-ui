@@ -25,6 +25,6 @@ context('Generate PDF', () => {
     cy.get('#generate-pdf-task-btn').should('exist')
 
     cy.downloadFile('http://localhost:3007/print/packPdf?prisonerNumber=G4161UF', '', 'test.pdf')
-    cy.readFile('test.pdf').should('exist')
+    cy.task('getPdfContent', './test.pdf').should('contain', 'John Smith').and('contain', '123456')
   })
 })

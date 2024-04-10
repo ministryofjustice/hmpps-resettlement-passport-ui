@@ -1,10 +1,18 @@
 import { defineConfig } from 'cypress'
 import { downloadFile } from 'cypress-downloadfile/lib/addPlugin'
+import fs from 'fs'
+import pdfParse from 'pdf-parse'
+import type PdfParse from 'pdf-parse'
 import { resetStubs } from './integration_tests/mockApis/wiremock'
 import auth from './integration_tests/mockApis/auth'
 import tokenVerification from './integration_tests/mockApis/tokenVerification'
 import nomisUserRolesApi from './integration_tests/mockApis/nomisUserRolesApi'
 import rpApi from './integration_tests/mockApis/rpApi'
+
+const parsePdf = async (pdfPath): Promise<PdfParse.Result> => {
+  const dataBuffer = fs.readFileSync(pdfPath)
+  return pdfParse(dataBuffer)
+}
 
 export default defineConfig({
   chromeWebSecurity: false,
@@ -29,6 +37,9 @@ export default defineConfig({
         stubSignIn: () => auth.stubSignIn(['ROLE_RESETTLEMENT_PASSPORT_EDIT']),
         ...tokenVerification,
         downloadFile,
+        getPdfContent(pdfPath) {
+          return parsePdf(pdfPath).then(x => x.text)
+        },
       })
     },
     baseUrl: 'http://localhost:3007',

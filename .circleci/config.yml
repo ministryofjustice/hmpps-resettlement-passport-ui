@@ -20,6 +20,27 @@ parameters:
     type: string
     default: 18.15-browsers
 
+  redis-version:
+    type: string
+    default: '7.0'
+
+executors:
+  # same as hmpps/node_redis executor with the addition of gotenberg container
+  integration-tests-executor:
+    docker:
+      - image: cimg/node:<< pipeline.parameters.node-version >>
+      - image: cimg/redis:<< pipeline.parameters.redis-version >>
+      - image: 'gotenberg/gotenberg:7.7.0'
+        command:
+          - "gotenberg"
+          - "--api-port=3001"
+          - "--chromium-ignore-certificate-errors"
+          - "--api-timeout=30s"
+          - "--pdfengines-engines=pdftk"
+          - "--uno-listener-restart-threshold=0"
+    resource_class: medium
+    working_directory: ~/app
+
 
 jobs:
   build:
@@ -75,10 +96,7 @@ jobs:
           path: test_results/unit-test-reports.html
 
   integration_test:
-    executor:
-      name: hmpps/node_redis
-      node_tag: << pipeline.parameters.node-version >>
-      redis_tag: "7.0"
+    executor: integration-tests-executor
     steps:
       - checkout
       - attach_workspace:
