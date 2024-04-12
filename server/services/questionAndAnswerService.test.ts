@@ -98,11 +98,11 @@ describe('QuestionAndAnswerService', () => {
     store.setCurrentPage = jest.fn().mockResolvedValue('editedQList')
     rpService.getAssessmentPage = jest.fn().mockResolvedValue({ error: null, id: 'CHECK_ANSWERS' })
 
-    const res = await qAndAService.getAssessmentPage(getAssessmentReq)
+    const resp = await qAndAService.getAssessmentPage(getAssessmentReq)
 
     const expected = `/BCST2/pathway/${getAssessmentReq.pathway}/page/CHECK_ANSWERS?prisonerNumber=${getAssessmentReq.prisonerNumber}&edit=true&type=${getAssessmentReq.assessmentType}`
 
-    expect(res.redirect).toBe(expected)
+    expect(resp.redirect).toBe(expected)
   })
 })
 
