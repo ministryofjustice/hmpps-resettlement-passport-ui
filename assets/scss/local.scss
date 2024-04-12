@@ -837,3 +837,11 @@ th.fixed-header-width-1000 {
 .no-wrap {
   white-space: nowrap;
 }
+
+.govuk-tag {
+  max-width: unset;
+  padding-top: unset;
+  padding-bottom: unset;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}

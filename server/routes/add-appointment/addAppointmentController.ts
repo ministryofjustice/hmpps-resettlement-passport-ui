@@ -6,7 +6,9 @@ import { RPClient } from '../../data'
 import logger from '../../../logger'
 
 export default class AddAppointmentController {
-  constructor(private readonly rpService: RpService) {}
+  constructor(private readonly rpService: RpService) {
+    // no op
+  }
 
   getAddAppointmentView: RequestHandler = (req, res, next) => {
     const { prisonerData } = req

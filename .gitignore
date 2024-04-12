@@ -132,4 +132,4 @@ test-results/
 **/Chart.lock
 cypress/
 volume/
-.DS_Store
+test.pdf

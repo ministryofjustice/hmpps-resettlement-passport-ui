@@ -10,8 +10,7 @@
         background: white;
       }
       .main-wrapper {
-        min-height: 400px;
-        padding-top: 0;
+        padding-top: 0px;
         margin-left: 30px;
         margin-right: 30px;
       }
@@ -24,39 +23,24 @@
       }
       .appointment {
         clear: both;
-        padding-bottom: 15px;
+        padding: 0;
+        border-bottom: 2px dashed black;
+        margin-bottom: 10px;
+        margin-top: 0px;
       }
-      .column1 {
-        flex: 50%;
-      }
-
-      .column2 {
-        flex: 30%;
-      }
-
       .two-thirds {
         width: 66%;
       }
       .one-thirds {
         width: 33%;
       }
-
-      .header__container {
-        margin: 0;
-        border-bottom: 5px solid #1d70b8;
-        border-bottom-style: solid;
-        height: 130px;
-        margin-bottom: 20px;
-        padding: 30px 30px 10px;
-      }
       .text {
-        padding-top: 5px;
+        padding-top: 0px;
         padding-bottom: 5px;
       }
       .text-l {
-        padding-top: 10px;
+        margin-top: 0px;
         padding-bottom: 10px;
-        line-height: 1.5;
       }
       .code-text {
         padding-left: 20px;
@@ -76,9 +60,8 @@
       .codebox {
         margin-top: 20px;
         margin-bottom: 20px;
-        width: 100%;
+        width: 99%;
         background-color: #f3f2f1;
-        height: 250px;
         padding: 5px;
       }
       .center {
@@ -101,7 +84,6 @@
 
   <body>
     <!-- First Page -->
-    {% include "../partials/printPackHeader.njk" %}
 
     <div class="main-wrapper">
       <div class="row">
@@ -132,14 +114,19 @@
           <ul>
             <li class="text">a mobile phone to receive security codes</li>
             <li class="text">an email address</li>
-            <li class="text">your login code</li>
+            <li class="text">your First-time ID code</li>
           </ul>
         </div>
       </div>
 
       <div class="codebox">
         <p class="code-text">
-          <b>Your login code:</b>
+          <b>Your First-time ID code:</b>
+        </p>
+        <p class="code-text">
+          You will only need to use this code the first time you sign in to Plan your future.
+          <br>
+          Don't share this code with anyone else. 
         </p>
         <p class="code-xl center">
           {{ otpData.otp }}
@@ -148,37 +135,26 @@
            This code expires on {{otpData.expiryDate | formatDateExtended }}.
         </p>
         <p class="code-text">
-          <b>If your login code is not working:</b>
+          <b>Problems with this code?</b>
           <br>
-          If this login code has expired or is not working, your Offender Manager will be able to give you a new one. 
+          If this code has expired or is not working, your probation officer will be able to give you a new one. 
         </p>
       </div>
 
       <div class="row">
-        <div class="">
+        <div>
           <p class="text">
             <b>Important</b>
           </p>
           <p class="text">
-          Only use Plan your future online if you are allowed to use the internet.
-        </p>
+            Only use Plan your future online if you are allowed to use the internet.
+          </p>
         </div>
       </div>
 
     </div>
 
-    <div class="page-end">
-      <p class="page-number-text">
-        {% if appointments.length < 4 %}
-        1 of 2
-        {% else %}
-        1 of 3
-        {% endif %}
-      </p>
-    </div>
-
     <!-- Second Page -->
-    {% include "../partials/printPackHeader.njk" %}
 
     <div class="main-wrapper">
       <div class="row">
@@ -206,8 +182,8 @@
 
       {% for appointment in appointments %}
         <!-- appointment -->
-        <div class="appointment">
-          <div class="one-thirds">
+        <div class="two-thirds">
+          <div class="appointment">
             <h3 class="text-xl">
               {{appointment.date | formatDateExtended}}
             </h3>
@@ -234,25 +210,9 @@
             </p>
           </div>
         </div>
-        {% if loop.index == 3 %}
-          <div class="appointments-break">
-            {% if appointments.length > 3 %}
-              <p>2 of 3</p>
-            {% else %}
-              <p>2 of 2</p>
-            {% endif %}
-
-          </div>
-        {% endif %}
       {% endfor %}
 
     </div>
-    {% if appointments.length == 0 %}
-      <p class="page-number-text">2 of 2</p>
-    {% endif %}
-    {% if appointments.length > 3 %}
-      <p class="page-number-text">3 of 3</p>
-    {% endif %}
 
   </body>
 </html>

@@ -3,7 +3,9 @@ import RpService from '../../services/rpService'
 import HealthStatusView from './healthStatusView'
 
 export default class HealthStatusController {
-  constructor(private readonly rpService: RpService) {}
+  constructor(private readonly rpService: RpService) {
+    // no op
+  }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {

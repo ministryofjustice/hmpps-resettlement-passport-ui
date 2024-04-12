@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+docker-compose up --scale=app=0 -d
+npm run start:dev

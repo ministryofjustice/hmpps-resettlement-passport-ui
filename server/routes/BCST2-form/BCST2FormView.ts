@@ -15,7 +15,9 @@ export default class BCST2FormView implements View {
     private readonly backButton: boolean,
     private readonly assessmentType: AssessmentType,
     private readonly errors: ErrorMessage[] = [],
-  ) {}
+  ) {
+    // no op
+  }
 
   get renderArgs(): {
     prisonerData: PrisonerData

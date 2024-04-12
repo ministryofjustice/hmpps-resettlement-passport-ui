@@ -10,7 +10,9 @@ export default class AssessmentTaskListView implements View {
     private readonly BCST2Completed: boolean,
     private readonly assessmentType: AssessmentType,
     private readonly errors: ErrorMessage[] = [],
-  ) {}
+  ) {
+    // no op
+  }
 
   get renderArgs(): {
     prisonerData: PrisonerData

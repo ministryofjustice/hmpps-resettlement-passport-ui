@@ -50,47 +50,47 @@ export default {
       url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),
       externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://localhost:9090/auth')),
       timeout: {
-        response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000)),
-        deadline: Number(get('HMPPS_AUTH_TIMEOUT_DEADLINE', 10000)),
+        response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 20000)),
+        deadline: Number(get('HMPPS_AUTH_TIMEOUT_DEADLINE', 20000)),
       },
-      agent: new AgentConfig(Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 10000))),
+      agent: new AgentConfig(Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 20000))),
       apiClientId: get('API_CLIENT_ID', 'clientid', requiredInProduction),
       apiClientSecret: get('API_CLIENT_SECRET', 'clientsecret', requiredInProduction),
     },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
       timeout: {
-        response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000)),
-        deadline: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_DEADLINE', 5000)),
+        response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 20000)),
+        deadline: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_DEADLINE', 20000)),
       },
-      agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000))),
+      agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 20000))),
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
     },
     rpClient: {
       url: get('RESETTLEMENT_PASSPORT_API_URL', 'http://localhost:8080'),
       timeout: {
-        response: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 8000)),
-        deadline: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_DEADLINE', 10000)),
+        response: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 20000)),
+        deadline: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_DEADLINE', 20000)),
       },
-      agent: new AgentConfig(Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 8000))),
+      agent: new AgentConfig(Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 20000))),
       enabled: get('RESETTLEMENT_PASSPORT_API_ENABLED', 'true') === 'true',
     },
     nomisUserRolesClient: {
       url: get('NOMIS_USER_ROLES_API_URL', ''),
       timeout: {
-        response: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 10000)),
-        deadline: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_DEADLINE', 10000)),
+        response: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 20000)),
+        deadline: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_DEADLINE', 20000)),
       },
-      agent: new AgentConfig(Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 5000))),
+      agent: new AgentConfig(Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 20000))),
       enabled: get('NOMIS_USER_ROLES_API_ENABLED', 'true') === 'true',
     },
     frontendComponents: {
       url: get('COMPONENT_API_URL', 'http://localhost:8082', requiredInProduction),
       timeout: {
-        response: Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 10000)),
-        deadline: Number(get('COMPONENT_API_TIMEOUT_DEADLINE', 10000)),
+        response: Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 20000)),
+        deadline: Number(get('COMPONENT_API_TIMEOUT_DEADLINE', 20000)),
       },
-      agent: new AgentConfig(Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 5000))),
+      agent: new AgentConfig(Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 20000))),
       enabled: get('COMPONENT_API_ENABLED', 'true') === 'true',
     },
     gotenberg: {
@@ -110,6 +110,12 @@ export default {
       bucketName: get('FEATURE_FLAG_BUCKET', 'hmpps-resettlement-passport-ui-config'),
       path: get('FEATURE_FLAG_PATH', 'feature-flags'),
       filename: get('FEATURE_FLAG_PATH_FILENAME', 'flags.json'),
+    },
+  },
+  local: {
+    featureFlag: {
+      enabled: get('LOCAL_FEATURE_FLAG_ENABLED', 'false') === 'true',
+      filename: get('LOCAL_FEATURE_FLAG_PATH_FILENAME', 'localstack/flags.json'),
     },
   },
 }

@@ -1,4 +1,21 @@
 import { stubFor } from './wiremock'
+import {
+  johnSmithAccommodationNextPage1,
+  johnSmithAssessmentSummary,
+  johnSmithCheckAnswers,
+  johnSmithConfirm,
+  johnSmithNextPage2,
+  johnSmithNextPage3,
+  johnSmithNextPage4,
+  johnSmithTaskList,
+  johnSmithTaskListAfterComplete,
+  johnSmithWhereDidTheyLive,
+  johnSmithWhereWillTheyLive2,
+  stubJohnSmithPrisonerDetails,
+} from './scenarios/john-smith/john-smith-pre-release'
+import { johnSmithDefaults } from './scenarios/john-smith/john-smith'
+import { johnSmithBCST2 } from './scenarios/john-smith/john-smith-bcst2'
+import johnSmithBcst2Edit from './scenarios/john-smith/john-smith-bcst2-edit'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -25,9 +42,9 @@ const mockedPrisonerData = {
   personalDetails: {
     prisonerNumber: 'G4161UF',
     prisonId: 'MDI',
-    firstName: 'CHRISY',
+    firstName: 'John',
     middleNames: null,
-    lastName: 'CLEMENCE',
+    lastName: 'Smith',
     releaseDate: '2024-08-01',
     releaseType: 'CRD',
     dateOfBirth: '1974-05-30',
@@ -232,11 +249,49 @@ const stubCreateOtp = () =>
     },
   })
 
+const stubGetOtp = () =>
+  stubFor({
+    request: {
+      method: 'GET',
+      url: `/rpApi/resettlement-passport/popUser/G4161UF/otp`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: mockedOtpResponse,
+    },
+  })
+
+const stubJohnSmithPreRelease = () => {
+  return Promise.all([
+    ...johnSmithDefaults(),
+    stubJohnSmithPrisonerDetails(),
+    johnSmithTaskList(),
+    johnSmithTaskListAfterComplete(),
+    johnSmithAccommodationNextPage1(),
+    johnSmithNextPage2(),
+    johnSmithNextPage3(),
+    johnSmithNextPage4(),
+    johnSmithWhereDidTheyLive(),
+    johnSmithWhereWillTheyLive2(),
+    johnSmithAssessmentSummary(),
+    johnSmithCheckAnswers(),
+    johnSmithConfirm(),
+  ])
+}
+
+const stubJohnSmithBCST2 = () => Promise.all([...johnSmithDefaults(), ...johnSmithBCST2()])
+const stubJohnSmithBCST2Edit = () => Promise.all([...johnSmithDefaults(), ...johnSmithBcst2Edit()])
+
 export default {
   stubGetPrisoners,
   stubGetAppointments,
   stubGetAppointment,
   stubCreateOtp,
+  stubGetOtp,
   stubGetPrisonerData,
   stubGetPrisonerImage,
+  stubJohnSmithPreRelease,
+  stubJohnSmithBCST2,
+  stubJohnSmithBCST2Edit,
 }

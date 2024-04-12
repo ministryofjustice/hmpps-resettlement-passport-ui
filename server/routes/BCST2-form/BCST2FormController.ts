@@ -11,7 +11,9 @@ import QuestionAndAnswerService from '../../services/questionAndAnswerService'
 import GetAssessmentRequest from '../../data/model/getAssessmentRequest'
 
 export default class BCST2FormController {
-  constructor(private readonly rpService: RpService) {}
+  constructor(private readonly rpService: RpService) {
+    // no op
+  }
 
   getFirstPage: RequestHandler = async (req, res, next): Promise<void> => {
     try {
