@@ -6,8 +6,14 @@ import GetAssessmentRequest from '../data/model/getAssessmentRequest'
 import GetAssessmentResponse from '../data/model/getAssessmentResponse'
 
 export default class QuestionAndAnswerService {
-  // eslint-disable-next-line no-empty-function
-  constructor(private readonly rpService: RpService, private readonly store: AssessmentStore) {}
+  private rpService: RpService
+
+  private store: AssessmentStore
+
+  constructor(rpService: RpService, store: AssessmentStore) {
+    this.rpService = rpService
+    this.store = store
+  }
 
   async getAssessmentPage(getAssessmentReq: GetAssessmentRequest): Promise<GetAssessmentResponse> {
     // If this is not an edit (inc. a resettlement plan), ensure there are nothing in the cache for editedQuestionList
