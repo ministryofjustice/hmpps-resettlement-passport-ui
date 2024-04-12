@@ -6,6 +6,7 @@ import GetAssessmentRequest from '../data/model/getAssessmentRequest'
 import GetAssessmentResponse from '../data/model/getAssessmentResponse'
 
 export default class QuestionAndAnswerService {
+  // eslint-disable-next-line no-empty-function
   constructor(private readonly rpService: RpService, private readonly store: AssessmentStore) {}
 
   async getAssessmentPage(getAssessmentReq: GetAssessmentRequest): Promise<GetAssessmentResponse> {
