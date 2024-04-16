@@ -30,7 +30,7 @@ export default class FinanceIdController {
       // DELETE ASSESSMENT
       if (deleteAssessmentConfirmed) {
         try {
-          assessmentDeleted = await this.rpService.deleteAssessment(prisonerNumber, assessmentId)
+          assessmentDeleted = await this.rpService.deleteAssessment(prisonerNumber, assessmentId as string)
         } catch (err) {
           logger.warn(`Error deleting assessment`, err)
           assessmentDeleted.error = true
@@ -46,7 +46,7 @@ export default class FinanceIdController {
       // DELETE FINANCE
       if (deleteFinanceConfirmed) {
         try {
-          financeDeleted = await this.rpService.deleteFinance(prisonerNumber, financeId)
+          financeDeleted = await this.rpService.deleteFinance(prisonerNumber, financeId as string)
         } catch (err) {
           logger.warn(`Error deleting finance`, err)
           financeDeleted.error = true
@@ -62,7 +62,7 @@ export default class FinanceIdController {
       // DELETE ID
       if (deleteIdConfirmed) {
         try {
-          idDeleted = await this.rpService.deleteId(prisonerNumber, idId)
+          idDeleted = await this.rpService.deleteId(prisonerNumber, idId as string)
         } catch (err) {
           logger.warn(`Error deleting ID`, err)
           idDeleted.error = true

@@ -1,4 +1,3 @@
-import QueryString from 'qs'
 import { RPClient } from '../data'
 import { PrisonersList } from '../data/model/prisoners'
 import { CrsReferralResponse } from '../data/model/crsReferralResponse'
@@ -325,10 +324,7 @@ export default class RpService {
     return this.rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, body)
   }
 
-  async deleteAssessment(
-    prisonerNumber: string,
-    assessmentId: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[],
-  ) {
+  async deleteAssessment(prisonerNumber: string, assessmentId: string) {
     return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${assessmentId}`)
   }
 
@@ -336,10 +332,7 @@ export default class RpService {
     return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`)
   }
 
-  async deleteFinance(
-    prisonerNumber: string,
-    financeId: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[],
-  ) {
+  async deleteFinance(prisonerNumber: string, financeId: string) {
     return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${financeId}`)
   }
 
@@ -347,7 +340,7 @@ export default class RpService {
     return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
   }
 
-  async deleteId(prisonerNumber: string, idId: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[]) {
+  async deleteId(prisonerNumber: string, idId: string) {
     return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${idId}`)
   }
 }
