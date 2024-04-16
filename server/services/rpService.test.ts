@@ -43,4 +43,119 @@ describe('RpService', () => {
     expect(otpDetails.otp).toBe('123456')
     expect(loggerSpy).toHaveBeenCalledWith(`Session: sessionId Cannot get otp for ${nomsId} ${error.status} ${error}`)
   })
+
+  it('should call rpClient correctly when fetching assessment', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'get')
+    const prisonerNumber = '6'
+    await service.fetchAssessment(prisonerNumber)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
+  })
+
+  it('should call rpClient correctly when posting assessment', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'post')
+    const prisonerNumber = '6'
+    const body = { test: 'test' }
+    await service.postAssessment(prisonerNumber, body)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, body)
+  })
+
+  it('should call rpClient correctly when posting bank application', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'post')
+    const prisonerNumber = '6'
+    const body = { test: 'test' }
+    await service.postBankApplication(prisonerNumber, body)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
+  })
+
+  it('should call rpClient correctly when posting id application', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'post')
+    const prisonerNumber = '6'
+    const body = { test: 'test' }
+    await service.postBankApplication(prisonerNumber, body)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
+  })
+
+  it('should call rpClient correctly when patching bank application', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'patch')
+    const prisonerNumber = '6'
+    const applicationId = '1'
+    const body = { test: 'test' }
+    await service.patchBankApplication(prisonerNumber, applicationId, body)
+
+    expect(spy).toHaveBeenCalledWith(
+      `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`,
+      body,
+    )
+  })
+
+  it('should call rpClient correctly when patching id application', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'patch')
+    const prisonerNumber = '6'
+    const applicationId = '1'
+    const body = { test: 'test' }
+    await service.patchIdApplication(prisonerNumber, applicationId, body)
+
+    expect(spy).toHaveBeenCalledWith(
+      `/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`,
+      body,
+    )
+  })
+
+  it('should call rpClient correctly when deleting an assessment', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'delete')
+    const prisonerNumber = '6'
+    const applicationId = '1'
+    await service.deleteAssessment(prisonerNumber, applicationId)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${applicationId}`)
+  })
+
+  it('should call rpClient correctly when fetching finance', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'get')
+    const prisonerNumber = '6'
+    await service.fetchFinance(prisonerNumber)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`)
+  })
+
+  it('should call rpClient correctly when deleting finance', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'delete')
+    const prisonerNumber = '6'
+    const financeId = '1'
+    await service.deleteFinance(prisonerNumber, financeId)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${financeId}`)
+  })
+
+  it('should call rpClient correctly when fetching id', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'get')
+    const prisonerNumber = '6'
+    await service.fetchAssessment(prisonerNumber)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
+  })
+
+  it('should call rpClient correctly when deleting id', async () => {
+    rpClient.get.mockResolvedValue({})
+    const spy = jest.spyOn(rpClient, 'delete')
+    const prisonerNumber = '6'
+    const idId = '1'
+    await service.deleteId(prisonerNumber, idId)
+
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${idId}`)
+  })
 })
