@@ -1,3 +1,4 @@
+import QueryString from 'qs'
 import { RPClient } from '../data'
 import { PrisonersList } from '../data/model/prisoners'
 import { CrsReferralResponse } from '../data/model/crsReferralResponse'
@@ -295,5 +296,58 @@ export default class RpService {
       logger.warn(`Session: ${sessionId} Cannot recreate otp for ${prisonerId} ${err.status} ${err}`)
       return null
     }
+  }
+
+  async fetchAssessment(prisonerNumber: string) {
+    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
+  }
+
+  async postAssessment(prisonerNumber: string, body: Record<never, never>) {
+    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, body)
+  }
+
+  async postBankApplication(prisonerNumber: string, body: Record<never, never>) {
+    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
+  }
+
+  async postIdApplication(prisonerNumber: string, body: Record<never, never>) {
+    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
+  }
+
+  async patchBankApplication(prisonerNumber: string, applicationId: string, body: Record<never, never>) {
+    return this.rpClient.patch(
+      `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`,
+      body,
+    )
+  }
+
+  async patchIdApplication(prisonerNumber: string, applicationId: string, body: Record<never, never>) {
+    return this.rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, body)
+  }
+
+  async deleteAssessment(
+    prisonerNumber: string,
+    assessmentId: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[],
+  ) {
+    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${assessmentId}`)
+  }
+
+  async fetchFinance(prisonerNumber: string) {
+    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`)
+  }
+
+  async deleteFinance(
+    prisonerNumber: string,
+    financeId: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[],
+  ) {
+    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${financeId}`)
+  }
+
+  async fetchId(prisonerNumber: string) {
+    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
+  }
+
+  async deleteId(prisonerNumber: string, idId: string | string[] | QueryString.ParsedQs | QueryString.ParsedQs[]) {
+    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${idId}`)
   }
 }
