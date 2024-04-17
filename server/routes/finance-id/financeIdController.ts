@@ -1,6 +1,5 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
-import { RPClient } from '../../data'
 import logger from '../../../logger'
 import { AssessmentErrorMessage } from '../../data/model/assessmentErrorMessage'
 import { BankAccountErrorMessage } from '../../data/model/bankAccountErrorMessage'
@@ -19,8 +18,8 @@ export default class FinanceIdController {
       const { token } = req.user
       const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
         req.query
+      const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
 
-      const apiResponse = new RPClient(req.user.token, req.sessionID, req.user.username)
       let assessment: { error?: boolean } = {}
       let assessmentDeleted: { error?: boolean } = {}
       let finance: { error?: boolean } = {}
@@ -31,9 +30,7 @@ export default class FinanceIdController {
       // DELETE ASSESSMENT
       if (deleteAssessmentConfirmed) {
         try {
-          assessmentDeleted = await apiResponse.delete(
-            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment/${assessmentId}`,
-          )
+          assessmentDeleted = await this.rpService.deleteAssessment(prisonerNumber, assessmentId as string)
         } catch (err) {
           logger.warn(`Error deleting assessment`, err)
           assessmentDeleted.error = true
@@ -41,9 +38,7 @@ export default class FinanceIdController {
       }
       // FETCH ASSESSMENT
       try {
-        assessment = await apiResponse.get(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/assessment`,
-        )
+        assessment = await this.rpService.fetchAssessment(prisonerNumber)
       } catch (err) {
         logger.warn(`Error fetching assessment data`, err)
         assessment.error = true
@@ -51,9 +46,7 @@ export default class FinanceIdController {
       // DELETE FINANCE
       if (deleteFinanceConfirmed) {
         try {
-          financeDeleted = await apiResponse.delete(
-            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication/${financeId}`,
-          )
+          financeDeleted = await this.rpService.deleteFinance(prisonerNumber, financeId as string)
         } catch (err) {
           logger.warn(`Error deleting finance`, err)
           financeDeleted.error = true
@@ -61,9 +54,7 @@ export default class FinanceIdController {
       }
       // FETCH FINANCE
       try {
-        finance = await apiResponse.get(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/bankapplication`,
-        )
+        finance = await this.rpService.fetchFinance(prisonerNumber)
       } catch (err) {
         logger.warn(`Error fetching finance data`, err)
         finance.error = true
@@ -71,9 +62,7 @@ export default class FinanceIdController {
       // DELETE ID
       if (deleteIdConfirmed) {
         try {
-          idDeleted = await apiResponse.delete(
-            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/${idId}`,
-          )
+          idDeleted = await this.rpService.deleteId(prisonerNumber, idId as string)
         } catch (err) {
           logger.warn(`Error deleting ID`, err)
           idDeleted.error = true
@@ -81,9 +70,7 @@ export default class FinanceIdController {
       }
       // FETCH ID
       try {
-        id = await apiResponse.get(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/idapplication/all`,
-        )
+        id = await this.rpService.fetchId(prisonerNumber)
       } catch (err) {
         logger.warn(`Error fetching ID data`, err)
         id.error = true
@@ -124,9 +111,8 @@ export default class FinanceIdController {
         idDocuments = [idDocuments]
       }
 
-      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
       try {
-        await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, {
+        await this.rpService.postAssessment(prisonerNumber, {
           assessmentDate,
           isBankAccountRequired,
           isIdRequired,
@@ -154,9 +140,8 @@ export default class FinanceIdController {
       const params = req.body
       const { prisonerNumber, applicationDate, bankName } = req.body
 
-      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
       try {
-        await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
+        await this.rpService.postBankApplication(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
           applicationSubmittedDate: applicationDate,
           bankName,
         })
@@ -193,9 +178,8 @@ export default class FinanceIdController {
         driversLicenceApplicationMadeAt,
       } = req.body
       const costOfApplication = Number(req.body.costOfApplication)
-      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
       try {
-        await rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
+        await this.rpService.postIdApplication(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
           idType,
           applicationSubmittedDate,
           isPriorityApplication,
@@ -237,9 +221,8 @@ export default class FinanceIdController {
         resubmissionDate,
       } = req.body
 
-      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
       try {
-        await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`, {
+        await this.rpService.patchBankApplication(prisonerNumber, applicationId, {
           status: updatedStatus,
           bankResponseDate,
           isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
@@ -276,9 +259,8 @@ export default class FinanceIdController {
       } = req.body
 
       const refundAmount = Number(req.body.refundAmount)
-      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
       try {
-        await rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, {
+        await this.rpService.patchIdApplication(prisonerNumber, applicationId, {
           status: updatedStatus,
           isAddedToPersonalItems,
           addedToPersonalItemsDate,

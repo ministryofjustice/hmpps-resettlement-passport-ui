@@ -296,4 +296,51 @@ export default class RpService {
       return null
     }
   }
+
+  async fetchAssessment(prisonerNumber: string) {
+    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
+  }
+
+  async postAssessment(prisonerNumber: string, body: Record<never, never>) {
+    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, body)
+  }
+
+  async postBankApplication(prisonerNumber: string, body: Record<never, never>) {
+    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
+  }
+
+  async postIdApplication(prisonerNumber: string, body: Record<never, never>) {
+    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, body)
+  }
+
+  async patchBankApplication(prisonerNumber: string, applicationId: string, body: Record<never, never>) {
+    return this.rpClient.patch(
+      `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`,
+      body,
+    )
+  }
+
+  async patchIdApplication(prisonerNumber: string, applicationId: string, body: Record<never, never>) {
+    return this.rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, body)
+  }
+
+  async deleteAssessment(prisonerNumber: string, assessmentId: string) {
+    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${assessmentId}`)
+  }
+
+  async fetchFinance(prisonerNumber: string) {
+    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`)
+  }
+
+  async deleteFinance(prisonerNumber: string, financeId: string) {
+    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${financeId}`)
+  }
+
+  async fetchId(prisonerNumber: string) {
+    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/all`)
+  }
+
+  async deleteId(prisonerNumber: string, idId: string) {
+    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${idId}`)
+  }
 }
