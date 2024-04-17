@@ -144,9 +144,9 @@ describe('RpService', () => {
     rpClient.get.mockResolvedValue({})
     const spy = jest.spyOn(rpClient, 'get')
     const prisonerNumber = '6'
-    await service.fetchAssessment(prisonerNumber)
+    await service.fetchId(prisonerNumber)
 
-    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/all`)
   })
 
   it('should call rpClient correctly when deleting id', async () => {

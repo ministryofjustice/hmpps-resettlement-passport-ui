@@ -337,7 +337,7 @@ export default class RpService {
   }
 
   async fetchId(prisonerNumber: string) {
-    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
+    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/all`)
   }
 
   async deleteId(prisonerNumber: string, idId: string) {
