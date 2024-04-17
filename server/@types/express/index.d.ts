@@ -36,7 +36,7 @@ export declare global {
 }
 
 export type PersonalDetails = {
-  prisonerNumber: string | unknown
+  prisonerNumber?: string
   prisonId: string
   firstName: string
   lastName: string
