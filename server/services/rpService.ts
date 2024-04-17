@@ -310,7 +310,7 @@ export default class RpService {
   }
 
   async postIdApplication(prisonerNumber: string, body: Record<never, never>) {
-    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
+    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, body)
   }
 
   async patchBankApplication(prisonerNumber: string, applicationId: string, body: Record<never, never>) {

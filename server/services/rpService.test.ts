@@ -78,9 +78,9 @@ describe('RpService', () => {
     const spy = jest.spyOn(rpClient, 'post')
     const prisonerNumber = '6'
     const body = { test: 'test' }
-    await service.postBankApplication(prisonerNumber, body)
+    await service.postIdApplication(prisonerNumber, body)
 
-    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
+    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, body)
   })
 
   it('should call rpClient correctly when patching bank application', async () => {
