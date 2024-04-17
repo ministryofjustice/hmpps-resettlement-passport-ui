@@ -33,9 +33,6 @@
     <td class="govuk-table__cell" id="releaseDate">
       <span class="no-wrap">{{ releaseDate | formatDate }}</span> <br/>
       {% if releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
-      <span class="govuk-body-s" id="releaseType">
-        {{ releaseType }}
-      </span>
     </td>
     <td class="govuk-table__cell" id="releaseEligibilityDate">
       {{ releaseEligibilityDate | formatDate }} <br/>
