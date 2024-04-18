@@ -7,6 +7,7 @@ import AssessmentStore from '../../data/assessmentStore'
 import { SubmittedInput, SubmittedQuestionAndAnswer, ValidationErrors } from '../../data/model/BCST2Form'
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 import { getEnumValue, parseAssessmentType } from '../../utils/utils'
+import GetAssessmentRequest from '../../data/model/getAssessmentRequest'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {
@@ -133,34 +134,48 @@ export default class BCST2FormController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
-      const { pathway, currentPageId } = req.params
-      const assessmentType = parseAssessmentType(req.query.type)
-      const edit = req.query.edit === 'true'
-      const submitted = req.query.submitted === 'true'
-      const backButton = req.query.backButton === 'true'
       const validationErrorsString = req.query.validationErrors as string
       const validationErrors: ValidationErrors = validationErrorsString
         ? JSON.parse(decodeURIComponent(validationErrorsString))
         : null
 
+      const getAssessmentRequest = new GetAssessmentRequest(req.query.validationErrors as string)
+
+      getAssessmentRequest.prisonerNumber = req.prisonerData.personalDetails.prisonerNumber
+      getAssessmentRequest.token = req.user.token
+      getAssessmentRequest.pathway = req.params.pathway
+      getAssessmentRequest.currentPageId = req.params.currentPageId
+      getAssessmentRequest.assessmentType = parseAssessmentType(req.query.type)
+      getAssessmentRequest.editMode = req.query.edit === 'true'
+      getAssessmentRequest.submitted = req.query.submitted === 'true'
+      getAssessmentRequest.backButton = req.query.backButton === 'true'
+      getAssessmentRequest.sessionId = req.session.id
+
       const store = new AssessmentStore(createRedisClient())
 
       // If this is not an edit (inc. a resettlement plan), ensure there are nothing in the cache for editedQuestionList
-      if (!(edit || assessmentType === 'RESETTLEMENT_PLAN')) {
-        await store.deleteEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway)
+      if (!(getAssessmentRequest.editMode || getAssessmentRequest.assessmentType === 'RESETTLEMENT_PLAN')) {
+        await store.deleteEditedQuestionList(
+          getAssessmentRequest.sessionId,
+          `${getAssessmentRequest.prisonerNumber}`,
+          getAssessmentRequest.pathway,
+        )
       }
 
       // If it's already submitted, reset the cache at this point to the CHECK_ANSWERS
-      if (submitted) {
-        await store.deleteEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway)
+      if (getAssessmentRequest.submitted) {
+        await store.deleteEditedQuestionList(
+          getAssessmentRequest.sessionId,
+          `${getAssessmentRequest.prisonerNumber}`,
+          getAssessmentRequest.pathway,
+        )
         const assessmentPage = await this.rpService.getAssessmentPage(
-          token,
+          getAssessmentRequest.token,
           req.sessionID,
-          prisonerData.personalDetails.prisonerNumber as string,
-          pathway as string,
+          getAssessmentRequest.prisonerNumber as string,
+          getAssessmentRequest.pathway as string,
           'CHECK_ANSWERS',
-          assessmentType,
+          getAssessmentRequest.assessmentType,
         )
         const questionsAndAnswers = {
           questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
@@ -179,45 +194,53 @@ export default class BCST2FormController {
         }
         await store.setAssessment(
           req.session.id,
-          `${prisonerData.personalDetails.prisonerNumber}`,
-          pathway,
+          `${getAssessmentRequest.prisonerNumber}`,
+          getAssessmentRequest.pathway,
           questionsAndAnswers,
         )
       }
 
       const existingAssessment = JSON.parse(
-        await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+        await store.getAssessment(
+          getAssessmentRequest.sessionId,
+          `${getAssessmentRequest.prisonerNumber}`,
+          getAssessmentRequest.pathway,
+        ),
       ) as SubmittedInput
 
       // If there is nothing in the cache at this point, something has gone wrong so redirect back to the start of the form
       if (!existingAssessment) {
         return res.redirect(
-          `/BCST2-next-page?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&pathway=${pathway}&type=${assessmentType}`,
+          `/BCST2-next-page?prisonerNumber=${getAssessmentRequest.prisonerNumber}&pathway=${getAssessmentRequest.pathway}&type=${getAssessmentRequest.assessmentType}`,
         )
       }
 
       // Get the assessment page from the API and set in the cache
       const assessmentPage = await this.rpService.getAssessmentPage(
-        token,
+        getAssessmentRequest.token,
         req.sessionID,
-        prisonerData.personalDetails.prisonerNumber as string,
-        pathway as string,
-        currentPageId,
-        assessmentType,
+        getAssessmentRequest.prisonerNumber as string,
+        getAssessmentRequest.pathway as string,
+        getAssessmentRequest.currentPageId,
+        getAssessmentRequest.assessmentType,
       )
       const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
 
       if (!assessmentPage.error) {
         await store.setCurrentPage(
           req.session.id,
-          `${prisonerData.personalDetails.prisonerNumber}`,
-          pathway,
+          `${getAssessmentRequest.prisonerNumber}`,
+          getAssessmentRequest.pathway,
           assessmentPage,
         )
 
         // Get any edited questions from cache
         const editedQuestionIds = JSON.parse(
-          await store.getEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+          await store.getEditedQuestionList(
+            getAssessmentRequest.sessionId,
+            `${getAssessmentRequest.prisonerNumber}`,
+            getAssessmentRequest.pathway,
+          ),
         ) as string[]
 
         // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
@@ -260,25 +283,32 @@ export default class BCST2FormController {
             const newQuestionsAndAnswers = newQuestionIds.map(q =>
               existingAssessment.questionsAndAnswers.find(it => it.question === q),
             )
-            await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
-              questionsAndAnswers: newQuestionsAndAnswers,
-            })
+            await store.setAssessment(
+              getAssessmentRequest.sessionId,
+              `${getAssessmentRequest.prisonerNumber}`,
+              getAssessmentRequest.pathway,
+              {
+                questionsAndAnswers: newQuestionsAndAnswers,
+              },
+            )
             // Delete the edited question list from cache
             await store.deleteEditedQuestionList(
               req.session.id,
-              `${prisonerData.personalDetails.prisonerNumber}`,
-              pathway,
+              `${getAssessmentRequest.prisonerNumber}`,
+              getAssessmentRequest.pathway,
             )
             // Redirect to check answers page
             return res.redirect(
-              `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
+              `/BCST2/pathway/${getAssessmentRequest.pathway}/page/CHECK_ANSWERS?prisonerNumber=${getAssessmentRequest.prisonerNumber}&edit=true&type=${getAssessmentRequest.assessmentType}`,
             )
           }
         }
 
         // If we are in edit mode (inc. a resettlement plan but not on CHECK_ANSWERS) add the current question id to the edited question list in cache
         if (
-          (edit || assessmentType === 'RESETTLEMENT_PLAN' || editedQuestionIds) &&
+          (getAssessmentRequest.editMode ||
+            getAssessmentRequest.assessmentType === 'RESETTLEMENT_PLAN' ||
+            editedQuestionIds) &&
           assessmentPage.id !== 'CHECK_ANSWERS'
         ) {
           const questionList = editedQuestionIds
@@ -286,15 +316,18 @@ export default class BCST2FormController {
             : assessmentPage.questionsAndAnswers.map(it => it.question.id)
           await store.setEditedQuestionList(
             req.session.id,
-            `${prisonerData.personalDetails.prisonerNumber}`,
-            pathway,
+            `${getAssessmentRequest.prisonerNumber}`,
+            getAssessmentRequest.pathway,
             questionList,
           )
         }
 
         // Merge together answers from API and cache
         // If this is an edit and CHECK_ANSWERS then we need to use only the cache to define the questions as these may be different now
-        if (assessmentPage.questionsAndAnswers.length !== 0 && !(edit && assessmentPage.id === 'CHECK_ANSWERS')) {
+        if (
+          assessmentPage.questionsAndAnswers.length !== 0 &&
+          !(getAssessmentRequest.editMode && assessmentPage.id === 'CHECK_ANSWERS')
+        ) {
           assessmentPage.questionsAndAnswers.forEach(qAndA => {
             const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
               it => it?.question === qAndA.question.id,
@@ -323,25 +356,30 @@ export default class BCST2FormController {
         }
 
         // If we are about to render the check answers page - update the cache with the current question/answer set
-        if (currentPageId === 'CHECK_ANSWERS') {
-          await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
-            questionsAndAnswers: mergedQuestionsAndAnswers,
-          })
+        if (getAssessmentRequest.currentPageId === 'CHECK_ANSWERS') {
+          await store.setAssessment(
+            req.session.id,
+            `${getAssessmentRequest.prisonerNumber}`,
+            getAssessmentRequest.pathway,
+            {
+              questionsAndAnswers: mergedQuestionsAndAnswers,
+            },
+          )
         }
       }
 
       const view = new BCST2FormView(
         prisonerData,
         assessmentPage,
-        pathway,
+        getAssessmentRequest.pathway,
         {
           questionsAndAnswers: mergedQuestionsAndAnswers,
         },
         validationErrors,
-        edit,
-        submitted,
-        backButton,
-        assessmentType,
+        getAssessmentRequest.editMode,
+        getAssessmentRequest.submitted,
+        getAssessmentRequest.backButton,
+        getAssessmentRequest.assessmentType,
       )
       return res.render('pages/BCST2-form', { ...view.renderArgs })
     } catch (err) {
