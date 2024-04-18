@@ -9,17 +9,12 @@
         </strong>
       </h3>
     </header>
-    <div class="app-summary-card__body">
+    <div class="app-summary-card__header">
       <div class="govuk-form-group govuk-!-margin-0">
         <input type="hidden" id="updated" name="updated" value="today">
         <input type="hidden" id="pathway" name="pathway" value="attitudes">
         <a class="govuk-button" href="/status-update?selectedPathway={{ pathway | getUrlFromName }}&prisonerNumber={{ prisonerNumber }}">
-          Update status or notes
-        </a>
-      </div>
-      <div class="govuk-form-group govuk-!-margin-0">
-        <a class="govuk-button govuk-button--secondary" href="/status-update?selectedPathway={{ pathway | getUrlFromName }}&prisonerNumber={{ prisonerNumber }}#case-notes">
-          View history
+          Update status
         </a>
       </div>
     </div>

@@ -214,48 +214,12 @@ export default function routes(services: Services): Router {
           logger.error(error)
         }
       }
-      let caseNotes: { error?: boolean } = {}
-      const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, createdByUserId = 0 } = req.query
-      try {
-        caseNotes = await rpClient.get(
-          `/resettlement-passport/case-notes/${
-            prisonerData.personalDetails.prisonerNumber
-          }?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${getEnumByURL(
-            selectedPathway,
-          )}&createdByUserId=${createdByUserId}`,
-        )
-      } catch (err) {
-        logger.warn(
-          `Session: ${req.sessionID} Cannot retrieve Case Notes for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-        )
-        caseNotes.error = true
-      }
 
-      let caseNoteCreators: { error?: boolean } = {}
-      try {
-        caseNoteCreators = await rpClient.get(
-          `/resettlement-passport/case-notes/${prisonerData.personalDetails.prisonerNumber}/creators/${getEnumByURL(
-            selectedPathway,
-          )}`,
-        )
-      } catch (err) {
-        logger.warn(
-          `Session: ${req.sessionID} Cannot retrieve Case Notes creators for ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-        )
-        caseNoteCreators.error = true
-      }
       res.render('pages/status-update', {
         prisonerData,
         selectedPathway,
         serverUpdate,
         state,
-        caseNotes,
-        caseNoteCreators,
-        createdByUserId,
-        size,
-        page,
-        sort,
-        days,
       })
     } catch (err) {
       next(err)

@@ -11,6 +11,8 @@ import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentSt
 import { AssessmentsInformation, AssessmentType } from '../data/model/assessmentInformation'
 import { Appointments } from '../data/model/appointment'
 import { OtpDetails } from '../data/model/otp'
+import { CaseNote, CaseNotesHistory } from '../data/model/caseNotesHistory'
+import { CaseNotesCreator, CaseNotesCreators } from '../data/model/caseNotesCreators'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {
@@ -342,5 +344,47 @@ export default class RpService {
 
   async deleteId(prisonerNumber: string, idId: string) {
     return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${idId}`)
+  }
+
+  async getCaseNotesHistory(
+    token: string,
+    sessionId: string,
+    prisonerId: string,
+    pathway: string,
+    createdByUserId: string,
+    size: string,
+    page: string,
+    sort: string,
+    days: string,
+  ) {
+    await this.rpClient.setToken(token)
+    let caseNotes: CaseNotesHistory
+    try {
+      const caseNotesResponse = (await this.rpClient.get(
+        `/resettlement-passport/case-notes/${prisonerId}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${pathway}&createdByUserId=${createdByUserId}`,
+      )) as CaseNote[]
+      caseNotes = { results: caseNotesResponse }
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve case notes for ${prisonerId} ${err.status} ${err}`)
+      caseNotes = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+    }
+
+    return caseNotes
+  }
+
+  async getCaseNotesCreators(token: string, sessionId: string, prisonerId: string, pathway: string) {
+    await this.rpClient.setToken(token)
+    let caseNotesCreators: CaseNotesCreators
+    try {
+      const caseNotesCreatorsResponse = (await this.rpClient.get(
+        `/resettlement-passport/case-notes/${prisonerId}/creators/${pathway}`,
+      )) as CaseNotesCreator[]
+      caseNotesCreators = { results: caseNotesCreatorsResponse }
+    } catch (err) {
+      logger.warn(`Session: ${sessionId} Cannot retrieve case notes creators for ${prisonerId} ${err.status} ${err}`)
+      caseNotesCreators = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+    }
+
+    return caseNotesCreators
   }
 }
