@@ -8,6 +8,8 @@ import GetAssessmentResponse from '../data/model/getAssessmentResponse'
 export default class QuestionAndAnswerService {
   private rpService: RpService
 
+  private mergedQAndAs: SubmittedQuestionAndAnswer[]
+
   private store: AssessmentStore
 
   constructor(rpService: RpService, store: AssessmentStore) {
@@ -47,7 +49,7 @@ export default class QuestionAndAnswerService {
       getAssessmentReq.currentPageId,
       getAssessmentReq.assessmentType,
     )
-    const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
+    this.mergedQAndAs = []
 
     if (!assessmentPage.error) {
       await this.store.setCurrentPage(
@@ -114,9 +116,9 @@ export default class QuestionAndAnswerService {
         )
         // Cache always takes precedence
         if (questionAndAnswerFromCache) {
-          mergedQuestionsAndAnswers.push(questionAndAnswerFromCache)
+          this.mergedQAndAs.push(questionAndAnswerFromCache)
         } else {
-          mergedQuestionsAndAnswers.push({
+          this.mergedQAndAs.push({
             question: qAndA.question.id,
             questionTitle: qAndA.question.title,
             pageId: qAndA.originalPageId,
@@ -139,11 +141,10 @@ export default class QuestionAndAnswerService {
           `${getAssessmentReq.prisonerNumber}`,
           getAssessmentReq.pathway,
           {
-            questionsAndAnswers: mergedQuestionsAndAnswers,
+            questionsAndAnswers: this.mergedQAndAs,
           },
         )
       }
-      return null
     }
     const res = new GetAssessmentResponse()
     res.assessment = assessmentPage
@@ -151,7 +152,7 @@ export default class QuestionAndAnswerService {
   }
 
   getMergedQAndAs(): SubmittedQuestionAndAnswer[] {
-    return null
+    return this.mergedQAndAs
   }
 
   async #isSubmittedPath(getAssessmentReq: GetAssessmentRequest): Promise<void> {
