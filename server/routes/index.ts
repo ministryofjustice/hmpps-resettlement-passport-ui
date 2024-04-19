@@ -205,6 +205,9 @@ export default function routes(services: Services): Router {
             },
           )
           serverUpdate = 'success'
+          return res.redirect(
+            `/${selectedPathway}/?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}#case-notes`,
+          )
         } catch (error) {
           if (error.message === deliusUserErrorMessage) {
             serverUpdate = 'deliusUserError'
@@ -215,14 +218,14 @@ export default function routes(services: Services): Router {
         }
       }
 
-      res.render('pages/status-update', {
+      return res.render('pages/status-update', {
         prisonerData,
         selectedPathway,
         serverUpdate,
         state,
       })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   })
 

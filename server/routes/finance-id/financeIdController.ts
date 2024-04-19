@@ -101,7 +101,7 @@ export default class FinanceIdController {
         token,
         req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
-        'ACCOMMODATION',
+        'FINANCE_AND_ID',
         createdByUserId as string,
         pageSize as string,
         page as string,
@@ -113,7 +113,7 @@ export default class FinanceIdController {
         token,
         req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
-        'ACCOMMODATION',
+        'FINANCE_AND_ID',
       )
 
       const view = new FinanceIdView(
