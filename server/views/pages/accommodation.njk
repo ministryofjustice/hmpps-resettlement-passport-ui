@@ -4,7 +4,6 @@
 {% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% from "../macros/assessmentInformation.njk" import assessmentInformation %}
-{% from "../macros/pagination.njk" import pagination %}
 
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}
@@ -42,66 +41,7 @@
       {{ subNav(subNavItems) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
-        {% if serverUpdate === 'success' %}
-          <div id='content'></div>
-        {% endif %}
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">{{ pathway }} case notes and status history</h3>
-        </header>
-        <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
-          <div class="govuk-grid-row">
-            {% set currentUrl = "/" + (pathway | getUrlFromName) + "?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber + "#case-notes" %}
-            <form action="{{currentUrl}}" method="GET" novalidate>
-              <div class="govuk-grid-column-full">
-                <label class="govuk-label" for="pathway-select">Created by</label>
-                <select name="createdByUserId" class="govuk-select" id="pathway-select">
-                  <option value="0">Select an option</option>
-                  {% for creator in caseNotesCreators.results %}
-                    {% set isSelectedUser = createdByUserId == creator.userId %}
-                    <option {% if isSelectedUser %}selected{% endif %} value="{{ creator.userId }}">{{ creator.createdBy }}</option>
-                  {% endfor %}
-                </select>
-                {# <input type="hidden" name="selectedPathway" value="{{ selectedPathway }}"> #}
-                <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-              </div>
-              <div class="govuk-grid-column-full">
-                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
-              </div>
-            </form>
-          </div>
-          {% if not caseNotesData.error %}
-            <div class="govuk-grid-row govuk-!-padding-top-8">
-              <div class="govuk-grid-column-full" id="case-notes-container">
-                <hr>
-                {% for caseNote in caseNotesData.results.content %}
-                  {% set caseNotePathway = caseNote.pathway | getEnumValue %}
-                  <div class="case-note">
-                    <h3>{{ caseNotePathway.name }}</h3>
-                    <p>{{ caseNote.text | formatCaseNoteText | safe }}</p>
-                    <span class="govuk-caption-m">Happened: {{ caseNote.occurenceDateTime | formatDate('long') }}</span>
-                    <span class="govuk-caption-m">Created: {{ caseNote.creationDateTime | formatDate('long')  }} by {{caseNote.createdBy}}</span>
-                    <br>
-                  </div>
-                  <hr>
-                  {% else %}
-                    <p>No case notes found</p>
-                {% endfor %}
-                {% set totalElements = caseNotesData.results.totalElements %}
-                {% set totalPages = (totalElements / pageSize) | roundNumberUp %}
-                {% set nextPage = page | float + 1 | float%}
-                {% set prevPage = page | float - 1 | float%}
-                {% set currentUrl = "/" + (pathway | getUrlFromName) + "?createdByUserId=" + createdByUserId + "&prisonerNumber=" + prisonerData.personalDetails.prisonerNumber %}
-                {% if caseNotesData.results.totalElements != 0 %}
-                  {{ pagination(page, pageSize, totalPages, caseNotesData.results.last, currentUrl, caseNotesData.results.totalElements, sort, days, (pathway | getEnumByName)) }}
-                {% endif %}
-              </div>
-            </div>
-            {% else %}
-            <p>{{ errorMessage }}</p>
-          {% endif%}
-        </div>
-      </section>
+      {% include "../partials/caseNotes.njk" %}
       <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
