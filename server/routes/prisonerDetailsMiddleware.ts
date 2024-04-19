@@ -3,6 +3,24 @@ import { RPClient } from '../data'
 import { PrisonerData } from '../@types/express'
 import logger from '../../logger'
 
+export async function getPrisonerImage(
+  client: RPClient,
+  prisonerData: PrisonerData,
+  prisonerNumber: string,
+): Promise<string> {
+  try {
+    if (prisonerData.personalDetails.facialImageId) {
+      return await client.getImageAsBase64String(
+        `/resettlement-passport/prisoner/${prisonerNumber}/image/${prisonerData.personalDetails.facialImageId}`,
+      )
+    }
+    logger.info(`No image available for ${prisonerNumber}`)
+  } catch (err) {
+    logger.warn(`Unable to load image for ${prisonerNumber} received ${err.status}`)
+  }
+  return null
+}
+
 export default async function prisonerDetailsMiddleware(req: Request, res: Response, next: NextFunction) {
   /* *******************************
     FETCH PRISONER PROFILE DATA HERE
@@ -14,14 +32,10 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
     const { prisonerNumber: bodyPrisonerNumber } = req.body
     prisonerNumber = prisonerNumber || bodyPrisonerNumber
   }
+  const client = new RPClient(req.user.token, req.sessionID, req.user.username)
   if (prisonerNumber) {
     try {
-      const apiResponse = new RPClient(req.user.token, req.sessionID, req.user.username)
-      prisonerData = (await apiResponse.get(`/resettlement-passport/prisoner/${prisonerNumber}`)) as PrisonerData
-
-      prisonerData.prisonerImage = (await apiResponse.getImageAsBase64String(
-        `/resettlement-passport/prisoner/${prisonerNumber}/image/${prisonerData.personalDetails.facialImageId}`,
-      )) as string
+      prisonerData = (await client.get(`/resettlement-passport/prisoner/${prisonerNumber}`)) as PrisonerData
     } catch (err) {
       if (err.status === 404) {
         err.customMessage = 'No data found for prisoner'
@@ -29,6 +43,8 @@ export default async function prisonerDetailsMiddleware(req: Request, res: Respo
       next(err)
       return
     }
+
+    prisonerData.prisonerImage = await getPrisonerImage(client, prisonerData, prisonerNumber as string)
 
     // RP2-490 If the prisoner's prison does not match the user's caseload then we need to treat this as not found
     if (
