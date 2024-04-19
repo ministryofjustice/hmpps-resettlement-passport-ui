@@ -8,6 +8,7 @@ import { SubmittedInput, SubmittedQuestionAndAnswer, ValidationErrors } from '..
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 import { getEnumValue, parseAssessmentType } from '../../utils/utils'
 import GetAssessmentRequest from '../../data/model/getAssessmentRequest'
+import QuestionAndAnswerService from '../../services/questionsAndAnswersService'
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService) {
@@ -153,60 +154,17 @@ export default class BCST2FormController {
 
       const store = new AssessmentStore(createRedisClient())
 
+      const qAndAService = new QuestionAndAnswerService(this.rpService, store)
+
       // If this is not an edit (inc. a resettlement plan), ensure there are nothing in the cache for editedQuestionList
       if (!(getAssessmentRequest.editMode || getAssessmentRequest.assessmentType === 'RESETTLEMENT_PLAN')) {
-        await store.deleteEditedQuestionList(
-          getAssessmentRequest.sessionId,
-          `${getAssessmentRequest.prisonerNumber}`,
-          getAssessmentRequest.pathway,
-        )
+        await qAndAService.deleteQuestionsListWhenNotEditing(getAssessmentRequest)
       }
 
       // If it's already submitted, reset the cache at this point to the CHECK_ANSWERS
-      if (getAssessmentRequest.submitted) {
-        await store.deleteEditedQuestionList(
-          getAssessmentRequest.sessionId,
-          `${getAssessmentRequest.prisonerNumber}`,
-          getAssessmentRequest.pathway,
-        )
-        const assessmentPage = await this.rpService.getAssessmentPage(
-          getAssessmentRequest.token,
-          req.sessionID,
-          getAssessmentRequest.prisonerNumber as string,
-          getAssessmentRequest.pathway as string,
-          'CHECK_ANSWERS',
-          getAssessmentRequest.assessmentType,
-        )
-        const questionsAndAnswers = {
-          questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
-            question: qAndA.question.id,
-            questionTitle: qAndA.question.title,
-            pageId: qAndA.originalPageId,
-            questionType: qAndA.question.type,
-            answer: qAndA.answer
-              ? {
-                  answer: qAndA.answer.answer,
-                  displayText: getDisplayTextFromQandA(qAndA),
-                  '@class': qAndA.answer['@class'],
-                }
-              : null,
-          })),
-        }
-        await store.setAssessment(
-          req.session.id,
-          `${getAssessmentRequest.prisonerNumber}`,
-          getAssessmentRequest.pathway,
-          questionsAndAnswers,
-        )
-      }
+      await qAndAService.resetCacheToCHECK_ANSWERSIfSubmitted(getAssessmentRequest)
 
-      const existingAssessment = JSON.parse(
-        await store.getAssessment(
-          getAssessmentRequest.sessionId,
-          `${getAssessmentRequest.prisonerNumber}`,
-          getAssessmentRequest.pathway,
-        ),
-      ) as SubmittedInput
+      const existingAssessment = await qAndAService.getExistingAssessment(getAssessmentRequest)
 
       // If there is nothing in the cache at this point, something has gone wrong so redirect back to the start of the form
       if (!existingAssessment) {
