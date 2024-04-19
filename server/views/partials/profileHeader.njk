@@ -49,9 +49,6 @@
                 {% set daysData = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
                 ({{ daysData.daysDiff }} days{% if daysData.isPast %} ago{% endif %})
               </p>
-              <p>
-                <b>Release type: {{ prisonerData.personalDetails.releaseType }}</b>
-              </p>
             </div>
           </div>
         </div>
