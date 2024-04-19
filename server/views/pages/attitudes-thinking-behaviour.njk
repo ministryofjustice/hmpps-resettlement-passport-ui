@@ -14,13 +14,14 @@
     </div>
     <div class="govuk-grid-row govuk-!-padding-top-4">
       <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-        {% set subNavItems = [] %}
+        {% set subNavItems = [
+          {
+            name: "Case notes and status history",
+            id: "case-notes"
+          }
+        ] %}
         {% if not prisonerData.assessmentRequired %}
           {% set subNavItems = subNavItems.concat([
-            {
-              name: "Case notes and status history",
-              id: "case-notes"
-            },
             {
               name: "Report information",
               id: "assessment-information"
