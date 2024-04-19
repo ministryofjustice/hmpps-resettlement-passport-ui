@@ -179,21 +179,7 @@ export default class BCST2FormController {
       const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
 
       if (!assessmentPage.error) {
-        await store.setCurrentPage(
-          req.session.id,
-          `${getAssessmentRequest.prisonerNumber}`,
-          getAssessmentRequest.pathway,
-          assessmentPage,
-        )
-
-        // Get any edited questions from cache
-        const editedQuestionIds = JSON.parse(
-          await store.getEditedQuestionList(
-            getAssessmentRequest.sessionId,
-            `${getAssessmentRequest.prisonerNumber}`,
-            getAssessmentRequest.pathway,
-          ),
-        ) as string[]
+        const editedQuestionIds = await qAndAService.setPageAndGetQuestions(getAssessmentRequest, assessmentPage)
 
         // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
         if (editedQuestionIds && !validationErrors) {
