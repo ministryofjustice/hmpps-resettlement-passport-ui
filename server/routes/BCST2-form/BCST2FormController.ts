@@ -174,14 +174,8 @@ export default class BCST2FormController {
       }
 
       // Get the assessment page from the API and set in the cache
-      const assessmentPage = await this.rpService.getAssessmentPage(
-        getAssessmentRequest.token,
-        req.sessionID,
-        getAssessmentRequest.prisonerNumber as string,
-        getAssessmentRequest.pathway as string,
-        getAssessmentRequest.currentPageId,
-        getAssessmentRequest.assessmentType,
-      )
+      const assessmentPage = await qAndAService.getAssessmentPage(getAssessmentRequest)
+
       const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
 
       if (!assessmentPage.error) {
