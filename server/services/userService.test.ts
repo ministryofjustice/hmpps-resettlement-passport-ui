@@ -1,30 +1,52 @@
 import UserService from './userService'
-import HmppsAuthClient, { User } from '../data/hmppsAuthClient'
+import NomisUserRolesApiClient, { User, UserActiveCaseLoad } from '../data/nomisUserRolesApiClient'
 
-jest.mock('../data/hmppsAuthClient')
+jest.mock('../data/nomisUserRolesApiClient')
 
 const token = 'some token'
 
 describe('User service', () => {
-  let hmppsAuthClient: jest.Mocked<HmppsAuthClient>
+  let nomisUserRolesApiClient: jest.Mocked<NomisUserRolesApiClient>
   let userService: UserService
 
+  beforeEach(() => {
+    nomisUserRolesApiClient = new NomisUserRolesApiClient(null) as jest.Mocked<NomisUserRolesApiClient>
+    ;(NomisUserRolesApiClient as jest.Mock<NomisUserRolesApiClient>).mockImplementation(() => nomisUserRolesApiClient)
+    userService = new UserService()
+  })
+
   describe('getUser', () => {
-    beforeEach(() => {
-      hmppsAuthClient = new HmppsAuthClient(null) as jest.Mocked<HmppsAuthClient>
-      userService = new UserService(hmppsAuthClient)
-    })
     it('Retrieves and formats user name', async () => {
-      hmppsAuthClient.getUser.mockResolvedValue({ name: 'john smith' } as User)
+      nomisUserRolesApiClient.getUser.mockResolvedValue({ name: 'john smith' } as User)
 
       const result = await userService.getUser(token)
 
-      expect(result.displayName).toEqual('John Smith')
+      expect(result).toEqual({ name: 'john smith', displayName: 'John Smith', username: 'john smith' })
     })
     it('Propagates error', async () => {
-      hmppsAuthClient.getUser.mockRejectedValue(new Error('some error'))
+      nomisUserRolesApiClient.getUser.mockRejectedValue(new Error('some error'))
 
       await expect(userService.getUser(token)).rejects.toEqual(new Error('some error'))
+    })
+  })
+
+  describe('getUserActiveCaseLoad', () => {
+    it('Retrieves use active case load', async () => {
+      nomisUserRolesApiClient.getUserActiveCaseLoad.mockResolvedValue({
+        activeCaseload: { id: 'BWI', name: 'Berwyn' },
+      })
+
+      const result = await userService.getUserActiveCaseLoad(token)
+
+      expect(result).toEqual({
+        caseLoadId: 'BWI',
+        description: 'Berwyn',
+      } as UserActiveCaseLoad)
+    })
+    it('Propagates error', async () => {
+      nomisUserRolesApiClient.getUserActiveCaseLoad.mockRejectedValue(new Error('some error'))
+
+      await expect(userService.getUserActiveCaseLoad(token)).rejects.toEqual(new Error('some error'))
     })
   })
 })

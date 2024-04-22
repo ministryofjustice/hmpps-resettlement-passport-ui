@@ -4,9 +4,9 @@ import ComponentService from './componentService'
 import RpService from './rpService'
 
 export const services = () => {
-  const { hmppsAuthClient, applicationInfo, rpClient, componentClient } = dataAccess()
+  const { applicationInfo, rpClient, componentClient } = dataAccess()
 
-  const userService = new UserService(hmppsAuthClient)
+  const userService = new UserService()
   const rpService = new RpService(rpClient)
   const componentService = new ComponentService(componentClient)
 

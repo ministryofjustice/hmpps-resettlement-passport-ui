@@ -76,7 +76,28 @@ const getStaffDetails = (staffId = 485588) =>
     },
   })
 
+const stubUser = (name: string) =>
+  stubFor({
+    request: {
+      method: 'GET',
+      urlPattern: '/nomisUserRolesApi/me',
+    },
+    response: {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+      },
+      jsonBody: {
+        staffId: 231232,
+        username: 'USER1',
+        active: true,
+        name,
+      },
+    },
+  })
+
 export default {
   getUserActiveCaseLoad,
   getStaffDetails,
+  stubAuthUser: (name = 'john smith') => stubUser(name),
 }
