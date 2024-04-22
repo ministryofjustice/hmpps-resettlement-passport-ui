@@ -17,6 +17,10 @@
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {% set subNavItems = [
         {
+          name: "Case notes and status history",
+          id: "case-notes"
+        },
+        {
           name: "Work status",
           id: "work-status"
         },
@@ -57,6 +61,7 @@
       {{ subNav(subNavItems) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
+      {% include "../partials/caseNotes.njk" %}
       {% if not educationSkillsWork.error %}
         <section id="work-status" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">

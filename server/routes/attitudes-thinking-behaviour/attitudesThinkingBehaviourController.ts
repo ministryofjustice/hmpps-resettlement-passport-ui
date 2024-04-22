@@ -11,6 +11,14 @@ export default class AttitudesThinkingBehaviourController {
     try {
       const { prisonerData } = req
       const { token } = req.user
+      const {
+        page = '0',
+        pageSize = '10',
+        sort = 'occurenceDateTime%2CDESC',
+        days = '0',
+        createdByUserId = '0',
+      } = req.query
+
       const crsReferrals = await this.prisonService.getCrsReferrals(
         token,
         req.sessionID,
@@ -25,7 +33,37 @@ export default class AttitudesThinkingBehaviourController {
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )
 
-      const view = new AttitudesThinkingBehaviour(prisonerData, crsReferrals, assessmentData)
+      const caseNotesData = await this.prisonService.getCaseNotesHistory(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        'ATTITUDES_THINKING_AND_BEHAVIOUR',
+        createdByUserId as string,
+        pageSize as string,
+        page as string,
+        sort as string,
+        days as string,
+      )
+
+      const caseNotesCreators = await this.prisonService.getCaseNotesCreators(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        'ATTITUDES_THINKING_AND_BEHAVIOUR',
+      )
+
+      const view = new AttitudesThinkingBehaviour(
+        prisonerData,
+        crsReferrals,
+        assessmentData,
+        caseNotesData,
+        caseNotesCreators,
+        createdByUserId as string,
+        pageSize as string,
+        page as string,
+        sort as string,
+        days as string,
+      )
       res.render('pages/attitudes-thinking-behaviour', { ...view.renderArgs })
     } catch (err) {
       next(err)

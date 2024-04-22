@@ -18,6 +18,13 @@ export default class FinanceIdController {
       const { token } = req.user
       const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
         req.query
+      const {
+        page = '0',
+        pageSize = '10',
+        sort = 'occurenceDateTime%2CDESC',
+        days = '0',
+        createdByUserId = '0',
+      } = req.query
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
 
       let assessment: { error?: boolean } = {}
@@ -90,7 +97,37 @@ export default class FinanceIdController {
         'FINANCE_AND_ID',
       )
 
-      const view = new FinanceIdView(prisonerData, crsReferrals, assessmentData)
+      const caseNotesData = await this.rpService.getCaseNotesHistory(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        'FINANCE_AND_ID',
+        createdByUserId as string,
+        pageSize as string,
+        page as string,
+        sort as string,
+        days as string,
+      )
+
+      const caseNotesCreators = await this.rpService.getCaseNotesCreators(
+        token,
+        req.sessionID,
+        prisonerData.personalDetails.prisonerNumber as string,
+        'FINANCE_AND_ID',
+      )
+
+      const view = new FinanceIdView(
+        prisonerData,
+        crsReferrals,
+        assessmentData,
+        caseNotesData,
+        caseNotesCreators,
+        createdByUserId as string,
+        pageSize as string,
+        page as string,
+        sort as string,
+        days as string,
+      )
       res.render('pages/finance-id', { ...view.renderArgs, assessment, finance, id })
     } catch (err) {
       next(err)

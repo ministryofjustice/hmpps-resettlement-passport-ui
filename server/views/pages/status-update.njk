@@ -21,10 +21,6 @@
         {
           name: pathway + " resettlement status",
           id: "status"
-        },
-        {
-          name: pathway + " case notes",
-          id: "case-notes"
         }
       ]) }}
       <p class="govuk-body-s govuk-!-padding-bottom-4">
@@ -114,65 +110,6 @@
               }) }}
             {% endif %}
           </form>
-        </div>
-      </section>
-      <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
-        {% if serverUpdate === 'success' %}
-          <div id='content'></div>
-        {% endif %}
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">{{ pathway }} case notes</h3>
-        </header>
-
-        <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
-          <div class="govuk-grid-row">
-            <form action="/status-update#case-notes" method="GET" novalidate>
-              <div class="govuk-grid-column-full">
-                <label class="govuk-label" for="pathway-select">Created by</label>
-                <select name="createdByUserId" class="govuk-select" id="pathway-select">
-                  <option value="0">Select an option</option>
-                  {% for creator in caseNoteCreators %}
-                    {% set isSelectedUser = createdByUserId == creator.userId %}
-                    <option {% if isSelectedUser %}selected{% endif %} value="{{ creator.userId }}">{{ creator.createdBy }}</option>
-                  {% endfor %}
-                </select>
-                <input type="hidden" name="selectedPathway" value="{{ selectedPathway }}">
-                <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-              </div>
-              <div class="govuk-grid-column-full">
-                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
-              </div>
-            </form>
-          </div>
-          {% if not caseNotes.error %}
-            <div class="govuk-grid-row govuk-!-padding-top-8">
-              <div class="govuk-grid-column-full" id="case-notes-container">
-                <hr>
-                {% for notes in caseNotes.content %}
-                  {% set currentPathway = notes.pathway | getEnumValue %}
-                  <div class="case-note">
-                    <h3>{{ currentPathway.name }}</h3>
-                    <p>{{ notes.text | formatCaseNoteText | safe }}</p>
-                    <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate('long') }}</span>
-                    <span class="govuk-caption-m">Created: {{ notes.creationDateTime | formatDate('long')  }} by {{notes.createdBy}}</span>
-                    <br>
-                  </div>
-                  <hr>
-                  {% else %}
-                    <p>No case notes found</p>
-                {% endfor %}
-                {% set totalPages = (caseNotes.totalElements / size) | roundNumberUp %}
-                {% set nextPage = page | float + 1 | float%}
-                {% set prevPage = page | float - 1 | float%}
-                {% set currentUrl = "/status-update/?createdByUserId=" + createdByUserId + "&prisonerNumber=" + prisonerData.personalDetails.prisonerNumber %}
-                {% if caseNotes.totalElements != 0 %}
-                  {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
-                {% endif %}
-              </div>
-            </div>
-            {% else %}
-            <p>{{ errorMessage }}</p>
-          {% endif%}
         </div>
       </section>
     </div>
