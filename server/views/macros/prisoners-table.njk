@@ -32,7 +32,7 @@
     </td>
     <td class="govuk-table__cell" id="releaseDate">
       <span class="no-wrap">{{ releaseDate | formatDate }}</span> <br/>
-      {% if releaseEligibilityDate | isFriday %}<span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span><span class="govuk-visually-hidden"> Warning: release date is a Friday </span>{% endif %}
+      {% if releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span><span class="govuk-visually-hidden"> Warning: release date is a Friday </span>{% endif %}
     </td>
     <td class="govuk-table__cell" id="releaseEligibilityDate">
       {{ releaseEligibilityDate | formatDate }} <br/>
