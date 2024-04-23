@@ -10,6 +10,7 @@ import {
   formatTimeWithDuration,
   formatAddressAndCheckboxAnswers,
   formatSummaryNotes,
+  getDaysFromGivenDate,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -364,5 +365,16 @@ describe('formatTimeWithDuration', () => {
     ['', null],
   ])('it should add 50 minutes to formatTimeWithDuration(%s)', (input: string, expected: string) => {
     expect(formatTimeWithDuration(input, 50)).toEqual(expected)
+  })
+})
+
+describe('getDaysFromDate', () => {
+  it.each([
+    ['2024-04-28', { daysDiff: 5, isPast: false }],
+    ['2024-04-21', { daysDiff: 2, isPast: true }],
+    [null, null],
+  ])('calculate days from date 2024-04-23 to %s', (input: string, expected: object) => {
+    const currentDateTime = new Date('2024-04-23T12:22:47.714Z')
+    expect(getDaysFromGivenDate(input, currentDateTime)).toEqual(expected)
   })
 })
