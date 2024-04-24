@@ -848,6 +848,30 @@ const submitAccommodationAssessment = () =>
     },
   })
 
+const nextPageHelpToKeepHome = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 help to keep home next page',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=HELP_TO_KEEP_HOME',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].answer.answer',
+            contains: 'NO',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'ASSESSMENT_SUMMARY',
+      },
+    },
+  })
+
 export const johnSmithBCST2Health = (): SuperAgentRequest[] => [
   stubJohnSmithPrisonerDetails(),
   initialTaskListAllCompleteButHealth(),
@@ -880,4 +904,6 @@ export const johnSmithBCSTAccommodation = (): SuperAgentRequest[] => [
   nextPageSummary('ACCOMMODATION'),
   checkAnswersPage('ACCOMMODATION'),
   submitAccommodationAssessment(),
+
+  nextPageHelpToKeepHome(),
 ]
