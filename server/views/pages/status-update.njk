@@ -39,45 +39,47 @@
           {% set actionURL = "/status-update#content" %}
           <form method="POST" action="{{actionURL}}" novalidate>
             <div class="govuk-form-group">
-              <div class="govuk-radios" data-module="govuk-radios">
-                {% for statusItem in statuses %}
-                  {% set statusInfo = statusItem | getEnumValue(resettlementAssessmentEnabled) %}
-                  {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
-                  {% set isChecked = false %}
-                  {% if serverUpdate === 'success' %}
-                    {% if state == statusItem %}
-                      {% set isChecked = true %}
-                    {% endif %}
-                  {% else %}
-                    {% if currentPathway.status == statusItem %}
-                      {% set isChecked = true %}
-                    {% endif %}
-                  {% endif %}
-                  <div class="govuk-radios__item">
-                    <input
-                      class="govuk-radios__input"
-                      name="state"
-                      type="radio"
-                      id="{{ statusItem }}"
-                      value="{{ statusItem }}"
-                      data-aria-controls="caseNote_{{statusItem}}"
-                      {% if isChecked %}checked{% endif %}
-                    >
-                    <label class="govuk-label govuk-radios__label" for="{{ statusItem }}">
-                      {{ statusInfo.name }}
-                    </label>
-                    <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
-                      {{ statusInfo.description }}
-                    </div>
-                  </div>
-                  <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="caseNote_{{statusItem}}">
-                    <div class="govuk-form-group">
-                      <label class="govuk-label" for="caseNoteInput_{{ loop.index }}">Add a case note</label>
-                      <textarea class="govuk-textarea" id="caseNoteInput_{{ loop.index }}" name="caseNoteInput_{{ statusItem }}" rows="5" aria-describedby="more-detail-hint"></textarea>
-                    </div>
-                  </div>
-                {% endfor %}
-              </div>
+              <fieldset class="govuk-fieldset">
+                <div class="govuk-radios" data-module="govuk-radios">
+                  {% for statusItem in statuses %}
+                      {% set statusInfo = statusItem | getEnumValue(resettlementAssessmentEnabled) %}
+                      {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
+                      {% set isChecked = false %}
+                      {% if serverUpdate === 'success' %}
+                        {% if state == statusItem %}
+                          {% set isChecked = true %}
+                        {% endif %}
+                      {% else %}
+                        {% if currentPathway.status == statusItem %}
+                          {% set isChecked = true %}
+                        {% endif %}
+                      {% endif %}
+                      <div class="govuk-radios__item">
+                        <input
+                          class="govuk-radios__input"
+                          name="state"
+                          type="radio"
+                          id="{{ statusItem }}"
+                          value="{{ statusItem }}"
+                          data-aria-controls="caseNote_{{statusItem}}"
+                          {% if isChecked %}checked{% endif %}
+                        >
+                        <label class="govuk-label govuk-radios__label" for="{{ statusItem }}">
+                          {{ statusInfo.name }}
+                        </label>
+                        <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
+                          {{ statusInfo.description }}
+                        </div>
+                      </div>
+                      <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="caseNote_{{statusItem}}">
+                        <div class="govuk-form-group">
+                          <label class="govuk-label" for="caseNoteInput_{{ loop.index }}">Add a case note</label>
+                          <textarea class="govuk-textarea" id="caseNoteInput_{{ loop.index }}" name="caseNoteInput_{{ statusItem }}" rows="5" aria-describedby="more-detail-hint"></textarea>
+                        </div>
+                      </div>
+                  {% endfor %}
+                </div>
+              </fieldset>
             </div>
             <input type="hidden" name="selectedPathway" value="{{ selectedPathway }}">
             <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
