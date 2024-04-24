@@ -1,9 +1,14 @@
+function assertShouldNotHaveAddressAnswer() {
+  cy.get('.govuk-summary-list__key').should(itemKeys => {
+    expect(itemKeys.get().map(e => e.textContent)).to.not.contain('Enter the address')
+  })
+}
+
 context('BCST2 Report', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
-    cy.task('stubJohnSmithBCST2')
   })
 
   function clickContinue() {
@@ -29,6 +34,7 @@ context('BCST2 Report', () => {
   }
 
   it('Prisoner Overview should have BCST2 Banner', () => {
+    cy.task('stubJohnSmithBCST2Health')
     cy.signIn()
 
     cy.visit('/prisoner-overview?prisonerNumber=A8731DY')
@@ -40,6 +46,7 @@ context('BCST2 Report', () => {
   })
 
   it('BCST2 Health pathway scenario', () => {
+    cy.task('stubJohnSmithBCST2Health')
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
@@ -90,5 +97,105 @@ context('BCST2 Report', () => {
     })
     clickSubmit()
     cy.get('.govuk-panel__title').should('contain.text', 'BCST2 report completed')
+  })
+
+  it.skip('BCST2 Back button and divergent paths scenario', () => {
+    cy.task('stubJohnSmithBCST2Accommodation')
+    cy.signIn()
+
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'BCST2 report')
+
+    // Click Accommodation link
+    cy.get(':nth-child(1) > .govuk-table__header > a').click()
+
+    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    cy.get('#PRIVATE_RENTED_HOUSING').check()
+    clickContinue()
+
+    cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
+    cy.get('#address-line-1').type('line1')
+    cy.get('#address-town').type('town')
+    cy.get('#address-postcode').type('postcode')
+    clickContinue()
+
+    getHeading().should(
+      'have.text',
+      'Does the person in prison or their family need help to keep their home while they are in prison?',
+    )
+
+    // Go back twice to the where did they live question
+    cy.go('back')
+    cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
+    cy.go('back')
+    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    cy.get('#PRIVATE_RENTED_HOUSING').should('be.checked')
+
+    // Change answer to go down a different path
+    cy.get('#NO_PERMANENT_OR_FIXED').check()
+    clickContinue()
+
+    getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+    cy.get('#DOES_NOT_HAVE_ANYWHERE').check()
+    clickContinue()
+
+    getHeading().should('have.text', 'Accommodation report summary')
+    cy.get('#SUPPORT_REQUIRED').check()
+    cy.get('#CASE_NOTE_SUMMARY').type('Needs somewhere to stay')
+    clickContinue()
+
+    getHeading().should('have.text', 'Check your answers')
+    assertShouldNotHaveAddressAnswer()
+
+    clickConfirm()
+  })
+
+  it('BCST2 Divergent paths scenario with edit', () => {
+    cy.task('stubJohnSmithBCST2Accommodation')
+    cy.signIn()
+
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'BCST2 report')
+
+    // Click Accommodation link
+    cy.get(':nth-child(1) > .govuk-table__header > a').click()
+
+    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    cy.get('#PRIVATE_RENTED_HOUSING').check()
+    clickContinue()
+
+    cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
+    cy.get('#address-line-1').type('line1')
+    cy.get('#address-town').type('town')
+    cy.get('#address-postcode').type('postcode')
+    clickContinue()
+
+    getHeading().should(
+      'have.text',
+      'Does the person in prison or their family need help to keep their home while they are in prison?',
+    )
+
+    cy.get('#NO').check()
+    clickContinue()
+
+    getHeading().should('have.text', 'Accommodation report summary')
+    cy.get('#SUPPORT_NOT_REQUIRED').check()
+    cy.get('#CASE_NOTE_SUMMARY').type('No support required')
+    clickContinue()
+
+    getHeading().should('have.text', 'Check your answers')
+    // Click change on the first row - Where did the person in prison live before custody?
+    cy.get('.govuk-summary-list__actions').eq(0).children('a').click()
+
+    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    cy.get('#PRIVATE_RENTED_HOUSING').should('be.checked')
+    cy.get('#NO_PERMANENT_OR_FIXED').check()
+    clickContinue()
+
+    getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+    cy.get('#DOES_NOT_HAVE_ANYWHERE').check()
+    clickContinue()
+
+    assertShouldNotHaveAddressAnswer()
   })
 })

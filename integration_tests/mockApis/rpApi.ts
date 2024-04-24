@@ -14,7 +14,7 @@ import {
   stubJohnSmithPrisonerDetails,
 } from './scenarios/john-smith/john-smith-pre-release'
 import { johnSmithDefaults } from './scenarios/john-smith/john-smith'
-import { johnSmithBCST2 } from './scenarios/john-smith/john-smith-bcst2'
+import { johnSmithBCST2Health, johnSmithBCSTAccommodation } from './scenarios/john-smith/john-smith-bcst2'
 import johnSmithBcst2Edit from './scenarios/john-smith/john-smith-bcst2-edit'
 
 const getTomorrowsDate = () => {
@@ -280,8 +280,9 @@ const stubJohnSmithPreRelease = () => {
   ])
 }
 
-const stubJohnSmithBCST2 = () => Promise.all([...johnSmithDefaults(), ...johnSmithBCST2()])
+const stubJohnSmithBCST2Health = () => Promise.all([...johnSmithDefaults(), ...johnSmithBCST2Health()])
 const stubJohnSmithBCST2Edit = () => Promise.all([...johnSmithDefaults(), ...johnSmithBcst2Edit()])
+const stubJohnSmithBCST2Accommodation = () => Promise.all([...johnSmithDefaults(), ...johnSmithBCSTAccommodation()])
 
 export default {
   stubGetPrisoners,
@@ -292,6 +293,7 @@ export default {
   stubGetPrisonerData,
   stubGetPrisonerImage,
   stubJohnSmithPreRelease,
-  stubJohnSmithBCST2,
+  stubJohnSmithBCST2Health,
   stubJohnSmithBCST2Edit,
+  stubJohnSmithBCST2Accommodation,
 }

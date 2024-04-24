@@ -1,3 +1,4 @@
+import { SuperAgentRequest } from 'superagent'
 import { stubFor } from '../../wiremock'
 import { responseHeaders, submitHeaders } from '../../headers'
 
@@ -75,6 +76,30 @@ const initialTaskList = () =>
       status: 200,
       headers: responseHeaders,
       jsonBody: [
+        { pathway: 'ACCOMMODATION', assessmentStatus: 'NOT_STARTED' },
+        { pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR', assessmentStatus: 'NOT_STARTED' },
+        { pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY', assessmentStatus: 'NOT_STARTED' },
+        { pathway: 'DRUGS_AND_ALCOHOL', assessmentStatus: 'NOT_STARTED' },
+        { pathway: 'EDUCATION_SKILLS_AND_WORK', assessmentStatus: 'NOT_STARTED' },
+        { pathway: 'FINANCE_AND_ID', assessmentStatus: 'NOT_STARTED' },
+        { pathway: 'HEALTH', assessmentStatus: 'NOT_STARTED' },
+      ],
+    },
+    scenarioName: 'john-smith-bcst2',
+    requiredScenarioState: 'Started',
+  })
+
+const initialTaskListAllCompleteButHealth = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 Initial task list',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/summary?assessmentType=BCST2',
+      method: 'GET',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: [
         { pathway: 'ACCOMMODATION', assessmentStatus: 'COMPLETE' },
         { pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR', assessmentStatus: 'COMPLETE' },
         { pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY', assessmentStatus: 'COMPLETE' },
@@ -88,7 +113,7 @@ const initialTaskList = () =>
     requiredScenarioState: 'Started',
   })
 
-const nextPageStart = () =>
+const nextPageStartHealth = () =>
   stubFor({
     name: 'JohnSmith BCST2 Health Assessment Next Page 1',
     request: {
@@ -231,12 +256,12 @@ const nextPageHealthcareTeam = () =>
     },
   })
 
-const assessmentSummaryPage = () =>
+const assessmentSummaryPage = (pathway: string) =>
   stubFor({
     name: 'John Smith BCST2 Assessment Summary Page',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/ASSESSMENT_SUMMARY?assessmentType=BCST2',
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/page/ASSESSMENT_SUMMARY?assessmentType=BCST2`,
     },
     response: {
       status: 200,
@@ -295,11 +320,11 @@ const assessmentSummaryPage = () =>
     },
   })
 
-const nextPageSummary = () =>
+const nextPageSummary = (pathway: string) =>
   stubFor({
-    name: 'JohnSmith BCST2 Health Assessment Next Page Summary',
+    name: 'JohnSmith BCST2 Next Page Summary',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?assessmentType=BCST2&currentPage=ASSESSMENT_SUMMARY',
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/next-page?assessmentType=BCST2&currentPage=ASSESSMENT_SUMMARY`,
       method: 'POST',
       bodyPatterns: [
         {
@@ -319,12 +344,12 @@ const nextPageSummary = () =>
     },
   })
 
-const checkAnswersPage = () =>
+const checkAnswersPage = (pathway: string) =>
   stubFor({
     name: 'John Smith BCST2 Check Answers Page',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/CHECK_ANSWERS?assessmentType=BCST2',
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/page/CHECK_ANSWERS?assessmentType=BCST2`,
     },
     response: {
       status: 200,
@@ -444,18 +469,441 @@ const submit = () =>
     },
   })
 
-export const johnSmithBCST2 = () => [
+const nextPageStartAccommodation = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 Accommodation Assessment Next Page 1',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          equalToJson: '{"questionsAndAnswers":null}',
+          ignoreArrayOrder: true,
+          ignoreExtraElements: true,
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'WHERE_DID_THEY_LIVE',
+      },
+    },
+  })
+
+const whereDoTheyLivePage = () =>
+  stubFor({
+    name: 'John Smith Where Do They Live Page',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE?assessmentType=BCST2',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'WHERE_DID_THEY_LIVE',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'WHERE_DID_THEY_LIVE',
+              title: 'Where did the person in prison live before custody?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'PRIVATE_RENTED_HOUSING',
+                  displayText: 'Private rented housing',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'SOCIAL_HOUSING',
+                  displayText: 'Social housing',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'HOMEOWNER',
+                  displayText: 'Homeowner',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO_PERMANENT_OR_FIXED',
+                  displayText: 'No permanent or fixed address',
+                  description: null,
+                  exclusive: false,
+                },
+                { id: 'NO_ANSWER', displayText: 'No answer provided', description: null, exclusive: false },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'WHERE_DID_THEY_LIVE',
+          },
+        ],
+      },
+    },
+  })
+
+const nextPageWhereDoTheyLiveAfterChoosingRented = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 Where do they live next page after choosing Private Rented',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'WHERE_DID_THEY_LIVE',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].answer.answer',
+            contains: 'PRIVATE_RENTED_HOUSING',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'WHERE_DID_THEY_LIVE_ADDRESS',
+      },
+    },
+  })
+
+const addressPage = () =>
+  stubFor({
+    name: 'John Smith Address Page',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE_ADDRESS?assessmentType=BCST2',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'WHERE_DID_THEY_LIVE_ADDRESS',
+        questionsAndAnswers: [
+          {
+            answer: null,
+            originalPageId: 'WHERE_DID_THEY_LIVE_ADDRESS',
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'WHERE_DID_THEY_LIVE_ADDRESS',
+              options: null,
+              subTitle: null,
+              title: 'Enter the address',
+              type: 'ADDRESS',
+              validationType: 'MANDATORY',
+            },
+          },
+        ],
+        title: 'Where did the person in prison live before custody?',
+      },
+    },
+  })
+
+const nextPageAddress = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 next page after entering address',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE_ADDRESS',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'WHERE_DID_THEY_LIVE_ADDRESS',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'HELP_TO_KEEP_HOME',
+      },
+    },
+  })
+
+const helpToKeepHomePage = () =>
+  stubFor({
+    name: 'John Smith Help To keep home Page',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/HELP_TO_KEEP_HOME?assessmentType=BCST2',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'HELP_TO_KEEP_HOME',
+        questionsAndAnswers: [
+          {
+            answer: null,
+            originalPageId: 'HELP_TO_KEEP_HOME',
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'HELP_TO_KEEP_HOME',
+              options: [
+                {
+                  description: null,
+                  displayText: 'Yes',
+                  exclusive: false,
+                  id: 'YES',
+                },
+                {
+                  description: null,
+                  displayText: 'No',
+                  exclusive: false,
+                  id: 'NO',
+                },
+                {
+                  description: null,
+                  displayText: 'No answer provided',
+                  exclusive: false,
+                  id: 'NO_ANSWER',
+                },
+              ],
+              subTitle: null,
+              title: 'Does the person in prison or their family need help to keep their home while they are in prison?',
+              type: 'RADIO',
+              validationType: 'MANDATORY',
+            },
+          },
+        ],
+        title: null,
+      },
+    },
+  })
+
+const nextPageWhereDoTheyLiveAfterChoosingNone = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 Where do they live next page after choosing No permenant or fixed',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'WHERE_DID_THEY_LIVE',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].answer.answer',
+            contains: 'NO_PERMANENT_OR_FIXED',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'WHERE_WILL_THEY_LIVE_2',
+      },
+    },
+  })
+
+const whereWillTheyLive2Page = () =>
+  stubFor({
+    name: 'John Smith Where will they live 2 page',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_WILL_THEY_LIVE_2?assessmentType=BCST2',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'WHERE_WILL_THEY_LIVE_2',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'WHERE_WILL_THEY_LIVE_2',
+              title: 'Where will the person in prison live when they are released?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'MOVE_TO_NEW_ADDRESS',
+                  displayText: 'Move to a new address',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'DOES_NOT_HAVE_ANYWHERE',
+                  displayText: 'Does not have anywhere to live',
+                  description: null,
+                  exclusive: false,
+                },
+                { id: 'NO_ANSWER', displayText: 'No answer provided', description: null, exclusive: false },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'WHERE_WILL_THEY_LIVE_2',
+          },
+        ],
+      },
+    },
+  })
+
+const nextPageWhereWillTheyLive = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 Where will they live next page',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_WILL_THEY_LIVE_2',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].answer.answer',
+            contains: 'DOES_NOT_HAVE_ANYWHERE',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'ASSESSMENT_SUMMARY',
+      },
+    },
+  })
+
+const submitAccommodationAssessment = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 Accommodation Assessment Submit',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          equalToJson: JSON.stringify({
+            questionsAndAnswers: [
+              {
+                question: 'WHERE_DID_THEY_LIVE',
+                questionTitle: 'Where did the person in prison live before custody?',
+                questionType: 'RADIO',
+                pageId: 'WHERE_DID_THEY_LIVE',
+                answer: {
+                  answer: 'NO_PERMANENT_OR_FIXED',
+                  displayText: 'No permanent or fixed address',
+                  '@class': 'StringAnswer',
+                },
+              },
+              {
+                question: 'WHERE_WILL_THEY_LIVE_2',
+                questionTitle: 'Where will the person in prison live when they are released?',
+                questionType: 'RADIO',
+                pageId: 'WHERE_WILL_THEY_LIVE_2',
+                answer: {
+                  answer: 'DOES_NOT_HAVE_ANYWHERE',
+                  displayText: 'Does not have anywhere to live',
+                  '@class': 'StringAnswer',
+                },
+              },
+              {
+                question: 'SUPPORT_NEEDS',
+                questionTitle: '',
+                questionType: 'RADIO',
+                pageId: 'ASSESSMENT_SUMMARY',
+                answer: { answer: 'SUPPORT_REQUIRED', displayText: 'Support required', '@class': 'StringAnswer' },
+              },
+              {
+                question: 'CASE_NOTE_SUMMARY',
+                questionTitle: 'Add a case note summary',
+                questionType: 'LONG_TEXT',
+                pageId: 'ASSESSMENT_SUMMARY',
+                answer: {
+                  answer: 'Needs somewhere to stay',
+                  displayText: 'Needs somewhere to stay',
+                  '@class': 'StringAnswer',
+                },
+              },
+            ],
+          }),
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: submitHeaders,
+    },
+  })
+
+const nextPageHelpToKeepHome = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 help to keep home next page',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=HELP_TO_KEEP_HOME',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].answer.answer',
+            contains: 'NO',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'ASSESSMENT_SUMMARY',
+      },
+    },
+  })
+
+export const johnSmithBCST2Health = (): SuperAgentRequest[] => [
   stubJohnSmithPrisonerDetails(),
-  initialTaskList(),
-  nextPageStart(),
+  initialTaskListAllCompleteButHealth(),
+  nextPageStartHealth(),
   healthAssessment(),
   nextPageHealth(),
   meetHealthCareTeamPage(),
   nextPageHealthcareTeam(),
-  assessmentSummaryPage(),
-  nextPageSummary(),
-  checkAnswersPage(),
+  assessmentSummaryPage('HEALTH'),
+  nextPageSummary('HEALTH'),
+  checkAnswersPage('HEALTH'),
   submitAssessment(),
   completedTaskList(),
   submit(),
+]
+
+export const johnSmithBCSTAccommodation = (): SuperAgentRequest[] => [
+  stubJohnSmithPrisonerDetails(),
+  initialTaskList(),
+  nextPageStartAccommodation(),
+  whereDoTheyLivePage(),
+  nextPageWhereDoTheyLiveAfterChoosingRented(),
+  addressPage(),
+  nextPageAddress(),
+  helpToKeepHomePage(),
+  nextPageWhereDoTheyLiveAfterChoosingNone(),
+  whereWillTheyLive2Page(),
+  nextPageWhereWillTheyLive(),
+  assessmentSummaryPage('ACCOMMODATION'),
+  nextPageSummary('ACCOMMODATION'),
+  checkAnswersPage('ACCOMMODATION'),
+  submitAccommodationAssessment(),
+
+  nextPageHelpToKeepHome(),
 ]
