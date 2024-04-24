@@ -1,5 +1,3 @@
-import { cli } from 'cypress'
-
 function assertShouldNotHaveAddressAnswer() {
   cy.get('.govuk-summary-list__key').should(itemKeys => {
     expect(itemKeys.get().map(e => e.textContent)).to.not.contain('Enter the address')
