@@ -1,4 +1,3 @@
-import { SuperAgentRequest } from 'superagent'
 import { stubFor } from './wiremock'
 import {
   johnSmithAccommodationNextPage1,
