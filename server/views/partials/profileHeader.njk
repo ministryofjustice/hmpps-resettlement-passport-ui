@@ -44,7 +44,8 @@
                 <br />
                 {% set isDayFriday = prisonerData.personalDetails.releaseDate | isFriday %}
                 {% if isDayFriday %}
-                  <span class="govuk-body-s">⚠️ (Friday)</span>
+                <span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span>
+                <span class="govuk-visually-hidden"> Warning: release date is a Friday </span>
                 {% endif %}
                 {% set daysData = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
                 {% if daysData %}

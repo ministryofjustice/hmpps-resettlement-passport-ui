@@ -32,11 +32,11 @@
     </td>
     <td class="govuk-table__cell" id="releaseDate">
       <span class="no-wrap">{{ releaseDate | formatDate }}</span> <br/>
-      {% if releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
+      {% if releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span><span class="govuk-visually-hidden"> Warning: release date is a Friday </span>{% endif %}
     </td>
     <td class="govuk-table__cell" id="releaseEligibilityDate">
       {{ releaseEligibilityDate | formatDate }} <br/>
-      {% if releaseEligibilityDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
+      {% if releaseEligibilityDate | isFriday %}<span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span><span class="govuk-visually-hidden"> Warning: release date is a Friday </span>{% endif %}
       <span class="govuk-body-s" id="releaseEligibilityType">
         {{ releaseEligibilityType }}
       </span>
@@ -44,7 +44,7 @@
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       {% if releaseOnTemporaryLicenceDate|length %}
         {{ releaseOnTemporaryLicenceDate | formatDate }} <br/>
-        {% if releaseOnTemporaryLicenceDate | isFriday %}<span class="govuk-body-s" id="fridayRelease">⚠️ Friday</span> <br/>{% endif %}
+        {% if releaseOnTemporaryLicenceDate | isFriday %}<span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span><span class="govuk-visually-hidden"> Warning: release date is a Friday </span>{% endif %}
         <span class="govuk-body-s" id="releaseOnTemporaryLicenceType">
         {{ releaseOnTemporaryLicenceType }}
       </span>
