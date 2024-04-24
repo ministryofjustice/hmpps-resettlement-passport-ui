@@ -7,9 +7,10 @@ import AssessmentStore from '../../data/assessmentStore'
 import { SubmittedInput, SubmittedQuestionAndAnswer, ValidationErrors } from '../../data/model/BCST2Form'
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 import { getEnumValue, parseAssessmentType } from '../../utils/utils'
+import { AssessmentStateService } from '../../data/assessmentStateService'
 
 export default class BCST2FormController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
     // no op
   }
 
@@ -21,12 +22,7 @@ export default class BCST2FormController {
       const assessmentType = parseAssessmentType(req.query.type)
 
       // Reset the cache at the point as starting new journey through the form
-      const store = new AssessmentStore(createRedisClient())
-      await store.deleteAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway)
-      await store.deleteEditedQuestionList(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway)
-      await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
-        questionsAndAnswers: [],
-      })
+      await this.assessmentStateService.reset(req, pathway)
 
       const nextPage = await this.rpService.fetchNextPage(
         token,
