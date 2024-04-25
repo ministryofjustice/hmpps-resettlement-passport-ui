@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  hmpps: ministryofjustice/hmpps@7
+  hmpps: ministryofjustice/hmpps@8
   slack: circleci/slack@4.12.5
 
 parameters:
@@ -13,8 +13,7 @@ parameters:
 
   releases-slack-channel:
     type: string
-    # Normally dps-releases for most teams / projects
-    default: dps-releases
+    default: resettlement_passport_releases
 
   node-version:
     type: string
@@ -180,7 +179,6 @@ workflows:
       - hmpps/deploy_env:
           name: deploy_dev
           env: "dev"
-          jira_update: true
           context: hmpps-common-vars
           filters:
             branches:
@@ -203,8 +201,6 @@ workflows:
       - hmpps/deploy_env:
           name: deploy_preprod
           env: "preprod"
-          jira_update: true
-          jira_env_type: staging
           context:
             - hmpps-common-vars
             - hmpps-resettlement-passport-ui-preprod
@@ -218,8 +214,6 @@ workflows:
       - hmpps/deploy_env:
           name: deploy_prod
           env: "prod"
-          jira_update: true
-          jira_env_type: production
           slack_notification: true
           slack_channel_name: << pipeline.parameters.releases-slack-channel >>
           context:
