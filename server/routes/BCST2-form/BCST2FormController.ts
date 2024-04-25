@@ -131,27 +131,7 @@ export default class BCST2FormController {
           'CHECK_ANSWERS',
           assessmentType,
         )
-        const questionsAndAnswers = {
-          questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
-            question: qAndA.question.id,
-            questionTitle: qAndA.question.title,
-            pageId: qAndA.originalPageId,
-            questionType: qAndA.question.type,
-            answer: qAndA.answer
-              ? {
-                  answer: qAndA.answer.answer,
-                  displayText: getDisplayTextFromQandA(qAndA),
-                  '@class': qAndA.answer['@class'],
-                }
-              : null,
-          })),
-        }
-        await store.setAssessment(
-          req.session.id,
-          `${prisonerData.personalDetails.prisonerNumber}`,
-          pathway,
-          questionsAndAnswers,
-        )
+        await this.assessmentStateService.overwriteWith(req, pathway, assessmentPage)
       }
 
       const existingAssessment = await store.getAssessment(

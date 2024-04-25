@@ -1,6 +1,7 @@
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
-import { SubmittedInput, SubmittedQuestionAndAnswer } from './model/BCST2Form'
+import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './model/BCST2Form'
+import { getDisplayTextFromQandA } from '../utils/formatAssessmentResponse'
 
 interface Request {
   prisonerData: {
@@ -53,5 +54,25 @@ export class AssessmentStateService {
     })
 
     await this.store.setAssessment(req.session.id, prisonerNumber, pathway, allQuestionsAndAnswers)
+  }
+
+  async overwriteWith(req: Request, pathway: string, assessmentPage: AssessmentPage) {
+    const { prisonerNumber } = req.prisonerData.personalDetails
+    const questionsAndAnswers = {
+      questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
+        question: qAndA.question.id,
+        questionTitle: qAndA.question.title,
+        pageId: qAndA.originalPageId,
+        questionType: qAndA.question.type,
+        answer: qAndA.answer
+          ? {
+              answer: qAndA.answer.answer,
+              displayText: getDisplayTextFromQandA(qAndA),
+              '@class': qAndA.answer['@class'],
+            }
+          : null,
+      })),
+    }
+    await this.store.setAssessment(req.session.id, prisonerNumber, pathway, questionsAndAnswers)
   }
 }

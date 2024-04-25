@@ -2,7 +2,7 @@ import { Request } from 'express'
 import { AssessmentStateService } from './assessmentStateService'
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
-import { SubmittedInput } from './model/BCST2Form'
+import { AssessmentPage, QuestionsAndAnswers, SubmittedInput } from './model/BCST2Form'
 
 jest.mock('./assessmentStore')
 
@@ -214,6 +214,145 @@ describe('assessmentStateService', () => {
       }
 
       expect(spy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
+    })
+
+    describe('overwriteWith', () => {
+      it('should overwrite the contents of the cache with the given summary page info', () => {
+        const spy = jest.spyOn(store, 'setAssessment')
+        const summaryPage: AssessmentPage = {
+          id: 'CHECK_ANSWERS',
+          title: null,
+          questionsAndAnswers: [
+            {
+              question: {
+                '@class': 'EducationSkillsAndWorkResettlementAssessmentQuestion',
+                id: 'JOB_BEFORE_CUSTODY',
+                title: 'Did the person in prison have a job before custody?',
+                subTitle: null,
+                type: 'RADIO',
+                options: [
+                  { id: 'YES', displayText: 'Yes', description: null, exclusive: false },
+                  { id: 'NO', displayText: 'No', description: null, exclusive: false },
+                  { id: 'NO_ANSWER', displayText: 'No answer provided', description: null, exclusive: false },
+                ],
+                validationType: 'MANDATORY',
+              },
+              answer: { '@class': 'StringAnswer', answer: 'NO' },
+              originalPageId: 'JOB_BEFORE_CUSTODY',
+            },
+            {
+              question: {
+                '@class': 'EducationSkillsAndWorkResettlementAssessmentQuestion',
+                id: 'HAVE_A_JOB_AFTER_RELEASE',
+                title: 'Does the person in prison have a job when they are released?',
+                subTitle: null,
+                type: 'RADIO',
+                options: [
+                  { id: 'YES', displayText: 'Yes', description: null, exclusive: false },
+                  { id: 'NO', displayText: 'No', description: null, exclusive: false },
+                  { id: 'NO_ANSWER', displayText: 'No answer provided', description: null, exclusive: false },
+                ],
+                validationType: 'MANDATORY',
+              },
+              answer: { '@class': 'StringAnswer', answer: 'NO' },
+              originalPageId: 'HAVE_A_JOB_AFTER_RELEASE',
+            },
+            {
+              question: {
+                '@class': 'EducationSkillsAndWorkResettlementAssessmentQuestion',
+                id: 'SUPPORT_TO_FIND_JOB',
+                title: 'Does the person in prison want support to find a job when they are released?',
+                subTitle: null,
+                type: 'RADIO',
+                options: [
+                  { id: 'YES', displayText: 'Yes', description: null, exclusive: false },
+                  { id: 'NO', displayText: 'No', description: null, exclusive: false },
+                  { id: 'NO_ANSWER', displayText: 'No answer provided', description: null, exclusive: false },
+                ],
+                validationType: 'MANDATORY',
+              },
+              answer: { '@class': 'StringAnswer', answer: 'YES' },
+              originalPageId: 'SUPPORT_TO_FIND_JOB',
+            },
+            {
+              question: {
+                '@class': 'EducationSkillsAndWorkResettlementAssessmentQuestion',
+                id: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
+                title: 'Was the person in prison in education or training before custody?',
+                subTitle: null,
+                type: 'RADIO',
+                options: [
+                  { id: 'YES', displayText: 'Yes', description: null, exclusive: false },
+                  { id: 'NO', displayText: 'No', description: null, exclusive: false },
+                  { id: 'NO_ANSWER', displayText: 'No answer provided', description: null, exclusive: false },
+                ],
+                validationType: 'MANDATORY',
+              },
+              answer: { '@class': 'StringAnswer', answer: 'NO' },
+              originalPageId: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
+            },
+            {
+              question: {
+                '@class': 'EducationSkillsAndWorkResettlementAssessmentQuestion',
+                id: 'WANT_TO_START_EDUCATION_OR_TRAINING_AFTER_RELEASE',
+                title: 'Does the person in prison want to start education or training after release?',
+                subTitle: null,
+                type: 'RADIO',
+                options: [
+                  { id: 'YES', displayText: 'Yes', description: null, exclusive: false },
+                  { id: 'NO', displayText: 'No', description: null, exclusive: false },
+                  { id: 'NO_ANSWER', displayText: 'No answer provided', description: null, exclusive: false },
+                ],
+                validationType: 'MANDATORY',
+              },
+              answer: { '@class': 'StringAnswer', answer: 'NO' },
+              originalPageId: 'WANT_TO_START_EDUCATION_OR_TRAINING_AFTER_RELEASE',
+            },
+          ],
+        } as unknown as AssessmentPage
+
+        assessmentStateService.overwriteWith(aRequest(), 'EDUCATION_SKILLS_AND_WORK', summaryPage)
+
+        expect(spy).toHaveBeenCalledWith('sessionId', '123', 'EDUCATION_SKILLS_AND_WORK', {
+          questionsAndAnswers: [
+            {
+              question: 'JOB_BEFORE_CUSTODY',
+              questionTitle: 'Did the person in prison have a job before custody?',
+              pageId: 'JOB_BEFORE_CUSTODY',
+              questionType: 'RADIO',
+              answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'HAVE_A_JOB_AFTER_RELEASE',
+              questionTitle: 'Does the person in prison have a job when they are released?',
+              pageId: 'HAVE_A_JOB_AFTER_RELEASE',
+              questionType: 'RADIO',
+              answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'SUPPORT_TO_FIND_JOB',
+              questionTitle: 'Does the person in prison want support to find a job when they are released?',
+              pageId: 'SUPPORT_TO_FIND_JOB',
+              questionType: 'RADIO',
+              answer: { answer: 'YES', displayText: 'Yes', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
+              questionTitle: 'Was the person in prison in education or training before custody?',
+              pageId: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
+              questionType: 'RADIO',
+              answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'WANT_TO_START_EDUCATION_OR_TRAINING_AFTER_RELEASE',
+              questionTitle: 'Does the person in prison want to start education or training after release?',
+              pageId: 'WANT_TO_START_EDUCATION_OR_TRAINING_AFTER_RELEASE',
+              questionType: 'RADIO',
+              answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+            },
+          ],
+        })
+      })
     })
   })
 })
