@@ -84,10 +84,10 @@ export default class AssessmentStore {
     })
   }
 
-  async getEditedQuestionList(sessionId: string, nomsId: string, pathway: string): Promise<string> {
+  async getEditedQuestionList(sessionId: string, nomsId: string, pathway: string): Promise<string[]> {
     await this.ensureConnected()
     const key = `${this.editedQuestionPrefix}${sessionId}${nomsId}${pathway}`
-    return this.client.get(key)
+    return JSON.parse(await this.client.get(key))
   }
 
   public async deleteEditedQuestionList(sessionId: string, nomsId: string, pathway: string) {
