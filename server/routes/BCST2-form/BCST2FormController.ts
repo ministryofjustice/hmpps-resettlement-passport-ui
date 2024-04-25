@@ -67,34 +67,7 @@ export default class BCST2FormController {
 
       // prepare current Q&A's from req body for post request
       const dataToSubmit: SubmittedInput = formatAssessmentResponse(currentPage, req.body)
-
-      // get previous Q&A's
-      const allQuestionsAndAnswers = JSON.parse(
-        await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-      ) as SubmittedInput
-
-      dataToSubmit.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
-        const index = allQuestionsAndAnswers?.questionsAndAnswers
-          ? allQuestionsAndAnswers.questionsAndAnswers.findIndex((existingQandA: SubmittedQuestionAndAnswer) => {
-              return existingQandA.question === newQandA.question
-            })
-          : -1
-
-        if (index !== -1) {
-          // Replace the existing question with the new one
-          allQuestionsAndAnswers.questionsAndAnswers[index] = newQandA
-        } else {
-          // Add the new question if it doesn't exist
-          allQuestionsAndAnswers.questionsAndAnswers.push(newQandA)
-        }
-      })
-
-      await store.setAssessment(
-        req.session.id,
-        `${prisonerData.personalDetails.prisonerNumber}`,
-        pathway,
-        allQuestionsAndAnswers,
-      )
+      await this.assessmentStateService.answer(req, pathway, dataToSubmit)
 
       const nextPage = await this.rpService.fetchNextPage(
         token,
@@ -181,9 +154,11 @@ export default class BCST2FormController {
         )
       }
 
-      const existingAssessment = JSON.parse(
-        await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
-      ) as SubmittedInput
+      const existingAssessment = await store.getAssessment(
+        req.session.id,
+        `${prisonerData.personalDetails.prisonerNumber}`,
+        pathway,
+      )
 
       // If there is nothing in the cache at this point, something has gone wrong so redirect back to the start of the form
       if (!existingAssessment) {
@@ -355,8 +330,10 @@ export default class BCST2FormController {
       const isBcst2AlreadySubmitted = !prisonerData.assessmentRequired
       const isResettlementPlanAlreadySubmitted = !prisonerData.resettlementReviewAvailable
 
-      const dataToSubmit = JSON.parse(
-        await store.getAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway),
+      const dataToSubmit = await store.getAssessment(
+        req.session.id,
+        `${prisonerData.personalDetails.prisonerNumber}`,
+        pathway,
       )
 
       const completeAssessment = (await this.rpService.completeAssessment(
