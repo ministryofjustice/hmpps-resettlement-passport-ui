@@ -19,36 +19,36 @@ export function mergeQuestionsAndAnswers(
   existingAssessment: SubmittedInput,
   edit: boolean,
 ): SubmittedQuestionAndAnswer[] {
-  const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
-  // Merge together answers from API and cache
   // If this is an edit and CHECK_ANSWERS then we need to use only the cache to define the questions as these may be different now
-  if (assessmentPage.questionsAndAnswers.length !== 0 && !(edit && assessmentPage.id === 'CHECK_ANSWERS')) {
-    assessmentPage.questionsAndAnswers.forEach(qAndA => {
-      const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
-        it => it?.question === qAndA.question.id,
-      )
-      // Cache always takes precedence
-      if (questionAndAnswerFromCache) {
-        mergedQuestionsAndAnswers.push(questionAndAnswerFromCache)
-      } else {
-        mergedQuestionsAndAnswers.push({
-          question: qAndA.question.id,
-          questionTitle: qAndA.question.title,
-          pageId: qAndA.originalPageId,
-          questionType: qAndA.question.type,
-          answer: qAndA.answer
-            ? {
-                answer: qAndA.answer.answer,
-                displayText: getDisplayTextFromQandA(qAndA),
-                '@class': qAndA.answer['@class'],
-              }
-            : null,
-        })
-      }
-    })
-  } else {
-    mergedQuestionsAndAnswers.push(...existingAssessment.questionsAndAnswers)
+  if (!(assessmentPage.questionsAndAnswers.length !== 0 && !(edit && assessmentPage.id === 'CHECK_ANSWERS'))) {
+    return existingAssessment.questionsAndAnswers
   }
+
+  // Merge together answers from API and cache
+  const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
+  assessmentPage.questionsAndAnswers.forEach(qAndA => {
+    const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
+      it => it?.question === qAndA.question.id,
+    )
+    // Cache always takes precedence
+    if (questionAndAnswerFromCache) {
+      mergedQuestionsAndAnswers.push(questionAndAnswerFromCache)
+    } else {
+      mergedQuestionsAndAnswers.push({
+        question: qAndA.question.id,
+        questionTitle: qAndA.question.title,
+        pageId: qAndA.originalPageId,
+        questionType: qAndA.question.type,
+        answer: qAndA.answer
+          ? {
+              answer: qAndA.answer.answer,
+              displayText: getDisplayTextFromQandA(qAndA),
+              '@class': qAndA.answer['@class'],
+            }
+          : null,
+      })
+    }
+  })
 
   return mergedQuestionsAndAnswers
 }
