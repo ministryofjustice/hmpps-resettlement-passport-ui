@@ -40,10 +40,10 @@ export default class AssessmentStore {
     )
   }
 
-  public async getAssessment(sessionId: string, nomsId: string, pathway: string): Promise<string> {
+  public async getAssessment(sessionId: string, nomsId: string, pathway: string): Promise<SubmittedInput> {
     await this.ensureConnected()
     const key = `${this.assessmentPrefix}${sessionId}${nomsId}${pathway}`
-    return this.client.get(key)
+    return JSON.parse(await this.client.get(key))
   }
 
   public async deleteAssessment(sessionId: string, nomsId: string, pathway: string) {
