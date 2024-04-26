@@ -4,15 +4,10 @@ import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './mo
 import { getDisplayTextFromQandA } from '../utils/formatAssessmentResponse'
 import { AssessmentType } from './model/assessmentInformation'
 
-interface Request {
-  prisonerData: {
-    personalDetails: {
-      prisonerNumber?: string
-    }
-  }
-  session: {
-    id: string
-  }
+export interface StateKey {
+  prisonerNumber?: string
+  sessionId: string
+  pathway: string
 }
 
 export function createAssessmentStateService() {
@@ -24,19 +19,25 @@ export class AssessmentStateService {
     // no-op
   }
 
-  async reset(req: Request, pathway: string) {
-    const { prisonerData } = req
-    await this.store.deleteAssessment(req.session.id, prisonerData.personalDetails.prisonerNumber, pathway)
-    await this.store.deleteEditedQuestionList(req.session.id, prisonerData.personalDetails.prisonerNumber, pathway)
-    await this.store.setAssessment(req.session.id, prisonerData.personalDetails.prisonerNumber, pathway, {
+  async getAssessment(key: StateKey): Promise<SubmittedInput> {
+    return this.store.getAssessment(key.sessionId, key.prisonerNumber, key.pathway)
+  }
+
+  async deleteEditedQuestionList(key: StateKey, pathway: string) {
+    await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, pathway)
+  }
+
+  async reset(key: StateKey, pathway: string) {
+    await this.store.deleteAssessment(key.sessionId, key.prisonerNumber, pathway)
+    await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, pathway)
+    await this.store.setAssessment(key.sessionId, key.prisonerNumber, pathway, {
       questionsAndAnswers: [],
     })
   }
 
-  async answer(req: Request, pathway: string, answer: SubmittedInput) {
-    const { prisonerNumber } = req.prisonerData.personalDetails
+  async answer(key: StateKey, answer: SubmittedInput) {
     // get previous Q&A's
-    const allQuestionsAndAnswers = await this.store.getAssessment(req.session.id, prisonerNumber, pathway)
+    const allQuestionsAndAnswers = await this.store.getAssessment(key.sessionId, key.prisonerNumber, key.pathway)
 
     answer.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
       const index = allQuestionsAndAnswers?.questionsAndAnswers
@@ -54,11 +55,10 @@ export class AssessmentStateService {
       }
     })
 
-    await this.store.setAssessment(req.session.id, prisonerNumber, pathway, allQuestionsAndAnswers)
+    await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, allQuestionsAndAnswers)
   }
 
-  async overwriteWith(req: Request, pathway: string, assessmentPage: AssessmentPage) {
-    const { prisonerNumber } = req.prisonerData.personalDetails
+  async overwriteWith(key: StateKey, assessmentPage: AssessmentPage) {
     const questionsAndAnswers = {
       questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
         question: qAndA.question.id,
@@ -74,30 +74,22 @@ export class AssessmentStateService {
           : null,
       })),
     }
-    await this.store.setAssessment(req.session.id, prisonerNumber, pathway, questionsAndAnswers)
+    await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, questionsAndAnswers)
   }
 
   async checkIfEditAndHandle(
-    req: Request,
-    pathway: string,
+    key: StateKey,
     assessmentPage: AssessmentPage,
     existingAssessment: SubmittedInput,
     edit: boolean,
     assessmentType: AssessmentType,
   ): Promise<boolean> {
-    const { prisonerNumber } = req.prisonerData.personalDetails
     // Get any edited questions from cache
-    const editedQuestionIds = await this.store.getEditedQuestionList(req.session.id, prisonerNumber, pathway)
+    const editedQuestionIds = await this.store.getEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
 
     // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
     if (editedQuestionIds) {
-      const reConverged = await this.checkForConvergence(
-        assessmentPage,
-        existingAssessment,
-        editedQuestionIds,
-        req,
-        pathway,
-      )
+      const reConverged = await this.checkForConvergence(assessmentPage, existingAssessment, editedQuestionIds, key)
       if (reConverged) {
         return true
       }
@@ -111,7 +103,7 @@ export class AssessmentStateService {
       const questionList = editedQuestionIds
         ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
         : assessmentPage.questionsAndAnswers.map(it => it.question.id)
-      await this.store.setEditedQuestionList(req.session.id, prisonerNumber, pathway, questionList)
+      await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, questionList)
     }
     return false
   }
@@ -120,10 +112,8 @@ export class AssessmentStateService {
     assessmentPage: AssessmentPage,
     existingAssessment: SubmittedInput,
     editedQuestionIds: string[],
-    req: Request,
-    pathway: string,
+    key: StateKey,
   ): Promise<boolean> {
-    const { prisonerNumber } = req.prisonerData.personalDetails
     // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
     const nextPageQuestionIds =
       assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []
@@ -160,14 +150,31 @@ export class AssessmentStateService {
       const newQuestionsAndAnswers = newQuestionIds.map(q =>
         existingAssessment.questionsAndAnswers.find(it => it.question === q),
       )
-      await this.store.setAssessment(req.session.id, prisonerNumber, pathway, {
+      await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, {
         questionsAndAnswers: newQuestionsAndAnswers,
       })
       // Delete the edited question list from cache
-      await this.store.deleteEditedQuestionList(req.session.id, prisonerNumber, pathway)
+      await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
       // Redirect to check answers page
       return true
     }
     return false
+  }
+
+  async onComplete(key: StateKey) {
+    await this.store.deleteAssessment(key.sessionId, key.prisonerNumber, key.pathway)
+    await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
+  }
+
+  async getCurrentPage(key: StateKey): Promise<AssessmentPage> {
+    return JSON.parse(await this.store.getCurrentPage(key.sessionId, key.prisonerNumber, key.pathway))
+  }
+
+  async setCurrentPage(key: StateKey, assessmentPage: AssessmentPage) {
+    await this.store.setCurrentPage(key.sessionId, key.prisonerNumber, key.pathway, assessmentPage)
+  }
+
+  async onMerge(stateKey: StateKey, input: SubmittedInput) {
+    await this.store.setAssessment(stateKey.sessionId, stateKey.prisonerNumber, stateKey.pathway, input)
   }
 }

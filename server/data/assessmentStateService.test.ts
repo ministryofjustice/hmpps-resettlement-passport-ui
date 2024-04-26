@@ -1,5 +1,4 @@
-import { Request } from 'express'
-import { AssessmentStateService } from './assessmentStateService'
+import { AssessmentStateService, StateKey } from './assessmentStateService'
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
 import { AssessmentPage, SubmittedInput } from './model/BCST2Form'
@@ -22,22 +21,17 @@ describe('assessmentStateService', () => {
     jest.restoreAllMocks()
   })
 
-  function aRequest(): Request {
+  function aStateKey(pathway: string): StateKey {
     return {
-      prisonerData: {
-        personalDetails: {
-          prisonerNumber,
-        },
-      },
-      session: {
-        id: sessionId,
-      },
-    } as Request
+      prisonerNumber,
+      sessionId,
+      pathway,
+    }
   }
 
   it('should reset state for a pathway', async () => {
     const pathway = 'HEALTH'
-    await assessmentStateService.reset(aRequest(), pathway)
+    await assessmentStateService.reset(aStateKey(pathway), pathway)
 
     expect(store.deleteAssessment).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway)
     expect(store.deleteEditedQuestionList).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway)
@@ -64,7 +58,7 @@ describe('assessmentStateService', () => {
       }
       store.getAssessment.mockResolvedValueOnce({ questionsAndAnswers: [] })
 
-      await assessmentStateService.answer(aRequest(), 'ACCOMMODATION', answer)
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
 
       expect(spy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', answer)
     })
@@ -105,7 +99,7 @@ describe('assessmentStateService', () => {
 
       store.getAssessment.mockResolvedValueOnce(existing)
 
-      await assessmentStateService.answer(aRequest(), 'ACCOMMODATION', answer)
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
 
       const expected = {
         questionsAndAnswers: [
@@ -184,7 +178,7 @@ describe('assessmentStateService', () => {
 
       store.getAssessment.mockResolvedValueOnce(existing)
 
-      await assessmentStateService.answer(aRequest(), 'ACCOMMODATION', answer)
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
 
       const expected = {
         questionsAndAnswers: [
@@ -271,7 +265,7 @@ describe('assessmentStateService', () => {
                 ],
                 validationType: 'MANDATORY',
               },
-              answer: { '@class': 'StringAnswer', answer: 'YES' },
+              answer: { '@class': 'StringAnswer', answer: 'NO_ANSWER' },
               originalPageId: 'SUPPORT_TO_FIND_JOB',
             },
             {
@@ -311,7 +305,7 @@ describe('assessmentStateService', () => {
           ],
         } as unknown as AssessmentPage
 
-        assessmentStateService.overwriteWith(aRequest(), 'EDUCATION_SKILLS_AND_WORK', summaryPage)
+        assessmentStateService.overwriteWith(aStateKey('EDUCATION_SKILLS_AND_WORK'), summaryPage)
 
         expect(spy).toHaveBeenCalledWith('sessionId', '123', 'EDUCATION_SKILLS_AND_WORK', {
           questionsAndAnswers: [
@@ -334,7 +328,7 @@ describe('assessmentStateService', () => {
               questionTitle: 'Does the person in prison want support to find a job when they are released?',
               pageId: 'SUPPORT_TO_FIND_JOB',
               questionType: 'RADIO',
-              answer: { answer: 'YES', displayText: 'Yes', '@class': 'StringAnswer' },
+              answer: { answer: 'NO_ANSWER', displayText: 'No answer provided', '@class': 'StringAnswer' },
             },
             {
               question: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
@@ -358,6 +352,7 @@ describe('assessmentStateService', () => {
 
   describe('checkIfEditAndHandle', () => {
     it('re-converge scenario', async () => {
+      // noinspection DuplicatedCode
       const setAssessmentSpy = jest.spyOn(store, 'setAssessment')
       const deleteQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
       const questionEditList = ['JOB_BEFORE_CUSTODY']
@@ -378,7 +373,7 @@ describe('assessmentStateService', () => {
               ],
               validationType: 'MANDATORY',
             },
-            answer: { '@class': 'StringAnswer', answer: 'NO' },
+            answer: { '@class': 'StringAnswer', answer: 'YES' },
             originalPageId: 'HAVE_A_JOB_AFTER_RELEASE',
           },
         ],
@@ -404,8 +399,7 @@ describe('assessmentStateService', () => {
       }
 
       const reConverged = await assessmentStateService.checkIfEditAndHandle(
-        aRequest(),
-        'EDUCATION_SKILLS_AND_WORK',
+        aStateKey('EDUCATION_SKILLS_AND_WORK'),
         page,
         existingAssessment,
         true,
@@ -418,6 +412,7 @@ describe('assessmentStateService', () => {
     })
 
     it('no re-converge scenario', async () => {
+      // noinspection DuplicatedCode
       const setAssessmentSpy = jest.spyOn(store, 'setAssessment')
       const deleteQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
       const questionEditList = ['JOB_BEFORE_CUSTODY']
@@ -438,7 +433,7 @@ describe('assessmentStateService', () => {
               ],
               validationType: 'MANDATORY',
             },
-            answer: { '@class': 'StringAnswer', answer: 'NO' },
+            answer: { '@class': 'StringAnswer', answer: 'YES' },
             originalPageId: 'HAVE_A_JOB_AFTER_RELEASE',
           },
         ],
@@ -457,8 +452,7 @@ describe('assessmentStateService', () => {
       }
 
       const reConverged = await assessmentStateService.checkIfEditAndHandle(
-        aRequest(),
-        'EDUCATION_SKILLS_AND_WORK',
+        aStateKey('EDUCATION_SKILLS_AND_WORK'),
         page,
         existingAssessment,
         true,
