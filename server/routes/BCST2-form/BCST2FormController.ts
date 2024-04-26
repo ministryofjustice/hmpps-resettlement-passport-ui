@@ -223,83 +223,21 @@ export default class BCST2FormController {
         pathway,
         assessmentPage,
       )
-
-      // Get any edited questions from cache
-      const editedQuestionIds = await store.getEditedQuestionList(
-        req.session.id,
-        prisonerData.personalDetails.prisonerNumber,
-        pathway,
-      )
-
-      // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
-      if (editedQuestionIds && !validationErrors) {
-        // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
-        const nextPageQuestionIds =
-          assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []
-        // Get all question ids currently in cache
-        const allQuestionIdsInCache = existingAssessment?.questionsAndAnswers.map(it => it.question)
-        // If all the questions on the next page are in the cache we have converged
-        if (nextPageQuestionIds.every(it => allQuestionIdsInCache?.includes(it))) {
-          // Get the start and end index of existingAssessment where we diverged and converged
-          const editedQuestionsStartIndex = existingAssessment.questionsAndAnswers.findIndex(
-            it => it.question === editedQuestionIds[0],
-          )
-          const editedQuestionsEndIndex = existingAssessment.questionsAndAnswers.findIndex(
-            it => it.question === nextPageQuestionIds[0],
-          )
-          // Get the question ids from the indexes
-          const questionIdsPreDivergence = existingAssessment.questionsAndAnswers
-            .map(it => it.question)
-            .slice(0, editedQuestionsStartIndex)
-          // If editedQuestionsEndIndex === -1, it means the next page has no questions on it. In this case we can set the questionIdsPostConvergence to empty.
-          const questionIdsPostConvergence =
-            editedQuestionsEndIndex !== -1
-              ? existingAssessment.questionsAndAnswers
-                  .map(it => it.question)
-                  .slice(editedQuestionsEndIndex, existingAssessment.questionsAndAnswers.length)
-              : []
-
-          // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
-          const newQuestionIds = [
-            ...questionIdsPreDivergence,
-            ...editedQuestionIds,
-            ...questionIdsPostConvergence,
-          ].filter((item, pos, arr) => {
-            return arr.indexOf(item) === pos
-          })
-          // Convert back to questionsAndAnswers and overwrite the assessment in the cache
-          const newQuestionsAndAnswers = newQuestionIds.map(q =>
-            existingAssessment.questionsAndAnswers.find(it => it.question === q),
-          )
-          await store.setAssessment(req.session.id, `${prisonerData.personalDetails.prisonerNumber}`, pathway, {
-            questionsAndAnswers: newQuestionsAndAnswers,
-          })
-          // Delete the edited question list from cache
-          await store.deleteEditedQuestionList(
-            req.session.id,
-            `${prisonerData.personalDetails.prisonerNumber}`,
-            pathway,
-          )
-          // Redirect to check answers page
-          return res.redirect(
-            `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
-          )
-        }
+      let reConverged = false
+      if (!validationErrors) {
+        reConverged = await this.assessmentStateService.checkIfEditAndHandle(
+          req,
+          pathway,
+          assessmentPage,
+          existingAssessment,
+          edit,
+          assessmentType,
+        )
       }
 
-      // If we are in edit mode (inc. a resettlement plan but not on CHECK_ANSWERS) add the current question id to the edited question list in cache
-      if (
-        (edit || assessmentType === 'RESETTLEMENT_PLAN' || editedQuestionIds) &&
-        assessmentPage.id !== 'CHECK_ANSWERS'
-      ) {
-        const questionList = editedQuestionIds
-          ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
-          : assessmentPage.questionsAndAnswers.map(it => it.question.id)
-        await store.setEditedQuestionList(
-          req.session.id,
-          `${prisonerData.personalDetails.prisonerNumber}`,
-          pathway,
-          questionList,
+      if (reConverged) {
+        return res.redirect(
+          `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
         )
       }
 

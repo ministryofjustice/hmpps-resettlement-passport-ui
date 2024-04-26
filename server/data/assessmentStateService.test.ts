@@ -2,7 +2,7 @@ import { Request } from 'express'
 import { AssessmentStateService } from './assessmentStateService'
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
-import { AssessmentPage, QuestionsAndAnswers, SubmittedInput } from './model/BCST2Form'
+import { AssessmentPage, SubmittedInput } from './model/BCST2Form'
 
 jest.mock('./assessmentStore')
 
@@ -353,6 +353,121 @@ describe('assessmentStateService', () => {
           ],
         })
       })
+    })
+  })
+
+  describe('checkIfEditAndHandle', () => {
+    it('re-converge scenario', async () => {
+      const setAssessmentSpy = jest.spyOn(store, 'setAssessment')
+      const deleteQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
+      const questionEditList = ['JOB_BEFORE_CUSTODY']
+      store.getEditedQuestionList.mockResolvedValueOnce(questionEditList)
+      const page: AssessmentPage = {
+        id: 'HAVE_A_JOB_AFTER_RELEASE',
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'HAVE_A_JOB_AFTER_RELEASE',
+              title: 'Does the person in prison have a job when they are released?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                { id: 'YES', displayText: 'Yes', description: null },
+                { id: 'NO', displayText: 'No', description: null },
+                { id: 'NO_ANSWER', displayText: 'No answer provided', description: null },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: { '@class': 'StringAnswer', answer: 'NO' },
+            originalPageId: 'HAVE_A_JOB_AFTER_RELEASE',
+          },
+        ],
+      }
+
+      const existingAssessment: SubmittedInput = {
+        questionsAndAnswers: [
+          {
+            question: 'JOB_BEFORE_CUSTODY',
+            questionTitle: 'Did the person in prison have a job before custody?',
+            questionType: 'RADIO',
+            pageId: 'JOB_BEFORE_CUSTODY',
+            answer: { '@class': 'StringAnswer', answer: 'NO', displayText: 'No' },
+          },
+          {
+            question: 'HAVE_A_JOB_AFTER_RELEASE',
+            questionTitle: 'Does the person in prison have a job when they are released?',
+            questionType: 'RADIO',
+            pageId: 'HAVE_A_JOB_AFTER_RELEASE',
+            answer: { '@class': 'StringAnswer', answer: 'NO', displayText: 'No' },
+          },
+        ],
+      }
+
+      const reConverged = await assessmentStateService.checkIfEditAndHandle(
+        aRequest(),
+        'EDUCATION_SKILLS_AND_WORK',
+        page,
+        existingAssessment,
+        true,
+        'BCST2',
+      )
+
+      expect(reConverged).toEqual(true)
+      expect(setAssessmentSpy).toHaveBeenCalledTimes(1)
+      expect(deleteQuestionListSpy).toHaveBeenCalledTimes(1)
+    })
+
+    it('no re-converge scenario', async () => {
+      const setAssessmentSpy = jest.spyOn(store, 'setAssessment')
+      const deleteQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
+      const questionEditList = ['JOB_BEFORE_CUSTODY']
+      store.getEditedQuestionList.mockResolvedValueOnce(questionEditList)
+      const page: AssessmentPage = {
+        id: 'HAVE_A_JOB_AFTER_RELEASE',
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'HAVE_A_JOB_AFTER_RELEASE',
+              title: 'Does the person in prison have a job when they are released?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                { id: 'YES', displayText: 'Yes', description: null },
+                { id: 'NO', displayText: 'No', description: null },
+                { id: 'NO_ANSWER', displayText: 'No answer provided', description: null },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: { '@class': 'StringAnswer', answer: 'NO' },
+            originalPageId: 'HAVE_A_JOB_AFTER_RELEASE',
+          },
+        ],
+      }
+
+      const existingAssessment: SubmittedInput = {
+        questionsAndAnswers: [
+          {
+            question: 'JOB_BEFORE_CUSTODY',
+            questionTitle: 'Did the person in prison have a job before custody?',
+            questionType: 'RADIO',
+            pageId: 'JOB_BEFORE_CUSTODY',
+            answer: { '@class': 'StringAnswer', answer: 'NO', displayText: 'No' },
+          },
+        ],
+      }
+
+      const reConverged = await assessmentStateService.checkIfEditAndHandle(
+        aRequest(),
+        'EDUCATION_SKILLS_AND_WORK',
+        page,
+        existingAssessment,
+        true,
+        'BCST2',
+      )
+
+      expect(reConverged).toEqual(false)
+      expect(setAssessmentSpy).toHaveBeenCalledTimes(0)
+      expect(deleteQuestionListSpy).toHaveBeenCalledTimes(0)
     })
   })
 })
