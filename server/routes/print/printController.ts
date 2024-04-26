@@ -2,6 +2,7 @@ import { RequestHandler } from 'express'
 import nunjucks from 'nunjucks'
 import RpService from '../../services/rpService'
 import PrintView from './printView'
+import { pdfMetricsCounter } from '../../monitoring/customMetrics'
 
 const pdfOptions = {
   marginTop: '2.4',
@@ -19,13 +20,18 @@ export default class HealthStatusController {
     try {
       const { prisonerData, sessionID } = req
       const { token } = req.user
-      const { prisonerNumber } = prisonerData.personalDetails
+      const { prisonerNumber, prisonId } = prisonerData.personalDetails
       const appointmentData = await this.rpService.getAppointments(token, sessionID, prisonerNumber as string)
 
       const otpData = await this.rpService.getOtp(token, sessionID, prisonerNumber as string)
       const filename = `plan-your-future-pack-${prisonerNumber}.pdf`
       const fullName = `${prisonerData.personalDetails.firstName} ${prisonerData.personalDetails.lastName}`
       const view = new PrintView(prisonerData, fullName, appointmentData.results.slice(0, 8), otpData)
+
+      pdfMetricsCounter.inc({
+        path: req.path.toLowerCase(),
+        prisonId,
+      })
 
       const headerHtml = await nunjucks.render('pages/printPackHeader.njk', { ...view.renderArgs })
       res.renderPDF('pages/printPack', headerHtml, { ...view.renderArgs }, { filename, pdfOptions: { ...pdfOptions } })
