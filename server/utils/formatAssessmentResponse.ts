@@ -4,9 +4,7 @@ type RequestBody = {
   [key: string]: string
 }
 
-const formatAssessmentResponse = (currentPage: string, reqBody: RequestBody) => {
-  const pageData: AssessmentPage = JSON.parse(currentPage)
-
+const formatAssessmentResponse = (pageData: AssessmentPage, reqBody: RequestBody) => {
   function getAddressValuesFromBody() {
     return [
       {
