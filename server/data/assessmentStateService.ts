@@ -91,50 +91,14 @@ export class AssessmentStateService {
 
     // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
     if (editedQuestionIds) {
-      // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
-      const nextPageQuestionIds =
-        assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []
-      // Get all question ids currently in cache
-      const allQuestionIdsInCache = existingAssessment?.questionsAndAnswers.map(it => it.question)
-      // If all the questions on the page we are about to render are in the cache we have converged
-      if (nextPageQuestionIds.every(it => allQuestionIdsInCache?.includes(it))) {
-        // Get the start and end index of existingAssessment where we diverged and converged
-        const editedQuestionsStartIndex = existingAssessment.questionsAndAnswers.findIndex(
-          it => it.question === editedQuestionIds[0],
-        )
-        const editedQuestionsEndIndex = existingAssessment.questionsAndAnswers.findIndex(
-          it => it.question === nextPageQuestionIds[0],
-        )
-        // Get the question ids from the indexes
-        const questionIdsPreDivergence = existingAssessment.questionsAndAnswers
-          .map(it => it.question)
-          .slice(0, editedQuestionsStartIndex)
-        // If editedQuestionsEndIndex === -1, it means the next page has no questions on it. In this case we can set the questionIdsPostConvergence to empty.
-        const questionIdsPostConvergence =
-          editedQuestionsEndIndex !== -1
-            ? existingAssessment.questionsAndAnswers
-                .map(it => it.question)
-                .slice(editedQuestionsEndIndex, existingAssessment.questionsAndAnswers.length)
-            : []
-
-        // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
-        const newQuestionIds = [
-          ...questionIdsPreDivergence,
-          ...editedQuestionIds,
-          ...questionIdsPostConvergence,
-        ].filter((item, pos, arr) => {
-          return arr.indexOf(item) === pos
-        })
-        // Convert back to questionsAndAnswers and overwrite the assessment in the cache
-        const newQuestionsAndAnswers = newQuestionIds.map(q =>
-          existingAssessment.questionsAndAnswers.find(it => it.question === q),
-        )
-        await this.store.setAssessment(req.session.id, prisonerNumber, pathway, {
-          questionsAndAnswers: newQuestionsAndAnswers,
-        })
-        // Delete the edited question list from cache
-        await this.store.deleteEditedQuestionList(req.session.id, prisonerNumber, pathway)
-        // Redirect to check answers page
+      const reConverged = await this.checkForConvergence(
+        assessmentPage,
+        existingAssessment,
+        editedQuestionIds,
+        req,
+        pathway,
+      )
+      if (reConverged) {
         return true
       }
     }
@@ -148,6 +112,61 @@ export class AssessmentStateService {
         ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
         : assessmentPage.questionsAndAnswers.map(it => it.question.id)
       await this.store.setEditedQuestionList(req.session.id, prisonerNumber, pathway, questionList)
+    }
+    return false
+  }
+
+  private async checkForConvergence(
+    assessmentPage: AssessmentPage,
+    existingAssessment: SubmittedInput,
+    editedQuestionIds: string[],
+    req: Request,
+    pathway: string,
+  ): Promise<boolean> {
+    const { prisonerNumber } = req.prisonerData.personalDetails
+    // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
+    const nextPageQuestionIds =
+      assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []
+    // Get all question ids currently in cache
+    const allQuestionIdsInCache = existingAssessment?.questionsAndAnswers.map(it => it.question)
+    // If all the questions on the page we are about to render are in the cache we have converged
+    if (nextPageQuestionIds.every(it => allQuestionIdsInCache?.includes(it))) {
+      // Get the start and end index of existingAssessment where we diverged and converged
+      const editedQuestionsStartIndex = existingAssessment.questionsAndAnswers.findIndex(
+        it => it.question === editedQuestionIds[0],
+      )
+      const editedQuestionsEndIndex = existingAssessment.questionsAndAnswers.findIndex(
+        it => it.question === nextPageQuestionIds[0],
+      )
+      // Get the question ids from the indexes
+      const questionIdsPreDivergence = existingAssessment.questionsAndAnswers
+        .map(it => it.question)
+        .slice(0, editedQuestionsStartIndex)
+      // If editedQuestionsEndIndex === -1, it means the next page has no questions on it. In this case we can set the questionIdsPostConvergence to empty.
+      const questionIdsPostConvergence =
+        editedQuestionsEndIndex !== -1
+          ? existingAssessment.questionsAndAnswers
+              .map(it => it.question)
+              .slice(editedQuestionsEndIndex, existingAssessment.questionsAndAnswers.length)
+          : []
+
+      // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
+      const newQuestionIds = [...questionIdsPreDivergence, ...editedQuestionIds, ...questionIdsPostConvergence].filter(
+        (item, pos, arr) => {
+          return arr.indexOf(item) === pos
+        },
+      )
+      // Convert back to questionsAndAnswers and overwrite the assessment in the cache
+      const newQuestionsAndAnswers = newQuestionIds.map(q =>
+        existingAssessment.questionsAndAnswers.find(it => it.question === q),
+      )
+      await this.store.setAssessment(req.session.id, prisonerNumber, pathway, {
+        questionsAndAnswers: newQuestionsAndAnswers,
+      })
+      // Delete the edited question list from cache
+      await this.store.deleteEditedQuestionList(req.session.id, prisonerNumber, pathway)
+      // Redirect to check answers page
+      return true
     }
     return false
   }
