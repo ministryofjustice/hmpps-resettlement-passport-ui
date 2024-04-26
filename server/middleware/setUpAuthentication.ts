@@ -4,7 +4,7 @@ import passport from 'passport'
 import flash from 'connect-flash'
 import config from '../config'
 import auth from '../authentication/auth'
-import userMetricsCounter from '../monitoring/customMetrics'
+import { userMetricsCounter } from '../monitoring/customMetrics'
 
 const router = express.Router()
 
