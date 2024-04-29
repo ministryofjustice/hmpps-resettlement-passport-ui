@@ -27,7 +27,7 @@ export default class HealthStatusController {
       const filename = `plan-your-future-pack-${prisonerNumber}.pdf`
       const fullName = `${prisonerData.personalDetails.firstName} ${prisonerData.personalDetails.lastName}`
       const view = new PrintView(prisonerData, fullName, appointmentData.results.slice(0, 8), otpData)
-
+      
       pdfMetricsCounter.inc({
         path: req.path.toLowerCase(),
         prison: prisonName,
