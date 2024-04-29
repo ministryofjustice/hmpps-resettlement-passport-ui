@@ -96,6 +96,8 @@ jobs:
 
   integration_test:
     executor: integration-tests-executor
+    environment:
+      TZ: Europe/London
     steps:
       - checkout
       - attach_workspace:
