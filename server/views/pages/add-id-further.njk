@@ -66,7 +66,7 @@
                   </div>
                 </div>
                 <div class="govuk-radios__item">
-                  <input class="govuk-radios__input" id="isUkNationalBornOverseasNo" name="isUkNationalBornOverseas" type="radio" value="false" data-aria-controls="conditional-contact" {% if params.isUkNationalBornOverseas == "false" %}checked{% endif %}>
+                  <input class="govuk-radios__input" id="isUkNationalBornOverseasNo" name="isUkNationalBornOverseas" type="radio" value="false" {% if params.isUkNationalBornOverseas == "false" %}checked{% endif %}>
                   <label class="govuk-label govuk-radios__label" for="isUkNationalBornOverseasNo">
                     No
                 </label>

@@ -178,11 +178,11 @@ export default class FinanceIdController {
       const { prisonerNumber, applicationDate, bankName } = req.body
 
       try {
-        await this.rpService.postBankApplication(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, {
+        await this.rpService.postBankApplication(prisonerNumber, {
           applicationSubmittedDate: applicationDate,
           bankName,
         })
-        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#finance`)
       } catch (error) {
         const errorMessage = error.message
         logger.error('Error fetching finance data:', error)
@@ -216,7 +216,7 @@ export default class FinanceIdController {
       } = req.body
       const costOfApplication = Number(req.body.costOfApplication)
       try {
-        await this.rpService.postIdApplication(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, {
+        await this.rpService.postIdApplication(prisonerNumber, {
           idType,
           applicationSubmittedDate,
           isPriorityApplication,
@@ -229,7 +229,7 @@ export default class FinanceIdController {
           driversLicenceType,
           driversLicenceApplicationMadeAt,
         })
-        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#id`)
       } catch (error) {
         const errorMessage = error.message
         logger.error('Error fetching id data:', error)
@@ -266,7 +266,7 @@ export default class FinanceIdController {
           addedToPersonalItemsDate,
           resubmissionDate,
         })
-        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#finance`)
       } catch (error) {
         const errorMessage = error.message
         logger.error('Error updating banking application:', error)
@@ -305,7 +305,7 @@ export default class FinanceIdController {
           dateIdReceived,
           refundAmount,
         })
-        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}`)
+        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#id`)
       } catch (error) {
         const errorMessage = error.message
         logger.error('Error updating id application:', error)
