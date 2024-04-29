@@ -9,5 +9,5 @@ export const userMetricsCounter = new Counter({
 export const pdfMetricsCounter = new Counter({
   name: 'pdf_print_count',
   help: 'Counts the number of pdf printed.',
-  labelNames: ['path', 'prisonId'],
+  labelNames: ['path', 'prison'],
 })
