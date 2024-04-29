@@ -96,6 +96,8 @@ jobs:
 
   integration_test:
     executor: integration-tests-executor
+    environment:
+      TZ: Europe/London
     steps:
       - checkout
       - attach_workspace:
@@ -125,9 +127,9 @@ jobs:
       - store_test_results:
           path: test_results
       - store_artifacts:
-          path: integration-tests/videos
+          path: integration_tests/videos
       - store_artifacts:
-          path: integration-tests/screenshots
+          path: integration_tests/screenshots
 
   end-to-end-test:
     circleci_ip_ranges: true

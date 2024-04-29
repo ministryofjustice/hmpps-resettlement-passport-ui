@@ -16,6 +16,11 @@ import {
 import { johnSmithDefaults } from './scenarios/john-smith/john-smith'
 import { johnSmithBCST2Health, johnSmithBCSTAccommodation } from './scenarios/john-smith/john-smith-bcst2'
 import johnSmithBcst2Edit from './scenarios/john-smith/john-smith-bcst2-edit'
+import johnSmithPostFinanceAndID from './scenarios/john-smith/john-smith-post-finance-and-ID'
+import johnSmithGetFinanceAndID from './scenarios/john-smith/john-smith-get-finance-and-ID'
+import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-prisoner-details'
+import johnSmithDeleteFinanceAndID from './scenarios/john-smith/john-smith-delete-finance-and-ID'
+import johnSmithGetFinanceAndIDUpdated from './scenarios/john-smith/john-smith-get-finance-and-ID-updated'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -283,6 +288,19 @@ const stubJohnSmithPreRelease = () => {
 const stubJohnSmithBCST2Health = () => Promise.all([...johnSmithDefaults(), ...johnSmithBCST2Health()])
 const stubJohnSmithBCST2Edit = () => Promise.all([...johnSmithDefaults(), ...johnSmithBcst2Edit()])
 const stubJohnSmithBCST2Accommodation = () => Promise.all([...johnSmithDefaults(), ...johnSmithBCSTAccommodation()])
+const stubJohnSmithPostFinanceAndID = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithPostFinanceAndID()])
+const stubJohnSmithGetFinanceAndID = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithGetFinanceAndID()])
+const stubJohnSmithGetFinanceAndIDUpdated = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithGetFinanceAndIDUpdated()])
+const stubJohnSmithDeleteFinanceAndID = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithGetPrisonerDetails(),
+    ...johnSmithGetFinanceAndID(),
+    ...johnSmithDeleteFinanceAndID(),
+  ])
 
 export default {
   stubGetPrisoners,
@@ -296,4 +314,8 @@ export default {
   stubJohnSmithBCST2Health,
   stubJohnSmithBCST2Edit,
   stubJohnSmithBCST2Accommodation,
+  stubJohnSmithPostFinanceAndID,
+  stubJohnSmithGetFinanceAndID,
+  stubJohnSmithDeleteFinanceAndID,
+  stubJohnSmithGetFinanceAndIDUpdated,
 }
