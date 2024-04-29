@@ -20,7 +20,7 @@ export default class HealthStatusController {
     try {
       const { prisonerData, sessionID } = req
       const { token } = req.user
-      const { prisonerNumber, prisonId } = prisonerData.personalDetails
+      const { prisonerNumber, prisonName } = prisonerData.personalDetails
       const appointmentData = await this.rpService.getAppointments(token, sessionID, prisonerNumber as string)
 
       const otpData = await this.rpService.getOtp(token, sessionID, prisonerNumber as string)
@@ -30,7 +30,7 @@ export default class HealthStatusController {
 
       pdfMetricsCounter.inc({
         path: req.path.toLowerCase(),
-        prisonId,
+        prison: prisonName,
       })
 
       const headerHtml = await nunjucks.render('pages/printPackHeader.njk', { ...view.renderArgs })

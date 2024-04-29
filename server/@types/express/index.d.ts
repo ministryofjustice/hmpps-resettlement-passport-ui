@@ -38,6 +38,7 @@ export declare global {
 export type PersonalDetails = {
   prisonerNumber?: string
   prisonId: string
+  prisonName?: string
   firstName: string
   lastName: string
   location: string
