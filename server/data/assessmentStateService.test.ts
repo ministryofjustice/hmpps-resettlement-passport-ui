@@ -395,7 +395,6 @@ describe('assessmentStateService', () => {
         aStateKey('EDUCATION_SKILLS_AND_WORK'),
         page,
         true,
-        'BCST2',
       )
 
       expect(reConverged).toEqual(true)
@@ -439,7 +438,6 @@ describe('assessmentStateService', () => {
         aStateKey('EDUCATION_SKILLS_AND_WORK'),
         page,
         true,
-        'BCST2',
       )
 
       expect(reConverged).toEqual(false)

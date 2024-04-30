@@ -39,9 +39,13 @@ describe('BCST2FormController', () => {
 
       const merged = mergeQuestionsAndAnswers(apiQAndA, cacheQAndA, false)
 
-      expect(merged).toHaveLength(2)
-      expect(merged[0]).toMatchObject(aSubmittedQAndA('1', 'Cache 1'))
-      expect(merged[1]).toMatchObject(aSubmittedQAndA('2', 'API 2'))
+      expect(merged).toHaveLength(3)
+      const mergedItems = merged.map(i => {
+        return { q: i.question, a: i.answer.answer }
+      })
+      expect(mergedItems).toContainEqual({ q: '1', a: 'Cache 1' })
+      expect(mergedItems).toContainEqual({ q: '2', a: 'API 2' })
+      expect(mergedItems).toContainEqual({ q: '3', a: 'Cache 3' })
     })
 
     it('Just gives the contents of the cache when it is an edit and on the check answers page', () => {

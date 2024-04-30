@@ -23,14 +23,14 @@ export function mergeQuestionsAndAnswers(
   }
 
   // Merge together answers from API and cache
-  const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = []
+  const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = [...existingAssessment.questionsAndAnswers]
   assessmentPage.questionsAndAnswers.forEach(qAndA => {
     const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
       it => it?.question === qAndA.question.id,
     )
-    // Cache always takes precedence
+
     if (questionAndAnswerFromCache) {
-      mergedQuestionsAndAnswers.push(questionAndAnswerFromCache)
+      // already there
     } else {
       mergedQuestionsAndAnswers.push({
         question: qAndA.question.id,
@@ -205,14 +205,10 @@ export default class BCST2FormController {
         return res.render('pages/BCST2-form', { ...view.renderArgs })
       }
       await this.assessmentStateService.setCurrentPage(stateKey, assessmentPage)
+
       let reConverged = false
       if (!validationErrors) {
-        reConverged = await this.assessmentStateService.checkIfEditAndHandle(
-          stateKey,
-          assessmentPage,
-          edit,
-          assessmentType,
-        )
+        reConverged = await this.assessmentStateService.checkIfEditAndHandle(stateKey, assessmentPage, edit)
       }
 
       if (reConverged) {
@@ -308,7 +304,7 @@ export default class BCST2FormController {
   startEdit: RequestHandler = async (req, res, next): Promise<void> => {
     const { prisonerData } = req
     const { pathway, pageId } = req.params
-    const submitted = !prisonerData.assessmentRequired
+    const submitted = req.query.submitted === 'true'
     const { token } = req.user
     const assessmentType = parseAssessmentType(req.query.type)
     const { prisonerNumber } = prisonerData.personalDetails
@@ -332,9 +328,9 @@ export default class BCST2FormController {
         )
       }
       await this.assessmentStateService.startEdit(stateKey, assessmentPage)
-
+      const submittedParam = submitted ? '&submitted=true' : ''
       res.redirect(
-        `/BCST2/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}`,
+        `/BCST2/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}${submittedParam}`,
       )
     } catch (error) {
       next(error)

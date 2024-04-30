@@ -2,7 +2,7 @@ import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
 import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './model/BCST2Form'
 import { getDisplayTextFromQandA } from '../utils/formatAssessmentResponse'
-import { AssessmentType } from './model/assessmentInformation'
+import logger from '../../logger'
 
 export interface StateKey {
   prisonerNumber?: string
@@ -78,6 +78,7 @@ export class AssessmentStateService {
         answeredQuestionIds = answeredQuestionIds.slice(0, questionIndex + 1)
       }
     })
+
     if (edit) {
       await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, answeredQuestionIds)
     } else {
@@ -110,12 +111,7 @@ export class AssessmentStateService {
     )
   }
 
-  async checkIfEditAndHandle(
-    key: StateKey,
-    assessmentPage: AssessmentPage,
-    edit: boolean,
-    assessmentType: AssessmentType,
-  ): Promise<boolean> {
+  async checkIfEditAndHandle(key: StateKey, assessmentPage: AssessmentPage, edit: boolean): Promise<boolean> {
     // Get any edited questions from cache
     const editedQuestionIds = await this.store.getEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
     const answeredQuestionIds = await this.store.getAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway)
@@ -128,16 +124,16 @@ export class AssessmentStateService {
       }
     }
 
-    // If we are in edit mode (inc. a resettlement plan but not on CHECK_ANSWERS) add the current question id to the edited question list in cache
-    if (
-      (edit || assessmentType === 'RESETTLEMENT_PLAN' || editedQuestionIds) &&
-      assessmentPage.id !== 'CHECK_ANSWERS'
-    ) {
-      const questionList = editedQuestionIds
-        ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
-        : assessmentPage.questionsAndAnswers.map(it => it.question.id)
-      await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, questionList)
-    }
+    // // If we are in edit mode (inc. a resettlement plan but not on CHECK_ANSWERS) add the current question id to the edited question list in cache
+    // if (
+    //   (edit || assessmentType === 'RESETTLEMENT_PLAN' || editedQuestionIds) &&
+    //   assessmentPage.id !== 'CHECK_ANSWERS'
+    // ) {
+    //   const questionList = editedQuestionIds
+    //     ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
+    //     : assessmentPage.questionsAndAnswers.map(it => it.question.id)
+    //   await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, questionList)
+    // }
     return false
   }
 
@@ -212,13 +208,26 @@ export class AssessmentStateService {
     }
   }
 
-  async takeOnlyCurrentAnswers(stateKey: StateKey, qAndA: SubmittedQuestionAndAnswer[]) {
+  async takeOnlyCurrentAnswers(stateKey: StateKey, submission: SubmittedQuestionAndAnswer[]) {
     const answeredQuestions = await this.store.getAnsweredQuestions(
       stateKey.sessionId,
       stateKey.prisonerNumber,
       stateKey.pathway,
     )
 
-    return qAndA.filter(q => answeredQuestions.indexOf(q.question) >= 0)
+    function find(id: string) {
+      const questionAndAnswer = submission.find(qAndA => qAndA.question === id)
+      if (!questionAndAnswer) {
+        logger.info(
+          'Missing question id: %s in submission for session %s on %s pathway',
+          id,
+          stateKey.sessionId,
+          stateKey.pathway,
+        )
+      }
+      return questionAndAnswer
+    }
+
+    return answeredQuestions.map(id => find(id))
   }
 }
