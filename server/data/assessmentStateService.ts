@@ -102,6 +102,12 @@ export class AssessmentStateService {
       })),
     }
     await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, questionsAndAnswers)
+    await this.store.setAnsweredQuestions(
+      key.sessionId,
+      key.prisonerNumber,
+      key.pathway,
+      questionsAndAnswers.questionsAndAnswers.map(qAndA => qAndA.question),
+    )
   }
 
   async checkIfEditAndHandle(
@@ -199,8 +205,11 @@ export class AssessmentStateService {
     }
   }
 
-  async startEdit(stateKey: StateKey) {
-    await this.store.setEditedQuestionList(stateKey.sessionId, stateKey.prisonerNumber, stateKey.pathway, [])
+  async startEdit(key: StateKey, assessmentPage: AssessmentPage | undefined) {
+    await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, [])
+    if (assessmentPage) {
+      await this.overwriteWith(key, assessmentPage)
+    }
   }
 
   async takeOnlyCurrentAnswers(stateKey: StateKey, qAndA: SubmittedQuestionAndAnswer[]) {

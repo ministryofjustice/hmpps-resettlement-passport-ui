@@ -169,20 +169,6 @@ export default class BCST2FormController {
         await this.assessmentStateService.deleteEditedQuestionList(stateKey, pathway)
       }
 
-      // If it's already submitted, reset the cache at this point to the CHECK_ANSWERS
-      if (submitted) {
-        await this.assessmentStateService.deleteEditedQuestionList(stateKey, pathway)
-        const assessmentPage = await this.rpService.getAssessmentPage(
-          token,
-          req.sessionID,
-          prisonerData.personalDetails.prisonerNumber as string,
-          pathway as string,
-          'CHECK_ANSWERS',
-          assessmentType,
-        )
-        await this.assessmentStateService.overwriteWith(stateKey, assessmentPage)
-      }
-
       const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
 
       // If there is nothing in the cache at this point, something has gone wrong so redirect back to the start of the form
@@ -322,7 +308,8 @@ export default class BCST2FormController {
   startEdit: RequestHandler = async (req, res, next): Promise<void> => {
     const { prisonerData } = req
     const { pathway, pageId } = req.params
-
+    const submitted = !prisonerData.assessmentRequired
+    const { token } = req.user
     const assessmentType = parseAssessmentType(req.query.type)
     const { prisonerNumber } = prisonerData.personalDetails
     const stateKey = {
@@ -332,7 +319,19 @@ export default class BCST2FormController {
     }
 
     try {
-      await this.assessmentStateService.startEdit(stateKey)
+      // If it's already submitted, we may reset the cache at this point to the CHECK_ANSWERS
+      let assessmentPage: AssessmentPage
+      if (submitted) {
+        assessmentPage = await this.rpService.getAssessmentPage(
+          token,
+          req.sessionID,
+          prisonerData.personalDetails.prisonerNumber as string,
+          pathway as string,
+          'CHECK_ANSWERS',
+          assessmentType,
+        )
+      }
+      await this.assessmentStateService.startEdit(stateKey, assessmentPage)
 
       res.redirect(
         `/BCST2/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}`,
