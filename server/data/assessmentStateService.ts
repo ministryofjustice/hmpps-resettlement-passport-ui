@@ -35,9 +35,10 @@ export class AssessmentStateService {
     })
   }
 
-  async answer(key: StateKey, answer: SubmittedInput) {
+  async answer(key: StateKey, answer: SubmittedInput, edit: boolean = false) {
     // get previous Q&A's
     const allQuestionsAndAnswers = await this.store.getAssessment(key.sessionId, key.prisonerNumber, key.pathway)
+    await this.updateAnsweredQuestionIds(key, answer, edit)
 
     answer.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
       const index = allQuestionsAndAnswers?.questionsAndAnswers
@@ -56,6 +57,32 @@ export class AssessmentStateService {
     })
 
     await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, allQuestionsAndAnswers)
+  }
+
+  private async updateAnsweredQuestionIds(key: StateKey, answer: SubmittedInput, edit: boolean) {
+    let answeredQuestionIds: string[]
+    if (edit) {
+      answeredQuestionIds = await this.store.getEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
+    } else {
+      answeredQuestionIds = await this.store.getAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway)
+    }
+
+    answer.questionsAndAnswers.forEach(q => {
+      const questionId = q.question
+      const questionIndex = answeredQuestionIds.indexOf(questionId)
+      if (questionIndex === -1) {
+        // Not currently answered, just add to the end
+        answeredQuestionIds.push(questionId)
+      } else {
+        // Remove any answers that come after the question
+        answeredQuestionIds = answeredQuestionIds.slice(0, questionIndex + 1)
+      }
+    })
+    if (edit) {
+      await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, answeredQuestionIds)
+    } else {
+      await this.store.setAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway, answeredQuestionIds)
+    }
   }
 
   async overwriteWith(key: StateKey, assessmentPage: AssessmentPage) {
@@ -80,16 +107,16 @@ export class AssessmentStateService {
   async checkIfEditAndHandle(
     key: StateKey,
     assessmentPage: AssessmentPage,
-    existingAssessment: SubmittedInput,
     edit: boolean,
     assessmentType: AssessmentType,
   ): Promise<boolean> {
     // Get any edited questions from cache
     const editedQuestionIds = await this.store.getEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
+    const answeredQuestionIds = await this.store.getAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway)
 
     // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
-    if (editedQuestionIds) {
-      const reConverged = await this.checkForConvergence(assessmentPage, existingAssessment, editedQuestionIds, key)
+    if (editedQuestionIds.length > 0 && edit) {
+      const reConverged = await this.checkForConvergence(assessmentPage, answeredQuestionIds, editedQuestionIds, key)
       if (reConverged) {
         return true
       }
@@ -110,35 +137,26 @@ export class AssessmentStateService {
 
   private async checkForConvergence(
     assessmentPage: AssessmentPage,
-    existingAssessment: SubmittedInput,
+    answeredQuestionIds: string[],
     editedQuestionIds: string[],
     key: StateKey,
   ): Promise<boolean> {
     // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
     const nextPageQuestionIds =
       assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []
-    // Get all question ids currently in cache
-    const allQuestionIdsInCache = existingAssessment?.questionsAndAnswers.map(it => it.question)
+
     // If all the questions on the page we are about to render are in the cache we have converged
-    if (nextPageQuestionIds.every(it => allQuestionIdsInCache?.includes(it))) {
+    if (nextPageQuestionIds.every(it => answeredQuestionIds?.includes(it))) {
       // Get the start and end index of existingAssessment where we diverged and converged
-      const editedQuestionsStartIndex = existingAssessment.questionsAndAnswers.findIndex(
-        it => it.question === editedQuestionIds[0],
-      )
-      const editedQuestionsEndIndex = existingAssessment.questionsAndAnswers.findIndex(
-        it => it.question === nextPageQuestionIds[0],
-      )
+      const editedQuestionsStartIndex = answeredQuestionIds.indexOf(editedQuestionIds[0])
+      const editedQuestionsEndIndex = answeredQuestionIds.indexOf(nextPageQuestionIds[0])
       // Get the question ids from the indexes
-      const questionIdsPreDivergence = existingAssessment.questionsAndAnswers
-        .map(it => it.question)
-        .slice(0, editedQuestionsStartIndex)
+      const questionIdsPreDivergence = answeredQuestionIds.slice(0, editedQuestionsStartIndex)
       // If editedQuestionsEndIndex === -1, it means the next page has no questions on it. In this case we can set the questionIdsPostConvergence to empty.
       const questionIdsPostConvergence =
-        editedQuestionsEndIndex !== -1
-          ? existingAssessment.questionsAndAnswers
-              .map(it => it.question)
-              .slice(editedQuestionsEndIndex, existingAssessment.questionsAndAnswers.length)
-          : []
+        editedQuestionsEndIndex === -1
+          ? []
+          : answeredQuestionIds.slice(editedQuestionsEndIndex, answeredQuestionIds.length)
 
       // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
       const newQuestionIds = [...questionIdsPreDivergence, ...editedQuestionIds, ...questionIdsPostConvergence].filter(
@@ -146,13 +164,8 @@ export class AssessmentStateService {
           return arr.indexOf(item) === pos
         },
       )
-      // Convert back to questionsAndAnswers and overwrite the assessment in the cache
-      const newQuestionsAndAnswers = newQuestionIds.map(q =>
-        existingAssessment.questionsAndAnswers.find(it => it.question === q),
-      )
-      await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, {
-        questionsAndAnswers: newQuestionsAndAnswers,
-      })
+
+      await this.store.setAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway, newQuestionIds)
       // Delete the edited question list from cache
       await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
       // Redirect to check answers page
@@ -174,7 +187,29 @@ export class AssessmentStateService {
     await this.store.setCurrentPage(key.sessionId, key.prisonerNumber, key.pathway, assessmentPage)
   }
 
-  async onMerge(stateKey: StateKey, input: SubmittedInput) {
-    await this.store.setAssessment(stateKey.sessionId, stateKey.prisonerNumber, stateKey.pathway, input)
+  async prepareSubmission(stateKey: StateKey): Promise<SubmittedInput> {
+    const assessment = await this.getAssessment(stateKey)
+    const answeredQuestions = await this.store.getAnsweredQuestions(
+      stateKey.sessionId,
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+    )
+    return {
+      questionsAndAnswers: answeredQuestions.map(id => assessment.questionsAndAnswers.find(it => it.question === id)),
+    }
+  }
+
+  async startEdit(stateKey: StateKey) {
+    await this.store.setEditedQuestionList(stateKey.sessionId, stateKey.prisonerNumber, stateKey.pathway, [])
+  }
+
+  async takeOnlyCurrentAnswers(stateKey: StateKey, qAndA: SubmittedQuestionAndAnswer[]) {
+    const answeredQuestions = await this.store.getAnsweredQuestions(
+      stateKey.sessionId,
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+    )
+
+    return qAndA.filter(q => answeredQuestions.indexOf(q.question) >= 0)
   }
 }

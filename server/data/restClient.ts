@@ -65,11 +65,11 @@ export default class RestClient {
     retry = false,
   }: GetRequest): Promise<T> {
     try {
-      if (this.userId) {
-        logger.info(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
-      } else {
-        logger.info(`User making GET request to ${path}`)
-      }
+      // if (this.userId) {
+      //   logger.info(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
+      // } else {
+      //   logger.info(`User making GET request to ${path}`)
+      // }
 
       const result = await superagent
         .get(`${this.apiUrl()}${path}`)
@@ -175,11 +175,11 @@ export default class RestClient {
   }
 
   async stream({ path = null, headers = {} }: StreamRequest = {}): Promise<unknown> {
-    if (this.userId) {
-      logger.info(`User: ${this.userId} Session: ${this.sessionId} making STREAM request to ${path}`)
-    } else {
-      logger.info(`User making STREAM request to ${path}`)
-    }
+    // if (this.userId) {
+    //   logger.info(`User: ${this.userId} Session: ${this.sessionId} making STREAM request to ${path}`)
+    // } else {
+    //   logger.info(`User making STREAM request to ${path}`)
+    // }
     return new Promise((resolve, reject) => {
       superagent
         .get(`${this.apiUrl()}${path}`)

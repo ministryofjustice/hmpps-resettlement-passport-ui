@@ -113,7 +113,7 @@ export default class BCST2FormController {
 
       // prepare current Q&A's from req body for post request
       const dataToSubmit: SubmittedInput = formatAssessmentResponse(currentPage, req.body)
-      await this.assessmentStateService.answer(stateKey, dataToSubmit)
+      await this.assessmentStateService.answer(stateKey, dataToSubmit, edit)
 
       const nextPage = await this.rpService.fetchNextPage(
         token,
@@ -224,7 +224,6 @@ export default class BCST2FormController {
         reConverged = await this.assessmentStateService.checkIfEditAndHandle(
           stateKey,
           assessmentPage,
-          existingAssessment,
           edit,
           assessmentType,
         )
@@ -236,16 +235,18 @@ export default class BCST2FormController {
         )
       }
 
-      const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = mergeQuestionsAndAnswers(
+      let mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = mergeQuestionsAndAnswers(
         assessmentPage,
         existingAssessment,
         edit,
       )
-      // If we are about to render the check answers page - update the cache with the current question/answer set
+
+      // If we are about to render the check answers page - make sure we only show answered questions
       if (currentPageId === 'CHECK_ANSWERS') {
-        await this.assessmentStateService.onMerge(stateKey, {
-          questionsAndAnswers: mergedQuestionsAndAnswers,
-        })
+        mergedQuestionsAndAnswers = await this.assessmentStateService.takeOnlyCurrentAnswers(
+          stateKey,
+          mergedQuestionsAndAnswers,
+        )
       }
 
       const view = new BCST2FormView(
@@ -282,7 +283,7 @@ export default class BCST2FormController {
         pathway,
       }
 
-      const dataToSubmit = await this.assessmentStateService.getAssessment(stateKey)
+      const dataToSubmit = await this.assessmentStateService.prepareSubmission(stateKey)
 
       const completeAssessment = (await this.rpService.completeAssessment(
         token,
@@ -315,6 +316,29 @@ export default class BCST2FormController {
       }
     } catch (err) {
       next(err)
+    }
+  }
+
+  startEdit: RequestHandler = async (req, res, next): Promise<void> => {
+    const { prisonerData } = req
+    const { pathway, pageId } = req.params
+
+    const assessmentType = parseAssessmentType(req.query.type)
+    const { prisonerNumber } = prisonerData.personalDetails
+    const stateKey = {
+      prisonerNumber,
+      sessionId: req.session.id,
+      pathway,
+    }
+
+    try {
+      await this.assessmentStateService.startEdit(stateKey)
+
+      res.redirect(
+        `/BCST2/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}`,
+      )
+    } catch (error) {
+      next(error)
     }
   }
 }

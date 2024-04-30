@@ -11,10 +11,14 @@ const prisonerNumber = '123'
 describe('assessmentStateService', () => {
   let store: jest.Mocked<AssessmentStore>
   let assessmentStateService: AssessmentStateService
+  let setAssessmentSpy: jest.SpyInstance
+  let setAnsweredQuestionSpy: jest.SpyInstance
 
   beforeEach(() => {
     store = new AssessmentStore(createRedisClient()) as jest.Mocked<AssessmentStore>
     assessmentStateService = new AssessmentStateService(store as AssessmentStore)
+    setAssessmentSpy = jest.spyOn(store, 'setAssessment')
+    setAnsweredQuestionSpy = jest.spyOn(store, 'setAnsweredQuestions')
   })
 
   afterEach(() => {
@@ -40,7 +44,6 @@ describe('assessmentStateService', () => {
 
   describe('answer', () => {
     it('when no questions have been answered', async () => {
-      const spy = jest.spyOn(store, 'setAssessment')
       const answer: SubmittedInput = {
         questionsAndAnswers: [
           {
@@ -57,14 +60,17 @@ describe('assessmentStateService', () => {
         ],
       }
       store.getAssessment.mockResolvedValueOnce({ questionsAndAnswers: [] })
+      store.getAnsweredQuestions.mockResolvedValueOnce([])
 
       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
 
-      expect(spy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', answer)
+      expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', answer)
+      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
+        'WHERE_WILL_THEY_LIVE_2',
+      ])
     })
 
     it('should add an answer to a question that has not been answered before', async () => {
-      const spy = jest.spyOn(store, 'setAssessment')
       const answer: SubmittedInput = {
         questionsAndAnswers: [
           {
@@ -98,7 +104,7 @@ describe('assessmentStateService', () => {
       }
 
       store.getAssessment.mockResolvedValueOnce(existing)
-
+      store.getAnsweredQuestions.mockResolvedValueOnce(['WHERE_DID_THEY_LIVE'])
       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
 
       const expected = {
@@ -128,21 +134,24 @@ describe('assessmentStateService', () => {
         ],
       }
 
-      expect(spy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
+      expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
+      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
+        'WHERE_DID_THEY_LIVE',
+        'WHERE_WILL_THEY_LIVE_2',
+      ])
     })
 
     it('should replace an answer to a question that has been answered before', async () => {
-      const spy = jest.spyOn(store, 'setAssessment')
       const answer: SubmittedInput = {
         questionsAndAnswers: [
           {
-            question: 'WHERE_WILL_THEY_LIVE_2',
-            questionTitle: 'Where will the person in prison live when they are released?',
+            question: 'WHERE_DID_THEY_LIVE',
+            questionTitle: 'Where did the person in prison live before custody?',
             questionType: 'RADIO',
-            pageId: 'WHERE_WILL_THEY_LIVE_2',
+            pageId: 'WHERE_DID_THEY_LIVE',
             answer: {
-              answer: 'MOVE_TO_NEW_ADDRESS',
-              displayText: 'Move to a new address',
+              answer: 'HOMEOWNER',
+              displayText: 'Homeowner',
               '@class': 'StringAnswer',
             },
           },
@@ -177,6 +186,7 @@ describe('assessmentStateService', () => {
       }
 
       store.getAssessment.mockResolvedValueOnce(existing)
+      store.getAnsweredQuestions.mockResolvedValueOnce(['WHERE_DID_THEY_LIVE', 'WHERE_WILL_THEY_LIVE_2'])
 
       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
 
@@ -188,8 +198,8 @@ describe('assessmentStateService', () => {
             questionType: 'RADIO',
             pageId: 'WHERE_DID_THEY_LIVE',
             answer: {
-              answer: 'NO_PERMANENT_OR_FIXED',
-              displayText: 'No permanent or fixed address',
+              answer: 'HOMEOWNER',
+              displayText: 'Homeowner',
               '@class': 'StringAnswer',
             },
           },
@@ -199,15 +209,16 @@ describe('assessmentStateService', () => {
             questionType: 'RADIO',
             pageId: 'WHERE_WILL_THEY_LIVE_2',
             answer: {
-              answer: 'MOVE_TO_NEW_ADDRESS',
-              displayText: 'Move to a new address',
+              answer: 'DOES_NOT_HAVE_ANYWHERE',
+              displayText: 'Does not have anywhere to live',
               '@class': 'StringAnswer',
             },
           },
         ],
       }
 
-      expect(spy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
+      expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
+      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', ['WHERE_DID_THEY_LIVE'])
     })
 
     describe('overwriteWith', () => {
@@ -352,11 +363,12 @@ describe('assessmentStateService', () => {
 
   describe('checkIfEditAndHandle', () => {
     it('re-converge scenario', async () => {
-      // noinspection DuplicatedCode
-      const setAssessmentSpy = jest.spyOn(store, 'setAssessment')
-      const deleteQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
+      const deleteEditedQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
       const questionEditList = ['JOB_BEFORE_CUSTODY']
       store.getEditedQuestionList.mockResolvedValueOnce(questionEditList)
+      const questionAnswerList = ['JOB_BEFORE_CUSTODY', 'A.N.OTHER', 'HAVE_A_JOB_AFTER_RELEASE']
+      store.getAnsweredQuestions.mockResolvedValueOnce(questionAnswerList)
+
       const page: AssessmentPage = {
         id: 'HAVE_A_JOB_AFTER_RELEASE',
         questionsAndAnswers: [
@@ -379,44 +391,28 @@ describe('assessmentStateService', () => {
         ],
       }
 
-      const existingAssessment: SubmittedInput = {
-        questionsAndAnswers: [
-          {
-            question: 'JOB_BEFORE_CUSTODY',
-            questionTitle: 'Did the person in prison have a job before custody?',
-            questionType: 'RADIO',
-            pageId: 'JOB_BEFORE_CUSTODY',
-            answer: { '@class': 'StringAnswer', answer: 'NO', displayText: 'No' },
-          },
-          {
-            question: 'HAVE_A_JOB_AFTER_RELEASE',
-            questionTitle: 'Does the person in prison have a job when they are released?',
-            questionType: 'RADIO',
-            pageId: 'HAVE_A_JOB_AFTER_RELEASE',
-            answer: { '@class': 'StringAnswer', answer: 'NO', displayText: 'No' },
-          },
-        ],
-      }
-
       const reConverged = await assessmentStateService.checkIfEditAndHandle(
         aStateKey('EDUCATION_SKILLS_AND_WORK'),
         page,
-        existingAssessment,
         true,
         'BCST2',
       )
 
       expect(reConverged).toEqual(true)
-      expect(setAssessmentSpy).toHaveBeenCalledTimes(1)
-      expect(deleteQuestionListSpy).toHaveBeenCalledTimes(1)
+      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(sessionId, prisonerNumber, 'EDUCATION_SKILLS_AND_WORK', [
+        'JOB_BEFORE_CUSTODY',
+        'HAVE_A_JOB_AFTER_RELEASE',
+      ])
+      expect(deleteEditedQuestionListSpy).toHaveBeenCalledTimes(1)
     })
 
     it('no re-converge scenario', async () => {
-      // noinspection DuplicatedCode
-      const setAssessmentSpy = jest.spyOn(store, 'setAssessment')
       const deleteQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
       const questionEditList = ['JOB_BEFORE_CUSTODY']
       store.getEditedQuestionList.mockResolvedValueOnce(questionEditList)
+      const answeredQuestionList = ['JOB_BEFORE_CUSTODY', 'SUPPORT_NEEDS']
+      store.getAnsweredQuestions.mockResolvedValueOnce(answeredQuestionList)
+
       const page: AssessmentPage = {
         id: 'HAVE_A_JOB_AFTER_RELEASE',
         questionsAndAnswers: [
@@ -439,22 +435,9 @@ describe('assessmentStateService', () => {
         ],
       }
 
-      const existingAssessment: SubmittedInput = {
-        questionsAndAnswers: [
-          {
-            question: 'JOB_BEFORE_CUSTODY',
-            questionTitle: 'Did the person in prison have a job before custody?',
-            questionType: 'RADIO',
-            pageId: 'JOB_BEFORE_CUSTODY',
-            answer: { '@class': 'StringAnswer', answer: 'NO', displayText: 'No' },
-          },
-        ],
-      }
-
       const reConverged = await assessmentStateService.checkIfEditAndHandle(
         aStateKey('EDUCATION_SKILLS_AND_WORK'),
         page,
-        existingAssessment,
         true,
         'BCST2',
       )
