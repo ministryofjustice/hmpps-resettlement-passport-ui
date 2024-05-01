@@ -5,7 +5,7 @@ import { AssessmentPage, SubmittedInput } from './model/BCST2Form'
 import { secondsUntilMidnight } from '../utils/utils'
 
 const assessmentPrefix = 'assessment:'
-const answeredQuestionsPrefix = ':answered'
+const answeredQuestionsPrefix = 'answered:'
 const currentPagePrefix = 'currentPage:'
 const editedQuestionPrefix = 'edit:'
 
