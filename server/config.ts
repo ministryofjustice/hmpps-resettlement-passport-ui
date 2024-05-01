@@ -84,6 +84,15 @@ export default {
       agent: new AgentConfig(Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 20000))),
       enabled: get('NOMIS_USER_ROLES_API_ENABLED', 'true') === 'true',
     },
+    manageUsersClient: {
+      url: get('MANAGE_USERS_API_URL', ''),
+      timeout: {
+        response: Number(get('MANAGE_USERS_API_TIMEOUT_RESPONSE', 20000)),
+        deadline: Number(get('MANAGE_USERS_API_TIMEOUT_DEADLINE', 20000)),
+      },
+      agent: new AgentConfig(Number(get('MANAGE_USERS_API_TIMEOUT_RESPONSE', 20000))),
+      enabled: get('MANAGE_USERS_API_ENABLED', 'true') === 'true',
+    },
     frontendComponents: {
       url: get('COMPONENT_API_URL', 'http://localhost:8082', requiredInProduction),
       timeout: {

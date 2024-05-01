@@ -7,11 +7,6 @@ export interface UserActiveCaseLoad {
   description: string
 }
 
-export interface User {
-  name: string
-  activeCaseLoadId: string
-}
-
 export default class NomisUserRolesApiClient {
   restClient: RestClient
 
@@ -21,9 +16,5 @@ export default class NomisUserRolesApiClient {
 
   async getUserActiveCaseLoad(): Promise<any> {
     return this.restClient.get<any>({ path: `/me/caseloads` })
-  }
-
-  async getUser(): Promise<User> {
-    return this.restClient.get<User>({ path: '/me' })
   }
 }
