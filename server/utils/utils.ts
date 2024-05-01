@@ -326,3 +326,14 @@ export function secondsUntilMidnight() {
 export function parseAssessmentType(type: unknown): AssessmentType {
   return type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
 }
+
+export function formatDateAsLocal(dateString: string) {
+  if (dateString) {
+    const date = new Date(dateString)
+    const pad = (n: number) => `${Math.floor(Math.abs(n))}`.padStart(2, '0')
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(
+      date.getMinutes(),
+    )}:${pad(date.getSeconds())}`
+  }
+  return null
+}

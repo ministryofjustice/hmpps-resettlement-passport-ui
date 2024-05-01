@@ -9,7 +9,7 @@ const submitBankAccount = () => {
       bodyPatterns: [
         {
           equalToJson: JSON.stringify({
-            applicationSubmittedDate: '2024-04-25T23:00:00.000Z',
+            applicationSubmittedDate: '2024-04-26T00:00:00',
             bankName: 'Nationwide',
           }),
         },

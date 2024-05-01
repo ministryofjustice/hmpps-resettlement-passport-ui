@@ -4,7 +4,7 @@ import logger from '../../../logger'
 import { AssessmentErrorMessage } from '../../data/model/assessmentErrorMessage'
 import { BankAccountErrorMessage } from '../../data/model/bankAccountErrorMessage'
 import { IdErrorMessage } from '../../data/model/idErrorMessage'
-import { isDateValid } from '../../utils/utils'
+import { formatDateAsLocal, isDateValid } from '../../utils/utils'
 import FinanceIdView from './financeIdView'
 
 export default class FinanceIdController {
@@ -179,7 +179,7 @@ export default class FinanceIdController {
 
       try {
         await this.rpService.postBankApplication(prisonerNumber, {
-          applicationSubmittedDate: applicationDate,
+          applicationSubmittedDate: formatDateAsLocal(applicationDate),
           bankName,
         })
         res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#finance`)
@@ -218,7 +218,7 @@ export default class FinanceIdController {
       try {
         await this.rpService.postIdApplication(prisonerNumber, {
           idType,
-          applicationSubmittedDate,
+          applicationSubmittedDate: formatDateAsLocal(applicationSubmittedDate),
           isPriorityApplication,
           costOfApplication,
           haveGro,
@@ -261,10 +261,10 @@ export default class FinanceIdController {
       try {
         await this.rpService.patchBankApplication(prisonerNumber, applicationId, {
           status: updatedStatus,
-          bankResponseDate,
+          bankResponseDate: formatDateAsLocal(bankResponseDate),
           isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
-          addedToPersonalItemsDate,
-          resubmissionDate,
+          addedToPersonalItemsDate: formatDateAsLocal(addedToPersonalItemsDate),
+          resubmissionDate: formatDateAsLocal(resubmissionDate),
         })
         res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#finance`)
       } catch (error) {
@@ -300,9 +300,9 @@ export default class FinanceIdController {
         await this.rpService.patchIdApplication(prisonerNumber, applicationId, {
           status: updatedStatus,
           isAddedToPersonalItems,
-          addedToPersonalItemsDate,
-          statusUpdateDate,
-          dateIdReceived,
+          addedToPersonalItemsDate: formatDateAsLocal(addedToPersonalItemsDate),
+          statusUpdateDate: formatDateAsLocal(statusUpdateDate),
+          dateIdReceived: formatDateAsLocal(dateIdReceived),
           refundAmount,
         })
         res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#id`)
