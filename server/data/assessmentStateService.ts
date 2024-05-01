@@ -124,16 +124,6 @@ export class AssessmentStateService {
       }
     }
 
-    // // If we are in edit mode (inc. a resettlement plan but not on CHECK_ANSWERS) add the current question id to the edited question list in cache
-    // if (
-    //   (edit || assessmentType === 'RESETTLEMENT_PLAN' || editedQuestionIds) &&
-    //   assessmentPage.id !== 'CHECK_ANSWERS'
-    // ) {
-    //   const questionList = editedQuestionIds
-    //     ? [...editedQuestionIds, ...assessmentPage.questionsAndAnswers.map(it => it.question.id)]
-    //     : assessmentPage.questionsAndAnswers.map(it => it.question.id)
-    //   await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, questionList)
-    // }
     return false
   }
 
