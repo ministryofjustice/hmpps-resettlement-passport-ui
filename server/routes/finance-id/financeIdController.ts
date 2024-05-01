@@ -264,7 +264,7 @@ export default class FinanceIdController {
           bankResponseDate: formatDateAsLocal(bankResponseDate),
           isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
           addedToPersonalItemsDate: formatDateAsLocal(addedToPersonalItemsDate),
-          resubmissionDate,
+          resubmissionDate: formatDateAsLocal(resubmissionDate),
         })
         res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#finance`)
       } catch (error) {
