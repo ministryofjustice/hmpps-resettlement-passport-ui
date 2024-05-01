@@ -86,31 +86,6 @@ export class AssessmentStateService {
     }
   }
 
-  async overwriteWith(key: StateKey, assessmentPage: AssessmentPage) {
-    const questionsAndAnswers = {
-      questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
-        question: qAndA.question.id,
-        questionTitle: qAndA.question.title,
-        pageId: qAndA.originalPageId,
-        questionType: qAndA.question.type,
-        answer: qAndA.answer
-          ? {
-              answer: qAndA.answer.answer,
-              displayText: getDisplayTextFromQandA(qAndA),
-              '@class': qAndA.answer['@class'],
-            }
-          : null,
-      })),
-    }
-    await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, questionsAndAnswers)
-    await this.store.setAnsweredQuestions(
-      key.sessionId,
-      key.prisonerNumber,
-      key.pathway,
-      questionsAndAnswers.questionsAndAnswers.map(qAndA => qAndA.question),
-    )
-  }
-
   async checkForConvergence(key: StateKey, assessmentPage: AssessmentPage, edit: boolean): Promise<boolean> {
     // Get any edited questions from cache
     const editedQuestionIds = await this.store.getEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
@@ -181,9 +156,29 @@ export class AssessmentStateService {
 
   async startEdit(key: StateKey, assessmentPage: AssessmentPage | undefined) {
     await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, [])
-    if (assessmentPage) {
-      await this.overwriteWith(key, assessmentPage)
+    if (!assessmentPage) {
+      return
     }
+    const questionsAndAnswers = {
+      questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
+        question: qAndA.question.id,
+        questionTitle: qAndA.question.title,
+        pageId: qAndA.originalPageId,
+        questionType: qAndA.question.type,
+        answer: qAndA.answer
+          ? {
+              answer: qAndA.answer.answer,
+              displayText: getDisplayTextFromQandA(qAndA),
+              '@class': qAndA.answer['@class'],
+            }
+          : null,
+      })),
+    }
+    await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, questionsAndAnswers)
+    const questionIds = questionsAndAnswers.questionsAndAnswers
+      .map(qAndA => qAndA.question)
+      .filter(q => !q.startsWith('SUPPORT_NEEDS'))
+    await this.store.setAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway, questionIds)
   }
 
   async takeOnlyCurrentAnswers(stateKey: StateKey, submission: SubmittedQuestionAndAnswer[]) {
