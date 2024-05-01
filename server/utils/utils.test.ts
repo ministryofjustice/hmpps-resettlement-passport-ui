@@ -11,6 +11,7 @@ import {
   formatAddressAndCheckboxAnswers,
   formatSummaryNotes,
   getDaysFromGivenDate,
+  formatDateAsLocal,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -376,5 +377,19 @@ describe('getDaysFromDate', () => {
   ])('calculate days from date 2024-04-23 to %s', (input: string, expected: object) => {
     const currentDateTime = new Date('2024-04-23T12:22:47.714Z')
     expect(getDaysFromGivenDate(input, currentDateTime)).toEqual(expected)
+  })
+})
+
+describe('formatDateAsLocal', () => {
+  it.each([
+    ['2024-04-20T23:00:00Z', '2024-04-21T00:00:00'],
+    ['2024-02-13T00:00:00Z', '2024-02-13T00:00:00'],
+    ['2024-03-31T00:00:00Z', '2024-03-31T00:00:00'],
+    ['2024-03-31T23:00:00Z', '2024-04-01T00:00:00'],
+    [undefined, null],
+    [null, null],
+    ['', null],
+  ])('formatDateAsLocal from %s to %s', (input: string, expected: string) => {
+    expect(formatDateAsLocal(input)).toEqual(expected)
   })
 })
