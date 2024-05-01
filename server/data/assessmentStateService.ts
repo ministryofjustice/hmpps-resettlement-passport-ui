@@ -111,28 +111,16 @@ export class AssessmentStateService {
     )
   }
 
-  async checkIfEditAndHandle(key: StateKey, assessmentPage: AssessmentPage, edit: boolean): Promise<boolean> {
+  async checkForConvergence(key: StateKey, assessmentPage: AssessmentPage, edit: boolean): Promise<boolean> {
     // Get any edited questions from cache
     const editedQuestionIds = await this.store.getEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
     const answeredQuestionIds = await this.store.getAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway)
 
-    // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
-    if (editedQuestionIds.length > 0 && edit) {
-      const reConverged = await this.checkForConvergence(assessmentPage, answeredQuestionIds, editedQuestionIds, key)
-      if (reConverged) {
-        return true
-      }
+    if (editedQuestionIds.length === 0 || !edit) {
+      return false
     }
+    // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
 
-    return false
-  }
-
-  private async checkForConvergence(
-    assessmentPage: AssessmentPage,
-    answeredQuestionIds: string[],
-    editedQuestionIds: string[],
-    key: StateKey,
-  ): Promise<boolean> {
     // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
     const nextPageQuestionIds =
       assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []

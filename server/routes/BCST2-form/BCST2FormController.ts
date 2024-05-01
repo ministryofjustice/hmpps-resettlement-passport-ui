@@ -208,7 +208,7 @@ export default class BCST2FormController {
 
       let reConverged = false
       if (!validationErrors) {
-        reConverged = await this.assessmentStateService.checkIfEditAndHandle(stateKey, assessmentPage, edit)
+        reConverged = await this.assessmentStateService.checkForConvergence(stateKey, assessmentPage, edit)
       }
 
       if (reConverged) {

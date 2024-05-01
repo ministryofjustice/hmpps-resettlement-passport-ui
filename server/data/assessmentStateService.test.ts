@@ -361,7 +361,7 @@ describe('assessmentStateService', () => {
     })
   })
 
-  describe('checkIfEditAndHandle', () => {
+  describe('checkForConvergence', () => {
     it('re-converge scenario', async () => {
       const deleteEditedQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
       const questionEditList = ['JOB_BEFORE_CUSTODY']
@@ -391,7 +391,7 @@ describe('assessmentStateService', () => {
         ],
       }
 
-      const reConverged = await assessmentStateService.checkIfEditAndHandle(
+      const reConverged = await assessmentStateService.checkForConvergence(
         aStateKey('EDUCATION_SKILLS_AND_WORK'),
         page,
         true,
@@ -434,7 +434,7 @@ describe('assessmentStateService', () => {
         ],
       }
 
-      const reConverged = await assessmentStateService.checkIfEditAndHandle(
+      const reConverged = await assessmentStateService.checkForConvergence(
         aStateKey('EDUCATION_SKILLS_AND_WORK'),
         page,
         true,
