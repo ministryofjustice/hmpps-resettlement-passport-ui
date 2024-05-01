@@ -15,6 +15,7 @@ generic-service:
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
     RESETTLEMENT_PASSPORT_API_URL: "https://resettlement-passport-api-dev.hmpps.service.justice.gov.uk"
     NOMIS_USER_ROLES_API_URL: "https://nomis-user-roles-api-dev.prison.service.justice.gov.uk"
+    MANAGE_USERS_API_URL: "https://manage-users-api-dev.hmpps.service.justice.gov.uk"
     DPS_URL: "https://digital-dev.prison.service.justice.gov.uk"
     COMPONENT_API_URL: "https://frontend-components-dev.hmpps.service.justice.gov.uk"
     ENVIRONMENT_NAME: "DEV"

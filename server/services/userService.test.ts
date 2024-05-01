@@ -1,30 +1,35 @@
 import UserService from './userService'
-import NomisUserRolesApiClient, { User, UserActiveCaseLoad } from '../data/nomisUserRolesApiClient'
+import NomisUserRolesApiClient, { UserActiveCaseLoad } from '../data/nomisUserRolesApiClient'
+import ManageUsersApiClient, { User } from '../data/manageUsersApiClient'
 
 jest.mock('../data/nomisUserRolesApiClient')
+jest.mock('../data/manageUsersApiClient')
 
 const token = 'some token'
 
 describe('User service', () => {
   let nomisUserRolesApiClient: jest.Mocked<NomisUserRolesApiClient>
+  let manageUsersApiClient: jest.Mocked<ManageUsersApiClient>
   let userService: UserService
 
   beforeEach(() => {
     nomisUserRolesApiClient = new NomisUserRolesApiClient(null) as jest.Mocked<NomisUserRolesApiClient>
     ;(NomisUserRolesApiClient as jest.Mock<NomisUserRolesApiClient>).mockImplementation(() => nomisUserRolesApiClient)
+    manageUsersApiClient = new ManageUsersApiClient(null) as jest.Mocked<ManageUsersApiClient>
+    ;(ManageUsersApiClient as jest.Mock<ManageUsersApiClient>).mockImplementation(() => manageUsersApiClient)
     userService = new UserService()
   })
 
   describe('getUser', () => {
     it('Retrieves and formats user name', async () => {
-      nomisUserRolesApiClient.getUser.mockResolvedValue({ name: 'john smith' } as User)
+      manageUsersApiClient.getUser.mockResolvedValue({ name: 'john smith' } as User)
 
       const result = await userService.getUser(token)
 
       expect(result).toEqual({ name: 'john smith', displayName: 'John Smith', username: 'john smith' })
     })
     it('Propagates error', async () => {
-      nomisUserRolesApiClient.getUser.mockRejectedValue(new Error('some error'))
+      manageUsersApiClient.getUser.mockRejectedValue(new Error('some error'))
 
       await expect(userService.getUser(token)).rejects.toEqual(new Error('some error'))
     })

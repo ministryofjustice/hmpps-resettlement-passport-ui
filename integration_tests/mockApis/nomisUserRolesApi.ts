@@ -80,7 +80,7 @@ const stubUser = (name: string) =>
   stubFor({
     request: {
       method: 'GET',
-      urlPattern: '/nomisUserRolesApi/me',
+      urlPattern: '/manageUsersApi/users/me',
     },
     response: {
       status: 200,

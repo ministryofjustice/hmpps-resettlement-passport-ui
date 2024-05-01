@@ -1,5 +1,6 @@
 import { convertToTitleCase } from '../utils/utils'
 import NomisUserRolesApiClient, { UserActiveCaseLoad } from '../data/nomisUserRolesApiClient'
+import ManageUsersApiClient from '../data/manageUsersApiClient'
 
 export interface UserDetails {
   name: string
@@ -13,7 +14,7 @@ export default class UserService {
   }
 
   async getUser(token: string): Promise<UserDetails> {
-    const user = await new NomisUserRolesApiClient(token).getUser()
+    const user = await new ManageUsersApiClient(token).getUser()
     return { ...user, displayName: convertToTitleCase(user.name), username: user.name }
   }
 
