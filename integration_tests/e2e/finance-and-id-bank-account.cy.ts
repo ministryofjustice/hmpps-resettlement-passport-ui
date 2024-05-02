@@ -84,4 +84,38 @@ context('Finance and ID - bank account', () => {
     cy.get('button.delete-finance-button').contains('Delete application').click()
     cy.get('button').contains('Confirm delete application').click()
   })
+
+  it('Update bank account application', () => {
+    cy.task('stubJohnSmithUpdateFinanceAndID')
+    cy.signIn()
+
+    cy.visit('/finance-and-id/?prisonerNumber=A8731DY')
+
+    cy.get('.govuk-button').contains('Update application').click()
+
+    cy.get('select#status').select('Account opened')
+    cy.get('input#accountOpenedDay').type('29')
+    cy.get('input#accountOpenedMonth').type('04')
+    cy.get('input#accountOpenedYear').type('2024')
+    cy.get('input#added-to-items-yes').click()
+    cy.get('input#day').type('30')
+    cy.get('input#month').type('04')
+    cy.get('input#year').type('2024')
+    cy.get('.govuk-button').contains('Submit').click()
+
+    cy.get('h2').eq(0).should('contain.text', 'Finance and ID')
+    cy.get('h2').eq(1).should('contain.text', 'Check your answers before adding a bank account application')
+    cy.get('.govuk-summary-list__row > dt').eq(0).should('contain.text', 'Status')
+    cy.get('.govuk-summary-list__row > dd').eq(0).should('contain.text', 'Account opened')
+    cy.get('.govuk-summary-list__row > dd').eq(1).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(1).should('contain.text', 'Date account opened')
+    cy.get('.govuk-summary-list__row > dd').eq(2).should('contain.text', '29 April 2024')
+    cy.get('.govuk-summary-list__row > dd').eq(3).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(2).should('contain.text', 'Added to personal items')
+    cy.get('.govuk-summary-list__row > dd').eq(4).should('contain.text', '30 April 2024')
+    cy.get('.govuk-summary-list__row > dd').eq(5).should('contain.text', 'Change')
+    cy.get('.govuk-button').contains('Confirm').click()
+
+    cy.url().should('include', '/finance-and-id/?prisonerNumber=A8731DY#finance')
+  })
 })

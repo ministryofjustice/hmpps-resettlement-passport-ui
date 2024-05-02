@@ -21,6 +21,7 @@ import johnSmithGetFinanceAndID from './scenarios/john-smith/john-smith-get-fina
 import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-prisoner-details'
 import johnSmithDeleteFinanceAndID from './scenarios/john-smith/john-smith-delete-finance-and-ID'
 import johnSmithGetFinanceAndIDUpdated from './scenarios/john-smith/john-smith-get-finance-and-ID-updated'
+import johnSmithUpdateFinanceAndID from './scenarios/john-smith/john-smith-update-finance-and-ID'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -301,6 +302,13 @@ const stubJohnSmithDeleteFinanceAndID = () =>
     ...johnSmithGetFinanceAndID(),
     ...johnSmithDeleteFinanceAndID(),
   ])
+const stubJohnSmithUpdateFinanceAndID = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithGetPrisonerDetails(),
+    ...johnSmithGetFinanceAndID(),
+    ...johnSmithUpdateFinanceAndID(),
+  ])
 
 export default {
   stubGetPrisoners,
@@ -318,4 +326,5 @@ export default {
   stubJohnSmithGetFinanceAndID,
   stubJohnSmithDeleteFinanceAndID,
   stubJohnSmithGetFinanceAndIDUpdated,
+  stubJohnSmithUpdateFinanceAndID,
 }
