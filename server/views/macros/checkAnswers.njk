@@ -32,7 +32,7 @@
             {% endif %}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}&edit=true&type={{ assessmentType }}">Change</a>
+            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}">Change</a>
           </dd>
         </div>
       {% endif %}
@@ -53,7 +53,7 @@
               </strong>
             </dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}&edit=true">Change</a>
+              <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}">Change</a>
             </dd>
           </div>
         {% endif %}
@@ -62,7 +62,7 @@
             <dt class="govuk-summary-list__key">Support needs summary</dt>
             <dd class="govuk-summary-list__value">{{ questionAnswer.answer.displayText | formatSummaryNotes | safe }}</dd>
             <dd class="govuk-summary-list__actions">
-              <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}?prisonerNumber={{ prisonerNumber }}&edit=true">Change</a>
+              <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}">Change</a>
             </dd>
           </div>
         {% endif %}

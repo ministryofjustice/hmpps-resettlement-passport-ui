@@ -824,7 +824,11 @@ const submitAccommodationAssessment = () =>
                 questionTitle: '',
                 questionType: 'RADIO',
                 pageId: 'ASSESSMENT_SUMMARY',
-                answer: { answer: 'SUPPORT_REQUIRED', displayText: 'Support required', '@class': 'StringAnswer' },
+                answer: {
+                  answer: 'SUPPORT_NOT_REQUIRED',
+                  displayText: 'Support not required',
+                  '@class': 'StringAnswer',
+                },
               },
               {
                 question: 'CASE_NOTE_SUMMARY',
@@ -832,8 +836,8 @@ const submitAccommodationAssessment = () =>
                 questionType: 'LONG_TEXT',
                 pageId: 'ASSESSMENT_SUMMARY',
                 answer: {
-                  answer: 'Needs somewhere to stay',
-                  displayText: 'Needs somewhere to stay',
+                  answer: 'No support required',
+                  displayText: 'No support required',
                   '@class': 'StringAnswer',
                 },
               },

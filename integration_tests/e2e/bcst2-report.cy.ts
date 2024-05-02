@@ -99,7 +99,7 @@ context('BCST2 Report', () => {
     cy.get('.govuk-panel__title').should('contain.text', 'BCST2 report completed')
   })
 
-  it.skip('BCST2 Back button and divergent paths scenario', () => {
+  it('BCST2 Back button and divergent paths scenario', () => {
     cy.task('stubJohnSmithBCST2Accommodation')
     cy.signIn()
 
@@ -197,5 +197,8 @@ context('BCST2 Report', () => {
     clickContinue()
 
     assertShouldNotHaveAddressAnswer()
+    clickConfirm()
+
+    cy.url().should('contain', '/assessment-task-list?prisonerNumber=A8731DY')
   })
 })
