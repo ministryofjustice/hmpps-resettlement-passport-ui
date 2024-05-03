@@ -45,11 +45,13 @@ if (selectOptionsIdEl) {
 }
 
 window.addEventListener('load', function () {
-  if (selectOptionsIdEl.value === 'Rejected') {
-    acceptedApplicationEl.hidden = true
-    rejectedApplicationEl.hidden = false
-  } else if (selectOptionsIdEl.value === 'Accepted') {
-    acceptedApplicationEl.hidden = false
-    rejectedApplicationEl.hidden = true
+  if (selectOptionsIdEl) {
+    if (selectOptionsIdEl.value === 'Rejected') {
+      acceptedApplicationEl.hidden = true
+      rejectedApplicationEl.hidden = false
+    } else if (selectOptionsIdEl.value === 'Accepted') {
+      acceptedApplicationEl.hidden = false
+      rejectedApplicationEl.hidden = true
+    }
   }
 })
