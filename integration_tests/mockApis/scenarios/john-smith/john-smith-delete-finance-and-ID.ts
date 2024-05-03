@@ -16,5 +16,20 @@ const deleteBankAccount = () => {
   })
 }
 
-const johnSmithDeleteFinanceAndID = () => [deleteBankAccount()]
-export default johnSmithDeleteFinanceAndID
+const deleteId = () => {
+  return stubFor({
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/idapplication/1',
+      method: 'DELETE',
+    },
+    response: {
+      status: 200,
+      headers: submitHeaders,
+    },
+    scenarioName: 'john-smith-finance-delete-Id',
+    requiredScenarioState: 'Started',
+  })
+}
+
+export const johnSmithDeleteFinanceAndID = () => [deleteBankAccount()]
+export const johnSmithDeleteID = () => [deleteId()]

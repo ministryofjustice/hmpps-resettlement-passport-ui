@@ -118,4 +118,151 @@ context('Finance and ID - bank account', () => {
 
     cy.url().should('include', '/finance-and-id/?prisonerNumber=A8731DY#finance')
   })
+
+  const flowForAddDrivingLicence = () => {
+    cy.get('a').contains('Add an ID application').click()
+
+    cy.get('select#idType').select('Driving licence')
+    cy.get('input#applicationSubmittedDay').type('01')
+    cy.get('input#applicationSubmittedMonth').type('5')
+    cy.get('input#applicationSubmittedYear').type('2024')
+    cy.get('.govuk-button').contains('Submit').click()
+
+    cy.get('h2').eq(0).should('contain.text', 'Finance and ID')
+    cy.get('h2').eq(1).should('contain.text', 'Apply for a Driving licence')
+    cy.get('select#driversLicenceType').select('Renewal')
+    cy.get('select#driversLicenceApplicationMadeAt').select('Online')
+    cy.get('input#costOfApplication').type('100')
+    cy.get('.govuk-button').contains('Submit').click()
+
+    cy.get('h2').eq(0).should('contain.text', 'Finance and ID')
+    cy.get('h2').eq(1).should('contain.text', 'Check your answers before applying for a')
+    cy.get('h2').eq(1).should('contain.text', 'Driving licence')
+    cy.get('.govuk-summary-list__row > dt').eq(0).should('contain.text', 'Type')
+    cy.get('.govuk-summary-list__row > dd').eq(0).should('contain.text', 'Driving licence')
+    cy.get('.govuk-summary-list__row > dd').eq(1).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(1).should('contain.text', 'Application submitted')
+    cy.get('.govuk-summary-list__row > dd').eq(2).should('contain.text', '1 May 2024')
+    cy.get('.govuk-summary-list__row > dd').eq(3).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(2).should('contain.text', 'Driving licence type')
+    cy.get('.govuk-summary-list__row > dd').eq(4).should('contain.text', 'Renewal')
+    cy.get('.govuk-summary-list__row > dd').eq(5).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(3).should('contain.text', 'Driving licence application location')
+    cy.get('.govuk-summary-list__row > dd').eq(6).should('contain.text', 'Online')
+    cy.get('.govuk-summary-list__row > dd').eq(7).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(4).should('contain.text', 'Cost of application')
+    cy.get('.govuk-summary-list__row > dd').eq(8).should('contain.text', '£100')
+    cy.get('.govuk-summary-list__row > dd').eq(9).should('contain.text', 'Change')
+    cy.get('.govuk-button').contains('Confirm').click()
+
+    cy.url().should('include', '/finance-and-id/?prisonerNumber=A8731DY#id')
+  }
+
+  it('Add ID application', () => {
+    cy.task('stubJohnSmithAddID')
+    cy.signIn()
+
+    cy.visit('/finance-and-id/?prisonerNumber=A8731DY')
+
+    cy.get('section#id').find('p').should('contain.text', 'No current applications')
+    flowForAddDrivingLicence()
+  })
+
+  it('Add 2nd ID application', () => {
+    cy.task('stubJohnSmithAdd2ndID')
+    cy.signIn()
+
+    cy.visit('/finance-and-id/?prisonerNumber=A8731DY')
+
+    cy.get('section#id').find('p').should('not.exist')
+    flowForAddDrivingLicence()
+
+    cy.get('a').contains('Add an ID application').click()
+
+    cy.get('select#idType').select('Replacement marriage certificate')
+    cy.get('input#applicationSubmittedDay').type('02')
+    cy.get('input#applicationSubmittedMonth').type('05')
+    cy.get('input#applicationSubmittedYear').type('2024')
+    cy.get('.govuk-button').contains('Submit').click()
+
+    cy.get('h2').eq(0).should('contain.text', 'Finance and ID')
+    cy.get('h2').eq(1).should('contain.text', 'Apply for a Marriage certificate')
+    cy.get('input#haveGroNo').click()
+    cy.get('input#isUkNationalBornOverseasYes').click()
+    cy.get('select#countryBornIn').select('Malawi')
+    cy.get('input#isPriorityApplicationNo').click()
+    cy.get('input#costOfApplication').type('10.50')
+    cy.get('.govuk-button').contains('Submit').click()
+
+    cy.get('h2').eq(0).should('contain.text', 'Finance and ID')
+    cy.get('h2').eq(1).should('contain.text', 'Check your answers before applying for a')
+    cy.get('h2').eq(1).should('contain.text', 'Marriage certificate')
+    cy.get('.govuk-summary-list__row > dt').eq(0).should('contain.text', 'Type')
+    cy.get('.govuk-summary-list__row > dd').eq(0).should('contain.text', 'Marriage certificate')
+    cy.get('.govuk-summary-list__row > dd').eq(1).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(1).should('contain.text', 'Application submitted')
+    cy.get('.govuk-summary-list__row > dd').eq(2).should('contain.text', '2 May 2024')
+    cy.get('.govuk-summary-list__row > dd').eq(3).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(2).should('contain.text', 'Has the GRO number?')
+    cy.get('.govuk-summary-list__row > dd').eq(4).should('contain.text', 'No')
+    cy.get('.govuk-summary-list__row > dd').eq(5).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(3).should('contain.text', 'Was a UK national born overseas?')
+    cy.get('.govuk-summary-list__row > dd').eq(6).should('contain.text', 'Yes')
+    cy.get('.govuk-summary-list__row > dd').eq(6).should('contain.text', '(Malawi)')
+    cy.get('.govuk-summary-list__row > dd').eq(7).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(4).should('contain.text', 'Priority application')
+    cy.get('.govuk-summary-list__row > dd').eq(8).should('contain.text', 'No')
+    cy.get('.govuk-summary-list__row > dd').eq(9).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(5).should('contain.text', 'Cost of application')
+    cy.get('.govuk-summary-list__row > dd').eq(10).should('contain.text', '£10.50')
+    cy.get('.govuk-summary-list__row > dd').eq(11).should('contain.text', 'Change')
+    cy.get('.govuk-button').contains('Confirm').click()
+
+    cy.url().should('include', '/finance-and-id/?prisonerNumber=A8731DY#id')
+  })
+
+  it('Delete ID application', () => {
+    cy.task('stubJohnSmithDeleteID')
+    cy.signIn()
+
+    cy.visit('/finance-and-id/?prisonerNumber=A8731DY')
+
+    cy.get('button.delete-id-button').contains('Delete application').click()
+    cy.get('section#id').find('button').not(':hidden').contains('Confirm delete application').click()
+  })
+
+  it('Update ID application', () => {
+    cy.task('stubJohnSmithUpdateID')
+    cy.signIn()
+
+    cy.visit('/finance-and-id/?prisonerNumber=A8731DY')
+
+    cy.get('section#id').find('.govuk-button').not(':hidden').contains('Update application').click()
+
+    cy.get('select#updatedStatus').select('Accepted')
+    cy.get('input#dateIdReceivedDay').type('02')
+    cy.get('input#dateIdReceivedMonth').type('05')
+    cy.get('input#dateIdReceivedYear').type('2024')
+    cy.get('input#isAddedToPersonalItemsYes').click()
+    cy.get('input#addedToPersonalItemsDateDay').type('02')
+    cy.get('input#addedToPersonalItemsDateMonth').type('05')
+    cy.get('input#addedToPersonalItemsDateYear').type('2024')
+    cy.get('.govuk-button').contains('Submit').click()
+
+    cy.get('h2').eq(0).should('contain.text', 'Finance and ID')
+    cy.get('h2').eq(1).should('contain.text', 'Check your answers before completing application for a')
+    cy.get('h2').eq(1).should('contain.text', 'Birth certificate')
+    cy.get('.govuk-summary-list__row > dt').eq(0).should('contain.text', 'Application status')
+    cy.get('.govuk-summary-list__row > dd').eq(0).should('contain.text', 'Accepted')
+    cy.get('.govuk-summary-list__row > dd').eq(1).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(1).should('contain.text', 'Date ID received')
+    cy.get('.govuk-summary-list__row > dd').eq(2).should('contain.text', '2 May 2024')
+    cy.get('.govuk-summary-list__row > dd').eq(3).should('contain.text', 'Change')
+    cy.get('.govuk-summary-list__row > dt').eq(2).should('contain.text', 'Added to personal items')
+    cy.get('.govuk-summary-list__row > dd').eq(4).should('contain.text', '2 May 2024')
+    cy.get('.govuk-summary-list__row > dd').eq(5).should('contain.text', 'Change')
+    cy.get('.govuk-button').contains('Confirm').click()
+
+    cy.url().should('include', '/finance-and-id/?prisonerNumber=A8731DY#id')
+  })
 })

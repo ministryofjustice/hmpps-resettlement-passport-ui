@@ -16,12 +16,12 @@ import {
 import { johnSmithDefaults } from './scenarios/john-smith/john-smith'
 import { johnSmithBCST2Health, johnSmithBCSTAccommodation } from './scenarios/john-smith/john-smith-bcst2'
 import johnSmithBcst2Edit from './scenarios/john-smith/john-smith-bcst2-edit'
-import johnSmithPostFinanceAndID from './scenarios/john-smith/john-smith-post-finance-and-ID'
-import johnSmithGetFinanceAndID from './scenarios/john-smith/john-smith-get-finance-and-ID'
+import { johnSmithPostFinanceAndID, johnSmithPostID } from './scenarios/john-smith/john-smith-post-finance-and-ID'
+import { johnSmithGetFinance, johnSmithGetFinanceAndID } from './scenarios/john-smith/john-smith-get-finance-and-ID'
 import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-prisoner-details'
-import johnSmithDeleteFinanceAndID from './scenarios/john-smith/john-smith-delete-finance-and-ID'
+import { johnSmithDeleteFinanceAndID, johnSmithDeleteID } from './scenarios/john-smith/john-smith-delete-finance-and-ID'
 import johnSmithGetFinanceAndIDUpdated from './scenarios/john-smith/john-smith-get-finance-and-ID-updated'
-import johnSmithUpdateFinanceAndID from './scenarios/john-smith/john-smith-update-finance-and-ID'
+import { johnSmithPatchFinanceAndID, johnSmithPatchID } from './scenarios/john-smith/john-smith-patch-finance-and-ID'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -307,7 +307,35 @@ const stubJohnSmithUpdateFinanceAndID = () =>
     ...johnSmithDefaults(),
     ...johnSmithGetPrisonerDetails(),
     ...johnSmithGetFinanceAndID(),
-    ...johnSmithUpdateFinanceAndID(),
+    ...johnSmithPatchFinanceAndID(),
+  ])
+const stubJohnSmithAddID = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithGetPrisonerDetails(),
+    ...johnSmithGetFinance(),
+    ...johnSmithPostID(),
+  ])
+const stubJohnSmithAdd2ndID = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithGetPrisonerDetails(),
+    ...johnSmithGetFinanceAndID(),
+    ...johnSmithPostID(),
+  ])
+const stubJohnSmithDeleteID = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithGetPrisonerDetails(),
+    ...johnSmithGetFinanceAndID(),
+    ...johnSmithDeleteID(),
+  ])
+const stubJohnSmithUpdateID = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithGetPrisonerDetails(),
+    ...johnSmithGetFinanceAndID(),
+    ...johnSmithPatchID(),
   ])
 
 export default {
@@ -327,4 +355,8 @@ export default {
   stubJohnSmithDeleteFinanceAndID,
   stubJohnSmithGetFinanceAndIDUpdated,
   stubJohnSmithUpdateFinanceAndID,
+  stubJohnSmithAddID,
+  stubJohnSmithDeleteID,
+  stubJohnSmithUpdateID,
+  stubJohnSmithAdd2ndID,
 }
