@@ -23,7 +23,7 @@ services:
     networks:
       - hmpps_int
     ports:
-      - "3001:3001"
+      - "3009:3001"
     command:
       - "gotenberg"
       - "--api-port=3001"

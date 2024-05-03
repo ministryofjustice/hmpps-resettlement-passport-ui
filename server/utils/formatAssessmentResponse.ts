@@ -1,10 +1,16 @@
-import { AnswerType, AssessmentPage, QuestionsAndAnswers, SubmittedInput } from '../data/model/BCST2Form'
+import {
+  AnswerType,
+  AssessmentPage,
+  QuestionsAndAnswers,
+  SubmittedInput,
+  SubmittedQuestionAndAnswer,
+} from '../data/model/BCST2Form'
 
 type RequestBody = {
   [key: string]: string
 }
 
-const formatAssessmentResponse = (pageData: AssessmentPage, reqBody: RequestBody) => {
+export const formatAssessmentResponse = (pageData: AssessmentPage, reqBody: RequestBody) => {
   function getAddressValuesFromBody() {
     return [
       {
@@ -107,4 +113,18 @@ export function getDisplayTextFromQandA(questionAndAnswer: QuestionsAndAnswers) 
   return displayText
 }
 
-export default formatAssessmentResponse
+export function toSubmittedQuestionAndAnswer(questionsAndAnswers: QuestionsAndAnswers): SubmittedQuestionAndAnswer {
+  return {
+    question: questionsAndAnswers.question.id,
+    questionTitle: questionsAndAnswers.question.title,
+    pageId: questionsAndAnswers.originalPageId,
+    questionType: questionsAndAnswers.question.type,
+    answer: questionsAndAnswers.answer
+      ? {
+          answer: questionsAndAnswers.answer.answer,
+          displayText: getDisplayTextFromQandA(questionsAndAnswers),
+          '@class': questionsAndAnswers.answer['@class'],
+        }
+      : null,
+  }
+}
