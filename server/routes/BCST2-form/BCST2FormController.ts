@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import BCST2FormView from './BCST2FormView'
-import formatAssessmentResponse, { getDisplayTextFromQandA } from '../../utils/formatAssessmentResponse'
+import { formatAssessmentResponse } from '../../utils/formatAssessmentResponse'
 import {
   AssessmentPage,
   SubmittedInput,
@@ -11,45 +11,6 @@ import {
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 import { getEnumValue, parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'
-
-export function mergeQuestionsAndAnswers(
-  assessmentPage: AssessmentPage,
-  existingAssessment: SubmittedInput,
-  edit: boolean,
-): SubmittedQuestionAndAnswer[] {
-  // If this is an edit and CHECK_ANSWERS then we need to use only the cache to define the questions as these may be different now
-  if (!(assessmentPage.questionsAndAnswers.length !== 0 && !(edit && assessmentPage.id === 'CHECK_ANSWERS'))) {
-    return existingAssessment.questionsAndAnswers
-  }
-
-  // Merge together answers from API and cache
-  const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = [...existingAssessment.questionsAndAnswers]
-  assessmentPage.questionsAndAnswers.forEach(qAndA => {
-    const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
-      it => it?.question === qAndA.question.id,
-    )
-
-    if (questionAndAnswerFromCache) {
-      // already there
-    } else {
-      mergedQuestionsAndAnswers.push({
-        question: qAndA.question.id,
-        questionTitle: qAndA.question.title,
-        pageId: qAndA.originalPageId,
-        questionType: qAndA.question.type,
-        answer: qAndA.answer
-          ? {
-              answer: qAndA.answer.answer,
-              displayText: getDisplayTextFromQandA(qAndA),
-              '@class': qAndA.answer['@class'],
-            }
-          : null,
-      })
-    }
-  })
-
-  return mergedQuestionsAndAnswers
-}
 
 export default class BCST2FormController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -179,7 +140,7 @@ export default class BCST2FormController {
       }
 
       // Get the assessment page from the API and set in the cache
-      const assessmentPage = await this.rpService.getAssessmentPage(
+      const assessmentPage: AssessmentPage = await this.rpService.getAssessmentPage(
         token,
         req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
@@ -217,17 +178,19 @@ export default class BCST2FormController {
         )
       }
 
-      let mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = mergeQuestionsAndAnswers(
-        assessmentPage,
-        existingAssessment,
-        edit,
-      )
+      let mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[]
 
-      // If we are about to render the check answers page - make sure we only show answered questions
       if (currentPageId === 'CHECK_ANSWERS') {
-        mergedQuestionsAndAnswers = await this.assessmentStateService.takeOnlyCurrentAnswers(
+        // If we are about to render the check answers page - make sure we only show answered questions
+        mergedQuestionsAndAnswers = await this.assessmentStateService.buildCheckYourAnswers(
           stateKey,
-          mergedQuestionsAndAnswers,
+          assessmentPage,
+          existingAssessment,
+        )
+      } else {
+        mergedQuestionsAndAnswers = this.assessmentStateService.mergeQuestionsAndAnswers(
+          assessmentPage,
+          existingAssessment,
         )
       }
 

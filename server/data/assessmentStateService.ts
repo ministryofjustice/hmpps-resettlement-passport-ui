@@ -1,7 +1,7 @@
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
 import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './model/BCST2Form'
-import { getDisplayTextFromQandA } from '../utils/formatAssessmentResponse'
+import { getDisplayTextFromQandA, toSubmittedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
 import logger from '../../logger'
 
 export interface StateKey {
@@ -181,12 +181,41 @@ export class AssessmentStateService {
     await this.store.setAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway, questionIds)
   }
 
-  async takeOnlyCurrentAnswers(stateKey: StateKey, submission: SubmittedQuestionAndAnswer[]) {
+  mergeQuestionsAndAnswers(
+    assessmentPage: AssessmentPage,
+    existingAssessment: SubmittedInput,
+  ): SubmittedQuestionAndAnswer[] {
+    // Merge together answers from API and cache
+    const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = [...existingAssessment.questionsAndAnswers]
+    assessmentPage.questionsAndAnswers.forEach(qAndA => {
+      const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
+        it => it?.question === qAndA.question.id,
+      )
+      // Only add if not present in cache
+      if (!questionAndAnswerFromCache) {
+        mergedQuestionsAndAnswers.push(toSubmittedQuestionAndAnswer(qAndA))
+      }
+    })
+
+    return mergedQuestionsAndAnswers
+  }
+
+  async buildCheckYourAnswers(
+    stateKey: StateKey,
+    apiAssessment: AssessmentPage,
+    cacheInput: SubmittedInput,
+  ): Promise<SubmittedQuestionAndAnswer[]> {
     const answeredQuestions = await this.store.getAnsweredQuestions(
       stateKey.sessionId,
       stateKey.prisonerNumber,
       stateKey.pathway,
     )
+    if (answeredQuestions.length === 0) {
+      // We're just checking previously submitted answers
+      return apiAssessment.questionsAndAnswers.map(q => toSubmittedQuestionAndAnswer(q))
+    }
+
+    const submission = this.mergeQuestionsAndAnswers(apiAssessment, cacheInput)
 
     function find(id: string) {
       const questionAndAnswer = submission.find(qAndA => qAndA.question === id)
