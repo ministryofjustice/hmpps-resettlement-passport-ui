@@ -1,7 +1,7 @@
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
 import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './model/BCST2Form'
-import { getDisplayTextFromQandA, toSubmittedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
+import { toSubmittedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
 import logger from '../../logger'
 
 export interface StateKey {
@@ -160,24 +160,10 @@ export class AssessmentStateService {
       return
     }
     const questionsAndAnswers = {
-      questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => ({
-        question: qAndA.question.id,
-        questionTitle: qAndA.question.title,
-        pageId: qAndA.originalPageId,
-        questionType: qAndA.question.type,
-        answer: qAndA.answer
-          ? {
-              answer: qAndA.answer.answer,
-              displayText: getDisplayTextFromQandA(qAndA),
-              '@class': qAndA.answer['@class'],
-            }
-          : null,
-      })),
+      questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => toSubmittedQuestionAndAnswer(qAndA)),
     }
     await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, questionsAndAnswers)
-    const questionIds = questionsAndAnswers.questionsAndAnswers
-      .map(qAndA => qAndA.question)
-      .filter(q => !q.startsWith('SUPPORT_NEEDS'))
+    const questionIds = questionsAndAnswers.questionsAndAnswers.map(qAndA => qAndA.question)
     await this.store.setAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway, questionIds)
   }
 
