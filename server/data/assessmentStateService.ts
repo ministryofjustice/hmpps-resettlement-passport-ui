@@ -1,7 +1,7 @@
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
 import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './model/BCST2Form'
-import { getDisplayTextFromQandA, toSubmittedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
+import { toSubmittedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
 import logger from '../../logger'
 
 export interface StateKey {
