@@ -56,7 +56,7 @@
           >
 
             {% if assessmentPage.id === "CHECK_ANSWERS" %}
-              {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber, assessmentType) }}
+              {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber, assessmentType, submitted) }}
             {% else %}
 
               {% if assessmentPage.id === "ASSESSMENT_SUMMARY" or assessmentPage.id === "PRERELEASE_ASSESSMENT_SUMMARY" %}

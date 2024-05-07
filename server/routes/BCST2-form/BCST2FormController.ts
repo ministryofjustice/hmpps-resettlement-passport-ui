@@ -44,9 +44,10 @@ export default class BCST2FormController {
         assessmentType,
       )
       const { nextPageId } = nextPage
+      const submitted = nextPageId === 'CHECK_ANSWERS' ? '&submitted=true' : ''
 
       res.redirect(
-        `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
+        `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}${submitted}`,
       )
     } catch (err) {
       next(err)

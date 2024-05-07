@@ -378,6 +378,7 @@ describe('assessmentStateService', () => {
         expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway, [
           'HELP_TO_MANAGE_ANGER',
           'ISSUES_WITH_GAMBLING',
+          'SUPPORT_NEEDS_PRERELEASE',
         ])
       })
     })

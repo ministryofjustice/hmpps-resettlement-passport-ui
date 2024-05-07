@@ -1,4 +1,4 @@
-{% macro checkAnswers(allQuestionsAndAnswers, pathway, prisonerNumber, assessmentType) %}
+{% macro checkAnswers(allQuestionsAndAnswers, pathway, prisonerNumber, assessmentType, submitted) %}
   {% set enumValue = pathway | getEnumValue %}
 
   {% set containsAssessmentSummary = false %}
@@ -32,7 +32,7 @@
             {% endif %}
           </dd>
           <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}">Change</a>
+            <a class="govuk-link govuk-link--no-visited-state" href="/BCST2/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}">Change</a>
           </dd>
         </div>
       {% endif %}
