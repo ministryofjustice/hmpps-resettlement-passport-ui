@@ -17,6 +17,7 @@ import { getEnumByURL, getEnumValue, getFeatureFlagBoolean } from '../utils/util
 import logger from '../../logger'
 import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
+import assessmentSkipRouter from './assessment-skip'
 import bcst2FormRouter from './BCST2-form'
 import assessmentCompleteRouter from './assessment-complete'
 import printRouter from './print'
@@ -40,6 +41,7 @@ export default function routes(services: Services): Router {
   assessmentTaskListRouter(router, services)
   bcst2FormRouter(router, services)
   assessmentCompleteRouter(router, services)
+  assessmentSkipRouter(router)
   printRouter(router, services)
 
   /* ************************************

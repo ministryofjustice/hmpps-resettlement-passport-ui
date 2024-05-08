@@ -244,7 +244,12 @@ export default class RpService {
     return response
   }
 
-  async getAssessmentSummary(token: string, sessionId: string, prisonerId: string, type: AssessmentType) {
+  async getAssessmentSummary(
+    token: string,
+    sessionId: string,
+    prisonerId: string,
+    type: AssessmentType,
+  ): Promise<AssessmentsSummary> {
     await this.rpClient.setToken(token)
     let assessmentsSummary: AssessmentsSummary
 
