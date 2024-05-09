@@ -10,7 +10,7 @@
         <div class="app-summary-card__body">
           {% if watchlistViewEnabled == true %}
             <div class="govuk-form-group govuk-!-margin-0">
-              <form action="/prisoner-overview" method="GET" novalidate>
+              <form action="/prisoner-overview/" method="GET" novalidate>
                 <button class="govuk-button govuk-button--primary" type="submit">Add to your cases
                 </button>
                 <input hidden name="prisonerNumber" value="{{prisonerNumber}}"/>
