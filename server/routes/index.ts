@@ -61,7 +61,14 @@ export default function routes(services: Services): Router {
   use('/prisoner-overview', async (req, res, next) => {
     try {
       const { prisonerData } = req
-      const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
+      const {
+        page = 0,
+        size = 10,
+        sort = 'occurenceDateTime%2CDESC',
+        days = 0,
+        selectedPathway = 'All',
+        addToYourCases,
+      } = req.query
       const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
       let licenceConditions: { error?: boolean } = {}
@@ -71,6 +78,18 @@ export default function routes(services: Services): Router {
       let caseNotes: { error?: boolean } = {}
       let staffContacts: { error?: boolean } = {}
       let appointments: Appointments
+      if (addToYourCases) {
+        try {
+          await rpClient.post(
+            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/watch`,
+            null,
+          )
+        } catch (err) {
+          logger.warn(
+            `Session: ${req.sessionID} Cannot add to your cases ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+          )
+        }
+      }
       try {
         licenceConditions = await rpClient.get(
           `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
