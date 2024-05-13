@@ -32,7 +32,7 @@
   
     {{ govukPanel({
         titleText: "First-time ID code",
-        html: "<strong>" + otpData.otp + "</strong><br><br>This code is valid until <br> " + otpData.expiryDate | formatDate
+        html: "<strong id='otp-code'>" + otpData.otp + "</strong><br><br>This code is valid until <br> " + otpData.expiryDate | formatDate
       }) }}
       
     {% endif %}
