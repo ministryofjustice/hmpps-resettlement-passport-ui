@@ -8,5 +8,5 @@ export function isInResettlementWindow(releaseDate: string, now = new Date()): b
   if (!releaseDate) {
     return false
   }
-  return isInResettlementWindowDays(differenceInCalendarDays(now, releaseDate))
+  return isInResettlementWindowDays(differenceInCalendarDays(releaseDate, now))
 }
