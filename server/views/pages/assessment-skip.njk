@@ -59,105 +59,109 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-width-container">
-    <h1 class="govuk-heading-l govuk-!-margin-top-6">A BCST2 has not been completed in Prepare someone for release</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <h1 class="govuk-heading-l govuk-!-margin-top-6">
+        A BCST2 has not been completed in Prepare someone for release
+      </h1>
 
-    <p>
-      {{ prisonerData.personalDetails.firstName | toTitleCase }}
-      {{ prisonerData.personalDetails.lastName | toTitleCase }}
-      is now in their pre-release window.
-    </p>
-    <p>
-      You can choose to complete a pre-release report only, rather than completing both reports in Prepare someone for
-      release.
-    </p>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        <form action="/assessment-skip" class="govuk-form" method="post">
-          <div class="govuk-form-group {{ 'govuk-form-group--error' if validationErrors }}">
-            <label class="govuk-label govuk-label--m" for="whySkipChoice">
-              Why has a BCST2 not been completed in Prepare someone for release?
-            </label>
-            <div id="whySkipChoice" class="govuk-radios" data-module="govuk-radios">
-              {% if validationErrors.whySkipChoice  %}
-                <p class="govuk-error-message">
-                  <span class="govuk-visually-hidden">Error:</span>
-                  {{ validationErrors.whySkipChoice  }}
-                </p>
-              {% endif %}
-              <div class="govuk-radios__item">
-                <input
-                  class="govuk-radios__input"
-                  id="completedInOASys"
-                  name="whySkipChoice"
-                  type="radio"
-                  value="completedInOASys"
-                />
-                <label class="govuk-label govuk-radios__label" for="completedInOASys">
-                  The BCST2 was completed in OASys
-                </label>
-              </div>
-              <div class="govuk-radios__item">
-                <input
-                  class="govuk-radios__input"
-                  id="completedInAnotherPrison"
-                  name="whySkipChoice"
-                  type="radio"
-                  value="completedInAnotherPrison"
-                />
-                <label class="govuk-label govuk-radios__label" for="completedInAnotherPrison">
-                  The BCST2 was completed in another prison
-                </label>
-              </div>
-              <div class="govuk-radios__item">
-                <input
-                  class="govuk-radios__input"
-                  id="earlyRelease"
-                  name="whySkipChoice"
-                  type="radio"
-                  value="earlyRelease"
-                />
-                <label class="govuk-label govuk-radios__label" for="earlyRelease">
-                  The prisoner is on early release
-                </label>
-              </div>
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="transfer" name="whySkipChoice" type="radio" value="transfer" />
-                <label class="govuk-label govuk-radios__label" for="transfer">
-                  The prisoner has been transferred and will be released shortly
-                </label>
-              </div>
-              <div class="govuk-radios__item">
-                <input class="govuk-radios__input" id="other" name="whySkipChoice" type="radio" value="other" />
-                <label class="govuk-label govuk-radios__label" for="other"> Other </label>
+      <p>
+        {{ prisonerData.personalDetails.firstName | toTitleCase }}
+        {{ prisonerData.personalDetails.lastName | toTitleCase }}
+        is now in their pre-release window.
+      </p>
+      <p>
+        You can choose to complete a pre-release report only, rather than completing both reports in Prepare someone for
+        release.
+      </p>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <form action="/assessment-skip" class="govuk-form" method="post">
+            <div class="govuk-form-group {{ 'govuk-form-group--error' if validationErrors }}">
+              <label class="govuk-label govuk-label--m" for="whySkipChoice">
+                Why has a BCST2 not been completed in Prepare someone for release?
+              </label>
+              <div id="whySkipChoice" class="govuk-radios" data-module="govuk-radios">
+                {% if validationErrors.whySkipChoice %}
+                  <p class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span>
+                    {{ validationErrors.whySkipChoice }}
+                  </p>
+                {% endif %}
+                <div class="govuk-radios__item">
+                  <input
+                    class="govuk-radios__input"
+                    id="completedInOASys"
+                    name="whySkipChoice"
+                    type="radio"
+                    value="completedInOASys"
+                  />
+                  <label class="govuk-label govuk-radios__label" for="completedInOASys">
+                    The BCST2 was completed in OASys
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input
+                    class="govuk-radios__input"
+                    id="completedInAnotherPrison"
+                    name="whySkipChoice"
+                    type="radio"
+                    value="completedInAnotherPrison"
+                  />
+                  <label class="govuk-label govuk-radios__label" for="completedInAnotherPrison">
+                    The BCST2 was completed in another prison
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input
+                    class="govuk-radios__input"
+                    id="earlyRelease"
+                    name="whySkipChoice"
+                    type="radio"
+                    value="earlyRelease"
+                  />
+                  <label class="govuk-label govuk-radios__label" for="earlyRelease">
+                    The prisoner is on early release
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="transfer" name="whySkipChoice" type="radio" value="transfer" />
+                  <label class="govuk-label govuk-radios__label" for="transfer">
+                    The prisoner has been transferred and will be released shortly
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input class="govuk-radios__input" id="other" name="whySkipChoice" type="radio" value="other" />
+                  <label class="govuk-label govuk-radios__label" for="other"> Other </label>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="govuk-form-group govuk-!-padding-top-3">
-            <label class="govuk-label govuk-label--m" for="supportingInfo">
-              Add any additional supporting information (optional)
-            </label>
-            <textarea
-              class="govuk-textarea"
-              id="supportingInfo"
-              name="supportingInfo"
-              rows="5"
-              aria-describedby="supportingInfo"
-            ></textarea>
-          </div>
+            <div class="govuk-form-group govuk-!-padding-top-3">
+              <label class="govuk-label govuk-label--m" for="supportingInfo">
+                Add any additional supporting information (optional)
+              </label>
+              <textarea
+                class="govuk-textarea"
+                id="supportingInfo"
+                name="supportingInfo"
+                rows="5"
+                aria-describedby="supportingInfo"
+              ></textarea>
+            </div>
 
-          <div class="govuk-button-group">
-            <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
-            <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" />
-            <button type="submit" class="govuk-button" data-module="govuk-button">Start pre-release report</button>
-          </div>
-        </form>
+            <div class="govuk-button-group">
+              <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+              <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" />
+              <button type="submit" class="govuk-button" data-module="govuk-button">Start pre-release report</button>
+            </div>
+          </form>
+        </div>
       </div>
+      <a
+        href="/assessment-task-list?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&type=BCST2&force=true"
+      >
+        Complete BCST2
+      </a>
     </div>
-    <a
-      href="/assessment-task-list?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&type=BCST2&force=true"
-    >
-      Complete BCST2
-    </a>
   </div>
 {% endblock %}
