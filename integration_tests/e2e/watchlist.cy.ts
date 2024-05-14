@@ -19,6 +19,6 @@ context('Watchlist', () => {
 
     cy.visit('/prisoner-overview/?prisonerNumber=A8731DY')
     cy.get('a#add-to-your-cases-btn').click()
-    cy.url().should('include', '/prisoner-overview/?prisonerNumber=A8731DY')
+    cy.url().should('include', '/addToYourCases/?prisonerNumber=A8731DY')
   })
 })
