@@ -60,6 +60,8 @@ const johnSmithPrisonerDetails = () =>
         ],
         assessmentRequired: true,
         resettlementReviewAvailable: false,
+        immediateNeedsSubmitted: false,
+        preReleaseSubmitted: false,
       },
     },
   })

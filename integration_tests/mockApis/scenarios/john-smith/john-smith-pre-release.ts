@@ -36,6 +36,8 @@ export const stubJohnSmithPrisonerDetails = () =>
         ],
         assessmentRequired: false,
         resettlementReviewAvailable: true,
+        immediateNeedsSubmitted: true,
+        preReleaseSubmitted: false,
       },
     },
   })

@@ -97,6 +97,8 @@ const mockedPrisonerData = {
   ],
   assessmentRequired: true,
   resettlementReviewAvailable: false,
+  immediateNeedsSubmitted: false,
+  preReleaseSubmitted: false,
 }
 
 const mockedAppointmentsResponse = (apptDate: Date) => {

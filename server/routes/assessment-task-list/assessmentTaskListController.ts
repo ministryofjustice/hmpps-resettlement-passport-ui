@@ -25,17 +25,24 @@ export default class AssessmentTaskListController {
         assessmentType,
       )
 
-      const immediateNeedsReportNotStarted =
-        assessmentType === 'BCST2' &&
-        assessmentsSummary.results.every(({ assessmentStatus }) => assessmentStatus === 'NOT_STARTED')
-
+      const immediateNeedsReportNotStarted = assessmentType === 'BCST2' && notStarted(assessmentsSummary.results)
       if (
         force !== 'true' &&
         immediateNeedsReportNotStarted &&
         isInResettlementWindow(prisonerData.personalDetails.releaseDate)
       ) {
-        // Optionally skip initial needs assessment if it's not started and we're in the pre release window
-        return res.redirect(`/assessment-skip?prisonerNumber=${prisonerNumber}`)
+        const preReleaseSummary = await this.rpService.getAssessmentSummary(
+          req.user.token,
+          req.sessionID,
+          prisonerNumber,
+          'RESETTLEMENT_PLAN',
+        )
+        if (notStarted(preReleaseSummary.results)) {
+          // Optionally skip initial needs assessment if it's not started and we're in the pre-release window
+          return res.redirect(`/assessment-skip?prisonerNumber=${prisonerNumber}`)
+        }
+        // Go to in progress pre-release report
+        return res.redirect(`/assessment-task-list?prisonerNumber=${prisonerNumber}&type=RESETTLEMENT_PLAN`)
       }
 
       const BCST2Completed: boolean = assessmentsSummary.results
@@ -48,4 +55,8 @@ export default class AssessmentTaskListController {
       return next(err)
     }
   }
+}
+
+function notStarted(summary: AssessmentStatus[]): boolean {
+  return summary.every(({ assessmentStatus }) => assessmentStatus === 'NOT_STARTED')
 }
