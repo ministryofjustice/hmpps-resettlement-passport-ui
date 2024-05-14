@@ -41,7 +41,7 @@ export default function routes(services: Services): Router {
   assessmentTaskListRouter(router, services)
   bcst2FormRouter(router, services)
   assessmentCompleteRouter(router, services)
-  assessmentSkipRouter(router)
+  assessmentSkipRouter(router, services)
   printRouter(router, services)
 
   /* ************************************

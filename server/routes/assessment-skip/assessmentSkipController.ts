@@ -1,10 +1,11 @@
 import { RequestHandler } from 'express'
 import { ValidationErrors } from '../../data/model/BCST2Form'
-
-const validSkipChoices = ['completedInOASys', 'completedInAnotherPrison', 'earlyRelease', 'transfer', 'other']
+import { AssessmentSkipReason, assessmentSkipReasons } from '../../data/model/assessmentInformation'
+import RpService from '../../services/rpService'
+import logger from '../../../logger'
 
 export default class AssessmentSkipController {
-  constructor() {
+  constructor(private readonly rpService: RpService) {
     // no op
   }
 
@@ -32,14 +33,24 @@ export default class AssessmentSkipController {
         )}`,
       )
     }
-    // TODO: Persist form in API
-    return res.redirect(`/assessment-task-list?prisonerNumber=${prisonerNumber}&type=RESETTLEMENT_PLAN`)
+    try {
+      await this.rpService.postAssessmentSkip(req.user?.token, prisonerNumber, {
+        reason: req.body.whySkipChoice,
+        moreInfo: req.body.supportingInfo,
+      })
+      return res.redirect(`/assessment-task-list?prisonerNumber=${prisonerNumber}&type=RESETTLEMENT_PLAN`)
+    } catch (err) {
+      logger.warn(
+        `Session: ${req.sessionID} Failed to skip assessment for prisoner: ${prisonerNumber} | ${err.status} ${err}`,
+      )
+      return next(err)
+    }
   }
 }
 
 export function validateAssessmentSkipForm(body: Record<string, string>): Record<string, string> {
   const result: Record<string, string> = {}
-  if (!validSkipChoices.includes(body.whySkipChoice)) {
+  if (!assessmentSkipReasons.includes(body.whySkipChoice as AssessmentSkipReason)) {
     result.whySkipChoice = 'This field is required'
   }
   return Object.keys(result).length > 0 ? result : null

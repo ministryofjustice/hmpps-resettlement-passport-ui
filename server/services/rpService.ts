@@ -8,7 +8,7 @@ import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/BCST2Form'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
-import { AssessmentsInformation, AssessmentType } from '../data/model/assessmentInformation'
+import { AssessmentsInformation, AssessmentSkipRequest, AssessmentType } from '../data/model/assessmentInformation'
 import { Appointments } from '../data/model/appointment'
 import { OtpDetails } from '../data/model/otp'
 import { CaseNote, CaseNotesHistory } from '../data/model/caseNotesHistory'
@@ -391,5 +391,10 @@ export default class RpService {
     }
 
     return caseNotesCreators
+  }
+
+  async postAssessmentSkip(token: string, prisonerId: string, skipRequest: AssessmentSkipRequest): Promise<void> {
+    await this.rpClient.setToken(token)
+    await this.rpClient.post(`/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/skip`, skipRequest)
   }
 }

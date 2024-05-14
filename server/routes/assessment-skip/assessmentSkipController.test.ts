@@ -1,7 +1,7 @@
 import { validateAssessmentSkipForm } from './assessmentSkipController'
 
 describe('validateAssessmentSkipForm', () => {
-  it.each(['completedInOASys', 'completedInAnotherPrison', 'earlyRelease', 'transfer', 'other'])(
+  it.each(['COMPLETED_IN_OASYS', 'COMPLETED_IN_ANOTHER_PRISON', 'EARLY_RELEASE', 'TRANSFER', 'OTHER'])(
     'Returns null on a valid form where %s is chosen',
     choice => {
       expect(validateAssessmentSkipForm({ whySkipChoice: choice })).toBeNull()
