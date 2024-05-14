@@ -1,4 +1,4 @@
-import { type RequestHandler, Router, Request, Response } from 'express'
+import { Request, type RequestHandler, Response, Router } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
@@ -61,14 +61,7 @@ export default function routes(services: Services): Router {
   use('/prisoner-overview', async (req, res, next) => {
     try {
       const { prisonerData } = req
-      const {
-        page = 0,
-        size = 10,
-        sort = 'occurenceDateTime%2CDESC',
-        days = 0,
-        selectedPathway = 'All',
-        addToYourCases,
-      } = req.query
+      const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
       const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
 
       let licenceConditions: { error?: boolean } = {}
@@ -78,18 +71,6 @@ export default function routes(services: Services): Router {
       let caseNotes: { error?: boolean } = {}
       let staffContacts: { error?: boolean } = {}
       let appointments: Appointments
-      if (addToYourCases) {
-        try {
-          await rpClient.post(
-            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/watch`,
-            null,
-          )
-        } catch (err) {
-          logger.warn(
-            `Session: ${req.sessionID} Cannot add to your cases ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-          )
-        }
-      }
       try {
         licenceConditions = await rpClient.get(
           `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/licence-condition`,
@@ -182,7 +163,33 @@ export default function routes(services: Services): Router {
       next(err)
     }
   })
+  use('/addToYourCases/', async (req: Request, res: Response, next) => {
+    try {
+      const { prisonerData } = req
+      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+      try {
+        await rpClient.post(
+          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/watch`,
+          null,
+        )
+        res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
+      } catch (err) {
+        logger.error(
+          `Session: ${req.sessionID} Cannot add to your cases ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
+        )
+        errorPage(res, 'Error adding to your cases', err.status)
+      }
+    } catch (error) {
+      logger.error(`Session: ${req.sessionID} Cannot add to your cases ${error.status} ${error}`)
+    }
+  })
+  function errorPage(res: Response, errorMessage: string, errorStatus: number) {
+    logger.error(`Error page handling: ${errorStatus} - ${errorMessage}`)
 
+    res.locals.message = errorMessage
+    res.status(errorStatus || 500)
+    return res.render('pages/error')
+  }
   use('/licence-image', licenceImageRouter)
   use('/add-case-note', (req: Request, res: Response) => {
     const { prisonerData } = req
