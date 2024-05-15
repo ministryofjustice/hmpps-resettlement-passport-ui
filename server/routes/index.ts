@@ -1,4 +1,4 @@
-import { type RequestHandler, Router, Request, Response } from 'express'
+import { Request, type RequestHandler, Response, Router } from 'express'
 
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
@@ -22,6 +22,7 @@ import assessmentCompleteRouter from './assessment-complete'
 import printRouter from './print'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
+import watchlistRouter from './watchlist'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -41,6 +42,7 @@ export default function routes(services: Services): Router {
   bcst2FormRouter(router, services)
   assessmentCompleteRouter(router, services)
   printRouter(router, services)
+  watchlistRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
@@ -163,7 +165,6 @@ export default function routes(services: Services): Router {
       next(err)
     }
   })
-
   use('/licence-image', licenceImageRouter)
   use('/add-case-note', (req: Request, res: Response) => {
     const { prisonerData } = req

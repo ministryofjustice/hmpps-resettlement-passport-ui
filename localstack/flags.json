@@ -18,5 +18,9 @@
   {
     "feature": "tasksView",
     "enabled": true
+  },
+  {
+    "feature": "watchlistView",
+    "enabled": true
   }
 ]
