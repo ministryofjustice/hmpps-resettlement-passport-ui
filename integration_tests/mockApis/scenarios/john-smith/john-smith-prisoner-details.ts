@@ -1,7 +1,11 @@
+import { addMonths, format, addDays } from 'date-fns'
 import { stubFor } from '../../wiremock'
 import { responseHeaders } from '../../headers'
 
-const johnSmithPrisonerDetails = () =>
+export const aDateOutsideOfPreReleaseWindow = format(addMonths(new Date(), 6), 'yyyy-MM-dd')
+export const aDateInsideOfPreReleaseWindow = format(addDays(new Date(), 20), 'yyyy-MM-dd')
+
+const johnSmithPrisonerDetails = (releaseDate = aDateOutsideOfPreReleaseWindow) =>
   stubFor({
     name: 'John Smith Details',
     request: {
@@ -18,7 +22,7 @@ const johnSmithPrisonerDetails = () =>
           firstName: 'John',
           middleNames: 'Michael',
           lastName: 'Smith',
-          releaseDate: '2024-06-17',
+          releaseDate,
           releaseType: 'CRD',
           dateOfBirth: '1982-10-24',
           age: 41,
@@ -66,5 +70,7 @@ const johnSmithPrisonerDetails = () =>
     },
   })
 
-const johnSmithGetPrisonerDetails = () => [johnSmithPrisonerDetails()]
+const johnSmithGetPrisonerDetails = (releaseDate = aDateOutsideOfPreReleaseWindow) => [
+  johnSmithPrisonerDetails(releaseDate),
+]
 export default johnSmithGetPrisonerDetails

@@ -22,6 +22,10 @@ import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-priso
 import { johnSmithDeleteFinanceAndID, johnSmithDeleteID } from './scenarios/john-smith/john-smith-delete-finance-and-ID'
 import johnSmithGetFinanceAndIDUpdated from './scenarios/john-smith/john-smith-get-finance-and-ID-updated'
 import { johnSmithPatchFinanceAndID, johnSmithPatchID } from './scenarios/john-smith/john-smith-patch-finance-and-ID'
+import { stubJohnSmithSkipInsidePreReleaseWindow } from './scenarios/john-smith/john-smith-assessment-skip'
+import { PathwayAssessmentStatus } from '../../server/data/model/assessmentStatus'
+import { responseHeaders } from './headers'
+import { AssessmentType } from '../../server/data/model/assessmentInformation'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -270,6 +274,35 @@ const stubGetOtp = () =>
     },
   })
 
+const stubAssessmentSummary = ({
+  nomsId,
+  status,
+  assessmentType = 'BCST2',
+}: {
+  nomsId: string
+  status: PathwayAssessmentStatus
+  assessmentType?: AssessmentType
+}) =>
+  stubFor({
+    request: {
+      method: 'GET',
+      url: `/rpApi/resettlement-passport/prisoner/${nomsId}/resettlement-assessment/summary?assessmentType=${assessmentType}`,
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: [
+        { pathway: 'ACCOMMODATION', assessmentStatus: status },
+        { pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR', assessmentStatus: status },
+        { pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY', assessmentStatus: status },
+        { pathway: 'DRUGS_AND_ALCOHOL', assessmentStatus: status },
+        { pathway: 'EDUCATION_SKILLS_AND_WORK', assessmentStatus: status },
+        { pathway: 'FINANCE_AND_ID', assessmentStatus: status },
+        { pathway: 'HEALTH', assessmentStatus: status },
+      ],
+    },
+  })
+
 const stubJohnSmithPreRelease = () => {
   return Promise.all([
     ...johnSmithDefaults(),
@@ -361,4 +394,6 @@ export default {
   stubJohnSmithDeleteID,
   stubJohnSmithUpdateID,
   stubJohnSmithAdd2ndID,
+  stubJohnSmithSkipInsidePreReleaseWindow,
+  stubAssessmentSummary,
 }
