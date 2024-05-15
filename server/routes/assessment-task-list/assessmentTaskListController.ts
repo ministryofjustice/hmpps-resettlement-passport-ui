@@ -3,7 +3,7 @@ import RpService from '../../services/rpService'
 import AssessmentTaskListView from './assessmentTaskListView'
 import { AssessmentStatus } from '../../data/model/assessmentStatus'
 import { AssessmentType } from '../../data/model/assessmentInformation'
-import { parseAssessmentType } from '../../utils/utils'
+import { getFeatureFlagBoolean, parseAssessmentType } from '../../utils/utils'
 import { isInResettlementWindow } from '../../utils/resettlementWindow'
 
 export default class AssessmentTaskListController {
@@ -25,24 +25,26 @@ export default class AssessmentTaskListController {
         assessmentType,
       )
 
-      const immediateNeedsReportNotStarted = assessmentType === 'BCST2' && notStarted(assessmentsSummary.results)
-      if (
-        force !== 'true' &&
-        immediateNeedsReportNotStarted &&
-        isInResettlementWindow(prisonerData.personalDetails.releaseDate)
-      ) {
-        const preReleaseSummary = await this.rpService.getAssessmentSummary(
-          req.user.token,
-          req.sessionID,
-          prisonerNumber,
-          'RESETTLEMENT_PLAN',
-        )
-        if (notStarted(preReleaseSummary.results)) {
-          // Optionally skip initial needs assessment if it's not started and we're in the pre-release window
-          return res.redirect(`/assessment-skip?prisonerNumber=${prisonerNumber}`)
+      if (await getFeatureFlagBoolean('reportSkip')) {
+        const immediateNeedsReportNotStarted = assessmentType === 'BCST2' && notStarted(assessmentsSummary.results)
+        if (
+          force !== 'true' &&
+          immediateNeedsReportNotStarted &&
+          isInResettlementWindow(prisonerData.personalDetails.releaseDate)
+        ) {
+          const preReleaseSummary = await this.rpService.getAssessmentSummary(
+            req.user.token,
+            req.sessionID,
+            prisonerNumber,
+            'RESETTLEMENT_PLAN',
+          )
+          if (notStarted(preReleaseSummary.results)) {
+            // Optionally skip initial needs assessment if it's not started and we're in the pre-release window
+            return res.redirect(`/assessment-skip?prisonerNumber=${prisonerNumber}`)
+          }
+          // Go to in progress pre-release report
+          return res.redirect(`/assessment-task-list?prisonerNumber=${prisonerNumber}&type=RESETTLEMENT_PLAN`)
         }
-        // Go to in progress pre-release report
-        return res.redirect(`/assessment-task-list?prisonerNumber=${prisonerNumber}&type=RESETTLEMENT_PLAN`)
       }
 
       const BCST2Completed: boolean = assessmentsSummary.results
