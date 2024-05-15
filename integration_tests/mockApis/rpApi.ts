@@ -22,6 +22,7 @@ import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-priso
 import { johnSmithDeleteFinanceAndID, johnSmithDeleteID } from './scenarios/john-smith/john-smith-delete-finance-and-ID'
 import johnSmithGetFinanceAndIDUpdated from './scenarios/john-smith/john-smith-get-finance-and-ID-updated'
 import { johnSmithPatchFinanceAndID, johnSmithPatchID } from './scenarios/john-smith/john-smith-patch-finance-and-ID'
+import { johnSmithPostWatchlist, johnSmithPostWatchlist404 } from './scenarios/john-smith/john-smith-watchlist'
 import {
   stubJohnSmithSkipInsidePreReleaseWindow,
   stubJohnSmithSkipOutsidePreReleaseWindow,
@@ -375,6 +376,20 @@ const stubJohnSmithUpdateID = () =>
     ...johnSmithGetFinanceAndID(),
     ...johnSmithPatchID(),
   ])
+const stubJohnSmithPostWatchlist = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithGetPrisonerDetails(),
+    ...johnSmithGetFinanceAndID(),
+    ...johnSmithPostWatchlist(),
+  ])
+const stubJohnSmithPostWatchlistNotFound = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithGetPrisonerDetails(),
+    ...johnSmithGetFinanceAndID(),
+    ...johnSmithPostWatchlist404(),
+  ])
 
 export default {
   stubGetPrisoners,
@@ -397,6 +412,8 @@ export default {
   stubJohnSmithDeleteID,
   stubJohnSmithUpdateID,
   stubJohnSmithAdd2ndID,
+  stubJohnSmithPostWatchlist,
+  stubJohnSmithPostWatchlistNotFound,
   stubJohnSmithSkipInsidePreReleaseWindow,
   stubJohnSmithSkipOutsidePreReleaseWindow,
   stubAssessmentSummary,
