@@ -10,7 +10,7 @@ context('Watchlist', () => {
     cy.signIn()
 
     cy.visit('/prisoner-overview/?prisonerNumber=A8731DY')
-    cy.get('a#add-to-your-cases-btn').click()
+    cy.get('button#add-to-your-cases-btn').click()
     cy.url().should('include', '/prisoner-overview/?prisonerNumber=A8731DY')
   })
   it('Add to cases not found', () => {
@@ -18,8 +18,8 @@ context('Watchlist', () => {
     cy.signIn()
 
     cy.visit('/prisoner-overview/?prisonerNumber=A8731DY')
-    cy.get('a#add-to-your-cases-btn').click()
-    cy.url().should('include', '/addToYourCases/?prisonerNumber=A8731DY')
+    cy.get('button#add-to-your-cases-btn').click()
+    cy.url().should('include', '/addToYourCases/')
     cy.get('h1').should('contain.text', 'Error adding to your cases')
   })
 })

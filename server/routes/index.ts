@@ -22,6 +22,7 @@ import assessmentCompleteRouter from './assessment-complete'
 import printRouter from './print'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
+import watchlistRouter from './watchlist'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -41,6 +42,7 @@ export default function routes(services: Services): Router {
   bcst2FormRouter(router, services)
   assessmentCompleteRouter(router, services)
   printRouter(router, services)
+  watchlistRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
@@ -163,33 +165,6 @@ export default function routes(services: Services): Router {
       next(err)
     }
   })
-  use('/addToYourCases/', async (req: Request, res: Response, next) => {
-    try {
-      const { prisonerData } = req
-      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-      try {
-        await rpClient.post(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/watch`,
-          null,
-        )
-        res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
-      } catch (err) {
-        logger.error(
-          `Session: ${req.sessionID} Cannot add to your cases ${prisonerData.personalDetails.prisonerNumber} ${err.status} ${err}`,
-        )
-        errorPage(res, 'Error adding to your cases', err.status)
-      }
-    } catch (error) {
-      logger.error(`Session: ${req.sessionID} Cannot add to your cases ${error.status} ${error}`)
-    }
-  })
-  function errorPage(res: Response, errorMessage: string, errorStatus: number) {
-    logger.error(`Error page handling: ${errorStatus} - ${errorMessage}`)
-
-    res.locals.message = errorMessage
-    res.status(errorStatus || 500)
-    return res.render('pages/error')
-  }
   use('/licence-image', licenceImageRouter)
   use('/add-case-note', (req: Request, res: Response) => {
     const { prisonerData } = req
