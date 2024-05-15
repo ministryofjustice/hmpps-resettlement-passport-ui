@@ -4,7 +4,7 @@ import AssessmentTaskListView from './assessmentTaskListView'
 import { AssessmentStatus } from '../../data/model/assessmentStatus'
 import { AssessmentType } from '../../data/model/assessmentInformation'
 import { getFeatureFlagBoolean, parseAssessmentType } from '../../utils/utils'
-import { isInResettlementWindow } from '../../utils/resettlementWindow'
+import { isInPreReleaseWindow } from '../../utils/preReleaseWindow'
 
 export default class AssessmentTaskListController {
   constructor(private readonly rpService: RpService) {
@@ -30,7 +30,7 @@ export default class AssessmentTaskListController {
         if (
           force !== 'true' &&
           immediateNeedsReportNotStarted &&
-          isInResettlementWindow(prisonerData.personalDetails.releaseDate)
+          isInPreReleaseWindow(prisonerData.personalDetails.releaseDate)
         ) {
           const preReleaseSummary = await this.rpService.getAssessmentSummary(
             req.user.token,
