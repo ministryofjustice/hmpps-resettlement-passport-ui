@@ -64,4 +64,13 @@ context('BCST2 pre-release skip form', () => {
     // Should have been redirected to RESETTLEMENT_PLAN
     cy.url().should('include', '/assessment-task-list?prisonerNumber=A8731DY&type=RESETTLEMENT_PLAN')
   })
+
+  it('Goes to BCST2 task list if outside of resettlement window', () => {
+    cy.signIn()
+    cy.task('stubJohnSmithSkipOutsidePreReleaseWindow')
+    cy.task('stubAssessmentSummary', { nomsId: 'A8731DY', status: 'NOT_STARTED', assessmentType: 'BCST2' })
+    cy.visit('/assessment-task-list?prisonerNumber=A8731DY&type=BCST2')
+
+    cy.url().should('include', '/assessment-task-list?prisonerNumber=A8731DY&type=BCST2')
+  })
 })

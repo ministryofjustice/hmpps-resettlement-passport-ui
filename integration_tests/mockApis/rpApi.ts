@@ -22,7 +22,10 @@ import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-priso
 import { johnSmithDeleteFinanceAndID, johnSmithDeleteID } from './scenarios/john-smith/john-smith-delete-finance-and-ID'
 import johnSmithGetFinanceAndIDUpdated from './scenarios/john-smith/john-smith-get-finance-and-ID-updated'
 import { johnSmithPatchFinanceAndID, johnSmithPatchID } from './scenarios/john-smith/john-smith-patch-finance-and-ID'
-import { stubJohnSmithSkipInsidePreReleaseWindow } from './scenarios/john-smith/john-smith-assessment-skip'
+import {
+  stubJohnSmithSkipInsidePreReleaseWindow,
+  stubJohnSmithSkipOutsidePreReleaseWindow,
+} from './scenarios/john-smith/john-smith-assessment-skip'
 import { PathwayAssessmentStatus } from '../../server/data/model/assessmentStatus'
 import { responseHeaders } from './headers'
 import { AssessmentType } from '../../server/data/model/assessmentInformation'
@@ -395,5 +398,6 @@ export default {
   stubJohnSmithUpdateID,
   stubJohnSmithAdd2ndID,
   stubJohnSmithSkipInsidePreReleaseWindow,
+  stubJohnSmithSkipOutsidePreReleaseWindow,
   stubAssessmentSummary,
 }

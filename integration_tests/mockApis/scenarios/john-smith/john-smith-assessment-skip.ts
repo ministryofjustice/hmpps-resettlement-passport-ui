@@ -4,7 +4,7 @@ import johnSmithGetPrisonerDetails, {
   aDateOutsideOfPreReleaseWindow,
 } from './john-smith-prisoner-details'
 import { stubFor } from '../../wiremock'
-import { responseHeaders, submitHeaders } from '../../headers'
+import { submitHeaders } from '../../headers'
 
 const stubAssessmentSkip = () =>
   stubFor({

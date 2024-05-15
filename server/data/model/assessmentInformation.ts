@@ -1,5 +1,3 @@
-import { type } from 'node:os'
-
 type QuestionsAndAnswers = {
   questionTitle: string
   answer?: string
