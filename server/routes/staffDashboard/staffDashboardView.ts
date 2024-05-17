@@ -16,6 +16,7 @@ export default class StaffDashboardView implements View {
     private readonly prisonerCountMetrics: PrisonerCountMetrics,
     private readonly reportType: string,
     private readonly assessmentRequired: string,
+    private readonly watchList: string,
   ) {
     // no op
   }
@@ -33,6 +34,7 @@ export default class StaffDashboardView implements View {
     prisonerCountMetrics: PrisonerCountMetrics
     reportType: string
     assessmentRequired: string
+    watchList: string
   } {
     return {
       prisonersList: this.prisonersList,
@@ -47,6 +49,7 @@ export default class StaffDashboardView implements View {
       prisonerCountMetrics: this.prisonerCountMetrics,
       reportType: this.reportType,
       assessmentRequired: this.assessmentRequired,
+      watchList: this.watchList,
     }
   }
 }
