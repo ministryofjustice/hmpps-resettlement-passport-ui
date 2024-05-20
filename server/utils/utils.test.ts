@@ -345,11 +345,11 @@ describe('get validation data from array by question id', () => {
 
 describe('formatTimeWithDuration', () => {
   it.each([
-    ['14:00:00', '02:00 PM'],
-    ['14:01', '02:01 PM'],
-    ['12:00:00', '12:00 PM'],
-    ['09:01:00', '09:01 AM'],
-    ['13:50:23', '01:50 PM'],
+    ['14:00:00', '2:00pm'],
+    ['14:01', '2:01pm'],
+    ['12:00:00', '12:00pm'],
+    ['09:01:00', '9:01am'],
+    ['13:50:23', '1:50pm'],
     [null, null],
     ['', null],
   ])('formatTimeWithDuration(%s)', (input: string, expected: string) => {
@@ -357,11 +357,11 @@ describe('formatTimeWithDuration', () => {
   })
 
   it.each([
-    ['14:00:00', '02:50 PM'],
-    ['14:01', '02:51 PM'],
-    ['12:00:00', '12:50 PM'],
-    ['09:01:00', '09:51 AM'],
-    ['13:50:23', '02:40 PM'],
+    ['14:00:00', '2:50pm'],
+    ['14:01', '2:51pm'],
+    ['12:00:00', '12:50pm'],
+    ['09:01:00', '9:51am'],
+    ['13:50:23', '2:40pm'],
     [null, null],
     ['', null],
   ])('it should add 50 minutes to formatTimeWithDuration(%s)', (input: string, expected: string) => {
