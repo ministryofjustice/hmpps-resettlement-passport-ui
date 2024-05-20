@@ -221,8 +221,6 @@ export default class BCST2FormController {
       const { pathway } = req.params
       const assessmentType = parseAssessmentType(req.body.assessmentType)
 
-      const isBcst2AlreadySubmitted = !prisonerData.assessmentRequired
-      const isResettlementPlanAlreadySubmitted = !prisonerData.resettlementReviewAvailable
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         sessionId: req.session.id,
@@ -250,8 +248,8 @@ export default class BCST2FormController {
           ),
         )
       } else if (
-        (isBcst2AlreadySubmitted && assessmentType === 'BCST2') ||
-        (isResettlementPlanAlreadySubmitted && assessmentType === 'RESETTLEMENT_PLAN')
+        (prisonerData.immediateNeedsSubmitted && assessmentType === 'BCST2') ||
+        (prisonerData.preReleaseSubmitted && assessmentType === 'RESETTLEMENT_PLAN')
       ) {
         const { url } = getEnumValue(pathway)
         res.redirect(`/${url}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)

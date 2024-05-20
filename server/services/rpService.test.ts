@@ -1,6 +1,7 @@
 import logger from '../../logger'
 import { RPClient } from '../data'
 import RpService from './rpService'
+import { AssessmentSkipRequest } from '../data/model/assessmentInformation'
 
 jest.mock('../../logger')
 jest.mock('../data')
@@ -157,5 +158,21 @@ describe('RpService', () => {
     await service.deleteId(prisonerNumber, idId)
 
     expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${idId}`)
+  })
+
+  it('should call rpClient correctly when skipping assessment', async () => {
+    rpClient.get.mockResolvedValue({})
+    const postSpy = jest.spyOn(rpClient, 'post')
+    const setTokenSpy = jest.spyOn(rpClient, 'setToken')
+    const prisonerNumber = '6'
+    const token = 'userToken'
+    const request: AssessmentSkipRequest = { reason: 'COMPLETED_IN_ANOTHER_PRISON' }
+    await service.postAssessmentSkip(token, prisonerNumber, request)
+
+    expect(setTokenSpy).toHaveBeenCalledWith(token)
+    expect(postSpy).toHaveBeenCalledWith(
+      `/resettlement-passport/prisoner/${prisonerNumber}/resettlement-assessment/skip`,
+      request,
+    )
   })
 })

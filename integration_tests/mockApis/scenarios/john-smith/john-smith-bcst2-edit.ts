@@ -36,6 +36,8 @@ const profile = () =>
         ],
         assessmentRequired: false,
         resettlementReviewAvailable: true,
+        immediateNeedsSubmitted: true,
+        preReleaseSubmitted: false,
       },
     },
   })

@@ -1,4 +1,5 @@
 import { SuperAgentRequest } from 'superagent'
+import { addMonths, format } from 'date-fns'
 import { stubFor } from '../../wiremock'
 import { responseHeaders, submitHeaders } from '../../headers'
 
@@ -19,7 +20,7 @@ export const stubJohnSmithPrisonerDetails = () =>
           firstName: 'John',
           middleNames: 'Michael',
           lastName: 'Smith',
-          releaseDate: '2024-06-17',
+          releaseDate: format(addMonths(new Date(), 6), 'yyyy-MM-dd'),
           releaseType: 'CRD',
           dateOfBirth: '1982-10-24',
           age: 41,
@@ -61,6 +62,8 @@ export const stubJohnSmithPrisonerDetails = () =>
         ],
         assessmentRequired: true,
         resettlementReviewAvailable: false,
+        immediateNeedsSubmitted: false,
+        preReleaseSubmitted: false,
       },
     },
   })
@@ -787,7 +790,7 @@ const nextPageWhereWillTheyLive = () =>
     },
   })
 
-const submitAccommodationAssessment = () =>
+const submitAccommodationAssessmentEdit1 = () =>
   stubFor({
     name: 'JohnSmith BCST2 Accommodation Assessment Submit',
     request: {
@@ -795,54 +798,52 @@ const submitAccommodationAssessment = () =>
       method: 'POST',
       bodyPatterns: [
         {
-          equalToJson: JSON.stringify({
-            questionsAndAnswers: [
-              {
-                question: 'WHERE_DID_THEY_LIVE',
-                questionTitle: 'Where did the person in prison live before custody?',
-                questionType: 'RADIO',
-                pageId: 'WHERE_DID_THEY_LIVE',
-                answer: {
-                  answer: 'NO_PERMANENT_OR_FIXED',
-                  displayText: 'No permanent or fixed address',
-                  '@class': 'StringAnswer',
-                },
-              },
-              {
-                question: 'WHERE_WILL_THEY_LIVE_2',
-                questionTitle: 'Where will the person in prison live when they are released?',
-                questionType: 'RADIO',
-                pageId: 'WHERE_WILL_THEY_LIVE_2',
-                answer: {
-                  answer: 'DOES_NOT_HAVE_ANYWHERE',
-                  displayText: 'Does not have anywhere to live',
-                  '@class': 'StringAnswer',
-                },
-              },
-              {
-                question: 'SUPPORT_NEEDS',
-                questionTitle: '',
-                questionType: 'RADIO',
-                pageId: 'ASSESSMENT_SUMMARY',
-                answer: {
-                  answer: 'SUPPORT_NOT_REQUIRED',
-                  displayText: 'Support not required',
-                  '@class': 'StringAnswer',
-                },
-              },
-              {
-                question: 'CASE_NOTE_SUMMARY',
-                questionTitle: 'Add a case note summary',
-                questionType: 'LONG_TEXT',
-                pageId: 'ASSESSMENT_SUMMARY',
-                answer: {
-                  answer: 'No support required',
-                  displayText: 'No support required',
-                  '@class': 'StringAnswer',
-                },
-              },
-            ],
-          }),
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'WHERE_DID_THEY_LIVE',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].answer.answer',
+            contains: 'NO_PERMANENT_OR_FIXED',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[1].question',
+            contains: 'WHERE_WILL_THEY_LIVE_2',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[1].answer.answer',
+            contains: 'DOES_NOT_HAVE_ANYWHERE',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[2].question',
+            contains: 'SUPPORT_NEEDS',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[2].answer.answer',
+            contains: 'SUPPORT_REQUIRED',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[3].question',
+            contains: 'CASE_NOTE_SUMMARY',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[3].answer.answer',
+            contains: 'Needs somewhere to stay',
+          },
         },
       ],
     },
@@ -852,6 +853,68 @@ const submitAccommodationAssessment = () =>
     },
   })
 
+const submitAccommodationAssessmentEdit2 = () =>
+  stubFor({
+    name: 'JohnSmith BCST2 Accommodation Assessment Submit',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'WHERE_DID_THEY_LIVE',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].answer.answer',
+            contains: 'NO_PERMANENT_OR_FIXED',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[1].question',
+            contains: 'WHERE_WILL_THEY_LIVE_2',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[1].answer.answer',
+            contains: 'DOES_NOT_HAVE_ANYWHERE',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[2].question',
+            contains: 'SUPPORT_NEEDS',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[2].answer.answer',
+            contains: 'SUPPORT_NOT_REQUIRED',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[3].question',
+            contains: 'CASE_NOTE_SUMMARY',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[3].answer.answer',
+            contains: 'No support required',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: submitHeaders,
+    },
+  })
 const nextPageHelpToKeepHome = () =>
   stubFor({
     name: 'JohnSmith BCST2 help to keep home next page',
@@ -907,7 +970,8 @@ export const johnSmithBCSTAccommodation = (): SuperAgentRequest[] => [
   assessmentSummaryPage('ACCOMMODATION'),
   nextPageSummary('ACCOMMODATION'),
   checkAnswersPage('ACCOMMODATION'),
-  submitAccommodationAssessment(),
+  submitAccommodationAssessmentEdit1(),
+  submitAccommodationAssessmentEdit2(),
 
   nextPageHelpToKeepHome(),
 ]

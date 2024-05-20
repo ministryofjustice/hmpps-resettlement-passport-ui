@@ -148,6 +148,7 @@ context('BCST2 Report', () => {
     assertShouldNotHaveAddressAnswer()
 
     clickConfirm()
+    cy.url().should('contain', '/assessment-task-list?prisonerNumber=A8731DY')
   })
 
   it('BCST2 Divergent paths scenario with edit', () => {
