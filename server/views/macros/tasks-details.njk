@@ -1,4 +1,4 @@
-{% macro tasksDetails(prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken) %}
+{% macro tasksDetails(prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken, isInWatchlist) %}
   {% if tasksViewEnabled == true or watchlistViewEnabled == true %}
     <div class="govuk-grid-column-one-third">
       <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
@@ -9,11 +9,19 @@
         </header>
         <div class="app-summary-card__body">
           {% if watchlistViewEnabled == true %}
-            <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/addToYourCases/" method="POST" novalidate>
-              <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Add to your cases</button>
-              <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-              <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
-            </form>
+            {% if isInWatchlist == true %}
+                   <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/removeFromYourCases/" method="POST" novalidate>
+                       <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Remove from your cases</button>
+                       <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                       <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+                   </form>
+            {% else %}
+                  <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/addToYourCases/" method="POST" novalidate>
+                      <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Add to your cases</button>
+                      <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                      <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+                  </form>
+            {% endif %}
           {% endif %}
           {% if tasksViewEnabled == true %}
             <div class="govuk-form-group govuk-!-margin-0">

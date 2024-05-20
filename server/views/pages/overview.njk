@@ -23,7 +23,7 @@
     {% elif resettlementAssessmentEnabled and prisonerData.resettlementReviewAvailable === false %}
         {{preReleaseComplete(pathway, prisonerData)}}
     {% endif %}
-    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken) }}
+    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
 </div>
 
 
@@ -571,7 +571,4 @@
       </section>
     </div>
   </div>
-{% endblock %}
-{% block bodyEnd %}
-  <script src="/assets/js/add-remove-to-your-cases.js" data-added-to-cases={{ prisonerData.isInWatchlist }}></script>
 {% endblock %}
