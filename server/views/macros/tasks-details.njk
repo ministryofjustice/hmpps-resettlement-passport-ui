@@ -9,7 +9,7 @@
         </header>
         <div class="app-summary-card__body">
           {% if watchlistViewEnabled == true %}
-            <form class="govuk-form-group govuk-!-margin-0" action="/addToYourCases/" method="POST" novalidate>
+            <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/addToYourCases/" method="POST" novalidate>
               <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Add to your cases</button>
               <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
               <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>

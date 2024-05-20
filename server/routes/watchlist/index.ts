@@ -6,4 +6,5 @@ export default (router: Router, services: Services) => {
   const watchlistController = new WatchlistController(services.rpService)
 
   router.post('/addToYourCases/', [watchlistController.postWatchlist])
+  router.post('/removeFromYourCases/', [watchlistController.deleteWatchlist])
 }

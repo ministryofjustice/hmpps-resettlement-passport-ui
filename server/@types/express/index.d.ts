@@ -54,6 +54,7 @@ export type PrisonerData = {
   prisonerImage?: string
   assessmentRequired: boolean
   resettlementReviewAvailable: boolean
+  isInWatchlist: boolean
 }
 
 export type PathwayStatus = {

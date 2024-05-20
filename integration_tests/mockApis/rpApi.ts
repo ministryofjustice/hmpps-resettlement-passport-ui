@@ -22,7 +22,12 @@ import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-priso
 import { johnSmithDeleteFinanceAndID, johnSmithDeleteID } from './scenarios/john-smith/john-smith-delete-finance-and-ID'
 import johnSmithGetFinanceAndIDUpdated from './scenarios/john-smith/john-smith-get-finance-and-ID-updated'
 import { johnSmithPatchFinanceAndID, johnSmithPatchID } from './scenarios/john-smith/john-smith-patch-finance-and-ID'
-import { johnSmithPostWatchlist, johnSmithPostWatchlist404 } from './scenarios/john-smith/john-smith-watchlist'
+import {
+  johnSmithDeleteWatchlist,
+  johnSmithDeleteWatchlist404,
+  johnSmithPostWatchlist,
+  johnSmithPostWatchlist404,
+} from './scenarios/john-smith/john-smith-watchlist'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -339,12 +344,7 @@ const stubJohnSmithUpdateID = () =>
     ...johnSmithPatchID(),
   ])
 const stubJohnSmithPostWatchlist = () =>
-  Promise.all([
-    ...johnSmithDefaults(),
-    ...johnSmithGetPrisonerDetails(),
-    ...johnSmithGetFinanceAndID(),
-    ...johnSmithPostWatchlist(),
-  ])
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetFinanceAndID(), ...johnSmithPostWatchlist()])
 const stubJohnSmithPostWatchlistNotFound = () =>
   Promise.all([
     ...johnSmithDefaults(),
@@ -352,6 +352,10 @@ const stubJohnSmithPostWatchlistNotFound = () =>
     ...johnSmithGetFinanceAndID(),
     ...johnSmithPostWatchlist404(),
   ])
+const stubJohnSmithDeleteWatchlist = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetFinanceAndID(), ...johnSmithDeleteWatchlist()])
+const stubJohnSmithDeleteWatchlistNotFound = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetFinanceAndID(), ...johnSmithDeleteWatchlist404()])
 
 export default {
   stubGetPrisoners,
@@ -376,4 +380,6 @@ export default {
   stubJohnSmithAdd2ndID,
   stubJohnSmithPostWatchlist,
   stubJohnSmithPostWatchlistNotFound,
+  stubJohnSmithDeleteWatchlist,
+  stubJohnSmithDeleteWatchlistNotFound,
 }
