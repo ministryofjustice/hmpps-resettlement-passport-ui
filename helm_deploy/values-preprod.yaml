@@ -13,7 +13,7 @@ generic-service:
     HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     RESETTLEMENT_PASSPORT_API_URL: "https://resettlement-passport-api-preprod.hmpps.service.justice.gov.uk"
-    NOMIS_USER_ROLES_API_URL: "https://nomis-user-pp.aks-live-1.studio-hosting.service.justice.gov.uk"
+    NOMIS_USER_ROLES_API_URL: "https://nomis-user-roles-api-preprod.prison.service.justice.gov.uk"
     MANAGE_USERS_API_URL: "https://manage-users-api-preprod.hmpps.service.justice.gov.uk"
     DPS_URL: "https://digital-preprod.prison.service.justice.gov.uk"
     COMPONENT_API_URL: "https://frontend-components-preprod.hmpps.service.justice.gov.uk"
