@@ -23,7 +23,7 @@
     {% elif resettlementAssessmentEnabled and prisonerData.resettlementReviewAvailable === false %}
         {{preReleaseComplete(pathway, prisonerData)}}
     {% endif %}
-    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken) }}
+    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
 </div>
 
 
