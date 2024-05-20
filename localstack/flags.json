@@ -20,6 +20,10 @@
     "enabled": true
   },
   {
+    "feature": "reportSkip",
+    "enabled": true
+  },
+  {
     "feature": "watchlistView",
     "enabled": true
   }

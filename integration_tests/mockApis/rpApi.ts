@@ -28,6 +28,13 @@ import {
   johnSmithPostWatchlist,
   johnSmithPostWatchlist404,
 } from './scenarios/john-smith/john-smith-watchlist'
+import {
+  stubJohnSmithSkipInsidePreReleaseWindow,
+  stubJohnSmithSkipOutsidePreReleaseWindow,
+} from './scenarios/john-smith/john-smith-assessment-skip'
+import { PathwayAssessmentStatus } from '../../server/data/model/assessmentStatus'
+import { responseHeaders } from './headers'
+import { AssessmentType } from '../../server/data/model/assessmentInformation'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -103,6 +110,8 @@ const mockedPrisonerData = {
   ],
   assessmentRequired: true,
   resettlementReviewAvailable: false,
+  immediateNeedsSubmitted: false,
+  preReleaseSubmitted: false,
 }
 
 const mockedAppointmentsResponse = (apptDate: Date) => {
@@ -274,6 +283,35 @@ const stubGetOtp = () =>
     },
   })
 
+const stubAssessmentSummary = ({
+  nomsId,
+  status,
+  assessmentType = 'BCST2',
+}: {
+  nomsId: string
+  status: PathwayAssessmentStatus
+  assessmentType?: AssessmentType
+}) =>
+  stubFor({
+    request: {
+      method: 'GET',
+      url: `/rpApi/resettlement-passport/prisoner/${nomsId}/resettlement-assessment/summary?assessmentType=${assessmentType}`,
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: [
+        { pathway: 'ACCOMMODATION', assessmentStatus: status },
+        { pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR', assessmentStatus: status },
+        { pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY', assessmentStatus: status },
+        { pathway: 'DRUGS_AND_ALCOHOL', assessmentStatus: status },
+        { pathway: 'EDUCATION_SKILLS_AND_WORK', assessmentStatus: status },
+        { pathway: 'FINANCE_AND_ID', assessmentStatus: status },
+        { pathway: 'HEALTH', assessmentStatus: status },
+      ],
+    },
+  })
+
 const stubJohnSmithPreRelease = () => {
   return Promise.all([
     ...johnSmithDefaults(),
@@ -382,4 +420,7 @@ export default {
   stubJohnSmithPostWatchlistNotFound,
   stubJohnSmithDeleteWatchlist,
   stubJohnSmithDeleteWatchlistNotFound,
+  stubJohnSmithSkipInsidePreReleaseWindow,
+  stubJohnSmithSkipOutsidePreReleaseWindow,
+  stubAssessmentSummary,
 }

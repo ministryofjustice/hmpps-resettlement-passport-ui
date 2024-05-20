@@ -57,7 +57,7 @@ export function formatTimeWithDuration(inputTime: string, duration = 0): string 
   dateObj.setSeconds(seconds || 0)
   const updatedDate = addMinutes(dateObj, duration)
 
-  return format(updatedDate, 'hh:mm a')
+  return format(updatedDate, 'h:mma')?.toLocaleLowerCase()
 }
 
 export const formatDateToIso = (dateString: string): string => {
