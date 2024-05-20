@@ -90,7 +90,7 @@
                     </legend>
                     <div class="govuk-checkboxes govuk-checkboxes--small">
                       <div class="govuk-checkboxes__item">
-                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" {% if watchList == "true" %}checked{% endif %}>
                         <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
                       </div>
                     </div>
