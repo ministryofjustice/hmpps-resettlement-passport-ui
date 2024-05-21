@@ -22,6 +22,7 @@ export default class StaffDashboardController {
         sortField = 'releaseDate',
         sortDirection = 'ASC',
         reportType = 'pathway-summary',
+        watchList = '',
       } = req.query as {
         searchInput: string
         releaseTime: string
@@ -32,6 +33,7 @@ export default class StaffDashboardController {
         sortField: string
         sortDirection: string
         reportType: string
+        watchList: string
       }
 
       // Only submit pathway status if pathwayView is applied
@@ -60,6 +62,7 @@ export default class StaffDashboardController {
             <string>pathwayView,
             <string>modifiedPathwayStatus,
             <string>assessmentRequired,
+            <string>watchList,
           )
           if (reportType === 'pathway-summary') {
             prisonerCountMetrics = await this.rpService.getPrisonerCountMetrics(
@@ -82,6 +85,7 @@ export default class StaffDashboardController {
           prisonerCountMetrics,
           reportType,
           assessmentRequired,
+          watchList,
         )
         res.render('pages/staff-dashboard', { ...view.renderArgs })
       } catch (err) {

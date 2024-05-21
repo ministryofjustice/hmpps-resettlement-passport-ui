@@ -7,6 +7,8 @@
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 {% set reportingEnabled = features.REPORTING | getFeatureFlag %}
 {% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
+{% set watchlistViewEnabled = features.WATCHLIST_VIEW | getFeatureFlag %}
+
 {% block content %}
   {# Only NOMIS users can access the list prisoners functionality at present #}
   {% if isPrisonUser %}
@@ -14,11 +16,11 @@
       <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
         <form action="/#prisonersFilter" method="GET" novalidate>
           <div class="govuk-grid-row">
-            <div class="govuk-grid-column-full">
+            <div class="{{"govuk-grid-column-three-quarters" if watchlistViewEnabled else "govuk-grid-column-full"}}">
               <div class="govuk-grid-column-full">
                 <h3 class="govuk-heading-m">Filter by</h3>
               </div>
-              <div class="govuk-grid-column-one-quarter">
+              <div class="{{"govuk-grid-column-one-third" if watchlistViewEnabled else "govuk-grid-column-one-quarter"}}">
                 <div class="govuk-form-group">
                   <label class="govuk-label" for="releaseTime">Time to release</label>
                   <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
@@ -28,7 +30,7 @@
                   </select>
                 </div>
               </div>
-              <div class="govuk-grid-column-one-quarter">
+              <div class="{{"govuk-grid-column-one-third" if watchlistViewEnabled else "govuk-grid-column-one-quarter"}}">
                 <div class="govuk-form-group">
                   <label class="govuk-label" for="pathwayView">Pathway view</label>
                   <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
@@ -44,7 +46,7 @@
                 </div>
               </div>
               {% if pathwayView %}
-                <div class="govuk-grid-column-one-quarter">
+                <div class="{{"govuk-grid-column-one-third" if watchlistViewEnabled else "govuk-grid-column-one-quarter"}}">
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="pathwayStatus">Pathway status</label>
                     <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
@@ -62,7 +64,7 @@
                 </div>
               {% endif %}
               {% if not pathwayView and resettlementAssessmentEnabled %}
-                <div class="govuk-grid-column-one-quarter">
+                <div class="{{"govuk-grid-column-one-third" if watchlistViewEnabled else "govuk-grid-column-one-quarter"}}">
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="assessmentRequired">BCST2 report</label>
                     <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
@@ -72,13 +74,32 @@
                   </div>
                 </div>
               {% endif %}
-              <div class="govuk-grid-column-one-quarter">
+              <div class="{{"govuk-grid-column-one-third" if watchlistViewEnabled else "govuk-grid-column-one-quarter"}}">
                 <div class="govuk-form-group">
                   <label class="govuk-label " for="searchInput">Prisoner name or number</label>
                   <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="{{ searchInput }}">
                 </div>
               </div>
-              <div class="govuk-grid-column-full">
+            </div>
+            {% if watchlistViewEnabled %}
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" {% if watchList == "true" %}checked{% endif %}>
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            {% endif %}
+            <div class="govuk-grid-column-full">
+              <div class="govuk-grid-column-one-quarter">
                 <button class="govuk-button" type="submit">Apply filters</button>
               </div>
             </div>
