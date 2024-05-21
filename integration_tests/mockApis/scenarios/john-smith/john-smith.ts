@@ -232,7 +232,7 @@ export const johnSmithAppointments = () =>
           {
             title: 'Appointment with CRS Staff (NS)',
             contact: 'CRSUATU Staff',
-            date: '2024-09-14',
+            date: '2024-05-22',
             time: '14:05:00',
             location: {
               buildingName: '',
