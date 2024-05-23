@@ -26,7 +26,7 @@ export default class HealthStatusController {
       const otpData = await this.rpService.getOtp(token, sessionID, prisonerNumber as string)
       const filename = `plan-your-future-pack-${prisonerNumber}.pdf`
       const fullName = `${prisonerData.personalDetails.firstName} ${prisonerData.personalDetails.lastName}`
-      const view = new PrintView(prisonerData, fullName, appointmentData.results.slice(0, 3), otpData)
+      const view = new PrintView(prisonerData, fullName, appointmentData.results.slice(0, 8), otpData)
 
       pdfMetricsCounter.inc({
         path: req.path.toLowerCase(),
