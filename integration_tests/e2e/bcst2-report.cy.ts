@@ -41,7 +41,7 @@ context('BCST2 Report', () => {
 
     cy.get('.govuk-notification-banner__heading').should(
       'contain.text',
-      'John Smith does not have a completed BCST2 report.',
+      'John Smith does not have a completed immediate needs report.',
     )
   })
 
@@ -50,7 +50,7 @@ context('BCST2 Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'BCST2 report')
+    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
 
     // // Status buttons
     cy.get('.govuk-table__cell > .govuk-tag').each((item, index) => {
@@ -96,7 +96,7 @@ context('BCST2 Report', () => {
       cy.wrap(item).should('have.text', 'Completed')
     })
     clickSubmit()
-    cy.get('.govuk-panel__title').should('contain.text', 'BCST2 report completed')
+    cy.get('.govuk-panel__title').should('contain.text', 'Immediate needs report completed')
   })
 
   it('BCST2 Back button and divergent paths scenario', () => {
@@ -104,7 +104,7 @@ context('BCST2 Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'BCST2 report')
+    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
 
     // Click Accommodation link
     cy.get(':nth-child(1) > .govuk-table__header > a').click()
@@ -156,7 +156,7 @@ context('BCST2 Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'BCST2 report')
+    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
 
     // Click Accommodation link
     cy.get(':nth-child(1) > .govuk-table__header > a').click()
