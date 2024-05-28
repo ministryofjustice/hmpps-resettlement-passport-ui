@@ -18,7 +18,7 @@ import logger from '../../logger'
 import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
 import assessmentSkipRouter from './assessment-skip'
-import bcst2FormRouter from './BCST2-form'
+import immediateNeedsReportRouter from './immediate-needs-report'
 import assessmentCompleteRouter from './assessment-complete'
 import printRouter from './print'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
@@ -40,7 +40,7 @@ export default function routes(services: Services): Router {
   educationSkillsWorkRouter(router, services)
   addAppointmentRouter(router, services)
   assessmentTaskListRouter(router, services)
-  bcst2FormRouter(router, services)
+  immediateNeedsReportRouter(router, services)
   assessmentCompleteRouter(router, services)
   assessmentSkipRouter(router, services)
   printRouter(router, services)

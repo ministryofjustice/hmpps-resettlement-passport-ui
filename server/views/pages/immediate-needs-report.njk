@@ -48,9 +48,9 @@
           {% endif %}
           <form
             {% if assessmentPage.id == 'CHECK_ANSWERS' %}
-              action="/BCST2/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+              action="/ImmediateNeedsReport/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
             {% else %}
-              action="/BCST2-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&backButton={{true if backButton or submitted}}"
+              action="/ImmediateNeedsReport-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&backButton={{true if backButton or submitted}}"
             {% endif %}
             method="post"
           >

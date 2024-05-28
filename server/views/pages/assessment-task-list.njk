@@ -84,7 +84,7 @@
                 <th scope="row" class="govuk-table__header">
                   {% set pathway =  assessment.pathway | getEnumValue %}
                   {% set status =  assessment.assessmentStatus | getAssessmentEnumValue %}
-                  <a href="/BCST2-next-page?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&pathway={{ assessment.pathway }}&type={{ assessmentType }}">{{ pathway.name }}</a>
+                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&pathway={{ assessment.pathway }}&type={{ assessmentType }}">{{ pathway.name }}</a>
                 </th>
                 <td class="govuk-table__cell">
                   <strong class="govuk-tag govuk-tag--{{ status.color }}">{{ status.name }}</strong>

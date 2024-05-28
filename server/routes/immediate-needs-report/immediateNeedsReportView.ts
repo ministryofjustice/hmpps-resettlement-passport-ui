@@ -3,7 +3,7 @@ import { PrisonerData } from '../../@types/express'
 import { AssessmentPage, SubmittedInput, ValidationErrors } from '../../data/model/BCST2Form'
 import { AssessmentType } from '../../data/model/assessmentInformation'
 
-export default class BCST2FormView implements View {
+export default class ImmediateNeedsReportView implements View {
   constructor(
     private readonly prisonerData: PrisonerData,
     private readonly assessmentPage: AssessmentPage,
