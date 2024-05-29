@@ -5,13 +5,12 @@ import {
   createReferralsSubNav,
   formatAddress,
   getAnswerValueFromArrayOfMaps,
-  formatCaseNoteText,
   getValidationError,
   formatTimeWithDuration,
-  formatAddressAndCheckboxAnswers,
-  formatSummaryNotes,
   getDaysFromGivenDate,
   formatDateAsLocal,
+  getCaseNotesIntro,
+  getCaseNotesText,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -55,6 +54,40 @@ describe('covert array to comma separated list', () => {
     ['Array length 3', ['cat', 'dog', 'bird'], 'cat, dog, bird'],
   ])('%s convertArrayToCommaSeparatedList(%s, %s)', (_: string, a: string[], expected: string) => {
     expect(convertArrayToCommaSeparatedList(a)).toEqual(expected)
+  })
+})
+
+describe('get case notes introductory line', () => {
+  it.each([
+    [
+      'Contains first introductory sentence',
+      'Resettlement status set to: In progress. This is the main text of the case notes body.',
+      'Resettlement status set to: In progress.',
+    ],
+    ['Does not contain introductory sentence', 'This is the main text of the case notes body.', null],
+    ['Empty string', '', null],
+    ['Null input', null, null],
+  ])('getCaseNotesIntro(%s)', (_: string, a: string, expected: string) => {
+    expect(getCaseNotesIntro(a)).toEqual(expected)
+  })
+})
+
+describe('get case notes body text', () => {
+  it.each([
+    [
+      'Contains first introductory sentence',
+      'Resettlement status set to: In progress. This is the main text of the case notes body.',
+      'This is the main text of the case notes body.',
+    ],
+    [
+      'Does not contain introductory sentence',
+      'This is the main text of the case notes body.',
+      'This is the main text of the case notes body.',
+    ],
+    ['Empty string', '', ''],
+    ['Null input', null, ''],
+  ])('getCaseNotesText(%s)', (_: string, a: string, expected: string) => {
+    expect(getCaseNotesText(a)).toEqual(expected)
   })
 })
 
@@ -189,34 +222,6 @@ describe('format address', () => {
   })
 })
 
-describe('format address and checkbox answers to include line breaks', () => {
-  it.each([
-    ['Null input', null, ''],
-    ['No newline character in string', 'This is a test string', 'This is a test string'],
-    ['Single address information', '123 Main St\nApt 1\nCity', '123 Main St<br>Apt 1<br>City'],
-    ['Individual checkbox options', 'Option 1\nOption 2\nOption 3', 'Option 1<br>Option 2<br>Option 3'],
-    ['Empty string', '', ''],
-  ])('formats address and checkbox answers (%s)', (_: string, a: string, expected: string) => {
-    expect(formatAddressAndCheckboxAnswers(a)).toEqual(expected)
-  })
-})
-
-describe('format summary notes to insert breaks between paragraphs or sections', () => {
-  it.each([
-    [
-      'should replace newlines with <br>',
-      'This is a summary.\nThis is a new line.',
-      'This is a summary.<br>This is a new line.',
-    ],
-    ['should handle multiple new lines', 'Paragraph 1.\n\nParagraph 2.', 'Paragraph 1.<br><br>Paragraph 2.'],
-    ['should handle empty input', '', ''],
-    ['should handle input without new lines', 'This is a single line input.', 'This is a single line input.'],
-    ['should handle input with only new lines', '\n\n\n', '<br><br><br>'],
-  ])('formats summary notes (%s)', (_: string, a: string, expected: string) => {
-    expect(formatSummaryNotes(a)).toEqual(expected)
-  })
-})
-
 describe('getValueFromArrayOfMaps', () => {
   it.each([
     [
@@ -291,27 +296,6 @@ describe('getValueFromArrayOfMaps', () => {
     ['wrong type of answer', { answer: 'string' }, 'addressTown_SOCIAL_HOUSING', ''],
   ])('%s getValueFromArrayOfMaps(%s, %s, %s)', (_: string, answer: Answer, key: string, expected: string) => {
     expect(getAnswerValueFromArrayOfMaps(answer, key)).toEqual(expected)
-  })
-})
-
-describe('formatCaseNoteText', () => {
-  it.each([
-    ['null input', null, ''],
-    ['empty input', '', ''],
-    ['input with no line breaks', 'This is a case note.', 'This is a case note.'],
-    ['input with some line breaks', 'This is\na case\n\nnote.', 'This is<br />a case<br /><br />note.'],
-    [
-      'input with only resettlement status',
-      'Resettlement status set to: In Progress.',
-      '<strong>Resettlement status set to: In Progress.</strong>',
-    ],
-    [
-      'input with some line breaks and resettlement status',
-      'Resettlement status set to: In Progress. This is\na case\n\nnote.',
-      '<strong>Resettlement status set to: In Progress.</strong><div>This is<br />a case<br /><br />note.</div>',
-    ],
-  ])('%s formatCaseNoteText(%s)', (_: string, caseNoteText: string, expected: string) => {
-    expect(formatCaseNoteText(caseNoteText)).toEqual(expected)
   })
 })
 

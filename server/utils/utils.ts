@@ -141,24 +141,6 @@ export function roundNumberUp(number: number): number | undefined {
   return Math.ceil(number)
 }
 
-export function formatCaseNoteText(caseNoteText: string): string {
-  // Replace line breaks with <br />
-  const formattedInputString = caseNoteText?.replace(/\n/g, '<br />')
-  // Check if the first sentence matches the pattern
-  if (formattedInputString?.startsWith('Resettlement status set to:')) {
-    // Split the first sentence into two parts: before and after the period
-    const parts = formattedInputString.split('.')
-    if (parts.length > 1) {
-      const beforePeriod = `${parts[0]}.`.trim()
-      const afterPeriod = parts.slice(1).join('.').trim()
-      const bodyText = afterPeriod ? `<div>${afterPeriod}</div>` : ''
-      // Format the part before the period as bold
-      return `<strong>${beforePeriod}</strong>${bodyText}`
-    }
-  }
-  return formattedInputString || ''
-}
-
 export function formatTime(inputTime: string): string {
   // Split the input time string by ':' to extract hours and minutes
   const [hour, minute] = inputTime.split(':')
@@ -279,14 +261,6 @@ export function formatAddress(location: AppointmentLocation): string {
   return address.trim()
 }
 
-export function formatAddressAndCheckboxAnswers(answer: string): string {
-  return (answer ?? '').split('\n').join('<br>')
-}
-
-export function formatSummaryNotes(answer: string): string {
-  return answer.replace(/\n/g, '<br>')
-}
-
 export function getAnswerToCurrentQuestion(
   currentQuestionAndAnswer: QuestionsAndAnswers,
   allQuestionsAndAnswers: SubmittedInput,
@@ -336,4 +310,28 @@ export function formatDateAsLocal(dateString: string) {
     )}:${pad(date.getSeconds())}`
   }
   return null
+}
+
+export function getCaseNotesIntro(caseNoteText: string): string | null {
+  if (caseNoteText?.startsWith('Resettlement status set to:')) {
+    // Split the first sentence into two parts: before and after the period
+    const parts = caseNoteText.split('.')
+    if (parts.length > 1) {
+      const beforePeriod = `${parts[0]}.`.trim()
+      return beforePeriod
+    }
+  }
+  return null
+}
+
+export function getCaseNotesText(caseNoteText: string): string | null {
+  if (caseNoteText?.startsWith('Resettlement status set to:')) {
+    // Split the first sentence into two parts: before and after the period
+    const parts = caseNoteText.split('.')
+    if (parts.length > 1) {
+      const afterPeriod = parts.slice(1).join('.').trim()
+      return afterPeriod
+    }
+  }
+  return caseNoteText || ''
 }
