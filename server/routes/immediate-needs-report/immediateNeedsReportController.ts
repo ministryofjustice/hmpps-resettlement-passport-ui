@@ -1,6 +1,5 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
-import BCST2FormView from './BCST2FormView'
 import { formatAssessmentResponse } from '../../utils/formatAssessmentResponse'
 import {
   AssessmentPage,
@@ -11,8 +10,9 @@ import {
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 import { getEnumValue, parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'
+import ImmediateNeedsReportView from './immediateNeedsReportView'
 
-export default class BCST2FormController {
+export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
     // no op
   }
@@ -47,7 +47,7 @@ export default class BCST2FormController {
       const submitted = nextPageId === 'CHECK_ANSWERS' ? '&submitted=true' : ''
 
       res.redirect(
-        `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}${submitted}`,
+        `/ImmediateNeedsReport/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}${submitted}`,
       )
     } catch (err) {
       next(err)
@@ -90,7 +90,7 @@ export default class BCST2FormController {
       if (validationErrors) {
         const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
         return res.redirect(
-          `/BCST2/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
+          `/ImmediateNeedsReport/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
         )
       }
 
@@ -98,7 +98,7 @@ export default class BCST2FormController {
         const { nextPageId } = nextPage
 
         return res.redirect(
-          `/BCST2/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
+          `/ImmediateNeedsReport/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
         )
       }
       return next(new Error(nextPage.error))
@@ -136,7 +136,7 @@ export default class BCST2FormController {
       // If there is nothing in the cache at this point, something has gone wrong so redirect back to the start of the form
       if (!existingAssessment) {
         return res.redirect(
-          `/BCST2-next-page?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&pathway=${pathway}&type=${assessmentType}`,
+          `/ImmediateNeedsReport-next-page?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&pathway=${pathway}&type=${assessmentType}`,
         )
       }
 
@@ -151,7 +151,7 @@ export default class BCST2FormController {
       )
 
       if (assessmentPage.error) {
-        const view = new BCST2FormView(
+        const view = new ImmediateNeedsReportView(
           prisonerData,
           assessmentPage,
           pathway,
@@ -164,7 +164,7 @@ export default class BCST2FormController {
           backButton,
           assessmentType,
         )
-        return res.render('pages/BCST2-form', { ...view.renderArgs })
+        return res.render('pages/immediate-needs-report', { ...view.renderArgs })
       }
       await this.assessmentStateService.setCurrentPage(stateKey, assessmentPage)
 
@@ -175,7 +175,7 @@ export default class BCST2FormController {
 
       if (reConverged) {
         return res.redirect(
-          `/BCST2/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
+          `/ImmediateNeedsReport/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
         )
       }
 
@@ -195,7 +195,7 @@ export default class BCST2FormController {
         )
       }
 
-      const view = new BCST2FormView(
+      const view = new ImmediateNeedsReportView(
         prisonerData,
         assessmentPage,
         pathway,
@@ -208,7 +208,7 @@ export default class BCST2FormController {
         backButton,
         assessmentType,
       )
-      return res.render('pages/BCST2-form', { ...view.renderArgs })
+      return res.render('pages/immediate-needs-report', { ...view.renderArgs })
     } catch (err) {
       return next(err)
     }
@@ -292,7 +292,7 @@ export default class BCST2FormController {
       await this.assessmentStateService.startEdit(stateKey, assessmentPage)
       const submittedParam = submitted ? '&submitted=true' : ''
       res.redirect(
-        `/BCST2/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}${submittedParam}`,
+        `/ImmediateNeedsReport/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}${submittedParam}`,
       )
     } catch (error) {
       next(error)

@@ -125,7 +125,7 @@ export const johnSmithCaseNotes = () =>
             creationDateTime: '2024-04-02T10:38:29.087589618',
             occurenceDateTime: '2024-04-02T10:38:29',
             createdBy: 'Arugonda, Usharani',
-            text: 'Case note summary from Drugs and alcohol BCST2 report\\n\\nou\\r\\n]hi',
+            text: 'Case note summary from Drugs and alcohol immediate needs report\\n\\nou\\r\\n]hi',
           },
         ],
         pageSize: 10,
