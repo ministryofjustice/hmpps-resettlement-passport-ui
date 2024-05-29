@@ -156,3 +156,7 @@
     </div>
   </div>
 {% endblock %}
+{% block bodyEnd %}
+  {{ super() }}
+  <script src="/assets/js/disable-on-submit.js"></script>
+{% endblock %}
