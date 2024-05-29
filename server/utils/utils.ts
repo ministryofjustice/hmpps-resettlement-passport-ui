@@ -141,30 +141,6 @@ export function roundNumberUp(number: number): number | undefined {
   return Math.ceil(number)
 }
 
-export function getCaseNotesIntro(caseNoteText: string): string | null {
-  if (caseNoteText?.startsWith('Resettlement status set to:')) {
-    // Split the first sentence into two parts: before and after the period
-    const parts = caseNoteText.split('.')
-    if (parts.length > 1) {
-      const beforePeriod = `${parts[0]}.`.trim()
-      return beforePeriod
-    }
-  }
-  return null
-}
-
-export function getCaseNotesText(caseNoteText: string): string | null {
-  if (caseNoteText?.startsWith('Resettlement status set to:')) {
-    // Split the first sentence into two parts: before and after the period
-    const parts = caseNoteText.split('.')
-    if (parts.length > 1) {
-      const afterPeriod = parts.slice(1).join('.').trim()
-      return afterPeriod
-    }
-  }
-  return caseNoteText || ''
-}
-
 export function formatTime(inputTime: string): string {
   // Split the input time string by ':' to extract hours and minutes
   const [hour, minute] = inputTime.split(':')
@@ -334,4 +310,28 @@ export function formatDateAsLocal(dateString: string) {
     )}:${pad(date.getSeconds())}`
   }
   return null
+}
+
+export function getCaseNotesIntro(caseNoteText: string): string | null {
+  if (caseNoteText?.startsWith('Resettlement status set to:')) {
+    // Split the first sentence into two parts: before and after the period
+    const parts = caseNoteText.split('.')
+    if (parts.length > 1) {
+      const beforePeriod = `${parts[0]}.`.trim()
+      return beforePeriod
+    }
+  }
+  return null
+}
+
+export function getCaseNotesText(caseNoteText: string): string | null {
+  if (caseNoteText?.startsWith('Resettlement status set to:')) {
+    // Split the first sentence into two parts: before and after the period
+    const parts = caseNoteText.split('.')
+    if (parts.length > 1) {
+      const afterPeriod = parts.slice(1).join('.').trim()
+      return afterPeriod
+    }
+  }
+  return caseNoteText || ''
 }
