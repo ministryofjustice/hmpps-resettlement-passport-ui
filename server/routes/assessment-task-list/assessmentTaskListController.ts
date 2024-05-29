@@ -47,11 +47,16 @@ export default class AssessmentTaskListController {
         }
       }
 
-      const BCST2Completed: boolean = assessmentsSummary.results
+      const immediateNeedsReportCompleted: boolean = assessmentsSummary.results
         ? assessmentsSummary.results.every((status: AssessmentStatus) => status.assessmentStatus === 'COMPLETE')
         : null
 
-      const view = new AssessmentTaskListView(prisonerData, assessmentsSummary, BCST2Completed, assessmentType)
+      const view = new AssessmentTaskListView(
+        prisonerData,
+        assessmentsSummary,
+        immediateNeedsReportCompleted,
+        assessmentType,
+      )
       return res.render('pages/assessment-task-list', { ...view.renderArgs })
     } catch (err) {
       return next(err)

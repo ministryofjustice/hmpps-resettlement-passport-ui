@@ -33,7 +33,7 @@ context('BCST2 pre-release skip form', () => {
     // Should have been redirected to assessment skip page
     cy.url().should('include', 'assessment-skip')
 
-    cy.get('[data-qa="completeBCST2"]').click()
+    cy.get('[data-qa="completeImmediateNeedsReport"]').click()
 
     // Should have been redirected to assessment skip page
     cy.url().should('include', '/assessment-task-list?prisonerNumber=A8731DY&type=BCST2&force=true')

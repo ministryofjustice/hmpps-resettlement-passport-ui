@@ -4,7 +4,7 @@ import {
   QuestionsAndAnswers,
   SubmittedInput,
   SubmittedQuestionAndAnswer,
-} from '../data/model/BCST2Form'
+} from '../data/model/immediateNeedsReport'
 
 type RequestBody = {
   [key: string]: string

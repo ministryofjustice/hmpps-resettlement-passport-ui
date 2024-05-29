@@ -1,7 +1,7 @@
 import type { RedisClient } from './redisClient'
 
 import logger from '../../logger'
-import { AssessmentPage, SubmittedInput } from './model/BCST2Form'
+import { AssessmentPage, SubmittedInput } from './model/immediateNeedsReport'
 import { secondsUntilMidnight } from '../utils/utils'
 
 const assessmentPrefix = 'assessment:'

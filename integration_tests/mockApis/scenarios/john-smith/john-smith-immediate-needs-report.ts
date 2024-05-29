@@ -5,7 +5,7 @@ import { responseHeaders, submitHeaders } from '../../headers'
 
 export const stubJohnSmithPrisonerDetails = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Details',
+    name: 'JohnSmith immediate needs report Details',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY',
       method: 'GET',
@@ -70,7 +70,7 @@ export const stubJohnSmithPrisonerDetails = () =>
 
 const initialTaskList = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Initial task list',
+    name: 'JohnSmith immediate needs report Initial task list',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/summary?assessmentType=BCST2',
       method: 'GET',
@@ -88,13 +88,13 @@ const initialTaskList = () =>
         { pathway: 'HEALTH', assessmentStatus: 'NOT_STARTED' },
       ],
     },
-    scenarioName: 'john-smith-bcst2',
+    scenarioName: 'john-smith-immediate-needs-report',
     requiredScenarioState: 'Started',
   })
 
 const initialTaskListAllCompleteButHealth = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Initial task list',
+    name: 'JohnSmith immediate needs report Initial task list',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/summary?assessmentType=BCST2',
       method: 'GET',
@@ -112,13 +112,13 @@ const initialTaskListAllCompleteButHealth = () =>
         { pathway: 'HEALTH', assessmentStatus: 'NOT_STARTED' },
       ],
     },
-    scenarioName: 'john-smith-bcst2',
+    scenarioName: 'john-smith-immediate-needs-report',
     requiredScenarioState: 'Started',
   })
 
 const nextPageStartHealth = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Health Assessment Next Page 1',
+    name: 'JohnSmith immediate needs report Health Assessment Next Page 1',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?assessmentType=BCST2',
       method: 'POST',
@@ -141,7 +141,7 @@ const nextPageStartHealth = () =>
 
 const healthAssessment = () =>
   stubFor({
-    name: 'John Smith BCST2 Health Assessment',
+    name: 'John Smith immediate needs report Health Assessment',
     request: {
       method: 'GET',
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/REGISTERED_WITH_GP?assessmentType=BCST2',
@@ -177,7 +177,7 @@ const healthAssessment = () =>
 
 const nextPageHealth = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Health Assessment Next Page Health',
+    name: 'JohnSmith immediate needs report Health Assessment Next Page Health',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?assessmentType=BCST2&currentPage=REGISTERED_WITH_GP',
       method: 'POST',
@@ -237,7 +237,7 @@ const meetHealthCareTeamPage = () =>
 
 const nextPageHealthcareTeam = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Health Assessment Next Page Healthcare Team Meeting',
+    name: 'JohnSmith immediate needs report Health Assessment Next Page Healthcare Team Meeting',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?assessmentType=BCST2&currentPage=MEET_HEALTHCARE_TEAM',
       method: 'POST',
@@ -261,7 +261,7 @@ const nextPageHealthcareTeam = () =>
 
 const assessmentSummaryPage = (pathway: string) =>
   stubFor({
-    name: 'John Smith BCST2 Assessment Summary Page',
+    name: 'John Smith immediate needs report Assessment Summary Page',
     request: {
       method: 'GET',
       url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/page/ASSESSMENT_SUMMARY?assessmentType=BCST2`,
@@ -325,7 +325,7 @@ const assessmentSummaryPage = (pathway: string) =>
 
 const nextPageSummary = (pathway: string) =>
   stubFor({
-    name: 'JohnSmith BCST2 Next Page Summary',
+    name: 'JohnSmith immediate needs report Next Page Summary',
     request: {
       url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/next-page?assessmentType=BCST2&currentPage=ASSESSMENT_SUMMARY`,
       method: 'POST',
@@ -349,7 +349,7 @@ const nextPageSummary = (pathway: string) =>
 
 const checkAnswersPage = (pathway: string) =>
   stubFor({
-    name: 'John Smith BCST2 Check Answers Page',
+    name: 'John Smith immediate needs report Check Answers Page',
     request: {
       method: 'GET',
       url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/page/CHECK_ANSWERS?assessmentType=BCST2`,
@@ -367,7 +367,7 @@ const checkAnswersPage = (pathway: string) =>
 
 const submitAssessment = () => {
   return stubFor({
-    name: 'JohnSmith BCST2 Health Assessment Submit',
+    name: 'JohnSmith immediate needs report Health Assessment Submit',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/complete?assessmentType=BCST2',
       method: 'POST',
@@ -429,7 +429,7 @@ const submitAssessment = () => {
       status: 200,
       headers: submitHeaders,
     },
-    scenarioName: 'john-smith-bcst2',
+    scenarioName: 'john-smith-immediate-needs-report',
     requiredScenarioState: 'Started',
     newScenarioState: 'After-Complete',
   })
@@ -437,7 +437,7 @@ const submitAssessment = () => {
 
 const completedTaskList = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Completed task list',
+    name: 'JohnSmith immediate needs report Completed task list',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/summary?assessmentType=BCST2',
       method: 'GET',
@@ -455,13 +455,13 @@ const completedTaskList = () =>
         { pathway: 'HEALTH', assessmentStatus: 'COMPLETE' },
       ],
     },
-    scenarioName: 'john-smith-bcst2',
+    scenarioName: 'john-smith-immediate-needs-report',
     requiredScenarioState: 'After-Complete',
   })
 
 const submit = () =>
   stubFor({
-    name: 'John Smith BCST2 Submit',
+    name: 'John Smith immediate needs report Submit',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/submit?assessmentType=BCST2',
       method: 'POST',
@@ -474,7 +474,7 @@ const submit = () =>
 
 const nextPageStartAccommodation = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Accommodation Assessment Next Page 1',
+    name: 'JohnSmith immediate needs report Accommodation Assessment Next Page 1',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2',
       method: 'POST',
@@ -555,7 +555,7 @@ const whereDoTheyLivePage = () =>
 
 const nextPageWhereDoTheyLiveAfterChoosingRented = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Where do they live next page after choosing Private Rented',
+    name: 'JohnSmith immediate needs report Where do they live next page after choosing Private Rented',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE',
       method: 'POST',
@@ -617,7 +617,7 @@ const addressPage = () =>
 
 const nextPageAddress = () =>
   stubFor({
-    name: 'JohnSmith BCST2 next page after entering address',
+    name: 'JohnSmith immediate needs report next page after entering address',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE_ADDRESS',
       method: 'POST',
@@ -692,7 +692,7 @@ const helpToKeepHomePage = () =>
 
 const nextPageWhereDoTheyLiveAfterChoosingNone = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Where do they live next page after choosing No permenant or fixed',
+    name: 'JohnSmith immediate needs report Where do they live next page after choosing No permenant or fixed',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE',
       method: 'POST',
@@ -768,7 +768,7 @@ const whereWillTheyLive2Page = () =>
 
 const nextPageWhereWillTheyLive = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Where will they live next page',
+    name: 'JohnSmith immediate needs report Where will they live next page',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_WILL_THEY_LIVE_2',
       method: 'POST',
@@ -792,7 +792,7 @@ const nextPageWhereWillTheyLive = () =>
 
 const submitAccommodationAssessmentEdit1 = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Accommodation Assessment Submit',
+    name: 'JohnSmith immediate needs report Accommodation Assessment Submit',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2',
       method: 'POST',
@@ -855,7 +855,7 @@ const submitAccommodationAssessmentEdit1 = () =>
 
 const submitAccommodationAssessmentEdit2 = () =>
   stubFor({
-    name: 'JohnSmith BCST2 Accommodation Assessment Submit',
+    name: 'JohnSmith immediate needs report Accommodation Assessment Submit',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2',
       method: 'POST',
@@ -917,7 +917,7 @@ const submitAccommodationAssessmentEdit2 = () =>
   })
 const nextPageHelpToKeepHome = () =>
   stubFor({
-    name: 'JohnSmith BCST2 help to keep home next page',
+    name: 'JohnSmith immediate needs report help to keep home next page',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=HELP_TO_KEEP_HOME',
       method: 'POST',
@@ -939,7 +939,7 @@ const nextPageHelpToKeepHome = () =>
     },
   })
 
-export const johnSmithBCST2Health = (): SuperAgentRequest[] => [
+export const johnSmithImmediateNeedsReportHealth = (): SuperAgentRequest[] => [
   stubJohnSmithPrisonerDetails(),
   initialTaskListAllCompleteButHealth(),
   nextPageStartHealth(),
@@ -955,7 +955,7 @@ export const johnSmithBCST2Health = (): SuperAgentRequest[] => [
   submit(),
 ]
 
-export const johnSmithBCSTAccommodation = (): SuperAgentRequest[] => [
+export const johnSmithImmediateNeedsReportAccommodation = (): SuperAgentRequest[] => [
   stubJohnSmithPrisonerDetails(),
   initialTaskList(),
   nextPageStartAccommodation(),

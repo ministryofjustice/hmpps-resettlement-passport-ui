@@ -1,7 +1,12 @@
 import { AssessmentStateService, StateKey } from './assessmentStateService'
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
-import { AssessmentPage, QuestionsAndAnswers, SubmittedInput, SubmittedQuestionAndAnswer } from './model/BCST2Form'
+import {
+  AssessmentPage,
+  QuestionsAndAnswers,
+  SubmittedInput,
+  SubmittedQuestionAndAnswer,
+} from './model/immediateNeedsReport'
 
 jest.mock('./assessmentStore')
 

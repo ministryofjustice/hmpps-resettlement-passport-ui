@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { ValidationErrors } from '../../data/model/BCST2Form'
+import { ValidationErrors } from '../../data/model/immediateNeedsReport'
 import { AssessmentSkipReason, assessmentSkipReasons } from '../../data/model/assessmentInformation'
 import RpService from '../../services/rpService'
 import logger from '../../../logger'

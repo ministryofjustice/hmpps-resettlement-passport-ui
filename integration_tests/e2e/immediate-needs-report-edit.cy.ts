@@ -1,9 +1,9 @@
-context('BCST2 Report Edit', () => {
+context('Immediate Needs Report Edit', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
-    cy.task('stubJohnSmithBCST2Edit')
+    cy.task('stubJohnSmithImmediateNeedsReportEdit')
   })
 
   function clickContinue() {

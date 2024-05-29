@@ -1,4 +1,9 @@
-import { AssessmentPage, QuestionsAndAnswers, ValidationError, ValidationErrors } from '../data/model/BCST2Form'
+import {
+  AssessmentPage,
+  QuestionsAndAnswers,
+  ValidationError,
+  ValidationErrors,
+} from '../data/model/immediateNeedsReport'
 
 export type RequestBody = {
   [key: string]: string
