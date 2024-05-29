@@ -17,7 +17,8 @@ import {
   getDescriptionFromName,
   getMostRecentDate,
   roundNumberUp,
-  formatCaseNoteText,
+  getCaseNotesIntro,
+  getCaseNotesText,
   formatDateToIso,
   formatTime,
   formatTimeWithDuration,
@@ -32,8 +33,6 @@ import {
   getAnswerToCurrentQuestion,
   getAnswerValueFromArrayOfMaps,
   getValidationError,
-  formatAddressAndCheckboxAnswers,
-  formatSummaryNotes,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -89,7 +88,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getEnumByName', getEnumByName)
   njkEnv.addFilter('getDescriptionFromName', getDescriptionFromName)
   njkEnv.addFilter('roundNumberUp', roundNumberUp)
-  njkEnv.addFilter('formatCaseNoteText', formatCaseNoteText)
+  njkEnv.addFilter('getCaseNotesIntro', getCaseNotesIntro)
+  njkEnv.addFilter('getCaseNotesText', getCaseNotesText)
   njkEnv.addFilter('formatDateToIso', formatDateToIso)
   njkEnv.addFilter('formatTime', formatTime)
   njkEnv.addFilter('formatTimeWithDuration', formatTimeWithDuration)
@@ -103,8 +103,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getFeatureFlag', getFeatureFlag, true)
   njkEnv.addGlobal('features', FEATURE_FLAGS)
   njkEnv.addFilter('formatAddress', formatAddress)
-  njkEnv.addFilter('formatAddressAndCheckboxAnswers', formatAddressAndCheckboxAnswers)
-  njkEnv.addFilter('formatSummaryNotes', formatSummaryNotes)
+  njkEnv.addFilter('getCaseNotesIntro', getCaseNotesIntro)
   njkEnv.addFilter('getAnswerToCurrentQuestion', getAnswerToCurrentQuestion)
   njkEnv.addGlobal('feedbackUrl', FEEDBACK_URL)
   njkEnv.addFilter('getAnswerValueFromArrayOfMaps', getAnswerValueFromArrayOfMaps)
