@@ -6,7 +6,7 @@ import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
 import { AppointmentLocation } from '../data/model/appointment'
-import { Answer, QuestionsAndAnswers, SubmittedInput, ValidationErrors } from '../data/model/BCST2Form'
+import { Answer, QuestionsAndAnswers, SubmittedInput, ValidationErrors } from '../data/model/immediateNeedsReport'
 import { AssessmentType } from '../data/model/assessmentInformation'
 
 const properCase = (word: string): string =>

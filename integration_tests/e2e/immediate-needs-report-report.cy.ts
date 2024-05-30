@@ -4,7 +4,7 @@ function assertShouldNotHaveAddressAnswer() {
   })
 }
 
-context('BCST2 Report', () => {
+context('Immediate Needs Report', () => {
   beforeEach(() => {
     cy.task('reset')
     cy.task('stubSignIn')
@@ -33,8 +33,8 @@ context('BCST2 Report', () => {
     return cy.get('.govuk-heading-l')
   }
 
-  it('Prisoner Overview should have BCST2 Banner', () => {
-    cy.task('stubJohnSmithBCST2Health')
+  it('Prisoner Overview should have Immediate Needs Report Banner', () => {
+    cy.task('stubJohnSmithImmediateNeedsReportHealth')
     cy.signIn()
 
     cy.visit('/prisoner-overview?prisonerNumber=A8731DY')
@@ -45,8 +45,8 @@ context('BCST2 Report', () => {
     )
   })
 
-  it('BCST2 Health pathway scenario', () => {
-    cy.task('stubJohnSmithBCST2Health')
+  it('Immediate Needs Report Health pathway scenario', () => {
+    cy.task('stubJohnSmithImmediateNeedsReportHealth')
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
@@ -99,8 +99,8 @@ context('BCST2 Report', () => {
     cy.get('.govuk-panel__title').should('contain.text', 'Immediate needs report completed')
   })
 
-  it('BCST2 Back button and divergent paths scenario', () => {
-    cy.task('stubJohnSmithBCST2Accommodation')
+  it('Immediate Needs Report Back button and divergent paths scenario', () => {
+    cy.task('stubJohnSmithImmediateNeedsReportAccommodation')
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
@@ -151,8 +151,8 @@ context('BCST2 Report', () => {
     cy.url().should('contain', '/assessment-task-list?prisonerNumber=A8731DY')
   })
 
-  it('BCST2 Divergent paths scenario with edit', () => {
-    cy.task('stubJohnSmithBCST2Accommodation')
+  it('Immediate Needs Report Divergent paths scenario with edit', () => {
+    cy.task('stubJohnSmithImmediateNeedsReportAccommodation')
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')

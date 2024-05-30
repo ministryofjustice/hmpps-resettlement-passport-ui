@@ -1,6 +1,6 @@
 import AssessmentStore from './assessmentStore'
 import { createRedisClient } from './redisClient'
-import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './model/BCST2Form'
+import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './model/immediateNeedsReport'
 import { toSubmittedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
 import logger from '../../logger'
 

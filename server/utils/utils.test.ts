@@ -14,7 +14,7 @@ import {
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
-import { Answer, ValidationError, ValidationErrors } from '../data/model/BCST2Form'
+import { Answer, ValidationError, ValidationErrors } from '../data/model/immediateNeedsReport'
 
 describe('convert to title case', () => {
   it.each([

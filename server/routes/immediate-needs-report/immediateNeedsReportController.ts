@@ -6,7 +6,7 @@ import {
   SubmittedInput,
   SubmittedQuestionAndAnswer,
   ValidationErrors,
-} from '../../data/model/BCST2Form'
+} from '../../data/model/immediateNeedsReport'
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 import { getEnumValue, parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'

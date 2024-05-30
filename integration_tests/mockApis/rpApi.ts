@@ -14,8 +14,11 @@ import {
   stubJohnSmithPrisonerDetails,
 } from './scenarios/john-smith/john-smith-pre-release'
 import { johnSmithDefaults } from './scenarios/john-smith/john-smith'
-import { johnSmithBCST2Health, johnSmithBCSTAccommodation } from './scenarios/john-smith/john-smith-bcst2'
-import johnSmithBcst2Edit from './scenarios/john-smith/john-smith-bcst2-edit'
+import {
+  johnSmithImmediateNeedsReportHealth,
+  johnSmithImmediateNeedsReportAccommodation,
+} from './scenarios/john-smith/john-smith-immediate-needs-report'
+import johnSmithImmediateNeedsReportEdit from './scenarios/john-smith/john-smith-immediate-needs-report-edit'
 import { johnSmithPostFinanceAndID, johnSmithPostID } from './scenarios/john-smith/john-smith-post-finance-and-ID'
 import { johnSmithGetFinance, johnSmithGetFinanceAndID } from './scenarios/john-smith/john-smith-get-finance-and-ID'
 import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-prisoner-details'
@@ -330,9 +333,12 @@ const stubJohnSmithPreRelease = () => {
   ])
 }
 
-const stubJohnSmithBCST2Health = () => Promise.all([...johnSmithDefaults(), ...johnSmithBCST2Health()])
-const stubJohnSmithBCST2Edit = () => Promise.all([...johnSmithDefaults(), ...johnSmithBcst2Edit()])
-const stubJohnSmithBCST2Accommodation = () => Promise.all([...johnSmithDefaults(), ...johnSmithBCSTAccommodation()])
+const stubJohnSmithImmediateNeedsReportHealth = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportHealth()])
+const stubJohnSmithImmediateNeedsReportEdit = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportEdit()])
+const stubJohnSmithImmediateNeedsReportAccommodation = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation()])
 const stubJohnSmithPostFinanceAndID = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithPostFinanceAndID()])
 const stubJohnSmithGetFinanceAndID = () =>
@@ -404,9 +410,9 @@ export default {
   stubGetPrisonerData,
   stubGetPrisonerImage,
   stubJohnSmithPreRelease,
-  stubJohnSmithBCST2Health,
-  stubJohnSmithBCST2Edit,
-  stubJohnSmithBCST2Accommodation,
+  stubJohnSmithImmediateNeedsReportHealth,
+  stubJohnSmithImmediateNeedsReportEdit,
+  stubJohnSmithImmediateNeedsReportAccommodation,
   stubJohnSmithPostFinanceAndID,
   stubJohnSmithGetFinanceAndID,
   stubJohnSmithDeleteFinanceAndID,

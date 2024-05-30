@@ -32,7 +32,7 @@ context('Pre Release Report', () => {
 
     // Should be on the Accommodation pathway page
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
-    // Should have no permanent or fixed address pre-selected from BCST2 report answers
+    // Should have no permanent or fixed address pre-selected from immediate needs report answers
     cy.get('#NO_PERMANENT_OR_FIXED').should('be.checked')
 
     clickContinue()

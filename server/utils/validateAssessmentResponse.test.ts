@@ -1,4 +1,4 @@
-import { AssessmentPage, QuestionsAndAnswers } from '../data/model/BCST2Form'
+import { AssessmentPage, QuestionsAndAnswers } from '../data/model/immediateNeedsReport'
 import validateAssessmentResponse, { RequestBody } from './validateAssessmentResponse'
 
 type ValidationObject = {

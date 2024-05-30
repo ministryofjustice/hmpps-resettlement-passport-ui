@@ -3,7 +3,7 @@ import { responseHeaders, submitHeaders } from '../../headers'
 
 const profile = () =>
   stubFor({
-    name: 'john smith bcst2-edit status',
+    name: 'john smith immediate-needs-report-edit status',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY',
       method: 'GET',
@@ -44,7 +44,7 @@ const profile = () =>
 
 const getEducationSkillsAndWork = () =>
   stubFor({
-    name: 'John Smith BCST2 Edit get education 1',
+    name: 'John Smith immediate needs report Edit get education 1',
     request: {
       url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/latest',
       method: 'GET',
@@ -533,13 +533,13 @@ const submitEdit = () => {
       status: 200,
       headers: submitHeaders,
     },
-    scenarioName: 'john-smith-bcst2',
+    scenarioName: 'john-smith-immediate-needs-report',
     requiredScenarioState: 'Started',
     newScenarioState: 'After-Complete',
   })
 }
 
-const johnSmithBcst2Edit = () => [
+const johnSmithImmediateNeedsReportEdit = () => [
   profile(),
   getEducationSkillsAndWork(),
   crsReferrals(),
@@ -552,4 +552,4 @@ const johnSmithBcst2Edit = () => [
   inEducationOrTrainingQuestion(),
   submitEdit(),
 ]
-export default johnSmithBcst2Edit
+export default johnSmithImmediateNeedsReportEdit
