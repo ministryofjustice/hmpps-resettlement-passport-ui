@@ -92,6 +92,7 @@ const stubUser = (name: string) =>
         username: 'USER1',
         active: true,
         name,
+        authSource: 'nomis',
       },
     },
   })
