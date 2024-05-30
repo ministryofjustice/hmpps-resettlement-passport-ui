@@ -398,4 +398,17 @@ export default class RpService {
     await this.rpClient.setToken(token)
     await this.rpClient.post(`/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/skip`, skipRequest)
   }
+
+  async patchStatusWithCaseNote(
+    token: string,
+    prisonerId: string,
+    body: {
+      pathway: string
+      status: string
+      caseNoteText: string
+    },
+  ) {
+    await this.rpClient.setToken(token)
+    await this.rpClient.patch(`/resettlement-passport/prisoner/${prisonerId}/pathway-with-case-note`, body)
+  }
 }

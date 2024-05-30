@@ -13,7 +13,7 @@ import financeIdRouter from './finance-id'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import { RPClient } from '../data'
-import { getEnumByURL, getEnumValue, getFeatureFlagBoolean } from '../utils/utils'
+import statusUpdateRouter from './status-update/statusUpdateRouter'
 import logger from '../../logger'
 import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
@@ -21,7 +21,7 @@ import assessmentSkipRouter from './assessment-skip'
 import immediateNeedsReportRouter from './immediate-needs-report'
 import assessmentCompleteRouter from './assessment-complete'
 import printRouter from './print'
-import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
+import { ERROR_DICTIONARY } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
 import watchlistRouter from './watchlist'
 
@@ -45,6 +45,7 @@ export default function routes(services: Services): Router {
   assessmentSkipRouter(router, services)
   printRouter(router, services)
   watchlistRouter(router, services)
+  statusUpdateRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
@@ -173,63 +174,6 @@ export default function routes(services: Services): Router {
     res.render('pages/add-case-note', {
       prisonerData,
     })
-  })
-  use('/status-update/', async (req: Request, res: Response, next) => {
-    try {
-      const { prisonerData } = req
-      let { state, selectedPathway, _csrf }: { state?: string; selectedPathway?: string; _csrf?: string } = req.query
-      // If query parameters are not provided, try to get values from the request body
-      if (!state || !selectedPathway || !_csrf) {
-        const { state: bodyState, selectedPathway: bodyPathway, _csrf: bodyCsrf } = req.body
-        // Use the values from the request body if they exist
-        state = state || bodyState
-        selectedPathway = selectedPathway || bodyPathway
-        _csrf = _csrf || bodyCsrf
-      }
-      const caseNoteInput = req.body[`caseNoteInput_${state}`] || null
-
-      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
-
-      let serverUpdate = 'none'
-      const deliusUserErrorMessage = 'Delius users are currently unable to access the case notes feature'
-      const isnDeliusCaseNotesEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.DELIUS_CASE_NOTES)
-      if (state) {
-        try {
-          if (res.locals.user.authSource === 'delius' && !isnDeliusCaseNotesEnabled) {
-            throw new Error(deliusUserErrorMessage)
-          }
-          const status = getEnumValue(state).name
-          await rpClient.patch(
-            `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/pathway-with-case-note`,
-            {
-              pathway: getEnumByURL(selectedPathway),
-              status: state,
-              caseNoteText: `Resettlement status set to: ${status}. ${caseNoteInput || ''}`,
-            },
-          )
-          serverUpdate = 'success'
-          return res.redirect(
-            `/${selectedPathway}/?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}#case-notes`,
-          )
-        } catch (error) {
-          if (error.message === deliusUserErrorMessage) {
-            serverUpdate = 'deliusUserError'
-          } else {
-            serverUpdate = 'error'
-          }
-          logger.error(error)
-        }
-      }
-
-      return res.render('pages/status-update', {
-        prisonerData,
-        selectedPathway,
-        serverUpdate,
-        state,
-      })
-    } catch (err) {
-      return next(err)
-    }
   })
 
   return router
