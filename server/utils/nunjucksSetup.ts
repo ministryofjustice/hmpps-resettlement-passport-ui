@@ -70,6 +70,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
     {
       autoescape: true,
       express: app,
+      dev: !production,
     },
   )
 
