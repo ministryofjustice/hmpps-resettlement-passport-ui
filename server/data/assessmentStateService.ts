@@ -132,6 +132,7 @@ export class AssessmentStateService {
   async onComplete(key: StateKey) {
     await this.store.deleteAssessment(key.sessionId, key.prisonerNumber, key.pathway)
     await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
+    await this.store.deleteAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway)
   }
 
   async getCurrentPage(key: StateKey): Promise<AssessmentPage> {

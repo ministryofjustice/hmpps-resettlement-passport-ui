@@ -1,12 +1,11 @@
 import { Router } from 'express'
 import { Services } from '../../services'
 import ImmediateNeedsReportController from './immediateNeedsReportController'
-import { createAssessmentStateService } from '../../data/assessmentStateService'
 
 export default (router: Router, services: Services) => {
   const immediateNeedsReportController = new ImmediateNeedsReportController(
     services.rpService,
-    createAssessmentStateService(),
+    services.assessmentStateService,
   )
 
   router.get('/ImmediateNeedsReport-next-page', [immediateNeedsReportController.getFirstPage])

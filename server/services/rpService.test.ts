@@ -22,7 +22,6 @@ describe('RpService', () => {
 
   it('should get an Otp when one exists', async () => {
     const nomsId = 'A8731DY'
-    rpClient.setToken.mockResolvedValue()
     rpClient.get.mockResolvedValue({
       otp: '123456',
     })
@@ -35,7 +34,6 @@ describe('RpService', () => {
     const error = {
       status: 404,
     }
-    rpClient.setToken.mockResolvedValue()
     rpClient.get.mockRejectedValue(error)
     rpClient.post.mockResolvedValue({
       otp: '123456',

@@ -11,6 +11,7 @@ import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
 import { getEnumValue, parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'
 import ImmediateNeedsReportView from './immediateNeedsReportView'
+import logger from '../../../logger'
 
 export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -228,6 +229,12 @@ export default class ImmediateNeedsReportController {
       }
 
       const dataToSubmit = await this.assessmentStateService.prepareSubmission(stateKey)
+      if (dataToSubmit.questionsAndAnswers.length === 0) {
+        logger.warn('Nothing entered on submit, returning to task list page. session id: %s', req.session.id)
+        return res.redirect(
+          `/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
+        )
+      }
 
       const completeAssessment = (await this.rpService.completeAssessment(
         token,
@@ -242,24 +249,24 @@ export default class ImmediateNeedsReportController {
       await this.assessmentStateService.onComplete(stateKey)
 
       if (completeAssessment.error) {
-        next(
+        return next(
           new Error(
             `Error completing assessment for prisoner ${prisonerData.personalDetails.prisonerNumber} pathway ${pathway}`,
           ),
         )
-      } else if (
+      }
+      if (
         (prisonerData.immediateNeedsSubmitted && assessmentType === 'BCST2') ||
         (prisonerData.preReleaseSubmitted && assessmentType === 'RESETTLEMENT_PLAN')
       ) {
         const { url } = getEnumValue(pathway)
-        res.redirect(`/${url}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
-      } else {
-        res.redirect(
-          `/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
-        )
+        return res.redirect(`/${url}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
       }
+      return res.redirect(
+        `/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
+      )
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 

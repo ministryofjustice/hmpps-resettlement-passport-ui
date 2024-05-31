@@ -13,6 +13,7 @@ import { Appointments } from '../data/model/appointment'
 import { OtpDetails } from '../data/model/otp'
 import { CaseNote, CaseNotesHistory } from '../data/model/caseNotesHistory'
 import { CaseNotesCreator, CaseNotesCreators } from '../data/model/caseNotesCreators'
+import { PrisonerData } from '../@types/express'
 
 export default class RpService {
   constructor(private readonly rpClient: RPClient) {
@@ -35,14 +36,14 @@ export default class RpService {
   ) {
     // If pathwayView is set then set assessmentRequired to blank
     const assessmentRequiredValue = !pathwayView ? assessmentRequired : ''
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     return (await this.rpClient.get(
       `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&assessmentRequired=${assessmentRequiredValue}&watchList=${watchList}`,
     )) as Promise<PrisonersList>
   }
 
   async getCrsReferrals(token: string, sessionId: string, prisonerId: string, pathway: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     let crsReferrals: CrsReferralResponse
     try {
@@ -62,7 +63,7 @@ export default class RpService {
   }
 
   async getAssessmentInformation(token: string, sessionId: string, prisonerId: string, pathway: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     let assessmentInformation: AssessmentsInformation
     try {
@@ -82,7 +83,7 @@ export default class RpService {
   }
 
   async getAccommodation(token: string, sessionId: string, prisonerId: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     let accommodation
     try {
@@ -102,7 +103,7 @@ export default class RpService {
   }
 
   async getEducationSkillsWork(token: string, sessionId: string, prisonerId: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     let getEducationSkillsWork: EducationSkillsWorkResponse
     try {
@@ -124,7 +125,7 @@ export default class RpService {
   }
 
   async getPrisonerCountMetrics(token: string, sessionId: string, prisonId: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     let prisonerCountMetrics: PrisonerCountMetrics
     try {
@@ -151,7 +152,7 @@ export default class RpService {
     pageId: string,
     assessmentType: AssessmentType,
   ) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     let assessmentPage
     try {
@@ -179,7 +180,7 @@ export default class RpService {
     currentPageId: string,
     assessmentType: AssessmentType,
   ) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     let nextQuestion
     try {
       nextQuestion = (await this.rpClient.post(
@@ -208,7 +209,7 @@ export default class RpService {
     questionsAndAnswers: SubmittedInput,
     assessmentType: AssessmentType,
   ) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     let response
     try {
       response = await this.rpClient.post(
@@ -230,7 +231,7 @@ export default class RpService {
   }
 
   async submitAssessment(token: string, sessionId: string, prisonerId: string, assessmentType: AssessmentType) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     let response: { error?: boolean }
     try {
       response = await this.rpClient.post(
@@ -251,7 +252,7 @@ export default class RpService {
     prisonerId: string,
     type: AssessmentType,
   ): Promise<AssessmentsSummary> {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     let assessmentsSummary: AssessmentsSummary
 
     try {
@@ -268,7 +269,7 @@ export default class RpService {
   }
 
   async getAppointments(token: string, sessionId: string, prisonerId: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     try {
       return (await this.rpClient.get(
@@ -284,7 +285,7 @@ export default class RpService {
   }
 
   async getOtp(token: string, sessionId: string, prisonerId: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     try {
       return (await this.rpClient.get(`/resettlement-passport/popUser/${prisonerId}/otp`)) as Promise<OtpDetails>
@@ -295,7 +296,7 @@ export default class RpService {
   }
 
   async recreateOtp(token: string, sessionId: string, prisonerId: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
 
     try {
       return (await this.rpClient.post(`/resettlement-passport/popUser/${prisonerId}/otp`, {})) as Promise<OtpDetails>
@@ -363,7 +364,7 @@ export default class RpService {
     sort: string,
     days: string,
   ) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     let caseNotes: CaseNotesHistory
     try {
       const caseNotesResponse = (await this.rpClient.get(
@@ -379,7 +380,7 @@ export default class RpService {
   }
 
   async getCaseNotesCreators(token: string, sessionId: string, prisonerId: string, pathway: string) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     let caseNotesCreators: CaseNotesCreators
     try {
       const caseNotesCreatorsResponse = (await this.rpClient.get(
@@ -395,7 +396,7 @@ export default class RpService {
   }
 
   async postAssessmentSkip(token: string, prisonerId: string, skipRequest: AssessmentSkipRequest): Promise<void> {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     await this.rpClient.post(`/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/skip`, skipRequest)
   }
 
@@ -408,7 +409,19 @@ export default class RpService {
       caseNoteText: string
     },
   ) {
-    await this.rpClient.setToken(token)
+    this.rpClient.setToken(token)
     await this.rpClient.patch(`/resettlement-passport/prisoner/${prisonerId}/pathway-with-case-note`, body)
+  }
+
+  async getPrisonerDetails(token: string, prisonerId: string): Promise<PrisonerData> {
+    this.rpClient.setToken(token)
+    return (await this.rpClient.get(`/resettlement-passport/prisoner/${prisonerId}`)) as PrisonerData
+  }
+
+  async getPrisonerImage(token: string, prisonerNumber: string, facialImageId: string): Promise<string> {
+    this.rpClient.setToken(token)
+    return this.rpClient.getImageAsBase64String(
+      `/resettlement-passport/prisoner/${prisonerNumber}/image/${facialImageId}`,
+    )
   }
 }
