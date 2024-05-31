@@ -16,5 +16,7 @@ context('Watchlist', () => {
     cy.get('#watchList').should('not.be.checked')
     cy.get('input#watchList').check()
     cy.get('#submit-filter-btn').click()
+
+    cy.get('#prisonerNumber').should('contain.text', 'G4161UF')
   })
 })
