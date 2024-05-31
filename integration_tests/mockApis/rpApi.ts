@@ -38,7 +38,10 @@ import {
 import { PathwayAssessmentStatus } from '../../server/data/model/assessmentStatus'
 import { responseHeaders } from './headers'
 import { AssessmentType } from '../../server/data/model/assessmentInformation'
-import { stubJohnSmithStatusUpdateSuccess } from './scenarios/john-smith/john-smith-status-update'
+import {
+  stubJohnSmithStatusUpdateFailure,
+  stubJohnSmithStatusUpdateSuccess,
+} from './scenarios/john-smith/john-smith-status-update'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -431,4 +434,5 @@ export default {
   stubJohnSmithSkipOutsidePreReleaseWindow,
   stubAssessmentSummary,
   stubJohnSmithStatusUpdateSuccess,
+  stubJohnSmithStatusUpdateFailure,
 }

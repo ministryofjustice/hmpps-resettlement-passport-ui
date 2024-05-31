@@ -45,8 +45,8 @@
                       {% set statusInfo = statusItem | getEnumValue(resettlementAssessmentEnabled) %}
                       {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
                       {% set isChecked = false %}
-                      {% if serverUpdate === 'success' %}
-                        {% if state == statusItem %}
+                      {% if selectedStatus %}
+                        {% if selectedStatus == statusItem %}
                           {% set isChecked = true %}
                         {% endif %}
                       {% else %}
@@ -57,7 +57,7 @@
                       <div class="govuk-radios__item">
                         <input
                           class="govuk-radios__input"
-                          name="state"
+                          name="selectedStatus"
                           type="radio"
                           id="{{ statusItem }}"
                           value="{{ statusItem }}"
@@ -74,7 +74,12 @@
                       <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="caseNote_{{statusItem}}">
                         <div class="govuk-form-group">
                           <label class="govuk-label" for="caseNoteInput_{{ loop.index }}">Add a case note</label>
-                          <textarea class="govuk-textarea" id="caseNoteInput_{{ loop.index }}" name="caseNoteInput_{{ statusItem }}" rows="5" aria-describedby="more-detail-hint"></textarea>
+                          {% if isChecked %}
+                              {% set caseNotesText = caseNoteInput %}
+                          {% else %}
+                            {% set caseNotesText = "" %}
+                          {% endif %}
+                          <textarea class="govuk-textarea" id="caseNoteInput_{{ loop.index }}" name="caseNoteInput_{{ statusItem }}" rows="5" aria-describedby="more-detail-hint">{{ caseNotesText }}</textarea>
                         </div>
                       </div>
                   {% endfor %}

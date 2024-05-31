@@ -57,7 +57,36 @@ const stubApiUpdate = () =>
     newScenarioState: 'after-submit',
   })
 
+const stubApiUpdateFailure = () =>
+  stubFor({
+    name: 'update john smith but the request fails',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/pathway-with-case-note',
+      method: 'PATCH',
+      bodyPatterns: [
+        {
+          equalToJson: JSON.stringify({
+            caseNoteText: 'Resettlement status set to: In progress. Long and precious case note',
+            pathway: 'ACCOMMODATION',
+            status: 'IN_PROGRESS',
+          }),
+          ignoreArrayOrder: true,
+          ignoreExtraElements: true,
+        },
+      ],
+    },
+    response: {
+      headers: submitHeaders,
+      status: 500,
+      jsonBody: {
+        status: 500,
+        userMessage: 'It broke, sorry',
+      },
+    },
+  })
+
 export const stubJohnSmithStatusUpdateSuccess = () =>
   Promise.all([...johnSmithDefaults(), profileBeforeUpdate(), profileAfterUpdate(), stubApiUpdate()])
 
-export const stubJohnSmithStatusUpdateFailure = () => Promise.all([])
+export const stubJohnSmithStatusUpdateFailure = () =>
+  Promise.all([...johnSmithDefaults(), profileBeforeUpdate(), stubApiUpdateFailure()])
