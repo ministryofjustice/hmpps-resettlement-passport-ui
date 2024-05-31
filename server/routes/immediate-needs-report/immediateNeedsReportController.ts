@@ -26,7 +26,7 @@ export default class ImmediateNeedsReportController {
       const assessmentType = parseAssessmentType(req.query.type)
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.session.id,
+        sessionId: req.sessionID,
         pathway,
       }
 
@@ -65,7 +65,7 @@ export default class ImmediateNeedsReportController {
       const backButton = req.query.backButton === 'true'
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.session.id,
+        sessionId: req.sessionID,
         pathway,
       }
       const currentPage = await this.assessmentStateService.getCurrentPage(stateKey)
@@ -123,7 +123,7 @@ export default class ImmediateNeedsReportController {
         : null
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.session.id,
+        sessionId: req.sessionID,
         pathway,
       }
 
@@ -224,13 +224,13 @@ export default class ImmediateNeedsReportController {
 
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.session.id,
+        sessionId: req.sessionID,
         pathway,
       }
 
       const dataToSubmit = await this.assessmentStateService.prepareSubmission(stateKey)
       if (dataToSubmit.questionsAndAnswers.length === 0) {
-        logger.warn('Nothing entered on submit, returning to task list page. session id: %s', req.session.id)
+        logger.warn('Nothing entered on submit, returning to task list page. session id: %s', req.sessionID)
         return res.redirect(
           `/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
         )
@@ -279,7 +279,7 @@ export default class ImmediateNeedsReportController {
     const { prisonerNumber } = prisonerData.personalDetails
     const stateKey = {
       prisonerNumber,
-      sessionId: req.session.id,
+      sessionId: req.sessionID,
       pathway,
     }
 

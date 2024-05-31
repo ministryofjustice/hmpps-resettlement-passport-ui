@@ -72,4 +72,21 @@ describe('completeAssessment', () => {
       'BCST2',
     )
   })
+
+  it('it should not submit the assessment if there is no submitted input', async () => {
+    stubPrisonerDetails()
+
+    jest.spyOn(assessmentStateService, 'prepareSubmission').mockResolvedValue({ questionsAndAnswers: [] })
+
+    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
+
+    await request(app)
+      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .expect(302)
+      .expect(res => {
+        expect(res.text).toContain('Found. Redirecting to /assessment-task-list?prisonerNumber=123&type=BCST2')
+      })
+
+    expect(completeAssessmentSpy).toHaveBeenCalledTimes(0)
+  })
 })
