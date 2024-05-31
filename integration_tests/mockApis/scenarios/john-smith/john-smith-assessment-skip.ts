@@ -22,9 +22,9 @@ const stubAssessmentSkip = () =>
 export const stubJohnSmithSkipInsidePreReleaseWindow = () =>
   Promise.all([
     ...johnSmithDefaults(),
-    ...johnSmithGetPrisonerDetails(aDateInsideOfPreReleaseWindow),
+    ...johnSmithGetPrisonerDetails({ releaseDate: aDateInsideOfPreReleaseWindow }),
     stubAssessmentSkip(),
   ])
 
 export const stubJohnSmithSkipOutsidePreReleaseWindow = () =>
-  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(aDateOutsideOfPreReleaseWindow)])
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails({ releaseDate: aDateOutsideOfPreReleaseWindow })])

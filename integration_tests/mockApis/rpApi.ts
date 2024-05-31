@@ -11,7 +11,7 @@ import {
   johnSmithTaskListAfterComplete,
   johnSmithWhereDidTheyLive,
   johnSmithWhereWillTheyLive2,
-  stubJohnSmithPrisonerDetails,
+  stubJohnSmithPrisonerDetailsPreRelease,
 } from './scenarios/john-smith/john-smith-pre-release'
 import { johnSmithDefaults } from './scenarios/john-smith/john-smith'
 import {
@@ -38,6 +38,10 @@ import {
 import { PathwayAssessmentStatus } from '../../server/data/model/assessmentStatus'
 import { responseHeaders } from './headers'
 import { AssessmentType } from '../../server/data/model/assessmentInformation'
+import {
+  stubJohnSmithStatusUpdateFailure,
+  stubJohnSmithStatusUpdateSuccess,
+} from './scenarios/john-smith/john-smith-status-update'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -318,7 +322,7 @@ const stubAssessmentSummary = ({
 const stubJohnSmithPreRelease = () => {
   return Promise.all([
     ...johnSmithDefaults(),
-    stubJohnSmithPrisonerDetails(),
+    stubJohnSmithPrisonerDetailsPreRelease(),
     johnSmithTaskList(),
     johnSmithTaskListAfterComplete(),
     johnSmithAccommodationNextPage1(),
@@ -429,4 +433,6 @@ export default {
   stubJohnSmithSkipInsidePreReleaseWindow,
   stubJohnSmithSkipOutsidePreReleaseWindow,
   stubAssessmentSummary,
+  stubJohnSmithStatusUpdateSuccess,
+  stubJohnSmithStatusUpdateFailure,
 }

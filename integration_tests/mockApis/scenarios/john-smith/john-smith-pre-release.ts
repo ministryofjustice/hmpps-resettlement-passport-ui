@@ -1,7 +1,7 @@
 import { stubFor } from '../../wiremock'
 import { responseHeaders } from '../../headers'
 
-export const stubJohnSmithPrisonerDetails = () =>
+export const stubJohnSmithPrisonerDetailsPreRelease = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy',
     request: {
