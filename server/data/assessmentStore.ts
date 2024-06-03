@@ -111,4 +111,10 @@ export default class AssessmentStore {
     const key = buildKey(editedQuestionPrefix, sessionId, nomsId, pathway)
     await this.client.del(key)
   }
+
+  public async deleteAnsweredQuestions(sessionId: string, nomsId: string, pathway: string) {
+    await this.ensureConnected()
+    const key = buildKey(answeredQuestionsPrefix, sessionId, nomsId, pathway)
+    await this.client.del(key)
+  }
 }

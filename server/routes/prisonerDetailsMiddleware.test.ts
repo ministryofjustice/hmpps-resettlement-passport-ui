@@ -1,12 +1,12 @@
 import { getPrisonerImage } from './prisonerDetailsMiddleware'
-import { RPClient } from '../data'
 import { PrisonerData } from '../@types/express'
+import RpService from '../services/rpService'
 
 describe('Prisoner Details Middleware', () => {
-  let rpClient: jest.Mocked<RPClient>
+  let rpService: jest.Mocked<RpService>
 
   beforeEach(() => {
-    rpClient = new RPClient() as jest.Mocked<RPClient>
+    rpService = new RpService(null) as jest.Mocked<RpService>
   })
 
   afterEach(() => {
@@ -15,44 +15,42 @@ describe('Prisoner Details Middleware', () => {
 
   it('Should get image happy path', async () => {
     const spy = jest
-      .spyOn(rpClient, 'getImageAsBase64String')
+      .spyOn(rpService, 'getPrisonerImage')
       .mockImplementation(() => Promise.resolve('aBase64ImageHonest'))
     const prisonerData = {
       personalDetails: {
         facialImageId: '1234',
       },
     }
-    const prisonerImage = await getPrisonerImage(rpClient, prisonerData as PrisonerData, 'abc')
+    const prisonerImage = await getPrisonerImage(rpService, 'token', prisonerData as PrisonerData, 'abc')
     expect(prisonerImage).toBe('aBase64ImageHonest')
 
-    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/abc/image/1234`)
+    expect(spy).toHaveBeenCalledWith('token', 'abc', '1234')
   })
 
   it('Should return null if there is an error loading the image', async () => {
-    const spy = jest
-      .spyOn(rpClient, 'getImageAsBase64String')
-      .mockImplementation(() => Promise.reject(Error('It broke')))
+    const spy = jest.spyOn(rpService, 'getPrisonerImage').mockImplementation(() => Promise.reject(Error('It broke')))
 
     const prisonerData = {
       personalDetails: {
         facialImageId: '1234',
       },
     }
-    const prisonerImage = await getPrisonerImage(rpClient, prisonerData as PrisonerData, 'abc')
+    const prisonerImage = await getPrisonerImage(rpService, 'token', prisonerData as PrisonerData, 'abc')
     expect(prisonerImage).toBe(null)
 
-    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/abc/image/1234`)
+    expect(spy).toHaveBeenCalledWith('token', 'abc', '1234')
   })
 
   it('Should not call the api if there is no prisoner image', async () => {
-    const spy = jest.spyOn(rpClient, 'getImageAsBase64String')
+    const spy = jest.spyOn(rpService, 'getPrisonerImage')
 
     const prisonerData = {
       personalDetails: {
         facialImageId: null as string,
       },
     }
-    const prisonerImage = await getPrisonerImage(rpClient, prisonerData as PrisonerData, 'abc')
+    const prisonerImage = await getPrisonerImage(rpService, 'token', prisonerData as PrisonerData, 'abc')
     expect(prisonerImage).toBe(null)
 
     expect(spy).toHaveBeenCalledTimes(0)

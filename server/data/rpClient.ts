@@ -8,7 +8,7 @@ export default class RPClient {
     this.restClient = new RestClient('RP API Client', config.apis.rpClient, token, sessionId, userId)
   }
 
-  async setToken(token: string) {
+  setToken(token: string) {
     this.restClient.token = token
   }
 
