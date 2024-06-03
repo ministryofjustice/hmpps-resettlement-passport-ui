@@ -13,59 +13,6 @@ const prisonersSearchWithWatchlist = () =>
       headers: responseHeaders,
       jsonBody: {
         content: [
-          //   {
-          //     prisonerNumber: 'A8731DY',
-          //     firstName: 'JOHN',
-          //     middleNames: 'MICHAEL',
-          //     lastName: 'SMITH',
-          //     releaseDate: '2024-06-17',
-          //     releaseType: 'CRD',
-          //     lastUpdatedDate: '2024-04-02',
-          //     status: [
-          //       {
-          //         pathway: 'ACCOMMODATION',
-          //         status: 'IN_PROGRESS',
-          //         lastDateChange: '2024-05-29',
-          //       },
-          //       {
-          //         pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR',
-          //         status: 'SUPPORT_REQUIRED',
-          //         lastDateChange: '2024-05-29',
-          //       },
-          //       {
-          //         pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY',
-          //         status: 'SUPPORT_DECLINED',
-          //         lastDateChange: '2024-05-29',
-          //       },
-          //       {
-          //         pathway: 'DRUGS_AND_ALCOHOL',
-          //         status: 'SUPPORT_NOT_REQUIRED',
-          //         lastDateChange: '2024-04-02',
-          //       },
-          //       {
-          //         pathway: 'EDUCATION_SKILLS_AND_WORK',
-          //         status: 'IN_PROGRESS',
-          //         lastDateChange: '2024-04-19',
-          //       },
-          //       {
-          //         pathway: 'FINANCE_AND_ID',
-          //         status: 'NOT_STARTED',
-          //         lastDateChange: '2024-05-29',
-          //       },
-          //       {
-          //         pathway: 'HEALTH',
-          //         status: 'SUPPORT_NOT_REQUIRED',
-          //         lastDateChange: '2024-04-19',
-          //       },
-          //     ],
-          //     pathwayStatus: null,
-          //     homeDetentionCurfewEligibilityDate: '2017-01-01',
-          //     paroleEligibilityDate: null,
-          //     releaseEligibilityDate: '2017-01-01',
-          //     releaseEligibilityType: 'HDCED',
-          //     releaseOnTemporaryLicenceDate: null,
-          //     assessmentRequired: true,
-          //   },
           {
             prisonerNumber: 'G4161UF',
             firstName: 'CHRISY',
