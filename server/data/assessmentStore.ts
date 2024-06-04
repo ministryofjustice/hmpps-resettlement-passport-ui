@@ -1,9 +1,10 @@
-import type { RedisClient } from './redisClient'
+import { hoursToSeconds } from 'date-fns'
 
+import type { RedisClient } from './redisClient'
 import logger from '../../logger'
 import { AssessmentPage, SubmittedInput } from './model/immediateNeedsReport'
-import { secondsUntilMidnight } from '../utils/utils'
 
+const defaultTimeToLive = hoursToSeconds(24 * 5)
 const assessmentPrefix = 'assessment:'
 const answeredQuestionsPrefix = 'answered:'
 const currentPagePrefix = 'currentPage:'
@@ -31,11 +32,11 @@ export default class AssessmentStore {
     nomsId: string,
     pathway: string,
     questionsAndAnswers: SubmittedInput,
-    durationSeconds = secondsUntilMidnight(),
+    ttl = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
     await this.client.set(buildKey(assessmentPrefix, userId, nomsId, pathway), JSON.stringify(questionsAndAnswers), {
-      EX: durationSeconds,
+      EX: ttl,
     })
   }
 
@@ -55,7 +56,7 @@ export default class AssessmentStore {
     nomsId: string,
     pathway: string,
     questionIds: string[],
-    durationSeconds: number = secondsUntilMidnight(),
+    durationSeconds: number = defaultTimeToLive,
   ) {
     await this.ensureConnected()
     const key = buildKey(answeredQuestionsPrefix, userId, nomsId, pathway)
@@ -73,11 +74,11 @@ export default class AssessmentStore {
     nomsId: string,
     pathway: string,
     currentPage: AssessmentPage,
-    durationSeconds: number = secondsUntilMidnight(),
+    ttl: number = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
     await this.client.set(buildKey(currentPagePrefix, userId, nomsId, pathway), JSON.stringify(currentPage), {
-      EX: durationSeconds,
+      EX: ttl,
     })
   }
 
@@ -92,11 +93,11 @@ export default class AssessmentStore {
     nomsId: string,
     pathway: string,
     questionIds: string[],
-    durationSeconds: number = secondsUntilMidnight(),
+    ttl: number = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
     await this.client.set(buildKey(editedQuestionPrefix, userId, nomsId, pathway), JSON.stringify(questionIds), {
-      EX: durationSeconds,
+      EX: ttl,
     })
   }
 

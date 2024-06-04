@@ -291,12 +291,6 @@ export function getValidationError(validationErrors: ValidationErrors, questionI
   return isQuestionInArray
 }
 
-export function secondsUntilMidnight() {
-  const midnight = new Date()
-  midnight.setHours(24, 0, 0, 0)
-  return Math.round((midnight.getTime() - new Date().getTime()) / 1000)
-}
-
 export function parseAssessmentType(type: unknown): AssessmentType {
   return type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
 }
