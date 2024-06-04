@@ -24,7 +24,7 @@ context('Pre Release Report', () => {
 
     // Status buttons
     cy.get('.govuk-table__cell > .govuk-tag').each(item => {
-      cy.wrap(item).should('have.text', 'Not started')
+      cy.wrap(item).should('have.text', 'Incomplete')
     })
 
     // Click Accommodation link

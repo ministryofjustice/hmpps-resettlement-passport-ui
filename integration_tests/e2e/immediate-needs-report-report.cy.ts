@@ -57,7 +57,7 @@ context('Immediate Needs Report', () => {
       if (index !== 6) {
         cy.wrap(item).should('have.text', 'Completed')
       } else {
-        cy.wrap(item).should('have.text', 'Not started')
+        cy.wrap(item).should('have.text', 'Incomplete')
       }
     })
 
