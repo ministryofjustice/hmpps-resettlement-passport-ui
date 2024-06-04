@@ -5,10 +5,10 @@ import logger from '../../logger'
 import { AssessmentPage, SubmittedInput } from './model/immediateNeedsReport'
 
 const defaultTimeToLive = hoursToSeconds(24 * 5)
-const assessmentPrefix = 'assessment:'
-const answeredQuestionsPrefix = 'answered:'
-const currentPagePrefix = 'currentPage:'
-const editedQuestionPrefix = 'edit:'
+const assessmentPrefix = 'assessment'
+const answeredQuestionsPrefix = 'answered'
+const currentPagePrefix = 'currentPage'
+const editedQuestionPrefix = 'edit'
 
 function buildKey(prefix: string, userId: string, nomsId: string, pathway: string) {
   return `${prefix}:${userId}:${nomsId}:${pathway}`
