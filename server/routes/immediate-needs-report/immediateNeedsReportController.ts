@@ -26,7 +26,7 @@ export default class ImmediateNeedsReportController {
       const assessmentType = parseAssessmentType(req.query.type)
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.sessionID,
+        userId: req.user.username,
         pathway,
       }
 
@@ -65,7 +65,7 @@ export default class ImmediateNeedsReportController {
       const backButton = req.query.backButton === 'true'
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.sessionID,
+        userId: req.user.username,
         pathway,
       }
       const currentPage = await this.assessmentStateService.getCurrentPage(stateKey)
@@ -123,7 +123,7 @@ export default class ImmediateNeedsReportController {
         : null
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.sessionID,
+        userId: req.user.username,
         pathway,
       }
 
@@ -224,7 +224,7 @@ export default class ImmediateNeedsReportController {
 
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.sessionID,
+        userId: req.user.username,
         pathway,
       }
 
@@ -279,7 +279,7 @@ export default class ImmediateNeedsReportController {
     const { prisonerNumber } = prisonerData.personalDetails
     const stateKey = {
       prisonerNumber,
-      sessionId: req.sessionID,
+      userId: req.user.username,
       pathway,
     }
 

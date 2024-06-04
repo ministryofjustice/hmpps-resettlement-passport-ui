@@ -33,7 +33,7 @@ describe('assessmentStateService', () => {
   function aStateKey(pathway: string): StateKey {
     return {
       prisonerNumber,
-      sessionId,
+      userId: sessionId,
       pathway,
     }
   }
