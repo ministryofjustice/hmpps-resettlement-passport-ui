@@ -6,13 +6,12 @@ import RpService from '../services/rpService'
 
 export async function getPrisonerImage(
   rpService: RpService,
-  token: string,
   prisonerData: PrisonerData,
   prisonerNumber: string,
 ): Promise<string> {
   try {
     if (prisonerData.personalDetails.facialImageId) {
-      return await rpService.getPrisonerImage(token, prisonerNumber, prisonerData.personalDetails.facialImageId)
+      return await rpService.getPrisonerImage(prisonerNumber, prisonerData.personalDetails.facialImageId)
     }
     logger.info(`No image available for ${prisonerNumber}`)
   } catch (err) {
@@ -27,7 +26,6 @@ export default function prisonerDetailsMiddleware({ rpService }: Services) {
       FETCH PRISONER PROFILE DATA HERE
     ********************************* */
     let { prisonerNumber }: { prisonerNumber?: string } = req.query
-    const { token } = req.user
     let prisonerData = null
 
     if (!prisonerNumber) {
@@ -37,7 +35,7 @@ export default function prisonerDetailsMiddleware({ rpService }: Services) {
 
     if (prisonerNumber) {
       try {
-        prisonerData = await rpService.getPrisonerDetails(token, prisonerNumber)
+        prisonerData = await rpService.getPrisonerDetails(prisonerNumber)
       } catch (err) {
         if (err.status === 404) {
           err.customMessage = 'No data found for prisoner'
@@ -46,7 +44,7 @@ export default function prisonerDetailsMiddleware({ rpService }: Services) {
         return
       }
 
-      prisonerData.prisonerImage = await getPrisonerImage(rpService, token, prisonerData, prisonerNumber)
+      prisonerData.prisonerImage = await getPrisonerImage(rpService, prisonerData, prisonerNumber)
 
       // RP2-490 If the prisoner's prison does not match the user's caseload then we need to treat this as not found
       if (

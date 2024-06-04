@@ -26,7 +26,7 @@ describe('assessmentTaskListController', () => {
   let controller: AssessmentTaskListController
 
   beforeEach(async () => {
-    rpService = new RpService(null) as jest.Mocked<RpService>
+    rpService = new RpService() as jest.Mocked<RpService>
     res = { redirect: jest.fn(), render: jest.fn() } as unknown as Response
     next = jest.fn(() => () => {})
     controller = new AssessmentTaskListController(rpService)

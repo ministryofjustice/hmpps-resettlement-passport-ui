@@ -49,7 +49,7 @@ export default (router: Router, { rpService }: Services) => {
 
     try {
       const status = getEnumValue(selectedStatus).name
-      await rpService.patchStatusWithCaseNote(req.user.token, prisonerNumber, {
+      await rpService.patchStatusWithCaseNote(prisonerNumber, {
         pathway: getEnumByURL(selectedPathway),
         status: selectedStatus,
         caseNoteText: `Resettlement status set to: ${status}. ${caseNoteInput || ''}`,

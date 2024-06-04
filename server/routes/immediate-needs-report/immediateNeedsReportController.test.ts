@@ -12,7 +12,7 @@ let rpService: jest.Mocked<RpService>
 let assessmentStateService: jest.Mocked<AssessmentStateService>
 
 beforeEach(() => {
-  rpService = new RpService(null) as jest.Mocked<RpService>
+  rpService = new RpService() as jest.Mocked<RpService>
   assessmentStateService = new AssessmentStateService(null) as jest.Mocked<AssessmentStateService>
 
   app = appWithAllRoutes({
@@ -63,14 +63,7 @@ describe('completeAssessment', () => {
         expect(res.text).toContain('Found. Redirecting to /assessment-task-list?prisonerNumber=123&type=BCST2')
       })
 
-    expect(completeAssessmentSpy).toHaveBeenCalledWith(
-      'token',
-      'sessionId',
-      '123',
-      'DRUGS_AND_ALCOHOL',
-      submission,
-      'BCST2',
-    )
+    expect(completeAssessmentSpy).toHaveBeenCalledWith('123', 'DRUGS_AND_ALCOHOL', submission, 'BCST2')
   })
 
   it('it should not submit the assessment if there is no submitted input', async () => {

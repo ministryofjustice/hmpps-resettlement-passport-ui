@@ -37,6 +37,9 @@
     "npm": "^9"
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>/jest.setup.js"
+    ],
     "transform": {
       "^.+\\.tsx?$": [
         "ts-jest",

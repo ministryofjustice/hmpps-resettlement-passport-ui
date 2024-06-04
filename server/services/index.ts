@@ -5,10 +5,10 @@ import RpService from './rpService'
 import { createAssessmentStateService } from '../data/assessmentStateService'
 
 export const services = () => {
-  const { applicationInfo, rpClient, componentClient } = dataAccess()
+  const { applicationInfo, componentClient } = dataAccess()
 
   const userService = new UserService()
-  const rpService = new RpService(rpClient)
+  const rpService = new RpService()
   const componentService = new ComponentService(componentClient)
   const assessmentStateService = createAssessmentStateService()
 

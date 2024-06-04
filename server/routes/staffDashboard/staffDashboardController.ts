@@ -10,7 +10,6 @@ export default class StaffDashboardController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { token } = req.user
       const { userActiveCaseLoad } = res.locals
       const {
         searchInput = '',
@@ -51,7 +50,6 @@ export default class StaffDashboardController {
         // Only NOMIS users can access the list prisoners functionality at present
         if (res.locals.user.authSource === 'nomis') {
           prisonersList = await this.rpService.getListOfPrisoners(
-            token,
             userActiveCaseLoad.caseLoadId,
             parseInt(page, 10),
             20,
@@ -65,11 +63,7 @@ export default class StaffDashboardController {
             <string>watchList,
           )
           if (reportType === 'pathway-summary') {
-            prisonerCountMetrics = await this.rpService.getPrisonerCountMetrics(
-              token,
-              req.sessionID,
-              userActiveCaseLoad.caseLoadId,
-            )
+            prisonerCountMetrics = await this.rpService.getPrisonerCountMetrics(userActiveCaseLoad.caseLoadId)
           }
         }
         const view = new StaffDashboardView(

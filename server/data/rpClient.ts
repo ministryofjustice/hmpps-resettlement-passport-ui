@@ -2,14 +2,10 @@ import RestClient from './restClient'
 import config from '../config'
 
 export default class RPClient {
-  restClient: RestClient
+  private restClient: RestClient
 
-  constructor(token = '', sessionId = '', userId = '') {
+  constructor(readonly token = '', readonly sessionId = '', readonly userId = '') {
     this.restClient = new RestClient('RP API Client', config.apis.rpClient, token, sessionId, userId)
-  }
-
-  setToken(token: string) {
-    this.restClient.token = token
   }
 
   async getImageAsBase64String(path: string): Promise<string> {

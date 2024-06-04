@@ -10,7 +10,6 @@ export default class AttitudesThinkingBehaviourController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
       const {
         page = '0',
         pageSize = '10',
@@ -20,22 +19,16 @@ export default class AttitudesThinkingBehaviourController {
       } = req.query
 
       const crsReferrals = await this.prisonService.getCrsReferrals(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )
 
       const assessmentData = await this.prisonService.getAssessmentInformation(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )
 
       const caseNotesData = await this.prisonService.getCaseNotesHistory(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
         createdByUserId as string,
@@ -46,8 +39,6 @@ export default class AttitudesThinkingBehaviourController {
       )
 
       const caseNotesCreators = await this.prisonService.getCaseNotesCreators(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )

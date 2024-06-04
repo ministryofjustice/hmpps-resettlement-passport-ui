@@ -23,6 +23,7 @@ import getFrontendComponents from './middleware/setUpFrontendComponents'
 import setUpEnvironmentName from './middleware/setUpEnvironmentName'
 import userMetricsAndLoggingMiddleware from './middleware/userMetricsAndLoggingMiddleware'
 import config from './config'
+import { userContextMiddleware } from './middleware/userContextMiddleware'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -44,13 +45,14 @@ export default function createApp(services: Services): express.Application {
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
   app.use(userMetricsAndLoggingMiddleware())
+  app.use(userContextMiddleware)
 
   app.get('*', getFrontendComponents(services))
 
   app.use(pdfRenderer(new GotenbergClient(config.apis.gotenberg.apiUrl)))
   app.use(routes(services))
 
-  app.use((req, res, next) => next(createError(404, 'Not found')))
+  app.use((_req, _res, next) => next(createError(404, 'Not found')))
   app.use(errorHandler(process.env.NODE_ENV === 'production'))
 
   return app

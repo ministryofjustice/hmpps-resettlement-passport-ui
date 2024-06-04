@@ -14,14 +14,14 @@ import { OtpDetails } from '../data/model/otp'
 import { CaseNote, CaseNotesHistory } from '../data/model/caseNotesHistory'
 import { CaseNotesCreator, CaseNotesCreators } from '../data/model/caseNotesCreators'
 import { PrisonerData } from '../@types/express'
+import { currentUser } from '../middleware/userContextMiddleware'
 
 export default class RpService {
-  constructor(private readonly rpClient: RPClient) {
+  constructor() {
     // noop
   }
 
   async getListOfPrisoners(
-    token: string,
     prisonSelected: string,
     page: number,
     pageSize: number,
@@ -36,22 +36,28 @@ export default class RpService {
   ) {
     // If pathwayView is set then set assessmentRequired to blank
     const assessmentRequiredValue = !pathwayView ? assessmentRequired : ''
-    this.rpClient.setToken(token)
-    return (await this.rpClient.get(
+
+    return (await this.createClient().get(
       `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&assessmentRequired=${assessmentRequiredValue}&watchList=${watchList}`,
     )) as Promise<PrisonersList>
   }
 
-  async getCrsReferrals(token: string, sessionId: string, prisonerId: string, pathway: string) {
-    this.rpClient.setToken(token)
+  createClient() {
+    const { token, sessionId, userId } = currentUser()
+    return new RPClient(token, sessionId, userId)
+  }
 
+  async getCrsReferrals(prisonerId: string, pathway: string) {
     let crsReferrals: CrsReferralResponse
+    const client = this.createClient()
     try {
-      crsReferrals = (await this.rpClient.get(
+      crsReferrals = (await client.get(
         `/resettlement-passport/prisoner/${prisonerId}/crs-referrals/${pathway}`,
       )) as CrsReferralResponse
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve ${pathway} CRS info for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${client.sessionId} Cannot retrieve ${pathway} CRS info for ${prisonerId} ${err.status} ${err}`,
+      )
       if (err.status === 404) {
         crsReferrals = { results: [{ pathway, referrals: [], message: ERROR_DICTIONARY.DATA_NOT_FOUND }] }
       } else {
@@ -62,16 +68,17 @@ export default class RpService {
     return crsReferrals
   }
 
-  async getAssessmentInformation(token: string, sessionId: string, prisonerId: string, pathway: string) {
-    this.rpClient.setToken(token)
-
+  async getAssessmentInformation(prisonerId: string, pathway: string) {
     let assessmentInformation: AssessmentsInformation
+    const client = this.createClient()
     try {
-      assessmentInformation = (await this.rpClient.get(
+      assessmentInformation = (await client.get(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/latest`,
       )) as AssessmentsInformation
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve ${pathway} CRS info for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${client.sessionId} Cannot retrieve ${pathway} CRS info for ${prisonerId} ${err.status} ${err}`,
+      )
       if (err.status === 404) {
         assessmentInformation = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
@@ -82,16 +89,17 @@ export default class RpService {
     return assessmentInformation
   }
 
-  async getAccommodation(token: string, sessionId: string, prisonerId: string) {
-    this.rpClient.setToken(token)
-
+  async getAccommodation(prisonerId: string) {
     let accommodation
+    const client = this.createClient()
     try {
-      accommodation = (await this.rpClient.get(
+      accommodation = (await client.get(
         `/resettlement-passport/prisoner/${prisonerId}/accommodation`,
       )) as Promise<Accommodation>
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve accommodation info for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${client.sessionId} Cannot retrieve accommodation info for ${prisonerId} ${err.status} ${err}`,
+      )
       if (err.status === 404) {
         accommodation = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
@@ -102,17 +110,16 @@ export default class RpService {
     return accommodation
   }
 
-  async getEducationSkillsWork(token: string, sessionId: string, prisonerId: string) {
-    this.rpClient.setToken(token)
-
+  async getEducationSkillsWork(prisonerId: string) {
     let getEducationSkillsWork: EducationSkillsWorkResponse
+    const client = this.createClient()
     try {
-      getEducationSkillsWork = (await this.rpClient.get(
+      getEducationSkillsWork = (await client.get(
         `/resettlement-passport/prisoner/${prisonerId}/work-readiness`,
       )) as EducationSkillsWorkResponse
     } catch (err) {
       logger.warn(
-        `Session: ${sessionId} Cannot retrieve Education, Skills & Work information for ${prisonerId} ${err.status} ${err}`,
+        `Session: ${client.sessionId} Cannot retrieve Education, Skills & Work information for ${prisonerId} ${err.status} ${err}`,
       )
       if (err.status === 404) {
         getEducationSkillsWork = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
@@ -124,16 +131,17 @@ export default class RpService {
     return getEducationSkillsWork
   }
 
-  async getPrisonerCountMetrics(token: string, sessionId: string, prisonId: string) {
-    this.rpClient.setToken(token)
-
+  async getPrisonerCountMetrics(prisonId: string) {
     let prisonerCountMetrics: PrisonerCountMetrics
+    const client = this.createClient()
     try {
-      prisonerCountMetrics = (await this.rpClient.get(
+      prisonerCountMetrics = (await client.get(
         `/resettlement-passport/metrics/prisoner-counts?prisonId=${prisonId}`,
       )) as PrisonerCountMetrics
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve prisoner count metrics for ${prisonId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${client.sessionId} Cannot retrieve prisoner count metrics for ${prisonId} ${err.status} ${err}`,
+      )
       if (err.status === 404) {
         prisonerCountMetrics = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
@@ -144,23 +152,17 @@ export default class RpService {
     return prisonerCountMetrics
   }
 
-  async getAssessmentPage(
-    token: string,
-    sessionId: string,
-    prisonerId: string,
-    pathway: string,
-    pageId: string,
-    assessmentType: AssessmentType,
-  ) {
-    this.rpClient.setToken(token)
-
+  async getAssessmentPage(prisonerId: string, pathway: string, pageId: string, assessmentType: AssessmentType) {
     let assessmentPage
+    const client = this.createClient()
     try {
-      assessmentPage = (await this.rpClient.get(
+      assessmentPage = (await client.get(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=${assessmentType}`,
       )) as AssessmentPage
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${client.sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`,
+      )
       if (err.status === 404) {
         assessmentPage = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
@@ -172,25 +174,25 @@ export default class RpService {
   }
 
   async fetchNextPage(
-    token: string,
-    sessionId: string,
     prisonerId: string,
     pathway: string,
     questionsAndAnswers: SubmittedInput,
     currentPageId: string,
     assessmentType: AssessmentType,
   ) {
-    this.rpClient.setToken(token)
     let nextQuestion
+    const client = this.createClient()
     try {
-      nextQuestion = (await this.rpClient.post(
+      nextQuestion = (await client.post(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=${assessmentType}${
           currentPageId ? `&currentPage=${currentPageId}` : ''
         }`,
         questionsAndAnswers,
       )) as NextPage
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${client.sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`,
+      )
       if (err.status === 404) {
         nextQuestion = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
       } else {
@@ -202,23 +204,21 @@ export default class RpService {
   }
 
   async completeAssessment(
-    token: string,
-    sessionId: string,
     prisonerId: string,
     pathway: string,
     questionsAndAnswers: SubmittedInput,
     assessmentType: AssessmentType,
   ) {
-    this.rpClient.setToken(token)
     let response
+    const client = this.createClient()
     try {
-      response = await this.rpClient.post(
+      response = await client.post(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/complete?assessmentType=${assessmentType}`,
         questionsAndAnswers,
       )
     } catch (err) {
       logger.warn(
-        `Session: ${sessionId} Cannot complete assessment for ${prisonerId} pathway ${pathway} ${err.status} ${err}`,
+        `Session: ${client.sessionId} Cannot complete assessment for ${prisonerId} pathway ${pathway} ${err.status} ${err}`,
       )
       if (err.status === 404) {
         response = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
@@ -230,53 +230,51 @@ export default class RpService {
     return response
   }
 
-  async submitAssessment(token: string, sessionId: string, prisonerId: string, assessmentType: AssessmentType) {
-    this.rpClient.setToken(token)
+  async submitAssessment(prisonerId: string, assessmentType: AssessmentType) {
     let response: { error?: boolean }
+    const client = this.createClient()
     try {
-      response = await this.rpClient.post(
+      response = await client.post(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=${assessmentType}`,
         null,
       )
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot submit assessments for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(`Session: ${client.sessionId} Cannot submit assessments for ${prisonerId} ${err.status} ${err}`)
       response = { error: true }
     }
 
     return response
   }
 
-  async getAssessmentSummary(
-    token: string,
-    sessionId: string,
-    prisonerId: string,
-    type: AssessmentType,
-  ): Promise<AssessmentsSummary> {
-    this.rpClient.setToken(token)
+  async getAssessmentSummary(prisonerId: string, type: AssessmentType): Promise<AssessmentsSummary> {
     let assessmentsSummary: AssessmentsSummary
+    const client = this.createClient()
 
     try {
-      const assessmentsSummaryResponse = (await this.rpClient.get(
+      const assessmentsSummaryResponse = (await client.get(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/summary?assessmentType=${type}`,
       )) as AssessmentStatus[]
       assessmentsSummary = { results: assessmentsSummaryResponse }
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${client.sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`,
+      )
       assessmentsSummary = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
     }
 
     return assessmentsSummary
   }
 
-  async getAppointments(token: string, sessionId: string, prisonerId: string) {
-    this.rpClient.setToken(token)
-
+  async getAppointments(prisonerId: string) {
+    const client = this.createClient()
     try {
-      return (await this.rpClient.get(
+      return (await client.get(
         `/resettlement-passport/prisoner/${prisonerId}/appointments?futureOnly=true`,
       )) as Promise<Appointments>
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve appointments info for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${client.sessionId} Cannot retrieve appointments info for ${prisonerId} ${err.status} ${err}`,
+      )
       if (err.status === 404) {
         return { error: ERROR_DICTIONARY.DATA_NOT_FOUND, results: [] }
       }
@@ -284,78 +282,76 @@ export default class RpService {
     }
   }
 
-  async getOtp(token: string, sessionId: string, prisonerId: string) {
-    this.rpClient.setToken(token)
-
+  async getOtp(prisonerId: string) {
+    const client = this.createClient()
     try {
-      return (await this.rpClient.get(`/resettlement-passport/popUser/${prisonerId}/otp`)) as Promise<OtpDetails>
+      return (await client.get(`/resettlement-passport/popUser/${prisonerId}/otp`)) as Promise<OtpDetails>
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot get otp for ${prisonerId} ${err.status} ${err}`)
-      return this.recreateOtp(token, sessionId, prisonerId)
+      logger.warn(`Session: ${client.sessionId} Cannot get otp for ${prisonerId} ${err.status} ${err}`)
+      return this.recreateOtp(prisonerId, client)
     }
   }
 
-  async recreateOtp(token: string, sessionId: string, prisonerId: string) {
-    this.rpClient.setToken(token)
-
+  async recreateOtp(prisonerId: string, client: RPClient = this.createClient()) {
     try {
-      return (await this.rpClient.post(`/resettlement-passport/popUser/${prisonerId}/otp`, {})) as Promise<OtpDetails>
+      return (await client.post(`/resettlement-passport/popUser/${prisonerId}/otp`, {})) as Promise<OtpDetails>
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot recreate otp for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(`Session: ${client.sessionId} Cannot recreate otp for ${prisonerId} ${err.status} ${err}`)
       return null
     }
   }
 
   async fetchAssessment(prisonerNumber: string) {
-    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
+    return this.createClient().get(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
   }
 
   async postAssessment(prisonerNumber: string, body: Record<never, never>) {
-    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, body)
+    return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, body)
   }
 
   async postBankApplication(prisonerNumber: string, body: Record<never, never>) {
-    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
+    return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
   }
 
   async postIdApplication(prisonerNumber: string, body: Record<never, never>) {
-    return this.rpClient.post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, body)
+    return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication`, body)
   }
 
   async patchBankApplication(prisonerNumber: string, applicationId: string, body: Record<never, never>) {
-    return this.rpClient.patch(
+    return this.createClient().patch(
       `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${applicationId}`,
       body,
     )
   }
 
   async patchIdApplication(prisonerNumber: string, applicationId: string, body: Record<never, never>) {
-    return this.rpClient.patch(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`, body)
+    return this.createClient().patch(
+      `/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`,
+      body,
+    )
   }
 
   async deleteAssessment(prisonerNumber: string, assessmentId: string) {
-    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${assessmentId}`)
+    return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${assessmentId}`)
   }
 
   async fetchFinance(prisonerNumber: string) {
-    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`)
+    return this.createClient().get(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`)
   }
 
   async deleteFinance(prisonerNumber: string, financeId: string) {
-    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${financeId}`)
+    return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication/${financeId}`)
   }
 
   async fetchId(prisonerNumber: string) {
-    return this.rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/all`)
+    return this.createClient().get(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/all`)
   }
 
   async deleteId(prisonerNumber: string, idId: string) {
-    return this.rpClient.delete(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${idId}`)
+    return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${idId}`)
   }
 
   async getCaseNotesHistory(
-    token: string,
-    sessionId: string,
     prisonerId: string,
     pathway: string,
     createdByUserId: string,
@@ -364,44 +360,47 @@ export default class RpService {
     sort: string,
     days: string,
   ) {
-    this.rpClient.setToken(token)
     let caseNotes: CaseNotesHistory
+    const rpClient = this.createClient()
     try {
-      const caseNotesResponse = (await this.rpClient.get(
+      const caseNotesResponse = (await rpClient.get(
         `/resettlement-passport/case-notes/${prisonerId}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${pathway}&createdByUserId=${createdByUserId}`,
       )) as CaseNote[]
       caseNotes = { results: caseNotesResponse }
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve case notes for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(`Session: ${rpClient.sessionId} Cannot retrieve case notes for ${prisonerId} ${err.status} ${err}`)
       caseNotes = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
     }
 
     return caseNotes
   }
 
-  async getCaseNotesCreators(token: string, sessionId: string, prisonerId: string, pathway: string) {
-    this.rpClient.setToken(token)
+  async getCaseNotesCreators(prisonerId: string, pathway: string) {
     let caseNotesCreators: CaseNotesCreators
+    const rpClient = this.createClient()
     try {
-      const caseNotesCreatorsResponse = (await this.rpClient.get(
+      const caseNotesCreatorsResponse = (await rpClient.get(
         `/resettlement-passport/case-notes/${prisonerId}/creators/${pathway}`,
       )) as CaseNotesCreator[]
       caseNotesCreators = { results: caseNotesCreatorsResponse }
     } catch (err) {
-      logger.warn(`Session: ${sessionId} Cannot retrieve case notes creators for ${prisonerId} ${err.status} ${err}`)
+      logger.warn(
+        `Session: ${rpClient.sessionId} Cannot retrieve case notes creators for ${prisonerId} ${err.status} ${err}`,
+      )
       caseNotesCreators = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
     }
 
     return caseNotesCreators
   }
 
-  async postAssessmentSkip(token: string, prisonerId: string, skipRequest: AssessmentSkipRequest): Promise<void> {
-    this.rpClient.setToken(token)
-    await this.rpClient.post(`/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/skip`, skipRequest)
+  async postAssessmentSkip(prisonerId: string, skipRequest: AssessmentSkipRequest): Promise<void> {
+    await this.createClient().post(
+      `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/skip`,
+      skipRequest,
+    )
   }
 
   async patchStatusWithCaseNote(
-    token: string,
     prisonerId: string,
     body: {
       pathway: string
@@ -409,18 +408,15 @@ export default class RpService {
       caseNoteText: string
     },
   ) {
-    this.rpClient.setToken(token)
-    await this.rpClient.patch(`/resettlement-passport/prisoner/${prisonerId}/pathway-with-case-note`, body)
+    await this.createClient().patch(`/resettlement-passport/prisoner/${prisonerId}/pathway-with-case-note`, body)
   }
 
-  async getPrisonerDetails(token: string, prisonerId: string): Promise<PrisonerData> {
-    this.rpClient.setToken(token)
-    return (await this.rpClient.get(`/resettlement-passport/prisoner/${prisonerId}`)) as PrisonerData
+  async getPrisonerDetails(prisonerId: string): Promise<PrisonerData> {
+    return (await this.createClient().get(`/resettlement-passport/prisoner/${prisonerId}`)) as PrisonerData
   }
 
-  async getPrisonerImage(token: string, prisonerNumber: string, facialImageId: string): Promise<string> {
-    this.rpClient.setToken(token)
-    return this.rpClient.getImageAsBase64String(
+  async getPrisonerImage(prisonerNumber: string, facialImageId: string): Promise<string> {
+    return this.createClient().getImageAsBase64String(
       `/resettlement-passport/prisoner/${prisonerNumber}/image/${facialImageId}`,
     )
   }

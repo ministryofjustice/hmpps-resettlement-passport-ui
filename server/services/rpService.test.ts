@@ -12,8 +12,10 @@ describe('RpService', () => {
   let service: RpService
 
   beforeEach(() => {
-    rpClient = new RPClient() as jest.Mocked<RPClient>
-    service = new RpService(rpClient)
+    rpClient = new RPClient('token', 'sessionId', 'userId') as jest.Mocked<RPClient>
+    service = new RpService()
+    service.createClient = () => rpClient
+    Object.defineProperty(rpClient, 'sessionId', { value: 'sessionId', writable: false })
   })
 
   afterEach(() => {
@@ -25,7 +27,7 @@ describe('RpService', () => {
     rpClient.get.mockResolvedValue({
       otp: '123456',
     })
-    const otpDetails = await service.getOtp('token', 'session', nomsId)
+    const otpDetails = await service.getOtp(nomsId)
     expect(otpDetails.otp).toBe('123456')
   })
 
@@ -38,7 +40,8 @@ describe('RpService', () => {
     rpClient.post.mockResolvedValue({
       otp: '123456',
     })
-    const otpDetails = await service.getOtp('token', 'sessionId', nomsId)
+
+    const otpDetails = await service.getOtp(nomsId)
     expect(otpDetails.otp).toBe('123456')
     expect(loggerSpy).toHaveBeenCalledWith(`Session: sessionId Cannot get otp for ${nomsId} ${error.status} ${error}`)
   })
@@ -161,13 +164,10 @@ describe('RpService', () => {
   it('should call rpClient correctly when skipping assessment', async () => {
     rpClient.get.mockResolvedValue({})
     const postSpy = jest.spyOn(rpClient, 'post')
-    const setTokenSpy = jest.spyOn(rpClient, 'setToken')
     const prisonerNumber = '6'
-    const token = 'userToken'
     const request: AssessmentSkipRequest = { reason: 'COMPLETED_IN_ANOTHER_PRISON' }
-    await service.postAssessmentSkip(token, prisonerNumber, request)
+    await service.postAssessmentSkip(prisonerNumber, request)
 
-    expect(setTokenSpy).toHaveBeenCalledWith(token)
     expect(postSpy).toHaveBeenCalledWith(
       `/resettlement-passport/prisoner/${prisonerNumber}/resettlement-assessment/skip`,
       request,
