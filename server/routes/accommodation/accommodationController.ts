@@ -10,7 +10,6 @@ export default class AccommodationController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
       const {
         page = '0',
         pageSize = '10',
@@ -20,28 +19,18 @@ export default class AccommodationController {
       } = req.query
 
       const crsReferrals = await this.rpService.getCrsReferrals(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'ACCOMMODATION',
       )
 
-      const accommodation = await this.rpService.getAccommodation(
-        token,
-        req.sessionID,
-        prisonerData.personalDetails.prisonerNumber as string,
-      )
+      const accommodation = await this.rpService.getAccommodation(prisonerData.personalDetails.prisonerNumber as string)
 
       const assessmentData = await this.rpService.getAssessmentInformation(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'ACCOMMODATION',
       )
 
       const caseNotesData = await this.rpService.getCaseNotesHistory(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'ACCOMMODATION',
         createdByUserId as string,
@@ -52,8 +41,6 @@ export default class AccommodationController {
       )
 
       const caseNotesCreators = await this.rpService.getCaseNotesCreators(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'ACCOMMODATION',
       )

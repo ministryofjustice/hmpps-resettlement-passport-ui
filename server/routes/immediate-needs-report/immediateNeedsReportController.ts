@@ -21,7 +21,6 @@ export default class ImmediateNeedsReportController {
   getFirstPage: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
       const pathway = req.query.pathway as string
       const assessmentType = parseAssessmentType(req.query.type)
       const stateKey = {
@@ -34,8 +33,6 @@ export default class ImmediateNeedsReportController {
       await this.assessmentStateService.reset(stateKey, pathway)
 
       const nextPage = await this.rpService.fetchNextPage(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         {
@@ -58,7 +55,6 @@ export default class ImmediateNeedsReportController {
   saveAnswerAndGetNextPage: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
       const assessmentType = parseAssessmentType(req.body.assessmentType)
       const { pathway, currentPageId } = req.body
       const edit = req.body.edit === 'true'
@@ -79,8 +75,6 @@ export default class ImmediateNeedsReportController {
       await this.assessmentStateService.answer(stateKey, dataToSubmit, edit)
 
       const nextPage = await this.rpService.fetchNextPage(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         dataToSubmit as SubmittedInput,
@@ -111,7 +105,6 @@ export default class ImmediateNeedsReportController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
       const { pathway, currentPageId } = req.params
       const assessmentType = parseAssessmentType(req.query.type)
       const edit = req.query.edit === 'true'
@@ -143,8 +136,6 @@ export default class ImmediateNeedsReportController {
 
       // Get the assessment page from the API and set in the cache
       const assessmentPage: AssessmentPage = await this.rpService.getAssessmentPage(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         currentPageId,
@@ -218,7 +209,6 @@ export default class ImmediateNeedsReportController {
   completeAssessment: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
       const { pathway } = req.params
       const assessmentType = parseAssessmentType(req.body.assessmentType)
 
@@ -237,8 +227,6 @@ export default class ImmediateNeedsReportController {
       }
 
       const completeAssessment = (await this.rpService.completeAssessment(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         dataToSubmit as SubmittedInput,
@@ -274,7 +262,6 @@ export default class ImmediateNeedsReportController {
     const { prisonerData } = req
     const { pathway, pageId } = req.params
     const submitted = req.query.submitted === 'true'
-    const { token } = req.user
     const assessmentType = parseAssessmentType(req.query.type)
     const { prisonerNumber } = prisonerData.personalDetails
     const stateKey = {
@@ -288,8 +275,6 @@ export default class ImmediateNeedsReportController {
       let assessmentPage: AssessmentPage
       if (submitted) {
         assessmentPage = await this.rpService.getAssessmentPage(
-          token,
-          req.sessionID,
           prisonerData.personalDetails.prisonerNumber as string,
           pathway as string,
           'CHECK_ANSWERS',

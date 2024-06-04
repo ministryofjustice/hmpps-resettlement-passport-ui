@@ -34,7 +34,7 @@ export default class AssessmentSkipController {
       )
     }
     try {
-      await this.rpService.postAssessmentSkip(req.user?.token, prisonerNumber, {
+      await this.rpService.postAssessmentSkip(prisonerNumber, {
         reason: req.body.whySkipChoice,
         moreInfo: req.body.supportingInfo,
       })

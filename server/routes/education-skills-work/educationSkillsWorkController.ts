@@ -10,7 +10,6 @@ export default class EducationSkillsWorkController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
       const {
         page = '0',
         pageSize = '10',
@@ -20,28 +19,20 @@ export default class EducationSkillsWorkController {
       } = req.query
 
       const crsReferrals = await this.rpService.getCrsReferrals(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'EDUCATION_SKILLS_AND_WORK',
       )
 
       const educationSkillsWork = await this.rpService.getEducationSkillsWork(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
       )
 
       const assessmentData = await this.rpService.getAssessmentInformation(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'EDUCATION_SKILLS_AND_WORK',
       )
 
       const caseNotesData = await this.rpService.getCaseNotesHistory(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'EDUCATION_SKILLS_AND_WORK',
         createdByUserId as string,
@@ -52,8 +43,6 @@ export default class EducationSkillsWorkController {
       )
 
       const caseNotesCreators = await this.rpService.getCaseNotesCreators(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'EDUCATION_SKILLS_AND_WORK',
       )

@@ -15,7 +15,6 @@ export default class FinanceIdController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { token } = req.user
       const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
         req.query
       const {
@@ -84,22 +83,16 @@ export default class FinanceIdController {
       }
       // CRS Referrals
       const crsReferrals = await this.rpService.getCrsReferrals(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'FINANCE_AND_ID',
       )
 
       const assessmentData = await this.rpService.getAssessmentInformation(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'FINANCE_AND_ID',
       )
 
       const caseNotesData = await this.rpService.getCaseNotesHistory(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'FINANCE_AND_ID',
         createdByUserId as string,
@@ -110,8 +103,6 @@ export default class FinanceIdController {
       )
 
       const caseNotesCreators = await this.rpService.getCaseNotesCreators(
-        token,
-        req.sessionID,
         prisonerData.personalDetails.prisonerNumber as string,
         'FINANCE_AND_ID',
       )

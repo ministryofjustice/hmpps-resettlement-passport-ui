@@ -18,12 +18,11 @@ export default class HealthStatusController {
 
   printPackPdf: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData, sessionID } = req
-      const { token } = req.user
+      const { prisonerData } = req
       const { prisonerNumber, prisonName } = prisonerData.personalDetails
-      const appointmentData = await this.rpService.getAppointments(token, sessionID, prisonerNumber as string)
+      const appointmentData = await this.rpService.getAppointments(prisonerNumber as string)
 
-      const otpData = await this.rpService.getOtp(token, sessionID, prisonerNumber as string)
+      const otpData = await this.rpService.getOtp(prisonerNumber as string)
       const filename = `plan-your-future-pack-${prisonerNumber}.pdf`
       const fullName = `${prisonerData.personalDetails.firstName} ${prisonerData.personalDetails.lastName}`
       const view = new PrintView(prisonerData, fullName, appointmentData.results.slice(0, 8), otpData)
@@ -33,7 +32,7 @@ export default class HealthStatusController {
         prison: prisonName,
       })
 
-      const headerHtml = await nunjucks.render('pages/printPackHeader.njk', { ...view.renderArgs })
+      const headerHtml = nunjucks.render('pages/printPackHeader.njk', { ...view.renderArgs })
       res.renderPDF('pages/printPack', headerHtml, { ...view.renderArgs }, { filename, pdfOptions: { ...pdfOptions } })
     } catch (err) {
       next(err)
@@ -42,14 +41,9 @@ export default class HealthStatusController {
 
   printOtp: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData, sessionID } = req
-      const { token } = req.user
+      const { prisonerData } = req
 
-      const otpData = await this.rpService.recreateOtp(
-        token,
-        sessionID,
-        prisonerData.personalDetails.prisonerNumber as string,
-      )
+      const otpData = await this.rpService.recreateOtp(prisonerData.personalDetails.prisonerNumber as string)
       let error
       if (!otpData?.otp) {
         error = 'Error recreating First-time ID code, please try again later'

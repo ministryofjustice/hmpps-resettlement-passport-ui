@@ -6,7 +6,7 @@ describe('Prisoner Details Middleware', () => {
   let rpService: jest.Mocked<RpService>
 
   beforeEach(() => {
-    rpService = new RpService(null) as jest.Mocked<RpService>
+    rpService = new RpService() as jest.Mocked<RpService>
   })
 
   afterEach(() => {
@@ -22,10 +22,10 @@ describe('Prisoner Details Middleware', () => {
         facialImageId: '1234',
       },
     }
-    const prisonerImage = await getPrisonerImage(rpService, 'token', prisonerData as PrisonerData, 'abc')
+    const prisonerImage = await getPrisonerImage(rpService, prisonerData as PrisonerData, 'abc')
     expect(prisonerImage).toBe('aBase64ImageHonest')
 
-    expect(spy).toHaveBeenCalledWith('token', 'abc', '1234')
+    expect(spy).toHaveBeenCalledWith('abc', '1234')
   })
 
   it('Should return null if there is an error loading the image', async () => {
@@ -36,10 +36,10 @@ describe('Prisoner Details Middleware', () => {
         facialImageId: '1234',
       },
     }
-    const prisonerImage = await getPrisonerImage(rpService, 'token', prisonerData as PrisonerData, 'abc')
+    const prisonerImage = await getPrisonerImage(rpService, prisonerData as PrisonerData, 'abc')
     expect(prisonerImage).toBe(null)
 
-    expect(spy).toHaveBeenCalledWith('token', 'abc', '1234')
+    expect(spy).toHaveBeenCalledWith('abc', '1234')
   })
 
   it('Should not call the api if there is no prisoner image', async () => {
@@ -50,7 +50,7 @@ describe('Prisoner Details Middleware', () => {
         facialImageId: null as string,
       },
     }
-    const prisonerImage = await getPrisonerImage(rpService, 'token', prisonerData as PrisonerData, 'abc')
+    const prisonerImage = await getPrisonerImage(rpService, prisonerData as PrisonerData, 'abc')
     expect(prisonerImage).toBe(null)
 
     expect(spy).toHaveBeenCalledTimes(0)

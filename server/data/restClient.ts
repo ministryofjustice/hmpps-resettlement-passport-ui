@@ -35,12 +35,10 @@ interface StreamRequest {
 export default class RestClient {
   agent: Agent
 
-  token: string
-
   constructor(
     private readonly name: string,
     private readonly config: ApiConfig,
-    token: string,
+    private readonly token: string,
     private readonly sessionId: string = '',
     private readonly userId: string = '',
   ) {

@@ -18,12 +18,7 @@ export default class AssessmentTaskListController {
       const assessmentType: AssessmentType = parseAssessmentType(type)
 
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
-      const assessmentsSummary = await this.rpService.getAssessmentSummary(
-        req.user.token,
-        req.sessionID,
-        prisonerNumber,
-        assessmentType,
-      )
+      const assessmentsSummary = await this.rpService.getAssessmentSummary(prisonerNumber, assessmentType)
 
       if (await getFeatureFlagBoolean('reportSkip')) {
         const immediateNeedsReportNotStarted = assessmentType === 'BCST2' && notStarted(assessmentsSummary.results)
@@ -32,12 +27,7 @@ export default class AssessmentTaskListController {
           immediateNeedsReportNotStarted &&
           isInPreReleaseWindow(prisonerData.personalDetails.releaseDate)
         ) {
-          const preReleaseSummary = await this.rpService.getAssessmentSummary(
-            req.user.token,
-            req.sessionID,
-            prisonerNumber,
-            'RESETTLEMENT_PLAN',
-          )
+          const preReleaseSummary = await this.rpService.getAssessmentSummary(prisonerNumber, 'RESETTLEMENT_PLAN')
           if (notStarted(preReleaseSummary.results)) {
             // Optionally skip initial needs assessment if it's not started and we're in the pre-release window
             return res.redirect(`/assessment-skip?prisonerNumber=${prisonerNumber}`)

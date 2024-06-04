@@ -21,12 +21,7 @@ export default class AssessmentCompleteController {
       const { prisonerData } = req
       const assessmentType: AssessmentType = parseAssessmentType(req.body.assessmentType)
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
-      const response = await this.rpService.submitAssessment(
-        req.user.token,
-        req.sessionID,
-        prisonerNumber,
-        assessmentType,
-      )
+      const response = await this.rpService.submitAssessment(prisonerNumber, assessmentType)
       if (response.error) {
         next(new Error())
       } else {
