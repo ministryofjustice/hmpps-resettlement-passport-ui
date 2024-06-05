@@ -11,7 +11,7 @@ import nomisUserRolesApi from './integration_tests/mockApis/nomisUserRolesApi'
 import rpApi from './integration_tests/mockApis/rpApi'
 import { resetRedisCache } from './integration_tests/mockApis/redis'
 
-const parsePdf = async (pdfPath): Promise<PdfParse.Result> => {
+const parsePdf = async (pdfPath: string): Promise<PdfParse.Result> => {
   const dataBuffer = fs.readFileSync(pdfPath)
   return pdfParse(dataBuffer)
 }

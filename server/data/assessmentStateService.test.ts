@@ -38,15 +38,6 @@ describe('assessmentStateService', () => {
     }
   }
 
-  it('should reset state for a pathway', async () => {
-    const pathway = 'HEALTH'
-    await assessmentStateService.reset(aStateKey(pathway), pathway)
-
-    expect(store.deleteAssessment).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway)
-    expect(store.deleteEditedQuestionList).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway)
-    expect(store.setAssessment).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway, { questionsAndAnswers: [] })
-  })
-
   describe('answer', () => {
     it('when no questions have been answered', async () => {
       const answer: SubmittedInput = {

@@ -27,14 +27,6 @@ export class AssessmentStateService {
     await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, pathway)
   }
 
-  async reset(key: StateKey, pathway: string) {
-    await this.store.deleteAssessment(key.userId, key.prisonerNumber, pathway)
-    await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, pathway)
-    await this.store.setAssessment(key.userId, key.prisonerNumber, pathway, {
-      questionsAndAnswers: [],
-    })
-  }
-
   async answer(key: StateKey, answer: SubmittedInput, edit: boolean = false) {
     // get previous Q&A's
     const allQuestionsAndAnswers = await this.getAssessment(key)
