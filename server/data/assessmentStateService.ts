@@ -20,7 +20,7 @@ export class AssessmentStateService {
   }
 
   async getAssessment(key: StateKey): Promise<SubmittedInput> {
-    return this.store.getAssessment(key.userId, key.prisonerNumber, key.pathway)
+    return (await this.store.getAssessment(key.userId, key.prisonerNumber, key.pathway)) ?? { questionsAndAnswers: [] }
   }
 
   async deleteEditedQuestionList(key: StateKey, pathway: string) {
@@ -37,7 +37,7 @@ export class AssessmentStateService {
 
   async answer(key: StateKey, answer: SubmittedInput, edit: boolean = false) {
     // get previous Q&A's
-    const allQuestionsAndAnswers = await this.store.getAssessment(key.userId, key.prisonerNumber, key.pathway)
+    const allQuestionsAndAnswers = await this.getAssessment(key)
     await this.updateAnsweredQuestionIds(key, answer, edit)
 
     answer.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {

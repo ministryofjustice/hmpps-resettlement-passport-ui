@@ -124,7 +124,7 @@ const nextPageStartHealth = () =>
       method: 'POST',
       bodyPatterns: [
         {
-          equalToJson: '{"questionsAndAnswers":null}',
+          equalToJson: '{"questionsAndAnswers":[]}',
           ignoreArrayOrder: true,
           ignoreExtraElements: true,
         },
@@ -480,7 +480,7 @@ const nextPageStartAccommodation = () =>
       method: 'POST',
       bodyPatterns: [
         {
-          equalToJson: '{"questionsAndAnswers":null}',
+          equalToJson: '{"questionsAndAnswers":[]}',
           ignoreArrayOrder: true,
           ignoreExtraElements: true,
         },

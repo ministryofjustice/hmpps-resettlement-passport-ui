@@ -98,7 +98,7 @@ export const johnSmithAccommodationNextPage1 = () =>
       method: 'POST',
       bodyPatterns: [
         {
-          equalToJson: '{"questionsAndAnswers":null}',
+          equalToJson: '{"questionsAndAnswers":[]}',
           ignoreArrayOrder: true,
           ignoreExtraElements: true,
         },

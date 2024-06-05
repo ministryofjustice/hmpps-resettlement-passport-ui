@@ -62,9 +62,8 @@ context('Immediate Needs Report', () => {
     })
 
     // Click Health link
-    cy.get(':nth-child(7) > .govuk-table__header > a').click()
+    cy.get('[data-qa="a-HEALTH"]').click()
 
-    // Should be on the Accommodation pathway page
     getHeading().should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
     nothingShouldBeSelected()
     cy.get('#YES').click()
@@ -107,7 +106,7 @@ context('Immediate Needs Report', () => {
     cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
 
     // Click Accommodation link
-    cy.get(':nth-child(1) > .govuk-table__header > a').click()
+    cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
     cy.get('#PRIVATE_RENTED_HOUSING').check()
@@ -159,7 +158,7 @@ context('Immediate Needs Report', () => {
     cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
 
     // Click Accommodation link
-    cy.get(':nth-child(1) > .govuk-table__header > a').click()
+    cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
     cy.get('#PRIVATE_RENTED_HOUSING').check()
@@ -200,6 +199,42 @@ context('Immediate Needs Report', () => {
     assertShouldNotHaveAddressAnswer()
     clickConfirm()
 
+    cy.url().should('contain', '/assessment-task-list?prisonerNumber=A8731DY')
+  })
+
+  it('should be able to resume entering immediate needs report', () => {
+    cy.task('stubJohnSmithImmediateNeedsReportAccommodation')
+    cy.signIn()
+
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
+
+    // Click Accommodation link
+    cy.get('[data-qa="a-ACCOMMODATION"]').click()
+
+    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    cy.get('#NO_PERMANENT_OR_FIXED').check()
+    clickContinue()
+
+    getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+
+    // Go back to the task list page
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    // Go back to accommodation
+    cy.get('[data-qa="a-ACCOMMODATION"]').click()
+
+    getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+    cy.get('#DOES_NOT_HAVE_ANYWHERE').check()
+    clickContinue()
+
+    getHeading().should('have.text', 'Accommodation report summary')
+    cy.get('#SUPPORT_REQUIRED').check()
+    cy.get('#CASE_NOTE_SUMMARY').type('Needs somewhere to stay')
+    clickContinue()
+
+    getHeading().should('have.text', 'Check your answers')
+
+    clickConfirm()
     cy.url().should('contain', '/assessment-task-list?prisonerNumber=A8731DY')
   })
 })

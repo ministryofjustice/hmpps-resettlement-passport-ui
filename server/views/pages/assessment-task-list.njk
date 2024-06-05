@@ -88,7 +88,7 @@
                   {% else %}
                     {% set status = assessment.assessmentStatus | getAssessmentEnumValue %}
                   {% endif %}
-                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&pathway={{ assessment.pathway }}&type={{ assessmentType }}">{{ pathway.name }}</a>
+                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&pathway={{ assessment.pathway }}&type={{ assessmentType }}" data-qa="a-{{ assessment.pathway }}">{{ pathway.name }}</a>
                 </th>
                 <td class="govuk-table__cell">
                   <strong class="govuk-tag govuk-tag--{{ status.color }}">{{ status.name }}</strong>
