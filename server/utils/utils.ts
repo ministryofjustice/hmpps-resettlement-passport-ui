@@ -1,7 +1,7 @@
 import { Callback } from 'nunjucks'
 import { addMinutes, format } from 'date-fns'
 import { PathwayStatus } from '../@types/express'
-import { ASSESSMENT_ENUMS_DICTIONARY, ENUMS_DICTIONARY, EnumValue } from './constants'
+import { ASSESSMENT_ENUMS_DICTIONARY, ENUMS_DICTIONARY, EnumValue, RISK_ASSESSMENT_ENUMS_DICTIONARY } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
@@ -108,6 +108,10 @@ export const filterByPathway = (arrayData: PathwayStatus[], condition: string): 
 
 export const getEnumValue = (pathwayStatusEnum: string) => {
   return ENUMS_DICTIONARY[pathwayStatusEnum]
+}
+
+export const getRiskAssessmentEnumValue = (pathwayStatusEnum: string) => {
+  return RISK_ASSESSMENT_ENUMS_DICTIONARY[pathwayStatusEnum]
 }
 
 export const getAssessmentEnumValue = (pathwayStatusEnum: string): EnumValue => {

@@ -1,0 +1,113 @@
+$risk-low-border: #85994B;
+$risk-low-text: #485B10;
+
+$risk-medium-border: #F47738;
+$risk-medium-text: #A34E00;
+
+$risk-high-border: #D4351C;
+$risk-high-text: #942514;
+
+$risk-very-high-border: #942514;
+$risk-very-high-text: #711A0D;
+
+.moj-badge {
+  font-size: 1rem;
+  font-weight: 700;
+
+  &__low {
+    border-color: $risk-low-border;
+    color: $risk-low-text;
+  }
+
+  &__medium {
+    border-color: $risk-medium-border;
+    color: $risk-medium-text;
+  }
+
+  &__high {
+    border-color: $risk-high-border;
+    color: $risk-high-text;
+  }
+
+  &__very-high {
+    border-color: $risk-very-high-border;
+    color: $risk-very-high-text;
+  }
+}
+
+.rosh {
+  margin: 20px 0;
+  border: 2px solid black;
+  padding: 0 20px 24px 20px;
+
+  h3 {
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    
+    span {
+      text-transform: none;
+    }
+  }
+
+  &__low {
+    border-color: $risk-low-border;
+    h3 {
+      color: $risk-low-text;
+    }
+  }
+
+  &__medium {
+    border-color: $risk-medium-border;
+    h3 {
+      color: $risk-medium-text;
+    }
+  }
+
+  &__high {
+    border-color: $risk-high-border;
+    h3 {
+      color: $risk-high-text;
+    }
+  }
+
+  &__very-high {
+    border-color: $risk-very-high-border;
+    h3 {
+      color: $risk-very-high-text;
+    }
+  }
+}
+
+.rosh-text {
+  &__low {
+    color: $risk-low-text;
+  }
+
+  &__medium {
+    color: $risk-medium-text;
+  }
+
+  &__high {
+    color: $risk-high-text;
+  }
+
+  &__very-high {
+    color: $risk-very-high-text;
+  }
+}
+
+.mappa-section {
+  border: 2px solid #4C2C92;
+  padding: 0 20px;
+  margin: 20px 0;
+
+  h3 {
+    color: #4C2C92;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    
+    span {
+      text-transform: none;
+    }
+  }
+}
