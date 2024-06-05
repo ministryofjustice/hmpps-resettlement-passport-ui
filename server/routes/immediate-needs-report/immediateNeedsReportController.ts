@@ -34,7 +34,7 @@ export default class ImmediateNeedsReportController {
       const { questionsAndAnswers } = existingInput
       let currentPageId = null
 
-      if (questionsAndAnswers.length > 0) {
+      if (questionsAndAnswers?.length > 0) {
         const lastAnsweredQ = questionsAndAnswers[questionsAndAnswers.length - 1]
         currentPageId = lastAnsweredQ.pageId
       }
