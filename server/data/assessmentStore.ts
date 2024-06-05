@@ -1,10 +1,9 @@
-import { hoursToSeconds } from 'date-fns'
-
 import type { RedisClient } from './redisClient'
 import logger from '../../logger'
 import { AssessmentPage, SubmittedInput } from './model/immediateNeedsReport'
+import config from '../config'
 
-const defaultTimeToLive = hoursToSeconds(24 * 5)
+const defaultTimeToLive = config.redis.defaultTtlSeconds
 const assessmentPrefix = 'assessment'
 const answeredQuestionsPrefix = 'answered'
 const currentPagePrefix = 'currentPage'
