@@ -125,6 +125,25 @@ export const ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   },
 }
 
+export const RISK_ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: { name: string; className: string } } = {
+  LOW: {
+    name: 'Low',
+    className: 'low',
+  },
+  MEDIUM: {
+    name: 'Medium',
+    className: 'medium',
+  },
+  HIGH: {
+    name: 'High',
+    className: 'high',
+  },
+  VERY_HIGH: {
+    name: 'Very high',
+    className: 'very-high',
+  },
+}
+
 export const FEATURE_FLAGS: { [key: string]: string } = {
   REPORTING: 'reporting',
   ADD_APPOINTMENTS: 'addAppointments',
