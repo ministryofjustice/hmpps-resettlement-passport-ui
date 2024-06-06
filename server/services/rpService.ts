@@ -3,7 +3,7 @@ import { PrisonersList } from '../data/model/prisoners'
 import { CrsReferralResponse } from '../data/model/crsReferralResponse'
 import { EducationSkillsWorkResponse } from '../data/model/educationSkillsWorkResponse'
 import logger from '../../logger'
-import { ERROR_DICTIONARY } from '../utils/constants'
+import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
 import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/immediateNeedsReport'
@@ -15,6 +15,7 @@ import { CaseNote, CaseNotesHistory } from '../data/model/caseNotesHistory'
 import { CaseNotesCreator, CaseNotesCreators } from '../data/model/caseNotesCreators'
 import { PrisonerData } from '../@types/express'
 import { currentUser } from '../middleware/userContextMiddleware'
+import { getFeatureFlag, getFeatureFlagBoolean } from '../utils/utils'
 
 export default class RpService {
   constructor() {
@@ -232,10 +233,11 @@ export default class RpService {
 
   async submitAssessment(prisonerId: string, assessmentType: AssessmentType) {
     let response: { error?: boolean }
+    const sendCombinedCaseNotes = await getFeatureFlagBoolean(FEATURE_FLAGS.COMBINED_REPORT_CASE_NOTES)
     const client = this.createClient()
     try {
       response = await client.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=${assessmentType}`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=${assessmentType}&sendCombinedCaseNotes=${sendCombinedCaseNotes}`,
         null,
       )
     } catch (err) {
