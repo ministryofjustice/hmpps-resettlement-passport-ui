@@ -15,7 +15,7 @@ import { CaseNote, CaseNotesHistory } from '../data/model/caseNotesHistory'
 import { CaseNotesCreator, CaseNotesCreators } from '../data/model/caseNotesCreators'
 import { PrisonerData } from '../@types/express'
 import { currentUser } from '../middleware/userContextMiddleware'
-import { getFeatureFlag, getFeatureFlagBoolean } from '../utils/utils'
+import { getFeatureFlagBoolean } from '../utils/utils'
 
 export default class RpService {
   constructor() {
