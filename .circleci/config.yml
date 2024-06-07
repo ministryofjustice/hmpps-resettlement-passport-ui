@@ -17,7 +17,7 @@ parameters:
 
   node-version:
     type: string
-    default: 18.15-browsers
+    default: 20.11-browsers
 
   redis-version:
     type: string
