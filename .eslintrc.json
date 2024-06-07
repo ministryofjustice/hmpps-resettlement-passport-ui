@@ -55,7 +55,8 @@
             "printWidth": 120,
             "semi": false
           }
-        ]
+        ],
+        "import/prefer-default-export": "off"
       }
     }
   ],

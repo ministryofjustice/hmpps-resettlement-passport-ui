@@ -1,16 +1,16 @@
 import type { RedisClient } from './redisClient'
-
 import logger from '../../logger'
 import { AssessmentPage, SubmittedInput } from './model/immediateNeedsReport'
-import { secondsUntilMidnight } from '../utils/utils'
+import config from '../config'
 
-const assessmentPrefix = 'assessment:'
-const answeredQuestionsPrefix = 'answered:'
-const currentPagePrefix = 'currentPage:'
-const editedQuestionPrefix = 'edit:'
+const defaultTimeToLive = config.redis.defaultTtlSeconds
+const assessmentPrefix = 'assessment'
+const answeredQuestionsPrefix = 'answered'
+const currentPagePrefix = 'currentPage'
+const editedQuestionPrefix = 'edit'
 
-function buildKey(prefix: string, sessionId: string, nomsId: string, pathway: string) {
-  return `${prefix}${sessionId}${nomsId}${pathway}`
+function buildKey(prefix: string, userId: string, nomsId: string, pathway: string) {
+  return `${prefix}:${userId}:${nomsId}:${pathway}`
 }
 
 export default class AssessmentStore {
@@ -27,94 +27,94 @@ export default class AssessmentStore {
   }
 
   public async setAssessment(
-    sessionId: string,
+    userId: string,
     nomsId: string,
     pathway: string,
     questionsAndAnswers: SubmittedInput,
-    durationSeconds = secondsUntilMidnight(),
+    ttl = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
-    await this.client.set(buildKey(assessmentPrefix, sessionId, nomsId, pathway), JSON.stringify(questionsAndAnswers), {
-      EX: durationSeconds,
+    await this.client.set(buildKey(assessmentPrefix, userId, nomsId, pathway), JSON.stringify(questionsAndAnswers), {
+      EX: ttl,
     })
   }
 
-  public async getAssessment(sessionId: string, nomsId: string, pathway: string): Promise<SubmittedInput> {
+  public async getAssessment(userId: string, nomsId: string, pathway: string): Promise<SubmittedInput> {
     await this.ensureConnected()
-    const key = buildKey(assessmentPrefix, sessionId, nomsId, pathway)
+    const key = buildKey(assessmentPrefix, userId, nomsId, pathway)
     return JSON.parse(await this.client.get(key))
   }
 
-  public async getAnsweredQuestions(sessionId: string, nomsId: string, pathway: string): Promise<string[]> {
+  public async getAnsweredQuestions(userId: string, nomsId: string, pathway: string): Promise<string[]> {
     await this.ensureConnected()
-    return JSON.parse(await this.client.get(buildKey(answeredQuestionsPrefix, sessionId, nomsId, pathway))) || []
+    return JSON.parse(await this.client.get(buildKey(answeredQuestionsPrefix, userId, nomsId, pathway))) || []
   }
 
   public async setAnsweredQuestions(
-    sessionId: string,
+    userId: string,
     nomsId: string,
     pathway: string,
     questionIds: string[],
-    durationSeconds: number = secondsUntilMidnight(),
+    durationSeconds: number = defaultTimeToLive,
   ) {
     await this.ensureConnected()
-    const key = buildKey(answeredQuestionsPrefix, sessionId, nomsId, pathway)
+    const key = buildKey(answeredQuestionsPrefix, userId, nomsId, pathway)
     await this.client.set(key, JSON.stringify(questionIds), { EX: durationSeconds })
   }
 
-  public async deleteAssessment(sessionId: string, nomsId: string, pathway: string) {
+  public async deleteAssessment(userId: string, nomsId: string, pathway: string) {
     await this.ensureConnected()
-    const key = buildKey(assessmentPrefix, sessionId, nomsId, pathway)
+    const key = buildKey(assessmentPrefix, userId, nomsId, pathway)
     await this.client.del(key)
   }
 
   public async setCurrentPage(
-    sessionId: string,
+    userId: string,
     nomsId: string,
     pathway: string,
     currentPage: AssessmentPage,
-    durationSeconds: number = secondsUntilMidnight(),
+    ttl: number = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
-    await this.client.set(buildKey(currentPagePrefix, sessionId, nomsId, pathway), JSON.stringify(currentPage), {
-      EX: durationSeconds,
+    await this.client.set(buildKey(currentPagePrefix, userId, nomsId, pathway), JSON.stringify(currentPage), {
+      EX: ttl,
     })
   }
 
-  public async getCurrentPage(sessionId: string, nomsId: string, pathway: string): Promise<string> {
+  public async getCurrentPage(userId: string, nomsId: string, pathway: string): Promise<string> {
     await this.ensureConnected()
-    const key = buildKey(currentPagePrefix, sessionId, nomsId, pathway)
+    const key = buildKey(currentPagePrefix, userId, nomsId, pathway)
     return this.client.get(key)
   }
 
   public async setEditedQuestionList(
-    sessionId: string,
+    userId: string,
     nomsId: string,
     pathway: string,
     questionIds: string[],
-    durationSeconds: number = secondsUntilMidnight(),
+    ttl: number = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
-    await this.client.set(buildKey(editedQuestionPrefix, sessionId, nomsId, pathway), JSON.stringify(questionIds), {
-      EX: durationSeconds,
+    await this.client.set(buildKey(editedQuestionPrefix, userId, nomsId, pathway), JSON.stringify(questionIds), {
+      EX: ttl,
     })
   }
 
-  async getEditedQuestionList(sessionId: string, nomsId: string, pathway: string): Promise<string[]> {
+  async getEditedQuestionList(userId: string, nomsId: string, pathway: string): Promise<string[]> {
     await this.ensureConnected()
-    const key = buildKey(editedQuestionPrefix, sessionId, nomsId, pathway)
+    const key = buildKey(editedQuestionPrefix, userId, nomsId, pathway)
     return JSON.parse(await this.client.get(key)) || []
   }
 
-  public async deleteEditedQuestionList(sessionId: string, nomsId: string, pathway: string) {
+  public async deleteEditedQuestionList(userId: string, nomsId: string, pathway: string) {
     await this.ensureConnected()
-    const key = buildKey(editedQuestionPrefix, sessionId, nomsId, pathway)
+    const key = buildKey(editedQuestionPrefix, userId, nomsId, pathway)
     await this.client.del(key)
   }
 
-  public async deleteAnsweredQuestions(sessionId: string, nomsId: string, pathway: string) {
+  public async deleteAnsweredQuestions(userId: string, nomsId: string, pathway: string) {
     await this.ensureConnected()
-    const key = buildKey(answeredQuestionsPrefix, sessionId, nomsId, pathway)
+    const key = buildKey(answeredQuestionsPrefix, userId, nomsId, pathway)
     await this.client.del(key)
   }
 }

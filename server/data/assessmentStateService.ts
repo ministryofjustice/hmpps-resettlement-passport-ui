@@ -6,7 +6,7 @@ import logger from '../../logger'
 
 export interface StateKey {
   prisonerNumber?: string
-  sessionId: string
+  userId: string
   pathway: string
 }
 
@@ -20,24 +20,16 @@ export class AssessmentStateService {
   }
 
   async getAssessment(key: StateKey): Promise<SubmittedInput> {
-    return this.store.getAssessment(key.sessionId, key.prisonerNumber, key.pathway)
+    return (await this.store.getAssessment(key.userId, key.prisonerNumber, key.pathway)) ?? { questionsAndAnswers: [] }
   }
 
   async deleteEditedQuestionList(key: StateKey, pathway: string) {
-    await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, pathway)
-  }
-
-  async reset(key: StateKey, pathway: string) {
-    await this.store.deleteAssessment(key.sessionId, key.prisonerNumber, pathway)
-    await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, pathway)
-    await this.store.setAssessment(key.sessionId, key.prisonerNumber, pathway, {
-      questionsAndAnswers: [],
-    })
+    await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, pathway)
   }
 
   async answer(key: StateKey, answer: SubmittedInput, edit: boolean = false) {
     // get previous Q&A's
-    const allQuestionsAndAnswers = await this.store.getAssessment(key.sessionId, key.prisonerNumber, key.pathway)
+    const allQuestionsAndAnswers = await this.getAssessment(key)
     await this.updateAnsweredQuestionIds(key, answer, edit)
 
     answer.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
@@ -56,15 +48,15 @@ export class AssessmentStateService {
       }
     })
 
-    await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, allQuestionsAndAnswers)
+    await this.store.setAssessment(key.userId, key.prisonerNumber, key.pathway, allQuestionsAndAnswers)
   }
 
   private async updateAnsweredQuestionIds(key: StateKey, answer: SubmittedInput, edit: boolean) {
     let answeredQuestionIds: string[]
     if (edit) {
-      answeredQuestionIds = await this.store.getEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
+      answeredQuestionIds = await this.store.getEditedQuestionList(key.userId, key.prisonerNumber, key.pathway)
     } else {
-      answeredQuestionIds = await this.store.getAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway)
+      answeredQuestionIds = await this.store.getAnsweredQuestions(key.userId, key.prisonerNumber, key.pathway)
     }
 
     answer.questionsAndAnswers.forEach(q => {
@@ -80,16 +72,16 @@ export class AssessmentStateService {
     })
 
     if (edit) {
-      await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, answeredQuestionIds)
+      await this.store.setEditedQuestionList(key.userId, key.prisonerNumber, key.pathway, answeredQuestionIds)
     } else {
-      await this.store.setAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway, answeredQuestionIds)
+      await this.store.setAnsweredQuestions(key.userId, key.prisonerNumber, key.pathway, answeredQuestionIds)
     }
   }
 
   async checkForConvergence(key: StateKey, assessmentPage: AssessmentPage, edit: boolean): Promise<boolean> {
     // Get any edited questions from cache
-    const editedQuestionIds = await this.store.getEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
-    const answeredQuestionIds = await this.store.getAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway)
+    const editedQuestionIds = await this.store.getEditedQuestionList(key.userId, key.prisonerNumber, key.pathway)
+    const answeredQuestionIds = await this.store.getAnsweredQuestions(key.userId, key.prisonerNumber, key.pathway)
 
     if (editedQuestionIds.length === 0 || !edit) {
       return false
@@ -120,9 +112,9 @@ export class AssessmentStateService {
         },
       )
 
-      await this.store.setAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway, newQuestionIds)
+      await this.store.setAnsweredQuestions(key.userId, key.prisonerNumber, key.pathway, newQuestionIds)
       // Delete the edited question list from cache
-      await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
+      await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, key.pathway)
       // Redirect to check answers page
       return true
     }
@@ -130,23 +122,23 @@ export class AssessmentStateService {
   }
 
   async onComplete(key: StateKey) {
-    await this.store.deleteAssessment(key.sessionId, key.prisonerNumber, key.pathway)
-    await this.store.deleteEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway)
-    await this.store.deleteAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway)
+    await this.store.deleteAssessment(key.userId, key.prisonerNumber, key.pathway)
+    await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, key.pathway)
+    await this.store.deleteAnsweredQuestions(key.userId, key.prisonerNumber, key.pathway)
   }
 
   async getCurrentPage(key: StateKey): Promise<AssessmentPage> {
-    return JSON.parse(await this.store.getCurrentPage(key.sessionId, key.prisonerNumber, key.pathway))
+    return JSON.parse(await this.store.getCurrentPage(key.userId, key.prisonerNumber, key.pathway))
   }
 
   async setCurrentPage(key: StateKey, assessmentPage: AssessmentPage) {
-    await this.store.setCurrentPage(key.sessionId, key.prisonerNumber, key.pathway, assessmentPage)
+    await this.store.setCurrentPage(key.userId, key.prisonerNumber, key.pathway, assessmentPage)
   }
 
   async prepareSubmission(stateKey: StateKey): Promise<SubmittedInput> {
     const assessment = await this.getAssessment(stateKey)
     const answeredQuestions = await this.store.getAnsweredQuestions(
-      stateKey.sessionId,
+      stateKey.userId,
       stateKey.prisonerNumber,
       stateKey.pathway,
     )
@@ -156,16 +148,16 @@ export class AssessmentStateService {
   }
 
   async startEdit(key: StateKey, assessmentPage: AssessmentPage | undefined) {
-    await this.store.setEditedQuestionList(key.sessionId, key.prisonerNumber, key.pathway, [])
+    await this.store.setEditedQuestionList(key.userId, key.prisonerNumber, key.pathway, [])
     if (!assessmentPage) {
       return
     }
     const questionsAndAnswers = {
       questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => toSubmittedQuestionAndAnswer(qAndA)),
     }
-    await this.store.setAssessment(key.sessionId, key.prisonerNumber, key.pathway, questionsAndAnswers)
+    await this.store.setAssessment(key.userId, key.prisonerNumber, key.pathway, questionsAndAnswers)
     const questionIds = questionsAndAnswers.questionsAndAnswers.map(qAndA => qAndA.question)
-    await this.store.setAnsweredQuestions(key.sessionId, key.prisonerNumber, key.pathway, questionIds)
+    await this.store.setAnsweredQuestions(key.userId, key.prisonerNumber, key.pathway, questionIds)
   }
 
   mergeQuestionsAndAnswers(
@@ -193,7 +185,7 @@ export class AssessmentStateService {
     cacheInput: SubmittedInput,
   ): Promise<SubmittedQuestionAndAnswer[]> {
     const answeredQuestions = await this.store.getAnsweredQuestions(
-      stateKey.sessionId,
+      stateKey.userId,
       stateKey.prisonerNumber,
       stateKey.pathway,
     )
@@ -210,7 +202,7 @@ export class AssessmentStateService {
         logger.info(
           'Missing question id: %s in submission for session %s on %s pathway',
           id,
-          stateKey.sessionId,
+          stateKey.userId,
           stateKey.pathway,
         )
       }

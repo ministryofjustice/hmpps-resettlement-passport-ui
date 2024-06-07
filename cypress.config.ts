@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress'
+// @ts-expect-error "there's no types for this"
 import { downloadFile } from 'cypress-downloadfile/lib/addPlugin'
 import fs from 'fs'
 import pdfParse from 'pdf-parse'
@@ -8,8 +9,9 @@ import auth from './integration_tests/mockApis/auth'
 import tokenVerification from './integration_tests/mockApis/tokenVerification'
 import nomisUserRolesApi from './integration_tests/mockApis/nomisUserRolesApi'
 import rpApi from './integration_tests/mockApis/rpApi'
+import { resetRedisCache } from './integration_tests/mockApis/redis'
 
-const parsePdf = async (pdfPath): Promise<PdfParse.Result> => {
+const parsePdf = async (pdfPath: string): Promise<PdfParse.Result> => {
   const dataBuffer = fs.readFileSync(pdfPath)
   return pdfParse(dataBuffer)
 }
@@ -30,7 +32,7 @@ export default defineConfig({
     // You may want to clean this up later by importing these.
     setupNodeEvents(on) {
       on('task', {
-        reset: resetStubs,
+        reset: () => Promise.all([resetStubs(), resetRedisCache()]),
         ...auth,
         ...nomisUserRolesApi,
         ...rpApi,

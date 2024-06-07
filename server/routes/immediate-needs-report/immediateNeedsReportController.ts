@@ -25,22 +25,27 @@ export default class ImmediateNeedsReportController {
       const assessmentType = parseAssessmentType(req.query.type)
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.sessionID,
+        userId: req.user.username,
         pathway,
       }
 
-      // Reset the cache at the point as starting new journey through the form
-      await this.assessmentStateService.reset(stateKey, pathway)
+      const existingInput = await this.assessmentStateService.prepareSubmission(stateKey)
+      const { questionsAndAnswers } = existingInput
+      let currentPageId = null
+
+      if (questionsAndAnswers?.length > 0) {
+        const lastAnsweredQ = questionsAndAnswers[questionsAndAnswers.length - 1]
+        currentPageId = lastAnsweredQ.pageId
+      }
 
       const nextPage = await this.rpService.fetchNextPage(
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
-        {
-          questionsAndAnswers: null,
-        },
-        null,
+        existingInput,
+        currentPageId,
         assessmentType,
       )
+
       const { nextPageId } = nextPage
       const submitted = nextPageId === 'CHECK_ANSWERS' ? '&submitted=true' : ''
 
@@ -61,7 +66,7 @@ export default class ImmediateNeedsReportController {
       const backButton = req.query.backButton === 'true'
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.sessionID,
+        userId: req.user.username,
         pathway,
       }
       const currentPage = await this.assessmentStateService.getCurrentPage(stateKey)
@@ -116,7 +121,7 @@ export default class ImmediateNeedsReportController {
         : null
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.sessionID,
+        userId: req.user.username,
         pathway,
       }
 
@@ -126,13 +131,6 @@ export default class ImmediateNeedsReportController {
       }
 
       const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
-
-      // If there is nothing in the cache at this point, something has gone wrong so redirect back to the start of the form
-      if (!existingAssessment) {
-        return res.redirect(
-          `/ImmediateNeedsReport-next-page?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&pathway=${pathway}&type=${assessmentType}`,
-        )
-      }
 
       // Get the assessment page from the API and set in the cache
       const assessmentPage: AssessmentPage = await this.rpService.getAssessmentPage(
@@ -214,7 +212,7 @@ export default class ImmediateNeedsReportController {
 
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-        sessionId: req.sessionID,
+        userId: req.user.username,
         pathway,
       }
 
@@ -233,9 +231,6 @@ export default class ImmediateNeedsReportController {
         assessmentType,
       )) as { error?: string }
 
-      // Clear cache for a completed assessment
-      await this.assessmentStateService.onComplete(stateKey)
-
       if (completeAssessment.error) {
         return next(
           new Error(
@@ -243,6 +238,9 @@ export default class ImmediateNeedsReportController {
           ),
         )
       }
+      // Clear cache for a completed assessment
+      await this.assessmentStateService.onComplete(stateKey)
+
       if (
         (prisonerData.immediateNeedsSubmitted && assessmentType === 'BCST2') ||
         (prisonerData.preReleaseSubmitted && assessmentType === 'RESETTLEMENT_PLAN')
@@ -266,7 +264,7 @@ export default class ImmediateNeedsReportController {
     const { prisonerNumber } = prisonerData.personalDetails
     const stateKey = {
       prisonerNumber,
-      sessionId: req.sessionID,
+      userId: req.user.username,
       pathway,
     }
 

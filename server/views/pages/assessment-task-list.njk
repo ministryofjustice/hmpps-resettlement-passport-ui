@@ -83,8 +83,12 @@
               <tr class="govuk-table__row">
                 <th scope="row" class="govuk-table__header">
                   {% set pathway =  assessment.pathway | getEnumValue %}
-                  {% set status =  assessment.assessmentStatus | getAssessmentEnumValue %}
-                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&pathway={{ assessment.pathway }}&type={{ assessmentType }}">{{ pathway.name }}</a>
+                  {% if assessment.assessmentStatus === 'NOT_STARTED' %}
+                    {% set status = { name: 'Incomplete', color: 'grey' } %}
+                  {% else %}
+                    {% set status = assessment.assessmentStatus | getAssessmentEnumValue %}
+                  {% endif %}
+                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&pathway={{ assessment.pathway }}&type={{ assessmentType }}" data-qa="a-{{ assessment.pathway }}">{{ pathway.name }}</a>
                 </th>
                 <td class="govuk-table__cell">
                   <strong class="govuk-tag govuk-tag--{{ status.color }}">{{ status.name }}</strong>

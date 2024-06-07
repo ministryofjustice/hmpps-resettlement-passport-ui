@@ -64,16 +64,16 @@ export default class RestClient {
   }: GetRequest): Promise<T> {
     try {
       if (this.userId) {
-        logger.info(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
+        logger.trace(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
       } else {
-        logger.info(`User making GET request to ${path}`)
+        logger.trace(`User making GET request to ${path}`)
       }
 
       const result = await superagent
         .get(`${this.apiUrl()}${path}`)
         .agent(this.agent)
         .use(restClientMetricsMiddleware)
-        .retry(2, (err, res) => {
+        .retry(2, (err, _) => {
           if (retry === false) {
             return false
           }
@@ -113,7 +113,7 @@ export default class RestClient {
         .send(data)
         .agent(this.agent)
         .use(restClientMetricsMiddleware)
-        .retry(2, (err, res) => {
+        .retry(2, (err, _) => {
           if (retry === false) {
             return false
           }
@@ -152,7 +152,7 @@ export default class RestClient {
         .send(data)
         .agent(this.agent)
         .use(restClientMetricsMiddleware)
-        .retry(2, (err, res) => {
+        .retry(2, (err, _) => {
           if (retry === false) {
             return false
           }
@@ -184,7 +184,7 @@ export default class RestClient {
         .agent(this.agent)
         .auth(this.token, { type: 'bearer' })
         .use(restClientMetricsMiddleware)
-        .retry(2, (err, res) => {
+        .retry(2, (err, _) => {
           if (err) logger.info(`Retry handler found API error with ${err.code} ${err.message}`)
           return undefined // retry handler only for logging retries, not to influence retry logic
         })
@@ -223,7 +223,7 @@ export default class RestClient {
         .delete(`${this.apiUrl()}${path}`)
         .agent(this.agent)
         .use(restClientMetricsMiddleware)
-        .retry(2, (err, res) => {
+        .retry(2, (err, _) => {
           if (retry === false) {
             return false
           }
