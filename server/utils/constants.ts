@@ -87,6 +87,12 @@ export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     name: 'Very high',
     color: 'red',
   },
+  IMMEDIATE_NEEDS_REPORT: {
+    name: 'Immediate needs report',
+  },
+  PRE_RELEASE_REPORT: {
+    name: 'Pre-release report',
+  },
 }
 
 export const ERROR_DICTIONARY: { [key: string]: string } = {
@@ -151,6 +157,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   RESETTLEMENT_ASSESSMENT: 'resettlementAssessment',
   TASKS_VIEW: 'tasksView',
   WATCHLIST_VIEW: 'watchlistView',
+  COMBINED_REPORT_CASE_NOTES: 'combinedReportCaseNotes',
 }
 
 export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'
