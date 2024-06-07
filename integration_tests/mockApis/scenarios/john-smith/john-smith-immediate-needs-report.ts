@@ -463,7 +463,7 @@ const submit = () =>
   stubFor({
     name: 'John Smith immediate needs report Submit',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/submit?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/submit?assessmentType=BCST2&sendCombinedCaseNotes=true',
       method: 'POST',
     },
     response: {
