@@ -76,7 +76,7 @@ const getStaffDetails = (staffId = 485588) =>
     },
   })
 
-const stubUser = (name: string) =>
+const stubUser = (name: string, nomis: boolean = false) =>
   stubFor({
     request: {
       method: 'GET',
@@ -92,7 +92,7 @@ const stubUser = (name: string) =>
         username: 'USER1',
         active: true,
         name,
-        authSource: 'nomis',
+        authSource: nomis ? 'nomis' : 'delius',
       },
     },
   })
@@ -100,5 +100,5 @@ const stubUser = (name: string) =>
 export default {
   getUserActiveCaseLoad,
   getStaffDetails,
-  stubAuthUser: (name = 'john smith') => stubUser(name),
+  stubAuthUser: ({ name = 'john smith', nomis = false } = {}) => stubUser(name, nomis),
 }

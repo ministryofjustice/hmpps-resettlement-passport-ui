@@ -3,7 +3,7 @@ context('Watchlist', () => {
     cy.task('reset')
     cy.task('getUserActiveCaseLoad')
     cy.task('stubSignIn')
-    cy.task('stubAuthUser')
+    cy.task('stubAuthUser', { name: 'john smith', nomis: true })
   })
 
   it('', () => {
