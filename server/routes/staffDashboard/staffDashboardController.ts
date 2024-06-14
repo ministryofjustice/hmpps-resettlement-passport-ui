@@ -43,7 +43,6 @@ export default class StaffDashboardController {
 
       const errors: ErrorMessage[] = []
       let prisonersList = null
-      let prisonerCountMetrics = null
 
       try {
         // TODO add dynamic pagination and sorting
@@ -62,9 +61,6 @@ export default class StaffDashboardController {
             <string>assessmentRequired,
             <string>watchList,
           )
-          if (reportType === 'pathway-summary') {
-            prisonerCountMetrics = await this.rpService.getPrisonerCountMetrics(userActiveCaseLoad.caseLoadId)
-          }
         }
         const view = new StaffDashboardView(
           prisonersList,
@@ -76,7 +72,6 @@ export default class StaffDashboardController {
           modifiedPathwayStatus,
           sortField,
           sortDirection,
-          prisonerCountMetrics,
           reportType,
           assessmentRequired,
           watchList,

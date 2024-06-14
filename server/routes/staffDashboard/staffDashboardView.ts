@@ -1,6 +1,5 @@
 import View, { ErrorMessage } from '../view'
 import { PrisonersList } from '../../data/model/prisoners'
-import { PrisonerCountMetrics } from '../../data/model/metrics'
 
 export default class StaffDashboardView implements View {
   constructor(
@@ -13,7 +12,6 @@ export default class StaffDashboardView implements View {
     private readonly pathwayStatus: string,
     private readonly sortField: string,
     private readonly sortDirection: string,
-    private readonly prisonerCountMetrics: PrisonerCountMetrics,
     private readonly reportType: string,
     private readonly assessmentRequired: string,
     private readonly watchList: string,
@@ -31,7 +29,6 @@ export default class StaffDashboardView implements View {
     pathwayStatus: string
     sortField: string
     sortDirection: string
-    prisonerCountMetrics: PrisonerCountMetrics
     reportType: string
     assessmentRequired: string
     watchList: string
@@ -46,7 +43,6 @@ export default class StaffDashboardView implements View {
       pathwayStatus: this.pathwayStatus,
       sortField: this.sortField,
       sortDirection: this.sortDirection,
-      prisonerCountMetrics: this.prisonerCountMetrics,
       reportType: this.reportType,
       assessmentRequired: this.assessmentRequired,
       watchList: this.watchList,
