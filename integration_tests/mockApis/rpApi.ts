@@ -438,5 +438,4 @@ export default {
   stubJohnSmithStatusUpdateSuccess,
   stubJohnSmithStatusUpdateFailure,
   stubJohnSmithWatchlistFilterResults,
-  stubJohnSmithWatchlistFilterResults,
 }
