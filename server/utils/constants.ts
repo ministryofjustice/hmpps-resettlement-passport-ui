@@ -151,7 +151,6 @@ export const RISK_ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: { name: string; 
 }
 
 export const FEATURE_FLAGS: { [key: string]: string } = {
-  REPORTING: 'reporting',
   ADD_APPOINTMENTS: 'addAppointments',
   DELIUS_CASE_NOTES: 'nDeliusCaseNotes',
   RESETTLEMENT_ASSESSMENT: 'resettlementAssessment',

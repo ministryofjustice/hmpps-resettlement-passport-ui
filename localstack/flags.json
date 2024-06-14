@@ -1,9 +1,5 @@
 [
   {
-    "feature": "reporting",
-    "enabled": true
-  },
-  {
     "feature": "addAppointments",
     "enabled": true
   },
