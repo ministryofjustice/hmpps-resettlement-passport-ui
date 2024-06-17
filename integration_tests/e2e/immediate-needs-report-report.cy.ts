@@ -192,6 +192,13 @@ context('Immediate Needs Report', () => {
     cy.get('#NO_PERMANENT_OR_FIXED').check()
     clickContinue()
 
+    // PSFR-1312 Clicking back at this point should take you to 'Where did the person in prison live before custody?'
+    // NOT the check your answers page
+    cy.go(-1)
+    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    cy.get('#NO_PERMANENT_OR_FIXED').should('be.checked')
+    clickContinue()
+
     getHeading().should('have.text', 'Where will the person in prison live when they are released?')
     cy.get('#DOES_NOT_HAVE_ANYWHERE').check()
     clickContinue()
