@@ -5,7 +5,6 @@ import path from 'path'
 import {
   formatDate,
   formatDateExtended,
-  getAgeFromDate,
   getDaysFromDate,
   filterByPathway,
   initialiseName,
@@ -78,7 +77,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('initialiseName', initialiseName)
   njkEnv.addFilter('formatDate', formatDate)
   njkEnv.addFilter('formatDateExtended', formatDateExtended)
-  njkEnv.addFilter('getAgeFromDate', getAgeFromDate)
   njkEnv.addFilter('getDaysFromDate', getDaysFromDate)
   njkEnv.addFilter('getMostRecentDate', getMostRecentDate)
   njkEnv.addFilter('isFriday', isFriday)

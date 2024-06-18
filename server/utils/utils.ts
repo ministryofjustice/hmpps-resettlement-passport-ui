@@ -66,12 +66,6 @@ export const formatDateToIso = (dateString: string): string => {
   return date.toISOString()
 }
 
-export const getAgeFromDate = (birthDate: string): number => {
-  const birthYear = new Date(birthDate).getFullYear()
-  const currentYear = new Date().getFullYear()
-  return currentYear - birthYear
-}
-
 export const getDaysFromGivenDate = (targetDate: string, currentDate: Date): { daysDiff: number; isPast: boolean } => {
   if (!targetDate) return null
 
