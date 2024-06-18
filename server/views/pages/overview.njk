@@ -10,7 +10,6 @@
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% set addAppointmentEnabled = features.ADD_APPOINTMENTS | getFeatureFlag %}
 {% set tasksViewEnabled = features.TASKS_VIEW | getFeatureFlag %}
-{% set watchlistViewEnabled = features.WATCHLIST_VIEW | getFeatureFlag %}
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
     {{ titleAndIntro(pathway) }}
@@ -22,7 +21,7 @@
     {% elif prisonerData.resettlementReviewAvailable === false %}
         {{preReleaseComplete(pathway, prisonerData)}}
     {% endif %}
-    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
+    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
 </div>
 
 

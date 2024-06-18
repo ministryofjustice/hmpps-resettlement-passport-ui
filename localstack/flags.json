@@ -16,10 +16,6 @@
     "enabled": true
   },
   {
-    "feature": "watchlistView",
-    "enabled": true
-  },
-  {
     "feature": "combinedReportCaseNotes",
     "enabled": true
   }

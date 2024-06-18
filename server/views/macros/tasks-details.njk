@@ -1,44 +1,38 @@
-{% macro tasksDetails(prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken, isInWatchlist) %}
-  {% if tasksViewEnabled == true or watchlistViewEnabled == true %}
-    <div class="govuk-grid-column-one-third">
-      <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-        Actions:
-      </h3>
-        </header>
-        <div class="app-summary-card__body">
-          {% if watchlistViewEnabled == true %}
-            {% if isInWatchlist == true %}
-                   <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/removeFromYourCases/" method="POST" novalidate>
-                       <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Remove from your cases</button>
-                       <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                       <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
-                   </form>
-            {% else %}
-                  <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/addToYourCases/" method="POST" novalidate>
-                      <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Add to your cases</button>
-                      <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                      <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
-                  </form>
-            {% endif %}
-          {% endif %}
-          {% if tasksViewEnabled == true %}
-            <div class="govuk-form-group govuk-!-margin-0">
-              <input type="hidden" id="updated" name="updated" value="today">
-              <input type="hidden" id="pathway" name="pathway" value="attitudes">
-              <a id="generate-pdf-task-btn"  class="govuk-button govuk-button--primary" href="/print/packPdf?prisonerNumber={{prisonerNumber}}" target="_blank">
-            Plan Your Future pack PDF
-          </a>
-            </div>
-            <div class="govuk-form-group govuk-!-margin-0">
-              <a id="generate-otp-task-btn" class="govuk-button govuk-button--primary" href="/print/otp?prisonerNumber={{prisonerNumber}}">
-                Generate First-time ID code
-              </a>
-            </div>
-          {% endif %}
-        </div>
-      </section>
-    </div>
-  {% endif %}
+{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, isInWatchlist) %}
+  <div class="govuk-grid-column-one-third">
+    <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
+      <header class="app-summary-card__header">
+        <h3 class="app-summary-card__title">Actions:</h3>
+      </header>
+      <div class="app-summary-card__body">
+        {% if isInWatchlist == true %}
+          <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/removeFromYourCases/" method="POST" novalidate>
+            <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Remove from your cases</button>
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+            <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+          </form>
+        {% else %}
+          <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/addToYourCases/" method="POST" novalidate>
+            <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Add to your cases</button>
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+            <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+          </form>
+        {% endif %}
+        {% if tasksViewEnabled == true %}
+          <div class="govuk-form-group govuk-!-margin-0">
+            <input type="hidden" id="updated" name="updated" value="today">
+            <input type="hidden" id="pathway" name="pathway" value="attitudes">
+            <a id="generate-pdf-task-btn"  class="govuk-button govuk-button--primary" href="/print/packPdf?prisonerNumber={{prisonerNumber}}" target="_blank">
+              Plan Your Future pack PDF
+            </a>
+          </div>
+          <div class="govuk-form-group govuk-!-margin-0">
+            <a id="generate-otp-task-btn" class="govuk-button govuk-button--primary" href="/print/otp?prisonerNumber={{prisonerNumber}}">
+              Generate First-time ID code
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  </div>
 {% endmacro %}
