@@ -1,9 +1,9 @@
-{% macro statusDetails(pathwayData, prisonerNumber, pathway, resettlementAssessmentEnabled) %}
+{% macro statusDetails(pathwayData, prisonerNumber, pathway) %}
   <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
         Resettlement status:
-        {% set statusValue = pathwayData.status | getEnumValue(resettlementAssessmentEnabled) %}
+        {% set statusValue = pathwayData.status | getEnumValue %}
         <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
           {{ statusValue.name }}
         </strong>

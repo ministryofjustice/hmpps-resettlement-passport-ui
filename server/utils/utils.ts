@@ -118,25 +118,25 @@ export const getAssessmentEnumValue = (pathwayStatusEnum: string): EnumValue => 
   return ASSESSMENT_ENUMS_DICTIONARY[pathwayStatusEnum]
 }
 
-export function getEnumByName(name: string, resettlementAssessmentEnabled = true) {
+export function getEnumByName(name: string) {
   return Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
 }
 
-export function getEnumByURL(url: unknown, resettlementAssessmentEnabled = true) {
+export function getEnumByURL(url: unknown) {
   return Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
 }
 
-export function getUrlFromName(pathwayName: string, resettlementAssessmentEnabled = true) {
+export function getUrlFromName(pathwayName: string) {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === pathwayName)
   return key ? ENUMS_DICTIONARY[key].url : undefined
 }
 
-export function getNameFromUrl(url: string, resettlementAssessmentEnabled = true) {
+export function getNameFromUrl(url: string) {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
   return key ? ENUMS_DICTIONARY[key].name : undefined
 }
 
-export async function getDescriptionFromName(name: string, resettlementAssessmentEnabled = true) {
+export async function getDescriptionFromName(name: string) {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].name === name)
   return key ? ENUMS_DICTIONARY[key].description : undefined
 }
