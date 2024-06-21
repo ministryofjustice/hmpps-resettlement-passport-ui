@@ -4,15 +4,7 @@
     "enabled": true
   },
   {
-    "feature": "nDeliusCaseNotes",
-    "enabled": true
-  },
-  {
     "feature": "tasksView",
-    "enabled": true
-  },
-  {
-    "feature": "reportSkip",
     "enabled": true
   },
   {
