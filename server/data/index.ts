@@ -8,7 +8,7 @@ import applicationInfoSupplier from '../applicationInfo'
 
 const applicationInfo = applicationInfoSupplier()
 initialiseAppInsights()
-buildAppInsightsClient(applicationInfo)
+const appInsightsClient = buildAppInsightsClient(applicationInfo)
 
 import HmppsAuthClient from './hmppsAuthClient'
 import { createRedisClient } from './redisClient'
@@ -18,6 +18,7 @@ import ComponentClient from './componentClient'
 
 export const dataAccess = () => ({
   applicationInfo,
+  appInsightsClient,
   hmppsAuthClient: new HmppsAuthClient(new TokenStore(createRedisClient())),
   rpClient: new RPClient(),
   componentClient: new ComponentClient(),

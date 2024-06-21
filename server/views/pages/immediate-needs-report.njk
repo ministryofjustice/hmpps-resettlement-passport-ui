@@ -37,7 +37,7 @@
       <div class="govuk-grid-column-three-quarters">
 
         {% if submitted or backButton or not edit %}
-          <button class="govuk-back-link assessment-back-button">Back</button>
+          <button class="govuk-back-link assessment-back-button" track-event-name="ReportBackLinkClicked" track-event-prisoner-id="{{ prisonerData.personalDetails.prisonerNumber }}">Back</button>
         {% endif %}
         
         {% if not assessmentPage.error %}

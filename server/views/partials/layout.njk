@@ -30,6 +30,8 @@
       <link href="{{ css }}" nonce="{{ cspNonce }}" rel="stylesheet" />
     {% endfor %}
   {% endif %}
+  <script src="/assets/analytics.js" nonce="{{ cspNonce }}"></script>
+  <meta name="csrf-token" content="{{ csrfToken }}">
 {% endblock %}
 
 {% block pageTitle %}{{ pageTitle | default(applicationName) }}
