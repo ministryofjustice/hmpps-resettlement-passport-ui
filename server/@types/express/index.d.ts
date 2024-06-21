@@ -32,11 +32,6 @@ export declare global {
         options: Record<string, unknown>,
       ): void
     }
-
-    interface ValidationError {
-      href: string
-      text: string
-    }
   }
 }
 
