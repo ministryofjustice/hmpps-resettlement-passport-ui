@@ -22,7 +22,7 @@
 {% endmacro %}
 {% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseEligibilityDate, releaseEligibilityType, releaseOnTemporaryLicenceDate, pathwayView, lastUpdatedDate) %}
   {% set lastUpdatedDates = [] %}
-  <tr class="govuk-table__row">
+  <tr class="govuk-table__row" data-qa="prisoner-table-row">
     <td class="govuk-table__cell">
       <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}">{{ lastName | toTitleCase }}, {{ firstName | toTitleCase }}</a>
       <br/>

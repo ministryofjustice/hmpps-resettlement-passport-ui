@@ -83,6 +83,11 @@ export class AssessmentStateService {
     const editedQuestionIds = await this.store.getEditedQuestionList(key.userId, key.prisonerNumber, key.pathway)
     const answeredQuestionIds = await this.store.getAnsweredQuestions(key.userId, key.prisonerNumber, key.pathway)
 
+    // PSFR-1312 If editedQuestionIds already contains one of the page's question ids then the user has clicked the back button so don't re-converge.
+    if (editedQuestionIds.some(eq => assessmentPage.questionsAndAnswers.map(qa => qa.question.id).includes(eq))) {
+      return false
+    }
+
     if (editedQuestionIds.length === 0 || !edit) {
       return false
     }
