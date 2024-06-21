@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express'
-import { getEnumByURL, getEnumValue, getFeatureFlagBoolean } from '../../utils/utils'
-import { FEATURE_FLAGS } from '../../utils/constants'
+import { getEnumByURL, getEnumValue } from '../../utils/utils'
 import { Services } from '../../services'
 import logger from '../../../logger'
 
