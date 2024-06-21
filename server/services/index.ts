@@ -5,7 +5,7 @@ import RpService from './rpService'
 import { createAssessmentStateService } from '../data/assessmentStateService'
 
 export const services = () => {
-  const { applicationInfo, componentClient } = dataAccess()
+  const { applicationInfo, componentClient, appInsightsClient } = dataAccess()
 
   const userService = new UserService()
   const rpService = new RpService()
@@ -18,6 +18,7 @@ export const services = () => {
     rpService,
     componentService,
     assessmentStateService,
+    appInsightsClient,
   }
 }
 

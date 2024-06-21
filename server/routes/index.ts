@@ -24,6 +24,7 @@ import printRouter from './print'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
 import watchlistRouter from './watchlist'
+import analyticsRouter from './analytics'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -46,6 +47,7 @@ export default function routes(services: Services): Router {
   printRouter(router, services)
   watchlistRouter(router, services)
   statusUpdateRouter(router, services)
+  analyticsRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 

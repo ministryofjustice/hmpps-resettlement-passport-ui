@@ -3,8 +3,9 @@ import { getEnumByURL, getEnumValue, getFeatureFlagBoolean } from '../../utils/u
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { Services } from '../../services'
 import logger from '../../../logger'
+import { PsfrEvent, trackEvent } from '../../utils/analytics'
 
-export default (router: Router, { rpService }: Services) => {
+export default (router: Router, { rpService, appInsightsClient }: Services) => {
   router.get('/status-update', async (req: Request, res: Response, next) => {
     try {
       const { prisonerData } = req
@@ -49,10 +50,19 @@ export default (router: Router, { rpService }: Services) => {
 
     try {
       const status = getEnumValue(selectedStatus).name
+      const pathway = getEnumByURL(selectedPathway)
       await rpService.patchStatusWithCaseNote(prisonerNumber, {
-        pathway: getEnumByURL(selectedPathway),
+        pathway,
         status: selectedStatus,
         caseNoteText: `Resettlement status set to: ${status}. ${caseNoteInput || ''}`,
+      })
+      trackEvent(appInsightsClient, PsfrEvent.STATUS_UPDATE_EVENT, {
+        prisonerId: prisonerNumber,
+        sessionId: req.sessionID,
+        username: res.locals.user.username,
+        pathway,
+        oldStatus: prisonerData.pathways.find(it => it.pathway === pathway)?.status,
+        newStatus: selectedStatus,
       })
       return res.redirect(`/${selectedPathway}?prisonerNumber=${prisonerNumber}#case-notes`)
     } catch (error) {
