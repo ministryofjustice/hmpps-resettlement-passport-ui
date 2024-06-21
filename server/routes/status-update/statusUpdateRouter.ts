@@ -1,6 +1,5 @@
 import { Request, Response, Router } from 'express'
-import { getEnumByURL, getEnumValue, getFeatureFlagBoolean } from '../../utils/utils'
-import { FEATURE_FLAGS } from '../../utils/constants'
+import { getEnumByURL, getEnumValue } from '../../utils/utils'
 import { Services } from '../../services'
 import logger from '../../../logger'
 import { PsfrEvent, trackEvent } from '../../utils/analytics'
@@ -25,19 +24,8 @@ export default (router: Router, { rpService, appInsightsClient }: Services) => {
     const { prisonerData } = req
     const { selectedStatus, selectedPathway } = req.body
 
-    const isnDeliusCaseNotesEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.DELIUS_CASE_NOTES)
     const { prisonerNumber } = prisonerData.personalDetails
     const caseNoteInput = req.body[`caseNoteInput_${selectedStatus}`] || null
-
-    if (res.locals.user.authSource === 'delius' && !isnDeliusCaseNotesEnabled) {
-      return res.render('pages/status-update', {
-        prisonerData,
-        selectedPathway,
-        serverUpdate: 'deliusUserError',
-        selectedStatus,
-        caseNoteInput,
-      })
-    }
 
     if (!selectedStatus) {
       return res.render('pages/status-update', {

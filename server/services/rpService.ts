@@ -5,7 +5,6 @@ import { EducationSkillsWorkResponse } from '../data/model/educationSkillsWorkRe
 import logger from '../../logger'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
-import { PrisonerCountMetrics } from '../data/model/metrics'
 import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/immediateNeedsReport'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
 import { AssessmentsInformation, AssessmentSkipRequest, AssessmentType } from '../data/model/assessmentInformation'
@@ -130,27 +129,6 @@ export default class RpService {
     }
 
     return getEducationSkillsWork
-  }
-
-  async getPrisonerCountMetrics(prisonId: string) {
-    let prisonerCountMetrics: PrisonerCountMetrics
-    const client = this.createClient()
-    try {
-      prisonerCountMetrics = (await client.get(
-        `/resettlement-passport/metrics/prisoner-counts?prisonId=${prisonId}`,
-      )) as PrisonerCountMetrics
-    } catch (err) {
-      logger.warn(
-        `Session: ${client.sessionId} Cannot retrieve prisoner count metrics for ${prisonId} ${err.status} ${err}`,
-      )
-      if (err.status === 404) {
-        prisonerCountMetrics = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
-      } else {
-        prisonerCountMetrics = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
-      }
-    }
-
-    return prisonerCountMetrics
   }
 
   async getAssessmentPage(prisonerId: string, pathway: string, pageId: string, assessmentType: AssessmentType) {

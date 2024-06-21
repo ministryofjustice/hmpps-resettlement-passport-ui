@@ -4,12 +4,7 @@
 {% set pathway = selectedPathway | getNameFromUrl %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
-{% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
-{% if resettlementAssessmentEnabled %}
-  {% set statuses = ["NOT_STARTED", "SUPPORT_REQUIRED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
-{% else %}
-  {% set statuses = ["NOT_STARTED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
-{% endif %}
+{% set statuses = ["NOT_STARTED", "SUPPORT_REQUIRED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-row govuk-!-padding-bottom-4">
@@ -42,7 +37,7 @@
               <fieldset class="govuk-fieldset">
                 <div class="govuk-radios" data-module="govuk-radios">
                   {% for statusItem in statuses %}
-                      {% set statusInfo = statusItem | getEnumValue(resettlementAssessmentEnabled) %}
+                      {% set statusInfo = statusItem | getEnumValue %}
                       {% set currentPathway = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
                       {% set isChecked = false %}
                       {% if selectedStatus %}

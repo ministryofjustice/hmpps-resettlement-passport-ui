@@ -74,19 +74,6 @@ describe('assessmentTaskListController', () => {
     expect(res.render).toHaveBeenCalledTimes(1)
   })
 
-  it('Should not redirect if feature flag is disabled', async () => {
-    jest.spyOn(utils, 'getFeatureFlagBoolean').mockResolvedValue(false)
-    jest.spyOn(rpService, 'getAssessmentSummary').mockResolvedValue(assessmentSummary('NOT_STARTED'))
-
-    const req = aRequest(dateInsideReleaseWindow)
-
-    await controller.getView(req, res, next)
-
-    expect(next).toHaveBeenCalledTimes(0)
-    expect(res.redirect).toHaveBeenCalledTimes(0)
-    expect(res.render).toHaveBeenCalledTimes(1)
-  })
-
   it('Should should redirect to RESETTLEMENT plan if in progress and BCST2 not started', async () => {
     jest.spyOn(utils, 'getFeatureFlagBoolean').mockResolvedValue(true)
     jest

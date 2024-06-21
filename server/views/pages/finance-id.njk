@@ -4,13 +4,12 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
-{% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
     <div class="govuk-grid-column-one-third">
-      {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway, resettlementAssessmentEnabled) }}
+      {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
     </div>
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
@@ -21,15 +20,6 @@
           id: "case-notes"
         }
       ] %}
-
-      {% if not assessment.error and (prisonerData.assessmentRequired or not resettlementAssessmentEnabled) %}
-        {% set subNavItems = subNavItems.concat([
-          {
-            name: "Finance and ID assessment",
-            id: "assessment"
-          }
-        ]) %}
-      {% endif %}
 
       {% set subNavItems = subNavItems.concat([
         {
@@ -56,80 +46,6 @@
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% include "../partials/caseNotes.njk" %}
-      {% if not assessment.error and (prisonerData.assessmentRequired or not resettlementAssessmentEnabled) %}
-        <section id="assessment" class="app-summary-card govuk-!-margin-bottom-8">
-          <header class="app-summary-card__header">
-            <h3 class="app-summary-card__title">
-              Finance and ID assessment
-            </h3>
-          </header>
-          <div class="app-summary-card__body">
-            <table class="govuk-table">
-              <tbody class=" govuk-table__body">
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Date of assessment</th>
-                <td class="govuk-table__cell">{{ assessment.assessmentDate | formatDate('long') }}
-                </td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Requires a bank account application</th>
-                <td class="govuk-table__cell capitalise">
-                  {% if assessment.isBankAccountRequired and true %}Yes{% else %}No{% endif %}
-                </td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Requires an ID application</th>
-                <td class="govuk-table__cell capitalise">
-                  {% if assessment.isIdRequired and true %}Yes{% else %}No{% endif %}
-                </td>
-              </tr>
-              <tr class="govuk-table__row">
-                <th scope="row" class="govuk-table__header">Existing ID</th>
-                <td class="govuk-table__cell">
-                  <ul class="govuk-list">
-                    {% for document in assessment.idDocuments %}
-                      <li>{{ document.name }}</li>
-                    {% endfor %}
-                  </ul>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-            <br />
-            <button class="ghost-button delete-assessment-button">Delete assessment</button>
-            <div class="confirm-delete-assessment-form" hidden>
-              <div class="govuk-button-group">
-                <form action action="/finance-and-id/" method="GET" novalidate>
-                  <button class="govuk-button govuk-button--warning" type="submit">Confirm delete assessment</button>
-                  <input hidden name="deleteAssessmentConfirmed" value="true" />
-                  <input hidden name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-                  <input hidden name="assessmentId" value="{{ assessment.id }}">
-                </form>
-                <button class="ghost-button cancel-delete-assessment-button" hidden>Cancel delete assessment</button>
-              </div>
-            </div>
-          </div>
-        </section>
-      {% elif assessment.error and not resettlementAssessmentEnabled %}
-        <div id="assessment" class="govuk-notification-banner" role="region"
-             aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
-          <div class="govuk-notification-banner__header">
-            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-              Important
-            </h2>
-          </div>
-          <div class="govuk-notification-banner__content">
-            <p class="govuk-notification-banner__heading">
-              {{ prisonerData.personalDetails.firstName | capitalize }}
-              {{ prisonerData.personalDetails.lastName | capitalize }} does not have a completed Finance and ID
-              assessment.<br>
-              <a class="govuk-notification-banner__link"
-                 href="/finance-and-id/assessment/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Complete
-                assessment now</a>.
-            </p>
-          </div>
-        </div>
-      {% endif %}
       <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">

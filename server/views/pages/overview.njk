@@ -9,21 +9,19 @@
 {% set mainClasses = "app-container govuk-body" %}
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% set addAppointmentEnabled = features.ADD_APPOINTMENTS | getFeatureFlag %}
-{% set resettlementAssessmentEnabled = features.RESETTLEMENT_ASSESSMENT | getFeatureFlag %}
 {% set tasksViewEnabled = features.TASKS_VIEW | getFeatureFlag %}
-{% set watchlistViewEnabled = features.WATCHLIST_VIEW | getFeatureFlag %}
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
     {{ titleAndIntro(pathway) }}
     {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
-    {% if resettlementAssessmentEnabled and prisonerData.assessmentRequired %}
+    {% if prisonerData.assessmentRequired %}
         {{ incompleteImmediateNeedsReport(pathway, prisonerData) }}
-    {% elif resettlementAssessmentEnabled and releaseDateDays.daysDiff <= 84 and prisonerData.resettlementReviewAvailable === true %}
+    {% elif releaseDateDays.daysDiff <= 84 and prisonerData.resettlementReviewAvailable === true %}
         {{preReleaseRequired(pathway, prisonerData)}}
-    {% elif resettlementAssessmentEnabled and prisonerData.resettlementReviewAvailable === false %}
+    {% elif prisonerData.resettlementReviewAvailable === false %}
         {{preReleaseComplete(pathway, prisonerData)}}
     {% endif %}
-    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, watchlistViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
+    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
 </div>
 
 
@@ -81,7 +79,7 @@
                     <span class="govuk-caption-m">{{ currentPathway.description }}</span>
                   </th>
                   <td class="govuk-table__cell">
-                    {% set statusValue = pathway.status | getEnumValue(resettlementAssessmentEnabled) %}
+                    {% set statusValue = pathway.status | getEnumValue %}
                     <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
                       {{ statusValue.name }}
                     </strong>
