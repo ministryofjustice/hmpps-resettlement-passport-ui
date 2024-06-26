@@ -15,5 +15,10 @@ context('Release time', () => {
     cy.visit('/')
     cy.get('select#releaseTime option:selected').should('have.text', 'All prisoners')
     cy.get('[data-qa="prisoner-table-row"]').should('have.length', 3)
+
+    cy.get('select#releaseTime').select('84')
+    cy.get('#submit-filter-btn').click()
+
+    cy.get('select#releaseTime option:selected').should('have.text', 'Within 12 weeks')
   })
 })
