@@ -154,6 +154,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   ADD_APPOINTMENTS: 'addAppointments',
   TASKS_VIEW: 'tasksView',
   COMBINED_REPORT_CASE_NOTES: 'combinedReportCaseNotes',
+  NEW_RESETTLEMENT_REPORT_FUNCTIONALITY: 'newResettlementReportFunctionality',
 }
 
 export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'
