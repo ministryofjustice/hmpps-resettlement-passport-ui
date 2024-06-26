@@ -13,7 +13,7 @@ export default class StaffDashboardController {
       const { userActiveCaseLoad } = res.locals
       const {
         searchInput = '',
-        releaseTime = '84',
+        releaseTime = '0',
         page = '0',
         pathwayView = '',
         pathwayStatus = '',

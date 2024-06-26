@@ -15,7 +15,7 @@ context('Watchlist', () => {
     cy.contains('label', 'Your cases').should('be.visible')
     cy.get('#watchList').should('not.be.checked')
 
-    cy.get('[data-qa="prisoner-table-row"]').should('have.length', 2)
+    cy.get('[data-qa="prisoner-table-row"]').should('have.length', 3)
 
     cy.get('input#watchList').check()
     cy.get('#submit-filter-btn').click()
