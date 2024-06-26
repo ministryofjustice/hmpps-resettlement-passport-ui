@@ -3,6 +3,7 @@
 {% set pathway = "Prepare someone for release" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
+{% set combinedReportCaseNotesEnabled = features.COMBINED_REPORT_CASE_NOTES | getFeatureFlag %}
 
 {% block header %}
   {% if feComponents.header %}
