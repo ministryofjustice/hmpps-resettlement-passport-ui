@@ -20,15 +20,7 @@ export default class FeatureFlags {
   }
 
   @Cache(featureFlagCache, { ttl: 120 })
-  public async getFeatureFlags(): Promise<Feature[]> {
-    if (!config.s3.featureFlag.enabled) {
-      if (config.local.featureFlag.enabled) {
-        logger.warn('Using local feature flags')
-        return loadLocalFlags()
-      }
-      logger.warn('Feature flags are disabled! Returning null.')
-      return null
-    }
+  private async fetchFeatureFlagsFromS3(): Promise<Feature[]> {
     try {
       const command = await this.s3.getObject({
         Bucket: config.s3.featureFlag.bucketName,
@@ -41,6 +33,18 @@ export default class FeatureFlags {
       logger.error(err, 'Error getting feature flags from S3')
       return null
     }
+  }
+
+  public async getFeatureFlags(): Promise<Feature[]> {
+    if (!config.s3.featureFlag.enabled) {
+      if (config.local.featureFlag.enabled) {
+        logger.warn('Using local feature flags')
+        return loadLocalFlags()
+      }
+      logger.warn('Feature flags are disabled! Returning null.')
+      return null
+    }
+    return this.fetchFeatureFlagsFromS3()
   }
 }
 

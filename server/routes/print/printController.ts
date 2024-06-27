@@ -15,7 +15,7 @@ const pdfOptions = {
   marginRight: '0.0',
 }
 
-export default class HealthStatusController {
+export default class PrintController {
   constructor(private readonly rpService: RpService) {
     // no op
   }
@@ -25,7 +25,7 @@ export default class HealthStatusController {
       const { prisonerData } = req
       const { prisonerNumber, prisonName } = prisonerData.personalDetails
 
-      const appointmentsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.VIEW_APPOINTMENTS)
+      const appointmentsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.VIEW_APPOINTMENTS_END_USER)
       logger.info('Feature flag viewAppointmentsEndUser: ', appointmentsEnabled)
       let appointments: Appointment[] = []
       if (appointmentsEnabled) {

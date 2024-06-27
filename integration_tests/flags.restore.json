@@ -1,0 +1,18 @@
+[
+  {
+    "feature": "addAppointments",
+    "enabled": true
+  },
+  {
+    "feature": "tasksView",
+    "enabled": true
+  },
+  {
+    "feature": "combinedReportCaseNotes",
+    "enabled": true
+  },
+  {
+    "feature": "viewAppointmentsEndUser",
+    "enabled": true
+  }
+]

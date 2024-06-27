@@ -3,4 +3,4 @@ docker-compose down
 docker compose -f docker-compose-test.yml down
 kill -9 $(lsof -ti:3007)
 docker compose -f docker-compose-test.yml up -d
-npm run start-feature & npm run int-test
+npm run start-feature & npm run int-test-ui
