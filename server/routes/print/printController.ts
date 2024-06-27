@@ -3,6 +3,10 @@ import nunjucks from 'nunjucks'
 import RpService from '../../services/rpService'
 import PrintView from './printView'
 import { pdfMetricsCounter } from '../../monitoring/customMetrics'
+import { FEATURE_FLAGS } from '../../utils/constants'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { Appointment } from '../../data/model/appointment'
+import logger from '../../../logger'
 
 const pdfOptions = {
   marginTop: '2.4',
@@ -20,12 +24,19 @@ export default class HealthStatusController {
     try {
       const { prisonerData } = req
       const { prisonerNumber, prisonName } = prisonerData.personalDetails
-      const appointmentData = await this.rpService.getAppointments(prisonerNumber as string)
 
+      const appointmentsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.VIEW_APPOINTMENTS)
+      logger.info('Feature flag viewAppointmentsEndUser: ', appointmentsEnabled)
+      let appointments: Appointment[] = []
+      if (appointmentsEnabled) {
+        const appointmentData = await this.rpService.getAppointments(prisonerNumber as string)
+        appointments = appointmentData.results.slice(0, 8)
+      }
       const otpData = await this.rpService.getOtp(prisonerNumber as string)
       const filename = `plan-your-future-pack-${prisonerNumber}.pdf`
       const fullName = `${prisonerData.personalDetails.firstName} ${prisonerData.personalDetails.lastName}`
-      const view = new PrintView(prisonerData, fullName, appointmentData.results.slice(0, 8), otpData)
+
+      const view = new PrintView(prisonerData, fullName, appointments, otpData, appointmentsEnabled)
 
       pdfMetricsCounter.inc({
         path: req.path.toLowerCase(),

@@ -10,5 +10,9 @@
   {
     "feature": "combinedReportCaseNotes",
     "enabled": true
+  },
+  {
+    "feature": "viewAppointmentsEndUser",
+    "enabled": true
   }
 ]

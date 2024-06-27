@@ -9,6 +9,7 @@ export default class PrintView implements View {
     private readonly fullName: string,
     private readonly appointments: Appointment[],
     private readonly otpData: OtpDetails,
+    private readonly appointmentsEnabled: boolean,
   ) {
     // no op
   }
@@ -20,6 +21,7 @@ export default class PrintView implements View {
     appointments: Appointment[]
     otpData: OtpDetails
     errors: ErrorMessage[]
+    appointmentsEnabled: boolean
   } {
     return {
       prisonerData: this.prisonerData,
@@ -28,6 +30,7 @@ export default class PrintView implements View {
       appointments: this.appointments,
       otpData: this.otpData,
       errors: null,
+      appointmentsEnabled: this.appointmentsEnabled,
     }
   }
 }
