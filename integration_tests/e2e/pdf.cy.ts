@@ -19,7 +19,7 @@ context('Generate PDF', () => {
     cy.task('restoreFlags')
   })
 
-  it('Plan your future PDF button should be visible when viewAppointmentsEndUser=true', () => {
+  it('Plan your future PDF should have registration code and appointments when viewAppointmentsEndUser=true', () => {
     const flagsEnabled = [
       {
         feature: 'tasksView',
@@ -47,7 +47,7 @@ context('Generate PDF', () => {
       .and('contain', 'details of your appointments')
   })
 
-  it('Plan your future PDF button should be visible when viewAppointmentsEndUser=false', () => {
+  it('Plan your future PDF should have registration code, not appointments when viewAppointmentsEndUser=false', () => {
     const flagsDisabled = [
       {
         feature: 'tasksView',
