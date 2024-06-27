@@ -15,11 +15,11 @@
     {{ titleAndIntro(pathway) }}
     {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
     {% if prisonerData.assessmentRequired %}
-        {{ incompleteImmediateNeedsReport(pathway, prisonerData) }}
+      {{ incompleteImmediateNeedsReport(pathway, prisonerData) }}
     {% elif releaseDateDays.daysDiff <= 84 and prisonerData.resettlementReviewAvailable === true %}
-        {{preReleaseRequired(pathway, prisonerData)}}
+      {{preReleaseRequired(pathway, prisonerData)}}
     {% elif prisonerData.resettlementReviewAvailable === false %}
-        {{preReleaseComplete(pathway, prisonerData)}}
+      {{preReleaseComplete(pathway, prisonerData)}}
     {% endif %}
     {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
 </div>
