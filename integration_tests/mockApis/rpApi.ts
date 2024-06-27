@@ -42,7 +42,7 @@ import {
   stubJohnSmithStatusUpdateFailure,
   stubJohnSmithStatusUpdateSuccess,
 } from './scenarios/john-smith/john-smith-status-update'
-import { prisonersSearchBeforeWatchlist, prisonersSearchWithWatchlist } from './scenarios/prisonersSearch'
+import { defaultPrisonersSearch, prisonersSearchWithWatchlist } from './scenarios/prisonersSearch'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -406,7 +406,8 @@ const stubJohnSmithDeleteWatchlist = () =>
 const stubJohnSmithDeleteWatchlistNotFound = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithGetFinanceAndID(), ...johnSmithDeleteWatchlist404()])
 const stubJohnSmithWatchlistFilterResults = () =>
-  Promise.all([...johnSmithDefaults(), prisonersSearchWithWatchlist(), prisonersSearchBeforeWatchlist()])
+  Promise.all([...johnSmithDefaults(), prisonersSearchWithWatchlist(), defaultPrisonersSearch()])
+const stubDefaultSearchResults = () => Promise.all([...johnSmithDefaults(), defaultPrisonersSearch()])
 
 export default {
   stubGetPrisoners,
@@ -439,4 +440,5 @@ export default {
   stubJohnSmithStatusUpdateSuccess,
   stubJohnSmithStatusUpdateFailure,
   stubJohnSmithWatchlistFilterResults,
+  stubDefaultSearchResults,
 }

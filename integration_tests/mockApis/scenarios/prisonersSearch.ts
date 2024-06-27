@@ -109,7 +109,61 @@ const johnSmithSearchResponse = {
   assessmentRequired: true,
 }
 
-export const prisonersSearchBeforeWatchlist = () =>
+const AnthonyCaramellaSearchResponse = {
+  prisonerNumber: 'G9349UD',
+  firstName: 'ANTHONY',
+  middleNames: null,
+  lastName: 'CARAMELLA',
+  releaseDate: '2027-10-23',
+  releaseType: 'CRD',
+  lastUpdatedDate: null,
+  status: [
+    {
+      pathway: 'ACCOMMODATION',
+      status: 'NOT_STARTED',
+      lastDateChange: null,
+    },
+    {
+      pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR',
+      status: 'NOT_STARTED',
+      lastDateChange: null,
+    },
+    {
+      pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY',
+      status: 'NOT_STARTED',
+      lastDateChange: null,
+    },
+    {
+      pathway: 'DRUGS_AND_ALCOHOL',
+      status: 'NOT_STARTED',
+      lastDateChange: null,
+    },
+    {
+      pathway: 'EDUCATION_SKILLS_AND_WORK',
+      status: 'NOT_STARTED',
+      lastDateChange: null,
+    },
+    {
+      pathway: 'FINANCE_AND_ID',
+      status: 'NOT_STARTED',
+      lastDateChange: null,
+    },
+    {
+      pathway: 'HEALTH',
+      status: 'NOT_STARTED',
+      lastDateChange: null,
+    },
+  ],
+  pathwayStatus: null,
+  homeDetentionCurfewEligibilityDate: '2017-07-31',
+  paroleEligibilityDate: null,
+  releaseEligibilityDate: '2017-07-31',
+  releaseEligibilityType: 'HDCED',
+  releaseOnTemporaryLicenceDate: null,
+  assessmentRequired: true,
+}
+
+export const defaultPrisonersSearch = () =>
   stubFor({
     name: 'search response',
     request: {
@@ -125,7 +179,7 @@ export const prisonersSearchBeforeWatchlist = () =>
       status: 200,
       headers: responseHeaders,
       jsonBody: {
-        content: [chrisyClemenceSearchResponse, johnSmithSearchResponse],
+        content: [chrisyClemenceSearchResponse, johnSmithSearchResponse, AnthonyCaramellaSearchResponse],
         pageSize: 1,
         page: 0,
         sortName: 'releaseDate,ASC',

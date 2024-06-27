@@ -12,6 +12,10 @@
     "enabled": true
   },
   {
+    "feature": "newResettlementReportFunctionality",
+    "enabled": true
+  },
+  {
     "feature": "viewAppointmentsEndUser",
     "enabled": true
   }
