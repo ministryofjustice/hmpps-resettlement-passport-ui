@@ -98,6 +98,11 @@
             {% endfor %}
           </tbody>
         </table>
+
+        {% if newResettlementReportFunctionalityEnabled | getFeatureFlag %}
+          <p>TESTING - New Resettlement Report Functionality enabled </p>
+        {% endif %}
+
       <form action="/assessment-complete" method="post" novalidate>
         <div class="govuk-button-group">
           <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
