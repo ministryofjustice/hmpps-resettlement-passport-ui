@@ -15,7 +15,23 @@ context('Generate PDF', () => {
     cy.task('stubGetOtp')
   })
 
-  it('Plan your future PDF button should be visible', () => {
+  after(() => {
+    cy.task('restoreFlags')
+  })
+
+  it('Plan your future PDF should have registration code and appointments when viewAppointmentsEndUser=true', () => {
+    const flagsEnabled = [
+      {
+        feature: 'tasksView',
+        enabled: true,
+      },
+      {
+        feature: 'viewAppointmentsEndUser',
+        enabled: true,
+      },
+    ]
+    cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
+
     cy.signIn()
     const indexPage = Page.verifyOnPage(IndexPage)
     indexPage.headerUserName().should('contain.text', 'J. Smith')
@@ -26,5 +42,31 @@ context('Generate PDF', () => {
 
     cy.downloadFile('http://localhost:3007/print/packPdf?prisonerNumber=G4161UF', '', 'test.pdf')
     cy.task('getPdfContent', './test.pdf').should('contain', 'John Smith').and('contain', '123456')
+    cy.task('getPdfContent', './test.pdf')
+      .should('contain', 'Appointments')
+      .and('contain', 'details of your appointments')
+  })
+
+  it('Plan your future PDF should have registration code, not appointments when viewAppointmentsEndUser=false', () => {
+    const flagsDisabled = [
+      {
+        feature: 'tasksView',
+        enabled: true,
+      },
+      {
+        feature: 'viewAppointmentsEndUser',
+        enabled: false,
+      },
+    ]
+    cy.task('overwriteFlags', JSON.stringify(flagsDisabled))
+    cy.signIn()
+    cy.visit('prisoner-overview?prisonerNumber=G4161UF')
+    cy.get('#generate-pdf-task-btn').should('exist')
+
+    cy.downloadFile('http://localhost:3007/print/packPdf?prisonerNumber=G4161UF', '', 'test.pdf')
+    cy.task('getPdfContent', './test.pdf').should('contain', 'John Smith').and('contain', '123456')
+    cy.task('getPdfContent', './test.pdf')
+      .should('not.contain', 'Appointments')
+      .and('not.contain', 'details of your appointments')
   })
 })

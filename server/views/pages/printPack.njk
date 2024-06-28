@@ -94,7 +94,9 @@
           <p>Plan your future is an online service for prison leavers allowing you to view:
           </p>
           <ul>
+          {% if appointmentsEnabled %}
             <li class="text">details of your appointments</li>
+          {% endif %}
             <li class="text">any licence conditions you have</li>
           </ul>
         </div>
@@ -155,6 +157,7 @@
     </div>
 
     <!-- Second Page -->
+    {% if appointmentsEnabled %}
 
     <div class="main-wrapper">
       <div class="row">
@@ -213,6 +216,7 @@
       {% endfor %}
 
     </div>
+    {% endif %}
 
   </body>
 </html>

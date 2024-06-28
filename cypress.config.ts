@@ -11,9 +11,38 @@ import nomisUserRolesApi from './integration_tests/mockApis/nomisUserRolesApi'
 import rpApi from './integration_tests/mockApis/rpApi'
 import { resetRedisCache } from './integration_tests/mockApis/redis'
 
+const flagFilePath = './localstack/flags.json'
+const flagRestoreFilePath = './integration_tests/flags.restore.json'
+
 const parsePdf = async (pdfPath: string): Promise<PdfParse.Result> => {
   const dataBuffer = fs.readFileSync(pdfPath)
   return pdfParse(dataBuffer)
+}
+
+const overwriteFlags = (content: string): Promise<boolean> => {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(flagFilePath, content, 'utf8', err => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(true)
+      }
+    })
+  })
+}
+
+const restoreFlags = (): Promise<boolean> => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(flagRestoreFilePath, 'utf8', (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        overwriteFlags(data)
+          .then(() => resolve(true))
+          .catch(err2 => reject(err2))
+      }
+    })
+  })
 }
 
 export default defineConfig({
@@ -42,6 +71,8 @@ export default defineConfig({
         getPdfContent(pdfPath) {
           return parsePdf(pdfPath).then(x => x.text)
         },
+        overwriteFlags,
+        restoreFlags,
       })
     },
     baseUrl: 'http://localhost:3007',

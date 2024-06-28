@@ -154,6 +154,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   ADD_APPOINTMENTS: 'addAppointments',
   TASKS_VIEW: 'tasksView',
   COMBINED_REPORT_CASE_NOTES: 'combinedReportCaseNotes',
+  VIEW_APPOINTMENTS_END_USER: 'viewAppointmentsEndUser',
   NEW_RESETTLEMENT_REPORT_FUNCTIONALITY: 'newResettlementReportFunctionality',
 }
 
