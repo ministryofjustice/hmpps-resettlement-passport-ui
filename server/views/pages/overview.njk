@@ -12,16 +12,16 @@
 {% set tasksViewEnabled = features.TASKS_VIEW | getFeatureFlag %}
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
-    {{ titleAndIntro(pathway) }}
-    {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
-    {% if prisonerData.assessmentRequired %}
-      {{ incompleteImmediateNeedsReport(pathway, prisonerData) }}
-    {% elif releaseDateDays.daysDiff <= 84 and prisonerData.resettlementReviewAvailable === true %}
-      {{preReleaseRequired(pathway, prisonerData)}}
-    {% elif prisonerData.resettlementReviewAvailable === false %}
-      {{preReleaseComplete(pathway, prisonerData)}}
-    {% endif %}
-    {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
+  {{ titleAndIntro(pathway) }}
+  {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
+  {% if prisonerData.assessmentRequired and prisonerData.preReleaseSubmitted === false %}
+    {{ incompleteImmediateNeedsReport(pathway, prisonerData) }}
+  {% elif releaseDateDays.daysDiff <= 84 and prisonerData.resettlementReviewAvailable === true %}
+    {{preReleaseRequired(pathway, prisonerData)}}
+  {% elif prisonerData.resettlementReviewAvailable === false %}
+    {{preReleaseComplete(pathway, prisonerData)}}
+  {% endif %}
+  {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
 </div>
 
 
