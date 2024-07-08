@@ -1,6 +1,6 @@
 astropy==6.1.0
 astropy-iers-data==0.2024.6.3.0.31.14
-certifi==2024.6.2
+certifi==2024.7.4
 charset-normalizer==3.3.2
 greenlet==3.0.3
 idna==3.7
