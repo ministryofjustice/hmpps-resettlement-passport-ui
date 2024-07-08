@@ -4,6 +4,7 @@ from zapv2 import ZAPv2
 import time
 import json
 import os
+import warnings
 
 
 # Change to match the API key set in ZAP, or use None if the API key is disabled
@@ -53,13 +54,14 @@ def run(playwright: Playwright):
         print(f"Active Scan progress: {zap.ascan.status()}%")
         time.sleep(50)
 
-    # Generate the report
-    print("Generating HTML report…")
-    sec_report_html = zap.core.htmlreport()
-    with open("test_results/zap_report.html", "w") as file:
-       file.write(sec_report_html)
+    # Generate the report locally (not in pipeline)
+    if (os.environ["ST_ENV_NAME"] != "dev"):
+        print("Generating HTML report…")
+        sec_report_html = zap.core.htmlreport()
+        with open("test_results/zap_report.html", "w") as file:
+            file.write(sec_report_html)
 
-    print("Security scan completed successfully.")
+        print("Security scan completed successfully.")
 
 
     # Retrieve the alerts using paging in case there are lots of them
@@ -130,14 +132,20 @@ def run(playwright: Playwright):
     # fail test if any High risk items are reported.
     assert risk_high == 0
 
-    # fail test if any changes to previous risk items are reported.
-    #assert results == previous_results
 
-    if (results == previous_results):
-    # if no change store this runs results for comparison next time
-        print('Writing results to file')
-        with open("security_test/previous_result.json", "w") as file:
-            file.write(result_publish)
+    # fail test if any changes to high or medium previous risk items are reported.
+    assert results["high"] == previous_results["high"]
+    assert results["medium"] == previous_results["medium"]
+
+
+    if (results != previous_results):
+        #prints if granular changes to low or warnings
+        warnings.warn(UserWarning("current results are different to previous results"))
+       
+    print('Writing results to file')
+    with open("security_test/previous_result.json", "w") as file:
+        file.write(result_publish)
+
 
     
 
