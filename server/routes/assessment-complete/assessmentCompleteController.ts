@@ -3,9 +3,11 @@ import RpService from '../../services/rpService'
 import AssessmentCompleteView from './assessmentCompleteView'
 import { AssessmentType } from '../../data/model/assessmentInformation'
 import { parseAssessmentType } from '../../utils/utils'
+import { AssessmentStateService } from '../../data/assessmentStateService'
+import { PATHWAY_DICTIONARY } from '../../utils/constants'
 
 export default class AssessmentCompleteController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
     // no op
   }
 
@@ -25,6 +27,16 @@ export default class AssessmentCompleteController {
       if (response.error) {
         next(new Error())
       } else {
+        // Clear cache on submitted for all pathways to avoid side effects on the next report
+        const promises = Object.entries(PATHWAY_DICTIONARY).map(([pathway]) => {
+          const stateKey = {
+            prisonerNumber: prisonerData.personalDetails.prisonerNumber,
+            userId: req.user.username,
+            pathway,
+          }
+          return this.assessmentStateService.onComplete(stateKey)
+        })
+        await Promise.all(promises)
         res.redirect(`/assessment-complete?prisonerNumber=${prisonerNumber}&type=${assessmentType}`)
       }
     } catch (err) {
