@@ -259,26 +259,26 @@ const nextPageHealthcareTeam = () =>
     },
   })
 
-const assessmentSummaryPage = (pathway: string) =>
+const assessmentSummaryPage = (pathwayEnum: string, pathwayString: string) =>
   stubFor({
     name: 'John Smith immediate needs report Assessment Summary Page',
     request: {
       method: 'GET',
-      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/page/ASSESSMENT_SUMMARY?assessmentType=BCST2`,
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathwayEnum}/page/ASSESSMENT_SUMMARY?assessmentType=BCST2`,
     },
     response: {
       status: 200,
       headers: responseHeaders,
       jsonBody: {
         id: 'ASSESSMENT_SUMMARY',
-        title: null,
+        title: `${pathwayString} report summary`,
         questionsAndAnswers: [
           {
             question: {
               '@class': 'ResettlementAssessmentResponseQuestion',
               id: 'SUPPORT_NEEDS',
-              title: '',
-              subTitle: null,
+              title: `${pathwayString} support needs`,
+              subTitle: 'Select one option.',
               type: 'RADIO',
               options: [
                 {
@@ -947,7 +947,7 @@ export const johnSmithImmediateNeedsReportHealth = (): SuperAgentRequest[] => [
   nextPageHealth(),
   meetHealthCareTeamPage(),
   nextPageHealthcareTeam(),
-  assessmentSummaryPage('HEALTH'),
+  assessmentSummaryPage('HEALTH', 'Health'),
   nextPageSummary('HEALTH'),
   checkAnswersPage('HEALTH'),
   submitAssessment(),
@@ -967,7 +967,7 @@ export const johnSmithImmediateNeedsReportAccommodation = (): SuperAgentRequest[
   nextPageWhereDoTheyLiveAfterChoosingNone(),
   whereWillTheyLive2Page(),
   nextPageWhereWillTheyLive(),
-  assessmentSummaryPage('ACCOMMODATION'),
+  assessmentSummaryPage('ACCOMMODATION', 'Accommodation'),
   nextPageSummary('ACCOMMODATION'),
   checkAnswersPage('ACCOMMODATION'),
   submitAccommodationAssessmentEdit1(),
