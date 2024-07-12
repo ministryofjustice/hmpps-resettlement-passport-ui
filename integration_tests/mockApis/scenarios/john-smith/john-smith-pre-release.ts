@@ -260,14 +260,14 @@ export const johnSmithAssessmentSummary = () =>
       status: 200,
       jsonBody: {
         id: 'PRERELEASE_ASSESSMENT_SUMMARY',
-        title: null,
+        title: 'Accommodation report summary',
         questionsAndAnswers: [
           {
             question: {
               '@class': 'ResettlementAssessmentResponseQuestion',
               id: 'SUPPORT_NEEDS_PRERELEASE',
-              title: '',
-              subTitle: null,
+              title: 'Accommodation support needs',
+              subTitle: 'Select one option.',
               type: 'RADIO',
               options: [
                 {
@@ -329,7 +329,7 @@ export const johnSmithNextPage4 = () =>
       bodyPatterns: [
         {
           equalToJson:
-            '{"questionsAndAnswers":[{"question":"SUPPORT_NEEDS_PRERELEASE","questionTitle":"","questionType":"RADIO","pageId":"PRERELEASE_ASSESSMENT_SUMMARY","answer":{"answer":"DONE","displayText":"Done","@class":"StringAnswer"}},{"question":"CASE_NOTE_SUMMARY","questionTitle":"Add a case note summary","questionType":"LONG_TEXT","pageId":"PRERELEASE_ASSESSMENT_SUMMARY","answer":{"answer":"Note","displayText":"Note","@class":"StringAnswer"}}]}',
+            '{"questionsAndAnswers":[{"question":"SUPPORT_NEEDS_PRERELEASE","questionTitle":"Accommodation support needs","questionType":"RADIO","pageId":"PRERELEASE_ASSESSMENT_SUMMARY","answer":{"answer":"DONE","displayText":"Done","@class":"StringAnswer"}},{"question":"CASE_NOTE_SUMMARY","questionTitle":"Add a case note summary","questionType":"LONG_TEXT","pageId":"PRERELEASE_ASSESSMENT_SUMMARY","answer":{"answer":"Note","displayText":"Note","@class":"StringAnswer"}}]}',
           ignoreArrayOrder: true,
           ignoreExtraElements: true,
         },
@@ -478,7 +478,7 @@ export const johnSmithConfirm = () =>
       bodyPatterns: [
         {
           equalToJson:
-            '{"questionsAndAnswers":[{"question":"WHERE_DID_THEY_LIVE","questionTitle":"Where did the person in prison live before custody?","questionType":"RADIO","pageId":"WHERE_DID_THEY_LIVE","answer":{"answer":"NO_PERMANENT_OR_FIXED","displayText":"No permanent or fixed address","@class":"StringAnswer"}},{"question":"WHERE_WILL_THEY_LIVE_2","questionTitle":"Where will the person in prison live when they are released?","questionType":"RADIO","pageId":"WHERE_WILL_THEY_LIVE_2","answer":{"answer":"NO_ANSWER","displayText":"No answer provided","@class":"StringAnswer"}},{"question":"SUPPORT_NEEDS_PRERELEASE","questionTitle":"","questionType":"RADIO","pageId":"PRERELEASE_ASSESSMENT_SUMMARY","answer":{"answer":"DONE","displayText":"Done","@class":"StringAnswer"}},{"question":"CASE_NOTE_SUMMARY","questionTitle":"Add a case note summary","questionType":"LONG_TEXT","pageId":"PRERELEASE_ASSESSMENT_SUMMARY","answer":{"answer":"Note","displayText":"Note","@class":"StringAnswer"}}]}',
+            '{"questionsAndAnswers":[{"question":"WHERE_DID_THEY_LIVE","questionTitle":"Where did the person in prison live before custody?","questionType":"RADIO","pageId":"WHERE_DID_THEY_LIVE","answer":{"answer":"NO_PERMANENT_OR_FIXED","displayText":"No permanent or fixed address","@class":"StringAnswer"}},{"question":"WHERE_WILL_THEY_LIVE_2","questionTitle":"Where will the person in prison live when they are released?","questionType":"RADIO","pageId":"WHERE_WILL_THEY_LIVE_2","answer":{"answer":"NO_ANSWER","displayText":"No answer provided","@class":"StringAnswer"}},{"question":"SUPPORT_NEEDS_PRERELEASE","questionTitle":"Accommodation support needs","questionType":"RADIO","pageId":"PRERELEASE_ASSESSMENT_SUMMARY","answer":{"answer":"DONE","displayText":"Done","@class":"StringAnswer"}},{"question":"CASE_NOTE_SUMMARY","questionTitle":"Add a case note summary","questionType":"LONG_TEXT","pageId":"PRERELEASE_ASSESSMENT_SUMMARY","answer":{"answer":"Note","displayText":"Note","@class":"StringAnswer"}}]}',
           ignoreArrayOrder: true,
           ignoreExtraElements: true,
         },

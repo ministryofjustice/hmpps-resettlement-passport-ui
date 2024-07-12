@@ -405,7 +405,7 @@ const submitAssessment = () => {
                 },
                 pageId: 'ASSESSMENT_SUMMARY',
                 question: 'SUPPORT_NEEDS',
-                questionTitle: '',
+                questionTitle: 'Health support needs',
                 questionType: 'RADIO',
               },
               {
