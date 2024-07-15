@@ -1,6 +1,6 @@
 export type EnumValue = { name: string; url?: string; description?: string; color?: string }
 
-export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
+export const PATHWAY_DICTIONARY: { [key: string]: EnumValue } = {
   ACCOMMODATION: {
     name: 'Accommodation',
     url: 'accommodation',
@@ -38,6 +38,10 @@ export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     url: 'health-status',
     description: 'Ensure that the physical and mental health needs of prison leavers are met.',
   },
+}
+
+export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
+  ...PATHWAY_DICTIONARY,
   BENEFITS: {
     name: 'Benefits',
   },
