@@ -133,9 +133,9 @@ def run(playwright: Playwright):
     assert risk_high == 0
 
 
-    # fail test if any changes to high or medium previous risk items are reported.
-    assert results["high"] == previous_results["high"]
-    assert results["medium"] == previous_results["medium"]
+    # fail test if increases to high or medium previous risk items are reported.
+    assert results["high"] <= previous_results["high"]
+    assert results["medium"] <= previous_results["medium"]
 
 
     if (results != previous_results):
