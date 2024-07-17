@@ -10,3 +10,4 @@ aws s3api create-bucket --region eu-west-2 --bucket hmpps-resettlement-passport-
 aws s3api list-buckets
 
 aws s3 cp /etc/localstack/init/ready.d/flags.json s3://hmpps-resettlement-passport-ui-config/feature-flags/flags.json
+aws s3 cp /etc/localstack/init/ready.d/config.json s3://hmpps-resettlement-passport-ui-config/config/config.json
