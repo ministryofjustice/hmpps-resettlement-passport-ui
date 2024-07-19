@@ -21,6 +21,7 @@ export declare global {
       id: string
       logout(done: (err: unknown) => void): void
       prisonerData: PrisonerData
+      config: ConfigFile
     }
 
     interface Response {
@@ -63,4 +64,23 @@ export type PathwayStatus = {
   pathway: string
   status: string
   lastDateChange: string
+}
+
+export type ConfigFile = {
+  reports: Reports
+}
+
+export type PathwayVersion = {
+  ACCOMMODATION: number
+  ATTITUDES_THINKING_AND_BEHAVIOUR: number
+  CHILDREN_FAMILIES_AND_COMMUNITY: number
+  DRUGS_AND_ALCOHOL: number
+  EDUCATION_SKILLS_AND_WORK: number
+  FINANCE_AND_ID: number
+  HEALTH: number
+}
+
+export type Reports = {
+  immediateNeedsVersion: PathwayVersion
+  preReleaseVersion: PathwayVersion
 }
