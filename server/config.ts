@@ -134,7 +134,7 @@ export default {
   local: {
     featureFlag: {
       enabled: get('LOCAL_FEATURE_FLAG_ENABLED', 'false') === 'true',
-      filename: get('LOCAL_FEATURE_FLAG_PATH_FILENAME', 'localstack/config.json'),
+      filename: get('LOCAL_FEATURE_FLAG_PATH_FILENAME', 'localstack/flags.json'),
     },
     config: {
       enabled: get('LOCAL_CONFIG_ENABLED', 'false') === 'true',
