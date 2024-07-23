@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express'
 import logger from '../../logger'
 import Config from '../s3Config'
-import { Services } from '../services'
 
-export default function configMiddleware({ rpService }: Services) {
+export default function configMiddleware() {
   return async (req: Request, res: Response, next: NextFunction) => {
     let configFile = null
 

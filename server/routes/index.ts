@@ -32,7 +32,7 @@ export default function routes(services: Services): Router {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware(services))
-  router.use(configMiddleware(services))
+  router.use(configMiddleware())
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
   attitudesThinkingBehaviourRouter(router, services)
