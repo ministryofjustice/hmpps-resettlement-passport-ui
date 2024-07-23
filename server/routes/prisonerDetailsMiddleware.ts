@@ -3,7 +3,6 @@ import { PrisonerData } from '../@types/express'
 import logger from '../../logger'
 import { Services } from '../services'
 import RpService from '../services/rpService'
-import Config from '../s3Config'
 
 export async function getPrisonerImage(
   rpService: RpService,
@@ -28,7 +27,6 @@ export default function prisonerDetailsMiddleware({ rpService }: Services) {
     ********************************* */
     let { prisonerNumber }: { prisonerNumber?: string } = req.query
     let prisonerData = null
-    let configFile = null
 
     if (!prisonerNumber) {
       const { prisonerNumber: bodyPrisonerNumber } = req.body
@@ -63,19 +61,7 @@ export default function prisonerDetailsMiddleware({ rpService }: Services) {
       }
     }
 
-    try {
-      const config = Config.getInstance()
-      configFile = await config.getConfig()
-      if (!configFile) {
-        logger.warn('No config available, returning false.')
-      }
-    } catch (err) {
-      next(err)
-      return
-    }
-
     req.prisonerData = prisonerData
-    req.config = configFile
     next()
   }
 }

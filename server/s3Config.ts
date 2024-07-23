@@ -37,13 +37,9 @@ export default class Config {
   }
 
   public async getConfig(): Promise<ConfigFile> {
-    if (!config.s3.config.enabled) {
-      if (config.local.config.enabled) {
-        logger.warn('Using local config')
-        return loadLocalConfig()
-      }
-      logger.warn('Config is disabled! Returning null.')
-      return null
+    if (config.local.config) {
+      logger.warn('Using local config')
+      return loadLocalConfig()
     }
     return this.fetchConfigFromS3()
   }

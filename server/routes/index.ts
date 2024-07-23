@@ -25,12 +25,14 @@ import { ERROR_DICTIONARY } from '../utils/constants'
 import { Appointments } from '../data/model/appointment'
 import watchlistRouter from './watchlist'
 import analyticsRouter from './analytics'
+import configMiddleware from './configMiddleware'
 
 export default function routes(services: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(prisonerDetailsMiddleware(services))
+  router.use(configMiddleware(services))
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
   attitudesThinkingBehaviourRouter(router, services)
