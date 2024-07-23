@@ -50,6 +50,7 @@ generic-service:
       REDIS_AUTH_TOKEN: "auth_token"
     s3-bucket-output:
       FEATURE_FLAG_BUCKET: "bucket_name"
+      CONFIG_BUCKET: "bucket_name"
 
   allowlist:
     groups:

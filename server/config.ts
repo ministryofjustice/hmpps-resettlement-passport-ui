@@ -123,11 +123,20 @@ export default {
       path: get('FEATURE_FLAG_PATH', 'feature-flags'),
       filename: get('FEATURE_FLAG_PATH_FILENAME', 'flags.json'),
     },
+    config: {
+      region: get('CONFIG_AWS_REGION', 'eu-west-2'),
+      bucketName: get('CONFIG_BUCKET', 'hmpps-resettlement-passport-ui-config'),
+      path: get('CONFIG_PATH', 'config'),
+      filename: get('CONFIG_PATH_FILENAME', 'config.json'),
+    },
   },
   local: {
     featureFlag: {
       enabled: get('LOCAL_FEATURE_FLAG_ENABLED', 'false') === 'true',
       filename: get('LOCAL_FEATURE_FLAG_PATH_FILENAME', 'localstack/flags.json'),
+    },
+    config: {
+      filename: get('LOCAL_CONFIG_PATH_FILENAME', 'localstack/config.json'),
     },
   },
 }
