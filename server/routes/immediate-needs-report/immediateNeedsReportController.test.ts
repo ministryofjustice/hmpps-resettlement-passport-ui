@@ -1,19 +1,23 @@
 import type { Express } from 'express'
 import request from 'supertest'
+import { PersonalDetails, PrisonerData } from '../../@types/express/index.d'
 import { appWithAllRoutes } from '../testutils/appSetup'
 
 import RpService from '../../services/rpService'
 import { AssessmentStateService } from '../../data/assessmentStateService'
-import { PersonalDetails, PrisonerData } from '../../@types/express'
 import { SubmittedInput } from '../../data/model/immediateNeedsReport'
+import Config from '../../s3Config'
+import { configHelper } from '../configHelperTest'
 
 let app: Express
 let rpService: jest.Mocked<RpService>
 let assessmentStateService: jest.Mocked<AssessmentStateService>
+const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
   rpService = new RpService() as jest.Mocked<RpService>
   assessmentStateService = new AssessmentStateService(null) as jest.Mocked<AssessmentStateService>
+  configHelper(config)
 
   app = appWithAllRoutes({
     services: {

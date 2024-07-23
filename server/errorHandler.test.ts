@@ -1,11 +1,15 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes } from './routes/testutils/appSetup'
+import Config from './s3Config'
+import { configHelper } from './routes/configHelperTest'
 
 let app: Express
+const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
   app = appWithAllRoutes({})
+  configHelper(config)
 })
 
 afterEach(() => {

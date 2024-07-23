@@ -37,7 +37,7 @@ export default class Config {
   }
 
   public async getConfig(): Promise<ConfigFile> {
-    if (config.local.config) {
+    if (config.local.config.enabled) {
       logger.warn('Using local config')
       return loadLocalConfig()
     }
