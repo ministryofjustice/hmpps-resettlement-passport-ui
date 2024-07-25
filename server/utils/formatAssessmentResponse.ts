@@ -5,49 +5,27 @@ import {
   SubmittedInput,
   SubmittedQuestionAndAnswer,
 } from '../data/model/immediateNeedsReport'
+import { ResettlementReportUserInput, ResettlementReportUserQuestionAndAnswer } from './assessmentHelperTypes'
 
-type RequestBody = {
-  [key: string]: string
-}
-
-export const formatAssessmentResponse = (pageData: AssessmentPage, reqBody: RequestBody) => {
-  function getAddressValuesFromBody() {
-    return [
-      {
-        addressLine1: reqBody.addressLine1,
-      },
-      {
-        addressLine2: reqBody.addressLine2,
-      },
-      {
-        addressTown: reqBody.addressTown,
-      },
-      {
-        addressCounty: reqBody.addressCounty,
-      },
-      {
-        addressPostcode: reqBody.addressPostcode,
-      },
-    ]
-  }
-
-  const filteredQuestionsAndAnswers = pageData.questionsAndAnswers.map(questionAndAnswer => {
+export const formatAssessmentResponse = (userInput: ResettlementReportUserInput) => {
+  const filteredQuestionsAndAnswers = userInput.flattenedQuestionsOnPage.map(questionAndAnswer => {
     const { id, title, type } = questionAndAnswer.question
+    const answers = userInput.questionsAndAnswers.filter(it => it.questionId === questionAndAnswer.question.id)
 
     let checkboxAnswers: string[] = []
     // Check if the value is a string, if so, convert it to an array with a single element
-    if (type === 'CHECKBOX' && reqBody[questionAndAnswer.question.id]) {
-      if (typeof reqBody[questionAndAnswer.question.id] === 'string') {
-        checkboxAnswers = [reqBody[questionAndAnswer.question.id]]
+    if (type === 'CHECKBOX' && answers[0].answer) {
+      if (typeof answers[0].answer === 'string') {
+        checkboxAnswers = [answers[0].answer]
       } else {
         // If it's already an array, use it directly
-        checkboxAnswers = [...reqBody[questionAndAnswer.question.id]]
+        checkboxAnswers = [...answers[0].answer]
       }
     }
 
     let displayText
     if (type === 'RADIO') {
-      displayText = questionAndAnswer.question.options.find(answer => answer.id === reqBody[id])?.displayText
+      displayText = questionAndAnswer.question.options.find(option => option.id === answers[0].answer)?.displayText
     } else if (type === 'CHECKBOX') {
       displayText = questionAndAnswer.question.options
         .filter(option => checkboxAnswers?.includes(option.id))
@@ -67,21 +45,21 @@ export const formatAssessmentResponse = (pageData: AssessmentPage, reqBody: Requ
 
     let answer
     if (type === 'ADDRESS') {
-      answer = getAddressValuesFromBody()
+      answer = getAddressValuesFromBody(questionAndAnswer.question.id, answers)
     } else if (type === 'CHECKBOX') {
       answer = checkboxAnswers
     } else {
-      answer = reqBody[id]
+      answer = answers[0].answer
     }
 
     return {
       question: id,
       questionTitle: title,
       questionType: type,
-      pageId: pageData.id,
+      pageId: userInput.pageId,
       answer: {
         answer,
-        displayText: displayText || reqBody[id],
+        displayText: displayText || answers[0].answer,
         '@class': answerType,
       },
     }
@@ -127,4 +105,33 @@ export function toSubmittedQuestionAndAnswer(questionsAndAnswers: QuestionsAndAn
         }
       : null,
   }
+}
+
+function getAddressValuesFromBody(
+  questionId: string,
+  userQuestionAndAnswers: ResettlementReportUserQuestionAndAnswer[],
+) {
+  return [
+    {
+      addressLine1: userQuestionAndAnswers.find(it => it.questionId === questionId && it.subField === 'addressLine1')
+        ?.answer as string,
+    },
+    {
+      addressLine2: userQuestionAndAnswers.find(it => it.questionId === questionId && it.subField === 'addressLine2')
+        ?.answer as string,
+    },
+    {
+      addressTown: userQuestionAndAnswers.find(it => it.questionId === questionId && it.subField === 'addressTown')
+        ?.answer as string,
+    },
+    {
+      addressCounty: userQuestionAndAnswers.find(it => it.questionId === questionId && it.subField === 'addressCounty')
+        ?.answer as string,
+    },
+    {
+      addressPostcode: userQuestionAndAnswers.find(
+        it => it.questionId === questionId && it.subField === 'addressPostcode',
+      )?.answer as string,
+    },
+  ]
 }

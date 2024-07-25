@@ -12,6 +12,7 @@ import { getEnumValue, parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'
 import ImmediateNeedsReportView from './immediateNeedsReportView'
 import logger from '../../../logger'
+import { processReportRequestBody } from '../../utils/processReportRequestBody'
 
 export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -73,10 +74,12 @@ export default class ImmediateNeedsReportController {
 
       const editQueryString = edit ? '&edit=true' : ''
 
-      const validationErrors: ValidationErrors = validateAssessmentResponse(currentPage, req.body)
+      const answeredQuestions = processReportRequestBody(currentPage, req.body)
+
+      const validationErrors: ValidationErrors = validateAssessmentResponse(answeredQuestions)
 
       // prepare current Q&A's from req body for post request
-      const dataToSubmit: SubmittedInput = formatAssessmentResponse(currentPage, req.body)
+      const dataToSubmit: SubmittedInput = formatAssessmentResponse(answeredQuestions)
       await this.assessmentStateService.answer(stateKey, dataToSubmit, edit)
 
       const nextPage = await this.rpService.fetchNextPage(

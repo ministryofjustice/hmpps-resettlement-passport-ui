@@ -1,39 +1,16 @@
-import {
-  AssessmentPage,
-  QuestionsAndAnswers,
-  ValidationError,
-  ValidationErrors,
-} from '../data/model/immediateNeedsReport'
+import { ValidationError, ValidationErrors } from '../data/model/immediateNeedsReport'
+import { ResettlementReportUserInput, ResettlementReportUserQuestionAndAnswer } from './assessmentHelperTypes'
 
-export type RequestBody = {
-  [key: string]: string
-}
-
-const validateAssessmentResponse = (currentPage: AssessmentPage, reqBody: RequestBody) => {
-  const pageData: AssessmentPage = currentPage
-
+const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
   let validationErrors: ValidationErrors = null
 
-  function answerInBody(questionAndAnswer: QuestionsAndAnswers) {
-    return reqBody[questionAndAnswer.question.id]
-  }
-
-  function isMissingRequiredField(questionAndAnswer: QuestionsAndAnswers) {
-    if (questionAndAnswer.question.type === 'ADDRESS') {
-      return (
-        !reqBody.addressLine1 &&
-        !reqBody.addressLine2 &&
-        !reqBody.addressTown &&
-        !reqBody.addressCounty &&
-        !reqBody.addressPostcode
-      )
-    }
-    return !answerInBody(questionAndAnswer)
-  }
-
-  pageData?.questionsAndAnswers?.forEach(questionAndAnswer => {
+  userInput?.flattenedQuestionsOnPage.forEach(questionAndAnswer => {
     if (questionAndAnswer.question.validationType === 'MANDATORY') {
-      const isMissingAnswer = isMissingRequiredField(questionAndAnswer)
+      const isMissingAnswer = isMissingRequiredField(
+        questionAndAnswer.question.id,
+        questionAndAnswer.question.type,
+        userInput.questionsAndAnswers,
+      )
       if (isMissingAnswer) {
         const newValidationError: ValidationError = {
           validationType: 'MANDATORY',
@@ -45,11 +22,11 @@ const validateAssessmentResponse = (currentPage: AssessmentPage, reqBody: Reques
 
     if (questionAndAnswer.question.type === 'ADDRESS') {
       if (
-        (reqBody.addressLine1 && reqBody.addressLine1.length > 500) ||
-        (reqBody.addressLine2 && reqBody.addressLine2.length > 500) ||
-        (reqBody.addressTown && reqBody.addressTown.length > 500) ||
-        (reqBody.addressCounty && reqBody.addressCounty.length > 500) ||
-        (reqBody.addressPostcode && reqBody.addressPostcode.length > 500)
+        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressLine1')?.length > 500 ||
+        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressLine2')?.length > 500 ||
+        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressTown')?.length > 500 ||
+        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressCounty')?.length > 500 ||
+        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressPostcode')?.length > 500
       ) {
         const newValidationError: ValidationError = {
           validationType: 'MAX_CHARACTER_LIMIT_ADDRESS',
@@ -59,8 +36,11 @@ const validateAssessmentResponse = (currentPage: AssessmentPage, reqBody: Reques
       }
     }
 
-    if (questionAndAnswer.question.type === 'SHORT_TEXT' && answerInBody(questionAndAnswer)) {
-      if (answerInBody(questionAndAnswer).length > 500) {
+    if (
+      questionAndAnswer.question.type === 'SHORT_TEXT' &&
+      answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers)
+    ) {
+      if (answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers).length > 500) {
         const newValidationError: ValidationError = {
           validationType: 'MAX_CHARACTER_LIMIT_SHORT_TEXT',
           questionId: questionAndAnswer.question.id,
@@ -69,8 +49,11 @@ const validateAssessmentResponse = (currentPage: AssessmentPage, reqBody: Reques
       }
     }
 
-    if (questionAndAnswer.question.type === 'LONG_TEXT' && answerInBody(questionAndAnswer)) {
-      if (answerInBody(questionAndAnswer).length > 3000) {
+    if (
+      questionAndAnswer.question.type === 'LONG_TEXT' &&
+      answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers)
+    ) {
+      if (answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers).length > 3000) {
         const newValidationError: ValidationError = {
           validationType: 'MAX_CHARACTER_LIMIT_LONG_TEXT',
           questionId: questionAndAnswer.question.id,
@@ -81,6 +64,31 @@ const validateAssessmentResponse = (currentPage: AssessmentPage, reqBody: Reques
   })
 
   return validationErrors
+}
+
+function answerInBody(
+  questionId: string,
+  allUserQuestionsAndAnswers: ResettlementReportUserQuestionAndAnswer[],
+  subField: string = undefined,
+) {
+  return allUserQuestionsAndAnswers.find(it => it.questionId === questionId && it.subField === subField)?.answer
+}
+
+function isMissingRequiredField(
+  questionId: string,
+  questionType: string,
+  allUserQuestionsAndAnswers: ResettlementReportUserQuestionAndAnswer[],
+) {
+  if (questionType === 'ADDRESS') {
+    return (
+      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressLine1') &&
+      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressLine2') &&
+      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressTown') &&
+      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressCounty') &&
+      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressPostcode')
+    )
+  }
+  return !answerInBody(questionId, allUserQuestionsAndAnswers)
 }
 
 export default validateAssessmentResponse

@@ -11,7 +11,7 @@
   <h2 class="govuk-heading-m">{{ enumValue.name }} report</h2>
   <dl class="govuk-summary-list govuk-!-margin-bottom-9">
     {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-      {% if questionAnswer.question !== 'SUPPORT_NEEDS' and questionAnswer.question !== 'SUPPORT_NEEDS_PRERELEASE' and questionAnswer.question !== 'CASE_NOTE_SUMMARY' %}
+      {% if questionAnswer.question not in ['SUPPORT_NEEDS', 'SUPPORT_NEEDS_PRERELEASE', 'CASE_NOTE_SUMMARY'] and 'SUPPORT_NEEDS_CHECKBOXES' not in questionAnswer.question %}
         <div class="govuk-summary-list__row">
           <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
           <dd class="govuk-summary-list__value">
@@ -43,10 +43,23 @@
     <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
     <dl class="govuk-summary-list govuk-!-margin-bottom-9">
       {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-        {% set statusValue = questionAnswer.answer.answer | getAssessmentEnumValue %}
-        {% if questionAnswer.question === 'SUPPORT_NEEDS' or questionAnswer.question === 'SUPPORT_NEEDS_PRERELEASE' %}
+        {% if 'SUPPORT_NEEDS_CHECKBOXES' in questionAnswer.question %}
           <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">{{ enumValue.name }} support status</dt>
+            <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
+            <dd class="govuk-summary-list__value">
+              {% for item in questionAnswer.answer.displayText %}
+                {{ item }}<br />
+              {% endfor %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}">Change</a>
+            </dd>
+          </div>
+        {% endif %}
+        {% if questionAnswer.question === 'SUPPORT_NEEDS' or questionAnswer.question === 'SUPPORT_NEEDS_PRERELEASE' %}
+          {% set statusValue = questionAnswer.answer.answer | getAssessmentEnumValue %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
             <dd class="govuk-summary-list__value">
               <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
                 {{ statusValue.name }}
@@ -59,7 +72,7 @@
         {% endif %}
         {% if questionAnswer.question === 'CASE_NOTE_SUMMARY' %}
           <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Support needs summary</dt>
+            <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
             <dd class="govuk-summary-list__value show-line-breaks">{{ questionAnswer.answer.displayText }}</dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}">Change</a>
