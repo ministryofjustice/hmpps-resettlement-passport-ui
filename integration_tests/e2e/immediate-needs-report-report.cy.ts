@@ -66,19 +66,19 @@ context('Immediate Needs Report', () => {
 
     getHeading().should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
     nothingShouldBeSelected()
-    cy.get('#YES').click()
+    cy.get('#REGISTERED_WITH_GP-YES').click()
 
     clickContinue()
 
     getHeading().should('have.text', 'Does the person in prison want to meet with a prison healthcare team?')
     nothingShouldBeSelected()
-    cy.get('#NO').click()
+    cy.get('#MEET_HEALTHCARE_TEAM-NO').click()
 
     clickContinue()
     getHeading().should('have.text', 'Health report summary')
 
     nothingShouldBeSelected()
-    cy.get('#SUPPORT_NOT_REQUIRED').click()
+    cy.get('#SUPPORT_NEEDS-SUPPORT_NOT_REQUIRED').click()
     cy.get('#CASE_NOTE_SUMMARY').type('Case Note')
 
     clickContinue()
@@ -109,13 +109,13 @@ context('Immediate Needs Report', () => {
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
-    cy.get('#PRIVATE_RENTED_HOUSING').check()
+    cy.get('#WHERE_DID_THEY_LIVE-PRIVATE_RENTED_HOUSING').check()
     clickContinue()
 
     cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
-    cy.get('#address-line-1').type('line1')
-    cy.get('#address-town').type('town')
-    cy.get('#address-postcode').type('postcode')
+    cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-line-1').type('line1')
+    cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-town').type('town')
+    cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-postcode').type('postcode')
     clickContinue()
 
     getHeading().should(
@@ -128,18 +128,18 @@ context('Immediate Needs Report', () => {
     cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
     cy.go('back')
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
-    cy.get('#PRIVATE_RENTED_HOUSING').should('be.checked')
+    cy.get('#WHERE_DID_THEY_LIVE-PRIVATE_RENTED_HOUSING').should('be.checked')
 
     // Change answer to go down a different path
-    cy.get('#NO_PERMANENT_OR_FIXED').check()
+    cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').check()
     clickContinue()
 
     getHeading().should('have.text', 'Where will the person in prison live when they are released?')
-    cy.get('#DOES_NOT_HAVE_ANYWHERE').check()
+    cy.get('#WHERE_WILL_THEY_LIVE_2-DOES_NOT_HAVE_ANYWHERE').check()
     clickContinue()
 
     getHeading().should('have.text', 'Accommodation report summary')
-    cy.get('#SUPPORT_REQUIRED').check()
+    cy.get('#SUPPORT_NEEDS-SUPPORT_REQUIRED').check()
     cy.get('#CASE_NOTE_SUMMARY').type('Needs somewhere to stay')
     clickContinue()
 
@@ -161,13 +161,13 @@ context('Immediate Needs Report', () => {
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
-    cy.get('#PRIVATE_RENTED_HOUSING').check()
+    cy.get('#WHERE_DID_THEY_LIVE-PRIVATE_RENTED_HOUSING').check()
     clickContinue()
 
     cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
-    cy.get('#address-line-1').type('line1')
-    cy.get('#address-town').type('town')
-    cy.get('#address-postcode').type('postcode')
+    cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-line-1').type('line1')
+    cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-town').type('town')
+    cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-postcode').type('postcode')
     clickContinue()
 
     getHeading().should(
@@ -175,11 +175,11 @@ context('Immediate Needs Report', () => {
       'Does the person in prison or their family need help to keep their home while they are in prison?',
     )
 
-    cy.get('#NO').check()
+    cy.get('#HELP_TO_KEEP_HOME-NO').check()
     clickContinue()
 
     getHeading().should('have.text', 'Accommodation report summary')
-    cy.get('#SUPPORT_NOT_REQUIRED').check()
+    cy.get('#SUPPORT_NEEDS-SUPPORT_NOT_REQUIRED').check()
     cy.get('#CASE_NOTE_SUMMARY').type('No support required')
     clickContinue()
 
@@ -188,19 +188,19 @@ context('Immediate Needs Report', () => {
     cy.get('.govuk-summary-list__actions').eq(0).children('a').click()
 
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
-    cy.get('#PRIVATE_RENTED_HOUSING').should('be.checked')
-    cy.get('#NO_PERMANENT_OR_FIXED').check()
+    cy.get('#WHERE_DID_THEY_LIVE-PRIVATE_RENTED_HOUSING').should('be.checked')
+    cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').check()
     clickContinue()
 
     // PSFR-1312 Clicking back at this point should take you to 'Where did the person in prison live before custody?'
     // NOT the check your answers page
     cy.go(-1)
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
-    cy.get('#NO_PERMANENT_OR_FIXED').should('be.checked')
+    cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').should('be.checked')
     clickContinue()
 
     getHeading().should('have.text', 'Where will the person in prison live when they are released?')
-    cy.get('#DOES_NOT_HAVE_ANYWHERE').check()
+    cy.get('#WHERE_WILL_THEY_LIVE_2-DOES_NOT_HAVE_ANYWHERE').check()
     clickContinue()
 
     assertShouldNotHaveAddressAnswer()
@@ -220,7 +220,7 @@ context('Immediate Needs Report', () => {
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
-    cy.get('#NO_PERMANENT_OR_FIXED').check()
+    cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').check()
     clickContinue()
 
     getHeading().should('have.text', 'Where will the person in prison live when they are released?')
@@ -231,11 +231,11 @@ context('Immediate Needs Report', () => {
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
     getHeading().should('have.text', 'Where will the person in prison live when they are released?')
-    cy.get('#DOES_NOT_HAVE_ANYWHERE').check()
+    cy.get('#WHERE_WILL_THEY_LIVE_2-DOES_NOT_HAVE_ANYWHERE').check()
     clickContinue()
 
     getHeading().should('have.text', 'Accommodation report summary')
-    cy.get('#SUPPORT_REQUIRED').check()
+    cy.get('#SUPPORT_NEEDS-SUPPORT_REQUIRED').check()
     cy.get('#CASE_NOTE_SUMMARY').type('Needs somewhere to stay')
     clickContinue()
 

@@ -33,17 +33,17 @@ context('Pre Release Report', () => {
     // Should be on the Accommodation pathway page
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
     // Should have no permanent or fixed address pre-selected from immediate needs report answers
-    cy.get('#NO_PERMANENT_OR_FIXED').should('be.checked')
+    cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').should('be.checked')
 
     clickContinue()
 
     getHeading().should('have.text', 'Where will the person in prison live when they are released?')
-    cy.get('#NO_ANSWER').should('be.checked')
+    cy.get('#WHERE_WILL_THEY_LIVE_2-NO_ANSWER').should('be.checked')
 
     clickContinue()
     getHeading().should('have.text', 'Accommodation report summary')
 
-    cy.get('#DONE').should('be.checked')
+    cy.get('#SUPPORT_NEEDS_PRERELEASE-DONE').should('be.checked')
     cy.get('#CASE_NOTE_SUMMARY').type('Note')
     clickContinue()
 
