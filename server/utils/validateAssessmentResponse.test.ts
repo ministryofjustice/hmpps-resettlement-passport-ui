@@ -1,4 +1,3 @@
-import { QuestionsAndAnswers } from '../data/model/immediateNeedsReport'
 import { ResettlementReportUserInput } from './assessmentHelperTypes'
 import validateAssessmentResponse from './validateAssessmentResponse'
 

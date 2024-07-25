@@ -1,6 +1,5 @@
 import {
   AnswerType,
-  AssessmentPage,
   QuestionsAndAnswers,
   SubmittedInput,
   SubmittedQuestionAndAnswer,
