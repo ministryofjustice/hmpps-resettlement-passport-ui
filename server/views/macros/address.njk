@@ -11,33 +11,33 @@
         {{ validationErrorMessage(validationError.validationType)  }}
       {% endif %}
       <div class="govuk-form-group">
-        <label class="govuk-label" for="address-line-1">Address line 1</label>
-        <input class="govuk-input govuk-!-width-two-thirds" id="address-line-1"
-               name="addressLine1" type="text" autocomplete="address-line1"
-               value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressLine1') }}">
+        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-line-1">Address line 1</label>
+        <input class="govuk-input govuk-!-width-two-thirds" id="{{ currentQuestionAndAnswer.question.id }}-address-line-1"
+               name="{{ currentQuestionAndAnswer.question.id }}-addressLine1" type="text" autocomplete="address-line1"
+               value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressLine1') }}"> {# FIXME #}
       </div>
       <div class="govuk-form-group">
-        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
-        <input class="govuk-input govuk-!-width-two-thirds" id="address-line-2"
-               name="addressLine2" type="text" autocomplete="address-line2"
+        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-line-2">Address line 2 (optional)</label>
+        <input class="govuk-input govuk-!-width-two-thirds" id="{{ currentQuestionAndAnswer.question.id }}-address-line-2"
+               name="{{ currentQuestionAndAnswer.question.id }}-addressLine2" type="text" autocomplete="address-line2"
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressLine2') }}">
       </div>
       <div class="govuk-form-group">
-        <label class="govuk-label" for="address-town">Town or city</label>
-        <input class="govuk-input govuk-!-width-one-half" id="address-town"
-               name="addressTown" type="text" autocomplete="address-level2"
+        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-town">Town or city</label>
+        <input class="govuk-input govuk-!-width-one-half" id="{{ currentQuestionAndAnswer.question.id }}-address-town"
+               name="{{ currentQuestionAndAnswer.question.id }}-addressTown" type="text" autocomplete="address-level2"
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressTown') }}">
       </div>
       <div class="govuk-form-group">
-        <label class="govuk-label" for="address-county">County (optional)</label>
-        <input class="govuk-input govuk-!-width-one-half" id="address-county"
-               name="addressCounty" type="text"
+        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-county">County (optional)</label>
+        <input class="govuk-input govuk-!-width-one-half" id="{{ currentQuestionAndAnswer.question.id }}-address-county"
+               name="{{ currentQuestionAndAnswer.question.id }}-addressCounty" type="text"
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressCounty') }}">
       </div>
       <div class="govuk-form-group">
-        <label class="govuk-label" for="address-postcode">Postcode</label>
-        <input class="govuk-input govuk-input--width-10" id="address-postcode"
-               name="addressPostcode" type="text" autocomplete="postal-code"
+        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-postcode">Postcode</label>
+        <input class="govuk-input govuk-input--width-10" id="{{ currentQuestionAndAnswer.question.id }}-address-postcode"
+               name="{{ currentQuestionAndAnswer.question.id }}-addressPostcode" type="text" autocomplete="postal-code"
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressPostcode') }}">
       </div>
     </fieldset>

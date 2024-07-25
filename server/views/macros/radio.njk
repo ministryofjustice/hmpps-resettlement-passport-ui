@@ -1,31 +1,53 @@
 {% from "../macros/validationErrorMessage.njk" import validationErrorMessage %}
+{% from "../macros/address.njk" import address %}
+{% from "../macros/shortText.njk" import shortText %}
+{% from "../macros/longText.njk" import longText %}
 
-{% macro radio(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) %}
+{% macro radio(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors, allQuestionsAndAnswers) %}
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
     {% if multipleQuestionsOnPage %}
-      <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{{ currentQuestionAndAnswer.question.title }}</legend>
     {% endif %}
     <div class="govuk-hint" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     <div class="govuk-radios" data-module="govuk-radios">
       {% if validationError %}
-        {{ validationErrorMessage(validationError.validationType)  }}
+        {{ validationErrorMessage(validationError.validationType) }}
       {% endif %}
 
       {% for option in currentQuestionAndAnswer.question.options %}
         <div class="govuk-radios__item">
           <input
             class="govuk-radios__input"
-            id="{{ option.id }}"
+            id="{{ currentQuestionAndAnswer.question.id }}-{{ option.id }}"
             name="{{ currentQuestionAndAnswer.question.id }}"
             type="radio"
             value="{{ option.id }}"
             {% if existingAnswer.answer == option.id %}
               checked
             {% endif %}
+            {% if option.nestedQuestions %}
+              data-aria-controls="nested-question-{{ currentQuestionAndAnswer.question.id }}-{{ option.id }}"
+            {% endif %}
           />
-          <label class="govuk-label govuk-radios__label" for="{{ option.id }}">{{ option.displayText }}</label>
+          <label class="govuk-label govuk-radios__label" for="{{ currentQuestionAndAnswer.question.id }}-{{ option.id }}">{{ option.displayText }}</label>
           <div class="govuk-hint govuk-radios__hint">{{ option.description }}</div>
+          {% if option.nestedQuestions %}
+            <div class="govuk-radios__conditional govuk-radios__conditional--hidden govuk-!-width-full" id="nested-question-{{ currentQuestionAndAnswer.question.id }}-{{ option.id }}">
+              {% for nestedQuestionAndAnswer in option.nestedQuestions %}
+                {% set nestedExistingAnswer = nestedQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
+                {% if nestedQuestionAndAnswer.question.type === 'ADDRESS' %}
+                  {{ address(nestedQuestionAndAnswer, nestedExistingAnswer, multipleQuestionsOnPage, validationErrors) }}
+                {% elif nestedQuestionAndAnswer.question.type === 'SHORT_TEXT' %}
+                  {{ shortText(nestedQuestionAndAnswer, nestedExistingAnswer, multipleQuestionsOnPage, validationErrors) }}
+                {% elif nestedQuestionAndAnswer.question.type === 'LONG_TEXT' %}
+                  {{ longText(nestedQuestionAndAnswer, nestedExistingAnswer, multipleQuestionsOnPage, validationErrors) }}
+                {% else %}
+                  <p class="govuk-error-message govuk-!-padding-top-6">There was a problem rendering the question.<br /> Please try again. <a class="govuk-link" href="{{ feedbackUrl }}">Contact us</a> if the problem still occurs</p>
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
       {% endfor %}
     </div>

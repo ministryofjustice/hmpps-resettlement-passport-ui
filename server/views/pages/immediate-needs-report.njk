@@ -69,7 +69,7 @@
                 {% set currentIndex = loop.index %}
 
                 {% if currentQuestionAndAnswer.question.type === 'RADIO' %}
-                  {{ radio(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
+                  {{ radio(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors, allQuestionsAndAnswers) }}
                 {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
                   {{ longText(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
                 {% elif currentQuestionAndAnswer.question.type === 'CHECKBOX' %}

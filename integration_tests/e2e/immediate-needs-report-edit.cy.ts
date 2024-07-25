@@ -35,15 +35,15 @@ context('Immediate Needs Report Edit', () => {
 
     // Should be on question page
     cy.get('.govuk-heading-l').should('have.text', 'Does the person in prison have a job when they are released?')
-    cy.get('#NO').should('be.checked')
-    cy.get('#YES').check()
+    cy.get('#HAVE_A_JOB_AFTER_RELEASE-NO').should('be.checked')
+    cy.get('#HAVE_A_JOB_AFTER_RELEASE-YES').check()
 
     clickContinue()
 
     cy.get('.govuk-heading-l').should('have.text', 'Does the person in prison need help contacting the employer?')
     nothingShouldBeSelected()
 
-    cy.get('#NO').check()
+    cy.get('#HELP_CONTACTING_EMPLOYER-NO').check()
     clickContinue()
 
     cy.get('.govuk-heading-l').should('have.text', 'Check your answers')

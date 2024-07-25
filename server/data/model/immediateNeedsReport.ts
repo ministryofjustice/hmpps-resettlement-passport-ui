@@ -7,6 +7,8 @@ export type QuestionOptions = {
   id: string
   displayText: string
   description?: string
+  exclusive?: boolean
+  nestedQuestions?: QuestionsAndAnswers[]
 }
 
 export type AnswerType = 'StringAnswer' | 'MapAnswer' | 'ListAnswer'

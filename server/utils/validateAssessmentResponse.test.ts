@@ -1,5 +1,5 @@
-import { AssessmentPage, QuestionsAndAnswers } from '../data/model/immediateNeedsReport'
-import validateAssessmentResponse, { RequestBody } from './validateAssessmentResponse'
+import { ResettlementReportUserInput } from './assessmentHelperTypes'
+import validateAssessmentResponse from './validateAssessmentResponse'
 
 type ValidationObject = {
   validationType: string
@@ -8,12 +8,12 @@ type ValidationObject = {
 
 describe('Validate assessment question', () => {
   it.each([
-    [null, null, null, null],
+    [null, null, null],
     [
       'Mandatory radio button - no answer provided',
       {
-        id: 'REGISTERED_WITH_GP',
-        questionsAndAnswers: [
+        questionsAndAnswers: [],
+        flattenedQuestionsOnPage: [
           {
             question: {
               id: 'REGISTERED_WITH_GP',
@@ -30,13 +30,10 @@ describe('Validate assessment question', () => {
               ],
               validationType: 'MANDATORY',
             },
-          } as QuestionsAndAnswers,
+          },
         ],
-      },
-      {
-        pathway: 'HEALTH',
-        currentPageId: 'REGISTERED_WITH_GP',
-      },
+        pageId: 'REGISTERED_WITH_GP',
+      } as ResettlementReportUserInput,
       [
         {
           questionId: 'REGISTERED_WITH_GP',
@@ -47,8 +44,13 @@ describe('Validate assessment question', () => {
     [
       'Mandatory radio button - answer provided',
       {
-        id: 'REGISTERED_WITH_GP',
         questionsAndAnswers: [
+          {
+            questionId: 'REGISTERED_WITH_GP',
+            answer: 'YES',
+          },
+        ],
+        flattenedQuestionsOnPage: [
           {
             question: {
               id: 'REGISTERED_WITH_GP',
@@ -65,21 +67,22 @@ describe('Validate assessment question', () => {
               ],
               validationType: 'MANDATORY',
             },
-          } as QuestionsAndAnswers,
+          },
         ],
-      },
-      {
-        REGISTERED_WITH_GP: 'YES',
-        pathway: 'HEALTH',
-        currentPageId: 'REGISTERED_WITH_GP',
-      },
+        pageId: 'REGISTERED_WITH_GP',
+      } as ResettlementReportUserInput,
       null,
     ],
     [
       'Multiple question on page - no answers provided',
       {
-        id: 'ASSESSMENT_SUMMARY',
         questionsAndAnswers: [
+          {
+            questionId: 'CASE_NOTE_SUMMARY',
+            answer: '',
+          },
+        ],
+        flattenedQuestionsOnPage: [
           {
             question: {
               id: 'SUPPORT_NEEDS',
@@ -96,7 +99,7 @@ describe('Validate assessment question', () => {
               ],
               validationType: 'MANDATORY',
             },
-          } as QuestionsAndAnswers,
+          },
           {
             question: {
               id: 'CASE_NOTE_SUMMARY',
@@ -104,14 +107,10 @@ describe('Validate assessment question', () => {
               options: null,
               validationType: 'MANDATORY',
             },
-          } as QuestionsAndAnswers,
+          },
         ],
-      },
-      {
-        CASE_NOTE_SUMMARY: '',
-        pathway: 'ACCOMMODATION',
-        currentPageId: 'ASSESSMENT_SUMMARY',
-      },
+        pageId: 'ASSESSMENT_SUMMARY',
+      } as ResettlementReportUserInput,
       [
         {
           questionId: 'SUPPORT_NEEDS',
@@ -126,23 +125,24 @@ describe('Validate assessment question', () => {
     [
       'Short text max character limit',
       {
-        id: 'EMPLOYMENT_DETAILS_BEFORE_CUSTODY',
         questionsAndAnswers: [
+          {
+            questionId: 'EMPLOYMENT_TITLE_BEFORE_CUSTODY',
+            answer:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s",
+          },
+        ],
+        flattenedQuestionsOnPage: [
           {
             question: {
               id: 'EMPLOYMENT_TITLE_BEFORE_CUSTODY',
               type: 'SHORT_TEXT',
               validationType: 'MANDATORY',
             },
-          } as QuestionsAndAnswers,
+          },
         ],
-      },
-      {
-        EMPLOYMENT_TITLE_BEFORE_CUSTODY:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s",
-        pathway: 'EDUCATION_SKILLS_AND_WORK',
-        currentPageId: 'EMPLOYMENT_DETAILS_BEFORE_CUSTODY',
-      },
+        pageId: 'EMPLOYMENT_DETAILS_BEFORE_CUSTODY',
+      } as ResettlementReportUserInput,
       [
         {
           questionId: 'EMPLOYMENT_TITLE_BEFORE_CUSTODY',
@@ -153,23 +153,24 @@ describe('Validate assessment question', () => {
     [
       'Long text max character limit',
       {
-        id: 'CASE_NOTE_SUMMARY',
         questionsAndAnswers: [
+          {
+            questionId: 'CASE_NOTE_SUMMARY',
+            answer:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s",
+          },
+        ],
+        flattenedQuestionsOnPage: [
           {
             question: {
               id: 'CASE_NOTE_SUMMARY',
               type: 'LONG_TEXT',
               validationType: 'MANDATORY',
             },
-          } as QuestionsAndAnswers,
+          },
         ],
-      },
-      {
-        CASE_NOTE_SUMMARY:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 15000s",
-        pathway: 'EDUCATION_SKILLS_AND_WORK',
-        currentPageId: 'EMPLOYMENT_DETAILS_BEFORE_CUSTODY',
-      },
+        pageId: 'ASSESSMENT_SUMMARY',
+      } as ResettlementReportUserInput,
       [
         {
           questionId: 'CASE_NOTE_SUMMARY',
@@ -180,26 +181,44 @@ describe('Validate assessment question', () => {
     [
       'Address - no answers provided in any field',
       {
-        id: 'EMPLOYMENT_DETAILS_BEFORE_CUSTODY',
         questionsAndAnswers: [
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressLine1',
+            answer: '',
+          },
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressLine2',
+            answer: '',
+          },
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressTown',
+            answer: '',
+          },
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressCounty',
+            answer: '',
+          },
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressPostcode',
+            answer: '',
+          },
+        ],
+        flattenedQuestionsOnPage: [
           {
             question: {
               id: 'ADDRESS_OF_EMPLOYER',
               type: 'ADDRESS',
               validationType: 'MANDATORY',
             },
-          } as QuestionsAndAnswers,
+          },
         ],
-      },
-      {
-        pathway: 'EDUCATION_SKILLS_AND_WORK',
-        currentPageId: 'EMPLOYMENT_DETAILS_BEFORE_CUSTODY',
-        addressLine1: '',
-        addressLine2: '',
-        addressTown: '',
-        addressCounty: '',
-        addressPostcode: '',
-      },
+        pageId: 'EMPLOYER_ADDRESS',
+      } as ResettlementReportUserInput,
       [
         {
           questionId: 'ADDRESS_OF_EMPLOYER',
@@ -210,32 +229,49 @@ describe('Validate assessment question', () => {
     [
       'Address - 1 answer provided in any field',
       {
-        id: 'EMPLOYMENT_DETAILS_BEFORE_CUSTODY',
         questionsAndAnswers: [
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressLine1',
+            answer: '',
+          },
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressLine2',
+            answer: '',
+          },
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressTown',
+            answer: 'Test town',
+          },
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressCounty',
+            answer: '',
+          },
+          {
+            questionId: 'ADDRESS_OF_EMPLOYER',
+            subField: 'addressPostcode',
+            answer: '',
+          },
+        ],
+        flattenedQuestionsOnPage: [
           {
             question: {
               id: 'ADDRESS_OF_EMPLOYER',
               type: 'ADDRESS',
               validationType: 'MANDATORY',
             },
-          } as QuestionsAndAnswers,
+          },
         ],
-      },
-      {
-        pathway: 'EDUCATION_SKILLS_AND_WORK',
-        currentPageId: 'EMPLOYMENT_DETAILS_BEFORE_CUSTODY',
-        addressLine1: '',
-        addressLine2: '',
-        addressTown: 'Test town',
-        addressCounty: '',
-        addressPostcode: '',
-      },
+      } as ResettlementReportUserInput,
       null,
     ],
   ])(
-    '%s validateAssessmentResponse(%s, %s)',
-    (_: string, currentPage: AssessmentPage, reqBody: RequestBody, expected: ValidationObject[] | null) => {
-      expect(validateAssessmentResponse(currentPage, reqBody)).toEqual(expected)
+    '%s validateAssessmentResponse(%s)',
+    (_: string, userInput: ResettlementReportUserInput, expected: ValidationObject[] | null) => {
+      expect(validateAssessmentResponse(userInput)).toEqual(expected)
     },
   )
 })
