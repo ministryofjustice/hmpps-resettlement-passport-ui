@@ -169,7 +169,7 @@ export class AssessmentStateService {
       return
     }
     const questionsAndAnswers = {
-      questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => toSubmittedQuestionAndAnswer(qAndA)),
+      questionsAndAnswers: assessmentPage.questionsAndAnswers?.map(qAndA => toSubmittedQuestionAndAnswer(qAndA)) || [],
       version,
     }
     await this.store.setAssessment(key.userId, key.prisonerNumber, key.pathway, questionsAndAnswers)

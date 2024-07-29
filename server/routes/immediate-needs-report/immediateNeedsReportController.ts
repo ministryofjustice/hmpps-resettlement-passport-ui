@@ -297,7 +297,20 @@ export default class ImmediateNeedsReportController {
       // If it's already submitted, we may reset the cache at this point to the CHECK_ANSWERS
       let assessmentPage: AssessmentPage
       const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
-      const { version } = existingAssessment
+
+      // We need to know what version to us in the edit - if the cache is empty there should be something in the database.
+      const versionFromCache = existingAssessment?.version
+      const versionFromDatabase = await this.rpService.getLatestAssessmentVersion(
+        prisonerNumber,
+        assessmentType,
+        pathway,
+      )
+      const version = versionFromCache || versionFromDatabase
+
+      if (!version) {
+        next(new Error("Cannot find a version in either the cache or database so can't start an edit!"))
+      }
+
       if (submitted) {
         assessmentPage = await this.rpService.getAssessmentPage(
           prisonerData.personalDetails.prisonerNumber as string,
