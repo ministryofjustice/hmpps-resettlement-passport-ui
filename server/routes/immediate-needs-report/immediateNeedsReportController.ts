@@ -13,6 +13,7 @@ import { AssessmentStateService } from '../../data/assessmentStateService'
 import ImmediateNeedsReportView from './immediateNeedsReportView'
 import logger from '../../../logger'
 import { processReportRequestBody } from '../../utils/processReportRequestBody'
+import { Pathway } from '../../@types/express'
 
 export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -21,16 +22,22 @@ export default class ImmediateNeedsReportController {
 
   getFirstPage: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
-      const pathway = req.query.pathway as string
-      const assessmentType = parseAssessmentType(req.query.type)
+      const { prisonerData, config } = req
+      const { type } = req.query
+      const pathway = req.query.pathway as Pathway
+      const assessmentType = parseAssessmentType(type)
+      const reportType = assessmentType === 'BCST2' ? 'immediateNeedsVersion' : 'preReleaseVersion'
+      const configVersion = config.reports[reportType][pathway]
+
+      // TODO: Check for version in database
+
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
         pathway,
       }
 
-      const existingInput = await this.assessmentStateService.prepareSubmission(stateKey)
+      const existingInput = await this.assessmentStateService.prepareSubmission(stateKey, configVersion)
       const { questionsAndAnswers } = existingInput
       let currentPageId = null
 
@@ -45,6 +52,7 @@ export default class ImmediateNeedsReportController {
         existingInput,
         currentPageId,
         assessmentType,
+        existingInput.version,
       )
 
       const { nextPageId } = nextPage
@@ -82,12 +90,15 @@ export default class ImmediateNeedsReportController {
       const dataToSubmit: SubmittedInput = formatAssessmentResponse(answeredQuestions)
       await this.assessmentStateService.answer(stateKey, dataToSubmit, edit)
 
+      const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
+
       const nextPage = await this.rpService.fetchNextPage(
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         dataToSubmit as SubmittedInput,
         currentPageId,
         assessmentType,
+        existingAssessment.version,
       )
 
       if (validationErrors) {
@@ -141,6 +152,7 @@ export default class ImmediateNeedsReportController {
         pathway as string,
         currentPageId,
         assessmentType,
+        Number(existingAssessment.version),
       )
 
       if (assessmentPage.error) {
@@ -150,6 +162,7 @@ export default class ImmediateNeedsReportController {
           pathway,
           {
             questionsAndAnswers: [],
+            version: null,
           },
           validationErrors,
           edit,
@@ -194,6 +207,7 @@ export default class ImmediateNeedsReportController {
         pathway,
         {
           questionsAndAnswers: mergedQuestionsAndAnswers,
+          version: null,
         },
         validationErrors,
         edit,
@@ -274,15 +288,18 @@ export default class ImmediateNeedsReportController {
     try {
       // If it's already submitted, we may reset the cache at this point to the CHECK_ANSWERS
       let assessmentPage: AssessmentPage
+      const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
+      const { version } = existingAssessment
       if (submitted) {
         assessmentPage = await this.rpService.getAssessmentPage(
           prisonerData.personalDetails.prisonerNumber as string,
           pathway as string,
           'CHECK_ANSWERS',
           assessmentType,
+          version,
         )
       }
-      await this.assessmentStateService.startEdit(stateKey, assessmentPage)
+      await this.assessmentStateService.startEdit(stateKey, assessmentPage, version)
       const submittedParam = submitted ? '&submitted=true' : ''
       res.redirect(
         `/ImmediateNeedsReport/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}${submittedParam}`,

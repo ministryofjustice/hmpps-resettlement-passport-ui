@@ -65,4 +65,5 @@ export type SubmittedQuestionAndAnswer = {
 
 export type SubmittedInput = {
   questionsAndAnswers?: SubmittedQuestionAndAnswer[]
+  version: number
 }

@@ -131,12 +131,18 @@ export default class RpService {
     return getEducationSkillsWork
   }
 
-  async getAssessmentPage(prisonerId: string, pathway: string, pageId: string, assessmentType: AssessmentType) {
+  async getAssessmentPage(
+    prisonerId: string,
+    pathway: string,
+    pageId: string,
+    assessmentType: AssessmentType,
+    version: number,
+  ) {
     let assessmentPage
     const client = this.createClient()
     try {
       assessmentPage = (await client.get(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=${assessmentType}`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=${assessmentType}&version=${version}`,
       )) as AssessmentPage
     } catch (err) {
       logger.warn(
@@ -158,12 +164,13 @@ export default class RpService {
     questionsAndAnswers: SubmittedInput,
     currentPageId: string,
     assessmentType: AssessmentType,
+    version: number,
   ) {
     let nextQuestion
     const client = this.createClient()
     try {
       nextQuestion = (await client.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=${assessmentType}${
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?version=${version}&assessmentType=${assessmentType}${
           currentPageId ? `&currentPage=${currentPageId}` : ''
         }`,
         questionsAndAnswers,
