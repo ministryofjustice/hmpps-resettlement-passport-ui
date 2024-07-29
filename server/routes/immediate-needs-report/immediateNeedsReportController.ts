@@ -29,7 +29,15 @@ export default class ImmediateNeedsReportController {
       const reportType = assessmentType === 'BCST2' ? 'immediateNeedsVersion' : 'preReleaseVersion'
       const configVersion = config.reports[reportType][pathway]
 
-      // TODO: Check for version in database
+      const existingAssessmentVersion = await this.rpService.getLatestAssessmentVersion(
+        prisonerData.personalDetails.prisonerNumber,
+        assessmentType,
+        pathway,
+      )
+
+      // The default version of the assessment to use in the cache is the version from the existing assessment
+      // from the API, or if this is a new assessment from the config
+      const defaultVersion = existingAssessmentVersion || configVersion
 
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
@@ -37,7 +45,7 @@ export default class ImmediateNeedsReportController {
         pathway,
       }
 
-      const existingInput = await this.assessmentStateService.prepareSubmission(stateKey, configVersion)
+      const existingInput = await this.assessmentStateService.prepareSubmission(stateKey, defaultVersion)
       const { questionsAndAnswers } = existingInput
       let currentPageId = null
 

@@ -67,3 +67,7 @@ export type SubmittedInput = {
   questionsAndAnswers?: SubmittedQuestionAndAnswer[]
   version: number
 }
+
+export type ResettlementAssessmentVersion = {
+  version: number
+}

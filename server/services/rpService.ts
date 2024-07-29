@@ -5,7 +5,12 @@ import { EducationSkillsWorkResponse } from '../data/model/educationSkillsWorkRe
 import logger from '../../logger'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
-import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/immediateNeedsReport'
+import {
+  AssessmentPage,
+  NextPage,
+  ResettlementAssessmentVersion,
+  SubmittedInput,
+} from '../data/model/immediateNeedsReport'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
 import { AssessmentsInformation, AssessmentSkipRequest, AssessmentType } from '../data/model/assessmentInformation'
 import { Appointments } from '../data/model/appointment'
@@ -406,5 +411,13 @@ export default class RpService {
     return this.createClient().getImageAsBase64String(
       `/resettlement-passport/prisoner/${prisonerNumber}/image/${facialImageId}`,
     )
+  }
+
+  async getLatestAssessmentVersion(prisonerNumber: string, assessmentType: string, pathway: string) {
+    return (
+      (await this.createClient().get(
+        `/resettlement-passport/prisoner/${prisonerNumber}/resettlement-assessment/${pathway}/version?assessmentType=${assessmentType}`,
+      )) as ResettlementAssessmentVersion
+    ).version
   }
 }
