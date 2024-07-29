@@ -36,7 +36,7 @@ export const PATHWAY_DICTIONARY = {
     url: 'health-status',
     description: 'Physical and mental health support, and registering for a GP.',
   },
-} as const
+}
 
 export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
   ...PATHWAY_DICTIONARY,

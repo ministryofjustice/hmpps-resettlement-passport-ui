@@ -160,7 +160,7 @@ export default class ImmediateNeedsReportController {
         pathway as string,
         currentPageId,
         assessmentType,
-        Number(existingAssessment.version),
+        existingAssessment.version,
       )
 
       if (assessmentPage.error) {

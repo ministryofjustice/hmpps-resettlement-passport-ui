@@ -54,9 +54,9 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-        version: null,
+        version: 2,
       }
-      store.getAssessment.mockResolvedValueOnce({ questionsAndAnswers: [], version: null })
+      store.getAssessment.mockResolvedValueOnce({ questionsAndAnswers: [], version: 2 })
       store.getAnsweredQuestions.mockResolvedValueOnce([])
 
       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
@@ -82,7 +82,7 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-        version: null,
+        version: 2,
       }
 
       const existing: SubmittedInput = {
@@ -99,7 +99,7 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-        version: null,
+        version: 2,
       }
 
       store.getAssessment.mockResolvedValueOnce(existing)
@@ -131,9 +131,10 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-      }
+        version: 2,
+      } as SubmittedInput
 
-      // expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
+      expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
         'WHERE_DID_THEY_LIVE',
         'WHERE_WILL_THEY_LIVE_2',
@@ -155,7 +156,7 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-        version: null,
+        version: 3,
       }
 
       const existing: SubmittedInput = {
@@ -183,7 +184,7 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-        version: null,
+        version: 3,
       }
 
       store.getAssessment.mockResolvedValueOnce(existing)
@@ -216,9 +217,10 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-      }
+        version: 3,
+      } as SubmittedInput
 
-      // expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
+      expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', ['WHERE_DID_THEY_LIVE'])
     })
 
@@ -349,33 +351,34 @@ describe('assessmentStateService', () => {
         } as unknown as AssessmentPage
 
         const pathway = 'ATTITUDES_THINKING_AND_BEHAVIOUR'
-        await assessmentStateService.startEdit(aStateKey(pathway), summaryPage, null)
+        await assessmentStateService.startEdit(aStateKey(pathway), summaryPage, 2)
 
-        // expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', pathway, {
-        //   questionsAndAnswers: [
-        //     {
-        //       question: 'HELP_TO_MANAGE_ANGER',
-        //       questionTitle: 'Does the person in prison want support managing their emotions?',
-        //       pageId: 'HELP_TO_MANAGE_ANGER',
-        //       questionType: 'RADIO',
-        //       answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
-        //     },
-        //     {
-        //       question: 'ISSUES_WITH_GAMBLING',
-        //       questionTitle: 'Does the person in prison want support with gambling issues?',
-        //       pageId: 'ISSUES_WITH_GAMBLING',
-        //       questionType: 'RADIO',
-        //       answer: { answer: 'NO_ANSWER', displayText: 'No answer provided', '@class': 'StringAnswer' },
-        //     },
-        //     {
-        //       question: 'SUPPORT_NEEDS_PRERELEASE',
-        //       questionTitle: '',
-        //       pageId: 'PRERELEASE_ASSESSMENT_SUMMARY',
-        //       questionType: 'RADIO',
-        //       answer: { answer: 'SUPPORT_DECLINED', displayText: 'Support declined', '@class': 'StringAnswer' },
-        //     },
-        //   ],
-        // })
+        expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', pathway, {
+          questionsAndAnswers: [
+            {
+              question: 'HELP_TO_MANAGE_ANGER',
+              questionTitle: 'Does the person in prison want support managing their emotions?',
+              pageId: 'HELP_TO_MANAGE_ANGER',
+              questionType: 'RADIO',
+              answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'ISSUES_WITH_GAMBLING',
+              questionTitle: 'Does the person in prison want support with gambling issues?',
+              pageId: 'ISSUES_WITH_GAMBLING',
+              questionType: 'RADIO',
+              answer: { answer: 'NO_ANSWER', displayText: 'No answer provided', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'SUPPORT_NEEDS_PRERELEASE',
+              questionTitle: '',
+              pageId: 'PRERELEASE_ASSESSMENT_SUMMARY',
+              questionType: 'RADIO',
+              answer: { answer: 'SUPPORT_DECLINED', displayText: 'Support declined', '@class': 'StringAnswer' },
+            },
+          ],
+          version: 2,
+        })
         expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway, [
           'HELP_TO_MANAGE_ANGER',
           'ISSUES_WITH_GAMBLING',
