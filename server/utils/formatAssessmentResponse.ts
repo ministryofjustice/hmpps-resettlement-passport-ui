@@ -24,7 +24,7 @@ export const formatAssessmentResponse = (userInput: ResettlementReportUserInput)
 
     let displayText
     if (type === 'RADIO') {
-      displayText = questionAndAnswer.question.options.find(option => option.id === answers[0].answer)?.displayText
+      displayText = questionAndAnswer.question.options.find(option => option.id === answers[0]?.answer)?.displayText
     } else if (type === 'CHECKBOX') {
       displayText = questionAndAnswer.question.options
         .filter(option => checkboxAnswers?.includes(option.id))
@@ -48,7 +48,7 @@ export const formatAssessmentResponse = (userInput: ResettlementReportUserInput)
     } else if (type === 'CHECKBOX') {
       answer = checkboxAnswers
     } else {
-      answer = answers[0].answer
+      answer = answers[0]?.answer
     }
 
     return {
@@ -58,7 +58,7 @@ export const formatAssessmentResponse = (userInput: ResettlementReportUserInput)
       pageId: userInput.pageId,
       answer: {
         answer,
-        displayText: displayText || answers[0].answer,
+        displayText: displayText || answers[0]?.answer,
         '@class': answerType,
       },
     }
