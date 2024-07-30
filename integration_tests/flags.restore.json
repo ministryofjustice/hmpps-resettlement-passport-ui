@@ -8,11 +8,7 @@
     "enabled": true
   },
   {
-    "feature": "combinedReportCaseNotes",
-    "enabled": true
-  },
-  {
-    "feature": "newResettlementReportFunctionality",
+    "feature": "useNewDeliusCaseNoteFormat",
     "enabled": true
   },
   {

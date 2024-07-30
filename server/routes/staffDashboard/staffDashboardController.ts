@@ -2,9 +2,6 @@ import { RequestHandler } from 'express'
 import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
 import RpService from '../../services/rpService'
-import logger from '../../../logger'
-import { getFeatureFlagBoolean } from '../../utils/utils'
-import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class StaffDashboardController {
   constructor(private readonly rpService: RpService) {
@@ -12,10 +9,6 @@ export default class StaffDashboardController {
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    if (await getFeatureFlagBoolean(FEATURE_FLAGS.NEW_RESETTLEMENT_REPORT_FUNCTIONALITY)) {
-      logger.info('Testing config middleware:', req.config)
-    }
-
     try {
       const { userActiveCaseLoad } = res.locals
       const {

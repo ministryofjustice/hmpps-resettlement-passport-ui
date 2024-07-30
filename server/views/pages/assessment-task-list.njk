@@ -3,7 +3,6 @@
 {% set pathway = "Prepare someone for release" %}
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set newResettlementReportFunctionalityEnabled = features.NEW_RESETTLEMENT_REPORT_FUNCTIONALITY | getFeatureFlag %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -98,10 +97,6 @@
             {% endfor %}
           </tbody>
         </table>
-
-        {% if newResettlementReportFunctionalityEnabled %}
-          <p>TESTING - New Resettlement Report Functionality enabled </p>
-        {% endif %}
 
       <form action="/assessment-complete" method="post" novalidate>
         <div class="govuk-button-group">
