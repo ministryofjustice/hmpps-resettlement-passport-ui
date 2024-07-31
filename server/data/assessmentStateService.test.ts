@@ -494,6 +494,80 @@ describe('assessmentStateService', () => {
       expect(mergedItems).toContainEqual({ q: '3', a: 'Cache 3' })
     })
   })
+
+  describe('initialiseCache', () => {
+    it('If cache is empty, save and return empty assessment with config version', async () => {
+      const stateKey = {
+        prisonerNumber: 'ABC1234',
+        userId: 'D126HJ',
+        pathway: 'ACCOMMODATION',
+      }
+      const configVersion = 2
+
+      const assessment = await assessmentStateService.initialiseCache(stateKey, configVersion)
+
+      const expectedAssessment = {
+        questionsAndAnswers: [],
+        version: configVersion,
+      } as SubmittedInput
+
+      expect(assessment).toEqual(expectedAssessment)
+      expect(setAssessmentSpy).toHaveBeenCalledWith(
+        stateKey.userId,
+        stateKey.prisonerNumber,
+        stateKey.pathway,
+        expectedAssessment,
+      )
+    })
+
+    it('If cache is not empty, return assessment from cache filtered to only answered questions', async () => {
+      const stateKey = {
+        prisonerNumber: 'ABC1234',
+        userId: 'D126HJ',
+        pathway: 'ACCOMMODATION',
+      }
+      const configVersion = 4
+
+      store.getAssessment.mockResolvedValue({
+        questionsAndAnswers: [
+          {
+            question: 'HELP_TO_MANAGE_ANGER',
+            questionTitle: 'Does the person in prison want support managing their emotions?',
+            pageId: 'HELP_TO_MANAGE_ANGER',
+            questionType: 'RADIO',
+            answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+          },
+          {
+            question: 'ISSUES_WITH_GAMBLING',
+            questionTitle: 'Does the person in prison want support with gambling issues?',
+            pageId: 'ISSUES_WITH_GAMBLING',
+            questionType: 'RADIO',
+            answer: { answer: 'NO_ANSWER', displayText: 'No answer provided', '@class': 'StringAnswer' },
+          },
+        ],
+        version: configVersion,
+      })
+
+      store.getAnsweredQuestions.mockResolvedValueOnce(['HELP_TO_MANAGE_ANGER'])
+
+      const assessment = await assessmentStateService.initialiseCache(stateKey, configVersion)
+
+      const expectedAssessment = {
+        questionsAndAnswers: [
+          {
+            question: 'HELP_TO_MANAGE_ANGER',
+            questionTitle: 'Does the person in prison want support managing their emotions?',
+            pageId: 'HELP_TO_MANAGE_ANGER',
+            questionType: 'RADIO',
+            answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+          },
+        ],
+        version: configVersion,
+      } as SubmittedInput
+
+      expect(assessment).toEqual(expectedAssessment)
+    })
+  })
 })
 
 function aQuestionAndAnswer(id: string, answer: string): QuestionsAndAnswers {

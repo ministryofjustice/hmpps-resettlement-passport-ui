@@ -140,7 +140,7 @@ export class AssessmentStateService {
     await this.store.setCurrentPage(key.userId, key.prisonerNumber, key.pathway, assessmentPage)
   }
 
-  async prepareSubmission(stateKey: StateKey, configVersion?: number): Promise<SubmittedInput> {
+  async initialiseCache(stateKey: StateKey, configVersion: number): Promise<SubmittedInput> {
     const existingAssessment = await this.getAssessment(stateKey)
     if (!existingAssessment) {
       const initialAssessment = {
@@ -149,6 +149,14 @@ export class AssessmentStateService {
       } as SubmittedInput
       await this.store.setAssessment(stateKey.userId, stateKey.prisonerNumber, stateKey.pathway, initialAssessment)
       return initialAssessment
+    }
+    return this.getExistingAssessmentAnsweredQuestions(stateKey)
+  }
+
+  async getExistingAssessmentAnsweredQuestions(stateKey: StateKey): Promise<SubmittedInput> {
+    const existingAssessment = await this.getAssessment(stateKey)
+    if (!existingAssessment) {
+      throw Error('Cannot prepare submission as no assessment found in cache')
     }
     const answeredQuestions = await this.store.getAnsweredQuestions(
       stateKey.userId,

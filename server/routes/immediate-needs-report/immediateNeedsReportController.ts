@@ -45,7 +45,7 @@ export default class ImmediateNeedsReportController {
         pathway,
       }
 
-      const existingInput = await this.assessmentStateService.prepareSubmission(stateKey, defaultVersion)
+      const existingInput = await this.assessmentStateService.initialiseCache(stateKey, defaultVersion)
       const { questionsAndAnswers } = existingInput
       let currentPageId = null
 
@@ -241,7 +241,7 @@ export default class ImmediateNeedsReportController {
         pathway,
       }
 
-      const dataToSubmit = await this.assessmentStateService.prepareSubmission(stateKey)
+      const dataToSubmit = await this.assessmentStateService.getExistingAssessmentAnsweredQuestions(stateKey)
       if (dataToSubmit.questionsAndAnswers.length === 0) {
         logger.warn('Nothing entered on submit, returning to task list page. session id: %s', req.sessionID)
         return res.redirect(

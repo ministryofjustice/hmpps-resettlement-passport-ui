@@ -56,7 +56,7 @@ describe('completeAssessment', () => {
       ],
       version: null,
     }
-    jest.spyOn(assessmentStateService, 'prepareSubmission').mockResolvedValue(submission)
+    jest.spyOn(assessmentStateService, 'getExistingAssessmentAnsweredQuestions').mockResolvedValue(submission)
 
     const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
     jest.spyOn(assessmentStateService, 'onComplete').mockImplementation()
@@ -75,7 +75,7 @@ describe('completeAssessment', () => {
     stubPrisonerDetails()
 
     jest
-      .spyOn(assessmentStateService, 'prepareSubmission')
+      .spyOn(assessmentStateService, 'getExistingAssessmentAnsweredQuestions')
       .mockResolvedValue({ questionsAndAnswers: [], version: null })
 
     const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
