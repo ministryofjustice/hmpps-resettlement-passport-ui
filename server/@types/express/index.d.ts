@@ -1,3 +1,5 @@
+import { PATHWAY_DICTIONARY } from '../../utils/constants'
+
 export default {}
 
 declare module 'express-session' {
@@ -70,17 +72,11 @@ export type ConfigFile = {
   reports: Reports
 }
 
-export type PathwayVersion = {
-  ACCOMMODATION: number
-  ATTITUDES_THINKING_AND_BEHAVIOUR: number
-  CHILDREN_FAMILIES_AND_COMMUNITY: number
-  DRUGS_AND_ALCOHOL: number
-  EDUCATION_SKILLS_AND_WORK: number
-  FINANCE_AND_ID: number
-  HEALTH: number
-}
-
 export type Reports = {
   immediateNeedsVersion: PathwayVersion
   preReleaseVersion: PathwayVersion
 }
+
+export type Pathway = keyof typeof PATHWAY_DICTIONARY
+
+export type PathwayVersion = Record<Pathway, number>

@@ -94,7 +94,7 @@ export const johnSmithAccommodationNextPage1 = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_next-page',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=RESETTLEMENT_PLAN',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=RESETTLEMENT_PLAN',
       method: 'POST',
       bodyPatterns: [
         {
@@ -115,7 +115,7 @@ export const johnSmithWhereDidTheyLive = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_page_where_did_they_live',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE?assessmentType=RESETTLEMENT_PLAN',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE?assessmentType=RESETTLEMENT_PLAN&version=1',
       method: 'GET',
     },
     response: {
@@ -163,7 +163,7 @@ export const johnSmithNextPage2 = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_next-page',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=RESETTLEMENT_PLAN&currentPage=WHERE_DID_THEY_LIVE',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=RESETTLEMENT_PLAN&currentPage=WHERE_DID_THEY_LIVE',
       method: 'POST',
       bodyPatterns: [
         {
@@ -185,7 +185,7 @@ export const johnSmithWhereWillTheyLive2 = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_page_where_will_they_live_2',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_WILL_THEY_LIVE_2?assessmentType=RESETTLEMENT_PLAN',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_WILL_THEY_LIVE_2?assessmentType=RESETTLEMENT_PLAN&version=1',
       method: 'GET',
     },
     response: {
@@ -231,7 +231,7 @@ export const johnSmithNextPage3 = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_next-page',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=RESETTLEMENT_PLAN&currentPage=WHERE_WILL_THEY_LIVE_2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=RESETTLEMENT_PLAN&currentPage=WHERE_WILL_THEY_LIVE_2',
       method: 'POST',
       bodyPatterns: [
         {
@@ -253,7 +253,7 @@ export const johnSmithAssessmentSummary = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_page_prerelease_assessment_summary',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/PRERELEASE_ASSESSMENT_SUMMARY?assessmentType=RESETTLEMENT_PLAN',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/PRERELEASE_ASSESSMENT_SUMMARY?assessmentType=RESETTLEMENT_PLAN&version=1',
       method: 'GET',
     },
     response: {
@@ -324,7 +324,7 @@ export const johnSmithNextPage4 = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_next-page',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=RESETTLEMENT_PLAN&currentPage=PRERELEASE_ASSESSMENT_SUMMARY',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=RESETTLEMENT_PLAN&currentPage=PRERELEASE_ASSESSMENT_SUMMARY',
       method: 'POST',
       bodyPatterns: [
         {
@@ -346,7 +346,7 @@ export const johnSmithCheckAnswers = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_page_check_answers',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/CHECK_ANSWERS?assessmentType=RESETTLEMENT_PLAN',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/CHECK_ANSWERS?assessmentType=RESETTLEMENT_PLAN&version=1',
       method: 'GET',
     },
     response: {

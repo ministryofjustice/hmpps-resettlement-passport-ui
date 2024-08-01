@@ -54,8 +54,9 @@ describe('assessmentStateService', () => {
             },
           },
         ],
+        version: 2,
       }
-      store.getAssessment.mockResolvedValueOnce({ questionsAndAnswers: [] })
+      store.getAssessment.mockResolvedValueOnce({ questionsAndAnswers: [], version: 2 })
       store.getAnsweredQuestions.mockResolvedValueOnce([])
 
       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
@@ -81,6 +82,7 @@ describe('assessmentStateService', () => {
             },
           },
         ],
+        version: 2,
       }
 
       const existing: SubmittedInput = {
@@ -97,6 +99,7 @@ describe('assessmentStateService', () => {
             },
           },
         ],
+        version: 2,
       }
 
       store.getAssessment.mockResolvedValueOnce(existing)
@@ -128,7 +131,8 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-      }
+        version: 2,
+      } as SubmittedInput
 
       expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
@@ -152,6 +156,7 @@ describe('assessmentStateService', () => {
             },
           },
         ],
+        version: 3,
       }
 
       const existing: SubmittedInput = {
@@ -179,6 +184,7 @@ describe('assessmentStateService', () => {
             },
           },
         ],
+        version: 3,
       }
 
       store.getAssessment.mockResolvedValueOnce(existing)
@@ -211,7 +217,8 @@ describe('assessmentStateService', () => {
             },
           },
         ],
-      }
+        version: 3,
+      } as SubmittedInput
 
       expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', ['WHERE_DID_THEY_LIVE'])
@@ -344,7 +351,7 @@ describe('assessmentStateService', () => {
         } as unknown as AssessmentPage
 
         const pathway = 'ATTITUDES_THINKING_AND_BEHAVIOUR'
-        await assessmentStateService.startEdit(aStateKey(pathway), summaryPage)
+        await assessmentStateService.startEdit(aStateKey(pathway), summaryPage, 2)
 
         expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', pathway, {
           questionsAndAnswers: [
@@ -370,6 +377,7 @@ describe('assessmentStateService', () => {
               answer: { answer: 'SUPPORT_DECLINED', displayText: 'Support declined', '@class': 'StringAnswer' },
             },
           ],
+          version: 2,
         })
         expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway, [
           'HELP_TO_MANAGE_ANGER',
@@ -484,6 +492,80 @@ describe('assessmentStateService', () => {
       expect(mergedItems).toContainEqual({ q: '1', a: 'Cache 1' })
       expect(mergedItems).toContainEqual({ q: '2', a: 'API 2' })
       expect(mergedItems).toContainEqual({ q: '3', a: 'Cache 3' })
+    })
+  })
+
+  describe('initialiseCache', () => {
+    it('If cache is empty, save and return empty assessment with config version', async () => {
+      const stateKey = {
+        prisonerNumber: 'ABC1234',
+        userId: 'D126HJ',
+        pathway: 'ACCOMMODATION',
+      }
+      const configVersion = 2
+
+      const assessment = await assessmentStateService.initialiseCache(stateKey, configVersion)
+
+      const expectedAssessment = {
+        questionsAndAnswers: [],
+        version: configVersion,
+      } as SubmittedInput
+
+      expect(assessment).toEqual(expectedAssessment)
+      expect(setAssessmentSpy).toHaveBeenCalledWith(
+        stateKey.userId,
+        stateKey.prisonerNumber,
+        stateKey.pathway,
+        expectedAssessment,
+      )
+    })
+
+    it('If cache is not empty, return assessment from cache filtered to only answered questions', async () => {
+      const stateKey = {
+        prisonerNumber: 'ABC1234',
+        userId: 'D126HJ',
+        pathway: 'ACCOMMODATION',
+      }
+      const configVersion = 4
+
+      store.getAssessment.mockResolvedValue({
+        questionsAndAnswers: [
+          {
+            question: 'HELP_TO_MANAGE_ANGER',
+            questionTitle: 'Does the person in prison want support managing their emotions?',
+            pageId: 'HELP_TO_MANAGE_ANGER',
+            questionType: 'RADIO',
+            answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+          },
+          {
+            question: 'ISSUES_WITH_GAMBLING',
+            questionTitle: 'Does the person in prison want support with gambling issues?',
+            pageId: 'ISSUES_WITH_GAMBLING',
+            questionType: 'RADIO',
+            answer: { answer: 'NO_ANSWER', displayText: 'No answer provided', '@class': 'StringAnswer' },
+          },
+        ],
+        version: configVersion,
+      })
+
+      store.getAnsweredQuestions.mockResolvedValueOnce(['HELP_TO_MANAGE_ANGER'])
+
+      const assessment = await assessmentStateService.initialiseCache(stateKey, configVersion)
+
+      const expectedAssessment = {
+        questionsAndAnswers: [
+          {
+            question: 'HELP_TO_MANAGE_ANGER',
+            questionTitle: 'Does the person in prison want support managing their emotions?',
+            pageId: 'HELP_TO_MANAGE_ANGER',
+            questionType: 'RADIO',
+            answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+          },
+        ],
+        version: configVersion,
+      } as SubmittedInput
+
+      expect(assessment).toEqual(expectedAssessment)
     })
   })
 })

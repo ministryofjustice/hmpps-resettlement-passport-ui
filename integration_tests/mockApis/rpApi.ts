@@ -13,7 +13,7 @@ import {
   johnSmithWhereWillTheyLive2,
   stubJohnSmithPrisonerDetailsPreRelease,
 } from './scenarios/john-smith/john-smith-pre-release'
-import { johnSmithDefaults } from './scenarios/john-smith/john-smith'
+import { getResettlementAssessmentVersion, johnSmithDefaults } from './scenarios/john-smith/john-smith'
 import {
   johnSmithImmediateNeedsReportHealth,
   johnSmithImmediateNeedsReportAccommodation,
@@ -335,6 +335,7 @@ const stubJohnSmithPreRelease = () => {
     johnSmithAssessmentSummary(),
     johnSmithCheckAnswers(),
     johnSmithConfirm(),
+    getResettlementAssessmentVersion('ACCOMMODATION', 'RESETTLEMENT_PLAN'),
   ])
 }
 

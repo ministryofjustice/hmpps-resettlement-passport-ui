@@ -54,8 +54,9 @@ describe('completeAssessment', () => {
           questionType: 'RADIO',
         },
       ],
+      version: null,
     }
-    jest.spyOn(assessmentStateService, 'prepareSubmission').mockResolvedValue(submission)
+    jest.spyOn(assessmentStateService, 'getExistingAssessmentAnsweredQuestions').mockResolvedValue(submission)
 
     const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
     jest.spyOn(assessmentStateService, 'onComplete').mockImplementation()
@@ -73,7 +74,9 @@ describe('completeAssessment', () => {
   it('it should not submit the assessment if there is no submitted input', async () => {
     stubPrisonerDetails()
 
-    jest.spyOn(assessmentStateService, 'prepareSubmission').mockResolvedValue({ questionsAndAnswers: [] })
+    jest
+      .spyOn(assessmentStateService, 'getExistingAssessmentAnsweredQuestions')
+      .mockResolvedValue({ questionsAndAnswers: [], version: null })
 
     const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
 
