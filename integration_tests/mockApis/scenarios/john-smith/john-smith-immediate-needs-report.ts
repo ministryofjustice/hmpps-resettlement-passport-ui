@@ -2,6 +2,7 @@ import { SuperAgentRequest } from 'superagent'
 import { addMonths, format } from 'date-fns'
 import { stubFor } from '../../wiremock'
 import { responseHeaders, submitHeaders } from '../../headers'
+import { getResettlementAssessmentVersion } from './john-smith'
 
 export const stubJohnSmithPrisonerDetails = () =>
   stubFor({
@@ -120,7 +121,7 @@ const nextPageStartHealth = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Health Assessment Next Page 1',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?version=1&assessmentType=BCST2',
       method: 'POST',
       bodyPatterns: [
         {
@@ -144,7 +145,7 @@ const healthAssessment = () =>
     name: 'John Smith immediate needs report Health Assessment',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/REGISTERED_WITH_GP?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/REGISTERED_WITH_GP?assessmentType=BCST2&version=1',
     },
     response: {
       status: 200,
@@ -179,7 +180,7 @@ const nextPageHealth = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Health Assessment Next Page Health',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?assessmentType=BCST2&currentPage=REGISTERED_WITH_GP',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?version=1&assessmentType=BCST2&currentPage=REGISTERED_WITH_GP',
       method: 'POST',
       bodyPatterns: [
         {
@@ -204,7 +205,7 @@ const meetHealthCareTeamPage = () =>
     name: 'John Smith Meet Health Care Team Page',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/MEET_HEALTHCARE_TEAM?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/MEET_HEALTHCARE_TEAM?assessmentType=BCST2&version=1',
     },
     response: {
       status: 200,
@@ -239,7 +240,7 @@ const nextPageHealthcareTeam = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Health Assessment Next Page Healthcare Team Meeting',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?assessmentType=BCST2&currentPage=MEET_HEALTHCARE_TEAM',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?version=1&assessmentType=BCST2&currentPage=MEET_HEALTHCARE_TEAM',
       method: 'POST',
       bodyPatterns: [
         {
@@ -324,7 +325,7 @@ const assessmentSummaryPage = (pathwayEnum: string, pathwayString: string) =>
     name: 'John Smith immediate needs report Assessment Summary Page',
     request: {
       method: 'GET',
-      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathwayEnum}/page/ASSESSMENT_SUMMARY?assessmentType=BCST2`,
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathwayEnum}/page/ASSESSMENT_SUMMARY?assessmentType=BCST2&version=1`,
     },
     response: {
       status: 200,
@@ -387,7 +388,7 @@ const nextPageSummary = (pathway: string) =>
   stubFor({
     name: 'JohnSmith immediate needs report Next Page Summary',
     request: {
-      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/next-page?assessmentType=BCST2&currentPage=ASSESSMENT_SUMMARY`,
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/next-page?version=1&assessmentType=BCST2&currentPage=ASSESSMENT_SUMMARY`,
       method: 'POST',
       bodyPatterns: [
         {
@@ -412,7 +413,7 @@ const checkAnswersPage = (pathway: string) =>
     name: 'John Smith immediate needs report Check Answers Page',
     request: {
       method: 'GET',
-      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/page/CHECK_ANSWERS?assessmentType=BCST2`,
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/page/CHECK_ANSWERS?assessmentType=BCST2&version=1`,
     },
     response: {
       status: 200,
@@ -491,6 +492,7 @@ const submitAssessment = () => {
                 questionType: 'LONG_TEXT',
               },
             ],
+            version: 1,
           }),
           ignoreArrayOrder: true,
         },
@@ -547,7 +549,7 @@ const nextPageStartAccommodation = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Accommodation Assessment Next Page 1',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2',
       method: 'POST',
       bodyPatterns: [
         {
@@ -571,7 +573,7 @@ const whereDoTheyLivePage = () =>
     name: 'John Smith Where Do They Live Page',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE?assessmentType=BCST2&version=1',
     },
     response: {
       status: 200,
@@ -628,7 +630,7 @@ const nextPageWhereDoTheyLiveAfterChoosingRented = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Where do they live next page after choosing Private Rented',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE',
       method: 'POST',
       bodyPatterns: [
         {
@@ -659,7 +661,7 @@ const addressPage = () =>
     name: 'John Smith Address Page',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE_ADDRESS?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE_ADDRESS?assessmentType=BCST2&version=1',
     },
     response: {
       status: 200,
@@ -690,7 +692,7 @@ const nextPageAddress = () =>
   stubFor({
     name: 'JohnSmith immediate needs report next page after entering address',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE_ADDRESS',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE_ADDRESS',
       method: 'POST',
       bodyPatterns: [
         {
@@ -715,7 +717,7 @@ const helpToKeepHomePage = () =>
     name: 'John Smith Help To keep home Page',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/HELP_TO_KEEP_HOME?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/HELP_TO_KEEP_HOME?assessmentType=BCST2&version=1',
     },
     response: {
       status: 200,
@@ -765,7 +767,7 @@ const nextPageWhereDoTheyLiveAfterChoosingNone = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Where do they live next page after choosing No permenant or fixed',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=WHERE_DID_THEY_LIVE',
       method: 'POST',
       bodyPatterns: [
         {
@@ -796,7 +798,7 @@ const whereWillTheyLive2Page = () =>
     name: 'John Smith Where will they live 2 page',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_WILL_THEY_LIVE_2?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_WILL_THEY_LIVE_2?assessmentType=BCST2&version=1',
     },
     response: {
       status: 200,
@@ -841,7 +843,7 @@ const nextPageWhereWillTheyLive = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Where will they live next page',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=WHERE_WILL_THEY_LIVE_2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=WHERE_WILL_THEY_LIVE_2',
       method: 'POST',
       bodyPatterns: [
         {
@@ -990,7 +992,7 @@ const nextPageHelpToKeepHome = () =>
   stubFor({
     name: 'JohnSmith immediate needs report help to keep home next page',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?assessmentType=BCST2&currentPage=HELP_TO_KEEP_HOME',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=HELP_TO_KEEP_HOME',
       method: 'POST',
       bodyPatterns: [
         {
@@ -1026,6 +1028,7 @@ export const johnSmithImmediateNeedsReportHealth = (): SuperAgentRequest[] => [
   submitAssessment(),
   completedTaskList(),
   submit(),
+  getResettlementAssessmentVersion('HEALTH', 'BCST2'),
 ]
 
 export const johnSmithImmediateNeedsReportAccommodation = (): SuperAgentRequest[] => [
@@ -1045,6 +1048,6 @@ export const johnSmithImmediateNeedsReportAccommodation = (): SuperAgentRequest[
   checkAnswersPage('ACCOMMODATION'),
   submitAccommodationAssessmentEdit1(),
   submitAccommodationAssessmentEdit2(),
-
   nextPageHelpToKeepHome(),
+  getResettlementAssessmentVersion('ACCOMMODATION', 'BCST2'),
 ]
