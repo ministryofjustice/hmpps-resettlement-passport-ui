@@ -26,6 +26,8 @@ import { Appointments } from '../data/model/appointment'
 import watchlistRouter from './watchlist'
 import analyticsRouter from './analytics'
 import configMiddleware from './configMiddleware'
+import { type } from 'node:os'
+import documentRouter from './documents/documentRouter'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -50,6 +52,7 @@ export default function routes(services: Services): Router {
   watchlistRouter(router, services)
   statusUpdateRouter(router, services)
   analyticsRouter(router, services)
+  documentRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
