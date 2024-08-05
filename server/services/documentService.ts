@@ -13,6 +13,33 @@ const docTypes: Record<string, DocumentType> = {
   'licence-conditions': DocumentType.LICENCE_CONDITIONS,
 }
 
+function buildFormData(filename: string, data: NodeJS.ReadableStream): FormData {
+  const formData = new FormData()
+
+  formData.set(
+    'file',
+    {
+      [Symbol.toStringTag]: 'File',
+      name: filename,
+      stream: () =>
+        // This is to bridge the different stream APIs, so that we don't have to load the whole
+        // file into memory or write it to disk, we can just stream chunk by chunk to downstream api
+        new ReadableStream({
+          start(controller) {
+            let chunk = data.read(chunkSize)
+            while (chunk != null) {
+              controller.enqueue(chunk as Buffer)
+              chunk = data.read(chunkSize)
+            }
+            controller.close()
+          },
+        }),
+    } as unknown as Blob,
+    filename,
+  )
+  return formData
+}
+
 export default class DocumentService {
   async upload(prisonerNumber: string, documentType: string, filename: string, data: NodeJS.ReadableStream) {
     const type = docTypes[documentType]
@@ -21,28 +48,7 @@ export default class DocumentService {
     if (!type) {
       throw new Error(`Unsupported document type "${documentType}"`)
     }
-
-    const formData = new FormData()
-
-    formData.set(
-      'file',
-      {
-        [Symbol.toStringTag]: 'File',
-        name: filename,
-        stream: () =>
-          new ReadableStream({
-            start(controller) {
-              let chunk = data.read(chunkSize)
-              while (chunk != null) {
-                controller.enqueue(chunk as Buffer)
-                chunk = data.read(chunkSize)
-              }
-              controller.close()
-            },
-          }),
-      } as unknown as Blob,
-      filename,
-    )
+    const body = buildFormData(filename, data)
 
     const response = await fetch(
       `${config.apis.rpClient.url}/resettlement-passport/prisoner/${prisonerNumber}/documents/upload?category=${type}`,
@@ -52,8 +58,9 @@ export default class DocumentService {
           Authorization: `Bearer ${token}`,
         },
         keepalive: true,
+        // Long timeout to support upload
         signal: AbortSignal.timeout(minutesToMilliseconds(5)),
-        body: formData,
+        body,
       },
     )
     if (!response.ok) {
