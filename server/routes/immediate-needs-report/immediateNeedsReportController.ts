@@ -60,7 +60,7 @@ export default class ImmediateNeedsReportController {
         existingInput,
         currentPageId,
         assessmentType,
-        existingInput.version,
+        existingInput.version || 1,
       )
 
       const { nextPageId } = nextPage
@@ -299,7 +299,7 @@ export default class ImmediateNeedsReportController {
       const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
 
       // We need to know what version to us in the edit - if the cache is empty there should be something in the database.
-      const versionFromCache = existingAssessment?.version
+      const versionFromCache = existingAssessment?.version || 1
       const versionFromDatabase = await this.rpService.getLatestAssessmentVersion(
         prisonerNumber,
         assessmentType,
