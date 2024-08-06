@@ -13,7 +13,6 @@ import { AssessmentStateService } from '../../data/assessmentStateService'
 import ImmediateNeedsReportView from './immediateNeedsReportView'
 import logger from '../../../logger'
 import { processReportRequestBody } from '../../utils/processReportRequestBody'
-import { Pathway } from '../../@types/express'
 
 export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -22,30 +21,16 @@ export default class ImmediateNeedsReportController {
 
   getFirstPage: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData, config } = req
-      const { type } = req.query
-      const pathway = req.query.pathway as Pathway
-      const assessmentType = parseAssessmentType(type)
-      const reportType = assessmentType === 'BCST2' ? 'immediateNeedsVersion' : 'preReleaseVersion'
-      const configVersion = config.reports[reportType][pathway]
-
-      const existingAssessmentVersion = await this.rpService.getLatestAssessmentVersion(
-        prisonerData.personalDetails.prisonerNumber,
-        assessmentType,
-        pathway,
-      )
-
-      // The default version of the assessment to use in the cache is the version from the existing assessment
-      // from the API, or if this is a new assessment from the config
-      const defaultVersion = existingAssessmentVersion || configVersion
-
+      const { prisonerData } = req
+      const pathway = req.query.pathway as string
+      const assessmentType = parseAssessmentType(req.query.type)
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
         pathway,
       }
 
-      const existingInput = await this.assessmentStateService.initialiseCache(stateKey, defaultVersion)
+      const existingInput = await this.assessmentStateService.prepareSubmission(stateKey)
       const { questionsAndAnswers } = existingInput
       let currentPageId = null
 
@@ -60,7 +45,6 @@ export default class ImmediateNeedsReportController {
         existingInput,
         currentPageId,
         assessmentType,
-        existingInput.version,
       )
 
       const { nextPageId } = nextPage
@@ -98,15 +82,12 @@ export default class ImmediateNeedsReportController {
       const dataToSubmit: SubmittedInput = formatAssessmentResponse(answeredQuestions)
       await this.assessmentStateService.answer(stateKey, dataToSubmit, edit)
 
-      const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
-
       const nextPage = await this.rpService.fetchNextPage(
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         dataToSubmit as SubmittedInput,
         currentPageId,
         assessmentType,
-        existingAssessment.version,
       )
 
       if (validationErrors) {
@@ -160,7 +141,6 @@ export default class ImmediateNeedsReportController {
         pathway as string,
         currentPageId,
         assessmentType,
-        existingAssessment.version,
       )
 
       if (assessmentPage.error) {
@@ -170,7 +150,6 @@ export default class ImmediateNeedsReportController {
           pathway,
           {
             questionsAndAnswers: [],
-            version: null,
           },
           validationErrors,
           edit,
@@ -215,7 +194,6 @@ export default class ImmediateNeedsReportController {
         pathway,
         {
           questionsAndAnswers: mergedQuestionsAndAnswers,
-          version: null,
         },
         validationErrors,
         edit,
@@ -241,7 +219,7 @@ export default class ImmediateNeedsReportController {
         pathway,
       }
 
-      const dataToSubmit = await this.assessmentStateService.getExistingAssessmentAnsweredQuestions(stateKey)
+      const dataToSubmit = await this.assessmentStateService.prepareSubmission(stateKey)
       if (dataToSubmit.questionsAndAnswers.length === 0) {
         logger.warn('Nothing entered on submit, returning to task list page. session id: %s', req.sessionID)
         return res.redirect(
@@ -296,31 +274,15 @@ export default class ImmediateNeedsReportController {
     try {
       // If it's already submitted, we may reset the cache at this point to the CHECK_ANSWERS
       let assessmentPage: AssessmentPage
-      const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
-
-      // We need to know what version to us in the edit - if the cache is empty there should be something in the database.
-      const versionFromCache = existingAssessment?.version
-      const versionFromDatabase = await this.rpService.getLatestAssessmentVersion(
-        prisonerNumber,
-        assessmentType,
-        pathway,
-      )
-      const version = versionFromCache || versionFromDatabase
-
-      if (!version) {
-        next(new Error("Cannot find a version in either the cache or database so can't start an edit!"))
-      }
-
       if (submitted) {
         assessmentPage = await this.rpService.getAssessmentPage(
           prisonerData.personalDetails.prisonerNumber as string,
           pathway as string,
           'CHECK_ANSWERS',
           assessmentType,
-          version,
         )
       }
-      await this.assessmentStateService.startEdit(stateKey, assessmentPage, version)
+      await this.assessmentStateService.startEdit(stateKey, assessmentPage)
       const submittedParam = submitted ? '&submitted=true' : ''
       res.redirect(
         `/ImmediateNeedsReport/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}${submittedParam}`,

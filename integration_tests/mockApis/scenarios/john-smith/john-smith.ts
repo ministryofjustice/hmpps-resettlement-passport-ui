@@ -361,24 +361,6 @@ export const johnSmithLicenseConditions = () =>
       },
     },
   })
-
-export const getResettlementAssessmentVersion = (pathway: string, assessmentType: string) => {
-  return stubFor({
-    request: {
-      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/${pathway}/version?assessmentType=${assessmentType}`,
-      method: 'GET',
-    },
-    response: {
-      status: 200,
-      jsonBody: {
-        version: 1,
-      },
-      headers: responseHeaders,
-    },
-    scenarioName: 'john-smith-immediate-needs-report',
-  })
-}
-
 export const johnSmithDefaults = () => [
   johnSmithImage(),
   johnSmithStaffContacts(),
