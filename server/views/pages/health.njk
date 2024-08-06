@@ -20,7 +20,7 @@
           id: "case-notes"
         }
       ] %}
-      {% if not prisonerData.assessmentRequired %}
+      {% if prisonerData.showReportInformation %}
         {% set subNavItems = subNavItems.concat([
           {
             name: "Report information",
@@ -33,7 +33,7 @@
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% include "../partials/caseNotes.njk" %}
-      {% if not prisonerData.assessmentRequired %}
+      {% if prisonerData.showReportInformation %}
         {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
       {% endif %}
       {% include "../partials/crsReferrals.njk" %}
