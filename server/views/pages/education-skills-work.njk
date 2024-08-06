@@ -33,7 +33,7 @@
           id: "affect-ability-to-work"
         }
       ] %}
-      {% if not prisonerData.assessmentRequired %}
+      {% if prisonerData.showReportInformation %}
         {% set subNavItems = subNavItems.concat([
           {
             name: "Report information",
@@ -116,7 +116,7 @@
       {% else %}
         <p>{{ educationSkillsWork.error }}</p>
       {% endif %}
-      {% if not prisonerData.assessmentRequired %}
+      {% if prisonerData.showReportInformation %}
         {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
       {% endif %}
       {% include "../partials/crsReferrals.njk" %}

@@ -29,7 +29,7 @@
           id: "main-address"
         }
       ] %}
-      {% if not prisonerData.assessmentRequired %}
+      {% if prisonerData.showReportInformation %}
         {% set subNavItems = subNavItems.concat([
           {
             name: "Report information",
@@ -110,7 +110,7 @@
           {% endif %}
         </div>
       </section>
-      {% if not prisonerData.assessmentRequired %}
+      {% if prisonerData.showReportInformation %}
         {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
       {% endif %}
       {% include "../partials/crsReferrals.njk" %}

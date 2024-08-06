@@ -11,6 +11,7 @@ import {
   formatDateAsLocal,
   getCaseNotesIntro,
   getCaseNotesText,
+  shouldShowReportInformation,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -376,4 +377,20 @@ describe('formatDateAsLocal', () => {
   ])('formatDateAsLocal from %s to %s', (input: string, expected: string) => {
     expect(formatDateAsLocal(input)).toEqual(expected)
   })
+})
+
+describe('shouldShowReportInformation', () => {
+  it.each([
+    [undefined, undefined, false],
+    [null, null, false],
+    [true, true, true],
+    [true, false, false],
+    [false, false, true],
+    [false, true, true],
+  ])(
+    'shouldShowReportInformation(%s, %s) to %s',
+    (assessmentRequired: boolean, preReleaseSubmitted: boolean, expected: boolean) => {
+      expect(shouldShowReportInformation(assessmentRequired, preReleaseSubmitted)).toEqual(expected)
+    },
+  )
 })

@@ -13,7 +13,7 @@ export const formatAssessmentResponse = (userInput: ResettlementReportUserInput)
 
     let checkboxAnswers: string[] = []
     // Check if the value is a string, if so, convert it to an array with a single element
-    if (type === 'CHECKBOX' && answers[0].answer) {
+    if (type === 'CHECKBOX' && answers[0]?.answer) {
       if (typeof answers[0].answer === 'string') {
         checkboxAnswers = [answers[0].answer]
       } else {
