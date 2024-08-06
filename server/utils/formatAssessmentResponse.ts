@@ -66,7 +66,6 @@ export const formatAssessmentResponse = (userInput: ResettlementReportUserInput)
 
   const formattedResponse: SubmittedInput = {
     questionsAndAnswers: filteredQuestionsAndAnswers,
-    version: null,
   }
 
   return formattedResponse

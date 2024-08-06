@@ -20,7 +20,7 @@ export class AssessmentStateService {
   }
 
   async getAssessment(key: StateKey): Promise<SubmittedInput> {
-    return this.store.getAssessment(key.userId, key.prisonerNumber, key.pathway)
+    return (await this.store.getAssessment(key.userId, key.prisonerNumber, key.pathway)) ?? { questionsAndAnswers: [] }
   }
 
   async deleteEditedQuestionList(key: StateKey, pathway: string) {
@@ -140,45 +140,25 @@ export class AssessmentStateService {
     await this.store.setCurrentPage(key.userId, key.prisonerNumber, key.pathway, assessmentPage)
   }
 
-  async initialiseCache(stateKey: StateKey, configVersion: number): Promise<SubmittedInput> {
-    const existingAssessment = await this.getAssessment(stateKey)
-    if (!existingAssessment) {
-      const initialAssessment = {
-        questionsAndAnswers: [],
-        version: configVersion,
-      } as SubmittedInput
-      await this.store.setAssessment(stateKey.userId, stateKey.prisonerNumber, stateKey.pathway, initialAssessment)
-      return initialAssessment
-    }
-    return this.getExistingAssessmentAnsweredQuestions(stateKey)
-  }
-
-  async getExistingAssessmentAnsweredQuestions(stateKey: StateKey): Promise<SubmittedInput> {
-    const existingAssessment = await this.getAssessment(stateKey)
-    if (!existingAssessment) {
-      throw Error('Cannot prepare submission as no assessment found in cache')
-    }
+  async prepareSubmission(stateKey: StateKey): Promise<SubmittedInput> {
+    const assessment = await this.getAssessment(stateKey)
     const answeredQuestions = await this.store.getAnsweredQuestions(
       stateKey.userId,
       stateKey.prisonerNumber,
       stateKey.pathway,
     )
     return {
-      questionsAndAnswers: answeredQuestions.map(id =>
-        existingAssessment.questionsAndAnswers.find(it => it.question === id),
-      ),
-      version: existingAssessment.version,
+      questionsAndAnswers: answeredQuestions.map(id => assessment.questionsAndAnswers.find(it => it.question === id)),
     }
   }
 
-  async startEdit(key: StateKey, assessmentPage: AssessmentPage | undefined, version: number) {
+  async startEdit(key: StateKey, assessmentPage: AssessmentPage | undefined) {
     await this.store.setEditedQuestionList(key.userId, key.prisonerNumber, key.pathway, [])
     if (!assessmentPage) {
       return
     }
     const questionsAndAnswers = {
-      questionsAndAnswers: assessmentPage.questionsAndAnswers?.map(qAndA => toSubmittedQuestionAndAnswer(qAndA)) || [],
-      version,
+      questionsAndAnswers: assessmentPage.questionsAndAnswers.map(qAndA => toSubmittedQuestionAndAnswer(qAndA)),
     }
     await this.store.setAssessment(key.userId, key.prisonerNumber, key.pathway, questionsAndAnswers)
     const questionIds = questionsAndAnswers.questionsAndAnswers.map(qAndA => qAndA.question)
@@ -190,9 +170,7 @@ export class AssessmentStateService {
     existingAssessment: SubmittedInput,
   ): SubmittedQuestionAndAnswer[] {
     // Merge together answers from API and cache
-    const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = existingAssessment
-      ? [...existingAssessment.questionsAndAnswers]
-      : []
+    const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = [...existingAssessment.questionsAndAnswers]
     assessmentPage.questionsAndAnswers.forEach(qAndA => {
       const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
         it => it?.question === qAndA.question.id,

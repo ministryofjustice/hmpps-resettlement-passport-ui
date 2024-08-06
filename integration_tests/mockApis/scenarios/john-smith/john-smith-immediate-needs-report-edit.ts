@@ -1,6 +1,5 @@
 import { stubFor } from '../../wiremock'
 import { responseHeaders, submitHeaders } from '../../headers'
-import { getResettlementAssessmentVersion } from './john-smith'
 
 const profile = () =>
   stubFor({
@@ -209,7 +208,7 @@ const workReadiness = () =>
 const getCheckAnswers = () =>
   stubFor({
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/page/CHECK_ANSWERS?assessmentType=BCST2&version=1',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/page/CHECK_ANSWERS?assessmentType=BCST2',
       method: 'GET',
     },
     response: {
@@ -312,7 +311,7 @@ const getCheckAnswers = () =>
 const getHaveAJobAfterReleasePage = () =>
   stubFor({
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/page/HAVE_A_JOB_AFTER_RELEASE?assessmentType=BCST2&version=1',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/page/HAVE_A_JOB_AFTER_RELEASE?assessmentType=BCST2',
       method: 'GET',
     },
     response: {
@@ -347,7 +346,7 @@ const getHaveAJobAfterReleasePage = () =>
 const nextPageJobAfterReleasePage = () =>
   stubFor({
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/next-page?version=1&assessmentType=BCST2&currentPage=HAVE_A_JOB_AFTER_RELEASE',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/next-page?assessmentType=BCST2&currentPage=HAVE_A_JOB_AFTER_RELEASE',
       method: 'POST',
       bodyPatterns: [
         {
@@ -370,7 +369,7 @@ const nextPageJobAfterReleasePage = () =>
 const helpContactingEmployerQuestion = () =>
   stubFor({
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/page/HELP_CONTACTING_EMPLOYER?assessmentType=BCST2&version=1',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/page/HELP_CONTACTING_EMPLOYER?assessmentType=BCST2',
       method: 'GET',
     },
     response: {
@@ -405,7 +404,7 @@ const helpContactingEmployerQuestion = () =>
 const nextPageHelpContactingEmployerQuestion = () =>
   stubFor({
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/next-page?version=1&assessmentType=BCST2&currentPage=HELP_CONTACTING_EMPLOYER',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/next-page?assessmentType=BCST2&currentPage=HELP_CONTACTING_EMPLOYER',
       method: 'POST',
       bodyPatterns: [
         {
@@ -428,7 +427,7 @@ const nextPageHelpContactingEmployerQuestion = () =>
 const inEducationOrTrainingQuestion = () =>
   stubFor({
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/page/IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY?assessmentType=BCST2&version=1',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/page/IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY?assessmentType=BCST2',
       method: 'GET',
     },
     response: {
@@ -525,7 +524,6 @@ const submitEdit = () => {
                 questionType: 'RADIO',
               },
             ],
-            version: 1,
           }),
           ignoreArrayOrder: true,
         },
@@ -553,6 +551,5 @@ const johnSmithImmediateNeedsReportEdit = () => [
   nextPageHelpContactingEmployerQuestion(),
   inEducationOrTrainingQuestion(),
   submitEdit(),
-  getResettlementAssessmentVersion('EDUCATION_SKILLS_AND_WORK', 'BCST2'),
 ]
 export default johnSmithImmediateNeedsReportEdit
