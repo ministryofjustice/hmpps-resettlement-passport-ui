@@ -291,6 +291,29 @@ const stubGetOtp = () =>
     },
   })
 
+const stubDocumentUploadSuccess = () =>
+  stubFor({
+    request: {
+      method: 'POST',
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/documents/upload?category=LICENCE_CONDITIONS`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: {
+        value: {
+          id: 1,
+          prisonerId: 1,
+          originalDocumentKey: 'A8731DY_0c1307a5-c02c-4ff6-8af4-ea84079da7ba',
+          htmlDocumentKey: 'ebcb4676-b4b4-4f1e-92f7-e41bff1c99df',
+          creationDate: '2024-07-29T14:03:05.093319',
+          category: 'LICENCE_CONDITIONS',
+          originalDocumentFileName: 'licence-conditions.pdf',
+        },
+      },
+    },
+  })
+
 const stubAssessmentSummary = ({
   nomsId,
   status,
@@ -442,4 +465,6 @@ export default {
   stubJohnSmithStatusUpdateFailure,
   stubJohnSmithWatchlistFilterResults,
   stubDefaultSearchResults,
+  stubJohnSmithDefaults: () => Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails()]),
+  stubDocumentUploadSuccess,
 }
