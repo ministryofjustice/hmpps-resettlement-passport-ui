@@ -167,7 +167,7 @@ export class AssessmentStateService {
       questionsAndAnswers: answeredQuestions.map(id =>
         existingAssessment.questionsAndAnswers.find(it => it.question === id),
       ),
-      version: existingAssessment.version,
+      version: existingAssessment.version || 1,
     }
   }
 

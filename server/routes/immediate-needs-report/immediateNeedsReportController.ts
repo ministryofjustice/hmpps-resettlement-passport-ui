@@ -106,7 +106,7 @@ export default class ImmediateNeedsReportController {
         dataToSubmit as SubmittedInput,
         currentPageId,
         assessmentType,
-        existingAssessment.version,
+        existingAssessment.version || 1,
       )
 
       if (validationErrors) {
@@ -160,7 +160,7 @@ export default class ImmediateNeedsReportController {
         pathway as string,
         currentPageId,
         assessmentType,
-        existingAssessment.version,
+        existingAssessment.version || 1,
       )
 
       if (assessmentPage.error) {
