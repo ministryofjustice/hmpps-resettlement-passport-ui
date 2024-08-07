@@ -1,6 +1,6 @@
 export type EnumValue = { name: string; url?: string; description?: string; color?: string }
 
-export const PATHWAY_DICTIONARY: { [key: string]: EnumValue } = {
+export const PATHWAY_DICTIONARY = {
   ACCOMMODATION: {
     name: 'Accommodation',
     url: 'accommodation',

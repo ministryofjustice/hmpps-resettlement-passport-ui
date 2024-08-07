@@ -5,7 +5,12 @@ import { EducationSkillsWorkResponse } from '../data/model/educationSkillsWorkRe
 import logger from '../../logger'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
-import { AssessmentPage, NextPage, SubmittedInput } from '../data/model/immediateNeedsReport'
+import {
+  AssessmentPage,
+  NextPage,
+  ResettlementAssessmentVersion,
+  SubmittedInput,
+} from '../data/model/immediateNeedsReport'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
 import { AssessmentsInformation, AssessmentSkipRequest, AssessmentType } from '../data/model/assessmentInformation'
 import { Appointments } from '../data/model/appointment'
@@ -131,12 +136,18 @@ export default class RpService {
     return getEducationSkillsWork
   }
 
-  async getAssessmentPage(prisonerId: string, pathway: string, pageId: string, assessmentType: AssessmentType) {
+  async getAssessmentPage(
+    prisonerId: string,
+    pathway: string,
+    pageId: string,
+    assessmentType: AssessmentType,
+    version: number,
+  ) {
     let assessmentPage
     const client = this.createClient()
     try {
       assessmentPage = (await client.get(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=${assessmentType}`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=${assessmentType}&version=${version}`,
       )) as AssessmentPage
     } catch (err) {
       logger.warn(
@@ -158,12 +169,13 @@ export default class RpService {
     questionsAndAnswers: SubmittedInput,
     currentPageId: string,
     assessmentType: AssessmentType,
+    version: number,
   ) {
     let nextQuestion
     const client = this.createClient()
     try {
       nextQuestion = (await client.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?assessmentType=${assessmentType}${
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/next-page?version=${version}&assessmentType=${assessmentType}${
           currentPageId ? `&currentPage=${currentPageId}` : ''
         }`,
         questionsAndAnswers,
@@ -399,5 +411,13 @@ export default class RpService {
     return this.createClient().getImageAsBase64String(
       `/resettlement-passport/prisoner/${prisonerNumber}/image/${facialImageId}`,
     )
+  }
+
+  async getLatestAssessmentVersion(prisonerNumber: string, assessmentType: string, pathway: string) {
+    return (
+      (await this.createClient().get(
+        `/resettlement-passport/prisoner/${prisonerNumber}/resettlement-assessment/${pathway}/version?assessmentType=${assessmentType}`,
+      )) as ResettlementAssessmentVersion
+    ).version
   }
 }
