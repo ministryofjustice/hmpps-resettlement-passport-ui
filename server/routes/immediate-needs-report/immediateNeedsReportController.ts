@@ -149,7 +149,7 @@ export default class ImmediateNeedsReportController {
 
       // If this is not an edit (inc. a resettlement plan), ensure there are nothing in the cache for editedQuestionList
       if (!(edit || assessmentType === 'RESETTLEMENT_PLAN')) {
-        await this.assessmentStateService.deleteEditedQuestionList(stateKey, pathway)
+        await this.assessmentStateService.deleteEditedQuestionList(stateKey)
       }
 
       const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
