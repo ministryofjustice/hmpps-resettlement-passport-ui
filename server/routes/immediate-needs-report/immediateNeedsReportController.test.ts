@@ -108,8 +108,8 @@ describe('getFirstPage', () => {
       version: null,
     }
 
-    jest.spyOn(rpService, 'getLatestAssessmentVersion').mockResolvedValue(2)
-    jest.spyOn(assessmentStateService, 'initialiseCache').mockResolvedValue(submission)
+    const getLatestAssessmentVersionSpy = jest.spyOn(rpService, 'getLatestAssessmentVersion').mockResolvedValue(2)
+    const initialiseCacheSpy = jest.spyOn(assessmentStateService, 'initialiseCache').mockResolvedValue(submission)
     const fetchNextPageSpy = jest.spyOn(rpService, 'fetchNextPage').mockResolvedValue({ nextPageId: 'PAGE_ID' })
 
     await request(app)
@@ -121,6 +121,15 @@ describe('getFirstPage', () => {
         )
       })
 
+    expect(getLatestAssessmentVersionSpy).toHaveBeenCalledWith('123', 'BCST2', 'ACCOMMODATION')
+    expect(initialiseCacheSpy).toHaveBeenCalledWith(
+      {
+        prisonerNumber: '123',
+        userId: 'user1',
+        pathway: 'ACCOMMODATION',
+      },
+      2,
+    )
     expect(fetchNextPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', submission, 'page1', 'BCST2', 1)
   })
 })
