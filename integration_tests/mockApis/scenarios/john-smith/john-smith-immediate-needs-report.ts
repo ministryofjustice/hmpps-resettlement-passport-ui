@@ -265,7 +265,7 @@ const supportRequirementsPage = () =>
     name: 'John Smith Support requirements Page',
     request: {
       method: 'GET',
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/SUPPORT_REQUIREMENTS?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/SUPPORT_REQUIREMENTS?assessmentType=BCST2&version=1',
     },
     response: {
       status: 200,
@@ -300,7 +300,7 @@ const nextPageSupportRequirements = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Health Assessment Next Page Support requirements',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?assessmentType=BCST2&currentPage=SUPPORT_REQUIREMENTS',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?version=1&assessmentType=BCST2&currentPage=SUPPORT_REQUIREMENTS',
       method: 'POST',
       bodyPatterns: [
         {
