@@ -382,23 +382,24 @@ describe('saveAnswerAndGetNextPage', () => {
         )
       })
 
-    expect(getCurrentPageSpy).toHaveBeenCalledWith({
+    const stateKey = {
       prisonerNumber: '123',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
-    })
+    }
 
-    expect(getAssessmentSpy).toHaveBeenCalledWith({
-      prisonerNumber: '123',
-      userId: 'user1',
-      pathway: 'ACCOMMODATION',
-    })
+    expect(getCurrentPageSpy).toHaveBeenCalledWith(stateKey)
 
-    expect(fetchNextPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', submission, 'PAGE_1', 'BCST2', 1)
-    expect(answerSpy).toHaveBeenCalledWith(
-      { prisonerNumber: '123', userId: 'user1', pathway: 'ACCOMMODATION' },
+    expect(getAssessmentSpy).toHaveBeenCalledWith(stateKey)
+
+    expect(fetchNextPageSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
       submission,
-      false,
+      'PAGE_1',
+      'BCST2',
+      1,
     )
+    expect(answerSpy).toHaveBeenCalledWith(stateKey, submission, false)
   })
 })
