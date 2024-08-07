@@ -31,16 +31,16 @@ afterEach(() => {
   jest.resetAllMocks()
 })
 
-describe('completeAssessment', () => {
-  function stubPrisonerDetails() {
-    jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
-      personalDetails: {
-        prisonerNumber: '123',
-        facialImageId: '456',
-      } as unknown as PersonalDetails,
-    } as unknown as PrisonerData)
-  }
+function stubPrisonerDetails() {
+  jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
+    personalDetails: {
+      prisonerNumber: '123',
+      facialImageId: '456',
+    } as unknown as PersonalDetails,
+  } as unknown as PrisonerData)
+}
 
+describe('completeAssessment', () => {
   it('should submit the assessment to the backend then redirect to the task list', async () => {
     stubPrisonerDetails()
 
@@ -54,7 +54,7 @@ describe('completeAssessment', () => {
           questionType: 'RADIO',
         },
       ],
-      version: null,
+      version: 1,
     }
     jest.spyOn(assessmentStateService, 'getExistingAssessmentAnsweredQuestions').mockResolvedValue(submission)
 
@@ -88,5 +88,39 @@ describe('completeAssessment', () => {
       })
 
     expect(completeAssessmentSpy).toHaveBeenCalledTimes(0)
+  })
+})
+
+describe('getFirstPage', () => {
+  it('Uses default version 1 when there is no version in the cache', async () => {
+    stubPrisonerDetails()
+
+    const submission: SubmittedInput = {
+      questionsAndAnswers: [
+        {
+          question: '1',
+          answer: { answer: 'YES', '@class': 'StringAnswer', displayText: 'Yes' },
+          pageId: 'page1',
+          questionTitle: 'question',
+          questionType: 'RADIO',
+        },
+      ],
+      version: null,
+    }
+
+    jest.spyOn(rpService, 'getLatestAssessmentVersion').mockResolvedValue(2)
+    jest.spyOn(assessmentStateService, 'initialiseCache').mockResolvedValue(submission)
+    const fetchNextPageSpy = jest.spyOn(rpService, 'fetchNextPage').mockResolvedValue({ nextPageId: 'PAGE_ID' })
+
+    await request(app)
+      .get('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=123')
+      .expect(302)
+      .expect(res => {
+        expect(res.text).toContain(
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_ID?prisonerNumber=123&type=BCST2',
+        )
+      })
+
+    expect(fetchNextPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', submission, 'page1', 'BCST2', 1)
   })
 })
