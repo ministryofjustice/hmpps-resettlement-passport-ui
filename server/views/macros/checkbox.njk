@@ -7,7 +7,7 @@
       {% if multipleQuestionsOnPage %}
         <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
       {% endif %}
-      <div id="waste-hint" class="govuk-hint">Select all that apply.</div>
+      <div id="waste-hint" class="govuk-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     {% if validationError %}
       {{ validationErrorMessage(validationError.validationType)  }}
     {% endif %}

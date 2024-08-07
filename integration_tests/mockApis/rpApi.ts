@@ -43,6 +43,7 @@ import {
   stubJohnSmithStatusUpdateSuccess,
 } from './scenarios/john-smith/john-smith-status-update'
 import { defaultPrisonersSearch, prisonersSearchWithWatchlist } from './scenarios/prisonersSearch'
+import { johnSmithCheckbox } from './scenarios/john-smith/john-smith-checkbox'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -409,6 +410,17 @@ const stubJohnSmithWatchlistFilterResults = () =>
   Promise.all([...johnSmithDefaults(), prisonersSearchWithWatchlist(), defaultPrisonersSearch()])
 const stubDefaultSearchResults = () => Promise.all([...johnSmithDefaults(), defaultPrisonersSearch()])
 
+const stubJohnSmithCheckBox = () => {
+  return Promise.all([
+    ...johnSmithDefaults(),
+    stubJohnSmithPrisonerDetailsPreRelease(),
+    johnSmithTaskList(),
+    johnSmithTaskListAfterComplete(),
+    johnSmithAccommodationNextPage1(),
+    johnSmithCheckbox(),
+  ])
+}
+
 export default {
   stubGetPrisoners,
   stubGetAppointments,
@@ -441,4 +453,5 @@ export default {
   stubJohnSmithStatusUpdateFailure,
   stubJohnSmithWatchlistFilterResults,
   stubDefaultSearchResults,
+  stubJohnSmithCheckBox,
 }
