@@ -9,17 +9,6 @@ context('Check-box', () => {
     cy.task('stubJohnSmithCheckBox')
     cy.signIn()
 
-    // Intercept the API call and log the response
-    cy.intercept(
-      'GET',
-      '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE?assessmentType=RESETTLEMENT_PLAN',
-      req => {
-        req.continue(res => {
-          console.log(res.body)
-        })
-      },
-    )
-
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=RESETTLEMENT_PLAN')
 
     // Click Accommodation link
