@@ -12,7 +12,7 @@ context('Check-box', () => {
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=RESETTLEMENT_PLAN')
 
     // Click Accommodation link
-    cy.get(':nth-child(1) > .govuk-table__header > a').click()
+    cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
     // Should be on the Accommodation pathway page
     cy.get('.govuk-heading-l').should('have.text', 'Where did the person in prison live before custody?')

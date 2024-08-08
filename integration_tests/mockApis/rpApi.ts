@@ -43,7 +43,7 @@ import {
   stubJohnSmithStatusUpdateSuccess,
 } from './scenarios/john-smith/john-smith-status-update'
 import { defaultPrisonersSearch, prisonersSearchWithWatchlist } from './scenarios/prisonersSearch'
-import { johnSmithCheckbox } from './scenarios/john-smith/john-smith-checkbox'
+import { johnSmithCheckbox, johnSmithCheckboxReportVersion } from './scenarios/john-smith/john-smith-checkbox'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -419,6 +419,7 @@ const stubJohnSmithCheckBox = () => {
     johnSmithTaskListAfterComplete(),
     johnSmithAccommodationNextPage1(),
     johnSmithCheckbox(),
+    johnSmithCheckboxReportVersion(),
   ])
 }
 
