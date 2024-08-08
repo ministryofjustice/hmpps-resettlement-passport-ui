@@ -5,7 +5,7 @@ export const johnSmithCheckbox = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_page_where_did_they_live',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE?assessmentType=RESETTLEMENT_PLAN',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/WHERE_DID_THEY_LIVE?assessmentType=RESETTLEMENT_PLAN&version=1',
       method: 'GET',
     },
     response: {
@@ -44,6 +44,22 @@ export const johnSmithCheckbox = () =>
             originalPageId: 'WHERE_DID_THEY_LIVE',
           },
         ],
+      },
+      headers: responseHeaders,
+    },
+  })
+
+export const johnSmithCheckboxReportVersion = () =>
+  stubFor({
+    name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_page_where_did_they_live',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/version?assessmentType=RESETTLEMENT_PLAN',
+      method: 'GET',
+    },
+    response: {
+      status: 200,
+      jsonBody: {
+        version: 1,
       },
       headers: responseHeaders,
     },
