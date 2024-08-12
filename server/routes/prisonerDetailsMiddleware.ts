@@ -3,6 +3,7 @@ import { PrisonerData } from '../@types/express'
 import logger from '../../logger'
 import { Services } from '../services'
 import RpService from '../services/rpService'
+import { shouldShowReportInformation } from '../utils/utils'
 
 export async function getPrisonerImage(
   rpService: RpService,
@@ -45,6 +46,10 @@ export default function prisonerDetailsMiddleware({ rpService }: Services) {
       }
 
       prisonerData.prisonerImage = await getPrisonerImage(rpService, prisonerData, prisonerNumber)
+      prisonerData.showReportInformation = shouldShowReportInformation(
+        prisonerData?.assessmentRequired,
+        prisonerData?.preReleaseSubmitted,
+      )
 
       // RP2-490 If the prisoner's prison does not match the user's caseload then we need to treat this as not found
       if (

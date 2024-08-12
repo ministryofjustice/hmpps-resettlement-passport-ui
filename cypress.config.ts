@@ -9,7 +9,7 @@ import auth from './integration_tests/mockApis/auth'
 import tokenVerification from './integration_tests/mockApis/tokenVerification'
 import nomisUserRolesApi from './integration_tests/mockApis/nomisUserRolesApi'
 import rpApi from './integration_tests/mockApis/rpApi'
-import { resetRedisCache } from './integration_tests/mockApis/redis'
+import { initRedisCacheForNullExistingAssessment, resetRedisCache } from './integration_tests/mockApis/redis'
 
 const flagFilePath = './localstack/flags.json'
 const flagRestoreFilePath = './integration_tests/flags.restore.json'
@@ -62,6 +62,7 @@ export default defineConfig({
     setupNodeEvents(on) {
       on('task', {
         reset: () => Promise.all([resetStubs(), resetRedisCache()]),
+        initRedisCacheForNullExistingAssessment: () => initRedisCacheForNullExistingAssessment(),
         ...auth,
         ...nomisUserRolesApi,
         ...rpApi,

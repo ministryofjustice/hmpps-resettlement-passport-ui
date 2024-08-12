@@ -255,6 +255,66 @@ const nextPageHealthcareTeam = () =>
       status: 200,
       headers: responseHeaders,
       jsonBody: {
+        nextPageId: 'SUPPORT_REQUIREMENTS',
+      },
+    },
+  })
+
+const supportRequirementsPage = () =>
+  stubFor({
+    name: 'John Smith Support requirements Page',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/SUPPORT_REQUIREMENTS?assessmentType=BCST2&version=1',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'SUPPORT_REQUIREMENTS',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'SUPPORT_REQUIREMENTS',
+              title: 'Support needs',
+              subTitle: null,
+              type: 'CHECKBOX',
+              options: [
+                { id: 'NEED_1', displayText: 'Need 1', description: null, exclusive: false },
+                { id: 'NEED_2', displayText: 'Need 2', description: null, exclusive: false },
+                { id: 'NEED_3', displayText: 'Need 3', description: null, exclusive: false },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'SUPPORT_REQUIREMENTS',
+          },
+        ],
+      },
+    },
+  })
+
+const nextPageSupportRequirements = () =>
+  stubFor({
+    name: 'JohnSmith immediate needs report Health Assessment Next Page Support requirements',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/next-page?version=1&assessmentType=BCST2&currentPage=SUPPORT_REQUIREMENTS',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'SUPPORT_REQUIREMENTS',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
         nextPageId: 'ASSESSMENT_SUMMARY',
       },
     },
@@ -397,6 +457,17 @@ const submitAssessment = () => {
                 question: 'MEET_HEALTHCARE_TEAM',
                 questionTitle: 'Does the person in prison want to meet with a prison healthcare team?',
                 questionType: 'RADIO',
+              },
+              {
+                answer: {
+                  '@class': 'ListAnswer',
+                  answer: ['NEED_2'],
+                  displayText: ['Need 2'],
+                },
+                pageId: 'SUPPORT_REQUIREMENTS',
+                question: 'SUPPORT_REQUIREMENTS',
+                questionTitle: 'Support needs',
+                questionType: 'CHECKBOX',
               },
               {
                 answer: {
@@ -949,6 +1020,8 @@ export const johnSmithImmediateNeedsReportHealth = (): SuperAgentRequest[] => [
   nextPageHealth(),
   meetHealthCareTeamPage(),
   nextPageHealthcareTeam(),
+  supportRequirementsPage(),
+  nextPageSupportRequirements(),
   assessmentSummaryPage('HEALTH', 'Health'),
   nextPageSummary('HEALTH'),
   checkAnswersPage('HEALTH'),

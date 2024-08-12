@@ -23,8 +23,8 @@ export class AssessmentStateService {
     return this.store.getAssessment(key.userId, key.prisonerNumber, key.pathway)
   }
 
-  async deleteEditedQuestionList(key: StateKey, pathway: string) {
-    await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, pathway)
+  async deleteEditedQuestionList(key: StateKey) {
+    await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, key.pathway)
   }
 
   async answer(key: StateKey, answer: SubmittedInput, edit: boolean = false) {
@@ -167,7 +167,7 @@ export class AssessmentStateService {
       questionsAndAnswers: answeredQuestions.map(id =>
         existingAssessment.questionsAndAnswers.find(it => it.question === id),
       ),
-      version: existingAssessment.version,
+      version: existingAssessment.version || 1,
     }
   }
 

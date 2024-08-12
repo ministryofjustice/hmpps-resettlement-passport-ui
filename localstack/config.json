@@ -2,20 +2,20 @@
   "reports": {
     "immediateNeedsVersion": {
       "ACCOMMODATION": 2,
-      "ATTITUDES_THINKING_AND_BEHAVIOUR": 1,
+      "ATTITUDES_THINKING_AND_BEHAVIOUR": 2,
       "CHILDREN_FAMILIES_AND_COMMUNITY": 1,
       "DRUGS_AND_ALCOHOL": 1,
       "EDUCATION_SKILLS_AND_WORK": 1,
-      "FINANCE_AND_ID": 1,
+      "FINANCE_AND_ID": 2,
       "HEALTH": 1
     },
     "preReleaseVersion": {
       "ACCOMMODATION": 2,
-      "ATTITUDES_THINKING_AND_BEHAVIOUR": 1,
+      "ATTITUDES_THINKING_AND_BEHAVIOUR": 2,
       "CHILDREN_FAMILIES_AND_COMMUNITY": 1,
       "DRUGS_AND_ALCOHOL": 1,
       "EDUCATION_SKILLS_AND_WORK": 1,
-      "FINANCE_AND_ID": 1,
+      "FINANCE_AND_ID": 2,
       "HEALTH": 1
     }
   }

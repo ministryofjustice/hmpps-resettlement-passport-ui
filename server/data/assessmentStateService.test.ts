@@ -18,12 +18,16 @@ describe('assessmentStateService', () => {
   let assessmentStateService: AssessmentStateService
   let setAssessmentSpy: jest.SpyInstance
   let setAnsweredQuestionSpy: jest.SpyInstance
+  let getAnsweredQuestionsSpy: jest.SpyInstance
+  let getAssessmentSpy: jest.SpyInstance
 
   beforeEach(() => {
     store = new AssessmentStore(createRedisClient()) as jest.Mocked<AssessmentStore>
     assessmentStateService = new AssessmentStateService(store as AssessmentStore)
     setAssessmentSpy = jest.spyOn(store, 'setAssessment')
     setAnsweredQuestionSpy = jest.spyOn(store, 'setAnsweredQuestions')
+    getAnsweredQuestionsSpy = jest.spyOn(store, 'getAnsweredQuestions')
+    getAssessmentSpy = jest.spyOn(store, 'getAssessment')
   })
 
   afterEach(() => {
@@ -565,6 +569,50 @@ describe('assessmentStateService', () => {
         version: configVersion,
       } as SubmittedInput
 
+      expect(assessment).toEqual(expectedAssessment)
+    })
+  })
+
+  describe('getExistingAssessmentAnsweredQuestions', () => {
+    it('If cache does not contain version, return default version 1', async () => {
+      const stateKey = {
+        prisonerNumber: 'ABC1234',
+        userId: 'D126HJ',
+        pathway: 'ACCOMMODATION',
+      }
+
+      store.getAssessment.mockResolvedValue({
+        questionsAndAnswers: [
+          {
+            question: 'HELP_TO_MANAGE_ANGER',
+            questionTitle: 'Does the person in prison want support managing their emotions?',
+            pageId: 'HELP_TO_MANAGE_ANGER',
+            questionType: 'RADIO',
+            answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+          },
+        ],
+        version: undefined,
+      })
+
+      store.getAnsweredQuestions.mockResolvedValueOnce(['HELP_TO_MANAGE_ANGER'])
+
+      const assessment = await assessmentStateService.getExistingAssessmentAnsweredQuestions(stateKey)
+
+      const expectedAssessment = {
+        questionsAndAnswers: [
+          {
+            question: 'HELP_TO_MANAGE_ANGER',
+            questionTitle: 'Does the person in prison want support managing their emotions?',
+            pageId: 'HELP_TO_MANAGE_ANGER',
+            questionType: 'RADIO',
+            answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+          },
+        ],
+        version: 1,
+      } as SubmittedInput
+
+      expect(getAssessmentSpy).toHaveBeenCalledWith(stateKey.userId, stateKey.prisonerNumber, stateKey.pathway)
+      expect(getAnsweredQuestionsSpy).toHaveBeenCalledWith(stateKey.userId, stateKey.prisonerNumber, stateKey.pathway)
       expect(assessment).toEqual(expectedAssessment)
     })
   })

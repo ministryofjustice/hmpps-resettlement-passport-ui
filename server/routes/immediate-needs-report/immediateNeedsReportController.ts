@@ -60,7 +60,7 @@ export default class ImmediateNeedsReportController {
         existingInput,
         currentPageId,
         assessmentType,
-        existingInput.version,
+        existingInput.version || 1,
       )
 
       const { nextPageId } = nextPage
@@ -106,7 +106,7 @@ export default class ImmediateNeedsReportController {
         dataToSubmit as SubmittedInput,
         currentPageId,
         assessmentType,
-        existingAssessment.version,
+        existingAssessment.version || 1,
       )
 
       if (validationErrors) {
@@ -149,7 +149,7 @@ export default class ImmediateNeedsReportController {
 
       // If this is not an edit (inc. a resettlement plan), ensure there are nothing in the cache for editedQuestionList
       if (!(edit || assessmentType === 'RESETTLEMENT_PLAN')) {
-        await this.assessmentStateService.deleteEditedQuestionList(stateKey, pathway)
+        await this.assessmentStateService.deleteEditedQuestionList(stateKey)
       }
 
       const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
@@ -160,7 +160,7 @@ export default class ImmediateNeedsReportController {
         pathway as string,
         currentPageId,
         assessmentType,
-        existingAssessment.version,
+        existingAssessment.version || 1,
       )
 
       if (assessmentPage.error) {
@@ -299,7 +299,7 @@ export default class ImmediateNeedsReportController {
       const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
 
       // We need to know what version to us in the edit - if the cache is empty there should be something in the database.
-      const versionFromCache = existingAssessment?.version
+      const versionFromCache = existingAssessment?.version || 1
       const versionFromDatabase = await this.rpService.getLatestAssessmentVersion(
         prisonerNumber,
         assessmentType,
