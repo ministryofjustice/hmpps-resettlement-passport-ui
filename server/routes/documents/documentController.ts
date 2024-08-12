@@ -16,7 +16,14 @@ export default class DocumentController {
         this.documentService
           .upload(prisonerNumber, documentType, info.filename, file)
           .then(() => res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#licence-summary`))
-          .catch(err => next(err))
+          .catch(err => {
+            console.log(err.message)
+            if (err.message?.includes('Unsupported document format')) {
+              res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}&uploadError=badFormat#licence-summary`)
+            } else {
+              next(err)
+            }
+          })
       }
     })
     bb.on('error', err => next(err))

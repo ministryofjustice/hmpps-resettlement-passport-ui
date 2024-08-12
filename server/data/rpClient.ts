@@ -45,3 +45,8 @@ export default class RPClient {
     })
   }
 }
+
+export type RPError = {
+  status: number
+  userMessage: string
+}

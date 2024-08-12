@@ -36,4 +36,18 @@ context('Document upload', () => {
       expect(requests[0].body).to.contain('file contents')
     })
   })
+
+  it('shows error page when document upload fails', () => {
+    cy.task('stubDocumentUploadFailure')
+    cy.signIn()
+    cy.visit('prisoner-overview?prisonerNumber=A8731DY')
+
+    cy.get('#file').selectFile({
+      contents: Cypress.Buffer.from('file contents'),
+      fileName: 'file.dunno',
+      mimeType: 'who-knows',
+      lastModified: Date.now(),
+    })
+    cy.get('[data-cy="submit"]').click()
+  })
 })

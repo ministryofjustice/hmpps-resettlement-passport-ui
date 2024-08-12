@@ -1,6 +1,7 @@
 import { minutesToMilliseconds } from 'date-fns'
 import config from '../config'
 import { currentUser } from '../middleware/userContextMiddleware'
+import { RPError } from '../data/rpClient'
 
 const chunkSize = 500
 
@@ -64,8 +65,8 @@ export default class DocumentService {
       },
     )
     if (!response.ok) {
-      await response.json()
-      throw new Error(`Upload failed`)
+      const errorResponse: RPError = await response.json()
+      throw new Error(errorResponse.userMessage)
     }
   }
 }

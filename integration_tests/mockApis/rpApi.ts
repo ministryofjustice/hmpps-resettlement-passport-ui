@@ -313,6 +313,21 @@ const stubDocumentUploadSuccess = () =>
       },
     },
   })
+const stubDocumentUploadFailure = () =>
+  stubFor({
+    request: {
+      method: 'POST',
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/documents/upload?category=LICENCE_CONDITIONS`,
+    },
+    response: {
+      status: 400,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: {
+        status: 400,
+        userMessage: 'Unsupported document format',
+      },
+    },
+  })
 
 const stubAssessmentSummary = ({
   nomsId,
@@ -467,4 +482,5 @@ export default {
   stubDefaultSearchResults,
   stubJohnSmithDefaults: () => Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails()]),
   stubDocumentUploadSuccess,
+  stubDocumentUploadFailure,
 }
