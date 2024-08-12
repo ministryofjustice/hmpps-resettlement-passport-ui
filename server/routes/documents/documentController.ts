@@ -17,7 +17,6 @@ export default class DocumentController {
           .upload(prisonerNumber, documentType, info.filename, file)
           .then(() => res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#licence-summary`))
           .catch(err => {
-            console.log(err.message)
             if (err.message?.includes('Unsupported document format')) {
               res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}&uploadError=badFormat#licence-summary`)
             } else {
