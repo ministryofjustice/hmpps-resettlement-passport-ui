@@ -1,12 +1,12 @@
 import { RequestHandler } from 'express'
-import RpService from '../../services/rpService'
 import { RPClient } from '../../data'
 import { Appointments } from '../../data/model/appointment'
 import logger from '../../../logger'
 import { ERROR_DICTIONARY } from '../../utils/constants'
+import DocumentService from '../../services/documentService'
 
 export default class PrisonerOverviewController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly documentService: DocumentService) {
     // no op
   }
 
@@ -25,17 +25,20 @@ export default class PrisonerOverviewController {
         caseNotesResult,
         staffContactsResult,
         appointmentsResult,
+        documentsResult,
       ] = await Promise.allSettled([
         rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/licence-condition`),
         rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/scores`),
         rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/rosh`),
-
         rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/mappa`),
         rpClient.get(
           `/resettlement-passport/case-notes/${prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway}`,
         ),
         rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/staff-contacts`),
-        rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`),
+        rpClient
+          .get(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`)
+          .then((a: Appointments) => a.results),
+        this.documentService.getDocumentMeta(prisonerNumber),
       ])
 
       const licenceConditions = extractResultOrError(licenceConditionsResult, 'licence conditions', req)
@@ -44,15 +47,8 @@ export default class PrisonerOverviewController {
       const mappa = extractResultOrError(mappaResult, 'mappa', req)
       const caseNotes = extractResultOrError(caseNotesResult, 'case notes', req)
       const staffContacts = extractResultOrError(staffContactsResult, 'staff contacts', req)
-      let appointments: Appointments
-      if (appointmentsResult.status === 'fulfilled') {
-        appointments = appointmentsResult.value
-      } else if (appointmentsResult.status === 'rejected') {
-        logger.warn(
-          `Session: ${req.sessionID} Cannot retrieve appointments for ${prisonerData.personalDetails.prisonerNumber} ${appointmentsResult.status} ${appointmentsResult.reason}`,
-        )
-        appointments = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
-      }
+      const appointments = extractResultsOrErrorList(appointmentsResult, 'appointments', req)
+      const documents = extractResultsOrErrorList(documentsResult, 'documents', req)
 
       res.render('pages/overview', {
         licenceConditions,
@@ -68,6 +64,7 @@ export default class PrisonerOverviewController {
         selectedPathway,
         staffContacts,
         appointments,
+        documents,
       })
     } catch (err) {
       next(err)
@@ -75,11 +72,11 @@ export default class PrisonerOverviewController {
   }
 }
 
-function extractResultOrError(
+function extractResultOrError<T>(
   result: PromiseSettledResult<unknown>,
   name: string,
   req: Express.Request,
-): { error?: boolean } {
+): { error?: boolean } | T {
   if (result.status === 'fulfilled') {
     return result.value
   }
@@ -90,4 +87,26 @@ function extractResultOrError(
     return { error: true }
   }
   throw new Error('Should be unreachable')
+}
+
+function extractResultsOrErrorList<T>(
+  result: PromiseSettledResult<T[]>,
+  name: string,
+  req: Express.Request,
+): ResultListOrError<T> {
+  if (result.status === 'fulfilled') {
+    return { results: result.value }
+  }
+  if (result.status === 'rejected') {
+    logger.warn(
+      `Session: ${req.sessionID} Cannot retrieve ${name} for ${req.prisonerData.personalDetails.prisonerNumber} ${result.status} ${result.reason}`,
+    )
+    return { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+  }
+  throw new Error('Should be unreachable')
+}
+
+type ResultListOrError<T> = {
+  results?: T[]
+  error?: string
 }

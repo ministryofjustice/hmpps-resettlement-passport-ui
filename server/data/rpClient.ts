@@ -19,8 +19,8 @@ export default class RPClient {
     return Buffer.from(imageByteArray).toString('base64')
   }
 
-  async get(path: string) {
-    return this.restClient.get({
+  async get<T>(path: string) {
+    return this.restClient.get<T>({
       path,
     })
   }

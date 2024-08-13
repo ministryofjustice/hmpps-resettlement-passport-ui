@@ -14,5 +14,9 @@
   {
     "feature": "viewAppointmentsEndUser",
     "enabled": true
+  },
+  {
+    "feature": "uploadDocuments",
+    "enabled": true
   }
 ]

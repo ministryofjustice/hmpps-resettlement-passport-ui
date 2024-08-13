@@ -11,6 +11,7 @@
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% set addAppointmentEnabled = features.ADD_APPOINTMENTS | getFeatureFlag %}
 {% set tasksViewEnabled = features.TASKS_VIEW | getFeatureFlag %}
+{% set uploadDocumentsEnabled = features.UPLOAD_DOCUMENTS | getFeatureFlag %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
@@ -348,6 +349,51 @@
           {% endif %}
         </div>
       </section>
+
+    {% if uploadDocumentsEnabled %}
+        <section id="documents" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Uploaded documents
+                    <span class="govuk-caption-m">Any documents uploaded will be visible to the person when they leave prison.</span>
+                </h3>
+                <span class="right">
+                    <a href="#" style="color: white; text-decoration: none;" class="govuk-button"> Upload document</a>
+                </span>
+            </header>
+
+            {% if documents.error %}
+                <p>{{ errorMessage }}</p>
+            {% elseif documents.results.length === 0 %}
+                <p>No documents have been uploaded</p>
+            {% else %}
+
+                <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+                    <table class="govuk-table">
+                        <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Document name</th>
+                            <th scope="row" class="govuk-table__header">Category</th>
+                            <th scope="row" class="govuk-table__header">Date uploaded</th>
+                            <th scope="row" class="govuk-table__header">Action</th>
+                        </tr>
+                        {% for document in documents.results %}
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">{{ document.fileName }}</td>
+                                <td class="govuk-table__cell">{{ document.category | formatDocumentCategory }}</td>
+                                <td class="govuk-table__cell">TODO date</td>
+                                <td class="govuk-table__cell">
+                                    <a href="#">View document</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </section>
+
+    {% endif %}
       <section id="risk-assessments" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
