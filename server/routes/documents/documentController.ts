@@ -9,6 +9,14 @@ export default class DocumentController {
     // no-op
   }
 
+  viewUploadPage: RequestHandler = (req, res, _): void => {
+    const { prisonerData } = req
+
+    return res.render('pages/upload-documents', {
+      prisonerData,
+    })
+  }
+
   uploadDocument: RequestHandler = (req, res, next): void => {
     const bb = busboy({ headers: req.headers })
     const { prisonerNumber, documentType } = req.params

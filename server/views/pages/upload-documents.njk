@@ -1,0 +1,47 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% set mainClasses = "app-container govuk-body" %}
+{% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-l">Upload a document</h1>
+      <p>You can upload original documents or scans.</p>
+      <p>
+        Any documents uploaded will be available to James South in the Plan your future service after leaving prison.
+      </p>
+    </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form
+        action="/document/{{ prisonerNumber }}/licence-conditions?_csrf={{ csrfToken }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="sort"> Category</label>
+          <select class="govuk-select" id="sort" name="sort">
+            <option value="licence-conditions" selected>Licence conditions</option>
+          </select>
+        </div>
+        <div class="govuk-form-group">
+          <div>
+            <label id="label" class="govuk-label" for="document">Upload a file</label>
+            <input id="file" type="file" name="file" class="govuk-file-upload" />
+          </div>
+        </div>
+
+        {{
+          govukButton({
+          text: "Continue",
+          preventDoubleClick: true,
+          attributes: {
+          "data-cy": "submit"
+          }
+          })
+        }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,6 +1,5 @@
 {% extends "../partials/layout.njk" %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {% from "../macros/pagination.njk" import pagination %}
 {%from "../macros/preReleaseRequired.njk" import preReleaseRequired %}
@@ -284,24 +283,6 @@
 
 
       <section id="licence-summary" class="app-summary-card govuk-!-margin-bottom-8">
-      <div>
-          <form action="/document/{{ prisonerNumber }}/licence-conditions?_csrf={{ csrfToken }}" method="post" enctype="multipart/form-data">
-              <div>
-                  <div>
-                      <label id="label" class="govuk-label" for="document">Upload a file</label>
-                      <input id="file" type="file" name="file" class="govuk-file-upload"/>
-                  </div>
-              </div>
-
-           {{ govukButton({
-                  text: "Upload",
-                  preventDoubleClick: true,
-                  attributes: {
-                      "data-cy": "submit"
-                  }
-              }) }}
-          </form>
-        </div>
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
             Licence conditions<span class="govuk-caption-m">Data sourced from CVL</span>
@@ -358,7 +339,7 @@
                     <span class="govuk-caption-m">Any documents uploaded will be visible to the person when they leave prison.</span>
                 </h3>
                 <span class="right">
-                    <a href="#" style="color: white; text-decoration: none;" class="govuk-button"> Upload document</a>
+                    <a href="/upload-documents?prisonerNumber={{ prisonerNumber }}" class="govuk-button"> Upload document</a>
                 </span>
             </header>
 
