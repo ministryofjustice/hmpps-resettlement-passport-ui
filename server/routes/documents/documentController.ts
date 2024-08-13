@@ -1,6 +1,8 @@
 import { RequestHandler } from 'express'
 import busboy from 'busboy'
 import DocumentService from '../../services/documentService'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class DocumentController {
   constructor(private readonly documentService: DocumentService) {
@@ -27,5 +29,25 @@ export default class DocumentController {
     })
     bb.on('error', err => next(err))
     req.pipe(bb)
+  }
+
+  viewDocument: RequestHandler = async (req, res, next) => {
+    try {
+      if (!(await getFeatureFlagBoolean(FEATURE_FLAGS.UPLOAD_DOCUMENTS))) {
+        return res.redirect('/')
+      }
+
+      const { prisonerNumber, documentType } = req.params
+
+      const docResponse = await this.documentService.downloadDocument(prisonerNumber, documentType)
+      res.setHeader('Content-Type', 'application/pdf')
+
+      for await (const chunk of docResponse) {
+        res.write(chunk)
+      }
+      return res.end()
+    } catch (err) {
+      return next(err)
+    }
   }
 }

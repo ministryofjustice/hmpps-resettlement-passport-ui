@@ -51,12 +51,8 @@ function buildFormData(filename: string, data: NodeJS.ReadableStream): FormData 
 
 export default class DocumentService {
   async upload(prisonerNumber: string, documentType: string, filename: string, data: NodeJS.ReadableStream) {
-    const type = docTypes[documentType]
     const { token } = currentUser()
-
-    if (!type) {
-      throw new Error(`Unsupported document type "${documentType}"`)
-    }
+    const type = this.readDocumentType(documentType)
     const body = buildFormData(filename, data)
 
     const response = await fetch(
@@ -78,6 +74,14 @@ export default class DocumentService {
     }
   }
 
+  private readDocumentType(documentType: string) {
+    const type = docTypes[documentType]
+    if (!type) {
+      throw new Error(`Unsupported document type "${documentType}"`)
+    }
+    return type
+  }
+
   async getDocumentMeta(nomsId: string): Promise<DocumentMeta[]> {
     const enabled = getFeatureFlagBoolean(FEATURE_FLAGS.UPLOAD_DOCUMENTS)
     if (!enabled) {
@@ -96,6 +100,25 @@ export default class DocumentService {
   createClient() {
     const { token, sessionId, userId } = currentUser()
     return new RPClient(token, sessionId, userId)
+  }
+
+  async downloadDocument(prisonerNumber: string, documentType: string): Promise<ReadableStream<Uint8Array>> {
+    const type = this.readDocumentType(documentType)
+    const { token } = currentUser()
+    const response = await fetch(
+      `${config.apis.rpClient.url}/resettlement-passport/prisoner/${prisonerNumber}/documents/latest/download?category=${type}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        keepalive: true,
+        signal: AbortSignal.timeout(minutesToMilliseconds(5)),
+      },
+    )
+    if (response.ok) {
+      return response.body
+    }
+    throw new Error(`Download failed with ${response.status} ${response.statusText}`)
   }
 }
 
