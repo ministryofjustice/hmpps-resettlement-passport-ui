@@ -44,7 +44,22 @@ context('Pre Release Report', () => {
     getHeading().should('have.text', 'Accommodation report summary')
 
     cy.get('#SUPPORT_NEEDS_PRERELEASE-DONE').should('be.checked')
+
+    // Check if the <details> component is visible
+    cy.get('details.govuk-details').should('be.visible')
+
+    // Verify that the <summary> content is visible initially
+    cy.get('summary.govuk-details__summary').should('be.visible')
+
+    // Click on the <summary> to toggle the visibility of the content
+    cy.get('summary.govuk-details__summary').click()
+
+    // Verify that the content inside <details> is now visible
+    cy.get('details.govuk-details').should('have.attr', 'open')
+    cy.get('details.govuk-details .govuk-details__text').should('be.visible')
+
     cy.get('#CASE_NOTE_SUMMARY').type('Note')
+
     clickContinue()
 
     getHeading().should('have.text', 'Check your answers')

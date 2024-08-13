@@ -310,6 +310,9 @@ export const johnSmithAssessmentSummary = () =>
               type: 'LONG_TEXT',
               options: null,
               validationType: 'MANDATORY',
+              detailsTitle: 'Help with special category data',
+              detailsContent:
+                "Special category data includes any personal data concerning someone's health, sex life or sexual orientation. Or any personal data revealing someone's racial or ethnic origin, religious or philosophical beliefs or trade union membership.",
             },
             answer: null,
             originalPageId: 'PRERELEASE_ASSESSMENT_SUMMARY',
