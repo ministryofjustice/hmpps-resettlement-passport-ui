@@ -329,6 +329,23 @@ const stubDocumentUploadFailure = () =>
       },
     },
   })
+const stubListDocumentsSuccess = () =>
+  stubFor({
+    request: {
+      method: 'GET',
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/documents?category=LICENCE_CONDITIONS`,
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: [
+        {
+          id: 1,
+          fileName: 'conditions.pdf',
+        },
+      ],
+    },
+  })
 
 const stubAssessmentSummary = ({
   nomsId,
@@ -497,4 +514,5 @@ export default {
   stubDocumentUploadSuccess,
   stubDocumentUploadFailure,
   stubJohnSmithCheckBox,
+  stubListDocumentsSuccess,
 }

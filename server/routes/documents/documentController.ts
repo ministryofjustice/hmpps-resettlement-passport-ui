@@ -11,12 +11,18 @@ export default class DocumentController {
     // no-op
   }
 
-  viewUploadPage: RequestHandler = (req, res, _): void => {
+  viewUploadPage: RequestHandler = async (req, res, next): Promise<void> => {
     const { prisonerData } = req
 
-    return res.render('pages/upload-documents', {
-      prisonerData,
-    })
+    try {
+      if (!(await getFeatureFlagBoolean(FEATURE_FLAGS.UPLOAD_DOCUMENTS))) {
+        return res.redirect('/')
+      }
+
+      return res.render('pages/upload-documents', { prisonerData })
+    } catch (error) {
+      return next(error)
+    }
   }
 
   uploadDocument: RequestHandler = async (req, res, next): Promise<void> => {

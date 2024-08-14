@@ -359,7 +359,7 @@
                             <th scope="row" class="govuk-table__header">Action</th>
                         </tr>
                         {% for document in documents.results %}
-                            <tr class="govuk-table__row">
+                            <tr class="govuk-table__row" data-qa="documents-row-licence-conditions">
                                 <td class="govuk-table__cell">{{ document.fileName }}</td>
                                 <td class="govuk-table__cell">{{ document.category | formatDocumentCategory }}</td>
                                 <td class="govuk-table__cell">TODO date</td>

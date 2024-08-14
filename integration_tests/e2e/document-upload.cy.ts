@@ -7,10 +7,28 @@ context('Document upload', () => {
     cy.task('stubJohnSmithDefaults')
   })
 
+  it('Can view uploaded documents in the overview page', () => {
+    cy.task('stubListDocumentsSuccess')
+    cy.signIn()
+    cy.visit('prisoner-overview?prisonerNumber=A8731DY#documents')
+
+    cy.get('#documents h3').should('contain.text', 'Uploaded documents')
+    cy.get('#documents .govuk-button').should('have.attr', 'href', '/upload-documents?prisonerNumber=A8731DY')
+
+    cy.get('[data-qa="documents-row-licence-conditions"] > td').eq(0).should('have.text', 'conditions.pdf')
+    cy.get('[data-qa="documents-row-licence-conditions"] > td').eq(1).should('have.text', 'Licence conditions')
+    cy.get('[data-qa="documents-row-licence-conditions"] > td').eq(3).should('contain.text', 'View document')
+    cy.get('[data-qa="documents-row-licence-conditions"] a').should(
+      'have.attr',
+      'href',
+      '/document/A8731DY/licence-conditions',
+    )
+  })
+
   it('Can upload a document', () => {
     cy.task('stubDocumentUploadSuccess')
     cy.signIn()
-    cy.visit('prisoner-overview?prisonerNumber=A8731DY')
+    cy.visit('upload-documents?prisonerNumber=A8731DY')
 
     cy.get('.govuk-grid-column-three-quarters > .govuk-heading-xl').should('contain.text', 'Smith, John')
 
@@ -40,7 +58,7 @@ context('Document upload', () => {
   it('shows error page when document upload fails', () => {
     cy.task('stubDocumentUploadFailure')
     cy.signIn()
-    cy.visit('prisoner-overview?prisonerNumber=A8731DY')
+    cy.visit('upload-documents?prisonerNumber=A8731DY')
 
     cy.get('#file').selectFile({
       contents: Cypress.Buffer.from('file contents'),
