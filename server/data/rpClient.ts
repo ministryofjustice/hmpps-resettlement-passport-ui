@@ -44,6 +44,14 @@ export default class RPClient {
       path,
     })
   }
+
+  async upload(path: string, originalFilename: string, filePath: string) {
+    return this.restClient.upload({
+      path,
+      originalFilename,
+      filePath,
+    })
+  }
 }
 
 export type RPError = {

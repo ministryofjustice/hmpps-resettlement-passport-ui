@@ -6,6 +6,6 @@ export default (router: Router, services: Services) => {
   const documentController = new DocumentController(services.documentService)
 
   router.get('/upload-documents', documentController.viewUploadPage)
-  router.post('/document/:prisonerNumber/:documentType', [documentController.uploadDocument])
+  router.post('/document/:prisonerNumber', [documentController.uploadDocument])
   router.get('/document/:prisonerNumber/:documentType', [documentController.viewDocument])
 }

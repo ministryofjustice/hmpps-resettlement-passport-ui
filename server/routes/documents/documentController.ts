@@ -1,5 +1,6 @@
+import fs from 'node:fs/promises'
 import { RequestHandler } from 'express'
-import busboy from 'busboy'
+import formidable, { File } from 'formidable'
 import DocumentService from '../../services/documentService'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
@@ -17,26 +18,27 @@ export default class DocumentController {
     })
   }
 
-  uploadDocument: RequestHandler = (req, res, next): void => {
-    const bb = busboy({ headers: req.headers })
-    const { prisonerNumber, documentType } = req.params
+  uploadDocument: RequestHandler = async (req, res, next): Promise<void> => {
+    const { prisonerNumber } = req.params
+    try {
+      const form = formidable({ uploadDir: __dirname, maxFiles: 1, keepExtensions: true })
 
-    bb.on('file', (name, file, info) => {
-      if (name === 'file') {
-        this.documentService
-          .upload(prisonerNumber, documentType, info.filename, file)
-          .then(() => res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#licence-summary`))
-          .catch(err => {
-            if (err.message?.includes('Unsupported document format')) {
-              res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}&uploadError=badFormat#licence-summary`)
-            } else {
-              next(err)
-            }
-          })
+      const [fields, files] = await form.parse(req)
+      const category: string = firstOrNull(fields.category)
+      const file: File = firstOrNull(files.file)
+
+      await this.documentService
+        .upload(prisonerNumber, category, file.originalFilename, file.filepath)
+        .finally(() => fs.unlink(file.filepath))
+
+      res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#documents`)
+    } catch (error) {
+      if (error.message?.includes('Unsupported document format')) {
+        res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}&uploadError=badFormat#licence-summary`)
+      } else {
+        next(error)
       }
-    })
-    bb.on('error', err => next(err))
-    req.pipe(bb)
+    }
   }
 
   viewDocument: RequestHandler = async (req, res, next) => {
@@ -58,4 +60,11 @@ export default class DocumentController {
       return next(err)
     }
   }
+}
+
+function firstOrNull<T>(items: T[] | undefined): T | null {
+  if (items && items.length > 0) {
+    return items[0]
+  }
+  return null
 }
