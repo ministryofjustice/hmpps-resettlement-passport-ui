@@ -4,6 +4,7 @@ import formidable, { File } from 'formidable'
 import DocumentService from '../../services/documentService'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import config from '../../config'
 
 export default class DocumentController {
   constructor(private readonly documentService: DocumentService) {
@@ -21,7 +22,7 @@ export default class DocumentController {
   uploadDocument: RequestHandler = async (req, res, next): Promise<void> => {
     const { prisonerNumber } = req.params
     try {
-      const form = formidable({ uploadDir: __dirname, maxFiles: 1, keepExtensions: true })
+      const form = formidable({ uploadDir: config.uploadTempPath, maxFiles: 1, keepExtensions: true })
 
       const [fields, files] = await form.parse(req)
       const category: string = firstOrNull(fields.category)

@@ -141,4 +141,5 @@ export default {
     },
     signOutOnFailure: get('LOCAL_SIGN_OUT_ON_AUTH_FAILURE', 'true') === 'true',
   },
+  uploadTempPath: get('UPLOAD_TEMP_PATH', '/tmp', requiredInProduction),
 }

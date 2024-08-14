@@ -110,7 +110,6 @@
     "body-parser": "^1.20.2",
     "bunyan": "^1.8.15",
     "bunyan-format": "^0.2.1",
-    "busboy": "^1.6.0",
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-redis": "^7.1.1",
@@ -142,7 +141,6 @@
   "devDependencies": {
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",
-    "@types/busboy": "^1.5.4",
     "@types/compression": "^1.7.5",
     "@types/connect-flash": "0.0.37",
     "@types/cookie-session": "^2.0.49",
