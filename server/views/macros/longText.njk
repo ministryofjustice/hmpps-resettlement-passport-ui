@@ -8,6 +8,16 @@
       <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
     {% endif %}
     <div class="govuk-hint" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
+    
+    {% if currentQuestionAndAnswer.question.detailsTitle and currentQuestionAndAnswer.question.detailsContent %}
+      <details class="govuk-details govuk-!-padding-top-3" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">{{ currentQuestionAndAnswer.question.detailsTitle }}</span>
+        </summary>
+        <div class="govuk-details__text">{{ currentQuestionAndAnswer.question.detailsContent }}</div>
+      </details>
+    {% endif %}
+    
     {% if validationError %}
       {{ validationErrorMessage(validationError.validationType)  }}
     {% endif %}
