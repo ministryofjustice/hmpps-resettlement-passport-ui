@@ -139,5 +139,7 @@ export default {
       enabled: get('LOCAL_CONFIG_ENABLED', 'false') === 'true',
       filename: get('LOCAL_CONFIG_PATH_FILENAME', 'localstack/config.json'),
     },
+    signOutOnFailure: get('LOCAL_SIGN_OUT_ON_AUTH_FAILURE', 'true') === 'true',
   },
+  uploadTempPath: get('UPLOAD_TEMP_PATH', '/tmp', requiredInProduction),
 }

@@ -10,6 +10,8 @@
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% set addAppointmentEnabled = features.ADD_APPOINTMENTS | getFeatureFlag %}
 {% set tasksViewEnabled = features.TASKS_VIEW | getFeatureFlag %}
+{% set uploadDocumentsEnabled = features.UPLOAD_DOCUMENTS | getFeatureFlag %}
+{% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
   {{ titleAndIntro(pathway) }}
@@ -21,11 +23,11 @@
   {% elif prisonerData.resettlementReviewAvailable === false %}
     {{preReleaseComplete(pathway, prisonerData)}}
   {% endif %}
-  {{ tasksDetails(prisonerData.personalDetails.prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
+  {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
 </div>
 
-
   <div class="govuk-grid-row govuk-!-padding-top-4">
+
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {{ subNav([
         {
@@ -75,7 +77,7 @@
                 {% set currentPathway = pathway.pathway | getEnumValue %}
                 <tr class="govuk-table__row">
                   <th scope="row" class="govuk-table__header">
-                    <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">{{ currentPathway.name }}</a>
+                    <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerNumber }}">{{ currentPathway.name }}</a>
                     <span class="govuk-caption-m">{{ currentPathway.description }}</span>
                   </th>
                   <td class="govuk-table__cell">
@@ -94,7 +96,7 @@
             </tbody>
           </table>
           {% if prisonerData.resettlementReviewAvailable %}
-            <a class="govuk-button" href="/assessment-task-list/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&type=RESETTLEMENT_PLAN">
+            <a class="govuk-button" href="/assessment-task-list/?prisonerNumber={{ prisonerNumber }}&type=RESETTLEMENT_PLAN">
               Start pre-release report
             </a>
           {% endif %}
@@ -137,14 +139,14 @@
             Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
           </h3>
           <span class="right">
-                <a href="/add-case-note?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                <a href="/add-case-note?prisonerNumber={{ prisonerNumber }}"
                    class="govuk-button">Add a case note</a>
               </span>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
             <form action="/prisoner-overview/#case-notes" method="GET" novalidate>
-              <input name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" hidden />
+              <input name="prisonerNumber" value="{{ prisonerNumber }}" hidden />
               <div class="govuk-grid-column-one-third">
                 <label class="govuk-label" for="pathway-select">Filter by pathway</label>
                 <select name="selectedPathway" class="govuk-select" id="pathway-select">
@@ -217,7 +219,7 @@
                 {% set totalPages = (caseNotes.totalElements / size) | roundNumberUp %}
                 {% set nextPage = page | float + 1 | float %}
                 {% set prevPage = page | float - 1 | float %}
-                {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber %}
+                {% set currentUrl = "/prisoner-overview/?prisonerNumber=" + prisonerNumber %}
                 {% if caseNotes.totalElements != 0 %}
                   {{ pagination(page, size, totalPages, caseNotes.last, currentUrl, caseNotes.totalElements, sort, days, selectedPathway) }}
                 {% endif %}
@@ -237,7 +239,7 @@
           </h3>
           {% if addAppointmentEnabled %}
             <span class="right">
-                      <a href="/add-appointment?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                      <a href="/add-appointment?prisonerNumber={{ prisonerNumber }}"
                          class="govuk-button">Add an appointment</a>
                     </span>
           {% endif %}
@@ -295,7 +297,7 @@
                   <li>{{ condition.text }}
                     {% if condition.image %}
                       <a
-                          href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                          href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerNumber }}"
                           rel="noreferrer noopener"
                           target="_blank">View map (opens in new tab)</a>
                     {% endif %}
@@ -315,7 +317,7 @@
                   <li>{{ condition.text }}
                     {% if condition.image %}
                       <a
-                          href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
+                          href="/licence-image/?licenceId={{ licenceConditions.licenceId }}&conditionId={{ condition.id }}&prisonerNumber={{ risonerNumber }}"
                           rel="noreferrer noopener"
                           target="_blank">View map (opens in new tab)</a>
                     {% endif %}
@@ -328,6 +330,51 @@
           {% endif %}
         </div>
       </section>
+
+    {% if uploadDocumentsEnabled %}
+        <section id="documents" class="app-summary-card govuk-!-margin-bottom-8">
+            <header class="app-summary-card__header">
+                <h3 class="app-summary-card__title">
+                    Uploaded documents
+                    <span class="govuk-caption-m">Any documents uploaded will be visible to the person when they leave prison.</span>
+                </h3>
+                <span class="right">
+                    <a href="/upload-documents?prisonerNumber={{ prisonerNumber }}" class="govuk-button"> Upload document</a>
+                </span>
+            </header>
+
+            {% if documents.error %}
+                <p>{{ errorMessage }}</p>
+            {% elseif documents.results.length === 0 %}
+                <p>No documents have been uploaded</p>
+            {% else %}
+
+                <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+                    <table class="govuk-table">
+                        <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row">
+                            <th scope="row" class="govuk-table__header">Document name</th>
+                            <th scope="row" class="govuk-table__header">Category</th>
+                            <th scope="row" class="govuk-table__header">Date uploaded</th>
+                            <th scope="row" class="govuk-table__header">Action</th>
+                        </tr>
+                        {% for document in documents.results %}
+                            <tr class="govuk-table__row" data-qa="documents-row-licence-conditions">
+                                <td class="govuk-table__cell">{{ document.fileName }}</td>
+                                <td class="govuk-table__cell">{{ document.category | formatDocumentCategory }}</td>
+                                <td class="govuk-table__cell">TODO date</td>
+                                <td class="govuk-table__cell">
+                                    <a href="/document/{{ prisonerNumber }}/licence-conditions" target="_blank" rel="noopener noreferrer">View document</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </section>
+
+    {% endif %}
       <section id="risk-assessments" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
@@ -434,7 +481,7 @@
                   <span class="govuk-!-font-weight-regular">RoSH</span>
                 {% else %}
                   <span>No data</span>
-                {% endif %}               
+                {% endif %}
               </h3>
               <p>Risk of serious harm</p>
               <p class="govuk-body-s">Last updated: {{ rosh.assessedOn | formatDate('long') }}</p>

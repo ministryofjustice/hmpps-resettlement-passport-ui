@@ -1,6 +1,7 @@
 import superagent from 'superagent'
 import Agent, { HttpsAgent } from 'agentkeepalive'
 import { Readable } from 'stream'
+import { minutesToMilliseconds } from 'date-fns'
 
 import logger from '../../logger'
 import sanitiseError from '../sanitisedError'
@@ -239,6 +240,25 @@ export default class RestClient {
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'DELETE'`)
+      throw sanitisedError
+    }
+  }
+
+  async upload({ path, filePath, originalFilename }: { path: string; filePath: string; originalFilename: string }) {
+    try {
+      const result = await superagent
+        .post(`${this.apiUrl()}${path}`)
+        .agent(this.agent)
+        .use(restClientMetricsMiddleware)
+        .auth(this.token, { type: 'bearer' })
+        // Longer deadline to upload files
+        .timeout({ ...this.timeoutConfig(), deadline: minutesToMilliseconds(5) })
+        .field('originalFilename', originalFilename)
+        .attach('file', filePath)
+      return result.body
+    } catch (error) {
+      const sanitisedError = sanitiseError(error)
+      logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'POST' (multipart)`)
       throw sanitisedError
     }
   }

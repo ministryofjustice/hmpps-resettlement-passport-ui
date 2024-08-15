@@ -19,8 +19,8 @@ export default class RPClient {
     return Buffer.from(imageByteArray).toString('base64')
   }
 
-  async get(path: string) {
-    return this.restClient.get({
+  async get<T>(path: string) {
+    return this.restClient.get<T>({
       path,
     })
   }
@@ -44,4 +44,17 @@ export default class RPClient {
       path,
     })
   }
+
+  async upload(path: string, originalFilename: string, filePath: string) {
+    return this.restClient.upload({
+      path,
+      originalFilename,
+      filePath,
+    })
+  }
+}
+
+export type RPError = {
+  status: number
+  userMessage: string
 }
