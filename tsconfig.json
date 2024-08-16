@@ -1,9 +1,9 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "target": "es2018",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "lib": ["ES2023"],
+    "module": "node16",
+    "target": "ES2022",
     "outDir": "./dist",
     "sourceMap": true,
     "skipLibCheck": true,

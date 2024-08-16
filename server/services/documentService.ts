@@ -1,3 +1,4 @@
+import { ReadableStream } from 'stream/web'
 import { minutesToMilliseconds } from 'date-fns'
 import config from '../config'
 import { currentUser } from '../middleware/userContextMiddleware'
@@ -8,6 +9,8 @@ import { FEATURE_FLAGS } from '../utils/constants'
 export type DocumentMeta = {
   id: number
   originalDocumentFileName?: string
+  creationDate?: Date
+  category: string
 }
 
 // eslint-disable-next-line no-shadow
@@ -47,11 +50,8 @@ export default class DocumentService {
 
     const rpClient = this.createClient()
 
-    const docs = await rpClient.get<DocumentMeta[]>(
-      `/resettlement-passport/prisoner/${nomsId}/documents?category=LICENCE_CONDITIONS`,
-    )
-    // TODO: Find latest by type, but API is missing type on response currently
-    return docs.length > 0 ? [docs[0]] : []
+    const docs = await rpClient.get<DocumentMeta[]>(`/resettlement-passport/prisoner/${nomsId}/documents`)
+    return latestByCategory(docs)
   }
 
   createClient() {
@@ -84,9 +84,19 @@ const categoryNames: Record<string, string> = {
 }
 
 export function formatDocumentCategory(category: string) {
-  if (!category) {
-    // Temporary while api is not returning category
-    return 'Licence conditions'
-  }
-  return categoryNames[category] || 'Unknown category'
+  const convertedCategory = category?.toLowerCase()?.replace('_', '-')
+  return categoryNames[convertedCategory] || 'Unknown category'
+}
+
+export function latestByCategory(documents: DocumentMeta[]): DocumentMeta[] {
+  // Note: results coming back from API are ordered, so we don't need to sort
+  const seenCategories = new Set<string>()
+
+  return documents.filter(doc => {
+    if (seenCategories.has(doc.category)) {
+      return false
+    }
+    seenCategories.add(doc.category)
+    return true
+  })
 }
