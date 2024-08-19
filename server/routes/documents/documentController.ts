@@ -13,11 +13,14 @@ const errorMessageMap: Record<string, string> = {
   badFormat: 'The selected file must be a PDF, DOCX or DOC',
   virus: 'The selected file contains a virus',
   tooLarge: 'The selected file must be smaller than 10MB',
+  empty: 'The selected file is empty',
+  unknown: 'The selected file could not be uploaded – try again',
 }
 
 // Formidable exports these but they are incorrectly mapped in the @types lib, re-declaring as a workaround
 const formidableErrors = {
   biggerThanTotalMaxFileSize: 1009,
+  noEmptyFiles: 1010,
   maxFilesExceeded: 1015,
   biggerThanMaxFileSize: 1016,
 }
@@ -68,7 +71,10 @@ export default class DocumentController {
           err.code === formidableErrors.biggerThanMaxFileSize
         ) {
           uploadError = 'tooLarge'
+        } else if (err.code === formidableErrors.noEmptyFiles) {
+          uploadError = 'empty'
         }
+
         return res.redirect(`/upload-documents/?prisonerNumber=${prisonerNumber}&uploadError=${uploadError}`)
       }
 

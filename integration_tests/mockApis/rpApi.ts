@@ -329,6 +329,7 @@ const stubDocumentUploadFailure = ({ errorMessage }: { errorMessage: string }) =
       },
     },
   })
+
 const stubDocumentUploadFailureWithVirus = () =>
   stubFor({
     request: {
@@ -339,6 +340,22 @@ const stubDocumentUploadFailureWithVirus = () =>
       status: 200,
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
       jsonBody: { reason: { foundViruses: { badVirus: ['1', '2', '3'] } } },
+    },
+  })
+
+const stubDocumentUploadFailure500 = () =>
+  stubFor({
+    request: {
+      method: 'POST',
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/documents/upload?category=LICENCE_CONDITIONS`,
+    },
+    response: {
+      status: 500,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: {
+        status: 500,
+        developerMessage: 'It broke',
+      },
     },
   })
 const stubListDocumentsSuccess = () =>
@@ -536,4 +553,5 @@ export default {
   stubJohnSmithCheckBox,
   stubListDocumentsSuccess,
   stubDocumentUploadFailureWithVirus,
+  stubDocumentUploadFailure500,
 }

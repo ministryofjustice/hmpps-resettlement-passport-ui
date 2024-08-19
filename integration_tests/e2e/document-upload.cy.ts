@@ -94,7 +94,7 @@ context('Document upload', () => {
 
     cy.get('#file').selectFile({
       // The max file upload size is overridden for the cypress test to only allow 1000 bytes
-      contents: Cypress.Buffer.from('file contents'.repeat(100)),
+      contents: Cypress.Buffer.from('1234567890'.repeat(101)),
       fileName: 'file.pdf',
       mimeType: 'application/pdf',
       lastModified: Date.now(),
@@ -102,5 +102,48 @@ context('Document upload', () => {
     cy.get('[data-cy="submit"]').click()
 
     cy.get('#file-error').should('contain.text', 'The selected file must be smaller than 10MB')
+  })
+
+  it('shows error message when file is empty', () => {
+    cy.signIn()
+    cy.visit('upload-documents?prisonerNumber=A8731DY')
+
+    cy.get('#file').selectFile({
+      // The max file upload size is overridden for the cypress test to only allow 1000 bytes
+      contents: Cypress.Buffer.from(''),
+      fileName: 'file.pdf',
+      mimeType: 'application/pdf',
+      lastModified: Date.now(),
+    })
+    cy.get('[data-cy="submit"]').click()
+
+    cy.get('#file-error').should('contain.text', 'The selected file is empty')
+  })
+
+  it('shows error message when no file is selected', () => {
+    cy.signIn()
+    cy.visit('upload-documents?prisonerNumber=A8731DY')
+
+    cy.get('[data-cy="submit"]').click()
+
+    // Formidable doesn't seem to be able to distinguish between empty file and no file for some reason
+    cy.get('#file-error').should('contain.text', 'The selected file is empty')
+  })
+
+  it('shows a fallback error message when something unknown went wrong', () => {
+    cy.signIn()
+    cy.visit('upload-documents?prisonerNumber=A8731DY')
+    cy.task('stubDocumentUploadFailure500')
+
+    cy.get('#category')
+    cy.get('#file').selectFile({
+      contents: Cypress.Buffer.from('file contents'),
+      fileName: 'file.pdf',
+      mimeType: 'application/pdf',
+      lastModified: Date.now(),
+    })
+    cy.get('[data-cy="submit"]').click()
+
+    cy.get('#file-error').should('contain.text', 'The selected file could not be uploaded – try again')
   })
 })
