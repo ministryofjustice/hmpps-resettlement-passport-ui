@@ -1,3 +1,5 @@
+import { buffer } from 'node:stream/consumers'
+import { Buffer } from 'buffer'
 import RestClient from './restClient'
 import config from '../config'
 
@@ -9,14 +11,9 @@ export default class RPClient {
   }
 
   async getImageAsBase64String(path: string): Promise<string> {
-    const imageResult = (await this.restClient.stream({
-      path,
-    })) as ReadableStream
-
-    const imageBlob = await new Response(imageResult).blob()
-    const imageBlobReader = await imageBlob.stream().getReader().read()
-    const imageByteArray = imageBlobReader.value
-    return Buffer.from(imageByteArray).toString('base64')
+    const imageStream = await this.restClient.stream({ path })
+    const buffered: Buffer = await buffer(imageStream)
+    return buffered.toString('base64')
   }
 
   async get<T>(path: string) {

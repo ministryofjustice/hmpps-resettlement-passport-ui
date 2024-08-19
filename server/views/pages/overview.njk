@@ -342,14 +342,12 @@
                     <a href="/upload-documents?prisonerNumber={{ prisonerNumber }}" class="govuk-button"> Upload document</a>
                 </span>
             </header>
-
-            {% if documents.error %}
-                <p>{{ errorMessage }}</p>
-            {% elseif documents.results.length === 0 %}
-                <p>No documents have been uploaded</p>
-            {% else %}
-
-                <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+            <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+                {% if documents.error %}
+                    <p>{{ errorMessage }}</p>
+                {% elseif documents.results.length === 0 %}
+                    <p>No documents have been uploaded</p>
+                {% else %}
                     <table class="govuk-table">
                         <tbody class="govuk-table__body">
                         <tr class="govuk-table__row">
@@ -362,7 +360,7 @@
                             <tr class="govuk-table__row" data-qa="documents-row-licence-conditions">
                                 <td class="govuk-table__cell">{{ document.fileName }}</td>
                                 <td class="govuk-table__cell">{{ document.category | formatDocumentCategory }}</td>
-                                <td class="govuk-table__cell">TODO date</td>
+                                <td class="govuk-table__cell">{{ document.creationDate | formatDate }}</td>
                                 <td class="govuk-table__cell">
                                     <a href="/document/{{ prisonerNumber }}/licence-conditions" target="_blank" rel="noopener noreferrer">View document</a>
                                 </td>
@@ -370,8 +368,8 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </section>
 
     {% endif %}

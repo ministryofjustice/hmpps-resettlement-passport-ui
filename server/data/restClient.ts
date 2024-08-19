@@ -173,7 +173,7 @@ export default class RestClient {
     }
   }
 
-  async stream({ path = null, headers = {} }: StreamRequest = {}): Promise<unknown> {
+  async stream({ path = null, headers = {} }: StreamRequest = {}): Promise<NodeJS.ReadableStream> {
     if (this.userId) {
       logger.info(`User: ${this.userId} Session: ${this.sessionId} making STREAM request to ${path}`)
     } else {

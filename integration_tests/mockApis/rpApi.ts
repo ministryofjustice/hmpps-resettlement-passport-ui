@@ -333,15 +333,23 @@ const stubListDocumentsSuccess = () =>
   stubFor({
     request: {
       method: 'GET',
-      url: `/rpApi/resettlement-passport/prisoner/A8731DY/documents?category=LICENCE_CONDITIONS`,
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/documents`,
     },
     response: {
       status: 200,
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
       jsonBody: [
         {
-          id: 1,
+          id: 2,
           fileName: 'conditions.pdf',
+          category: 'LICENCE_CONDITIONS',
+          creationDate: '2024-08-16T14:03:05.093319',
+        },
+        {
+          id: 1,
+          fileName: 'old-conditions.pdf',
+          category: 'LICENCE_CONDITIONS',
+          creationDate: '2024-08-14T09:05:02.013214',
         },
       ],
     },

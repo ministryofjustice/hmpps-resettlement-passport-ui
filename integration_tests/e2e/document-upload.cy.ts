@@ -17,6 +17,7 @@ context('Document upload', () => {
 
     cy.get('[data-qa="documents-row-licence-conditions"] > td').eq(0).should('have.text', 'conditions.pdf')
     cy.get('[data-qa="documents-row-licence-conditions"] > td').eq(1).should('have.text', 'Licence conditions')
+    cy.get('[data-qa="documents-row-licence-conditions"] > td').eq(2).should('have.text', '16 Aug 2024')
     cy.get('[data-qa="documents-row-licence-conditions"] > td').eq(3).should('contain.text', 'View document')
     cy.get('[data-qa="documents-row-licence-conditions"] a').should(
       'have.attr',
