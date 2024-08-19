@@ -10,6 +10,7 @@ import { RPError } from '../../data/rpClient'
 
 const errorMessageMap: Record<string, string> = {
   badFormat: 'The selected file must be a PDF, DOCX or DOC',
+  virus: 'The selected file contains a virus',
 }
 
 export default class DocumentController {
@@ -20,7 +21,7 @@ export default class DocumentController {
   viewUploadPage: RequestHandler = async (req, res, next): Promise<void> => {
     const { prisonerData } = req
     const { uploadError } = req.query
-    const errorMessageText = errorMessageMap[uploadError.toString()]
+    const errorMessageText = errorMessageMap[uploadError?.toString()]
     const errorMessage = errorMessageText ? { text: errorMessageText } : null
 
     try {
@@ -43,9 +44,13 @@ export default class DocumentController {
       const category: string = firstOrNull(fields.category)
       const file: File = firstOrNull(files.file)
 
-      await this.documentService
+      const response = await this.documentService
         .upload(prisonerNumber, category, file.originalFilename, file.filepath)
         .finally(() => fs.unlink(file.filepath))
+
+      if (response?.reason?.foundViruses) {
+        return res.redirect(`/upload-documents/?prisonerNumber=${prisonerNumber}&uploadError=virus`)
+      }
 
       return res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#documents`)
     } catch (err) {

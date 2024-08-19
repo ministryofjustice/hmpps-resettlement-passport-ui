@@ -56,8 +56,8 @@ context('Document upload', () => {
     })
   })
 
-  it('shows error page when document upload fails', () => {
-    cy.task('stubDocumentUploadFailure')
+  it('shows error message when document upload fails with bad file type', () => {
+    cy.task('stubDocumentUploadFailure', { errorMessage: 'Unsupported document format, only .doc or pdf allowed' })
     cy.signIn()
     cy.visit('upload-documents?prisonerNumber=A8731DY')
 
@@ -68,5 +68,23 @@ context('Document upload', () => {
       lastModified: Date.now(),
     })
     cy.get('[data-cy="submit"]').click()
+
+    cy.get('#file-error').should('contain.text', 'The selected file must be a PDF, DOCX or DOC')
+  })
+
+  it('shows error message when document upload fails with a virus found', () => {
+    cy.task('stubDocumentUploadFailureWithVirus')
+    cy.signIn()
+    cy.visit('upload-documents?prisonerNumber=A8731DY')
+
+    cy.get('#file').selectFile({
+      contents: Cypress.Buffer.from('file contents'),
+      fileName: 'file.pdf',
+      mimeType: 'application/pdf',
+      lastModified: Date.now(),
+    })
+    cy.get('[data-cy="submit"]').click()
+
+    cy.get('#file-error').should('contain.text', 'The selected file contains a virus')
   })
 })

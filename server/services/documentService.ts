@@ -23,7 +23,12 @@ const docTypes: Record<string, DocumentType> = {
 }
 
 export default class DocumentService {
-  async upload(prisonerNumber: string, documentType: string, originalFilename: string, path: string) {
+  async upload(
+    prisonerNumber: string,
+    documentType: string,
+    originalFilename: string,
+    path: string,
+  ): Promise<DocumentUploadResponse> {
     const type = this.readDocumentType(documentType)
 
     const client = this.createClient()
@@ -99,4 +104,8 @@ export function latestByCategory(documents: DocumentMeta[]): DocumentMeta[] {
     seenCategories.add(doc.category)
     return true
   })
+}
+
+export type DocumentUploadResponse = {
+  reason?: { foundViruses?: Record<string, string[]> }
 }
