@@ -5,6 +5,12 @@ import DocumentService from '../../services/documentService'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import config from '../../config'
+import { SanitisedError } from '../../sanitisedError'
+import { RPError } from '../../data/rpClient'
+
+const errorMessageMap: Record<string, string> = {
+  badFormat: 'The selected file must be a PDF, DOCX or DOC',
+}
 
 export default class DocumentController {
   constructor(private readonly documentService: DocumentService) {
@@ -13,19 +19,22 @@ export default class DocumentController {
 
   viewUploadPage: RequestHandler = async (req, res, next): Promise<void> => {
     const { prisonerData } = req
+    const { uploadError } = req.query
+    const errorMessageText = errorMessageMap[uploadError.toString()]
+    const errorMessage = errorMessageText ? { text: errorMessageText } : null
 
     try {
       if (!(await getFeatureFlagBoolean(FEATURE_FLAGS.UPLOAD_DOCUMENTS))) {
         return res.redirect('/')
       }
 
-      return res.render('pages/upload-documents', { prisonerData })
+      return res.render('pages/upload-documents', { prisonerData, errorMessage })
     } catch (error) {
       return next(error)
     }
   }
 
-  uploadDocument: RequestHandler = async (req, res, next): Promise<void> => {
+  uploadDocument: RequestHandler = async (req, res, _): Promise<void> => {
     const { prisonerNumber } = req.params
     try {
       const form = formidable({ uploadDir: config.uploadTempPath, maxFiles: 1, keepExtensions: true })
@@ -38,13 +47,15 @@ export default class DocumentController {
         .upload(prisonerNumber, category, file.originalFilename, file.filepath)
         .finally(() => fs.unlink(file.filepath))
 
-      res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#documents`)
-    } catch (error) {
-      if (error.message?.includes('Unsupported document format')) {
-        res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}&uploadError=badFormat#licence-summary`)
-      } else {
-        next(error)
+      return res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerNumber}#documents`)
+    } catch (err) {
+      const rpError = (err as SanitisedError).data as RPError
+      let uploadError = 'unknown'
+      if (rpError.developerMessage?.includes('Unsupported document format')) {
+        uploadError = 'badFormat'
       }
+
+      return res.redirect(`/upload-documents/?prisonerNumber=${prisonerNumber}&uploadError=${uploadError}`)
     }
   }
 
