@@ -7,10 +7,19 @@ import { FEATURE_FLAGS } from '../../utils/constants'
 import config from '../../config'
 import { SanitisedError } from '../../sanitisedError'
 import { RPError } from '../../data/rpClient'
+import logger from '../../../logger'
 
 const errorMessageMap: Record<string, string> = {
   badFormat: 'The selected file must be a PDF, DOCX or DOC',
   virus: 'The selected file contains a virus',
+  tooLarge: 'The selected file must be smaller than 10MB',
+}
+
+// Formidable exports these but they are incorrectly mapped in the @types lib, re-declaring as a workaround
+const formidableErrors = {
+  biggerThanTotalMaxFileSize: 1009,
+  maxFilesExceeded: 1015,
+  biggerThanMaxFileSize: 1016,
 }
 
 export default class DocumentController {
@@ -38,11 +47,30 @@ export default class DocumentController {
   uploadDocument: RequestHandler = async (req, res, _): Promise<void> => {
     const { prisonerNumber } = req.params
     try {
-      const form = formidable({ uploadDir: config.uploadTempPath, maxFiles: 1, keepExtensions: true })
+      const form = formidable({
+        uploadDir: config.uploads.tempPath,
+        maxFiles: 1,
+        keepExtensions: true,
+        maxFileSize: config.uploads.maxFileSizeBytes,
+      })
 
-      const [fields, files] = await form.parse(req)
-      const category: string = firstOrNull(fields.category)
-      const file: File = firstOrNull(files.file)
+      let category: string
+      let file: File
+      try {
+        const [fields, files] = await form.parse(req)
+        category = firstOrNull(fields.category)
+        file = firstOrNull(files.file)
+      } catch (err) {
+        let uploadError = 'unknown'
+        logger.info('Form error %s %s', err.message, JSON.stringify(err))
+        if (
+          err.code === formidableErrors.biggerThanTotalMaxFileSize ||
+          err.code === formidableErrors.biggerThanMaxFileSize
+        ) {
+          uploadError = 'tooLarge'
+        }
+        return res.redirect(`/upload-documents/?prisonerNumber=${prisonerNumber}&uploadError=${uploadError}`)
+      }
 
       const response = await this.documentService
         .upload(prisonerNumber, category, file.originalFilename, file.filepath)
@@ -56,7 +84,7 @@ export default class DocumentController {
     } catch (err) {
       const rpError = (err as SanitisedError).data as RPError
       let uploadError = 'unknown'
-      if (rpError.developerMessage?.includes('Unsupported document format')) {
+      if (rpError?.developerMessage?.includes('Unsupported document format')) {
         uploadError = 'badFormat'
       }
 

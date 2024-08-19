@@ -87,4 +87,20 @@ context('Document upload', () => {
 
     cy.get('#file-error').should('contain.text', 'The selected file contains a virus')
   })
+
+  it('shows error message when uploaded file is too large', () => {
+    cy.signIn()
+    cy.visit('upload-documents?prisonerNumber=A8731DY')
+
+    cy.get('#file').selectFile({
+      // The max file upload size is overridden for the cypress test to only allow 1000 bytes
+      contents: Cypress.Buffer.from('file contents'.repeat(100)),
+      fileName: 'file.pdf',
+      mimeType: 'application/pdf',
+      lastModified: Date.now(),
+    })
+    cy.get('[data-cy="submit"]').click()
+
+    cy.get('#file-error').should('contain.text', 'The selected file must be smaller than 10MB')
+  })
 })
