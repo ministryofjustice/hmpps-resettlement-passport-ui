@@ -143,6 +143,6 @@ export default {
   },
   uploads: {
     tempPath: get('UPLOAD_TEMP_PATH', '/tmp', requiredInProduction),
-    maxFileSizeBytes: Number(get('UPLOAD_MAX_FILE_SIZE', 10 * 1024 * 1024)),
+    maxFileSizeBytes: Number(get('UPLOAD_MAX_FILE_SIZE_BYTES', 10 * 1024 * 1024)),
   },
 }

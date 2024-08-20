@@ -109,7 +109,6 @@ context('Document upload', () => {
     cy.visit('upload-documents?prisonerNumber=A8731DY')
 
     cy.get('#file').selectFile({
-      // The max file upload size is overridden for the cypress test to only allow 1000 bytes
       contents: Cypress.Buffer.from(''),
       fileName: 'file.pdf',
       mimeType: 'application/pdf',
