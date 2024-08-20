@@ -141,5 +141,8 @@ export default {
     },
     signOutOnFailure: get('LOCAL_SIGN_OUT_ON_AUTH_FAILURE', 'true') === 'true',
   },
-  uploadTempPath: get('UPLOAD_TEMP_PATH', '/tmp', requiredInProduction),
+  uploads: {
+    tempPath: get('UPLOAD_TEMP_PATH', '/tmp', requiredInProduction),
+    maxFileSizeBytes: Number(get('UPLOAD_MAX_FILE_SIZE_BYTES', 10 * 1024 * 1024)),
+  },
 }

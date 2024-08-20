@@ -1,5 +1,6 @@
 {% extends "../partials/layout.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
 {% block content %}
@@ -14,24 +15,24 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form
-        action="/document/{{ prisonerNumber }}?_csrf={{ csrfToken }}"
-        method="post"
-        enctype="multipart/form-data"
-      >
+      <form action="/document/{{ prisonerNumber }}?_csrf={{ csrfToken }}" method="post" enctype="multipart/form-data">
         <div class="govuk-form-group">
           <label class="govuk-label" for="category"> Category</label>
           <select class="govuk-select" id="category" name="category">
             <option value="licence-conditions" selected>Licence conditions</option>
           </select>
         </div>
-        <div class="govuk-form-group">
-          <div>
-            <label id="label" class="govuk-label" for="document">Upload a file</label>
-            <input id="file" type="file" name="file" class="govuk-file-upload" />
-          </div>
-        </div>
 
+        {{
+          govukFileUpload({
+            id: "file",
+            name: "file",
+            label: {
+              text: "Upload a file"
+            },
+            errorMessage: errorMessage
+          })
+        }}
         {{
           govukButton({
           text: "Continue",
