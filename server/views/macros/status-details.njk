@@ -2,18 +2,19 @@
   <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
-        Resettlement status:
-        {% set statusValue = pathwayData.status | getEnumValue %}
-        <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
-          {{ statusValue.name }}
-        </strong>
+        Resettlement status: {% set statusValue = pathwayData.status | getEnumValue %}
+        <strong class="govuk-tag govuk-tag--{{ statusValue.color }}"> {{ statusValue.name }} </strong>
       </h3>
     </header>
     <div class="app-summary-card__header">
       <div class="govuk-form-group govuk-!-margin-0">
-        <input type="hidden" id="updated" name="updated" value="today">
-        <input type="hidden" id="pathway" name="pathway" value="attitudes">
-        <a class="govuk-button" href="/status-update?selectedPathway={{ pathway | getUrlFromName }}&prisonerNumber={{ prisonerNumber }}">
+        <input type="hidden" id="updated" name="updated" value="today" />
+        <input type="hidden" id="pathway" name="pathway" value="attitudes" />
+        <a
+          class="govuk-button"
+          href="/status-update?selectedPathway={{ pathway | getUrlFromName }}&prisonerNumber={{ prisonerNumber }}"
+          data-qa="update-pathway-status-button"
+        >
           Update status
         </a>
       </div>

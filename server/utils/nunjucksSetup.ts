@@ -33,6 +33,7 @@ import {
   getAnswerValueFromArrayOfMaps,
   getValidationError,
   getRiskAssessmentEnumValue,
+  removeSlashes,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -111,4 +112,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getAnswerValueFromArrayOfMaps', getAnswerValueFromArrayOfMaps)
   njkEnv.addFilter('getValidationError', getValidationError)
   njkEnv.addFilter('formatDocumentCategory', formatDocumentCategory)
+  njkEnv.addFilter('removeSlashes', removeSlashes)
 }

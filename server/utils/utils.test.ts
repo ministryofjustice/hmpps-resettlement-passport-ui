@@ -12,6 +12,7 @@ import {
   getCaseNotesIntro,
   getCaseNotesText,
   shouldShowReportInformation,
+  removeSlashes,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -393,4 +394,15 @@ describe('shouldShowReportInformation', () => {
       expect(shouldShowReportInformation(assessmentRequired, preReleaseSubmitted)).toEqual(expected)
     },
   )
+})
+
+describe('removeSlashes', () => {
+  it.each([
+    ['/fish', 'fish'],
+    ['/fishy-wishy/', 'fishy-wishy'],
+    [undefined, null],
+    [null, null],
+  ])('removeSlashes(%s) to %s', (input, expected) => {
+    expect(removeSlashes(input)).toEqual(expected)
+  })
 })

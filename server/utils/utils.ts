@@ -339,3 +339,7 @@ export function shouldShowReportInformation(assessmentRequired: boolean, preRele
   }
   return !assessmentRequired || preReleaseSubmitted
 }
+
+export function removeSlashes(s: string): string {
+  return s ? s.replaceAll('/', '') : null
+}
