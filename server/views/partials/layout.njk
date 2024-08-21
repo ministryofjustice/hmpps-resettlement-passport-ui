@@ -81,9 +81,9 @@
     <br />
     {% if pageHeading %}
       <span class="govuk-caption-xl">{{ applicationName }}</span>
-      <h1 class="govuk-heading-xl">{{ pageHeading }}</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">{{ pageHeading }}</h1>
     {% else %}
-      <h1 class="govuk-heading-xl">{{ applicationName }}</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">{{ applicationName }}</h1>
     {% endif %}
 
     {% include "./profileHeader.njk" %}
