@@ -342,7 +342,7 @@
                     <a href="/upload-documents?prisonerNumber={{ prisonerNumber }}" class="govuk-button"> Upload document</a>
                 </span>
             </header>
-            <div class="app-summary-card__body govuk-!-padding-top-4" style="padding-left: 30px;">
+            <div class="app-summary-card__body govuk-!-padding-top-4">
                 {% if documents.error %}
                     <p>{{ errorMessage }}</p>
                 {% elseif documents.results.length === 0 %}

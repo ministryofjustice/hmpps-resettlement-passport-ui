@@ -1,6 +1,6 @@
 {% macro titleAndIntro(title) %}
   <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">
+    <h2 class="govuk-heading-l" data-qa="page-title-h2">
       {{ title }}
     </h2>
     {% if title | getDescriptionFromName | length %}
