@@ -41,6 +41,7 @@
           {% for navItem in subNavigationList %}
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
+                 data-qa="sub-nav-{{ navItem.url | removeSlashes }}"
                  href="{{ navItem.url }}?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" {{ "aria-current=page" if pathway === navItem.name }}>
                 {{ navItem.name }}
               </a>
