@@ -24,7 +24,8 @@
     "dist",
     "cypress.config.ts",
     "E2E_Tests",
-    "coverage"
+    "coverage",
+    "pt_tests"
   ],
   "include": ["**/*.js", "**/*.ts"]
 }
