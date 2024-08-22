@@ -246,7 +246,7 @@ workflows:
               only:
                 - main
           requires:
-            - e2e_test            
+            - end-to-end-test            
       - zap_test:
           filters:
             branches:
