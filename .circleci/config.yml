@@ -183,7 +183,22 @@ jobs:
             mkdir -p test_results
             pip install -r ./security_test/requirements.txt
             playwright install --with-deps
-            python3 ./security_test/test_security.py     
+            python3 ./security_test/test_security.py    
+
+  pt_browser_smoke_test:
+    circleci_ip_ranges: true
+    docker:
+      - image: grafana/k6:latest-with-browser
+    steps:
+      - checkout
+      - run:
+          command: |
+            export PT_USERNAME=${E2E_DEV_USERNAME}
+            export PT_PASSWORD=${E2E_DEV_PASSWORD}
+            k6 run pt_tests/tests/run.js --no-setup
+          environment:
+            EXECUTION_TYPE: smoke
+            PROCESS: dev
 
 workflows:
   version: 2
@@ -225,6 +240,13 @@ workflows:
           name: end-to-end-test
           requires:
             - deploy_dev
+      - pt_browser_smoke_test:
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - e2e_test            
       - zap_test:
           filters:
             branches:
