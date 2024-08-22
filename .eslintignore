@@ -6,3 +6,4 @@ reporter-config.json
 dist/
 E2E_Tests
 coverage/
+pt_tests
