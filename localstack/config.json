@@ -1,7 +1,7 @@
 {
   "reports": {
     "immediateNeedsVersion": {
-      "ACCOMMODATION": 2,
+      "ACCOMMODATION": 3,
       "ATTITUDES_THINKING_AND_BEHAVIOUR": 2,
       "CHILDREN_FAMILIES_AND_COMMUNITY": 2,
       "DRUGS_AND_ALCOHOL": 2,
@@ -10,7 +10,7 @@
       "HEALTH": 2
     },
     "preReleaseVersion": {
-      "ACCOMMODATION": 2,
+      "ACCOMMODATION": 3,
       "ATTITUDES_THINKING_AND_BEHAVIOUR": 2,
       "CHILDREN_FAMILIES_AND_COMMUNITY": 2,
       "DRUGS_AND_ALCOHOL": 2,
