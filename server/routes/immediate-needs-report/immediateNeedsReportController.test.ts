@@ -215,7 +215,7 @@ describe('getView', () => {
 })
 
 describe('startEdit', () => {
-  it('should use version 1 when existing assessment in cache has no version and assessment is submitted', async () => {
+  it('should use version 1 when assessment is submitted and db has no version', async () => {
     stubPrisonerDetails()
 
     const stateKey = {
@@ -224,21 +224,7 @@ describe('startEdit', () => {
       pathway: 'ACCOMMODATION',
     }
 
-    const submission: SubmittedInput = {
-      questionsAndAnswers: [
-        {
-          question: '1',
-          answer: { answer: 'YES', '@class': 'StringAnswer', displayText: 'Yes' },
-          pageId: 'page1',
-          questionTitle: 'question',
-          questionType: 'RADIO',
-        },
-      ],
-      version: null,
-    }
-    const getAssessmentSpy = jest.spyOn(assessmentStateService, 'getAssessment').mockResolvedValue(submission)
-
-    const getLatestAssessmentSpy = jest.spyOn(rpService, 'getLatestAssessmentVersion').mockResolvedValue(2)
+    const getLatestAssessmentSpy = jest.spyOn(rpService, 'getLatestAssessmentVersion').mockResolvedValue(null)
 
     const assessmentPage = {
       id: 'MY_PAGE',
@@ -269,7 +255,6 @@ describe('startEdit', () => {
         )
       })
 
-    expect(getAssessmentSpy).toHaveBeenCalledWith(stateKey)
     expect(getLatestAssessmentSpy).toHaveBeenCalledWith(stateKey.prisonerNumber, 'BCST2', stateKey.pathway)
     expect(getAssessmentPageSpy).toHaveBeenCalledWith(
       stateKey.prisonerNumber,
@@ -303,8 +288,6 @@ describe('startEdit', () => {
     }
     const getAssessmentSpy = jest.spyOn(assessmentStateService, 'getAssessment').mockResolvedValue(submission)
 
-    const getLatestAssessmentSpy = jest.spyOn(rpService, 'getLatestAssessmentVersion').mockResolvedValue(2)
-
     const startEditSpy = jest.spyOn(assessmentStateService, 'startEdit').mockImplementation()
 
     await request(app)
@@ -319,7 +302,6 @@ describe('startEdit', () => {
       })
 
     expect(getAssessmentSpy).toHaveBeenCalledWith(stateKey)
-    expect(getLatestAssessmentSpy).toHaveBeenCalledWith(stateKey.prisonerNumber, 'BCST2', stateKey.pathway)
     expect(startEditSpy).toHaveBeenCalledWith(stateKey, undefined, 1)
   })
 })
