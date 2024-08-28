@@ -7,7 +7,7 @@
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
     {% if multipleQuestionsOnPage %}
-    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{{ currentQuestionAndAnswer.question.title }}</legend>
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-top-6 govuk-!-margin-bottom-5">{{ currentQuestionAndAnswer.question.title }}</legend>
     {% endif %}
     <div class="govuk-hint" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     <div class="govuk-radios" data-module="govuk-radios">
