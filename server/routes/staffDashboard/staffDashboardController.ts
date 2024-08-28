@@ -2,6 +2,8 @@ import { RequestHandler } from 'express'
 import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
 import RpService from '../../services/rpService'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class StaffDashboardController {
   constructor(private readonly rpService: RpService) {
@@ -45,9 +47,9 @@ export default class StaffDashboardController {
       let prisonersList = null
 
       try {
-        // TODO add dynamic pagination and sorting
         // Only NOMIS users can access the list prisoners functionality at present
         if (res.locals.user.authSource === 'nomis') {
+          const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
           prisonersList = await this.rpService.getListOfPrisoners(
             userActiveCaseLoad.caseLoadId,
             parseInt(page, 10),
@@ -60,6 +62,7 @@ export default class StaffDashboardController {
             <string>modifiedPathwayStatus,
             <string>assessmentRequired,
             <string>watchList,
+            includePastReleaseDates,
           )
         }
         const view = new StaffDashboardView(
