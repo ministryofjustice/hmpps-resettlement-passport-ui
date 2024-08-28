@@ -158,6 +158,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   VIEW_APPOINTMENTS_END_USER: 'viewAppointmentsEndUser',
   USE_NEW_DELIUS_CASE_NOTE_FORMAT: 'useNewDeliusCaseNoteFormat',
   UPLOAD_DOCUMENTS: 'uploadDocuments',
+  INCLUDE_PAST_RELEASE_DATES: 'includePastReleaseDates',
 }
 
 export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'

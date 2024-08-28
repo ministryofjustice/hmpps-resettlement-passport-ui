@@ -42,7 +42,11 @@ import {
   stubJohnSmithStatusUpdateFailure,
   stubJohnSmithStatusUpdateSuccess,
 } from './scenarios/john-smith/john-smith-status-update'
-import { defaultPrisonersSearch, prisonersSearchWithWatchlist } from './scenarios/prisonersSearch'
+import {
+  defaultPrisonersSearch,
+  defaultPrisonersSearchNoPastReleaseDates,
+  prisonersSearchWithWatchlist,
+} from './scenarios/prisonersSearch'
 import { johnSmithCheckbox, johnSmithCheckboxReportVersion } from './scenarios/john-smith/john-smith-checkbox'
 
 const getTomorrowsDate = () => {
@@ -502,6 +506,8 @@ const stubJohnSmithDeleteWatchlistNotFound = () =>
 const stubJohnSmithWatchlistFilterResults = () =>
   Promise.all([...johnSmithDefaults(), prisonersSearchWithWatchlist(), defaultPrisonersSearch()])
 const stubDefaultSearchResults = () => Promise.all([...johnSmithDefaults(), defaultPrisonersSearch()])
+const stubDefaultSearchResultsNoPastReleaseDates = () =>
+  Promise.all([...johnSmithDefaults(), defaultPrisonersSearchNoPastReleaseDates()])
 
 const stubJohnSmithCheckBox = () => {
   return Promise.all([
@@ -554,4 +560,5 @@ export default {
   stubListDocumentsSuccess,
   stubDocumentUploadFailureWithVirus,
   stubDocumentUploadFailure500,
+  stubDefaultSearchResultsNoPastReleaseDates,
 }

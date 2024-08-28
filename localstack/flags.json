@@ -18,5 +18,9 @@
   {
     "feature": "uploadDocuments",
     "enabled": true
+  },
+  {
+    "feature": "includePastReleaseDates",
+    "enabled": true
   }
 ]

@@ -173,6 +173,9 @@ export const defaultPrisonersSearch = () =>
         watchList: {
           equalTo: '',
         },
+        includePastReleaseDates: {
+          equalTo: 'true',
+        },
       },
     },
     response: {
@@ -180,6 +183,35 @@ export const defaultPrisonersSearch = () =>
       headers: responseHeaders,
       jsonBody: {
         content: [chrisyClemenceSearchResponse, johnSmithSearchResponse, AnthonyCaramellaSearchResponse],
+        pageSize: 1,
+        page: 0,
+        sortName: 'releaseDate,ASC',
+        totalElements: 1,
+        last: true,
+      },
+    },
+  })
+
+export const defaultPrisonersSearchNoPastReleaseDates = () =>
+  stubFor({
+    name: 'search response',
+    request: {
+      urlPathPattern: '/rpApi/resettlement-passport/prison/1/prisoners',
+      method: 'GET',
+      queryParameters: {
+        watchList: {
+          equalTo: '',
+        },
+        includePastReleaseDates: {
+          equalTo: 'false',
+        },
+      },
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        content: [johnSmithSearchResponse, AnthonyCaramellaSearchResponse],
         pageSize: 1,
         page: 0,
         sortName: 'releaseDate,ASC',
