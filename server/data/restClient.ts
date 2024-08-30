@@ -87,6 +87,8 @@ export default class RestClient {
         .responseType(responseType)
         .timeout(this.timeoutConfig())
 
+      this.logRequestAndResponse('GET', path, null, raw, result)
+
       return raw ? result : result.body
     } catch (error) {
       const sanitisedError = sanitiseError(error)
@@ -126,6 +128,8 @@ export default class RestClient {
         .responseType(responseType)
         .timeout(this.timeoutConfig())
 
+      this.logRequestAndResponse('POST', path, data, raw, result)
+
       return raw ? result : result.body
     } catch (error) {
       const sanitisedError = sanitiseError(error)
@@ -164,6 +168,8 @@ export default class RestClient {
         .set(headers)
         .responseType(responseType)
         .timeout(this.timeoutConfig())
+
+      this.logRequestAndResponse('PATCH', path, null, raw, result)
 
       return raw ? result : result.body
     } catch (error) {
@@ -236,6 +242,8 @@ export default class RestClient {
         .responseType(responseType)
         .timeout(this.timeoutConfig())
 
+      this.logRequestAndResponse('DELETE', path, null, raw, result)
+
       return raw ? result : result.body
     } catch (error) {
       const sanitisedError = sanitiseError(error)
@@ -260,6 +268,22 @@ export default class RestClient {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'POST' (multipart)`)
       throw sanitisedError
+    }
+  }
+
+  logRequestAndResponse(
+    method: string,
+    path: string,
+    data: Record<string, unknown>,
+    raw: boolean,
+    result: superagent.Response,
+  ) {
+    if (this.config.logRequestAndResponse) {
+      logger.info(
+        `${method} to ${path}\nRequest body:\n${JSON.stringify(data)}\nRequest response:\n${
+          raw ? result : JSON.stringify(result.body)
+        }`,
+      )
     }
   }
 }

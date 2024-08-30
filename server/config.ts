@@ -29,6 +29,7 @@ export interface ApiConfig {
     deadline: number
   }
   agent: AgentConfig
+  logRequestAndResponse?: boolean
 }
 
 export default {
@@ -76,7 +77,7 @@ export default {
         deadline: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_DEADLINE', 20000)),
       },
       agent: new AgentConfig(Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 20000))),
-      enabled: get('RESETTLEMENT_PASSPORT_API_ENABLED', 'true') === 'true',
+      logRequestAndResponse: get('RESETTLEMENT_PASSPORT_API_LOG_REQUEST_AND_RESPONSE', 'false') === 'true',
     },
     nomisUserRolesClient: {
       url: get('NOMIS_USER_ROLES_API_URL', ''),
@@ -85,7 +86,6 @@ export default {
         deadline: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_DEADLINE', 20000)),
       },
       agent: new AgentConfig(Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 20000))),
-      enabled: get('NOMIS_USER_ROLES_API_ENABLED', 'true') === 'true',
     },
     manageUsersClient: {
       url: get('MANAGE_USERS_API_URL', ''),
@@ -94,7 +94,6 @@ export default {
         deadline: Number(get('MANAGE_USERS_API_TIMEOUT_DEADLINE', 20000)),
       },
       agent: new AgentConfig(Number(get('MANAGE_USERS_API_TIMEOUT_RESPONSE', 20000))),
-      enabled: get('MANAGE_USERS_API_ENABLED', 'true') === 'true',
     },
     frontendComponents: {
       url: get('COMPONENT_API_URL', 'http://localhost:8082', requiredInProduction),
@@ -103,7 +102,6 @@ export default {
         deadline: Number(get('COMPONENT_API_TIMEOUT_DEADLINE', 20000)),
       },
       agent: new AgentConfig(Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 20000))),
-      enabled: get('COMPONENT_API_ENABLED', 'true') === 'true',
     },
     gotenberg: {
       apiUrl: get('GOTENBERG_API_URL', 'http://localhost:3005', requiredInProduction),
