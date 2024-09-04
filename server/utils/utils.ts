@@ -1,6 +1,6 @@
 import { Callback } from 'nunjucks'
 import { addMinutes, format } from 'date-fns'
-import { PathwayStatus } from '../@types/express'
+import { PathwayStatus, PrisonerData } from '../@types/express'
 import { ASSESSMENT_ENUMS_DICTIONARY, ENUMS_DICTIONARY, EnumValue, RISK_ASSESSMENT_ENUMS_DICTIONARY } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
@@ -25,11 +25,11 @@ const properCaseName = (name: string): string => (isBlank(name) ? '' : name.spli
 export const convertToTitleCase = (sentence: string): string =>
   isBlank(sentence) ? '' : sentence.split(' ').map(properCaseName).join(' ')
 
-export const initialiseName = (fullName?: string): string | null => {
+export const initialiseName = (name?: string): string | null => {
   // this check is for the authError page
-  if (!fullName) return null
+  if (!name) return null
 
-  const array = fullName.split(' ')
+  const array = name.split(' ')
   return `${array[0][0]}. ${array.reverse()[0]}`
 }
 
@@ -342,4 +342,12 @@ export function shouldShowReportInformation(assessmentRequired: boolean, preRele
 
 export function removeSlashes(s: string): string {
   return s ? s.replaceAll('/', '') : null
+}
+
+export function fullName(prisonerData: PrisonerData): string {
+  const { firstName, lastName } = prisonerData?.personalDetails ?? {}
+  if (firstName?.length > 0 && lastName?.length > 0) {
+    return `${toTitleCase(firstName)} ${toTitleCase(lastName)}`
+  }
+  return ''
 }

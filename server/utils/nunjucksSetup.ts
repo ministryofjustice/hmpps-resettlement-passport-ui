@@ -34,6 +34,7 @@ import {
   getValidationError,
   getRiskAssessmentEnumValue,
   removeSlashes,
+  fullName,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -113,4 +114,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getValidationError', getValidationError)
   njkEnv.addFilter('formatDocumentCategory', formatDocumentCategory)
   njkEnv.addFilter('removeSlashes', removeSlashes)
+  njkEnv.addFilter('fullName', fullName)
 }
