@@ -5,6 +5,8 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
   let validationErrors: ValidationErrors = null
 
   userInput?.flattenedQuestionsOnPage.forEach(questionAndAnswer => {
+    const answerToQuestion = getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers)
+
     if (questionAndAnswer.question.validationType === 'MANDATORY') {
       const isMissingAnswer = isMissingRequiredField(
         questionAndAnswer.question.id,
@@ -13,7 +15,7 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
       )
       if (isMissingAnswer) {
         const newValidationError: ValidationError = {
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
           questionId: questionAndAnswer.question.id,
         }
         validationErrors = validationErrors ? [...validationErrors, newValidationError] : [newValidationError]
@@ -41,11 +43,8 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
       }
     }
 
-    if (
-      questionAndAnswer.question.type === 'SHORT_TEXT' &&
-      getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers)
-    ) {
-      if (getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers).length > 500) {
+    if (questionAndAnswer.question.type === 'SHORT_TEXT' && answerToQuestion) {
+      if (answerToQuestion.length > 500) {
         const newValidationError: ValidationError = {
           validationType: 'MAX_CHARACTER_LIMIT_SHORT_TEXT',
           questionId: questionAndAnswer.question.id,
@@ -54,11 +53,8 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
       }
     }
 
-    if (
-      questionAndAnswer.question.type === 'LONG_TEXT' &&
-      getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers)
-    ) {
-      if (getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers).length > 3000) {
+    if (questionAndAnswer.question.type === 'LONG_TEXT' && answerToQuestion) {
+      if (answerToQuestion.length > 3000) {
         const newValidationError: ValidationError = {
           validationType: 'MAX_CHARACTER_LIMIT_LONG_TEXT',
           questionId: questionAndAnswer.question.id,
@@ -67,14 +63,9 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
       }
     }
 
-    // TODO what if the answer is in the wrong format for regex validation?
-    if (
-      questionAndAnswer.question.customValidation &&
-      typeof getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers) === 'string'
-    ) {
+    if (questionAndAnswer.question.customValidation && typeof answerToQuestion === 'string') {
       const regex = new RegExp(questionAndAnswer.question.customValidation.regex)
-      const answer = getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers) as string
-      // TODO deal with case of optional question and blank answer
+      const answer = answerToQuestion as string
       if (!regex.test(answer)) {
         const newValidationError: ValidationError = {
           validationType: 'CUSTOM',

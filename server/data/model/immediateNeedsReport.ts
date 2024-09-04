@@ -18,15 +18,17 @@ export type Answer = {
   '@class'?: AnswerType
 }
 
-export type ValidationTypes =
-  | 'MANDATORY'
+export type ValidationType = 'MANDATORY' | 'OPTIONAL'
+
+export type ValidationErrorType =
+  | 'MANDATORY_INPUT'
   | 'MAX_CHARACTER_LIMIT_SHORT_TEXT'
   | 'MAX_CHARACTER_LIMIT_LONG_TEXT'
   | 'MAX_CHARACTER_LIMIT_ADDRESS'
   | 'CUSTOM'
 
 export type ValidationError = {
-  validationType: ValidationTypes
+  validationType: ValidationErrorType
   questionId: string
   customErrorMessage?: string
 }
@@ -40,7 +42,7 @@ export type QuestionsAndAnswers = {
     subTitle?: string
     type?: string
     options?: QuestionOptions[]
-    validationType?: ValidationTypes
+    validationType?: ValidationType
     customValidation?: CustomValidation
   }
   answer?: Answer

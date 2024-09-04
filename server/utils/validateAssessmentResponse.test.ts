@@ -37,7 +37,7 @@ describe('Validate assessment question', () => {
       [
         {
           questionId: 'REGISTERED_WITH_GP',
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
         },
       ],
     ],
@@ -114,11 +114,11 @@ describe('Validate assessment question', () => {
       [
         {
           questionId: 'SUPPORT_NEEDS',
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
         },
         {
           questionId: 'CASE_NOTE_SUMMARY',
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
         },
       ],
     ],
@@ -222,7 +222,7 @@ describe('Validate assessment question', () => {
       [
         {
           questionId: 'ADDRESS_OF_EMPLOYER',
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
         },
       ],
     ],
