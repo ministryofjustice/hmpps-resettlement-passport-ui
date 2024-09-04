@@ -66,8 +66,7 @@
       </h1>
 
       <p>
-        {{ prisonerData.personalDetails.firstName | toTitleCase }}
-        {{ prisonerData.personalDetails.lastName | toTitleCase }}
+        {{ prisonerData | fullName }}
         is now in their pre-release window.
       </p>
       <p>

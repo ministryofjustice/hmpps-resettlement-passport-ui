@@ -9,7 +9,8 @@
       <h1 class="govuk-heading-l">Upload a document</h1>
       <p>You can upload original documents or scans.</p>
       <p>
-        Any documents uploaded will be available to James South in the Plan your future service after leaving prison.
+        Any documents uploaded will be available to {{ prisonerData | fullName }} in the Plan your future service after
+        leaving prison.
       </p>
     </div>
   </div>
@@ -25,12 +26,12 @@
 
         {{
           govukFileUpload({
-            id: "file",
-            name: "file",
-            label: {
-              text: "Upload a file"
-            },
-            errorMessage: errorMessage
+          id: "file",
+          name: "file",
+          label: {
+          text: "Upload a file"
+          },
+          errorMessage: errorMessage
           })
         }}
         {{

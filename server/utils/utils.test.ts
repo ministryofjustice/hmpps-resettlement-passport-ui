@@ -13,10 +13,12 @@ import {
   getCaseNotesText,
   shouldShowReportInformation,
   removeSlashes,
+  fullName,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
 import { Answer, ValidationError, ValidationErrors } from '../data/model/immediateNeedsReport'
+import { PersonalDetails, PrisonerData } from '../@types/express'
 
 describe('convert to title case', () => {
   it.each([
@@ -404,5 +406,16 @@ describe('removeSlashes', () => {
     [null, null],
   ])('removeSlashes(%s) to %s', (input, expected) => {
     expect(removeSlashes(input)).toEqual(expected)
+  })
+})
+
+describe('fullName', () => {
+  it('Gives name in firstname lastname format', () => {
+    const personalDetails = { firstName: 'fred', lastName: 'FlintstOne' } as PersonalDetails
+    const prisonerData = { personalDetails } as PrisonerData
+    expect(fullName(prisonerData)).toEqual('Fred Flintstone')
+  })
+  it.each([null, undefined, {}])('handles %s', v => {
+    expect(fullName(v as PrisonerData)).toEqual('')
   })
 })

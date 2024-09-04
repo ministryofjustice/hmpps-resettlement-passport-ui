@@ -32,6 +32,7 @@ context('Document upload', () => {
     cy.visit('upload-documents?prisonerNumber=A8731DY')
 
     cy.get('.govuk-grid-column-three-quarters > .govuk-heading-xl').should('contain.text', 'Smith, John')
+    cy.get('#main-content').should('contain.text', 'John Smith')
 
     cy.get('#file').selectFile({
       contents: Cypress.Buffer.from('file contents'),
