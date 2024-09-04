@@ -1,17 +1,16 @@
-{% macro validationErrorMessage(validationType) %}
+{% macro validationErrorMessage(validationError) %}
   <p class="govuk-error-message">
     <span class="govuk-visually-hidden">Error:</span> 
-    {% if validationType === 'MANDATORY' %}
+    {% if validationError.validationType === 'MANDATORY' %}
       This field is required
-    {% endif %}
-    {% if validationType === 'MAX_CHARACTER_LIMIT_SHORT_TEXT' %}
+    {% elif validationError.validationType === 'MAX_CHARACTER_LIMIT_SHORT_TEXT' %}
       This field must be 500 characters or less
-    {% endif %}
-    {% if validationType === 'MAX_CHARACTER_LIMIT_LONG_TEXT' %}
+    {% elif validationError.validationType === 'MAX_CHARACTER_LIMIT_LONG_TEXT' %}
       This field must be 3,000 characters or less
-    {% endif %}
-    {% if validationType === 'MAX_CHARACTER_LIMIT_ADDRESS' %}
+    {% elif validationError.validationType === 'MAX_CHARACTER_LIMIT_ADDRESS' %}
       Each field must be 500 characters or less
+    {% elif validationError.validationType === 'CUSTOM' %}
+      {{ validationError.customErrorMessage }}
     {% endif %}
   </p>
 {% endmacro %}

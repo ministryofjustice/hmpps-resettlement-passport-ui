@@ -22,11 +22,16 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
 
     if (questionAndAnswer.question.type === 'ADDRESS') {
       if (
-        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressLine1')?.length > 500 ||
-        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressLine2')?.length > 500 ||
-        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressTown')?.length > 500 ||
-        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressCounty')?.length > 500 ||
-        answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressPostcode')?.length > 500
+        getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressLine1')?.length >
+          500 ||
+        getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressLine2')?.length >
+          500 ||
+        getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressTown')?.length >
+          500 ||
+        getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressCounty')?.length >
+          500 ||
+        getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers, 'addressPostcode')?.length >
+          500
       ) {
         const newValidationError: ValidationError = {
           validationType: 'MAX_CHARACTER_LIMIT_ADDRESS',
@@ -38,9 +43,9 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
 
     if (
       questionAndAnswer.question.type === 'SHORT_TEXT' &&
-      answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers)
+      getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers)
     ) {
-      if (answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers).length > 500) {
+      if (getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers).length > 500) {
         const newValidationError: ValidationError = {
           validationType: 'MAX_CHARACTER_LIMIT_SHORT_TEXT',
           questionId: questionAndAnswer.question.id,
@@ -51,12 +56,30 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
 
     if (
       questionAndAnswer.question.type === 'LONG_TEXT' &&
-      answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers)
+      getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers)
     ) {
-      if (answerInBody(questionAndAnswer.question.id, userInput.questionsAndAnswers).length > 3000) {
+      if (getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers).length > 3000) {
         const newValidationError: ValidationError = {
           validationType: 'MAX_CHARACTER_LIMIT_LONG_TEXT',
           questionId: questionAndAnswer.question.id,
+        }
+        validationErrors = validationErrors ? [...validationErrors, newValidationError] : [newValidationError]
+      }
+    }
+
+    // TODO what if the answer is in the wrong format for regex validation?
+    if (
+      questionAndAnswer.question.customValidation &&
+      typeof getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers) === 'string'
+    ) {
+      const regex = new RegExp(questionAndAnswer.question.customValidation.regex)
+      const answer = getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers) as string
+      // TODO deal with case of optional question and blank answer
+      if (!regex.test(answer)) {
+        const newValidationError: ValidationError = {
+          validationType: 'CUSTOM',
+          questionId: questionAndAnswer.question.id,
+          customErrorMessage: questionAndAnswer.question.customValidation.message,
         }
         validationErrors = validationErrors ? [...validationErrors, newValidationError] : [newValidationError]
       }
@@ -66,7 +89,7 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
   return validationErrors
 }
 
-function answerInBody(
+function getAnswerToQuestion(
   questionId: string,
   allUserQuestionsAndAnswers: ResettlementReportUserQuestionAndAnswer[],
   subField: string = undefined,
@@ -81,14 +104,14 @@ function isMissingRequiredField(
 ) {
   if (questionType === 'ADDRESS') {
     return (
-      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressLine1') &&
-      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressLine2') &&
-      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressTown') &&
-      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressCounty') &&
-      !answerInBody(questionId, allUserQuestionsAndAnswers, 'addressPostcode')
+      !getAnswerToQuestion(questionId, allUserQuestionsAndAnswers, 'addressLine1') &&
+      !getAnswerToQuestion(questionId, allUserQuestionsAndAnswers, 'addressLine2') &&
+      !getAnswerToQuestion(questionId, allUserQuestionsAndAnswers, 'addressTown') &&
+      !getAnswerToQuestion(questionId, allUserQuestionsAndAnswers, 'addressCounty') &&
+      !getAnswerToQuestion(questionId, allUserQuestionsAndAnswers, 'addressPostcode')
     )
   }
-  return !answerInBody(questionId, allUserQuestionsAndAnswers)
+  return !getAnswerToQuestion(questionId, allUserQuestionsAndAnswers)
 }
 
 export default validateAssessmentResponse

@@ -268,6 +268,62 @@ describe('Validate assessment question', () => {
       } as ResettlementReportUserInput,
       null,
     ],
+    [
+      'Regex validation - value matches regex',
+      {
+        questionsAndAnswers: [
+          {
+            questionId: 'NUMBER_OF_CHILDREN',
+            answer: '3',
+          },
+        ],
+        flattenedQuestionsOnPage: [
+          {
+            question: {
+              id: 'NUMBER_OF_CHILDREN',
+              type: 'SHORT_TEXT',
+              validationType: 'MANDATORY',
+              customValidation: {
+                regex: '^\\d+$',
+                message: 'Must be numerical',
+              },
+            },
+          },
+        ],
+      } as ResettlementReportUserInput,
+      null,
+    ],
+    [
+      'Regex validation - value does not match regex',
+      {
+        questionsAndAnswers: [
+          {
+            questionId: 'NUMBER_OF_CHILDREN',
+            answer: 'not a number',
+          },
+        ],
+        flattenedQuestionsOnPage: [
+          {
+            question: {
+              id: 'NUMBER_OF_CHILDREN',
+              type: 'SHORT_TEXT',
+              validationType: 'MANDATORY',
+              customValidation: {
+                regex: '^\\d+$',
+                message: 'Must be numerical',
+              },
+            },
+          },
+        ],
+      } as ResettlementReportUserInput,
+      [
+        {
+          questionId: 'NUMBER_OF_CHILDREN',
+          validationType: 'CUSTOM',
+          customErrorMessage: 'Must be numerical',
+        },
+      ],
+    ],
   ])(
     '%s validateAssessmentResponse(%s)',
     (_: string, userInput: ResettlementReportUserInput, expected: ValidationObject[] | null) => {

@@ -9,7 +9,7 @@
     {% endif %}
     <div id="{{ currentQuestionAndAnswer.question.id }}-hint" class='govuk-hint'>{{ currentQuestionAndAnswer.question.subTitle }}</div>
     {% if validationError %}
-      {{ validationErrorMessage(validationError.validationType)  }}
+      {{ validationErrorMessage(validationError)  }}
     {% endif %}
     <input class="govuk-input govuk-!-width-two-thirds" id="{{ currentQuestionAndAnswer.question.id }}" name="{{ currentQuestionAndAnswer.question.id }}" type="text" value="{{ existingAnswer.answer if existingAnswer }}" />
   </div>

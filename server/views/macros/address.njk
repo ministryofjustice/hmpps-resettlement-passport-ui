@@ -8,7 +8,7 @@
     <fieldset class="govuk-fieldset">
       <div id="{{ currentQuestionAndAnswer.question.id }}-hint" class="govuk-hint"> {{ currentQuestionAndAnswer.question.subTitle }}</div>
       {% if validationError %}
-        {{ validationErrorMessage(validationError.validationType)  }}
+        {{ validationErrorMessage(validationError) }}
       {% endif %}
       <div class="govuk-form-group">
         <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-line-1">Address line 1</label>

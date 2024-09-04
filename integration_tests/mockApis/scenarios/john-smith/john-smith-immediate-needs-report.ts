@@ -171,6 +171,22 @@ const healthAssessment = () =>
             answer: null,
             originalPageId: 'REGISTERED_WITH_GP',
           },
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'GP_PHONE_NUMBER',
+              title: 'What is the phone number of the GP?',
+              subTitle: null,
+              type: 'SHORT_TEXT',
+              validationType: 'MANDATORY',
+              customValidation: {
+                regex: '^\\d+$',
+                message: 'Must be numerical',
+              },
+            },
+            answer: null,
+            originalPageId: 'REGISTERED_WITH_GP',
+          },
         ],
       },
     },
@@ -446,6 +462,17 @@ const submitAssessment = () => {
                 question: 'REGISTERED_WITH_GP',
                 questionTitle: 'Is the person in prison registered with a GP surgery outside of prison?',
                 questionType: 'RADIO',
+              },
+              {
+                answer: {
+                  '@class': 'StringAnswer',
+                  answer: '01234567890',
+                  displayText: '01234567890',
+                },
+                pageId: 'REGISTERED_WITH_GP',
+                question: 'GP_PHONE_NUMBER',
+                questionTitle: 'What is the phone number of the GP?',
+                questionType: 'SHORT_TEXT',
               },
               {
                 answer: {

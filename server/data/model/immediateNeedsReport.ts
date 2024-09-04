@@ -23,10 +23,12 @@ export type ValidationTypes =
   | 'MAX_CHARACTER_LIMIT_SHORT_TEXT'
   | 'MAX_CHARACTER_LIMIT_LONG_TEXT'
   | 'MAX_CHARACTER_LIMIT_ADDRESS'
+  | 'CUSTOM'
 
 export type ValidationError = {
   validationType: ValidationTypes
   questionId: string
+  customErrorMessage?: string
 }
 
 export type ValidationErrors = ValidationError[] | null
@@ -39,6 +41,7 @@ export type QuestionsAndAnswers = {
     type?: string
     options?: QuestionOptions[]
     validationType?: ValidationTypes
+    customValidation?: CustomValidation
   }
   answer?: Answer
   originalPageId: string
@@ -70,4 +73,9 @@ export type SubmittedInput = {
 
 export type ResettlementAssessmentVersion = {
   version: number
+}
+
+export type CustomValidation = {
+  regex: string
+  message: string
 }

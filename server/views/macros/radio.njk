@@ -12,7 +12,7 @@
     <div class="govuk-hint" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     <div class="govuk-radios" data-module="govuk-radios">
       {% if validationError %}
-        {{ validationErrorMessage(validationError.validationType) }}
+        {{ validationErrorMessage(validationError) }}
       {% endif %}
 
       {% for option in currentQuestionAndAnswer.question.options %}
