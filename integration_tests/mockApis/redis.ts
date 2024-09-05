@@ -64,10 +64,17 @@ export async function initRedisCacheForNullExistingAssessment() {
         pageId: 'REGISTERED_WITH_GP',
         answer: { answer: 'YES', displayText: 'Yes', '@class': 'StringAnswer' },
       },
+      {
+        question: 'GP_PHONE_NUMBER',
+        questionTitle: 'What is the phone number of the GP?',
+        questionType: 'SHORT_TEXT',
+        pageId: 'REGISTERED_WITH_GP',
+        answer: { answer: '01234567890', displayText: '01234567890', '@class': 'StringAnswer' },
+      },
     ],
   }
 
-  const answered = ['REGISTERED_WITH_GP']
+  const answered = ['REGISTERED_WITH_GP', 'GP_PHONE_NUMBER']
 
   initRedisCache([
     {

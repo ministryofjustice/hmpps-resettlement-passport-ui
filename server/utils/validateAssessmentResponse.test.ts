@@ -37,7 +37,7 @@ describe('Validate assessment question', () => {
       [
         {
           questionId: 'REGISTERED_WITH_GP',
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
         },
       ],
     ],
@@ -114,11 +114,11 @@ describe('Validate assessment question', () => {
       [
         {
           questionId: 'SUPPORT_NEEDS',
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
         },
         {
           questionId: 'CASE_NOTE_SUMMARY',
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
         },
       ],
     ],
@@ -222,7 +222,7 @@ describe('Validate assessment question', () => {
       [
         {
           questionId: 'ADDRESS_OF_EMPLOYER',
-          validationType: 'MANDATORY',
+          validationType: 'MANDATORY_INPUT',
         },
       ],
     ],
@@ -267,6 +267,62 @@ describe('Validate assessment question', () => {
         ],
       } as ResettlementReportUserInput,
       null,
+    ],
+    [
+      'Regex validation - value matches regex',
+      {
+        questionsAndAnswers: [
+          {
+            questionId: 'NUMBER_OF_CHILDREN',
+            answer: '3',
+          },
+        ],
+        flattenedQuestionsOnPage: [
+          {
+            question: {
+              id: 'NUMBER_OF_CHILDREN',
+              type: 'SHORT_TEXT',
+              validationType: 'MANDATORY',
+              customValidation: {
+                regex: '^\\d+$',
+                message: 'Must be numerical',
+              },
+            },
+          },
+        ],
+      } as ResettlementReportUserInput,
+      null,
+    ],
+    [
+      'Regex validation - value does not match regex',
+      {
+        questionsAndAnswers: [
+          {
+            questionId: 'NUMBER_OF_CHILDREN',
+            answer: 'not a number',
+          },
+        ],
+        flattenedQuestionsOnPage: [
+          {
+            question: {
+              id: 'NUMBER_OF_CHILDREN',
+              type: 'SHORT_TEXT',
+              validationType: 'MANDATORY',
+              customValidation: {
+                regex: '^\\d+$',
+                message: 'Must be numerical',
+              },
+            },
+          },
+        ],
+      } as ResettlementReportUserInput,
+      [
+        {
+          questionId: 'NUMBER_OF_CHILDREN',
+          validationType: 'CUSTOM',
+          customErrorMessage: 'Must be numerical',
+        },
+      ],
     ],
   ])(
     '%s validateAssessmentResponse(%s)',

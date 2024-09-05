@@ -320,7 +320,6 @@ describe('saveAnswerAndGetNextPage', () => {
             title: 'Question title',
             subTitle: 'Question subtitle',
             type: 'SHORT_TEXT',
-            validationType: 'MAX_CHARACTER_LIMIT_SHORT_TEXT',
           },
           answer: {
             answer: 'Answer text',

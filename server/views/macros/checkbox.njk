@@ -9,7 +9,7 @@
       {% endif %}
       <div id="waste-hint" class="govuk-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     {% if validationError %}
-      {{ validationErrorMessage(validationError.validationType)  }}
+      {{ validationErrorMessage(validationError) }}
     {% endif %}
       <div class="govuk-checkboxes" data-module="govuk-checkboxes">
         {% for option in currentQuestionAndAnswer.question.options %}

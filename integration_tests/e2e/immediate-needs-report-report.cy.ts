@@ -73,12 +73,20 @@ context('Immediate Needs Report', () => {
     getHeading().should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
     nothingShouldBeSelected()
 
-    // Check mandatory validation
+    // Check validation
     clickContinue()
-    cy.get('.govuk-error-message').should('contain.text', 'This field is required')
+    cy.get('.govuk-error-message').eq(0).should('contain.text', 'This field is required')
+    cy.get('.govuk-error-message').eq(1).should('contain.text', 'This field is required')
 
     cy.get('#REGISTERED_WITH_GP-YES').click()
 
+    cy.get('#GP_PHONE_NUMBER').type('not a phone number')
+    clickContinue()
+
+    cy.get('.govuk-error-message').should('contain.text', 'Must be numerical')
+
+    cy.get('#GP_PHONE_NUMBER').clear()
+    cy.get('#GP_PHONE_NUMBER').type('01234567890')
     clickContinue()
 
     getHeading().should('have.text', 'Does the person in prison want to meet with a prison healthcare team?')
@@ -109,10 +117,11 @@ context('Immediate Needs Report', () => {
     getHeading().should('have.text', 'Check your answers')
 
     cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'Yes')
-    cy.get('.govuk-summary-list__value').eq(1).should('contain.text', 'No')
-    cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'Need 2')
-    cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'Support not required')
-    cy.get('.govuk-summary-list__value').eq(4).should('contain.text', 'Case Note')
+    cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '01234567890')
+    cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No')
+    cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'Need 2')
+    cy.get('.govuk-summary-list__value').eq(4).should('contain.text', 'Support not required')
+    cy.get('.govuk-summary-list__value').eq(5).should('contain.text', 'Case Note')
     clickConfirm()
 
     cy.get('.govuk-table__cell > .govuk-tag').each(item => {
@@ -317,10 +326,11 @@ context('Immediate Needs Report', () => {
     getHeading().should('have.text', 'Check your answers')
 
     cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'Yes')
-    cy.get('.govuk-summary-list__value').eq(1).should('contain.text', 'No')
-    cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'Need 2')
-    cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'Support not required')
-    cy.get('.govuk-summary-list__value').eq(4).should('contain.text', 'Case Note')
+    cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '01234567890')
+    cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No')
+    cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'Need 2')
+    cy.get('.govuk-summary-list__value').eq(4).should('contain.text', 'Support not required')
+    cy.get('.govuk-summary-list__value').eq(5).should('contain.text', 'Case Note')
     clickConfirm()
 
     cy.get('.govuk-table__cell > .govuk-tag').each(item => {
