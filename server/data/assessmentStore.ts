@@ -117,4 +117,10 @@ export default class AssessmentStore {
     const key = buildKey(answeredQuestionsPrefix, userId, nomsId, pathway)
     await this.client.del(key)
   }
+
+  public async deleteCurrentPage(userId: string, nomsId: string, pathway: string) {
+    await this.ensureConnected()
+    const key = buildKey(currentPagePrefix, userId, nomsId, pathway)
+    await this.client.del(key)
+  }
 }

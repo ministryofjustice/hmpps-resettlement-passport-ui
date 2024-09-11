@@ -18,7 +18,7 @@
   {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
   {% if prisonerData.assessmentRequired and prisonerData.preReleaseSubmitted === false %}
     {{ incompleteImmediateNeedsReport(pathway, prisonerData) }}
-  {% elif releaseDateDays.daysDiff <= 84 and prisonerData.resettlementReviewAvailable === true %}
+  {% elif (releaseDateDays.daysDiff <= 84 or releaseDateDays.isPast) and prisonerData.resettlementReviewAvailable === true %}
     {{preReleaseRequired(pathway, prisonerData)}}
   {% elif prisonerData.resettlementReviewAvailable === false %}
     {{preReleaseComplete(pathway, prisonerData)}}

@@ -92,11 +92,18 @@ export default class ImmediateNeedsReportController {
 
       const answeredQuestions = processReportRequestBody(currentPage, req.body)
 
-      const validationErrors: ValidationErrors = validateAssessmentResponse(answeredQuestions)
+      const validationErrors = validateAssessmentResponse(answeredQuestions)
 
       // prepare current Q&A's from req body for post request
       const dataToSubmit: SubmittedInput = formatAssessmentResponse(answeredQuestions)
-      await this.assessmentStateService.answer(stateKey, dataToSubmit, edit)
+      await this.assessmentStateService.answer(stateKey, dataToSubmit, validationErrors != null, edit)
+
+      if (validationErrors) {
+        const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
+        return res.redirect(
+          `/ImmediateNeedsReport/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
+        )
+      }
 
       const existingAssessment = await this.assessmentStateService.getAssessment(stateKey)
 
@@ -108,13 +115,6 @@ export default class ImmediateNeedsReportController {
         assessmentType,
         existingAssessment.version || 1,
       )
-
-      if (validationErrors) {
-        const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
-        return res.redirect(
-          `/ImmediateNeedsReport/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
-        )
-      }
 
       if (!nextPage.error) {
         const { nextPageId } = nextPage

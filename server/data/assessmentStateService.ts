@@ -27,10 +27,13 @@ export class AssessmentStateService {
     await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, key.pathway)
   }
 
-  async answer(key: StateKey, answer: SubmittedInput, edit: boolean = false) {
+  async answer(key: StateKey, answer: SubmittedInput, validationErrors: boolean, edit: boolean = false) {
     // get previous Q&A's
     const allQuestionsAndAnswers = await this.getAssessment(key)
-    await this.updateAnsweredQuestionIds(key, answer, edit)
+
+    if (!validationErrors) {
+      await this.updateAnsweredQuestionIds(key, answer, edit)
+    }
 
     answer.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
       const index = allQuestionsAndAnswers?.questionsAndAnswers
@@ -130,6 +133,7 @@ export class AssessmentStateService {
     await this.store.deleteAssessment(key.userId, key.prisonerNumber, key.pathway)
     await this.store.deleteEditedQuestionList(key.userId, key.prisonerNumber, key.pathway)
     await this.store.deleteAnsweredQuestions(key.userId, key.prisonerNumber, key.pathway)
+    await this.store.deleteCurrentPage(key.userId, key.prisonerNumber, key.pathway)
   }
 
   async getCurrentPage(key: StateKey): Promise<AssessmentPage> {
