@@ -381,6 +381,6 @@ describe('saveAnswerAndGetNextPage', () => {
       'BCST2',
       1,
     )
-    expect(answerSpy).toHaveBeenCalledWith(stateKey, submission, false)
+    expect(answerSpy).toHaveBeenCalledWith(stateKey, submission, false, false)
   })
 })

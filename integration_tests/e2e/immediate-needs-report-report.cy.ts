@@ -339,4 +339,71 @@ context('Immediate Needs Report', () => {
     clickSubmit()
     cy.get('.govuk-panel__title').should('contain.text', 'Immediate needs report completed')
   })
+
+  it('PSFR-1629 Validation errors and back button scenario', () => {
+    cy.task('stubJohnSmithImmediateNeedsReportHealth')
+    cy.signIn()
+
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+
+    // Click Health link
+    cy.get('[data-qa="a-HEALTH"]').click()
+
+    getHeading().should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
+    nothingShouldBeSelected()
+
+    cy.get('#REGISTERED_WITH_GP-YES').click()
+
+    // Click continue to get missing mandatory validation
+    clickContinue()
+    cy.get('.govuk-error-message').eq(0).should('contain.text', 'This field is required')
+
+    // Click back twice to go back to task list page
+    cy.go(-2)
+
+    // Click Health link
+    cy.get('[data-qa="a-HEALTH"]').click()
+
+    // Should go to page 1
+    getHeading().should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
+    cy.get('#REGISTERED_WITH_GP-YES').should('be.checked')
+    cy.get('#GP_PHONE_NUMBER').type('01234567890')
+    clickContinue()
+
+    getHeading().should('have.text', 'Does the person in prison want to meet with a prison healthcare team?')
+    nothingShouldBeSelected()
+    cy.get('#MEET_HEALTHCARE_TEAM-NO').click()
+
+    clickContinue()
+
+    getHeading().should('have.text', 'Support needs')
+    noCheckboxesShouldBeSelected()
+    cy.get('#NEED_2').click()
+
+    clickContinue()
+
+    getHeading().should('have.text', 'Health report summary')
+
+    nothingShouldBeSelected()
+    cy.get('#SUPPORT_NEEDS-SUPPORT_NOT_REQUIRED').click()
+    cy.get('#CASE_NOTE_SUMMARY').type('Case Note')
+
+    clickContinue()
+
+    getHeading().should('have.text', 'Check your answers')
+
+    cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'Yes')
+    cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '01234567890')
+    cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No')
+    cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'Need 2')
+    cy.get('.govuk-summary-list__value').eq(4).should('contain.text', 'Support not required')
+    cy.get('.govuk-summary-list__value').eq(5).should('contain.text', 'Case Note')
+    clickConfirm()
+
+    cy.get('.govuk-table__cell > .govuk-tag').each(item => {
+      cy.wrap(item).should('have.text', 'Completed')
+    })
+    clickSubmit()
+    cy.get('.govuk-panel__title').should('contain.text', 'Immediate needs report completed')
+  })
 })

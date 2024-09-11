@@ -63,7 +63,7 @@ describe('assessmentStateService', () => {
       store.getAssessment.mockResolvedValueOnce({ questionsAndAnswers: [], version: 2 })
       store.getAnsweredQuestions.mockResolvedValueOnce([])
 
-      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, false)
 
       expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', answer)
       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
@@ -108,7 +108,7 @@ describe('assessmentStateService', () => {
 
       store.getAssessment.mockResolvedValueOnce(existing)
       store.getAnsweredQuestions.mockResolvedValueOnce(['WHERE_DID_THEY_LIVE'])
-      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, false)
 
       const expected = {
         questionsAndAnswers: [
@@ -194,7 +194,7 @@ describe('assessmentStateService', () => {
       store.getAssessment.mockResolvedValueOnce(existing)
       store.getAnsweredQuestions.mockResolvedValueOnce(['WHERE_DID_THEY_LIVE', 'WHERE_WILL_THEY_LIVE_2'])
 
-      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer)
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, false)
 
       const expected = {
         questionsAndAnswers: [
