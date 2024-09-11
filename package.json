@@ -107,7 +107,7 @@
     "@types/pdf-parse": "^1.1.4",
     "agentkeepalive": "^4.5.0",
     "applicationinsights": "^2.9.6",
-    "body-parser": "^1.20.2",
+    "body-parser": "^1.20.3",
     "bunyan": "^1.8.15",
     "bunyan-format": "^0.2.1",
     "compression": "^1.7.4",
@@ -115,7 +115,7 @@
     "connect-redis": "^7.1.1",
     "csurf": "^1.11.0",
     "date-fns": "^3.6.0",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "express-prom-bundle": "^6.6.0",
     "express-session": "^1.18.0",
     "formidable": "^3.5.1",
@@ -188,7 +188,7 @@
     "sass": "^1.78.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.5.4"
+    "typescript": "^5.6.2"
   },
   "overrides": {
     "semver": "^7.5.3",
