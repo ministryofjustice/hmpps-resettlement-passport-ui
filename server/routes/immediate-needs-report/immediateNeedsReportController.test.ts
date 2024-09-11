@@ -383,4 +383,86 @@ describe('saveAnswerAndGetNextPage', () => {
     )
     expect(answerSpy).toHaveBeenCalledWith(stateKey, submission, false, false)
   })
+  it('Validation errors', async () => {
+    stubPrisonerDetails()
+
+    const assessmentPage: AssessmentPage = {
+      id: 'PAGE_1',
+      title: 'Page 1 title',
+      questionsAndAnswers: [
+        {
+          question: {
+            id: 'QUESTION_1',
+            title: 'Question title',
+            subTitle: 'Question subtitle',
+            type: 'SHORT_TEXT',
+            validationType: 'MANDATORY',
+          },
+          answer: null,
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_2',
+            title: 'Another question title',
+            subTitle: 'Another question subtitle',
+            type: 'SHORT_TEXT',
+            validationType: 'MANDATORY',
+          },
+          answer: null,
+          originalPageId: 'PAGE_1',
+        },
+      ],
+    }
+
+    const expectedDataToSubmit: SubmittedInput = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_1',
+          questionTitle: 'Question title',
+          pageId: 'PAGE_1',
+          questionType: 'SHORT_TEXT',
+          answer: { answer: 'Answer text', '@class': 'StringAnswer', displayText: 'Answer text' },
+        },
+        {
+          question: 'QUESTION_2',
+          questionTitle: 'Another question title',
+          pageId: 'PAGE_1',
+          questionType: 'SHORT_TEXT',
+          answer: { answer: undefined, '@class': 'StringAnswer', displayText: undefined },
+        },
+      ],
+      version: null,
+    }
+
+    const getCurrentPageSpy = jest.spyOn(assessmentStateService, 'getCurrentPage').mockResolvedValue(assessmentPage)
+    const answerSpy = jest.spyOn(assessmentStateService, 'answer').mockImplementation()
+
+    await request(app)
+      .post('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=123')
+      .send({
+        assessmentType: 'BCST2',
+        pathway: 'ACCOMMODATION',
+        currentPageId: 'PAGE_1',
+        QUESTION_1: 'Answer text',
+      })
+      .expect(302)
+      .expect(res => {
+        expect(res.text).toContain(
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%5D&backButton=false&type=BCST2',
+        )
+      })
+
+    const stateKey = {
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    expect(getCurrentPageSpy).toHaveBeenCalledWith(stateKey)
+
+    expect(answerSpy).toHaveBeenCalledWith(stateKey, expectedDataToSubmit, true, false)
+    expect(jest.spyOn(assessmentStateService, 'getAssessment')).toHaveBeenCalledTimes(0)
+    expect(jest.spyOn(rpService, 'fetchNextPage')).toHaveBeenCalledTimes(0)
+  })
 })
