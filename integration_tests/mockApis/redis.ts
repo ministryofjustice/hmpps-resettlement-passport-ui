@@ -78,15 +78,15 @@ export async function initRedisCacheForNullExistingAssessment() {
 
   initRedisCache([
     {
-      key: 'currentPage:USER1:A8731DY:HEALTH',
+      key: 'currentPage:USER1:A8731DY:BCST2:HEALTH',
       value: JSON.stringify(currentPage),
     },
     {
-      key: 'assessment:USER1:A8731DY:HEALTH',
+      key: 'assessment:USER1:A8731DY:BCST2:HEALTH',
       value: JSON.stringify(assessment),
     },
     {
-      key: 'answered:USER1:A8731DY:HEALTH',
+      key: 'answered:USER1:A8731DY:BCST2:HEALTH',
       value: JSON.stringify(answered),
     },
   ])
