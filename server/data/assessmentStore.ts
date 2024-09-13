@@ -9,8 +9,15 @@ const answeredQuestionsPrefix = 'answered'
 const currentPagePrefix = 'currentPage'
 const editedQuestionPrefix = 'edit'
 
-function buildKey(prefix: string, userId: string, nomsId: string, pathway: string) {
-  return `${prefix}:${userId}:${nomsId}:${pathway}`
+export interface StateKey {
+  prisonerNumber?: string
+  userId: string
+  assessmentType: string
+  pathway: string
+}
+
+function buildKey(prefix: string, key: StateKey) {
+  return `${prefix}:${key.userId}:${key.prisonerNumber}:${key.assessmentType}:${key.pathway}`
 }
 
 export default class AssessmentStore {
@@ -27,100 +34,92 @@ export default class AssessmentStore {
   }
 
   public async setAssessment(
-    userId: string,
-    nomsId: string,
-    pathway: string,
+    stateKey: StateKey,
     questionsAndAnswers: SubmittedInput,
     ttl = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
-    await this.client.set(buildKey(assessmentPrefix, userId, nomsId, pathway), JSON.stringify(questionsAndAnswers), {
+    await this.client.set(buildKey(assessmentPrefix, stateKey), JSON.stringify(questionsAndAnswers), {
       EX: ttl,
     })
   }
 
-  public async getAssessment(userId: string, nomsId: string, pathway: string): Promise<SubmittedInput> {
+  public async getAssessment(stateKey: StateKey): Promise<SubmittedInput> {
     await this.ensureConnected()
-    const key = buildKey(assessmentPrefix, userId, nomsId, pathway)
+    const key = buildKey(assessmentPrefix, stateKey)
     return JSON.parse(await this.client.get(key))
   }
 
-  public async getAnsweredQuestions(userId: string, nomsId: string, pathway: string): Promise<string[]> {
+  public async getAnsweredQuestions(stateKey: StateKey): Promise<string[]> {
     await this.ensureConnected()
-    return JSON.parse(await this.client.get(buildKey(answeredQuestionsPrefix, userId, nomsId, pathway))) || []
+    return JSON.parse(await this.client.get(buildKey(answeredQuestionsPrefix, stateKey))) || []
   }
 
   public async setAnsweredQuestions(
-    userId: string,
-    nomsId: string,
-    pathway: string,
+    stateKey: StateKey,
     questionIds: string[],
     durationSeconds: number = defaultTimeToLive,
   ) {
     await this.ensureConnected()
-    const key = buildKey(answeredQuestionsPrefix, userId, nomsId, pathway)
+    const key = buildKey(answeredQuestionsPrefix, stateKey)
     await this.client.set(key, JSON.stringify(questionIds), { EX: durationSeconds })
   }
 
-  public async deleteAssessment(userId: string, nomsId: string, pathway: string) {
+  public async deleteAssessment(stateKey: StateKey) {
     await this.ensureConnected()
-    const key = buildKey(assessmentPrefix, userId, nomsId, pathway)
+    const key = buildKey(assessmentPrefix, stateKey)
     await this.client.del(key)
   }
 
   public async setCurrentPage(
-    userId: string,
-    nomsId: string,
-    pathway: string,
+    stateKey: StateKey,
     currentPage: AssessmentPage,
     ttl: number = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
-    await this.client.set(buildKey(currentPagePrefix, userId, nomsId, pathway), JSON.stringify(currentPage), {
+    await this.client.set(buildKey(currentPagePrefix, stateKey), JSON.stringify(currentPage), {
       EX: ttl,
     })
   }
 
-  public async getCurrentPage(userId: string, nomsId: string, pathway: string): Promise<string> {
+  public async getCurrentPage(stateKey: StateKey): Promise<string> {
     await this.ensureConnected()
-    const key = buildKey(currentPagePrefix, userId, nomsId, pathway)
+    const key = buildKey(currentPagePrefix, stateKey)
     return this.client.get(key)
   }
 
   public async setEditedQuestionList(
-    userId: string,
-    nomsId: string,
-    pathway: string,
+    stateKey: StateKey,
     questionIds: string[],
     ttl: number = defaultTimeToLive,
   ): Promise<void> {
     await this.ensureConnected()
-    await this.client.set(buildKey(editedQuestionPrefix, userId, nomsId, pathway), JSON.stringify(questionIds), {
+    await this.client.set(buildKey(editedQuestionPrefix, stateKey), JSON.stringify(questionIds), {
       EX: ttl,
     })
   }
 
-  async getEditedQuestionList(userId: string, nomsId: string, pathway: string): Promise<string[]> {
+  async getEditedQuestionList(stateKey: StateKey): Promise<string[]> {
     await this.ensureConnected()
-    const key = buildKey(editedQuestionPrefix, userId, nomsId, pathway)
+    const key = buildKey(editedQuestionPrefix, stateKey)
     return JSON.parse(await this.client.get(key)) || []
   }
 
-  public async deleteEditedQuestionList(userId: string, nomsId: string, pathway: string) {
+  public async deleteEditedQuestionList(stateKey: StateKey) {
     await this.ensureConnected()
-    const key = buildKey(editedQuestionPrefix, userId, nomsId, pathway)
+    const key = buildKey(editedQuestionPrefix, stateKey)
     await this.client.del(key)
   }
 
-  public async deleteAnsweredQuestions(userId: string, nomsId: string, pathway: string) {
+  public async deleteAnsweredQuestions(stateKey: StateKey) {
     await this.ensureConnected()
-    const key = buildKey(answeredQuestionsPrefix, userId, nomsId, pathway)
+    const key = buildKey(answeredQuestionsPrefix, stateKey)
     await this.client.del(key)
   }
 
-  public async deleteCurrentPage(userId: string, nomsId: string, pathway: string) {
+  public async deleteCurrentPage(stateKey: StateKey) {
     await this.ensureConnected()
-    const key = buildKey(currentPagePrefix, userId, nomsId, pathway)
+    const key = buildKey(currentPagePrefix, stateKey)
     await this.client.del(key)
   }
 }

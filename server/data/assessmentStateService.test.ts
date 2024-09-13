@@ -1,5 +1,5 @@
-import { AssessmentStateService, StateKey } from './assessmentStateService'
-import AssessmentStore from './assessmentStore'
+import { AssessmentStateService } from './assessmentStateService'
+import AssessmentStore, { StateKey } from './assessmentStore'
 import { createRedisClient } from './redisClient'
 import {
   AssessmentPage,
@@ -12,6 +12,7 @@ jest.mock('./assessmentStore')
 
 const sessionId = 'sessionId'
 const prisonerNumber = '123'
+const assessmentType = 'RESETTLEMENT_PLAN'
 
 describe('assessmentStateService', () => {
   let store: jest.Mocked<AssessmentStore>
@@ -38,6 +39,7 @@ describe('assessmentStateService', () => {
     return {
       prisonerNumber,
       userId: sessionId,
+      assessmentType,
       pathway,
     }
   }
@@ -65,10 +67,8 @@ describe('assessmentStateService', () => {
 
       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, false)
 
-      expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', answer)
-      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
-        'WHERE_WILL_THEY_LIVE_2',
-      ])
+      expect(setAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), answer)
+      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), ['WHERE_WILL_THEY_LIVE_2'])
     })
 
     it('should add an answer to a question that has not been answered before', async () => {
@@ -138,8 +138,8 @@ describe('assessmentStateService', () => {
         version: 2,
       } as SubmittedInput
 
-      expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
-      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
+      expect(setAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), expected)
+      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), [
         'WHERE_DID_THEY_LIVE',
         'WHERE_WILL_THEY_LIVE_2',
       ])
@@ -224,8 +224,8 @@ describe('assessmentStateService', () => {
         version: 3,
       } as SubmittedInput
 
-      expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
-      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', ['WHERE_DID_THEY_LIVE'])
+      expect(setAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), expected)
+      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), ['WHERE_DID_THEY_LIVE'])
     })
 
     describe('startEdit', () => {
@@ -357,7 +357,7 @@ describe('assessmentStateService', () => {
         const pathway = 'ATTITUDES_THINKING_AND_BEHAVIOUR'
         await assessmentStateService.startEdit(aStateKey(pathway), summaryPage, 2)
 
-        expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', pathway, {
+        expect(setAssessmentSpy).toHaveBeenCalledWith(aStateKey(pathway), {
           questionsAndAnswers: [
             {
               question: 'HELP_TO_MANAGE_ANGER',
@@ -383,7 +383,7 @@ describe('assessmentStateService', () => {
           ],
           version: 2,
         })
-        expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway, [
+        expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(aStateKey(pathway), [
           'HELP_TO_MANAGE_ANGER',
           'ISSUES_WITH_GAMBLING',
           'SUPPORT_NEEDS_PRERELEASE',
@@ -429,7 +429,7 @@ describe('assessmentStateService', () => {
       )
 
       expect(reConverged).toEqual(true)
-      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(sessionId, prisonerNumber, 'EDUCATION_SKILLS_AND_WORK', [
+      expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(aStateKey('EDUCATION_SKILLS_AND_WORK'), [
         'JOB_BEFORE_CUSTODY',
         'HAVE_A_JOB_AFTER_RELEASE',
       ])
@@ -504,6 +504,7 @@ describe('assessmentStateService', () => {
       const stateKey = {
         prisonerNumber: 'ABC1234',
         userId: 'D126HJ',
+        assessmentType: 'RESETTLEMENT_PLAN',
         pathway: 'ACCOMMODATION',
       }
       const configVersion = 2
@@ -516,18 +517,14 @@ describe('assessmentStateService', () => {
       } as SubmittedInput
 
       expect(assessment).toEqual(expectedAssessment)
-      expect(setAssessmentSpy).toHaveBeenCalledWith(
-        stateKey.userId,
-        stateKey.prisonerNumber,
-        stateKey.pathway,
-        expectedAssessment,
-      )
+      expect(setAssessmentSpy).toHaveBeenCalledWith(stateKey, expectedAssessment)
     })
 
     it('If cache is not empty, return assessment from cache filtered to only answered questions', async () => {
       const stateKey = {
         prisonerNumber: 'ABC1234',
         userId: 'D126HJ',
+        assessmentType: 'RESETTLEMENT_PLAN',
         pathway: 'ACCOMMODATION',
       }
       const configVersion = 4
@@ -578,6 +575,7 @@ describe('assessmentStateService', () => {
       const stateKey = {
         prisonerNumber: 'ABC1234',
         userId: 'D126HJ',
+        assessmentType: 'RESETTLEMENT_PLAN',
         pathway: 'ACCOMMODATION',
       }
 
@@ -611,8 +609,8 @@ describe('assessmentStateService', () => {
         version: 1,
       } as SubmittedInput
 
-      expect(getAssessmentSpy).toHaveBeenCalledWith(stateKey.userId, stateKey.prisonerNumber, stateKey.pathway)
-      expect(getAnsweredQuestionsSpy).toHaveBeenCalledWith(stateKey.userId, stateKey.prisonerNumber, stateKey.pathway)
+      expect(getAssessmentSpy).toHaveBeenCalledWith(stateKey)
+      expect(getAnsweredQuestionsSpy).toHaveBeenCalledWith(stateKey)
       expect(assessment).toEqual(expectedAssessment)
     })
   })
