@@ -42,6 +42,7 @@ export default class ImmediateNeedsReportController {
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
+        assessmentType,
         pathway,
       }
 
@@ -84,6 +85,7 @@ export default class ImmediateNeedsReportController {
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
+        assessmentType,
         pathway,
       }
       const currentPage = await this.assessmentStateService.getCurrentPage(stateKey)
@@ -144,6 +146,7 @@ export default class ImmediateNeedsReportController {
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
+        assessmentType,
         pathway,
       }
 
@@ -238,6 +241,7 @@ export default class ImmediateNeedsReportController {
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
+        assessmentType,
         pathway,
       }
 
@@ -290,6 +294,7 @@ export default class ImmediateNeedsReportController {
     const stateKey = {
       prisonerNumber,
       userId: req.user.username,
+      assessmentType,
       pathway,
     }
 

@@ -1,6 +1,6 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import { PersonalDetails, PrisonerData } from '../../@types/express/index.d'
+import { PersonalDetails, PrisonerData } from '../../@types/express'
 import { appWithAllRoutes } from '../testutils/appSetup'
 
 import RpService from '../../services/rpService'
@@ -125,6 +125,7 @@ describe('getFirstPage', () => {
     expect(initialiseCacheSpy).toHaveBeenCalledWith(
       {
         prisonerNumber: '123',
+        assessmentType: 'BCST2',
         userId: 'user1',
         pathway: 'ACCOMMODATION',
       },
@@ -140,6 +141,7 @@ describe('getView', () => {
 
     const stateKey = {
       prisonerNumber: '123',
+      assessmentType: 'BCST2',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -220,6 +222,7 @@ describe('startEdit', () => {
 
     const stateKey = {
       prisonerNumber: '123',
+      assessmentType: 'BCST2',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -270,6 +273,7 @@ describe('startEdit', () => {
 
     const stateKey = {
       prisonerNumber: '123',
+      assessmentType: 'BCST2',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -365,6 +369,7 @@ describe('saveAnswerAndGetNextPage', () => {
 
     const stateKey = {
       prisonerNumber: '123',
+      assessmentType: 'BCST2',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -455,6 +460,7 @@ describe('saveAnswerAndGetNextPage', () => {
 
     const stateKey = {
       prisonerNumber: '123',
+      assessmentType: 'BCST2',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
