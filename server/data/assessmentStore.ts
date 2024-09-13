@@ -20,6 +20,10 @@ function buildKey(prefix: string, key: StateKey) {
   return `${prefix}:${key.userId}:${key.prisonerNumber}:${key.assessmentType}:${key.pathway}`
 }
 
+function buildOldKey(prefix: string, key: StateKey) {
+  return `${prefix}:${key.userId}:${key.prisonerNumber}:${key.pathway}`
+}
+
 export default class AssessmentStore {
   constructor(private readonly client: RedisClient) {
     client.on('error', error => {
@@ -46,13 +50,12 @@ export default class AssessmentStore {
 
   public async getAssessment(stateKey: StateKey): Promise<SubmittedInput> {
     await this.ensureConnected()
-    const key = buildKey(assessmentPrefix, stateKey)
-    return JSON.parse(await this.client.get(key))
+    return JSON.parse(await this.getFromCache(assessmentPrefix, stateKey))
   }
 
   public async getAnsweredQuestions(stateKey: StateKey): Promise<string[]> {
     await this.ensureConnected()
-    return JSON.parse(await this.client.get(buildKey(answeredQuestionsPrefix, stateKey))) || []
+    return JSON.parse(await this.getFromCache(answeredQuestionsPrefix, stateKey)) || []
   }
 
   public async setAnsweredQuestions(
@@ -67,8 +70,7 @@ export default class AssessmentStore {
 
   public async deleteAssessment(stateKey: StateKey) {
     await this.ensureConnected()
-    const key = buildKey(assessmentPrefix, stateKey)
-    await this.client.del(key)
+    await this.delFromCache(assessmentPrefix, stateKey)
   }
 
   public async setCurrentPage(
@@ -84,8 +86,7 @@ export default class AssessmentStore {
 
   public async getCurrentPage(stateKey: StateKey): Promise<string> {
     await this.ensureConnected()
-    const key = buildKey(currentPagePrefix, stateKey)
-    return this.client.get(key)
+    return this.getFromCache(currentPagePrefix, stateKey)
   }
 
   public async setEditedQuestionList(
@@ -101,25 +102,39 @@ export default class AssessmentStore {
 
   async getEditedQuestionList(stateKey: StateKey): Promise<string[]> {
     await this.ensureConnected()
-    const key = buildKey(editedQuestionPrefix, stateKey)
-    return JSON.parse(await this.client.get(key)) || []
+    return JSON.parse(await this.getFromCache(editedQuestionPrefix, stateKey)) || []
   }
 
   public async deleteEditedQuestionList(stateKey: StateKey) {
     await this.ensureConnected()
-    const key = buildKey(editedQuestionPrefix, stateKey)
-    await this.client.del(key)
+    await this.delFromCache(editedQuestionPrefix, stateKey)
   }
 
   public async deleteAnsweredQuestions(stateKey: StateKey) {
     await this.ensureConnected()
-    const key = buildKey(answeredQuestionsPrefix, stateKey)
-    await this.client.del(key)
+    await this.delFromCache(answeredQuestionsPrefix, stateKey)
   }
 
   public async deleteCurrentPage(stateKey: StateKey) {
     await this.ensureConnected()
-    const key = buildKey(currentPagePrefix, stateKey)
-    await this.client.del(key)
+    await this.delFromCache(currentPagePrefix, stateKey)
+  }
+
+  private async getFromCache(prefix: string, key: StateKey) {
+    const cacheKey = buildKey(prefix, key)
+    const value = await this.client.get(cacheKey)
+
+    if (value !== null) {
+      return value
+    }
+    const oldCacheKey = buildOldKey(prefix, key)
+    return this.client.get(oldCacheKey)
+  }
+
+  private async delFromCache(prefix: string, key: StateKey) {
+    const cacheKey = buildKey(prefix, key)
+    await this.client.del(cacheKey)
+    const oldCacheKey = buildOldKey(prefix, key)
+    await this.client.del(oldCacheKey)
   }
 }
