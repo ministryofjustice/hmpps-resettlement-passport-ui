@@ -9,6 +9,7 @@ export type QuestionOptions = {
   description?: string
   exclusive?: boolean
   nestedQuestions?: QuestionsAndAnswers[]
+  freeText?: boolean
 }
 
 export type AnswerType = 'StringAnswer' | 'MapAnswer' | 'ListAnswer'

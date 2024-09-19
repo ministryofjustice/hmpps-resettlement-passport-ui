@@ -24,9 +24,17 @@
                 {% endfor %}
               {% endfor %}
             {% elif questionAnswer.questionType === 'CHECKBOX' %}
+              {% set freeTextAnswer = "" %}
+              {% for answer in questionAnswer.answer.answer %}
+                {% if answer | startsWith("OTHER_SUPPORT_NEEDS: ") %}
+                  {% set freeTextAnswer = answer | removePrefix("OTHER_SUPPORT_NEEDS: ") %}
+                {% endif %}
+              {% endfor %}
+
               {% for item in questionAnswer.answer.displayText %}
                 {{ item }}<br />
               {% endfor %}
+              {{ freeTextAnswer }}
             {% else %}
               {{ questionAnswer.answer.displayText }}
             {% endif %}

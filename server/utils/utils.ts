@@ -351,3 +351,14 @@ export function fullName(prisonerData: PrisonerData): string {
   }
   return ''
 }
+
+export function startsWith(string: string, prefix: string): boolean {
+  return string.startsWith(prefix)
+}
+
+export function removePrefix(string: string, prefix: string): string {
+  if (typeof string === 'string' && string.startsWith(prefix)) {
+    return string.slice(prefix.length)
+  }
+  return string
+}

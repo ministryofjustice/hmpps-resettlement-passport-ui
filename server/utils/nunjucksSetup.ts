@@ -35,6 +35,8 @@ import {
   getRiskAssessmentEnumValue,
   removeSlashes,
   fullName,
+  startsWith,
+  removePrefix,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -115,4 +117,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('formatDocumentCategory', formatDocumentCategory)
   njkEnv.addFilter('removeSlashes', removeSlashes)
   njkEnv.addFilter('fullName', fullName)
+  njkEnv.addFilter('startsWith', startsWith)
+  njkEnv.addFilter('removePrefix', removePrefix)
 }
