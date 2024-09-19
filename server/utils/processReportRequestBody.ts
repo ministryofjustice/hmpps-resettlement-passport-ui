@@ -1,8 +1,8 @@
-import { AssessmentPage, QuestionsAndAnswers } from '../data/model/immediateNeedsReport'
+import { ApiAssessmentPage, ApiQuestionsAndAnswer } from '../data/model/immediateNeedsReport'
 import { RequestBody, ResettlementReportUserInput } from './assessmentHelperTypes'
 
 export const processReportRequestBody = (
-  currentPage: AssessmentPage,
+  apiAssessmentPage: ApiAssessmentPage,
   body: RequestBody,
 ): ResettlementReportUserInput => {
   const questionsAndAnswers = Object.entries(body).map(([key, value]) => {
@@ -26,9 +26,9 @@ export const processReportRequestBody = (
   })
 
   // Go through all the questions and find any nested. If the parent question isn't answered, remove this nested question as the user never answered it
-  const nestedQuestionsAnswered: QuestionsAndAnswers[] = []
-  const allQuestionsInOrder: QuestionsAndAnswers[] = []
-  currentPage.questionsAndAnswers.forEach(parentQuestion => {
+  const nestedQuestionsAnswered: ApiQuestionsAndAnswer[] = []
+  const allQuestionsInOrder: ApiQuestionsAndAnswer[] = []
+  apiAssessmentPage.questionsAndAnswers.forEach(parentQuestion => {
     allQuestionsInOrder.push(parentQuestion)
     // Get the answer to each parent question
     const answerToParentQuestion = questionsAndAnswers.find(it => it.questionId === parentQuestion.question.id)?.answer
@@ -47,12 +47,12 @@ export const processReportRequestBody = (
   const filteredAnsweredQuestions = questionsAndAnswers.filter(
     answeredQuestion =>
       nestedQuestionsAnswered.map(it => it.question.id).includes(answeredQuestion.questionId) ||
-      currentPage.questionsAndAnswers.map(it => it.question.id).includes(answeredQuestion.questionId),
+      apiAssessmentPage.questionsAndAnswers.map(it => it.question.id).includes(answeredQuestion.questionId),
   )
 
   return {
     questionsAndAnswers: filteredAnsweredQuestions,
     flattenedQuestionsOnPage: allQuestionsInOrder,
-    pageId: currentPage.id,
+    pageId: apiAssessmentPage.id,
   }
 }

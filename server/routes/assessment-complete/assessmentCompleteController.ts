@@ -34,6 +34,7 @@ export default class AssessmentCompleteController {
             userId: req.user.username,
             assessmentType,
             pathway,
+            assessmentType,
           }
           return this.assessmentStateService.onComplete(stateKey)
         })

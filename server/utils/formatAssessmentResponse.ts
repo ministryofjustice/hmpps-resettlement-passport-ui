@@ -1,8 +1,8 @@
 import {
   AnswerType,
-  QuestionsAndAnswers,
-  SubmittedInput,
-  SubmittedQuestionAndAnswer,
+  ApiQuestionsAndAnswer,
+  CachedAssessment,
+  CachedQuestionAndAnswer,
 } from '../data/model/immediateNeedsReport'
 import { ResettlementReportUserInput, ResettlementReportUserQuestionAndAnswer } from './assessmentHelperTypes'
 
@@ -64,7 +64,7 @@ export const formatAssessmentResponse = (userInput: ResettlementReportUserInput)
     }
   })
 
-  const formattedResponse: SubmittedInput = {
+  const formattedResponse: CachedAssessment = {
     questionsAndAnswers: filteredQuestionsAndAnswers,
     version: null,
   }
@@ -72,7 +72,7 @@ export const formatAssessmentResponse = (userInput: ResettlementReportUserInput)
   return formattedResponse
 }
 
-export function getDisplayTextFromQandA(questionAndAnswer: QuestionsAndAnswers) {
+export function getDisplayTextFromQandA(questionAndAnswer: ApiQuestionsAndAnswer) {
   let displayText
   const { type } = questionAndAnswer.question
   if (type === 'RADIO') {
@@ -91,7 +91,7 @@ export function getDisplayTextFromQandA(questionAndAnswer: QuestionsAndAnswers) 
   return displayText
 }
 
-export function toSubmittedQuestionAndAnswer(questionsAndAnswers: QuestionsAndAnswers): SubmittedQuestionAndAnswer {
+export function toSubmittedQuestionAndAnswer(questionsAndAnswers: ApiQuestionsAndAnswer): CachedQuestionAndAnswer {
   return {
     question: questionsAndAnswers.question.id,
     questionTitle: questionsAndAnswers.question.title,

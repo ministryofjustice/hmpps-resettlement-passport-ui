@@ -6,7 +6,7 @@ import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
 import { AppointmentLocation } from '../data/model/appointment'
-import { Answer, QuestionsAndAnswers, SubmittedInput, ValidationErrors } from '../data/model/immediateNeedsReport'
+import { Answer, ApiQuestionsAndAnswer, CachedAssessment, ValidationErrors } from '../data/model/immediateNeedsReport'
 import { AssessmentType } from '../data/model/assessmentInformation'
 
 const properCase = (word: string): string =>
@@ -260,8 +260,8 @@ export function formatAddress(location: AppointmentLocation): string {
 }
 
 export function getAnswerToCurrentQuestion(
-  currentQuestionAndAnswer: QuestionsAndAnswers,
-  allQuestionsAndAnswers: SubmittedInput,
+  currentQuestionAndAnswer: ApiQuestionsAndAnswer,
+  allQuestionsAndAnswers: CachedAssessment,
 ): Answer | null {
   if (!currentQuestionAndAnswer || !allQuestionsAndAnswers) return null
   const qaObject = allQuestionsAndAnswers.questionsAndAnswers.find(
