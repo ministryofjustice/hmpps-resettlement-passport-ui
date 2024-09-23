@@ -7,7 +7,7 @@ import {
   CachedQuestionAndAnswer,
   WorkingCachedAssessment,
 } from './model/immediateNeedsReport'
-import { toSubmittedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
+import { toCachedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
 
 export function createAssessmentStateService() {
   return new AssessmentStateService(new AssessmentStore(createRedisClient()))
@@ -22,7 +22,12 @@ export class AssessmentStateService {
     return this.store.getWorkingAssessment(key)
   }
 
-  async answer(key: StateKey, assessmentToSave: CachedAssessment) {
+  async answer(
+    key: StateKey,
+    assessmentToSave: CachedAssessment,
+    allAvailableQuestionsFromApi: string[],
+    pageId: string,
+  ) {
     // get previous Q&A's
     const existingAssessmentFromCache = await this.getWorkingAssessment(key)
     assessmentToSave.questionsAndAnswers.forEach((newQandA: CachedQuestionAndAnswer) => {
@@ -46,6 +51,13 @@ export class AssessmentStateService {
     await this.store.setWorkingAssessment(key, existingAssessmentFromCache)
   }
 
+  // async sortQuestions(key: StateKey, questions: CachedQuestionAndAnswer[]) {
+  //   const workingAssessment = await this.store.getWorkingAssessment(key)
+  //   const { pageLoadHistory } = workingAssessment
+  //   questions.sort((a, b) => pageLoadHistory.indexOf(a.pageId) - pageLoadHistory.indexOf(b.pageId))
+  //   return questions
+  // }
+
   async checkForConvergence(key: StateKey, currentPage: string): Promise<boolean> {
     const workingAssessment = await this.store.getWorkingAssessment(key)
     const backupAssessment = await this.store.getBackupAssessment(key)
@@ -53,14 +65,14 @@ export class AssessmentStateService {
     // Check if we're in an edit - we're in an edit if a backupAssessment exists
     const edit = backupAssessment !== null
 
-    if (!edit) {
+    if (!edit || backupAssessment.startEditPageId === currentPage) {
       return false
     }
 
     const answeredPages = [...new Set(workingAssessment.assessment.questionsAndAnswers.map(it => it.pageId))]
-    if (answeredPages.includes(currentPage) && backupAssessment.startEditPageId !== currentPage) {
+    if (answeredPages.includes(currentPage)) {
       const extraAnsweredPages = backupAssessment.pageLoadHistory.slice(
-        backupAssessment.pageLoadHistory.indexOf(currentPage) + 1,
+        backupAssessment.pageLoadHistory.indexOf(currentPage),
         backupAssessment.pageLoadHistory.length,
       )
       workingAssessment.pageLoadHistory.push(...extraAnsweredPages)
@@ -98,7 +110,7 @@ export class AssessmentStateService {
 
   convertQuestionsAndAnswersToCacheFormat(prefillFromApi: ApiQuestionsAndAnswer[]) {
     if (prefillFromApi.length > 0) {
-      return prefillFromApi.map(it => toSubmittedQuestionAndAnswer(it))
+      return prefillFromApi.map(it => toCachedQuestionAndAnswer(it))
     }
     return []
   }
@@ -130,9 +142,34 @@ export class AssessmentStateService {
     })
   }
 
-  async getQuestionsAndAnswersFromWorkingCache(stateKey: StateKey) {
+  async getMergedQuestionsAndAnswers(stateKey: StateKey, questionsAndAnswersFromApi: ApiQuestionsAndAnswer[]) {
     const assessmentFromCache = await this.getWorkingAssessment(stateKey)
-    return assessmentFromCache.assessment.questionsAndAnswers
+
+    // Merge together answers from API and cache
+    const mergedQuestionsAndAnswers = assessmentFromCache ? [...assessmentFromCache.assessment.questionsAndAnswers] : []
+    questionsAndAnswersFromApi.forEach(qAndA => {
+      const questionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers.find(
+        it => it?.question === qAndA.question.id,
+      )
+      // Only add if not present in cache
+      if (!questionAndAnswerFromCache) {
+        mergedQuestionsAndAnswers.push(toCachedQuestionAndAnswer(qAndA))
+      }
+      // Find any answered nested question and add to cache if it's not present
+      const nestedAnsweredQuestion = qAndA.question.options
+        ?.flatMap(it => it.nestedQuestions)
+        .find(it => it?.answer?.answer)
+      if (nestedAnsweredQuestion) {
+        const nestedQuestionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers.find(
+          it => it?.question === nestedAnsweredQuestion?.question.id,
+        )
+        if (!nestedQuestionAndAnswerFromCache) {
+          mergedQuestionsAndAnswers.push(toCachedQuestionAndAnswer(nestedAnsweredQuestion))
+        }
+      }
+    })
+
+    return mergedQuestionsAndAnswers
   }
 
   async getAllAnsweredQuestionsFromCache(stateKey: StateKey, workingOrBackupCache: 'working' | 'backup') {

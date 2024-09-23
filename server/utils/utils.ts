@@ -6,7 +6,13 @@ import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
 import { AppointmentLocation } from '../data/model/appointment'
-import { Answer, ApiQuestionsAndAnswer, CachedAssessment, ValidationErrors } from '../data/model/immediateNeedsReport'
+import {
+  Answer,
+  ApiAssessmentPage,
+  ApiQuestionsAndAnswer,
+  CachedAssessment,
+  ValidationErrors,
+} from '../data/model/immediateNeedsReport'
 import { AssessmentType } from '../data/model/assessmentInformation'
 
 const properCase = (word: string): string =>
@@ -350,6 +356,22 @@ export function fullName(prisonerData: PrisonerData): string {
     return `${toTitleCase(firstName)} ${toTitleCase(lastName)}`
   }
   return ''
+}
+
+export const getAvailableQuestionsFromApiAssessmentPage = (apiAssessmentPage: ApiAssessmentPage) => {
+  const questionIds: string[] = []
+  apiAssessmentPage.questionsAndAnswers.forEach(qa => {
+    const questionId = qa?.question.id
+    if (questionId) {
+      questionIds.push(questionId)
+    }
+    const nestedQuestionIds = qa?.question?.options
+      ?.flatMap(it => it?.nestedQuestions)
+      .map(it => it?.question.id)
+      .filter(it => it)
+    questionIds.push(...nestedQuestionIds)
+  })
+  return questionIds
 }
 
 export function startsWith(string: string, prefix: string): boolean {

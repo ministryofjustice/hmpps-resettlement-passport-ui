@@ -91,17 +91,17 @@ export function getDisplayTextFromQandA(questionAndAnswer: ApiQuestionsAndAnswer
   return displayText
 }
 
-export function toSubmittedQuestionAndAnswer(questionsAndAnswers: ApiQuestionsAndAnswer): CachedQuestionAndAnswer {
+export function toCachedQuestionAndAnswer(questionsAndAnswer: ApiQuestionsAndAnswer): CachedQuestionAndAnswer {
   return {
-    question: questionsAndAnswers.question.id,
-    questionTitle: questionsAndAnswers.question.title,
-    pageId: questionsAndAnswers.originalPageId,
-    questionType: questionsAndAnswers.question.type,
-    answer: questionsAndAnswers.answer
+    question: questionsAndAnswer.question.id,
+    questionTitle: questionsAndAnswer.question.title,
+    pageId: questionsAndAnswer.originalPageId,
+    questionType: questionsAndAnswer.question.type,
+    answer: questionsAndAnswer.answer
       ? {
-          answer: questionsAndAnswers.answer.answer,
-          displayText: getDisplayTextFromQandA(questionsAndAnswers),
-          '@class': questionsAndAnswers.answer['@class'],
+          answer: questionsAndAnswer.answer.answer,
+          displayText: getDisplayTextFromQandA(questionsAndAnswer),
+          '@class': questionsAndAnswer.answer['@class'],
         }
       : null,
   }

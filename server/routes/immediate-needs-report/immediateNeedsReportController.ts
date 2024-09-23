@@ -1,14 +1,9 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import { formatAssessmentResponse } from '../../utils/formatAssessmentResponse'
-import {
-  ApiAssessmentPage,
-  CachedAssessment,
-  CachedQuestionAndAnswer,
-  ValidationErrors,
-} from '../../data/model/immediateNeedsReport'
+import { CachedAssessment, CachedQuestionAndAnswer, ValidationErrors } from '../../data/model/immediateNeedsReport'
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
-import { getEnumValue, parseAssessmentType } from '../../utils/utils'
+import { getAvailableQuestionsFromApiAssessmentPage, getEnumValue, parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'
 import ImmediateNeedsReportView from './immediateNeedsReportView'
 import { processReportRequestBody } from '../../utils/processReportRequestBody'
@@ -50,7 +45,6 @@ export default class ImmediateNeedsReportController {
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
-        assessmentType,
         pathway,
         assessmentType,
       }
@@ -92,7 +86,6 @@ export default class ImmediateNeedsReportController {
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
-        assessmentType,
         pathway,
         assessmentType,
       }
@@ -114,7 +107,9 @@ export default class ImmediateNeedsReportController {
 
       // prepare current Q&A's from req body for post request
       const dataToSubmit = formatAssessmentResponse(answeredQuestions)
-      await this.assessmentStateService.answer(stateKey, dataToSubmit)
+
+      const allAvailableQuestionsFromApi = getAvailableQuestionsFromApiAssessmentPage(currentApiAssessmentPage)
+      await this.assessmentStateService.answer(stateKey, dataToSubmit, allAvailableQuestionsFromApi, currentPageId)
 
       if (validationErrors) {
         const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
@@ -162,7 +157,6 @@ export default class ImmediateNeedsReportController {
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
-        assessmentType,
         pathway,
         assessmentType,
       }
@@ -212,34 +206,34 @@ export default class ImmediateNeedsReportController {
         // - Clear down the working cache to the answered pages if a valid journey has been made
         // - Reset to the backup cache if we are in an abandoned edit journey
         // - Validate the answers with the backend and error if required
-        const workingAssessmentFromCache = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
+        const workingAssessmentAnsweredQuestions = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
           stateKey,
           'working',
         )
         const validateWorkingAssessment = await this.rpService.validateAssessment(
           prisonerData.personalDetails.prisonerNumber as string,
           pathway as string,
-          workingAssessmentFromCache,
+          workingAssessmentAnsweredQuestions,
           assessmentType,
         )
         if (validateWorkingAssessment.valid) {
-          mergedQuestionsAndAnswers = workingAssessmentFromCache.questionsAndAnswers
+          mergedQuestionsAndAnswers = workingAssessmentAnsweredQuestions.questionsAndAnswers
         } else {
-          const backupAssessmentFromCache = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
+          const backupAssessmentAnsweredQuestions = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
             stateKey,
             'backup',
           )
-          if (backupAssessmentFromCache) {
+          if (backupAssessmentAnsweredQuestions) {
             const validateBackupAssessment = await this.rpService.validateAssessment(
               prisonerData.personalDetails.prisonerNumber as string,
               pathway as string,
-              backupAssessmentFromCache,
+              backupAssessmentAnsweredQuestions,
               assessmentType,
             )
             if (validateBackupAssessment.valid) {
               // Replace working cache with backup cache
               await this.assessmentStateService.resetWorkingCacheToBackupCache(stateKey)
-              mergedQuestionsAndAnswers = backupAssessmentFromCache.questionsAndAnswers
+              mergedQuestionsAndAnswers = backupAssessmentAnsweredQuestions.questionsAndAnswers
             } else {
               // TODO - reset some things (?) and have this go back to first page
               return next(
@@ -251,13 +245,19 @@ export default class ImmediateNeedsReportController {
             return next(new Error('No valid working assessment available when loading check your answers!'))
           }
         }
+        // Sort the mergedQuestionsAndAnswers based on the order of pageLoadHistory
+        // TODO how to do this without all possible questionIds in order??
+        // mergedQuestionsAndAnswers = await this.assessmentStateService.sortQuestions(stateKey, mergedQuestionsAndAnswers)
         // Delete the backup cache and reset the pageLoadHistory in the working cache
         await this.assessmentStateService.clearDownCaches(stateKey, mergedQuestionsAndAnswers)
       } else {
         // Update page load history
         await this.assessmentStateService.updatePageLoadHistory(stateKey, currentPageId)
         // If it's a regular page, merge the cache and api assessments
-        mergedQuestionsAndAnswers = await this.assessmentStateService.getQuestionsAndAnswersFromWorkingCache(stateKey)
+        mergedQuestionsAndAnswers = await this.assessmentStateService.getMergedQuestionsAndAnswers(
+          stateKey,
+          apiAssessmentPage.questionsAndAnswers,
+        )
       }
 
       const view = new ImmediateNeedsReportView(
@@ -289,7 +289,6 @@ export default class ImmediateNeedsReportController {
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
-        assessmentType,
         pathway,
         assessmentType,
       }
@@ -336,7 +335,6 @@ export default class ImmediateNeedsReportController {
     const stateKey = {
       prisonerNumber: prisonerData.personalDetails.prisonerNumber,
       userId: req.user.username,
-      assessmentType,
       pathway,
       assessmentType,
     }
