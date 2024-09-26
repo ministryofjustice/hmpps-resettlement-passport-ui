@@ -380,6 +380,14 @@ context('Immediate Needs Report', () => {
     noCheckboxesShouldBeSelected()
     cy.get('#NEED_2').click()
 
+    // Verify textarea is toggled
+    cy.get('textarea[name="freeText"]').should('not.be.visible')
+    cy.get('#NEED_4').click()
+    cy.get('textarea[name="freeText"]').should('be.visible')
+    cy.get('textarea[name="freeText"]').type('Some support need text')
+    cy.get('#NEED_4').click()
+    cy.get('textarea[name="freeText"]').should('not.be.visible')
+
     clickContinue()
 
     getHeading().should('have.text', 'Health report summary')

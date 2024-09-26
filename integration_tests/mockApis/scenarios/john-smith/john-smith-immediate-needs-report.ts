@@ -301,6 +301,7 @@ const supportRequirementsPage = () =>
                 { id: 'NEED_1', displayText: 'Need 1', description: null, exclusive: false },
                 { id: 'NEED_2', displayText: 'Need 2', description: null, exclusive: false },
                 { id: 'NEED_3', displayText: 'Need 3', description: null, exclusive: false },
+                { id: 'NEED_4', displayText: 'Other', description: null, exclusive: false, freeText: true },
               ],
               validationType: 'MANDATORY',
             },
