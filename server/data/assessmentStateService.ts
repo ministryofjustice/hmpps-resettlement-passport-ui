@@ -232,11 +232,14 @@ export class AssessmentStateService {
     })
   }
 
-  async clearDownCaches(stateKey: StateKey, mergedQuestionsAndAnswers: CachedQuestionAndAnswer[]) {
+  async updateCachesOnCheckYourAnswers(stateKey: StateKey, mergedQuestionsAndAnswers: CachedQuestionAndAnswer[]) {
     await this.store.deleteBackupAssessment(stateKey)
     const workingCachedAssessment = await this.getWorkingAssessment(stateKey)
     if (mergedQuestionsAndAnswers) {
       workingCachedAssessment.assessment.questionsAndAnswers = mergedQuestionsAndAnswers
+    }
+    if (!workingCachedAssessment.pageLoadHistory.find(it => it.pageId === 'CHECK_ANSWERS')) {
+      workingCachedAssessment.pageLoadHistory.push({ pageId: 'CHECK_ANSWERS', questions: [] })
     }
     await this.store.setWorkingAssessment(stateKey, workingCachedAssessment)
   }

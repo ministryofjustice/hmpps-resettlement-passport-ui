@@ -50,6 +50,7 @@ import {
 } from './scenarios/prisonersSearch'
 import { johnSmithCheckbox, johnSmithCheckboxReportVersion } from './scenarios/john-smith/john-smith-checkbox'
 import editHealthAssessmentConvergingOnLastQuestion from './scenarios/john-smith/edit-health-assessment-converging-on-last-question'
+import { validateAssessment } from './common'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -435,6 +436,7 @@ const stubJohnSmithPreRelease = () => {
     johnSmithCheckAnswers(),
     johnSmithConfirm(),
     getResettlementAssessmentVersion('ACCOMMODATION', 'RESETTLEMENT_PLAN'),
+    validateAssessment('ACCOMMODATION', 'RESETTLEMENT_PLAN'),
   ])
 }
 
@@ -518,6 +520,7 @@ const stubJohnSmithCheckBox = () => {
     ...johnSmithDefaults(),
     stubJohnSmithPrisonerDetailsPreRelease(),
     johnSmithTaskList(),
+    johnSmithCheckAnswers(),
     johnSmithTaskListAfterComplete(),
     johnSmithAccommodationNextPage1(),
     johnSmithCheckbox(),

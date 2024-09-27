@@ -392,6 +392,7 @@ export function getPagesFromCheckYourAnswers(apiQuestionsAndAnswers: ApiQuestion
         questions,
       })
     })
+    pages.push({ pageId: 'CHECK_ANSWERS', questions: [] })
     return pages
   }
   return []

@@ -13,6 +13,7 @@
 {% from "../macros/checkbox.njk" import checkbox %}
 {% from "../macros/address.njk" import address %}
 {% from "../macros/shortText.njk" import shortText %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -41,7 +42,15 @@
 
         <div class="govuk-!-padding-top-7">
           {% if redirectAsInvalid %}
-            <p>Redirected the first page due to a validation error. Please reconfirm your answers.</p>
+            {{ govukErrorSummary({
+              titleText: "There is a problem",
+              errorList: [
+                {
+                  text: "Something went wrong - reconfirm your answers",
+                  href: "#"
+                }
+              ]
+            }) }}
           {% endif %}
           {% if not assessmentPage.error %}
             {% if assessmentPage.id === "CHECK_ANSWERS" %}

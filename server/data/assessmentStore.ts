@@ -41,7 +41,6 @@ export default class AssessmentStore {
     await this.client.set(buildKey(workingAssessmentPrefix, stateKey), JSON.stringify(assessment, null, 2), {
       EX: ttl,
     })
-    console.log(`### Working Assessment\n${JSON.stringify(assessment, null, 2)}`)
   }
 
   public async getWorkingAssessment(stateKey: StateKey): Promise<WorkingCachedAssessment> {
@@ -65,7 +64,6 @@ export default class AssessmentStore {
     await this.client.set(buildKey(backupAssessmentPrefix, stateKey), JSON.stringify(assessment, null, 2), {
       EX: ttl,
     })
-    console.log(`### Backup Assessment\n${JSON.stringify(assessment, null, 2)}`)
   }
 
   public async getBackupAssessment(stateKey: StateKey): Promise<BackupCachedAssessment> {

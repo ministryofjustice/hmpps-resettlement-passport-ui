@@ -293,25 +293,7 @@ const submitEdit = () => {
       method: 'POST',
       bodyPatterns: [
         {
-          equalToJson: JSON.stringify({
-            questionsAndAnswers: [
-              {
-                question: 'REGISTERED_WITH_GP',
-                questionTitle: 'Is the person in prison registered with a GP surgery outside of prison?',
-                pageId: 'REGISTERED_WITH_GP',
-                questionType: 'RADIO',
-                answer: { answer: 'YES', displayText: 'Yes', '@class': 'StringAnswer' },
-              },
-              {
-                question: 'MEET_HEALTHCARE_TEAM',
-                questionTitle: 'Does the person in prison want to meet with a prison healthcare team?',
-                questionType: 'RADIO',
-                pageId: 'MEET_HEALTHCARE_TEAM',
-                answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
-              },
-            ],
-            version: 1,
-          }),
+          equalToJson: JSON.stringify(healthCompleteValidateBody),
         },
       ],
     },
@@ -322,6 +304,45 @@ const submitEdit = () => {
   })
 }
 
+const validateAssessment = () => {
+  return stubFor({
+    request: {
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/validate?assessmentType=BCST2`,
+      method: 'POST',
+      bodyPatterns: [
+        {
+          equalToJson: JSON.stringify(healthCompleteValidateBody),
+          ignoreArrayOrder: true,
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: submitHeaders,
+    },
+  })
+}
+
+const healthCompleteValidateBody = {
+  questionsAndAnswers: [
+    {
+      question: 'REGISTERED_WITH_GP',
+      questionTitle: 'Is the person in prison registered with a GP surgery outside of prison?',
+      pageId: 'REGISTERED_WITH_GP',
+      questionType: 'RADIO',
+      answer: { answer: 'YES', displayText: 'Yes', '@class': 'StringAnswer' },
+    },
+    {
+      question: 'MEET_HEALTHCARE_TEAM',
+      questionTitle: 'Does the person in prison want to meet with a prison healthcare team?',
+      questionType: 'RADIO',
+      pageId: 'MEET_HEALTHCARE_TEAM',
+      answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+    },
+  ],
+  version: 1,
+}
+
 const editHealthAssessmentConvergingOnLastQuestion = () => [
   profile(),
   getHealthAssessment(),
@@ -330,5 +351,6 @@ const editHealthAssessmentConvergingOnLastQuestion = () => [
   nextPageMeetHealthcareTeam(),
   submitEdit(),
   getResettlementAssessmentVersion('HEALTH', 'BCST2'),
+  validateAssessment(),
 ]
 export default editHealthAssessmentConvergingOnLastQuestion

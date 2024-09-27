@@ -1,6 +1,7 @@
 import { stubFor } from '../../wiremock'
 import { responseHeaders, submitHeaders } from '../../headers'
 import { getResettlementAssessmentVersion } from './john-smith'
+import { validateAssessment } from '../../common'
 
 const profile = () =>
   stubFor({
@@ -467,66 +468,7 @@ const submitEdit = () => {
       method: 'POST',
       bodyPatterns: [
         {
-          equalToJson: JSON.stringify({
-            questionsAndAnswers: [
-              {
-                answer: {
-                  '@class': 'StringAnswer',
-                  answer: 'NO',
-                  displayText: 'No',
-                },
-                pageId: 'JOB_BEFORE_CUSTODY',
-                question: 'JOB_BEFORE_CUSTODY',
-                questionTitle: 'Did the person in prison have a job before custody?',
-                questionType: 'RADIO',
-              },
-              {
-                answer: {
-                  '@class': 'StringAnswer',
-                  answer: 'YES',
-                  displayText: 'Yes',
-                },
-                pageId: 'HAVE_A_JOB_AFTER_RELEASE',
-                question: 'HAVE_A_JOB_AFTER_RELEASE',
-                questionTitle: 'Does the person in prison have a job when they are released?',
-                questionType: 'RADIO',
-              },
-              {
-                answer: {
-                  '@class': 'StringAnswer',
-                  answer: 'NO',
-                  displayText: 'No',
-                },
-                pageId: 'HELP_CONTACTING_EMPLOYER',
-                question: 'HELP_CONTACTING_EMPLOYER',
-                questionTitle: 'Does the person in prison need help contacting the employer?',
-                questionType: 'RADIO',
-              },
-              {
-                answer: {
-                  '@class': 'StringAnswer',
-                  answer: 'NO',
-                  displayText: 'No',
-                },
-                pageId: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
-                question: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
-                questionTitle: 'Was the person in prison in education or training before custody?',
-                questionType: 'RADIO',
-              },
-              {
-                answer: {
-                  '@class': 'StringAnswer',
-                  answer: 'NO',
-                  displayText: 'No',
-                },
-                pageId: 'WANT_TO_START_EDUCATION_OR_TRAINING_AFTER_RELEASE',
-                question: 'WANT_TO_START_EDUCATION_OR_TRAINING_AFTER_RELEASE',
-                questionTitle: 'Does the person in prison want to start education or training after release?',
-                questionType: 'RADIO',
-              },
-            ],
-            version: 1,
-          }),
+          equalToJson: JSON.stringify(educationSkillsWorkCompleteValidateBody),
           ignoreArrayOrder: true,
         },
       ],
@@ -535,10 +477,68 @@ const submitEdit = () => {
       status: 200,
       headers: submitHeaders,
     },
-    // scenarioName: 'john-smith-immediate-needs-report',
-    // requiredScenarioState: 'Started',
-    // newScenarioState: 'After-Complete',
   })
+}
+
+const educationSkillsWorkCompleteValidateBody = {
+  questionsAndAnswers: [
+    {
+      answer: {
+        '@class': 'StringAnswer',
+        answer: 'NO',
+        displayText: 'No',
+      },
+      pageId: 'JOB_BEFORE_CUSTODY',
+      question: 'JOB_BEFORE_CUSTODY',
+      questionTitle: 'Did the person in prison have a job before custody?',
+      questionType: 'RADIO',
+    },
+    {
+      answer: {
+        '@class': 'StringAnswer',
+        answer: 'YES',
+        displayText: 'Yes',
+      },
+      pageId: 'HAVE_A_JOB_AFTER_RELEASE',
+      question: 'HAVE_A_JOB_AFTER_RELEASE',
+      questionTitle: 'Does the person in prison have a job when they are released?',
+      questionType: 'RADIO',
+    },
+    {
+      answer: {
+        '@class': 'StringAnswer',
+        answer: 'NO',
+        displayText: 'No',
+      },
+      pageId: 'HELP_CONTACTING_EMPLOYER',
+      question: 'HELP_CONTACTING_EMPLOYER',
+      questionTitle: 'Does the person in prison need help contacting the employer?',
+      questionType: 'RADIO',
+    },
+    {
+      answer: {
+        '@class': 'StringAnswer',
+        answer: 'NO',
+        displayText: 'No',
+      },
+      pageId: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
+      question: 'IN_EDUCATION_OR_TRAINING_BEFORE_CUSTODY',
+      questionTitle: 'Was the person in prison in education or training before custody?',
+      questionType: 'RADIO',
+    },
+    {
+      answer: {
+        '@class': 'StringAnswer',
+        answer: 'NO',
+        displayText: 'No',
+      },
+      pageId: 'WANT_TO_START_EDUCATION_OR_TRAINING_AFTER_RELEASE',
+      question: 'WANT_TO_START_EDUCATION_OR_TRAINING_AFTER_RELEASE',
+      questionTitle: 'Does the person in prison want to start education or training after release?',
+      questionType: 'RADIO',
+    },
+  ],
+  version: 1,
 }
 
 const johnSmithImmediateNeedsReportEdit = () => [
@@ -554,5 +554,6 @@ const johnSmithImmediateNeedsReportEdit = () => [
   inEducationOrTrainingQuestion(),
   submitEdit(),
   getResettlementAssessmentVersion('EDUCATION_SKILLS_AND_WORK', 'BCST2'),
+  validateAssessment('EDUCATION_SKILLS_AND_WORK', 'BCST2'),
 ]
 export default johnSmithImmediateNeedsReportEdit

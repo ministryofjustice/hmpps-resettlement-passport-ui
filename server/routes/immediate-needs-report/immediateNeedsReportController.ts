@@ -54,26 +54,39 @@ export default class ImmediateNeedsReportController {
         defaultVersion,
         apiAssessmentPage.questionsAndAnswers,
       )
+
+      let nextPageId: string
+
+      // If there's an in progress
       const currentPageId =
         workingCachedAssessment.pageLoadHistory[workingCachedAssessment.pageLoadHistory.length - 1]?.pageId
 
-      const nextPage = await this.rpService.fetchNextPage(
-        prisonerData.personalDetails.prisonerNumber as string,
-        pathway as string,
-        workingCachedAssessment.assessment,
-        currentPageId,
-        assessmentType,
-        workingCachedAssessment.assessment.version || 1,
-      )
+      if (!currentPageId) {
+        const nextPage = await this.rpService.fetchNextPage(
+          prisonerData.personalDetails.prisonerNumber as string,
+          pathway as string,
+          workingCachedAssessment.assessment,
+          currentPageId,
+          assessmentType,
+          workingCachedAssessment.assessment.version || 1,
+        )
 
-      const { nextPageId } = nextPage
+        if (nextPage.error) {
+          return next(new Error(`Can't fetch next page - ${nextPage.error}`))
+        }
+
+        nextPageId = nextPage.nextPageId
+      } else {
+        nextPageId = currentPageId
+      }
+
       const submitted = nextPageId === 'CHECK_ANSWERS' ? '&submitted=true' : ''
 
-      res.redirect(
+      return res.redirect(
         `/ImmediateNeedsReport/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}${submitted}`,
       )
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
@@ -248,7 +261,7 @@ export default class ImmediateNeedsReportController {
           }
         }
         // Delete the backup cache and reset the pageLoadHistory in the working cache
-        await this.assessmentStateService.clearDownCaches(stateKey, mergedQuestionsAndAnswers)
+        await this.assessmentStateService.updateCachesOnCheckYourAnswers(stateKey, mergedQuestionsAndAnswers)
 
         // If the assessment is not valid, remove the page load history and redirect to first page (if possible)
         if (invalidAssessment) {

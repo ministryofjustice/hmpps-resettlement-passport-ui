@@ -139,14 +139,14 @@ describe('getFirstPage', () => {
     const initialiseCacheSpy = jest
       .spyOn(assessmentStateService, 'initialiseCache')
       .mockResolvedValue(workingCacheAssessment)
-    const fetchNextPageSpy = jest.spyOn(rpService, 'fetchNextPage').mockResolvedValue({ nextPageId: 'PAGE_ID' })
+    const fetchNextPageSpy = jest.spyOn(rpService, 'fetchNextPage')
 
     await request(app)
       .get('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=123')
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_ID?prisonerNumber=123&type=BCST2',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/page1?prisonerNumber=123&type=BCST2',
         )
       })
 
@@ -162,14 +162,7 @@ describe('getFirstPage', () => {
       2,
       [],
     )
-    expect(fetchNextPageSpy).toHaveBeenCalledWith(
-      '123',
-      'ACCOMMODATION',
-      workingCacheAssessment.assessment,
-      'page1',
-      'BCST2',
-      1,
-    )
+    expect(fetchNextPageSpy).toHaveBeenCalledTimes(0)
   })
 })
 

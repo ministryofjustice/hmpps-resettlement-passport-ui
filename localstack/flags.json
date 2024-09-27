@@ -22,9 +22,5 @@
   {
     "feature": "includePastReleaseDates",
     "enabled": true
-  },
-  {
-    "feature": "profileReset",
-    "enabled": true
   }
 ]
