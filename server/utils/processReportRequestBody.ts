@@ -7,7 +7,22 @@ export const processReportRequestBody = (
 ): ResettlementReportUserInput => {
   const questionsAndAnswers = Object.entries(body).map(([key, value]) => {
     const splitKey = key.split('-')
-    return { questionId: splitKey[0], subField: splitKey[1], answer: value }
+
+    // If a checkbox question has a freeText option, replace the default checkbox value with the freeText input value
+    let answer: string | string[] = value
+    const freeTextId = 'OTHER_SUPPORT_NEEDS'
+    const freeTextValue = body.freeText ? `${freeTextId}: ${body.freeText}` : ''
+    if (typeof value === 'string' && value.includes(freeTextId)) {
+      // Replace in string
+      answer = value.replace(freeTextId, freeTextValue)
+    } else if (Array.isArray(value)) {
+      // Replace in array if any element includes 'OTHER_SUPPORT_NEEDS'
+      answer = value.map(item =>
+        typeof item === 'string' && item.includes(freeTextId) ? item.replace(freeTextId, freeTextValue) : item,
+      )
+    }
+
+    return { questionId: splitKey[0], subField: splitKey[1], answer }
   })
 
   // Go through all the questions and find any nested. If the parent question isn't answered, remove this nested question as the user never answered it

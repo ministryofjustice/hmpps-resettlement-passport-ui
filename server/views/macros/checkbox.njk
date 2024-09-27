@@ -5,23 +5,54 @@
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
     <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
       {% if multipleQuestionsOnPage %}
-        <label class="govuk-label govuk-label--m govuk-!-padding-top-6 govuk-!-margin-bottom-5" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}</label>
+        <label class="govuk-label govuk-label--m govuk-!-padding-top-6 govuk-!-margin-bottom-5" for="{{ currentQuestionAndAnswer.question.id }}">
+          {{ currentQuestionAndAnswer.question.title }}
+        </label>
       {% endif %}
       <div id="waste-hint" class="govuk-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
-    {% if validationError %}
-      {{ validationErrorMessage(validationError) }}
-    {% endif %}
+      {% if validationError %}
+        {{ validationErrorMessage(validationError) }}
+      {% endif %}
       <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+        {% set existingFreeTextAnswer = '' %}
+        {% for answer in existingAnswer.answer %}
+          {% if answer | startsWith("OTHER_SUPPORT_NEEDS: ") %}
+              {% set existingFreeTextAnswer = answer | removePrefix("OTHER_SUPPORT_NEEDS: ") %}
+          {% endif %}
+        {% endfor %}
         {% for option in currentQuestionAndAnswer.question.options %}
-          {% if option.exclusive%}
+          {% if option.exclusive %}
             <div class="govuk-checkboxes__divider">or</div>
           {% endif %}
           <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="{{ option.id }}" name="{{ currentQuestionAndAnswer.question.id }}" value="{{ option.id }}" type="checkbox" {% if existingAnswer and option.id in existingAnswer.answer %}checked{% endif %} {% if option.exclusive %} data-behaviour="exclusive" {% endif %}>
+            {% set preSelected = false %}
+            {% if existingAnswer and option.id in existingAnswer.answer %}
+              {% set preSelected = true %}
+            {% endif %}
+            {% if existingAnswer and option.freeText == true and existingFreeTextAnswer %}
+              {% set preSelected = true %}
+            {% endif %}
+            <input
+              class="govuk-checkboxes__input"
+              id="{{ option.id }}"
+              name="{{ currentQuestionAndAnswer.question.id }}"
+              value="{{ option.id }}"
+              type="checkbox"
+              {% if preSelected %}checked{% endif %}
+              {% if option.exclusive %}data-behaviour="exclusive"{% endif %}
+              {% if option.freeText %}data-aria-controls="conditional-other-free-text"{% endif %}
+            >
             <label class="govuk-label govuk-checkboxes__label" for="{{ option.id }}">
               {{ option.displayText }}
             </label>
           </div>
+          {% if option.freeText %}
+            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-free-text">
+              <div class="govuk-form-group">
+                <textarea class="govuk-textarea" name="freeText" rows="4">{{ existingFreeTextAnswer }}</textarea>
+              </div>
+            </div>
+          {% endif %}
         {% endfor %}
       </div>
     </fieldset>
