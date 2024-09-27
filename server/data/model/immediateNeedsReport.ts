@@ -76,12 +76,12 @@ export type CachedAssessment = {
 
 export type WorkingCachedAssessment = {
   assessment: CachedAssessment
-  pageLoadHistory: string[]
+  pageLoadHistory: PageWithQuestions[]
 }
 
 export type BackupCachedAssessment = {
   assessment: CachedAssessment
-  pageLoadHistory: string[]
+  pageLoadHistory: PageWithQuestions[]
   startEditPageId: string
 }
 
@@ -92,4 +92,9 @@ export type ResettlementAssessmentVersion = {
 export type CustomValidation = {
   regex: string
   message: string
+}
+
+export type PageWithQuestions = {
+  pageId: string
+  questions: string[]
 }

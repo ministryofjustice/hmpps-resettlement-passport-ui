@@ -11,9 +11,13 @@ import {
   ApiAssessmentPage,
   ApiQuestionsAndAnswer,
   CachedAssessment,
+  CachedQuestionAndAnswer,
+  PageWithQuestions,
   ValidationErrors,
+  WorkingCachedAssessment,
 } from '../data/model/immediateNeedsReport'
 import { AssessmentType } from '../data/model/assessmentInformation'
+import { toCachedQuestionAndAnswer } from './formatAssessmentResponse'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -358,20 +362,82 @@ export function fullName(prisonerData: PrisonerData): string {
   return ''
 }
 
-export const getAvailableQuestionsFromApiAssessmentPage = (apiAssessmentPage: ApiAssessmentPage) => {
-  const questionIds: string[] = []
+export function convertQuestionsAndAnswersToCacheFormat(prefillFromApi: ApiQuestionsAndAnswer[]) {
+  if (prefillFromApi.length > 0) {
+    return prefillFromApi.map(it => toCachedQuestionAndAnswer(it))
+  }
+  return []
+}
+
+export function getPagesFromCheckYourAnswers(apiQuestionsAndAnswers: ApiQuestionsAndAnswer[]) {
+  if (apiQuestionsAndAnswers.length > 0) {
+    const pages: PageWithQuestions[] = []
+    const allPages = [...new Set(apiQuestionsAndAnswers.map(it => it.originalPageId))]
+    allPages.forEach(p => {
+      const allQuestionsOnPage = apiQuestionsAndAnswers.filter(it => it.originalPageId === p)
+      const questions: string[] = []
+      allQuestionsOnPage.forEach(qa => {
+        questions.push(qa.question.id)
+        if (qa.question.options) {
+          questions.push(
+            ...qa.question.options
+              .flatMap(it => it.nestedQuestions)
+              .flatMap(it => it?.question.id)
+              .filter(it => it),
+          )
+        }
+      })
+      pages.push({
+        pageId: p,
+        questions,
+      })
+    })
+    return pages
+  }
+  return []
+}
+
+export function convertApiQuestionAndAnswersToPageWithQuestions(apiAssessmentPage: ApiAssessmentPage) {
+  const questions: string[] = []
   apiAssessmentPage.questionsAndAnswers.forEach(qa => {
-    const questionId = qa?.question.id
-    if (questionId) {
-      questionIds.push(questionId)
+    questions.push(qa.question.id)
+    if (qa.question.options) {
+      questions.push(
+        ...qa.question.options
+          .flatMap(it => it.nestedQuestions)
+          .flatMap(it => it?.question.id)
+          .filter(it => it),
+      )
     }
-    const nestedQuestionIds = qa?.question?.options
-      ?.flatMap(it => it?.nestedQuestions)
-      .map(it => it?.question.id)
-      .filter(it => it)
-    questionIds.push(...nestedQuestionIds)
   })
-  return questionIds
+  return {
+    pageId: apiAssessmentPage.id,
+    questions,
+  } as PageWithQuestions
+}
+
+export function findOtherNestedQuestions(
+  newQandA: CachedQuestionAndAnswer,
+  existingAssessmentFromCache: WorkingCachedAssessment,
+  apiAssessmentPage: ApiAssessmentPage,
+): CachedQuestionAndAnswer[] {
+  // Find if this is a nested question
+  const parentQuestion = apiAssessmentPage.questionsAndAnswers.find(qa => {
+    return qa.question.options
+      ?.flatMap(it => it.nestedQuestions)
+      .map(it => it?.question.id)
+      .includes(newQandA.question)
+  })
+  if (parentQuestion) {
+    const nestedQuestions = parentQuestion.question.options
+      ?.flatMap(it => it.nestedQuestions)
+      .map(it => it?.question.id)
+    nestedQuestions.splice(nestedQuestions.indexOf(newQandA.question), 1)
+    return existingAssessmentFromCache.assessment.questionsAndAnswers.filter(it =>
+      nestedQuestions.includes(it.question),
+    )
+  }
+  return []
 }
 
 export function startsWith(string: string, prefix: string): boolean {

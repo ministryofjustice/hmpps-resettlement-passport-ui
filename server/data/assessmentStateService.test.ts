@@ -1,646 +1,886 @@
-import assert from 'node:assert'
 import { AssessmentStateService } from './assessmentStateService'
-import AssessmentStore from './assessmentStore'
+import AssessmentStore, { StateKey } from './assessmentStore'
 import { createRedisClient } from './redisClient'
 import {
   ApiAssessmentPage,
   ApiQuestionsAndAnswer,
+  BackupCachedAssessment,
   CachedAssessment,
   CachedQuestionAndAnswer,
+  PageWithQuestions,
+  WorkingCachedAssessment,
 } from './model/immediateNeedsReport'
 
+jest.mock('./assessmentStore')
+
+const sessionId = 'sessionId'
+const prisonerNumber = '123'
+const assessmentType = 'BCST2'
+
 describe('assessmentStateService', () => {
-  it('test', () => {
-    assert(true)
+  let store: jest.Mocked<AssessmentStore>
+  let assessmentStateService: AssessmentStateService
+  let setWorkingAssessmentSpy: jest.SpyInstance
+  let setBackupAssessmentSpy: jest.SpyInstance
+
+  beforeEach(() => {
+    store = new AssessmentStore(createRedisClient()) as jest.Mocked<AssessmentStore>
+    assessmentStateService = new AssessmentStateService(store as AssessmentStore)
+    setWorkingAssessmentSpy = jest.spyOn(store, 'setWorkingAssessment')
+    setBackupAssessmentSpy = jest.spyOn(store, 'setBackupAssessment')
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
+  function aStateKey(pathway: string): StateKey {
+    return {
+      assessmentType,
+      prisonerNumber,
+      userId: sessionId,
+      pathway,
+    }
+  }
+
+  describe('answer', () => {
+    it('when no questions have been answered', async () => {
+      const answer: CachedAssessment = {
+        questionsAndAnswers: [
+          {
+            question: 'WHERE_WILL_THEY_LIVE_2',
+            questionTitle: 'Where will the person in prison live when they are released?',
+            questionType: 'RADIO',
+            pageId: 'WHERE_WILL_THEY_LIVE_2',
+            answer: {
+              answer: 'DOES_NOT_HAVE_ANYWHERE',
+              displayText: 'Does not have anywhere to live',
+              '@class': 'StringAnswer',
+            },
+          },
+        ],
+        version: 2,
+      }
+      store.getWorkingAssessment.mockResolvedValueOnce({
+        assessment: { questionsAndAnswers: [], version: 2 },
+        pageLoadHistory: [{ pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] }],
+      })
+
+      const apiAssessmentPage: ApiAssessmentPage = {
+        id: 'WHERE_WILL_THEY_LIVE_2',
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'WHERE_WILL_THEY_LIVE_2',
+              title: 'Where will the person in prison live when they are released?',
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'PRIVATE_RENTED_HOUSING',
+                  displayText: 'Private rented housing',
+                },
+                {
+                  id: 'DOES_NOT_HAVE_ANYWHERE',
+                  displayText: 'Does not have anywhere to live',
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                },
+              ],
+            },
+            originalPageId: 'PAGE_1',
+          },
+        ],
+      }
+
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, apiAssessmentPage)
+
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), {
+        assessment: answer,
+        pageLoadHistory: [{ pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] }],
+      })
+    })
+
+    it('should add an answer to a question that has not been answered before', async () => {
+      const answer: CachedAssessment = {
+        questionsAndAnswers: [
+          {
+            question: 'WHERE_WILL_THEY_LIVE_2',
+            questionTitle: 'Where will the person in prison live when they are released?',
+            questionType: 'RADIO',
+            pageId: 'WHERE_WILL_THEY_LIVE_2',
+            answer: {
+              answer: 'DOES_NOT_HAVE_ANYWHERE',
+              displayText: 'Does not have anywhere to live',
+              '@class': 'StringAnswer',
+            },
+          },
+        ],
+        version: 2,
+      }
+
+      const existing: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'NO_PERMANENT_OR_FIXED',
+                displayText: 'No permanent or fixed address',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 2,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+      }
+
+      const apiAssessmentPage: ApiAssessmentPage = {
+        id: 'WHERE_WILL_THEY_LIVE_2',
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'WHERE_WILL_THEY_LIVE_2',
+              title: 'Where will the person in prison live when they are released?',
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'PRIVATE_RENTED_HOUSING',
+                  displayText: 'Private rented housing',
+                },
+                {
+                  id: 'DOES_NOT_HAVE_ANYWHERE',
+                  displayText: 'Does not have anywhere to live',
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                },
+              ],
+            },
+            originalPageId: 'PAGE_1',
+          },
+        ],
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(existing)
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, apiAssessmentPage)
+
+      const expected: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'NO_PERMANENT_OR_FIXED',
+                displayText: 'No permanent or fixed address',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 2,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+      }
+
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), expected)
+    })
+
+    it('should replace an answer to a question that has been answered before', async () => {
+      const answer: CachedAssessment = {
+        questionsAndAnswers: [
+          {
+            question: 'WHERE_DID_THEY_LIVE',
+            questionTitle: 'Where did the person in prison live before custody?',
+            questionType: 'RADIO',
+            pageId: 'WHERE_DID_THEY_LIVE',
+            answer: {
+              answer: 'HOMEOWNER',
+              displayText: 'Homeowner',
+              '@class': 'StringAnswer',
+            },
+          },
+        ],
+        version: 3,
+      }
+
+      const existing: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'NO_PERMANENT_OR_FIXED',
+                displayText: 'No permanent or fixed address',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+      }
+
+      const apiAssessmentPage: ApiAssessmentPage = {
+        id: 'WHERE_WILL_THEY_LIVE_2',
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'WHERE_WILL_THEY_LIVE_2',
+              title: 'Where will the person in prison live when they are released?',
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'PRIVATE_RENTED_HOUSING',
+                  displayText: 'Private rented housing',
+                },
+                {
+                  id: 'DOES_NOT_HAVE_ANYWHERE',
+                  displayText: 'Does not have anywhere to live',
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                },
+              ],
+            },
+            originalPageId: 'PAGE_1',
+          },
+        ],
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(existing)
+
+      await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, apiAssessmentPage)
+
+      const expected: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+      }
+
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), expected)
+    })
+  })
+
+  describe('startEdit', () => {
+    it('should setup backup cache and update working cache', async () => {
+      const pathway = 'ACCOMMODATION'
+
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+      }
+
+      const expectedBackupAssessment: BackupCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+        startEditPageId: 'WHERE_DID_THEY_LIVE',
+      }
+
+      const expectedWorkingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [],
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(workingAssessment)
+
+      await assessmentStateService.startEdit(aStateKey(pathway), 'WHERE_DID_THEY_LIVE')
+
+      expect(setBackupAssessmentSpy).toHaveBeenCalledWith(aStateKey(pathway), expectedBackupAssessment)
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledWith(aStateKey(pathway), expectedWorkingAssessment)
+    })
+  })
+
+  describe('checkForConvergence', () => {
+    it('re-converge scenario', async () => {
+      const pageWithQuestions: PageWithQuestions = {
+        pageId: 'WHERE_WILL_THEY_LIVE_2',
+        questions: ['WHERE_WILL_THEY_LIVE_2'],
+      }
+
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [{ pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] }],
+      }
+      const backupAssessment: BackupCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+        startEditPageId: 'WHERE_DID_THEY_LIVE',
+      }
+      const expectedWorkingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(workingAssessment)
+      store.getBackupAssessment.mockResolvedValueOnce(backupAssessment)
+
+      const reConverged = await assessmentStateService.checkForConvergence(
+        aStateKey('ACCOMMODATION'),
+        pageWithQuestions,
+      )
+
+      expect(reConverged).toEqual(true)
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), expectedWorkingAssessment)
+    })
+
+    it('no re-converge scenario - new page', async () => {
+      const pageWithQuestions: PageWithQuestions = {
+        pageId: 'SUPPORT_NEEDS',
+        questions: ['SUPPORT_NEEDS'],
+      }
+
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [{ pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] }],
+      }
+      const backupAssessment: BackupCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+        startEditPageId: 'WHERE_DID_THEY_LIVE',
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(workingAssessment)
+      store.getBackupAssessment.mockResolvedValueOnce(backupAssessment)
+
+      const reConverged = await assessmentStateService.checkForConvergence(
+        aStateKey('ACCOMMODATION'),
+        pageWithQuestions,
+      )
+
+      expect(reConverged).toEqual(false)
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledTimes(0)
+    })
+
+    it('no re-converge scenario - not an edit', async () => {
+      const pageWithQuestions: PageWithQuestions = {
+        pageId: 'WHERE_WILL_THEY_LIVE_2',
+        questions: ['WHERE_WILL_THEY_LIVE_2'],
+      }
+
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [{ pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] }],
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(workingAssessment)
+      store.getBackupAssessment.mockResolvedValueOnce(null)
+
+      const reConverged = await assessmentStateService.checkForConvergence(
+        aStateKey('ACCOMMODATION'),
+        pageWithQuestions,
+      )
+
+      expect(reConverged).toEqual(false)
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledTimes(0)
+      expect(setBackupAssessmentSpy).toHaveBeenCalledTimes(0)
+    })
+
+    it('no re-converge scenario - editing first page', async () => {
+      const pageWithQuestions: PageWithQuestions = {
+        pageId: 'WHERE_DID_THEY_LIVE',
+        questions: ['WHERE_DID_THEY_LIVE'],
+      }
+
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [],
+      }
+      const backupAssessment: BackupCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'WHERE_DID_THEY_LIVE',
+              questionTitle: 'Where did the person in prison live before custody?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_DID_THEY_LIVE',
+              answer: {
+                answer: 'HOMEOWNER',
+                displayText: 'Homeowner',
+                '@class': 'StringAnswer',
+              },
+            },
+            {
+              question: 'WHERE_WILL_THEY_LIVE_2',
+              questionTitle: 'Where will the person in prison live when they are released?',
+              questionType: 'RADIO',
+              pageId: 'WHERE_WILL_THEY_LIVE_2',
+              answer: {
+                answer: 'DOES_NOT_HAVE_ANYWHERE',
+                displayText: 'Does not have anywhere to live',
+                '@class': 'StringAnswer',
+              },
+            },
+          ],
+          version: 3,
+        },
+        pageLoadHistory: [
+          { pageId: 'WHERE_DID_THEY_LIVE', questions: ['WHERE_DID_THEY_LIVE'] },
+          { pageId: 'WHERE_WILL_THEY_LIVE_2', questions: ['WHERE_WILL_THEY_LIVE_2'] },
+        ],
+        startEditPageId: 'WHERE_DID_THEY_LIVE',
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(workingAssessment)
+      store.getBackupAssessment.mockResolvedValueOnce(backupAssessment)
+
+      const reConverged = await assessmentStateService.checkForConvergence(
+        aStateKey('ACCOMMODATION'),
+        pageWithQuestions,
+      )
+
+      expect(reConverged).toEqual(false)
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledTimes(0)
+      expect(setBackupAssessmentSpy).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('getMergedQuestionsAndAnswers', () => {
+    it('Should merge questions and answers favouring questions from the cache', async () => {
+      const apiQAndA: ApiQuestionsAndAnswer[] = [aQuestionAndAnswer('1', 'API 1'), aQuestionAndAnswer('2', 'API 2')]
+
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [aSubmittedQAndA('1', 'Cache 1'), aSubmittedQAndA('3', 'Cache 3')],
+          version: 1,
+        },
+        pageLoadHistory: [],
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(workingAssessment)
+
+      const merged = await assessmentStateService.getMergedQuestionsAndAnswers(aStateKey('ACCOMMODATION'), apiQAndA)
+
+      expect(merged).toHaveLength(3)
+      const mergedItems = merged.map(i => {
+        return { q: i.question, a: i.answer.answer }
+      })
+      expect(mergedItems).toContainEqual({ q: '1', a: 'Cache 1' })
+      expect(mergedItems).toContainEqual({ q: '2', a: 'API 2' })
+      expect(mergedItems).toContainEqual({ q: '3', a: 'Cache 3' })
+    })
+  })
+
+  describe('initialiseCache', () => {
+    it('If cache is empty, save and return empty assessment with config version', async () => {
+      const configVersion = 2
+
+      const apiQAndA: ApiQuestionsAndAnswer[] = []
+
+      const assessment = await assessmentStateService.initialiseCache(
+        aStateKey('ACCOMMODATION'),
+        configVersion,
+        apiQAndA,
+      )
+
+      const expectedAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [],
+          version: configVersion,
+        },
+        pageLoadHistory: [],
+      }
+
+      expect(assessment).toEqual(expectedAssessment)
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), expectedAssessment)
+    })
+
+    it('If cache is not empty, return assessment from cache', async () => {
+      const configVersion = 4
+
+      const apiQAndA: ApiQuestionsAndAnswer[] = []
+
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'HELP_TO_MANAGE_ANGER',
+              questionTitle: 'Does the person in prison want support managing their emotions?',
+              pageId: 'HELP_TO_MANAGE_ANGER',
+              questionType: 'RADIO',
+              answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'ISSUES_WITH_GAMBLING',
+              questionTitle: 'Does the person in prison want support with gambling issues?',
+              pageId: 'ISSUES_WITH_GAMBLING',
+              questionType: 'RADIO',
+              answer: { answer: 'NO_ANSWER', displayText: 'No answer provided', '@class': 'StringAnswer' },
+            },
+          ],
+          version: configVersion,
+        },
+        pageLoadHistory: [
+          { pageId: 'HELP_TO_MANAGE_ANGER', questions: ['HELP_TO_MANAGE_ANGER'] },
+          { pageId: 'ISSUES_WITH_GAMBLING', questions: ['ISSUES_WITH_GAMBLING'] },
+        ],
+      }
+
+      store.getWorkingAssessment.mockResolvedValue(workingAssessment)
+
+      const assessment = await assessmentStateService.initialiseCache(
+        aStateKey('ATTITUDES_THINKING_AND_BEHAVIOUR'),
+        configVersion,
+        apiQAndA,
+      )
+
+      expect(assessment).toEqual(workingAssessment)
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledTimes(0)
+    })
   })
 })
 
-// jest.mock('./assessmentStore')
-//
-// const sessionId = 'sessionId'
-// const prisonerNumber = '123'
+function aQuestionAndAnswer(id: string, answer: string): ApiQuestionsAndAnswer {
+  return {
+    question: {
+      id,
+    },
+    answer: {
+      answer,
+    },
+  } as ApiQuestionsAndAnswer
+}
 
-// describe('assessmentStateService', () => {
-//   let store: jest.Mocked<AssessmentStore>
-//   let assessmentStateService: AssessmentStateService
-//   let setAssessmentSpy: jest.SpyInstance
-//   let setAnsweredQuestionSpy: jest.SpyInstance
-//   let getAnsweredQuestionsSpy: jest.SpyInstance
-//   let getAssessmentSpy: jest.SpyInstance
-//
-//   beforeEach(() => {
-//     store = new AssessmentStore(createRedisClient()) as jest.Mocked<AssessmentStore>
-//     assessmentStateService = new AssessmentStateService(store as AssessmentStore)
-//     setAssessmentSpy = jest.spyOn(store, 'setWorkingAssessment')
-//     setAnsweredQuestionSpy = jest.spyOn(store, 'setAnsweredQuestions')
-//     getAnsweredQuestionsSpy = jest.spyOn(store, 'getAnsweredQuestions')
-//     getAssessmentSpy = jest.spyOn(store, 'getWorkingAssessment')
-//   })
-//
-//   afterEach(() => {
-//     jest.restoreAllMocks()
-//   })
-//
-//   function aStateKey(pathway: string): StateKey {
-//     return {
-//       prisonerNumber,
-//       userId: sessionId,
-//       pathway,
-//     }
-//   }
-//
-//   describe('answer', () => {
-//     it('when no questions have been answered', async () => {
-//       const answer: CachedAssessment = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'WHERE_WILL_THEY_LIVE_2',
-//             questionTitle: 'Where will the person in prison live when they are released?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_WILL_THEY_LIVE_2',
-//             answer: {
-//               answer: 'DOES_NOT_HAVE_ANYWHERE',
-//               displayText: 'Does not have anywhere to live',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//         ],
-//         version: 2,
-//       }
-//       store.getWorkingAssessment.mockResolvedValueOnce({ questionsAndAnswers: [], version: 2 })
-//       store.getAnsweredQuestions.mockResolvedValueOnce([])
-//
-//       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, false)
-//
-//       expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', answer)
-//       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
-//         'WHERE_WILL_THEY_LIVE_2',
-//       ])
-//     })
-//
-//     it('should add an answer to a question that has not been answered before', async () => {
-//       const answer: CachedAssessment = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'WHERE_WILL_THEY_LIVE_2',
-//             questionTitle: 'Where will the person in prison live when they are released?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_WILL_THEY_LIVE_2',
-//             answer: {
-//               answer: 'DOES_NOT_HAVE_ANYWHERE',
-//               displayText: 'Does not have anywhere to live',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//         ],
-//         version: 2,
-//       }
-//
-//       const existing: CachedAssessment = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'WHERE_DID_THEY_LIVE',
-//             questionTitle: 'Where did the person in prison live before custody?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_DID_THEY_LIVE',
-//             answer: {
-//               answer: 'NO_PERMANENT_OR_FIXED',
-//               displayText: 'No permanent or fixed address',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//         ],
-//         version: 2,
-//       }
-//
-//       store.getWorkingAssessment.mockResolvedValueOnce(existing)
-//       store.getAnsweredQuestions.mockResolvedValueOnce(['WHERE_DID_THEY_LIVE'])
-//       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, false)
-//
-//       const expected = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'WHERE_DID_THEY_LIVE',
-//             questionTitle: 'Where did the person in prison live before custody?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_DID_THEY_LIVE',
-//             answer: {
-//               answer: 'NO_PERMANENT_OR_FIXED',
-//               displayText: 'No permanent or fixed address',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//           {
-//             question: 'WHERE_WILL_THEY_LIVE_2',
-//             questionTitle: 'Where will the person in prison live when they are released?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_WILL_THEY_LIVE_2',
-//             answer: {
-//               answer: 'DOES_NOT_HAVE_ANYWHERE',
-//               displayText: 'Does not have anywhere to live',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//         ],
-//         version: 2,
-//       } as CachedAssessment
-//
-//       expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
-//       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', [
-//         'WHERE_DID_THEY_LIVE',
-//         'WHERE_WILL_THEY_LIVE_2',
-//       ])
-//     })
-//
-//     it('should replace an answer to a question that has been answered before', async () => {
-//       const answer: CachedAssessment = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'WHERE_DID_THEY_LIVE',
-//             questionTitle: 'Where did the person in prison live before custody?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_DID_THEY_LIVE',
-//             answer: {
-//               answer: 'HOMEOWNER',
-//               displayText: 'Homeowner',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//         ],
-//         version: 3,
-//       }
-//
-//       const existing: CachedAssessment = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'WHERE_DID_THEY_LIVE',
-//             questionTitle: 'Where did the person in prison live before custody?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_DID_THEY_LIVE',
-//             answer: {
-//               answer: 'NO_PERMANENT_OR_FIXED',
-//               displayText: 'No permanent or fixed address',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//           {
-//             question: 'WHERE_WILL_THEY_LIVE_2',
-//             questionTitle: 'Where will the person in prison live when they are released?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_WILL_THEY_LIVE_2',
-//             answer: {
-//               answer: 'DOES_NOT_HAVE_ANYWHERE',
-//               displayText: 'Does not have anywhere to live',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//         ],
-//         version: 3,
-//       }
-//
-//       store.getWorkingAssessment.mockResolvedValueOnce(existing)
-//       store.getAnsweredQuestions.mockResolvedValueOnce(['WHERE_DID_THEY_LIVE', 'WHERE_WILL_THEY_LIVE_2'])
-//
-//       await assessmentStateService.answer(aStateKey('ACCOMMODATION'), answer, false)
-//
-//       const expected = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'WHERE_DID_THEY_LIVE',
-//             questionTitle: 'Where did the person in prison live before custody?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_DID_THEY_LIVE',
-//             answer: {
-//               answer: 'HOMEOWNER',
-//               displayText: 'Homeowner',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//           {
-//             question: 'WHERE_WILL_THEY_LIVE_2',
-//             questionTitle: 'Where will the person in prison live when they are released?',
-//             questionType: 'RADIO',
-//             pageId: 'WHERE_WILL_THEY_LIVE_2',
-//             answer: {
-//               answer: 'DOES_NOT_HAVE_ANYWHERE',
-//               displayText: 'Does not have anywhere to live',
-//               '@class': 'StringAnswer',
-//             },
-//           },
-//         ],
-//         version: 3,
-//       } as CachedAssessment
-//
-//       expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', expected)
-//       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith('sessionId', '123', 'ACCOMMODATION', ['WHERE_DID_THEY_LIVE'])
-//     })
-//
-//     describe('startEdit', () => {
-//       it('should overwrite the contents of the cache with the given summary page info', async () => {
-//         const summaryPage: ApiAssessmentPage = {
-//           id: 'CHECK_ANSWERS',
-//           questionsAndAnswers: [
-//             {
-//               answer: {
-//                 '@class': 'StringAnswer',
-//                 answer: 'NO',
-//               },
-//               originalPageId: 'HELP_TO_MANAGE_ANGER',
-//               question: {
-//                 '@class': 'AttitudesThinkingAndBehaviourResettlementAssessmentQuestion',
-//                 id: 'HELP_TO_MANAGE_ANGER',
-//                 options: [
-//                   {
-//                     description: null,
-//                     displayText: 'Yes',
-//                     exclusive: false,
-//                     id: 'YES',
-//                   },
-//                   {
-//                     description: null,
-//                     displayText: 'No',
-//                     exclusive: false,
-//                     id: 'NO',
-//                   },
-//                   {
-//                     description: null,
-//                     displayText: 'No answer provided',
-//                     exclusive: false,
-//                     id: 'NO_ANSWER',
-//                   },
-//                 ],
-//                 subTitle: null,
-//                 title: 'Does the person in prison want support managing their emotions?',
-//                 type: 'RADIO',
-//                 validationType: 'MANDATORY',
-//               },
-//             },
-//             {
-//               answer: {
-//                 '@class': 'StringAnswer',
-//                 answer: 'NO_ANSWER',
-//               },
-//               originalPageId: 'ISSUES_WITH_GAMBLING',
-//               question: {
-//                 '@class': 'AttitudesThinkingAndBehaviourResettlementAssessmentQuestion',
-//                 id: 'ISSUES_WITH_GAMBLING',
-//                 options: [
-//                   {
-//                     description: null,
-//                     displayText: 'Yes',
-//                     exclusive: false,
-//                     id: 'YES',
-//                   },
-//                   {
-//                     description: null,
-//                     displayText: 'No',
-//                     exclusive: false,
-//                     id: 'NO',
-//                   },
-//                   {
-//                     description: null,
-//                     displayText: 'No answer provided',
-//                     exclusive: false,
-//                     id: 'NO_ANSWER',
-//                   },
-//                 ],
-//                 subTitle: null,
-//                 title: 'Does the person in prison want support with gambling issues?',
-//                 type: 'RADIO',
-//                 validationType: 'MANDATORY',
-//               },
-//             },
-//             {
-//               answer: {
-//                 '@class': 'StringAnswer',
-//                 answer: 'SUPPORT_DECLINED',
-//               },
-//               originalPageId: 'PRERELEASE_ASSESSMENT_SUMMARY',
-//               question: {
-//                 '@class': 'GenericResettlementAssessmentQuestion',
-//                 id: 'SUPPORT_NEEDS_PRERELEASE',
-//                 options: [
-//                   {
-//                     description: 'a need for support has been identified and is accepted',
-//                     displayText: 'Support required',
-//                     exclusive: false,
-//                     id: 'SUPPORT_REQUIRED',
-//                   },
-//                   {
-//                     description: 'no need was identified',
-//                     displayText: 'Support not required',
-//                     exclusive: false,
-//                     id: 'SUPPORT_NOT_REQUIRED',
-//                   },
-//                   {
-//                     description: 'a need has been identified but support is declined',
-//                     displayText: 'Support declined',
-//                     exclusive: false,
-//                     id: 'SUPPORT_DECLINED',
-//                   },
-//                   {
-//                     description: 'work is ongoing',
-//                     displayText: 'In progress',
-//                     exclusive: false,
-//                     id: 'IN_PROGRESS',
-//                   },
-//                   {
-//                     description: 'all required work has been completed successfully',
-//                     displayText: 'Done',
-//                     exclusive: false,
-//                     id: 'DONE',
-//                   },
-//                 ],
-//                 subTitle: null,
-//                 title: '',
-//                 type: 'RADIO',
-//                 validationType: 'MANDATORY',
-//               },
-//             },
-//           ],
-//           title: null,
-//         } as unknown as ApiAssessmentPage
-//
-//         const pathway = 'ATTITUDES_THINKING_AND_BEHAVIOUR'
-//         await assessmentStateService.startEdit(aStateKey(pathway), summaryPage, 2)
-//
-//         expect(setAssessmentSpy).toHaveBeenCalledWith('sessionId', '123', pathway, {
-//           questionsAndAnswers: [
-//             {
-//               question: 'HELP_TO_MANAGE_ANGER',
-//               questionTitle: 'Does the person in prison want support managing their emotions?',
-//               pageId: 'HELP_TO_MANAGE_ANGER',
-//               questionType: 'RADIO',
-//               answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
-//             },
-//             {
-//               question: 'ISSUES_WITH_GAMBLING',
-//               questionTitle: 'Does the person in prison want support with gambling issues?',
-//               pageId: 'ISSUES_WITH_GAMBLING',
-//               questionType: 'RADIO',
-//               answer: { answer: 'NO_ANSWER', displayText: 'No answer provided', '@class': 'StringAnswer' },
-//             },
-//             {
-//               question: 'SUPPORT_NEEDS_PRERELEASE',
-//               questionTitle: '',
-//               pageId: 'PRERELEASE_ASSESSMENT_SUMMARY',
-//               questionType: 'RADIO',
-//               answer: { answer: 'SUPPORT_DECLINED', displayText: 'Support declined', '@class': 'StringAnswer' },
-//             },
-//           ],
-//           version: 2,
-//         })
-//         expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(sessionId, prisonerNumber, pathway, [
-//           'HELP_TO_MANAGE_ANGER',
-//           'ISSUES_WITH_GAMBLING',
-//           'SUPPORT_NEEDS_PRERELEASE',
-//         ])
-//       })
-//     })
-//   })
-//
-//   describe('checkForConvergence', () => {
-//     it('re-converge scenario', async () => {
-//       const deleteEditedQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
-//       const questionEditList = ['JOB_BEFORE_CUSTODY']
-//       store.getEditedQuestionList.mockResolvedValueOnce(questionEditList)
-//       const questionAnswerList = ['JOB_BEFORE_CUSTODY', 'A.N.OTHER', 'HAVE_A_JOB_AFTER_RELEASE']
-//       store.getAnsweredQuestions.mockResolvedValueOnce(questionAnswerList)
-//
-//       const page: ApiAssessmentPage = {
-//         id: 'HAVE_A_JOB_AFTER_RELEASE',
-//         questionsAndAnswers: [
-//           {
-//             question: {
-//               id: 'HAVE_A_JOB_AFTER_RELEASE',
-//               title: 'Does the person in prison have a job when they are released?',
-//               subTitle: null,
-//               type: 'RADIO',
-//               options: [
-//                 { id: 'YES', displayText: 'Yes', description: null },
-//                 { id: 'NO', displayText: 'No', description: null },
-//                 { id: 'NO_ANSWER', displayText: 'No answer provided', description: null },
-//               ],
-//               validationType: 'MANDATORY',
-//             },
-//             answer: { '@class': 'StringAnswer', answer: 'YES' },
-//             originalPageId: 'HAVE_A_JOB_AFTER_RELEASE',
-//           },
-//         ],
-//       }
-//
-//       const reConverged = await assessmentStateService.checkForConvergence(
-//         aStateKey('EDUCATION_SKILLS_AND_WORK'),
-//         page,
-//         true,
-//       )
-//
-//       expect(reConverged).toEqual(true)
-//       expect(setAnsweredQuestionSpy).toHaveBeenCalledWith(sessionId, prisonerNumber, 'EDUCATION_SKILLS_AND_WORK', [
-//         'JOB_BEFORE_CUSTODY',
-//         'HAVE_A_JOB_AFTER_RELEASE',
-//       ])
-//       expect(deleteEditedQuestionListSpy).toHaveBeenCalledTimes(1)
-//     })
-//
-//     it('no re-converge scenario', async () => {
-//       const deleteQuestionListSpy = jest.spyOn(store, 'deleteEditedQuestionList')
-//       const questionEditList = ['JOB_BEFORE_CUSTODY']
-//       store.getEditedQuestionList.mockResolvedValueOnce(questionEditList)
-//       const answeredQuestionList = ['JOB_BEFORE_CUSTODY', 'SUPPORT_NEEDS']
-//       store.getAnsweredQuestions.mockResolvedValueOnce(answeredQuestionList)
-//
-//       const page: ApiAssessmentPage = {
-//         id: 'HAVE_A_JOB_AFTER_RELEASE',
-//         questionsAndAnswers: [
-//           {
-//             question: {
-//               id: 'HAVE_A_JOB_AFTER_RELEASE',
-//               title: 'Does the person in prison have a job when they are released?',
-//               subTitle: null,
-//               type: 'RADIO',
-//               options: [
-//                 { id: 'YES', displayText: 'Yes', description: null },
-//                 { id: 'NO', displayText: 'No', description: null },
-//                 { id: 'NO_ANSWER', displayText: 'No answer provided', description: null },
-//               ],
-//               validationType: 'MANDATORY',
-//             },
-//             answer: { '@class': 'StringAnswer', answer: 'YES' },
-//             originalPageId: 'HAVE_A_JOB_AFTER_RELEASE',
-//           },
-//         ],
-//       }
-//
-//       const reConverged = await assessmentStateService.checkForConvergence(
-//         aStateKey('EDUCATION_SKILLS_AND_WORK'),
-//         page,
-//         true,
-//       )
-//
-//       expect(reConverged).toEqual(false)
-//       expect(setAssessmentSpy).toHaveBeenCalledTimes(0)
-//       expect(deleteQuestionListSpy).toHaveBeenCalledTimes(0)
-//     })
-//   })
-//
-//   describe('mergeQuestionsAndAnswers', () => {
-//     it('Should merge questions and answers favouring questions from the cache', () => {
-//       const apiQAndA: ApiAssessmentPage = {
-//         questionsAndAnswers: [aQuestionAndAnswer('1', 'API 1'), aQuestionAndAnswer('2', 'API 2')],
-//       } as ApiAssessmentPage
-//
-//       const cacheQAndA: CachedAssessment = {
-//         questionsAndAnswersFromCache: [aSubmittedQAndA('1', 'Cache 1'), aSubmittedQAndA('3', 'Cache 3')],
-//       } as CachedAssessment
-//
-//       const merged = assessmentStateService.mergeQuestionsAndAnswers(apiQAndA)
-//
-//       expect(merged).toHaveLength(3)
-//       const mergedItems = merged.map(i => {
-//         return { q: i.question, a: i.answer.answer }
-//       })
-//       expect(mergedItems).toContainEqual({ q: '1', a: 'Cache 1' })
-//       expect(mergedItems).toContainEqual({ q: '2', a: 'API 2' })
-//       expect(mergedItems).toContainEqual({ q: '3', a: 'Cache 3' })
-//     })
-//   })
-//
-//   describe('initialiseCache', () => {
-//     it('If cache is empty, save and return empty assessment with config version', async () => {
-//       const stateKey = {
-//         prisonerNumber: 'ABC1234',
-//         userId: 'D126HJ',
-//         pathway: 'ACCOMMODATION',
-//       }
-//       const configVersion = 2
-//
-//       const assessment = await assessmentStateService.initialiseCache(stateKey, configVersion)
-//
-//       const expectedAssessment = {
-//         questionsAndAnswersFromCache: [],
-//         version: configVersion,
-//       } as CachedAssessment
-//
-//       expect(assessment).toEqual(expectedAssessment)
-//       expect(setAssessmentSpy).toHaveBeenCalledWith(
-//         stateKey.userId,
-//         stateKey.prisonerNumber,
-//         stateKey.pathway,
-//         expectedAssessment,
-//       )
-//     })
-//
-//     it('If cache is not empty, return assessment from cache filtered to only answered questions', async () => {
-//       const stateKey = {
-//         prisonerNumber: 'ABC1234',
-//         userId: 'D126HJ',
-//         pathway: 'ACCOMMODATION',
-//       }
-//       const configVersion = 4
-//
-//       store.getWorkingAssessment.mockResolvedValue({
-//         questionsAndAnswers: [
-//           {
-//             question: 'HELP_TO_MANAGE_ANGER',
-//             questionTitle: 'Does the person in prison want support managing their emotions?',
-//             pageId: 'HELP_TO_MANAGE_ANGER',
-//             questionType: 'RADIO',
-//             answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
-//           },
-//           {
-//             question: 'ISSUES_WITH_GAMBLING',
-//             questionTitle: 'Does the person in prison want support with gambling issues?',
-//             pageId: 'ISSUES_WITH_GAMBLING',
-//             questionType: 'RADIO',
-//             answer: { answer: 'NO_ANSWER', displayText: 'No answer provided', '@class': 'StringAnswer' },
-//           },
-//         ],
-//         version: configVersion,
-//       })
-//
-//       store.getAnsweredQuestions.mockResolvedValueOnce(['HELP_TO_MANAGE_ANGER'])
-//
-//       const assessment = await assessmentStateService.initialiseCache(stateKey, configVersion)
-//
-//       const expectedAssessment = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'HELP_TO_MANAGE_ANGER',
-//             questionTitle: 'Does the person in prison want support managing their emotions?',
-//             pageId: 'HELP_TO_MANAGE_ANGER',
-//             questionType: 'RADIO',
-//             answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
-//           },
-//         ],
-//         version: configVersion,
-//       } as CachedAssessment
-//
-//       expect(assessment).toEqual(expectedAssessment)
-//     })
-//   })
-//
-//   describe('getExistingAssessmentAnsweredQuestions', () => {
-//     it('If cache does not contain version, return default version 1', async () => {
-//       const stateKey = {
-//         prisonerNumber: 'ABC1234',
-//         userId: 'D126HJ',
-//         pathway: 'ACCOMMODATION',
-//       }
-//
-//       store.getWorkingAssessment.mockResolvedValue({
-//         questionsAndAnswers: [
-//           {
-//             question: 'HELP_TO_MANAGE_ANGER',
-//             questionTitle: 'Does the person in prison want support managing their emotions?',
-//             pageId: 'HELP_TO_MANAGE_ANGER',
-//             questionType: 'RADIO',
-//             answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
-//           },
-//         ],
-//         version: undefined,
-//       })
-//
-//       store.getAnsweredQuestions.mockResolvedValueOnce(['HELP_TO_MANAGE_ANGER'])
-//
-//       const assessment = await assessmentStateService.getExistingWorkingAssessmentAnsweredQuestions(stateKey)
-//
-//       const expectedAssessment = {
-//         questionsAndAnswersFromCache: [
-//           {
-//             question: 'HELP_TO_MANAGE_ANGER',
-//             questionTitle: 'Does the person in prison want support managing their emotions?',
-//             pageId: 'HELP_TO_MANAGE_ANGER',
-//             questionType: 'RADIO',
-//             answer: { answer: 'NO', displayText: 'No', '@class': 'StringAnswer' },
-//           },
-//         ],
-//         version: 1,
-//       } as CachedAssessment
-//
-//       expect(getAssessmentSpy).toHaveBeenCalledWith(stateKey.userId, stateKey.prisonerNumber, stateKey.pathway)
-//       expect(getAnsweredQuestionsSpy).toHaveBeenCalledWith(stateKey.userId, stateKey.prisonerNumber, stateKey.pathway)
-//       expect(assessment).toEqual(expectedAssessment)
-//     })
-//   })
-// })
-//
-// function aQuestionAndAnswer(id: string, answer: string): ApiQuestionsAndAnswer {
-//   return {
-//     question: {
-//       id,
-//     },
-//     answer: {
-//       answer,
-//     },
-//   } as ApiQuestionsAndAnswer
-// }
-//
-// function aSubmittedQAndA(id: string, answer: string): CachedQuestionAndAnswer {
-//   return {
-//     question: id,
-//     answer: {
-//       answer,
-//     },
-//   } as CachedQuestionAndAnswer
-// }
+function aSubmittedQAndA(id: string, answer: string): CachedQuestionAndAnswer {
+  return {
+    question: id,
+    answer: {
+      answer,
+    },
+  } as CachedQuestionAndAnswer
+}

@@ -1,13 +1,20 @@
 import AssessmentStore, { StateKey } from './assessmentStore'
 import { createRedisClient } from './redisClient'
 import {
+  ApiAssessmentPage,
   ApiQuestionsAndAnswer,
   BackupCachedAssessment,
   CachedAssessment,
   CachedQuestionAndAnswer,
+  PageWithQuestions,
   WorkingCachedAssessment,
 } from './model/immediateNeedsReport'
 import { toCachedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
+import {
+  convertQuestionsAndAnswersToCacheFormat,
+  findOtherNestedQuestions,
+  getPagesFromCheckYourAnswers,
+} from '../utils/utils'
 
 export function createAssessmentStateService() {
   return new AssessmentStateService(new AssessmentStore(createRedisClient()))
@@ -22,12 +29,7 @@ export class AssessmentStateService {
     return this.store.getWorkingAssessment(key)
   }
 
-  async answer(
-    key: StateKey,
-    assessmentToSave: CachedAssessment,
-    allAvailableQuestionsFromApi: string[],
-    pageId: string,
-  ) {
+  async answer(key: StateKey, assessmentToSave: CachedAssessment, apiAssessmentPage: ApiAssessmentPage) {
     // get previous Q&A's
     const existingAssessmentFromCache = await this.getWorkingAssessment(key)
     assessmentToSave.questionsAndAnswers.forEach((newQandA: CachedQuestionAndAnswer) => {
@@ -43,7 +45,19 @@ export class AssessmentStateService {
         // Replace the existing question with the new one
         existingAssessmentFromCache.assessment.questionsAndAnswers[index] = newQandA
       } else {
-        // Add the new question if it doesn't exist
+        // Delete any other nested question under the same parent question
+        const otherNestedQuestionsToDelete = findOtherNestedQuestions(
+          newQandA,
+          existingAssessmentFromCache,
+          apiAssessmentPage,
+        )
+        otherNestedQuestionsToDelete.forEach(qa => {
+          existingAssessmentFromCache.assessment.questionsAndAnswers.splice(
+            existingAssessmentFromCache.assessment.questionsAndAnswers.indexOf(qa),
+            1,
+          )
+        })
+        // Add the new question
         existingAssessmentFromCache.assessment.questionsAndAnswers.push(newQandA)
       }
     })
@@ -51,28 +65,23 @@ export class AssessmentStateService {
     await this.store.setWorkingAssessment(key, existingAssessmentFromCache)
   }
 
-  // async sortQuestions(key: StateKey, questions: CachedQuestionAndAnswer[]) {
-  //   const workingAssessment = await this.store.getWorkingAssessment(key)
-  //   const { pageLoadHistory } = workingAssessment
-  //   questions.sort((a, b) => pageLoadHistory.indexOf(a.pageId) - pageLoadHistory.indexOf(b.pageId))
-  //   return questions
-  // }
-
-  async checkForConvergence(key: StateKey, currentPage: string): Promise<boolean> {
+  async checkForConvergence(key: StateKey, pageWithQuestions: PageWithQuestions): Promise<boolean> {
     const workingAssessment = await this.store.getWorkingAssessment(key)
     const backupAssessment = await this.store.getBackupAssessment(key)
 
     // Check if we're in an edit - we're in an edit if a backupAssessment exists
     const edit = backupAssessment !== null
 
-    if (!edit || backupAssessment.startEditPageId === currentPage) {
+    if (!edit || backupAssessment.startEditPageId === pageWithQuestions.pageId) {
       return false
     }
 
     const answeredPages = [...new Set(workingAssessment.assessment.questionsAndAnswers.map(it => it.pageId))]
-    if (answeredPages.includes(currentPage)) {
+    if (answeredPages.includes(pageWithQuestions.pageId)) {
       const extraAnsweredPages = backupAssessment.pageLoadHistory.slice(
-        backupAssessment.pageLoadHistory.indexOf(currentPage),
+        backupAssessment.pageLoadHistory.indexOf(
+          backupAssessment.pageLoadHistory.find(it => it.pageId === pageWithQuestions.pageId),
+        ),
         backupAssessment.pageLoadHistory.length,
       )
       workingAssessment.pageLoadHistory.push(...extraAnsweredPages)
@@ -87,39 +96,29 @@ export class AssessmentStateService {
     await this.store.deleteBackupAssessment(key)
   }
 
-  async initialiseCache(stateKey: StateKey, configVersion: number, apiQuestionsAndAnswers: ApiQuestionsAndAnswer[]) {
+  async initialiseCache(
+    stateKey: StateKey,
+    configVersion: number,
+    checkYourAnswersQuestionsAndAnswers: ApiQuestionsAndAnswer[],
+  ) {
     const existingWorkingAssessment = await this.getWorkingAssessment(stateKey)
 
     if (!existingWorkingAssessment) {
       const initialAssessment = {
         assessment: {
-          questionsAndAnswers: this.convertQuestionsAndAnswersToCacheFormat(apiQuestionsAndAnswers),
+          questionsAndAnswers: convertQuestionsAndAnswersToCacheFormat(checkYourAnswersQuestionsAndAnswers),
           version: configVersion,
         },
-        pageLoadHistory: this.getPagesFromApiQuestionsAndAnswers(apiQuestionsAndAnswers),
+        pageLoadHistory: getPagesFromCheckYourAnswers(checkYourAnswersQuestionsAndAnswers),
       } as WorkingCachedAssessment
       await this.store.setWorkingAssessment(stateKey, initialAssessment)
       return initialAssessment
     }
-    if (apiQuestionsAndAnswers.length > 0) {
-      existingWorkingAssessment.pageLoadHistory = this.getPagesFromApiQuestionsAndAnswers(apiQuestionsAndAnswers)
+    if (checkYourAnswersQuestionsAndAnswers.length > 0) {
+      existingWorkingAssessment.pageLoadHistory = getPagesFromCheckYourAnswers(checkYourAnswersQuestionsAndAnswers)
       await this.store.setWorkingAssessment(stateKey, existingWorkingAssessment)
     }
     return existingWorkingAssessment
-  }
-
-  convertQuestionsAndAnswersToCacheFormat(prefillFromApi: ApiQuestionsAndAnswer[]) {
-    if (prefillFromApi.length > 0) {
-      return prefillFromApi.map(it => toCachedQuestionAndAnswer(it))
-    }
-    return []
-  }
-
-  getPagesFromApiQuestionsAndAnswers(apiQuestionsAndAnswers: ApiQuestionsAndAnswer[]) {
-    if (apiQuestionsAndAnswers.length > 0) {
-      return [...new Set(apiQuestionsAndAnswers.map(it => it.originalPageId))]
-    }
-    return []
   }
 
   async startEdit(key: StateKey, pageToEdit: string) {
@@ -131,14 +130,14 @@ export class AssessmentStateService {
       startEditPageId: pageToEdit,
     })
 
-    const indexOfPageToEdit = workingCachedAssessment.pageLoadHistory.findIndex(it => it === pageToEdit)
+    const indexOfPageToEdit = workingCachedAssessment.pageLoadHistory.findIndex(it => it.pageId === pageToEdit)
 
     await this.store.setWorkingAssessment(key, {
       assessment: {
         questionsAndAnswers: workingCachedAssessment.assessment.questionsAndAnswers,
         version: workingCachedAssessment.assessment.version,
       },
-      pageLoadHistory: workingCachedAssessment.pageLoadHistory.slice(0, indexOfPageToEdit + 1),
+      pageLoadHistory: workingCachedAssessment.pageLoadHistory.slice(0, indexOfPageToEdit),
     })
   }
 
@@ -146,9 +145,11 @@ export class AssessmentStateService {
     const assessmentFromCache = await this.getWorkingAssessment(stateKey)
 
     // Merge together answers from API and cache
-    const mergedQuestionsAndAnswers = assessmentFromCache ? [...assessmentFromCache.assessment.questionsAndAnswers] : []
+    const mergedQuestionsAndAnswers = assessmentFromCache.assessment.questionsAndAnswers
+      ? [...assessmentFromCache.assessment.questionsAndAnswers]
+      : []
     questionsAndAnswersFromApi.forEach(qAndA => {
-      const questionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers.find(
+      const questionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers?.find(
         it => it?.question === qAndA.question.id,
       )
       // Only add if not present in cache
@@ -160,7 +161,7 @@ export class AssessmentStateService {
         ?.flatMap(it => it.nestedQuestions)
         .find(it => it?.answer?.answer)
       if (nestedAnsweredQuestion) {
-        const nestedQuestionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers.find(
+        const nestedQuestionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers?.find(
           it => it?.question === nestedAnsweredQuestion?.question.id,
         )
         if (!nestedQuestionAndAnswerFromCache) {
@@ -188,7 +189,12 @@ export class AssessmentStateService {
     if (assessment) {
       const answeredQuestions: CachedQuestionAndAnswer[] = []
       assessment.pageLoadHistory.forEach(page => {
-        answeredQuestions.push(...assessment.assessment.questionsAndAnswers.filter(qa => page === qa.pageId))
+        page.questions.forEach(question => {
+          const questionFromCache = assessment.assessment.questionsAndAnswers.find(it => it.question === question)
+          if (questionFromCache) {
+            answeredQuestions.push(questionFromCache)
+          }
+        })
       })
       return {
         questionsAndAnswers: answeredQuestions,
@@ -198,14 +204,15 @@ export class AssessmentStateService {
     return null
   }
 
-  async updatePageLoadHistory(stateKey: StateKey, currentPageId: string) {
+  async updatePageLoadHistory(stateKey: StateKey, pageWithQuestions: PageWithQuestions) {
     const workingCachedAssessment = await this.getWorkingAssessment(stateKey)
     const { pageLoadHistory } = workingCachedAssessment
     // If this is a page we haven't loaded before add to the end of the array, otherwise remove any items after
-    if (!pageLoadHistory.find(it => it === currentPageId)) {
-      pageLoadHistory.push(currentPageId)
+    const pageWithQuestionFromCache = pageLoadHistory.find(it => it.pageId === pageWithQuestions.pageId)
+    if (!pageWithQuestionFromCache) {
+      pageLoadHistory.push(pageWithQuestions)
     } else {
-      pageLoadHistory.splice(pageLoadHistory.indexOf(currentPageId) + 1, pageLoadHistory.length)
+      pageLoadHistory.splice(pageLoadHistory.indexOf(pageWithQuestionFromCache) + 1)
     }
 
     // Overwrite the pageLoadHistory
@@ -218,7 +225,7 @@ export class AssessmentStateService {
   }
 
   async resetWorkingCacheToBackupCache(stateKey: StateKey) {
-    const backupCachedAssessment = await this.getWorkingAssessment(stateKey)
+    const backupCachedAssessment = await this.getBackupAssessment(stateKey)
     await this.store.setWorkingAssessment(stateKey, {
       assessment: backupCachedAssessment.assessment,
       pageLoadHistory: backupCachedAssessment.pageLoadHistory,
@@ -228,11 +235,21 @@ export class AssessmentStateService {
   async clearDownCaches(stateKey: StateKey, mergedQuestionsAndAnswers: CachedQuestionAndAnswer[]) {
     await this.store.deleteBackupAssessment(stateKey)
     const workingCachedAssessment = await this.getWorkingAssessment(stateKey)
-    workingCachedAssessment.assessment.questionsAndAnswers = mergedQuestionsAndAnswers
+    if (mergedQuestionsAndAnswers) {
+      workingCachedAssessment.assessment.questionsAndAnswers = mergedQuestionsAndAnswers
+    }
     await this.store.setWorkingAssessment(stateKey, workingCachedAssessment)
   }
 
   async getBackupAssessment(stateKey: StateKey) {
     return this.store.getBackupAssessment(stateKey)
+  }
+
+  async getFirstPageAndResetPageLoadHistory(stateKey: StateKey) {
+    const workingAssessment = await this.store.getWorkingAssessment(stateKey)
+    const firstPage = workingAssessment.pageLoadHistory[0]?.pageId
+    workingAssessment.pageLoadHistory = []
+    await this.store.setWorkingAssessment(stateKey, workingAssessment)
+    return firstPage
   }
 }

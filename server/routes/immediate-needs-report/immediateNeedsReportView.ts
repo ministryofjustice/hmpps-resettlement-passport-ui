@@ -14,6 +14,7 @@ export default class ImmediateNeedsReportView implements View {
     private readonly submitted: boolean,
     private readonly backButton: boolean,
     private readonly assessmentType: AssessmentType,
+    private readonly redirectAsInvalid: boolean,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -29,6 +30,7 @@ export default class ImmediateNeedsReportView implements View {
     submitted: boolean
     backButton: boolean
     assessmentType: AssessmentType
+    redirectAsInvalid: boolean
     errors: ErrorMessage[]
   } {
     return {
@@ -41,6 +43,7 @@ export default class ImmediateNeedsReportView implements View {
       submitted: this.submitted,
       backButton: this.backButton,
       assessmentType: this.assessmentType,
+      redirectAsInvalid: this.redirectAsInvalid,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

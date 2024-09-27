@@ -3,7 +3,7 @@ import RpService from '../../services/rpService'
 import { formatAssessmentResponse } from '../../utils/formatAssessmentResponse'
 import { CachedAssessment, CachedQuestionAndAnswer, ValidationErrors } from '../../data/model/immediateNeedsReport'
 import validateAssessmentResponse from '../../utils/validateAssessmentResponse'
-import { getAvailableQuestionsFromApiAssessmentPage, getEnumValue, parseAssessmentType } from '../../utils/utils'
+import { convertApiQuestionAndAnswersToPageWithQuestions, getEnumValue, parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'
 import ImmediateNeedsReportView from './immediateNeedsReportView'
 import { processReportRequestBody } from '../../utils/processReportRequestBody'
@@ -54,7 +54,8 @@ export default class ImmediateNeedsReportController {
         defaultVersion,
         apiAssessmentPage.questionsAndAnswers,
       )
-      const currentPageId = workingCachedAssessment.pageLoadHistory[workingCachedAssessment.pageLoadHistory.length - 1]
+      const currentPageId =
+        workingCachedAssessment.pageLoadHistory[workingCachedAssessment.pageLoadHistory.length - 1]?.pageId
 
       const nextPage = await this.rpService.fetchNextPage(
         prisonerData.personalDetails.prisonerNumber as string,
@@ -108,8 +109,7 @@ export default class ImmediateNeedsReportController {
       // prepare current Q&A's from req body for post request
       const dataToSubmit = formatAssessmentResponse(answeredQuestions)
 
-      const allAvailableQuestionsFromApi = getAvailableQuestionsFromApiAssessmentPage(currentApiAssessmentPage)
-      await this.assessmentStateService.answer(stateKey, dataToSubmit, allAvailableQuestionsFromApi, currentPageId)
+      await this.assessmentStateService.answer(stateKey, dataToSubmit, currentApiAssessmentPage)
 
       if (validationErrors) {
         const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
@@ -150,6 +150,7 @@ export default class ImmediateNeedsReportController {
       const edit = req.query.edit === 'true'
       const submitted = req.query.submitted === 'true'
       const backButton = req.query.backButton === 'true'
+      const redirectAsInvalid = req.query.redirectAsInvalid === 'true'
       const validationErrorsString = req.query.validationErrors as string
       const validationErrors: ValidationErrors = validationErrorsString
         ? JSON.parse(decodeURIComponent(validationErrorsString))
@@ -186,12 +187,16 @@ export default class ImmediateNeedsReportController {
           submitted,
           backButton,
           assessmentType,
+          redirectAsInvalid,
         )
         return res.render('pages/immediate-needs-report', { ...view.renderArgs })
       }
 
+      // Get the current page with questions
+      const pageWithQuestions = convertApiQuestionAndAnswersToPageWithQuestions(apiAssessmentPage)
+
       // If we're in an edit - check for convergence and skip straight to check your answers if appropriate
-      const reConverged = await this.assessmentStateService.checkForConvergence(stateKey, apiAssessmentPage.id)
+      const reConverged = await this.assessmentStateService.checkForConvergence(stateKey, pageWithQuestions)
 
       if (reConverged) {
         return res.redirect(
@@ -206,6 +211,7 @@ export default class ImmediateNeedsReportController {
         // - Clear down the working cache to the answered pages if a valid journey has been made
         // - Reset to the backup cache if we are in an abandoned edit journey
         // - Validate the answers with the backend and error if required
+        let invalidAssessment = false
         const workingAssessmentAnsweredQuestions = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
           stateKey,
           'working',
@@ -235,25 +241,29 @@ export default class ImmediateNeedsReportController {
               await this.assessmentStateService.resetWorkingCacheToBackupCache(stateKey)
               mergedQuestionsAndAnswers = backupAssessmentAnsweredQuestions.questionsAndAnswers
             } else {
-              // TODO - reset some things (?) and have this go back to first page
-              return next(
-                new Error('No valid working or backup assessments available when loading check your answers!'),
-              )
+              invalidAssessment = true
             }
           } else {
-            // TODO - reset some things (?) and have this go back to first page
-            return next(new Error('No valid working assessment available when loading check your answers!'))
+            invalidAssessment = true
           }
         }
-        // Sort the mergedQuestionsAndAnswers based on the order of pageLoadHistory
-        // TODO how to do this without all possible questionIds in order??
-        // mergedQuestionsAndAnswers = await this.assessmentStateService.sortQuestions(stateKey, mergedQuestionsAndAnswers)
         // Delete the backup cache and reset the pageLoadHistory in the working cache
         await this.assessmentStateService.clearDownCaches(stateKey, mergedQuestionsAndAnswers)
+
+        // If the assessment is not valid, remove the page load history and redirect to first page (if possible)
+        if (invalidAssessment) {
+          const firstPage = await this.assessmentStateService.getFirstPageAndResetPageLoadHistory(stateKey)
+          if (firstPage) {
+            return res.redirect(
+              `/ImmediateNeedsReport/pathway/${pathway}/page/${firstPage}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&backButton=false&type=${assessmentType}&redirectAsInvalid=true`,
+            )
+          }
+          return next(new Error('Cannot find the first page to redirect to after validation of assessment failed'))
+        }
       } else {
-        // Update page load history
-        await this.assessmentStateService.updatePageLoadHistory(stateKey, currentPageId)
-        // If it's a regular page, merge the cache and api assessments
+        // For any other page, update page load history
+        await this.assessmentStateService.updatePageLoadHistory(stateKey, pageWithQuestions)
+        // Merge the cache and api assessment answers together
         mergedQuestionsAndAnswers = await this.assessmentStateService.getMergedQuestionsAndAnswers(
           stateKey,
           apiAssessmentPage.questionsAndAnswers,
@@ -273,6 +283,7 @@ export default class ImmediateNeedsReportController {
         submitted,
         backButton,
         assessmentType,
+        redirectAsInvalid,
       )
       return res.render('pages/immediate-needs-report', { ...view.renderArgs })
     } catch (err) {

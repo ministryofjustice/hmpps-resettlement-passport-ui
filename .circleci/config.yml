@@ -84,6 +84,7 @@ jobs:
             - node_modules
             - build
             - dist
+            - assets # TODO test this
             - .cache/Cypress
             - .cache/playwright
 
