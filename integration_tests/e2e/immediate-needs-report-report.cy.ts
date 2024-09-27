@@ -341,7 +341,7 @@ context('Immediate Needs Report', () => {
   })
 
   it('PSFR-1629 Validation errors and back button scenario', () => {
-    cy.task('stubJohnSmithImmediateNeedsReportHealth')
+    cy.task('stubJohnSmithImmediateNeedsReportHealthFreeText')
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
@@ -380,13 +380,12 @@ context('Immediate Needs Report', () => {
     noCheckboxesShouldBeSelected()
     cy.get('#NEED_2').click()
 
-    // Verify textarea is toggled
+    // Verify textarea is toggled and populate input field
     cy.get('textarea[name="freeText"]').should('not.be.visible')
-    cy.get('#NEED_4').click()
-    cy.get('textarea[name="freeText"]').should('not.be.visible')
-    cy.get('textarea[name="freeText"]').type('Some support need text')
-    cy.get('#NEED_4').click()
-    cy.get('textarea[name="freeText"]').should('not.be.visible')
+    cy.get('input[type="checkbox"][value="OTHER_SUPPORT_NEEDS"]').click()
+    cy.get('textarea[name="freeText"]').should('be.visible')
+
+    cy.get('textarea[name="freeText"]').type('Random text')
 
     clickContinue()
 
@@ -404,6 +403,7 @@ context('Immediate Needs Report', () => {
     cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '01234567890')
     cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No')
     cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'Need 2')
+    cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'Random text')
     cy.get('.govuk-summary-list__value').eq(4).should('contain.text', 'Support not required')
     cy.get('.govuk-summary-list__value').eq(5).should('contain.text', 'Case Note')
     clickConfirm()
