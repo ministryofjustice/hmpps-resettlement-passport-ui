@@ -13,12 +13,10 @@ export default class ResetProfileController {
   resetProfile: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { prisonerNumber } = prisonerData.personalDetails
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
-      logger.info('Feature flag resetProfile: ', resetProfileEnabled)
 
       if (resetProfileEnabled) {
-        console.log('resetProfile flag enabled')
+        logger.info('Feature flag resetProfile: ', resetProfileEnabled)
       }
 
       const view = new ResetProfileView(prisonerData, resetProfileEnabled)
