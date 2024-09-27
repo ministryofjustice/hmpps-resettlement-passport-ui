@@ -1,10 +1,15 @@
-{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, isInWatchlist) %}
+{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, isInWatchlist, resetProfileEnabled) %}
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
         <h3 class="app-summary-card__title">Actions:</h3>
       </header>
       <div class="app-summary-card__body">
+        {% if resetProfileEnabled %}
+          <a href="/resetProfile?prisonerNumber={{prisonerNumber}}" class="govuk-button govuk-button--warning">
+            Reset profile
+          </a>
+        {% endif %}
         {% if isInWatchlist == true %}
           <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/removeFromYourCases/" method="POST" novalidate>
             <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Remove from your cases</button>

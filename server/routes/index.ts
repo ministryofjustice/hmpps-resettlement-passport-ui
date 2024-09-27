@@ -23,6 +23,7 @@ import analyticsRouter from './analytics'
 import configMiddleware from './configMiddleware'
 import documentRouter from './documents/documentRouter'
 import prisonerOverviewRouter from './prisoner-overview/prisonerOverviewRouter'
+import resetProfileRouter from './reset-profile'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -49,6 +50,7 @@ export default function routes(services: Services): Router {
   analyticsRouter(router, services)
   documentRouter(router, services)
   prisonerOverviewRouter(router, services)
+  resetProfileRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 

@@ -1,0 +1,31 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% set pathway = "" %}
+{% set pageTitle = applicationName + " - " + pathway %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-full">
+      {{ govukBackLink({
+        text: "Back",
+        href: "/prisoner-overview?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber
+      }) }}
+      {% if error %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: error,
+              href: "#"
+            }
+          ]
+        }) }}
+      {% else %}
+        <h1>Reset profile</h1>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
