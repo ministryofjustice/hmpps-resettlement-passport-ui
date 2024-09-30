@@ -1029,6 +1029,81 @@ describe('findOtherNestedQuestions', () => {
         },
       ] as CachedQuestionAndAnswer[],
     ],
+    [
+      'Option selected with no nesting should return all other nested questions in other options',
+      {
+        question: 'QUESTION_1',
+        questionTitle: 'Question 1',
+        pageId: 'PAGE_1',
+        questionType: 'RADIO',
+        answer: { answer: 'NO_ANSWER', displayText: 'No answer', '@class': 'StringAnswer' },
+      } as CachedQuestionAndAnswer,
+      {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'OPTION_2_NESTED_QUESTION_1',
+              questionTitle: 'Option 2 nested question 1',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'OPTION_2_NESTED_QUESTION_2',
+              questionTitle: 'Option 2 nested question 2',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'OPTION_2_NESTED_QUESTION_3',
+              questionTitle: 'Option 2 nested question 3',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [{ pageId: 'PAGE_1', questions: ['QUESTION_1'] }],
+      } as WorkingCachedAssessment,
+      testApiAssessmentPage,
+      [
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_1',
+          questionTitle: 'Option 2 nested question 1',
+          questionType: 'SHORT_TEXT',
+        },
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_2',
+          questionTitle: 'Option 2 nested question 2',
+          questionType: 'SHORT_TEXT',
+        },
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_3',
+          questionTitle: 'Option 2 nested question 3',
+          questionType: 'SHORT_TEXT',
+        },
+      ] as CachedQuestionAndAnswer[],
+    ],
   ])(
     '%s',
     (

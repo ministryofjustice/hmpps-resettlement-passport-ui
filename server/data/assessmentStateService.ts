@@ -33,6 +33,19 @@ export class AssessmentStateService {
     // get previous Q&A's
     const existingAssessmentFromCache = await this.getWorkingAssessment(key)
     assessmentToSave.questionsAndAnswers.forEach((newQandA: CachedQuestionAndAnswer) => {
+      // Delete any other nested question under the same parent question
+      const otherNestedQuestionsToDelete = findOtherNestedQuestions(
+        newQandA,
+        existingAssessmentFromCache,
+        apiAssessmentPage,
+      )
+      otherNestedQuestionsToDelete.forEach(qa => {
+        existingAssessmentFromCache.assessment.questionsAndAnswers.splice(
+          existingAssessmentFromCache.assessment.questionsAndAnswers.indexOf(qa),
+          1,
+        )
+      })
+
       const index = existingAssessmentFromCache.assessment.questionsAndAnswers
         ? existingAssessmentFromCache.assessment.questionsAndAnswers.findIndex(
             (existingQandA: CachedQuestionAndAnswer) => {
@@ -45,18 +58,6 @@ export class AssessmentStateService {
         // Replace the existing question with the new one
         existingAssessmentFromCache.assessment.questionsAndAnswers[index] = newQandA
       } else {
-        // Delete any other nested question under the same parent question
-        const otherNestedQuestionsToDelete = findOtherNestedQuestions(
-          newQandA,
-          existingAssessmentFromCache,
-          apiAssessmentPage,
-        )
-        otherNestedQuestionsToDelete.forEach(qa => {
-          existingAssessmentFromCache.assessment.questionsAndAnswers.splice(
-            existingAssessmentFromCache.assessment.questionsAndAnswers.indexOf(qa),
-            1,
-          )
-        })
         // Add the new question
         existingAssessmentFromCache.assessment.questionsAndAnswers.push(newQandA)
       }

@@ -422,27 +422,28 @@ export function findOtherNestedQuestions(
   existingAssessmentFromCache: WorkingCachedAssessment,
   apiAssessmentPage: ApiAssessmentPage,
 ): CachedQuestionAndAnswer[] {
-  // Find if this is a nested question
   const parentQuestion = apiAssessmentPage?.questionsAndAnswers?.find(qa => {
     return qa.question.options
       ?.flatMap(it => it.nestedQuestions)
       .map(it => it?.question.id)
       .includes(newQandA.question)
   })
-  if (parentQuestion) {
-    const currentlySelectedOption = parentQuestion.question.options?.find(option =>
-      option.nestedQuestions.map(nq => nq.question.id).includes(newQandA.question),
-    )
-    const nestedQuestions = parentQuestion.question.options
+  const questionFromApi =
+    parentQuestion || apiAssessmentPage?.questionsAndAnswers.find(it => it.question.id === newQandA.question)
+  const currentlySelectedOption = questionFromApi?.question.options?.find(
+    option =>
+      option.id === newQandA.answer.answer ||
+      option.nestedQuestions?.flatMap(it => it.question.id).includes(newQandA.question),
+  )
+  const nestedQuestions =
+    questionFromApi?.question.options
       ?.filter(it => it !== currentlySelectedOption)
-      ?.flatMap(it => it.nestedQuestions)
-      .map(it => it?.question.id)
-    nestedQuestions.splice(nestedQuestions.indexOf(newQandA.question), 1)
-    return existingAssessmentFromCache.assessment.questionsAndAnswers.filter(it =>
-      nestedQuestions.includes(it.question),
-    )
-  }
-  return []
+      .flatMap(it => it.nestedQuestions)
+      .map(it => it?.question.id) || []
+  return (
+    existingAssessmentFromCache?.assessment.questionsAndAnswers.filter(it => nestedQuestions.includes(it.question)) ||
+    []
+  )
 }
 
 export function startsWith(string: string, prefix: string): boolean {
