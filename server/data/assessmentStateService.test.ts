@@ -863,6 +863,169 @@ describe('assessmentStateService', () => {
       expect(setWorkingAssessmentSpy).toHaveBeenCalledTimes(0)
     })
   })
+
+  describe('getAllAnsweredQuestionsFromCache', () => {
+    it('Assessment is null', async () => {
+      expect(
+        await assessmentStateService.getAllAnsweredQuestionsFromCache(aStateKey('ACCOMMODATION'), 'working'),
+      ).toEqual(null)
+    })
+
+    it('Happy path - working cache', async () => {
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            aSubmittedQAndA('1', 'Cache 1'),
+            aSubmittedQAndA('2', 'Cache 2'),
+            aSubmittedQAndA('3', 'Cache 3'),
+            aSubmittedQAndA('4', 'Cache 4'),
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [
+          { pageId: 'PAGE_1', questions: ['1', '3'] },
+          { pageId: 'PAGE_2', questions: ['4'] },
+        ],
+      }
+
+      store.getWorkingAssessment.mockResolvedValue(workingAssessment)
+
+      expect(
+        await assessmentStateService.getAllAnsweredQuestionsFromCache(aStateKey('ACCOMMODATION'), 'working'),
+      ).toEqual({
+        questionsAndAnswers: [
+          { answer: { answer: 'Cache 1' }, question: '1' },
+          { answer: { answer: 'Cache 3' }, question: '3' },
+          { answer: { answer: 'Cache 4' }, question: '4' },
+        ],
+        version: 1,
+      })
+    })
+
+    it('Happy path - backup cache', async () => {
+      const backupAssessment: BackupCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            aSubmittedQAndA('1', 'Cache 1'),
+            aSubmittedQAndA('2', 'Cache 2'),
+            aSubmittedQAndA('3', 'Cache 3'),
+            aSubmittedQAndA('4', 'Cache 4'),
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [
+          { pageId: 'PAGE_1', questions: ['1', '2', '3'] },
+          { pageId: 'PAGE_2', questions: ['4'] },
+          { pageId: 'CHECK_ANSWERS', questions: [] },
+        ],
+        startEditPageId: 'PAGE_2',
+      }
+
+      store.getBackupAssessment.mockResolvedValue(backupAssessment)
+
+      expect(
+        await assessmentStateService.getAllAnsweredQuestionsFromCache(aStateKey('ACCOMMODATION'), 'backup'),
+      ).toEqual({
+        questionsAndAnswers: [
+          { answer: { answer: 'Cache 1' }, question: '1' },
+          { answer: { answer: 'Cache 2' }, question: '2' },
+          { answer: { answer: 'Cache 3' }, question: '3' },
+          { answer: { answer: 'Cache 4' }, question: '4' },
+        ],
+        version: 1,
+      })
+    })
+  })
+
+  describe('updatePageLoadHistory', () => {
+    it('Happy path - new page loading', async () => {
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            aSubmittedQAndA('1', 'Cache 1'),
+            aSubmittedQAndA('2', 'Cache 2'),
+            aSubmittedQAndA('3', 'Cache 3'),
+            aSubmittedQAndA('4', 'Cache 4'),
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [
+          { pageId: 'PAGE_1', questions: ['1', '2'] },
+          { pageId: 'PAGE_2', questions: ['3'] },
+        ],
+      }
+
+      const expectedAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            aSubmittedQAndA('1', 'Cache 1'),
+            aSubmittedQAndA('2', 'Cache 2'),
+            aSubmittedQAndA('3', 'Cache 3'),
+            aSubmittedQAndA('4', 'Cache 4'),
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [
+          { pageId: 'PAGE_1', questions: ['1', '2'] },
+          { pageId: 'PAGE_2', questions: ['3'] },
+          { pageId: 'PAGE_3', questions: ['4'] },
+        ],
+      }
+
+      store.getWorkingAssessment.mockResolvedValue(workingAssessment)
+
+      const pageWithQuestions = {
+        pageId: 'PAGE_3',
+        questions: ['4'],
+      } as PageWithQuestions
+
+      await assessmentStateService.updatePageLoadHistory(aStateKey('ACCOMMODATION'), pageWithQuestions)
+
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), expectedAssessment)
+    })
+
+    it('Happy path - existing page loading should remove pages after', async () => {
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            aSubmittedQAndA('1', 'Cache 1'),
+            aSubmittedQAndA('2', 'Cache 2'),
+            aSubmittedQAndA('3', 'Cache 3'),
+            aSubmittedQAndA('4', 'Cache 4'),
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [
+          { pageId: 'PAGE_1', questions: ['1', '2'] },
+          { pageId: 'PAGE_2', questions: ['3'] },
+        ],
+      }
+
+      const expectedAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [
+            aSubmittedQAndA('1', 'Cache 1'),
+            aSubmittedQAndA('2', 'Cache 2'),
+            aSubmittedQAndA('3', 'Cache 3'),
+            aSubmittedQAndA('4', 'Cache 4'),
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [{ pageId: 'PAGE_1', questions: ['1', '2'] }],
+      }
+
+      store.getWorkingAssessment.mockResolvedValue(workingAssessment)
+
+      const pageWithQuestions = {
+        pageId: 'PAGE_1',
+        questions: ['1', '2'],
+      } as PageWithQuestions
+
+      await assessmentStateService.updatePageLoadHistory(aStateKey('ACCOMMODATION'), pageWithQuestions)
+
+      expect(setWorkingAssessmentSpy).toHaveBeenCalledWith(aStateKey('ACCOMMODATION'), expectedAssessment)
+    })
+  })
 })
 
 function aQuestionAndAnswer(id: string, answer: string): ApiQuestionsAndAnswer {
