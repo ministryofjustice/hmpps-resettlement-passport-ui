@@ -363,14 +363,14 @@ export function fullName(prisonerData: PrisonerData): string {
 }
 
 export function convertQuestionsAndAnswersToCacheFormat(prefillFromApi: ApiQuestionsAndAnswer[]) {
-  if (prefillFromApi.length > 0) {
+  if (prefillFromApi?.length > 0) {
     return prefillFromApi.map(it => toCachedQuestionAndAnswer(it))
   }
   return []
 }
 
 export function getPagesFromCheckYourAnswers(apiQuestionsAndAnswers: ApiQuestionsAndAnswer[]) {
-  if (apiQuestionsAndAnswers.length > 0) {
+  if (apiQuestionsAndAnswers?.length > 0) {
     const pages: PageWithQuestions[] = []
     const allPages = [...new Set(apiQuestionsAndAnswers.map(it => it.originalPageId))]
     allPages.forEach(p => {
@@ -400,7 +400,7 @@ export function getPagesFromCheckYourAnswers(apiQuestionsAndAnswers: ApiQuestion
 
 export function convertApiQuestionAndAnswersToPageWithQuestions(apiAssessmentPage: ApiAssessmentPage) {
   const questions: string[] = []
-  apiAssessmentPage.questionsAndAnswers.forEach(qa => {
+  apiAssessmentPage?.questionsAndAnswers?.forEach(qa => {
     questions.push(qa.question.id)
     if (qa.question.options) {
       questions.push(
@@ -412,7 +412,7 @@ export function convertApiQuestionAndAnswersToPageWithQuestions(apiAssessmentPag
     }
   })
   return {
-    pageId: apiAssessmentPage.id,
+    pageId: apiAssessmentPage?.id,
     questions,
   } as PageWithQuestions
 }
@@ -423,14 +423,18 @@ export function findOtherNestedQuestions(
   apiAssessmentPage: ApiAssessmentPage,
 ): CachedQuestionAndAnswer[] {
   // Find if this is a nested question
-  const parentQuestion = apiAssessmentPage.questionsAndAnswers.find(qa => {
+  const parentQuestion = apiAssessmentPage?.questionsAndAnswers?.find(qa => {
     return qa.question.options
       ?.flatMap(it => it.nestedQuestions)
       .map(it => it?.question.id)
       .includes(newQandA.question)
   })
   if (parentQuestion) {
+    const currentlySelectedOption = parentQuestion.question.options?.find(option =>
+      option.nestedQuestions.map(nq => nq.question.id).includes(newQandA.question),
+    )
     const nestedQuestions = parentQuestion.question.options
+      ?.filter(it => it !== currentlySelectedOption)
       ?.flatMap(it => it.nestedQuestions)
       .map(it => it?.question.id)
     nestedQuestions.splice(nestedQuestions.indexOf(newQandA.question), 1)

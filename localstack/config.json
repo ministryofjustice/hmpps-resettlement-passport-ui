@@ -7,7 +7,7 @@
       "DRUGS_AND_ALCOHOL": 2,
       "EDUCATION_SKILLS_AND_WORK": 2,
       "FINANCE_AND_ID": 2,
-      "HEALTH": 1
+      "HEALTH": 2
     },
     "preReleaseVersion": {
       "ACCOMMODATION": 3,
@@ -16,7 +16,7 @@
       "DRUGS_AND_ALCOHOL": 2,
       "EDUCATION_SKILLS_AND_WORK": 2,
       "FINANCE_AND_ID": 2,
-      "HEALTH": 1
+      "HEALTH": 2
     }
   }
 }
