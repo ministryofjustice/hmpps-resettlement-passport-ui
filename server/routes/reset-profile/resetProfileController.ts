@@ -15,15 +15,15 @@ export default class ResetProfileController {
       const { prisonerData } = req
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
 
-      if (resetProfileEnabled) {
-        logger.info('Feature flag resetProfile: ', resetProfileEnabled)
+      if (!resetProfileEnabled) {
+        return next(new Error('Reset profile is disabled'))
       }
 
-      const view = new ResetProfileView(prisonerData, resetProfileEnabled)
+      const view = new ResetProfileView(prisonerData)
 
-      res.render('pages/reset-profile', { ...view.renderArgs })
+      return res.render('pages/reset-profile', { ...view.renderArgs })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }
