@@ -8,6 +8,7 @@ import { AssessmentStateService } from '../../data/assessmentStateService'
 import ImmediateNeedsReportView from './immediateNeedsReportView'
 import { processReportRequestBody } from '../../utils/processReportRequestBody'
 import { Pathway } from '../../@types/express'
+import { CHECK_ANSWERS_PAGE_ID } from '../../utils/constants'
 
 export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -33,11 +34,11 @@ export default class ImmediateNeedsReportController {
       // from the API, or if this is a new assessment from the config
       const defaultVersion = existingAssessmentVersion || configVersion
 
-      // Get the CHECK_ANSWERS page to check if there's anything to pre-populate the cache with
+      // Get the check answers page to check if there's anything to pre-populate the cache with
       const apiAssessmentPage = await this.rpService.getAssessmentPage(
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
-        'CHECK_ANSWERS',
+        CHECK_ANSWERS_PAGE_ID,
         assessmentType,
         defaultVersion,
       )
@@ -80,7 +81,7 @@ export default class ImmediateNeedsReportController {
         nextPageId = currentPageId
       }
 
-      const submitted = nextPageId === 'CHECK_ANSWERS' ? '&submitted=true' : ''
+      const submitted = nextPageId === CHECK_ANSWERS_PAGE_ID ? '&submitted=true' : ''
 
       return res.redirect(
         `/ImmediateNeedsReport/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}${submitted}`,
@@ -213,13 +214,13 @@ export default class ImmediateNeedsReportController {
 
       if (reConverged) {
         return res.redirect(
-          `/ImmediateNeedsReport/pathway/${pathway}/page/CHECK_ANSWERS?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
+          `/ImmediateNeedsReport/pathway/${pathway}/page/${CHECK_ANSWERS_PAGE_ID}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
         )
       }
 
       let mergedQuestionsAndAnswers: CachedQuestionAndAnswer[]
 
-      if (currentPageId === 'CHECK_ANSWERS') {
+      if (currentPageId === CHECK_ANSWERS_PAGE_ID) {
         // If we are about to render the check answers page we need to either
         // - Clear down the working cache to the answered pages if a valid journey has been made
         // - Reset to the backup cache if we are in an abandoned edit journey
@@ -370,7 +371,7 @@ export default class ImmediateNeedsReportController {
         const apiAssessmentPage = await this.rpService.getAssessmentPage(
           prisonerData.personalDetails.prisonerNumber as string,
           pathway as string,
-          'CHECK_ANSWERS',
+          CHECK_ANSWERS_PAGE_ID,
           assessmentType,
           version,
         )

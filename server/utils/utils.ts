@@ -1,7 +1,13 @@
 import { Callback } from 'nunjucks'
 import { addMinutes, format } from 'date-fns'
 import { PathwayStatus, PrisonerData } from '../@types/express'
-import { ASSESSMENT_ENUMS_DICTIONARY, ENUMS_DICTIONARY, EnumValue, RISK_ASSESSMENT_ENUMS_DICTIONARY } from './constants'
+import {
+  ASSESSMENT_ENUMS_DICTIONARY,
+  CHECK_ANSWERS_PAGE_ID,
+  ENUMS_DICTIONARY,
+  EnumValue,
+  RISK_ASSESSMENT_ENUMS_DICTIONARY,
+} from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
@@ -392,7 +398,7 @@ export function getPagesFromCheckYourAnswers(apiQuestionsAndAnswers: ApiQuestion
         questions,
       })
     })
-    pages.push({ pageId: 'CHECK_ANSWERS', questions: [] })
+    pages.push({ pageId: CHECK_ANSWERS_PAGE_ID, questions: [] })
     return pages
   }
   return []

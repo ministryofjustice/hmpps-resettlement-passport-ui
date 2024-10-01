@@ -15,6 +15,7 @@ import {
   findOtherNestedQuestions,
   getPagesFromCheckYourAnswers,
 } from '../utils/utils'
+import { CHECK_ANSWERS_PAGE_ID } from '../utils/constants'
 
 export function createAssessmentStateService() {
   return new AssessmentStateService(new AssessmentStore(createRedisClient()))
@@ -239,8 +240,8 @@ export class AssessmentStateService {
     if (mergedQuestionsAndAnswers) {
       workingCachedAssessment.assessment.questionsAndAnswers = mergedQuestionsAndAnswers
     }
-    if (!workingCachedAssessment.pageLoadHistory.find(it => it.pageId === 'CHECK_ANSWERS')) {
-      workingCachedAssessment.pageLoadHistory.push({ pageId: 'CHECK_ANSWERS', questions: [] })
+    if (!workingCachedAssessment.pageLoadHistory.find(it => it.pageId === CHECK_ANSWERS_PAGE_ID)) {
+      workingCachedAssessment.pageLoadHistory.push({ pageId: CHECK_ANSWERS_PAGE_ID, questions: [] })
     }
     await this.store.setWorkingAssessment(stateKey, workingCachedAssessment)
   }

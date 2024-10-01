@@ -40,7 +40,7 @@ import {
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
-import { FEATURE_FLAGS, FEEDBACK_URL } from './constants'
+import { CHECK_ANSWERS_PAGE_ID, FEATURE_FLAGS, FEEDBACK_URL } from './constants'
 import { formatDocumentCategory } from '../services/documentService'
 
 const production = process.env.NODE_ENV === 'production'
@@ -119,4 +119,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('fullName', fullName)
   njkEnv.addFilter('startsWith', startsWith)
   njkEnv.addFilter('removePrefix', removePrefix)
+  njkEnv.addGlobal('checkAnswersPageId', CHECK_ANSWERS_PAGE_ID)
 }

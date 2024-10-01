@@ -163,3 +163,5 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
 }
 
 export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'
+
+export const CHECK_ANSWERS_PAGE_ID = 'CHECK_ANSWERS'
