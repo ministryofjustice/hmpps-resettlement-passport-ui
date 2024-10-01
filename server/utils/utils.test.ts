@@ -14,6 +14,8 @@ import {
   shouldShowReportInformation,
   removeSlashes,
   fullName,
+  startsWith,
+  removePrefix,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -417,5 +419,29 @@ describe('fullName', () => {
   })
   it.each([null, undefined, {}])('handles %s', v => {
     expect(fullName(v as PrisonerData)).toEqual('')
+  })
+})
+
+describe('startsWith', () => {
+  it.each([
+    ['String starts with prefix', 'hello world', 'hello', true],
+    ['String does not start with prefix', 'hello world', 'world', false],
+    ['Empty string with non-empty prefix', '', 'prefix', false],
+    ['Non-empty string with empty prefix', 'hello world', '', true],
+    ['Prefix longer than the string', 'hi', 'hello', false],
+  ])('%s: startsWith(%s, %s)', (_: string, string: string, prefix: string, expected: boolean) => {
+    expect(startsWith(string, prefix)).toBe(expected)
+  })
+})
+
+describe('removePrefix', () => {
+  it.each([
+    ['String starts with prefix', 'hello world', 'hello', ' world'],
+    ['String does not start with prefix', 'hello world', 'world', 'hello world'],
+    ['String with empty prefix', 'hello world', '', 'hello world'],
+    ['Empty string with non-empty prefix', '', 'prefix', ''],
+    ['Prefix longer than the string', 'hi', 'hello', 'hi'],
+  ])('%s: removePrefix(%s, %s)', (_: string, string: string, prefix: string, expected: string) => {
+    expect(removePrefix(string, prefix)).toEqual(expected)
   })
 })

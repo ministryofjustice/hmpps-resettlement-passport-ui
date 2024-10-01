@@ -312,6 +312,49 @@ const supportRequirementsPage = () =>
     },
   })
 
+const supportRequirementsPageFreeText = () =>
+  stubFor({
+    name: 'John Smith Support requirements Page',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/page/SUPPORT_REQUIREMENTS?assessmentType=BCST2&version=1',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'SUPPORT_REQUIREMENTS',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'SUPPORT_REQUIREMENTS',
+              title: 'Support needs',
+              subTitle: null,
+              type: 'CHECKBOX',
+              options: [
+                { id: 'NEED_1', displayText: 'Need 1', description: null, exclusive: false },
+                { id: 'NEED_2', displayText: 'Need 2', description: null, exclusive: false },
+                { id: 'NEED_3', displayText: 'Need 3', description: null, exclusive: false },
+                {
+                  id: 'OTHER_SUPPORT_NEEDS',
+                  displayText: 'Other',
+                  description: null,
+                  exclusive: false,
+                  freeText: true,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'SUPPORT_REQUIREMENTS',
+          },
+        ],
+      },
+    },
+  })
+
 const nextPageSupportRequirements = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Health Assessment Next Page Support requirements',
@@ -489,6 +532,99 @@ const submitAssessment = () => {
                 answer: {
                   '@class': 'ListAnswer',
                   answer: ['NEED_2'],
+                  displayText: ['Need 2'],
+                },
+                pageId: 'SUPPORT_REQUIREMENTS',
+                question: 'SUPPORT_REQUIREMENTS',
+                questionTitle: 'Support needs',
+                questionType: 'CHECKBOX',
+              },
+              {
+                answer: {
+                  '@class': 'StringAnswer',
+                  answer: 'SUPPORT_NOT_REQUIRED',
+                  displayText: 'Support not required',
+                },
+                pageId: 'ASSESSMENT_SUMMARY',
+                question: 'SUPPORT_NEEDS',
+                questionTitle: 'Health support needs',
+                questionType: 'RADIO',
+              },
+              {
+                answer: {
+                  '@class': 'StringAnswer',
+                  answer: 'Case Note',
+                  displayText: 'Case Note',
+                },
+                pageId: 'ASSESSMENT_SUMMARY',
+                question: 'CASE_NOTE_SUMMARY',
+                questionTitle: 'Add a case note summary',
+                questionType: 'LONG_TEXT',
+              },
+            ],
+            version: 1,
+          }),
+          ignoreArrayOrder: true,
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: submitHeaders,
+    },
+    scenarioName: 'john-smith-immediate-needs-report',
+    requiredScenarioState: 'Started',
+    newScenarioState: 'After-Complete',
+  })
+}
+
+const completeAssessmentHealthFreeText = () => {
+  return stubFor({
+    name: 'JohnSmith immediate needs report Health Assessment Submit',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/complete?assessmentType=BCST2',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          equalToJson: JSON.stringify({
+            questionsAndAnswers: [
+              {
+                answer: {
+                  '@class': 'StringAnswer',
+                  answer: 'YES',
+                  displayText: 'Yes',
+                },
+                pageId: 'REGISTERED_WITH_GP',
+                question: 'REGISTERED_WITH_GP',
+                questionTitle: 'Is the person in prison registered with a GP surgery outside of prison?',
+                questionType: 'RADIO',
+              },
+              {
+                answer: {
+                  '@class': 'StringAnswer',
+                  answer: '01234567890',
+                  displayText: '01234567890',
+                },
+                pageId: 'REGISTERED_WITH_GP',
+                question: 'GP_PHONE_NUMBER',
+                questionTitle: 'What is the phone number of the GP?',
+                questionType: 'SHORT_TEXT',
+              },
+              {
+                answer: {
+                  '@class': 'StringAnswer',
+                  answer: 'NO',
+                  displayText: 'No',
+                },
+                pageId: 'MEET_HEALTHCARE_TEAM',
+                question: 'MEET_HEALTHCARE_TEAM',
+                questionTitle: 'Does the person in prison want to meet with a prison healthcare team?',
+                questionType: 'RADIO',
+              },
+              {
+                answer: {
+                  '@class': 'ListAnswer',
+                  answer: ['NEED_2', 'OTHER_SUPPORT_NEEDS: Random text'],
                   displayText: ['Need 2'],
                 },
                 pageId: 'SUPPORT_REQUIREMENTS',
@@ -1053,6 +1189,25 @@ export const johnSmithImmediateNeedsReportHealth = (): SuperAgentRequest[] => [
   nextPageSummary('HEALTH'),
   checkAnswersPage('HEALTH'),
   submitAssessment(),
+  completedTaskList(),
+  submit(),
+  getResettlementAssessmentVersion('HEALTH', 'BCST2'),
+]
+
+export const johnSmithImmediateNeedsReportHealthWithFreeText = (): SuperAgentRequest[] => [
+  stubJohnSmithPrisonerDetails(),
+  initialTaskListAllCompleteButHealth(),
+  nextPageStartHealth(),
+  healthAssessment(),
+  nextPageHealth(),
+  meetHealthCareTeamPage(),
+  nextPageHealthcareTeam(),
+  supportRequirementsPageFreeText(),
+  nextPageSupportRequirements(),
+  assessmentSummaryPage('HEALTH', 'Health'),
+  nextPageSummary('HEALTH'),
+  checkAnswersPage('HEALTH'),
+  completeAssessmentHealthFreeText(),
   completedTaskList(),
   submit(),
   getResettlementAssessmentVersion('HEALTH', 'BCST2'),

@@ -17,6 +17,7 @@ import { getResettlementAssessmentVersion, johnSmithDefaults } from './scenarios
 import {
   johnSmithImmediateNeedsReportHealth,
   johnSmithImmediateNeedsReportAccommodation,
+  johnSmithImmediateNeedsReportHealthWithFreeText,
 } from './scenarios/john-smith/john-smith-immediate-needs-report'
 import johnSmithImmediateNeedsReportEdit from './scenarios/john-smith/john-smith-immediate-needs-report-edit'
 import { johnSmithPostFinanceAndID, johnSmithPostID } from './scenarios/john-smith/john-smith-post-finance-and-ID'
@@ -438,6 +439,8 @@ const stubJohnSmithPreRelease = () => {
 
 const stubJohnSmithImmediateNeedsReportHealth = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportHealth()])
+const stubJohnSmithImmediateNeedsReportHealthFreeText = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportHealthWithFreeText()])
 const stubJohnSmithImmediateNeedsReportEdit = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportEdit()])
 const stubJohnSmithImmediateNeedsReportAccommodation = () =>
@@ -531,6 +534,7 @@ export default {
   stubGetPrisonerImage,
   stubJohnSmithPreRelease,
   stubJohnSmithImmediateNeedsReportHealth,
+  stubJohnSmithImmediateNeedsReportHealthFreeText,
   stubJohnSmithImmediateNeedsReportEdit,
   stubJohnSmithImmediateNeedsReportAccommodation,
   stubJohnSmithPostFinanceAndID,
