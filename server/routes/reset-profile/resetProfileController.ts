@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import { FEATURE_FLAGS } from '../../utils/constants'
-import logger from '../../../logger'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import ResetProfileView from './resetProfileView'
 
