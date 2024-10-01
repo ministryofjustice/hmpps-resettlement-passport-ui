@@ -524,6 +524,9 @@ const stubJohnSmithCheckBox = () => {
   ])
 }
 
+const stubJohnSmithProfileReset = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation()])
+
 export default {
   stubGetPrisoners,
   stubGetAppointments,
@@ -565,4 +568,5 @@ export default {
   stubDocumentUploadFailureWithVirus,
   stubDocumentUploadFailure500,
   stubDefaultSearchResultsNoPastReleaseDates,
+  stubJohnSmithProfileReset,
 }
