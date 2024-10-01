@@ -66,26 +66,26 @@ export class AssessmentStateService {
     await this.store.setWorkingAssessment(key, existingAssessmentFromCache)
   }
 
-  async checkForConvergence(key: StateKey, pageWithQuestions: PageWithQuestions): Promise<boolean> {
+  async checkForConvergence(key: StateKey, currentPage: PageWithQuestions): Promise<boolean> {
     const workingAssessment = await this.store.getWorkingAssessment(key)
     const backupAssessment = await this.store.getBackupAssessment(key)
 
     // Check if we're in an edit - we're in an edit if a backupAssessment exists
     const edit = backupAssessment !== null
 
-    if (!edit || backupAssessment.startEditPageId === pageWithQuestions.pageId) {
+    if (!edit || backupAssessment.startEditPageId === currentPage.pageId) {
       return false
     }
 
-    const answeredPages = [...new Set(workingAssessment.assessment.questionsAndAnswers.map(it => it.pageId))]
-    if (answeredPages.includes(pageWithQuestions.pageId)) {
-      const extraAnsweredPages = backupAssessment.pageLoadHistory.slice(
+    const previouslyAnsweredPages = [...new Set(workingAssessment.assessment.questionsAndAnswers.map(it => it.pageId))]
+    if (previouslyAnsweredPages.includes(currentPage.pageId)) {
+      const previouslyAnsweredPagesAfterCurrentPage = backupAssessment.pageLoadHistory.slice(
         backupAssessment.pageLoadHistory.indexOf(
-          backupAssessment.pageLoadHistory.find(it => it.pageId === pageWithQuestions.pageId),
+          backupAssessment.pageLoadHistory.find(it => it.pageId === currentPage.pageId),
         ),
         backupAssessment.pageLoadHistory.length,
       )
-      workingAssessment.pageLoadHistory.push(...extraAnsweredPages)
+      workingAssessment.pageLoadHistory.push(...previouslyAnsweredPagesAfterCurrentPage)
       await this.store.setWorkingAssessment(key, workingAssessment)
       return true
     }
