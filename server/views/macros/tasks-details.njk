@@ -1,4 +1,4 @@
-{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, isInWatchlist) %}
+{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, isInWatchlist, resetProfileEnabled) %}
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -17,6 +17,11 @@
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
             <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
           </form>
+        {% endif %}
+        {% if resetProfileEnabled %}
+          <a href="/resetProfile?prisonerNumber={{prisonerNumber}}" class="govuk-button" id="reset-profile-btn">
+            Reset reports and statuses
+          </a>
         {% endif %}
         {% if tasksViewEnabled == true %}
           <div class="govuk-form-group govuk-!-margin-0">

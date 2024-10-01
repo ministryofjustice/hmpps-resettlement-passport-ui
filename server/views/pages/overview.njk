@@ -11,6 +11,7 @@
 {% set addAppointmentEnabled = features.ADD_APPOINTMENTS | getFeatureFlag %}
 {% set tasksViewEnabled = features.TASKS_VIEW | getFeatureFlag %}
 {% set uploadDocumentsEnabled = features.UPLOAD_DOCUMENTS | getFeatureFlag %}
+{% set resetProfileEnabled = features.RESET_PROFILE | getFeatureFlag %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
@@ -23,7 +24,7 @@
   {% elif prisonerData.resettlementReviewAvailable === false %}
     {{preReleaseComplete(pathway, prisonerData)}}
   {% endif %}
-  {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist) }}
+  {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, prisonerData.isInWatchlist, resetProfileEnabled) }}
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
