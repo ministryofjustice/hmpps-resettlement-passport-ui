@@ -13,6 +13,7 @@
 {% from "../macros/checkbox.njk" import checkbox %}
 {% from "../macros/address.njk" import address %}
 {% from "../macros/shortText.njk" import shortText %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -40,14 +41,25 @@
         {% endif %}
 
         <div class="govuk-!-padding-top-7">
+          {% if redirectAsInvalid %}
+            {{ govukErrorSummary({
+              titleText: "There is a problem",
+              errorList: [
+                {
+                  text: "Something went wrong - reconfirm your answers",
+                  href: "#"
+                }
+              ]
+            }) }}
+          {% endif %}
           {% if not assessmentPage.error %}
-            {% if assessmentPage.id === "CHECK_ANSWERS" %}
+            {% if assessmentPage.id === checkAnswersPageId %}
               <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Check your answers</h1>
             {% else %}
               <h1 class="govuk-heading-l govuk-!-margin-bottom-3">{{ assessmentPage.title or assessmentPage.questionsAndAnswers[0].question.title }}</h1>
             {% endif %}
             <form
-              {% if assessmentPage.id == 'CHECK_ANSWERS' %}
+              {% if assessmentPage.id === checkAnswersPageId %}
                 action="/ImmediateNeedsReport/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
               {% else %}
                 action="/ImmediateNeedsReport-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&backButton={{true if backButton or submitted}}"
@@ -55,7 +67,7 @@
               method="post"
             >
 
-              {% if assessmentPage.id === "CHECK_ANSWERS" %}
+              {% if assessmentPage.id === checkAnswersPageId %}
                 {{ checkAnswers(allQuestionsAndAnswers, pathway, prisonerData.personalDetails.prisonerNumber, assessmentType, submitted) }}
               {% else %}
 
@@ -95,7 +107,7 @@
               <input type="hidden" name="assessmentType" value="{{ assessmentType }}"/>
 
               <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">
-                {% if assessmentPage.id === 'CHECK_ANSWERS' %}
+                {% if assessmentPage.id === checkAnswersPageId %}
                   Confirm
                 {% else %}
                   Continue

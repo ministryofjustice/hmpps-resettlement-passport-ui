@@ -3,12 +3,12 @@ export type NextPage = {
   error?: string
 }
 
-export type QuestionOptions = {
+export type ApiQuestionOption = {
   id: string
   displayText: string
   description?: string
   exclusive?: boolean
-  nestedQuestions?: QuestionsAndAnswers[]
+  nestedQuestions?: ApiQuestionsAndAnswer[]
   freeText?: boolean
 }
 
@@ -36,13 +36,13 @@ export type ValidationError = {
 
 export type ValidationErrors = ValidationError[] | null
 
-export type QuestionsAndAnswers = {
+export type ApiQuestionsAndAnswer = {
   question: {
     id: string
     title?: string
     subTitle?: string
     type?: string
-    options?: QuestionOptions[]
+    options?: ApiQuestionOption[]
     validationType?: ValidationType
     customValidation?: CustomValidation
   }
@@ -50,14 +50,14 @@ export type QuestionsAndAnswers = {
   originalPageId: string
 }
 
-export type AssessmentPage = {
+export type ApiAssessmentPage = {
   error?: string
   id?: string
   title?: string
-  questionsAndAnswers?: QuestionsAndAnswers[]
+  questionsAndAnswers?: ApiQuestionsAndAnswer[]
 }
 
-export type SubmittedQuestionAndAnswer = {
+export type CachedQuestionAndAnswer = {
   question: string
   questionTitle: string
   pageId: string
@@ -69,9 +69,20 @@ export type SubmittedQuestionAndAnswer = {
   }
 }
 
-export type SubmittedInput = {
-  questionsAndAnswers?: SubmittedQuestionAndAnswer[]
+export type CachedAssessment = {
+  questionsAndAnswers: CachedQuestionAndAnswer[]
   version: number
+}
+
+export type WorkingCachedAssessment = {
+  assessment: CachedAssessment
+  pageLoadHistory: PageWithQuestions[]
+}
+
+export type BackupCachedAssessment = {
+  assessment: CachedAssessment
+  pageLoadHistory: PageWithQuestions[]
+  startEditPageId: string
 }
 
 export type ResettlementAssessmentVersion = {
@@ -81,4 +92,9 @@ export type ResettlementAssessmentVersion = {
 export type CustomValidation = {
   regex: string
   message: string
+}
+
+export type PageWithQuestions = {
+  pageId: string
+  questions: string[]
 }

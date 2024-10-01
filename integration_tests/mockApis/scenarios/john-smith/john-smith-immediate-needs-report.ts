@@ -3,6 +3,7 @@ import { addMonths, format } from 'date-fns'
 import { stubFor } from '../../wiremock'
 import { responseHeaders, submitHeaders } from '../../headers'
 import { getResettlementAssessmentVersion } from './john-smith'
+import { validateAssessment } from '../../common'
 
 export const stubJohnSmithPrisonerDetails = () =>
   stubFor({
@@ -1192,6 +1193,7 @@ export const johnSmithImmediateNeedsReportHealth = (): SuperAgentRequest[] => [
   completedTaskList(),
   submit(),
   getResettlementAssessmentVersion('HEALTH', 'BCST2'),
+  validateAssessment('HEALTH', 'BCST2'),
 ]
 
 export const johnSmithImmediateNeedsReportHealthWithFreeText = (): SuperAgentRequest[] => [
@@ -1211,6 +1213,7 @@ export const johnSmithImmediateNeedsReportHealthWithFreeText = (): SuperAgentReq
   completedTaskList(),
   submit(),
   getResettlementAssessmentVersion('HEALTH', 'BCST2'),
+  validateAssessment('HEALTH', 'BCST2'),
 ]
 
 export const johnSmithImmediateNeedsReportAccommodation = (): SuperAgentRequest[] => [
@@ -1232,4 +1235,5 @@ export const johnSmithImmediateNeedsReportAccommodation = (): SuperAgentRequest[
   submitAccommodationAssessmentEdit2(),
   nextPageHelpToKeepHome(),
   getResettlementAssessmentVersion('ACCOMMODATION', 'BCST2'),
+  validateAssessment('ACCOMMODATION', 'BCST2'),
 ]

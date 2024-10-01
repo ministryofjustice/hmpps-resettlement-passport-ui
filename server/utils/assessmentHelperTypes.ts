@@ -1,4 +1,4 @@
-import { QuestionsAndAnswers } from '../data/model/immediateNeedsReport'
+import { ApiQuestionsAndAnswer } from '../data/model/immediateNeedsReport'
 
 export type RequestBody = {
   [key: string]: string
@@ -6,7 +6,7 @@ export type RequestBody = {
 
 export type ResettlementReportUserInput = {
   questionsAndAnswers: ResettlementReportUserQuestionAndAnswer[]
-  flattenedQuestionsOnPage: QuestionsAndAnswers[]
+  flattenedQuestionsOnPage: ApiQuestionsAndAnswer[]
   pageId: string
 }
 

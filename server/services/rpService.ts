@@ -6,10 +6,10 @@ import logger from '../../logger'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
 import {
-  AssessmentPage,
+  ApiAssessmentPage,
   NextPage,
   ResettlementAssessmentVersion,
-  SubmittedInput,
+  CachedAssessment,
 } from '../data/model/immediateNeedsReport'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
 import { AssessmentsInformation, AssessmentSkipRequest, AssessmentType } from '../data/model/assessmentInformation'
@@ -149,7 +149,7 @@ export default class RpService {
     try {
       assessmentPage = (await client.get(
         `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/page/${pageId}?assessmentType=${assessmentType}&version=${version}`,
-      )) as AssessmentPage
+      )) as ApiAssessmentPage
     } catch (err) {
       logger.warn(
         `Session: ${client.sessionId} Cannot retrieve assessments summary for ${prisonerId} ${err.status} ${err}`,
@@ -167,7 +167,7 @@ export default class RpService {
   async fetchNextPage(
     prisonerId: string,
     pathway: string,
-    questionsAndAnswers: SubmittedInput,
+    questionsAndAnswers: CachedAssessment,
     currentPageId: string,
     assessmentType: AssessmentType,
     version: number,
@@ -198,7 +198,7 @@ export default class RpService {
   async completeAssessment(
     prisonerId: string,
     pathway: string,
-    questionsAndAnswers: SubmittedInput,
+    questionsAndAnswers: CachedAssessment,
     assessmentType: AssessmentType,
   ) {
     let response
@@ -219,6 +219,33 @@ export default class RpService {
       }
     }
 
+    return response
+  }
+
+  async validateAssessment(
+    prisonerId: string,
+    pathway: string,
+    assessment: CachedAssessment,
+    assessmentType: AssessmentType,
+  ) {
+    let response: { valid?: boolean; error?: string }
+    const client = this.createClient()
+    try {
+      await client.post(
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/validate?assessmentType=${assessmentType}`,
+        assessment,
+      )
+      response = { valid: true }
+    } catch (err) {
+      logger.warn(
+        `Session: ${client.sessionId} Cannot validate assessment for ${prisonerId} pathway ${pathway} ${err.status} ${err}`,
+      )
+      if (err.status === 400) {
+        response = { valid: false }
+      } else {
+        response = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      }
+    }
     return response
   }
 

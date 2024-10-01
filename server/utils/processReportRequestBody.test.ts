@@ -1,5 +1,5 @@
 import { RequestBody, ResettlementReportUserInput } from './assessmentHelperTypes'
-import { AssessmentPage } from '../data/model/immediateNeedsReport'
+import { ApiAssessmentPage } from '../data/model/immediateNeedsReport'
 import { processReportRequestBody } from './processReportRequestBody'
 
 describe('Process Report Request Body', () => {
@@ -60,7 +60,7 @@ describe('Process Report Request Body', () => {
             originalPageId: 'PAST_AND_FUTURE_ACCOMMODATION',
           },
         ],
-      } as AssessmentPage,
+      } as ApiAssessmentPage,
       {
         WHERE_DID_THEY_LIVE: 'PRIVATE_RENTED_HOUSING',
         'WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-addressLine1': '123 Fake Street',
@@ -172,7 +172,7 @@ describe('Process Report Request Body', () => {
     ],
   ])(
     '%s processReportRequestBody(%s, %s)',
-    (_: string, currentPage: AssessmentPage, body: RequestBody, expected: ResettlementReportUserInput | null) => {
+    (_: string, currentPage: ApiAssessmentPage, body: RequestBody, expected: ResettlementReportUserInput | null) => {
       expect(processReportRequestBody(currentPage, body)).toEqual(expected)
     },
   )

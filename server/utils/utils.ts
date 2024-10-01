@@ -1,13 +1,29 @@
 import { Callback } from 'nunjucks'
 import { addMinutes, format } from 'date-fns'
 import { PathwayStatus, PrisonerData } from '../@types/express'
-import { ASSESSMENT_ENUMS_DICTIONARY, ENUMS_DICTIONARY, EnumValue, RISK_ASSESSMENT_ENUMS_DICTIONARY } from './constants'
+import {
+  ASSESSMENT_ENUMS_DICTIONARY,
+  CHECK_ANSWERS_PAGE_ID,
+  ENUMS_DICTIONARY,
+  EnumValue,
+  RISK_ASSESSMENT_ENUMS_DICTIONARY,
+} from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
 import logger from '../../logger'
 import { AppointmentLocation } from '../data/model/appointment'
-import { Answer, QuestionsAndAnswers, SubmittedInput, ValidationErrors } from '../data/model/immediateNeedsReport'
+import {
+  Answer,
+  ApiAssessmentPage,
+  ApiQuestionsAndAnswer,
+  CachedAssessment,
+  CachedQuestionAndAnswer,
+  PageWithQuestions,
+  ValidationErrors,
+  WorkingCachedAssessment,
+} from '../data/model/immediateNeedsReport'
 import { AssessmentType } from '../data/model/assessmentInformation'
+import { toCachedQuestionAndAnswer } from './formatAssessmentResponse'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -260,8 +276,8 @@ export function formatAddress(location: AppointmentLocation): string {
 }
 
 export function getAnswerToCurrentQuestion(
-  currentQuestionAndAnswer: QuestionsAndAnswers,
-  allQuestionsAndAnswers: SubmittedInput,
+  currentQuestionAndAnswer: ApiQuestionsAndAnswer,
+  allQuestionsAndAnswers: CachedAssessment,
 ): Answer | null {
   if (!currentQuestionAndAnswer || !allQuestionsAndAnswers) return null
   const qaObject = allQuestionsAndAnswers.questionsAndAnswers.find(
@@ -350,6 +366,90 @@ export function fullName(prisonerData: PrisonerData): string {
     return `${toTitleCase(firstName)} ${toTitleCase(lastName)}`
   }
   return ''
+}
+
+export function convertQuestionsAndAnswersToCacheFormat(prefillFromApi: ApiQuestionsAndAnswer[]) {
+  if (prefillFromApi?.length > 0) {
+    return prefillFromApi.map(it => toCachedQuestionAndAnswer(it))
+  }
+  return []
+}
+
+export function getPagesFromCheckYourAnswers(apiQuestionsAndAnswers: ApiQuestionsAndAnswer[]) {
+  if (apiQuestionsAndAnswers?.length > 0) {
+    const pages: PageWithQuestions[] = []
+    const allPages = [...new Set(apiQuestionsAndAnswers.map(it => it.originalPageId))]
+    allPages.forEach(p => {
+      const allQuestionsOnPage = apiQuestionsAndAnswers.filter(it => it.originalPageId === p)
+      const questions: string[] = []
+      allQuestionsOnPage.forEach(qa => {
+        questions.push(qa.question.id)
+        if (qa.question.options) {
+          questions.push(
+            ...qa.question.options
+              .flatMap(it => it.nestedQuestions)
+              .flatMap(it => it?.question.id)
+              .filter(it => it),
+          )
+        }
+      })
+      pages.push({
+        pageId: p,
+        questions,
+      })
+    })
+    pages.push({ pageId: CHECK_ANSWERS_PAGE_ID, questions: [] })
+    return pages
+  }
+  return []
+}
+
+export function convertApiQuestionAndAnswersToPageWithQuestions(apiAssessmentPage: ApiAssessmentPage) {
+  const questions: string[] = []
+  apiAssessmentPage?.questionsAndAnswers?.forEach(qa => {
+    questions.push(qa.question.id)
+    if (qa.question.options) {
+      questions.push(
+        ...qa.question.options
+          .flatMap(it => it.nestedQuestions)
+          .flatMap(it => it?.question.id)
+          .filter(it => it),
+      )
+    }
+  })
+  return {
+    pageId: apiAssessmentPage?.id,
+    questions,
+  } as PageWithQuestions
+}
+
+export function findOtherNestedQuestions(
+  newQandA: CachedQuestionAndAnswer,
+  existingAssessmentFromCache: WorkingCachedAssessment,
+  apiAssessmentPage: ApiAssessmentPage,
+): CachedQuestionAndAnswer[] {
+  const parentQuestion = apiAssessmentPage?.questionsAndAnswers?.find(qa => {
+    return qa.question.options
+      ?.flatMap(it => it.nestedQuestions)
+      .map(it => it?.question.id)
+      .includes(newQandA.question)
+  })
+  const questionFromApi =
+    parentQuestion || apiAssessmentPage?.questionsAndAnswers.find(it => it.question.id === newQandA.question)
+  const currentlySelectedOption = questionFromApi?.question.options?.find(
+    option =>
+      option.id === newQandA.answer.answer ||
+      option.nestedQuestions?.flatMap(it => it.question.id).includes(newQandA.question),
+  )
+  const nestedQuestions =
+    questionFromApi?.question.options
+      ?.filter(it => it !== currentlySelectedOption)
+      .flatMap(it => it.nestedQuestions)
+      .map(it => it?.question.id) || []
+  return (
+    existingAssessmentFromCache?.assessment.questionsAndAnswers.filter(it => nestedQuestions.includes(it.question)) ||
+    []
+  )
 }
 
 export function startsWith(string: string, prefix: string): boolean {

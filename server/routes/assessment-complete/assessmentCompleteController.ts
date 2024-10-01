@@ -32,8 +32,8 @@ export default class AssessmentCompleteController {
           const stateKey = {
             prisonerNumber: prisonerData.personalDetails.prisonerNumber,
             userId: req.user.username,
-            assessmentType,
             pathway,
+            assessmentType,
           }
           return this.assessmentStateService.onComplete(stateKey)
         })

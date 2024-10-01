@@ -1,8 +1,21 @@
 import AssessmentStore, { StateKey } from './assessmentStore'
 import { createRedisClient } from './redisClient'
-import { AssessmentPage, SubmittedInput, SubmittedQuestionAndAnswer } from './model/immediateNeedsReport'
-import { toSubmittedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
-import logger from '../../logger'
+import {
+  ApiAssessmentPage,
+  ApiQuestionsAndAnswer,
+  BackupCachedAssessment,
+  CachedAssessment,
+  CachedQuestionAndAnswer,
+  PageWithQuestions,
+  WorkingCachedAssessment,
+} from './model/immediateNeedsReport'
+import { toCachedQuestionAndAnswer } from '../utils/formatAssessmentResponse'
+import {
+  convertQuestionsAndAnswersToCacheFormat,
+  findOtherNestedQuestions,
+  getPagesFromCheckYourAnswers,
+} from '../utils/utils'
+import { CHECK_ANSWERS_PAGE_ID } from '../utils/constants'
 
 export function createAssessmentStateService() {
   return new AssessmentStateService(new AssessmentStore(createRedisClient()))
@@ -13,219 +26,235 @@ export class AssessmentStateService {
     // no-op
   }
 
-  async getAssessment(key: StateKey): Promise<SubmittedInput> {
-    return this.store.getAssessment(key)
+  async getWorkingAssessment(key: StateKey): Promise<WorkingCachedAssessment> {
+    return this.store.getWorkingAssessment(key)
   }
 
-  async deleteEditedQuestionList(key: StateKey) {
-    await this.store.deleteEditedQuestionList(key)
-  }
-
-  async answer(key: StateKey, answer: SubmittedInput, validationErrors: boolean, edit: boolean = false) {
+  async answer(key: StateKey, assessmentToSave: CachedAssessment, apiAssessmentPage: ApiAssessmentPage) {
     // get previous Q&A's
-    const allQuestionsAndAnswers = await this.getAssessment(key)
+    const existingAssessmentFromCache = await this.getWorkingAssessment(key)
+    assessmentToSave.questionsAndAnswers.forEach((newQandA: CachedQuestionAndAnswer) => {
+      // Delete any other nested question under the same parent question
+      const otherNestedQuestionsToDelete = findOtherNestedQuestions(
+        newQandA,
+        existingAssessmentFromCache,
+        apiAssessmentPage,
+      )
+      otherNestedQuestionsToDelete.forEach(qa => {
+        existingAssessmentFromCache.assessment.questionsAndAnswers.splice(
+          existingAssessmentFromCache.assessment.questionsAndAnswers.indexOf(qa),
+          1,
+        )
+      })
 
-    if (!validationErrors) {
-      await this.updateAnsweredQuestionIds(key, answer, edit)
-    }
-
-    answer.questionsAndAnswers.forEach((newQandA: SubmittedQuestionAndAnswer) => {
-      const index = allQuestionsAndAnswers?.questionsAndAnswers
-        ? allQuestionsAndAnswers.questionsAndAnswers.findIndex((existingQandA: SubmittedQuestionAndAnswer) => {
-            return existingQandA.question === newQandA.question
-          })
+      const index = existingAssessmentFromCache.assessment.questionsAndAnswers
+        ? existingAssessmentFromCache.assessment.questionsAndAnswers.findIndex(
+            (existingQandA: CachedQuestionAndAnswer) => {
+              return existingQandA.question === newQandA.question
+            },
+          )
         : -1
 
       if (index !== -1) {
         // Replace the existing question with the new one
-        allQuestionsAndAnswers.questionsAndAnswers[index] = newQandA
+        existingAssessmentFromCache.assessment.questionsAndAnswers[index] = newQandA
       } else {
-        // Add the new question if it doesn't exist
-        allQuestionsAndAnswers.questionsAndAnswers.push(newQandA)
+        // Add the new question
+        existingAssessmentFromCache.assessment.questionsAndAnswers.push(newQandA)
       }
     })
 
-    await this.store.setAssessment(key, allQuestionsAndAnswers)
+    await this.store.setWorkingAssessment(key, existingAssessmentFromCache)
   }
 
-  private async updateAnsweredQuestionIds(key: StateKey, answer: SubmittedInput, edit: boolean) {
-    let answeredQuestionIds: string[]
-    if (edit) {
-      answeredQuestionIds = await this.store.getEditedQuestionList(key)
-    } else {
-      answeredQuestionIds = await this.store.getAnsweredQuestions(key)
-    }
+  async checkForConvergence(key: StateKey, currentPage: PageWithQuestions): Promise<boolean> {
+    const workingAssessment = await this.store.getWorkingAssessment(key)
+    const backupAssessment = await this.store.getBackupAssessment(key)
 
-    answer.questionsAndAnswers.forEach(q => {
-      const questionId = q.question
-      const questionIndex = answeredQuestionIds.indexOf(questionId)
-      if (questionIndex === -1) {
-        // Not currently answered, just add to the end
-        answeredQuestionIds.push(questionId)
-      } else {
-        // Remove any answers that come after the question
-        answeredQuestionIds = answeredQuestionIds.slice(0, questionIndex + 1)
-      }
-    })
+    // Check if we're in an edit - we're in an edit if a backupAssessment exists
+    const edit = backupAssessment !== null
 
-    if (edit) {
-      await this.store.setEditedQuestionList(key, answeredQuestionIds)
-    } else {
-      await this.store.setAnsweredQuestions(key, answeredQuestionIds)
-    }
-  }
-
-  async checkForConvergence(key: StateKey, assessmentPage: AssessmentPage, edit: boolean): Promise<boolean> {
-    // Get any edited questions from cache
-    const editedQuestionIds = await this.store.getEditedQuestionList(key)
-    const answeredQuestionIds = await this.store.getAnsweredQuestions(key)
-
-    // PSFR-1312 If editedQuestionIds already contains one of the page's question ids then the user has clicked the back button so don't re-converge.
-    if (editedQuestionIds.some(eq => assessmentPage.questionsAndAnswers.map(qa => qa.question.id).includes(eq))) {
+    if (!edit || backupAssessment.startEditPageId === currentPage.pageId) {
       return false
     }
 
-    if (editedQuestionIds.length === 0 || !edit) {
-      return false
-    }
-    // If we have any edited questions, check if we have now re-converged to the logic tree - if so update cache and redirect to CHECK_ANSWERS
-
-    // Get the question ids for the next page (with workaround if next page is CHECK_ANSWER as this contains no new questions)
-    const nextPageQuestionIds =
-      assessmentPage.id !== 'CHECK_ANSWERS' ? assessmentPage.questionsAndAnswers.map(it => it.question.id) : []
-
-    // If all the questions on the page we are about to render are in the cache we have converged
-    if (nextPageQuestionIds.every(it => answeredQuestionIds?.includes(it))) {
-      // Get the start and end index of existingAssessment where we diverged and converged
-      const editedQuestionsStartIndex = answeredQuestionIds.indexOf(editedQuestionIds[0])
-      const editedQuestionsEndIndex = answeredQuestionIds.indexOf(nextPageQuestionIds[0])
-      // Get the question ids from the indexes
-      const questionIdsPreDivergence = answeredQuestionIds.slice(0, editedQuestionsStartIndex)
-      // If editedQuestionsEndIndex === -1, it means the next page has no questions on it. In this case we can set the questionIdsPostConvergence to empty.
-      const questionIdsPostConvergence =
-        editedQuestionsEndIndex === -1
-          ? []
-          : answeredQuestionIds.slice(editedQuestionsEndIndex, answeredQuestionIds.length)
-
-      // The new list of question ids is the pre-divergence, edited questions and post-convergence ids de-duped
-      const newQuestionIds = [...questionIdsPreDivergence, ...editedQuestionIds, ...questionIdsPostConvergence].filter(
-        (item, pos, arr) => {
-          return arr.indexOf(item) === pos
-        },
+    const previouslyAnsweredPages = [...new Set(workingAssessment.assessment.questionsAndAnswers.map(it => it.pageId))]
+    if (previouslyAnsweredPages.includes(currentPage.pageId)) {
+      const previouslyAnsweredPagesAfterCurrentPage = backupAssessment.pageLoadHistory.slice(
+        backupAssessment.pageLoadHistory.indexOf(
+          backupAssessment.pageLoadHistory.find(it => it.pageId === currentPage.pageId),
+        ),
+        backupAssessment.pageLoadHistory.length,
       )
-
-      await this.store.setAnsweredQuestions(key, newQuestionIds)
-      // Delete the edited question list from cache
-      await this.store.deleteEditedQuestionList(key)
-      // Redirect to check answers page
+      workingAssessment.pageLoadHistory.push(...previouslyAnsweredPagesAfterCurrentPage)
+      await this.store.setWorkingAssessment(key, workingAssessment)
       return true
     }
     return false
   }
 
   async onComplete(key: StateKey) {
-    await this.store.deleteAssessment(key)
-    await this.store.deleteEditedQuestionList(key)
-    await this.store.deleteAnsweredQuestions(key)
-    await this.store.deleteCurrentPage(key)
+    await this.store.deleteWorkingAssessment(key)
+    await this.store.deleteBackupAssessment(key)
   }
 
-  async getCurrentPage(key: StateKey): Promise<AssessmentPage> {
-    return JSON.parse(await this.store.getCurrentPage(key))
-  }
+  async initialiseCache(
+    stateKey: StateKey,
+    configVersion: number,
+    checkYourAnswersQuestionsAndAnswers: ApiQuestionsAndAnswer[],
+  ) {
+    const existingWorkingAssessment = await this.getWorkingAssessment(stateKey)
 
-  async setCurrentPage(key: StateKey, assessmentPage: AssessmentPage) {
-    await this.store.setCurrentPage(key, assessmentPage)
-  }
-
-  async initialiseCache(stateKey: StateKey, configVersion: number): Promise<SubmittedInput> {
-    const existingAssessment = await this.getAssessment(stateKey)
-    if (!existingAssessment) {
+    if (!existingWorkingAssessment) {
       const initialAssessment = {
-        questionsAndAnswers: [],
-        version: configVersion,
-      } as SubmittedInput
-      await this.store.setAssessment(stateKey, initialAssessment)
+        assessment: {
+          questionsAndAnswers: convertQuestionsAndAnswersToCacheFormat(checkYourAnswersQuestionsAndAnswers),
+          version: configVersion,
+        },
+        pageLoadHistory: getPagesFromCheckYourAnswers(checkYourAnswersQuestionsAndAnswers),
+      } as WorkingCachedAssessment
+      await this.store.setWorkingAssessment(stateKey, initialAssessment)
       return initialAssessment
     }
-    return this.getExistingAssessmentAnsweredQuestions(stateKey)
+    if (checkYourAnswersQuestionsAndAnswers.length > 0) {
+      existingWorkingAssessment.pageLoadHistory = getPagesFromCheckYourAnswers(checkYourAnswersQuestionsAndAnswers)
+      await this.store.setWorkingAssessment(stateKey, existingWorkingAssessment)
+    }
+    return existingWorkingAssessment
   }
 
-  async getExistingAssessmentAnsweredQuestions(stateKey: StateKey): Promise<SubmittedInput> {
-    const existingAssessment = await this.getAssessment(stateKey)
-    if (!existingAssessment) {
-      throw Error('Cannot prepare submission as no assessment found in cache')
-    }
-    const answeredQuestions = await this.store.getAnsweredQuestions(stateKey)
-    return {
-      questionsAndAnswers: answeredQuestions.map(id =>
-        existingAssessment.questionsAndAnswers.find(it => it.question === id),
-      ),
-      version: existingAssessment.version || 1,
-    }
+  async startEdit(key: StateKey, pageToEdit: string) {
+    const workingCachedAssessment = await this.getWorkingAssessment(key)
+
+    await this.store.setBackupAssessment(key, {
+      assessment: workingCachedAssessment.assessment,
+      pageLoadHistory: workingCachedAssessment.pageLoadHistory,
+      startEditPageId: pageToEdit,
+    })
+
+    const indexOfPageToEdit = workingCachedAssessment.pageLoadHistory.findIndex(it => it.pageId === pageToEdit)
+
+    await this.store.setWorkingAssessment(key, {
+      assessment: {
+        questionsAndAnswers: workingCachedAssessment.assessment.questionsAndAnswers,
+        version: workingCachedAssessment.assessment.version,
+      },
+      pageLoadHistory: workingCachedAssessment.pageLoadHistory.slice(0, indexOfPageToEdit),
+    })
   }
 
-  async startEdit(key: StateKey, assessmentPage: AssessmentPage | undefined, version: number) {
-    await this.store.setEditedQuestionList(key, [])
-    if (!assessmentPage) {
-      return
-    }
-    const questionsAndAnswers = {
-      questionsAndAnswers: assessmentPage.questionsAndAnswers?.map(qAndA => toSubmittedQuestionAndAnswer(qAndA)) || [],
-      version,
-    }
-    await this.store.setAssessment(key, questionsAndAnswers)
-    const questionIds = questionsAndAnswers.questionsAndAnswers.map(qAndA => qAndA.question)
-    await this.store.setAnsweredQuestions(key, questionIds)
-  }
+  async getMergedQuestionsAndAnswers(stateKey: StateKey, questionsAndAnswersFromApi: ApiQuestionsAndAnswer[]) {
+    const assessmentFromCache = await this.getWorkingAssessment(stateKey)
 
-  mergeQuestionsAndAnswers(
-    assessmentPage: AssessmentPage,
-    existingAssessment: SubmittedInput,
-  ): SubmittedQuestionAndAnswer[] {
     // Merge together answers from API and cache
-    const mergedQuestionsAndAnswers: SubmittedQuestionAndAnswer[] = existingAssessment
-      ? [...existingAssessment.questionsAndAnswers]
+    const mergedQuestionsAndAnswers = assessmentFromCache.assessment.questionsAndAnswers
+      ? [...assessmentFromCache.assessment.questionsAndAnswers]
       : []
-    assessmentPage.questionsAndAnswers.forEach(qAndA => {
-      const questionAndAnswerFromCache = existingAssessment?.questionsAndAnswers?.find(
+    questionsAndAnswersFromApi.forEach(qAndA => {
+      const questionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers?.find(
         it => it?.question === qAndA.question.id,
       )
       // Only add if not present in cache
       if (!questionAndAnswerFromCache) {
-        mergedQuestionsAndAnswers.push(toSubmittedQuestionAndAnswer(qAndA))
+        mergedQuestionsAndAnswers.push(toCachedQuestionAndAnswer(qAndA))
+      }
+      // Find any answered nested question and add to cache if it's not present
+      const nestedAnsweredQuestion = qAndA.question.options
+        ?.flatMap(it => it.nestedQuestions)
+        .find(it => it?.answer?.answer)
+      if (nestedAnsweredQuestion) {
+        const nestedQuestionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers?.find(
+          it => it?.question === nestedAnsweredQuestion?.question.id,
+        )
+        if (!nestedQuestionAndAnswerFromCache) {
+          mergedQuestionsAndAnswers.push(toCachedQuestionAndAnswer(nestedAnsweredQuestion))
+        }
       }
     })
 
     return mergedQuestionsAndAnswers
   }
 
-  async buildCheckYourAnswers(
-    stateKey: StateKey,
-    apiAssessment: AssessmentPage,
-    cacheInput: SubmittedInput,
-  ): Promise<SubmittedQuestionAndAnswer[]> {
-    const answeredQuestions = await this.store.getAnsweredQuestions(stateKey)
-    if (answeredQuestions.length === 0) {
-      // We're just checking previously submitted answers
-      return apiAssessment.questionsAndAnswers.map(q => toSubmittedQuestionAndAnswer(q))
+  async getAllAnsweredQuestionsFromCache(stateKey: StateKey, workingOrBackupCache: 'working' | 'backup') {
+    let assessment: WorkingCachedAssessment | BackupCachedAssessment
+    switch (workingOrBackupCache) {
+      case 'working':
+        assessment = await this.getWorkingAssessment(stateKey)
+        break
+      case 'backup':
+        assessment = await this.getBackupAssessment(stateKey)
+        break
+      default:
+        break
     }
 
-    const submission = this.mergeQuestionsAndAnswers(apiAssessment, cacheInput)
+    if (assessment) {
+      const answeredQuestions: CachedQuestionAndAnswer[] = []
+      assessment.pageLoadHistory.forEach(page => {
+        page.questions.forEach(question => {
+          const questionFromCache = assessment.assessment.questionsAndAnswers.find(it => it.question === question)
+          if (questionFromCache) {
+            answeredQuestions.push(questionFromCache)
+          }
+        })
+      })
+      return {
+        questionsAndAnswers: answeredQuestions,
+        version: assessment.assessment.version,
+      } as CachedAssessment
+    }
+    return null
+  }
 
-    function find(id: string) {
-      const questionAndAnswer = submission.find(qAndA => qAndA.question === id)
-      if (!questionAndAnswer) {
-        logger.info(
-          'Missing question id: %s in submission for session %s on %s pathway',
-          id,
-          stateKey.userId,
-          stateKey.pathway,
-        )
-      }
-      return questionAndAnswer
+  async updatePageLoadHistory(stateKey: StateKey, pageWithQuestions: PageWithQuestions) {
+    const workingCachedAssessment = await this.getWorkingAssessment(stateKey)
+    const { pageLoadHistory } = workingCachedAssessment
+    // If this is a page we haven't loaded before add to the end of the array, otherwise remove any items after
+    const pageWithQuestionFromCache = pageLoadHistory.find(it => it.pageId === pageWithQuestions.pageId)
+    if (!pageWithQuestionFromCache) {
+      pageLoadHistory.push(pageWithQuestions)
+    } else {
+      pageLoadHistory.splice(pageLoadHistory.indexOf(pageWithQuestionFromCache) + 1)
     }
 
-    return answeredQuestions.map(id => find(id))
+    // Overwrite the pageLoadHistory
+    workingCachedAssessment.pageLoadHistory = pageLoadHistory
+    await this.store.setWorkingAssessment(stateKey, workingCachedAssessment)
+  }
+
+  async getWorkingAssessmentVersion(stateKey: StateKey) {
+    return (await this.store.getWorkingAssessment(stateKey)).assessment.version
+  }
+
+  async resetWorkingCacheToBackupCache(stateKey: StateKey) {
+    const backupCachedAssessment = await this.getBackupAssessment(stateKey)
+    await this.store.setWorkingAssessment(stateKey, {
+      assessment: backupCachedAssessment.assessment,
+      pageLoadHistory: backupCachedAssessment.pageLoadHistory,
+    })
+  }
+
+  async updateCachesOnCheckYourAnswers(stateKey: StateKey, mergedQuestionsAndAnswers: CachedQuestionAndAnswer[]) {
+    await this.store.deleteBackupAssessment(stateKey)
+    const workingCachedAssessment = await this.getWorkingAssessment(stateKey)
+    if (mergedQuestionsAndAnswers) {
+      workingCachedAssessment.assessment.questionsAndAnswers = mergedQuestionsAndAnswers
+    }
+    if (!workingCachedAssessment.pageLoadHistory.find(it => it.pageId === CHECK_ANSWERS_PAGE_ID)) {
+      workingCachedAssessment.pageLoadHistory.push({ pageId: CHECK_ANSWERS_PAGE_ID, questions: [] })
+    }
+    await this.store.setWorkingAssessment(stateKey, workingCachedAssessment)
+  }
+
+  async getBackupAssessment(stateKey: StateKey) {
+    return this.store.getBackupAssessment(stateKey)
+  }
+
+  async getFirstPageAndResetPageLoadHistory(stateKey: StateKey) {
+    const workingAssessment = await this.store.getWorkingAssessment(stateKey)
+    const firstPage = workingAssessment.pageLoadHistory[0]?.pageId
+    workingAssessment.pageLoadHistory = []
+    await this.store.setWorkingAssessment(stateKey, workingAssessment)
+    return firstPage
   }
 }

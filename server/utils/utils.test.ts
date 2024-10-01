@@ -16,10 +16,23 @@ import {
   fullName,
   startsWith,
   removePrefix,
+  convertQuestionsAndAnswersToCacheFormat,
+  getPagesFromCheckYourAnswers,
+  convertApiQuestionAndAnswersToPageWithQuestions,
+  findOtherNestedQuestions,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
-import { Answer, ValidationError, ValidationErrors } from '../data/model/immediateNeedsReport'
+import {
+  Answer,
+  ApiAssessmentPage,
+  ApiQuestionsAndAnswer,
+  CachedQuestionAndAnswer,
+  PageWithQuestions,
+  ValidationError,
+  ValidationErrors,
+  WorkingCachedAssessment,
+} from '../data/model/immediateNeedsReport'
 import { PersonalDetails, PrisonerData } from '../@types/express'
 
 describe('convert to title case', () => {
@@ -444,4 +457,663 @@ describe('removePrefix', () => {
   ])('%s: removePrefix(%s, %s)', (_: string, string: string, prefix: string, expected: string) => {
     expect(removePrefix(string, prefix)).toEqual(expected)
   })
+})
+
+describe('convertQuestionsAndAnswersToCacheFormat', () => {
+  it.each([
+    ['Null input', null, []],
+    ['Undefined input', undefined, []],
+    ['Blank input', [], []],
+    [
+      'Happy path',
+      [
+        {
+          question: {
+            id: 'QUESTION_1',
+            title: 'Question 1',
+            subTitle: 'Question subtitle',
+            type: 'RADIO',
+            options: [
+              {
+                id: 'OPTION_1',
+                displayText: 'Option 1',
+                description: 'Option 1 desc',
+                exclusive: false,
+                nestedQuestions: [],
+                freeText: false,
+              },
+              {
+                id: 'OPTION_2',
+                displayText: 'Option 2',
+                description: 'Option 2 desc',
+                exclusive: false,
+                nestedQuestions: [
+                  {
+                    question: {
+                      id: 'NESTED_QUESTION',
+                      title: 'Nested question',
+                      subTitle: 'Nested question subtitle',
+                      type: 'SHORT_TEXT',
+                    },
+                    answer: { answer: 'Answer text', '@class': 'StringAnswer' },
+                    originalPageId: 'PAGE_1',
+                  },
+                ],
+                freeText: false,
+              },
+              {
+                id: 'OTHER',
+                displayText: 'Other',
+                description: 'Other desc',
+                exclusive: false,
+                nestedQuestions: [],
+                freeText: true,
+              },
+              {
+                id: 'NO_ANSWER',
+                displayText: 'No answer',
+                description: 'No answer desc',
+                exclusive: true,
+                nestedQuestions: [],
+                freeText: false,
+              },
+            ],
+            validationType: 'OPTIONAL',
+          },
+          answer: { answer: 'OPTION_1', '@class': 'StringAnswer' },
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_2',
+            title: 'Question 2',
+            type: 'LONG_TEXT',
+            validationType: 'MANDATORY',
+          },
+          answer: { answer: 'Some long text', '@class': 'StringAnswer' },
+          originalPageId: 'PAGE_1',
+        },
+      ] as ApiQuestionsAndAnswer[],
+      [
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'OPTION_1',
+            displayText: 'Option 1',
+          },
+          pageId: 'PAGE_1',
+          question: 'QUESTION_1',
+          questionTitle: 'Question 1',
+          questionType: 'RADIO',
+        },
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some long text',
+            displayText: 'Some long text',
+          },
+          pageId: 'PAGE_1',
+          question: 'QUESTION_2',
+          questionTitle: 'Question 2',
+          questionType: 'LONG_TEXT',
+        },
+      ] as CachedQuestionAndAnswer[],
+    ],
+  ])('%s', (_: string, input: ApiQuestionsAndAnswer[], expectedOutput: CachedQuestionAndAnswer[]) => {
+    expect(convertQuestionsAndAnswersToCacheFormat(input)).toEqual(expectedOutput)
+  })
+})
+
+describe('getPagesFromCheckYourAnswers', () => {
+  it.each([
+    ['Null input', null, []],
+    ['Undefined input', undefined, []],
+    ['Blank input', [], []],
+    [
+      'Happy path',
+      [
+        {
+          question: {
+            id: 'QUESTION_1',
+            title: 'Question 1',
+            subTitle: 'Question subtitle',
+            type: 'RADIO',
+            options: [
+              {
+                id: 'OPTION_1',
+                displayText: 'Option 1',
+                description: 'Option 1 desc',
+                exclusive: false,
+                nestedQuestions: [],
+                freeText: false,
+              },
+              {
+                id: 'OPTION_2',
+                displayText: 'Option 2',
+                description: 'Option 2 desc',
+                exclusive: false,
+                nestedQuestions: [
+                  {
+                    question: {
+                      id: 'NESTED_QUESTION',
+                      title: 'Nested question',
+                      subTitle: 'Nested question subtitle',
+                      type: 'SHORT_TEXT',
+                    },
+                    answer: { answer: 'Answer text', '@class': 'StringAnswer' },
+                    originalPageId: 'PAGE_1',
+                  },
+                ],
+                freeText: false,
+              },
+              {
+                id: 'OTHER',
+                displayText: 'Other',
+                description: 'Other desc',
+                exclusive: false,
+                nestedQuestions: [],
+                freeText: true,
+              },
+              {
+                id: 'NO_ANSWER',
+                displayText: 'No answer',
+                description: 'No answer desc',
+                exclusive: true,
+                nestedQuestions: [],
+                freeText: false,
+              },
+            ],
+            validationType: 'OPTIONAL',
+          },
+          answer: { answer: 'OPTION_1', '@class': 'StringAnswer' },
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_2',
+            title: 'Question 2',
+            type: 'LONG_TEXT',
+            validationType: 'MANDATORY',
+          },
+          answer: { answer: 'Some long text', '@class': 'StringAnswer' },
+          originalPageId: 'PAGE_2',
+        },
+        {
+          question: {
+            id: 'QUESTION_3',
+            title: 'Question 3',
+            type: 'ADDRESS',
+            validationType: 'MANDATORY',
+          },
+          originalPageId: 'PAGE_3',
+        },
+        {
+          question: {
+            id: 'QUESTION_4',
+            title: 'Question 4',
+            type: 'SHORT_TEXT',
+            validationType: 'MANDATORY',
+          },
+          originalPageId: 'PAGE_3',
+        },
+      ] as ApiQuestionsAndAnswer[],
+      [
+        {
+          pageId: 'PAGE_1',
+          questions: ['QUESTION_1', 'NESTED_QUESTION'],
+        },
+        {
+          pageId: 'PAGE_2',
+          questions: ['QUESTION_2'],
+        },
+        {
+          pageId: 'PAGE_3',
+          questions: ['QUESTION_3', 'QUESTION_4'],
+        },
+        {
+          pageId: 'CHECK_ANSWERS',
+          questions: [],
+        },
+      ] as PageWithQuestions[],
+    ],
+  ])('%s', (_: string, input: ApiQuestionsAndAnswer[], expectedOutput: PageWithQuestions[]) => {
+    expect(getPagesFromCheckYourAnswers(input)).toEqual(expectedOutput)
+  })
+})
+
+describe('convertApiQuestionAndAnswersToPageWithQuestions', () => {
+  it.each([
+    ['Null input', null, { pageId: undefined, questions: [] }],
+    ['Undefined input', undefined, { pageId: undefined, questions: [] }],
+    [
+      'Happy path',
+      {
+        id: 'PAGE_1',
+        title: 'Page 1',
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'QUESTION_1',
+              title: 'Question 1',
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'OPTION_1',
+                  displayText: 'Option 1',
+                },
+                {
+                  id: 'OPTION_2',
+                  displayText: 'Option 2',
+                  nestedQuestions: [
+                    {
+                      question: {
+                        id: 'NESTED_QUESTION',
+                        title: 'Nested question',
+                        subTitle: 'Nested question subtitle',
+                        type: 'SHORT_TEXT',
+                      },
+                      originalPageId: 'PAGE_1',
+                    },
+                  ],
+                },
+                {
+                  id: 'OTHER',
+                  displayText: 'Other',
+                  freeText: true,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer',
+                  description: 'No answer desc',
+                  exclusive: true,
+                  nestedQuestions: [],
+                  freeText: false,
+                },
+              ],
+              validationType: 'OPTIONAL',
+            },
+            answer: { answer: 'OPTION_1', '@class': 'StringAnswer' },
+            originalPageId: 'PAGE_1',
+          },
+          {
+            question: {
+              id: 'QUESTION_2',
+              title: 'Question 2',
+              type: 'LONG_TEXT',
+              validationType: 'MANDATORY',
+            },
+            answer: { answer: 'Some long text', '@class': 'StringAnswer' },
+            originalPageId: 'PAGE_1',
+          },
+          {
+            question: {
+              id: 'QUESTION_3',
+              title: 'Question 3',
+              type: 'ADDRESS',
+              validationType: 'MANDATORY',
+            },
+            originalPageId: 'PAGE_1',
+          },
+          {
+            question: {
+              id: 'QUESTION_4',
+              title: 'Question 4',
+              type: 'SHORT_TEXT',
+              validationType: 'MANDATORY',
+            },
+            originalPageId: 'PAGE_1',
+          },
+        ],
+      } as ApiAssessmentPage,
+      {
+        pageId: 'PAGE_1',
+        questions: ['QUESTION_1', 'NESTED_QUESTION', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4'],
+      } as PageWithQuestions,
+    ],
+  ])('%s', (_: string, input: ApiAssessmentPage, expectedOutput: PageWithQuestions) => {
+    expect(convertApiQuestionAndAnswersToPageWithQuestions(input)).toEqual(expectedOutput)
+  })
+})
+
+describe('findOtherNestedQuestions', () => {
+  const testApiAssessmentPage = {
+    id: 'PAGE_1',
+    title: 'Page 1',
+    questionsAndAnswers: [
+      {
+        question: {
+          id: 'QUESTION_1',
+          title: 'Question 1',
+          type: 'RADIO',
+          options: [
+            {
+              id: 'OPTION_1',
+              displayText: 'Option 1',
+              nestedQuestions: [
+                {
+                  question: {
+                    id: 'OPTION_1_NESTED_QUESTION_1',
+                    title: 'Option 1 nested question 1',
+                    type: 'SHORT_TEXT',
+                  },
+                  originalPageId: 'PAGE_1',
+                },
+                {
+                  question: {
+                    id: 'OPTION_1_NESTED_QUESTION_2',
+                    title: 'Option 1 nested question 2',
+                    type: 'SHORT_TEXT',
+                  },
+                  originalPageId: 'PAGE_1',
+                },
+                {
+                  question: {
+                    id: 'OPTION_1_NESTED_QUESTION_3',
+                    title: 'Option 1 nested question 3',
+                    type: 'SHORT_TEXT',
+                  },
+                  originalPageId: 'PAGE_1',
+                },
+              ],
+            },
+            {
+              id: 'OPTION_2',
+              displayText: 'Option 2',
+              nestedQuestions: [
+                {
+                  question: {
+                    id: 'OPTION_2_NESTED_QUESTION_1',
+                    title: 'Option 2 nested question 1',
+                    type: 'SHORT_TEXT',
+                  },
+                  originalPageId: 'PAGE_1',
+                },
+                {
+                  question: {
+                    id: 'OPTION_2_NESTED_QUESTION_2',
+                    title: 'Option 2 nested question 2',
+                    type: 'SHORT_TEXT',
+                  },
+                  originalPageId: 'PAGE_1',
+                },
+                {
+                  question: {
+                    id: 'OPTION_2_NESTED_QUESTION_3',
+                    title: 'Option 2 nested question 3',
+                    type: 'SHORT_TEXT',
+                  },
+                  originalPageId: 'PAGE_1',
+                },
+              ],
+            },
+            {
+              id: 'OTHER',
+              displayText: 'Other',
+              freeText: true,
+            },
+            {
+              id: 'NO_ANSWER',
+              displayText: 'No answer',
+              description: 'No answer desc',
+              exclusive: true,
+              nestedQuestions: [],
+              freeText: false,
+            },
+          ],
+          validationType: 'OPTIONAL',
+        },
+        answer: { answer: 'OPTION_1', '@class': 'StringAnswer' },
+        originalPageId: 'PAGE_1',
+      },
+      {
+        question: {
+          id: 'QUESTION_2',
+          title: 'Question 2',
+          type: 'LONG_TEXT',
+          validationType: 'MANDATORY',
+        },
+        answer: { answer: 'Some long text', '@class': 'StringAnswer' },
+        originalPageId: 'PAGE_1',
+      },
+    ],
+  } as ApiAssessmentPage
+
+  it.each([
+    ['Null input', null, null, null, []],
+    ['undefined input', undefined, undefined, undefined, []],
+    [
+      'Not a nested question',
+      {
+        question: 'QUESTION_1',
+        questionTitle: 'Question 1',
+        pageId: 'PAGE_1',
+        questionType: 'SHORT_TEXT',
+        answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+      } as CachedQuestionAndAnswer,
+      {
+        assessment: { questionsAndAnswers: [], version: 1 },
+        pageLoadHistory: [{ pageId: 'PAGE_1', questions: ['QUESTION_1'] }],
+      } as WorkingCachedAssessment,
+      testApiAssessmentPage,
+      [],
+    ],
+    [
+      'Nested question answered but current cache empty',
+      {
+        question: 'OPTION_1_NESTED_QUESTION_2',
+        questionTitle: 'Option 1 nested question 2',
+        pageId: 'PAGE_1',
+        questionType: 'SHORT_TEXT',
+        answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+      } as CachedQuestionAndAnswer,
+      {
+        assessment: { questionsAndAnswers: [], version: 1 },
+        pageLoadHistory: [{ pageId: 'PAGE_1', questions: ['QUESTION_1'] }],
+      } as WorkingCachedAssessment,
+      testApiAssessmentPage,
+      [],
+    ],
+    [
+      'Nested question answered with cache filled in with same option',
+      {
+        question: 'OPTION_1_NESTED_QUESTION_2',
+        questionTitle: 'Option 1 nested question 2',
+        pageId: 'PAGE_1',
+        questionType: 'SHORT_TEXT',
+        answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+      } as CachedQuestionAndAnswer,
+      {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'OPTION_1_NESTED_QUESTION_1',
+              questionTitle: 'Option 1 nested question 1',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'OPTION_1_NESTED_QUESTION_2',
+              questionTitle: 'Option 1 nested question 2',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'OPTION_1_NESTED_QUESTION_3',
+              questionTitle: 'Option 1 nested question 3',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [{ pageId: 'PAGE_1', questions: ['QUESTION_1'] }],
+      } as WorkingCachedAssessment,
+      testApiAssessmentPage,
+      [],
+    ],
+    [
+      'Nested question answered with cache filled in with other option',
+      {
+        question: 'OPTION_1_NESTED_QUESTION_2',
+        questionTitle: 'Option 1 nested question 2',
+        pageId: 'PAGE_1',
+        questionType: 'SHORT_TEXT',
+        answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+      } as CachedQuestionAndAnswer,
+      {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'OPTION_2_NESTED_QUESTION_1',
+              questionTitle: 'Option 2 nested question 1',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'OPTION_2_NESTED_QUESTION_2',
+              questionTitle: 'Option 2 nested question 2',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'OPTION_2_NESTED_QUESTION_3',
+              questionTitle: 'Option 2 nested question 3',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [{ pageId: 'PAGE_1', questions: ['QUESTION_1'] }],
+      } as WorkingCachedAssessment,
+      testApiAssessmentPage,
+      [
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_1',
+          questionTitle: 'Option 2 nested question 1',
+          questionType: 'SHORT_TEXT',
+        },
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_2',
+          questionTitle: 'Option 2 nested question 2',
+          questionType: 'SHORT_TEXT',
+        },
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_3',
+          questionTitle: 'Option 2 nested question 3',
+          questionType: 'SHORT_TEXT',
+        },
+      ] as CachedQuestionAndAnswer[],
+    ],
+    [
+      'Option selected with no nesting should return all other nested questions in other options',
+      {
+        question: 'QUESTION_1',
+        questionTitle: 'Question 1',
+        pageId: 'PAGE_1',
+        questionType: 'RADIO',
+        answer: { answer: 'NO_ANSWER', displayText: 'No answer', '@class': 'StringAnswer' },
+      } as CachedQuestionAndAnswer,
+      {
+        assessment: {
+          questionsAndAnswers: [
+            {
+              question: 'OPTION_2_NESTED_QUESTION_1',
+              questionTitle: 'Option 2 nested question 1',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'OPTION_2_NESTED_QUESTION_2',
+              questionTitle: 'Option 2 nested question 2',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+            {
+              question: 'OPTION_2_NESTED_QUESTION_3',
+              questionTitle: 'Option 2 nested question 3',
+              pageId: 'PAGE_1',
+              questionType: 'SHORT_TEXT',
+              answer: { answer: 'Some text', displayText: 'Some text', '@class': 'StringAnswer' },
+            },
+          ],
+          version: 1,
+        },
+        pageLoadHistory: [{ pageId: 'PAGE_1', questions: ['QUESTION_1'] }],
+      } as WorkingCachedAssessment,
+      testApiAssessmentPage,
+      [
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_1',
+          questionTitle: 'Option 2 nested question 1',
+          questionType: 'SHORT_TEXT',
+        },
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_2',
+          questionTitle: 'Option 2 nested question 2',
+          questionType: 'SHORT_TEXT',
+        },
+        {
+          answer: {
+            '@class': 'StringAnswer',
+            answer: 'Some text',
+            displayText: 'Some text',
+          },
+          pageId: 'PAGE_1',
+          question: 'OPTION_2_NESTED_QUESTION_3',
+          questionTitle: 'Option 2 nested question 3',
+          questionType: 'SHORT_TEXT',
+        },
+      ] as CachedQuestionAndAnswer[],
+    ],
+  ])(
+    '%s',
+    (
+      _: string,
+      newQandA: CachedQuestionAndAnswer,
+      existingAssessmentFromCache: WorkingCachedAssessment,
+      apiAssessmentPage: ApiAssessmentPage,
+      expectedOutput: CachedQuestionAndAnswer[],
+    ) => {
+      expect(findOtherNestedQuestions(newQandA, existingAssessmentFromCache, apiAssessmentPage)).toEqual(expectedOutput)
+    },
+  )
 })
