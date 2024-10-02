@@ -22,7 +22,7 @@ async function track(name, customTags) {
   }
 }
 
-document.addEventListener('click', function (event) {
+document.addEventListener('click', async function (event) {
   const clickedElement = event.target
   const trackEventName = clickedElement.getAttribute('track-event-name')
   const prisonerId = clickedElement.getAttribute('track-event-prisoner-id')
@@ -34,6 +34,6 @@ document.addEventListener('click', function (event) {
       prisonerId: prisonerId,
     }
     console.log(customTags)
-    track(trackEventName, customTags)
+    await track(trackEventName, customTags)
   }
 })

@@ -19,7 +19,7 @@
           </form>
         {% endif %}
         {% if resetProfileEnabled %}
-          <a href="/resetProfile?prisonerNumber={{prisonerNumber}}" class="govuk-button" id="reset-profile-btn">
+          <a href="/resetProfile?prisonerNumber={{prisonerNumber}}" class="govuk-button" id="reset-profile-btn" track-event-name="ResetReportsAndStatusesLinkClicked" track-event-prisoner-id="{{ prisonerNumber }}">
             Reset reports and statuses
           </a>
         {% endif %}
