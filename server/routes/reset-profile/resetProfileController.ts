@@ -92,7 +92,7 @@ export default class ResetProfileController {
       )
 
       // Check if profile reset successfully
-      if (resetProfileResponse.error) {
+      if (resetProfileResponse?.error) {
         return next(new Error(resetProfileResponse.error))
       }
 

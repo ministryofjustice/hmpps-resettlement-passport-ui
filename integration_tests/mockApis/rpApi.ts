@@ -51,6 +51,7 @@ import {
 import { johnSmithCheckbox, johnSmithCheckboxReportVersion } from './scenarios/john-smith/john-smith-checkbox'
 import editHealthAssessmentConvergingOnLastQuestion from './scenarios/john-smith/edit-health-assessment-converging-on-last-question'
 import { validateAssessment } from './common'
+import { johnSmithResetProfile } from './scenarios/john-smith/john-smith-reset-profile'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -532,7 +533,7 @@ const stubEditHealthAssessmentConvergingOnLastQuestion = () =>
   Promise.all([...johnSmithDefaults(), ...editHealthAssessmentConvergingOnLastQuestion()])
 
 const stubJohnSmithProfileReset = () =>
-  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation()])
+  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation(), johnSmithResetProfile()])
 
 export default {
   stubGetPrisoners,
