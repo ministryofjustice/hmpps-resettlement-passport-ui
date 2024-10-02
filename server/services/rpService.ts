@@ -20,6 +20,7 @@ import { CaseNotesCreator, CaseNotesCreators } from '../data/model/caseNotesCrea
 import { PrisonerData } from '../@types/express'
 import { currentUser } from '../middleware/userContextMiddleware'
 import { getFeatureFlagBoolean } from '../utils/utils'
+import { ResetReason } from '../data/model/resetProfile'
 
 export default class RpService {
   constructor() {
@@ -447,5 +448,20 @@ export default class RpService {
         `/resettlement-passport/prisoner/${prisonerNumber}/resettlement-assessment/${pathway}/version?assessmentType=${assessmentType}`,
       )) as ResettlementAssessmentVersion
     ).version
+  }
+
+  async resetProfile(prisonerNumber: string, resetReason: ResetReason) {
+    let response: { error: string }
+    const client = this.createClient()
+    try {
+      await client.post(`/resettlement-passport/prisoner/${prisonerNumber}/reset-profile`, resetReason)
+    } catch (err) {
+      logger.warn(`Session: ${client.sessionId} Cannot reset profile for ${prisonerNumber} ${err.status} ${err}`)
+      if (err.status !== 200) {
+        response = { error: 'Something went wrong' }
+      }
+    }
+
+    return response
   }
 }

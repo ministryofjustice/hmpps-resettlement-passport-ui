@@ -1,11 +1,24 @@
 {% extends "../partials/layout.njk" %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-
 {% set pathway = "" %}
-{% set pageTitle = applicationName + " - " + pathway %}
+{% set pageTitle = applicationName + " - Reset profile" %}
 {% set mainClasses = "app-container govuk-body" %}
-
+{% block header %}
+  {% if feComponents.header %}
+    {{ feComponents.header | safe }}
+  {% else %}
+    {% include "../partials/header.njk" %}
+  {% endif %}
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: {
+        text: phaseName
+      },
+      html: feedbackText
+    }) }}
+  </div>
+{% endblock %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
@@ -24,7 +37,30 @@
           ]
         }) }}
       {% else %}
-        <h1>Reset profile</h1>
+        <div class="govuk-grid-row ">
+          <div class="govuk-grid-column-three-quarters">
+            <h1 class="govuk-heading-l govuk-!-padding-top-4">Reset reports and statuses
+              <br>
+              <span class="govuk-caption-l">{{ prisonerData.personalDetails.lastName | toTitleCase }}, {{ prisonerData.personalDetails.firstName | toTitleCase }} ({{ prisonerData.personalDetails.prisonerNumber }})</span>
+            </h1>
+            <p>Resetting will:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              <li>clear any current immediate needs and pre-release reports, letting you complete new versions</li>
+              <li>set all pathway resettlement statuses back to 'Not started'</li>
+              <li>send a case note to DPS to explain that the reports and statuses have been reset</li>
+            </ul>
+            <div class="govuk-grid-row govuk-!-padding-top-4">
+              <div class="govuk-grid-column-one-half">
+                <p class="govuk-body-m">
+                  <a href="/prisoner-overview?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Go back to profile</a>
+                </p>
+              </div>
+              <div class="govuk-grid-column-one-half">
+                <a href="/resetProfile/reason?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-button" id="reset-profile-continue-btn">Continue</a>
+              </div>
+            </div>
+          </div>
+        </div>
       {% endif %}
     </div>
   </div>
