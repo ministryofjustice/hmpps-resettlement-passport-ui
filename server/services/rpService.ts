@@ -451,16 +451,14 @@ export default class RpService {
   }
 
   async resetProfile(prisonerNumber: string, resetReason: ResetReason) {
-    let response
+    let response: { error: string }
     const client = this.createClient()
     try {
-      response = await client.post(`/resettlement-passport/prisoner/${prisonerNumber}/reset-profile`, resetReason)
+      await client.post(`/resettlement-passport/prisoner/${prisonerNumber}/reset-profile`, resetReason)
     } catch (err) {
       logger.warn(`Session: ${client.sessionId} Cannot reset profile for ${prisonerNumber} ${err.status} ${err}`)
-      if (err.status === 404) {
-        response = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
-      } else {
-        response = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
+      if (err.status !== 200) {
+        response = { error: 'Something went wrong' }
       }
     }
 

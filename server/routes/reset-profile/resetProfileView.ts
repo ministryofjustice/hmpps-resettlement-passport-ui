@@ -8,6 +8,8 @@ export default class ResetProfileView implements View {
     private readonly validationError?: ResetProfileValidationError,
     private readonly resetReason?: ResetReason,
     private readonly additionalDetails?: string,
+    private readonly userName?: string,
+    private readonly resetReasonDisplayText?: string,
   ) {
     // no op
   }
@@ -17,6 +19,8 @@ export default class ResetProfileView implements View {
     validationError: ResetProfileValidationError
     resetReason: ResetReason
     additionalDetails: string
+    userName: string
+    resetReasonDisplayText: string
     errors: ErrorMessage[]
   } {
     return {
@@ -24,6 +28,8 @@ export default class ResetProfileView implements View {
       validationError: this.validationError,
       resetReason: this.resetReason,
       additionalDetails: this.additionalDetails,
+      userName: this.userName,
+      resetReasonDisplayText: this.resetReasonDisplayText,
       errors: null,
     }
   }

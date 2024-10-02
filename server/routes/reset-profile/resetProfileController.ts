@@ -75,16 +75,36 @@ export default class ResetProfileController {
 
       const resetReasonPostBody: ResetReason = {
         resetReason,
-        additionalDetails,
+        additionalDetails: resetReason === 'OTHER' ? additionalDetails : null,
       }
+
+      const resetReasonTextMap: Record<string, string> = {
+        OTHER: 'Other',
+        RECALL_TO_PRISON: 'The person has been recalled to prison',
+        RETURN_ON_NEW_SENTENCE: 'The person has returned to prison on a new sentence',
+      }
+
+      const resetReasonDisplayText = resetReasonTextMap[resetReason]
+
       const resetProfileResponse = await this.rpService.resetProfile(
         prisonerData.personalDetails.prisonerNumber,
         resetReasonPostBody,
       )
 
       // Check if profile reset successfully
+      if (resetProfileResponse.error) {
+        return next(new Error(resetProfileResponse.error))
+      }
 
-      const view = new ResetProfileView(prisonerData, validationError, resetReason)
+      const userName = res.locals.user.displayName
+      const view = new ResetProfileView(
+        prisonerData,
+        validationError,
+        resetReason,
+        additionalDetails,
+        userName,
+        resetReasonDisplayText,
+      )
 
       return res.render('pages/reset-profile-success', { ...view.renderArgs })
     } catch (err) {

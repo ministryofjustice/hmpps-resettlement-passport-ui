@@ -2,5 +2,5 @@ export type ResetProfileValidationError = 'MANDATORY_REASON' | 'MANDATORY_OTHER_
 
 export type ResetReason = {
   resetReason: 'RECALL_TO_PRISON' | 'RETURN_ON_NEW_SENTENCE' | 'OTHER'
-  additionalDetails?: string
+  additionalDetails: string
 }
