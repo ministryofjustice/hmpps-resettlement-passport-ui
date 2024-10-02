@@ -1,0 +1,129 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% set pathway = "" %}
+{% set pageTitle = applicationName + " - Reset profile reason" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block header %}
+  {% if feComponents.header %}
+    {{ feComponents.header | safe }}
+  {% else %}
+    {% include "../partials/header.njk" %}
+  {% endif %}
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: {
+        text: phaseName
+      },
+      html: feedbackText
+    }) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-full">
+      {{ govukBackLink({
+        text: "Back",
+        href: "/resetProfile?prisonerNumber=" + prisonerData.personalDetails.prisonerNumber
+      }) }}
+      
+      {% if error %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: [
+            {
+              text: error,
+              href: "#"
+            }
+          ]
+        }) }}
+      {% else %}
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-three-quarters">
+            <h1 class="govuk-heading-l govuk-!-padding-top-4">
+              Why are you resetting the reports and statuses?
+              <br>
+              <span class="govuk-caption-l">
+                {{ prisonerData.personalDetails.lastName | toTitleCase }},
+                {{ prisonerData.personalDetails.firstName | toTitleCase }} 
+                ({{ prisonerData.personalDetails.prisonerNumber }})
+              </span>
+            </h1>
+            
+            <form id="reset-profile-reason" action="/resetProfile/reason" method="POST" novalidate>
+              <div class="govuk-form-group {{ "govuk-form-group--error" if validationError == 'MANDATORY_REASON' }} govuk-!-margin-0">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
+                {% if validationError == 'MANDATORY_REASON' %}
+                  <p class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> Select a reason why you are resetting the reports and statuses
+                  </p>
+                {% endif %}
+                <div class="govuk-radios" data-module="govuk-radios">
+                  <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="RECALL_TO_PRISON" name="resetReason" type="radio" value="RECALL_TO_PRISON">
+                    <label class="govuk-label govuk-radios__label" for="RECALL_TO_PRISON">
+                      The person has been recalled to prison
+                    </label>
+                  </div>
+
+                  <div class="govuk-radios__item">
+                    <input class="govuk-radios__input" id="RETURN_ON_NEW_SENTENCE" name="resetReason" type="radio" value="RETURN_ON_NEW_SENTENCE">
+                    <label class="govuk-label govuk-radios__label" for="RETURN_ON_NEW_SENTENCE">
+                      The person has returned to prison on a new sentence
+                    </label>
+                  </div>
+
+                  <div class="govuk-radios__item">
+                    <input
+                      class="govuk-radios__input"
+                      id="OTHER"
+                      name="resetReason"
+                      type="radio"
+                      value="OTHER"
+                      aria-controls="conditional-additionalDetails"
+                      aria-expanded="false"
+                      {% if validationError == 'MANDATORY_OTHER_TEXT' or validationError == 'MAX_CHARACTER_LIMIT_LONG_TEXT' %}checked{% endif %}
+                    >
+                    <label class="govuk-label govuk-radios__label" for="OTHER">
+                      Other reason
+                    </label>
+                  </div>
+
+                  <div class="govuk-radios__conditional govuk-radios__conditional--hidden" id="conditional-additionalDetails">
+                    <div class="govuk-form-group {{ "govuk-form-group--error" if validationError == 'MANDATORY_OTHER_TEXT' }}">
+                      <label class="govuk-label" for="additionalDetails">Other reason</label>
+                      {% if validationError == 'MANDATORY_OTHER_TEXT' %}
+                        <p class="govuk-error-message">
+                          <span class="govuk-visually-hidden">Error:</span> Other reason cannot be blank
+                        </p>
+                      {% endif %}
+                      {% if validationError == 'MAX_CHARACTER_LIMIT_LONG_TEXT' %}
+                        <p class="govuk-error-message">
+                          <span class="govuk-visually-hidden">Error:</span> This field must be 3,000 characters or less
+                        </p>
+                      {% endif %}
+                      <textarea class="govuk-textarea" id="additionalDetails" name="additionalDetails" spellcheck="false">{{ additionalDetails }}</textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-row govuk-!-padding-top-8">
+                <div class="govuk-grid-column-one-half">
+                  <p class="govuk-body-m">
+                    <a href="/prisoner-overview?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Go back to profile</a>
+                  </p>
+                </div>
+                <div class="govuk-grid-column-one-half">
+                  <button class="govuk-button" data-module="govuk-button">Continue</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
