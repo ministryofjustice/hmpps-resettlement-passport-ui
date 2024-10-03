@@ -37,7 +37,6 @@ import {
   fullName,
   startsWith,
   removePrefix,
-  getTodaysDate,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -121,5 +120,4 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('startsWith', startsWith)
   njkEnv.addFilter('removePrefix', removePrefix)
   njkEnv.addGlobal('checkAnswersPageId', CHECK_ANSWERS_PAGE_ID)
-  njkEnv.addGlobal('getTodaysDate', getTodaysDate)
 }

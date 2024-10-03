@@ -3,7 +3,13 @@ import RpService from '../../services/rpService'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import ResetProfileView from './resetProfileView'
-import { ResetProfileValidationError, ResetReason } from '../../data/model/resetProfile'
+import {
+  MANDATORY_OTHER_TEXT,
+  MANDATORY_REASON,
+  MAX_CHARACTER_LIMIT_LONG_TEXT,
+  ResetProfileValidationError,
+  ResetReason,
+} from '../../data/model/resetProfile'
 
 export default class ResetProfileController {
   constructor(private readonly rpService: RpService) {
@@ -19,9 +25,7 @@ export default class ResetProfileController {
         return next(new Error('Reset profile is disabled'))
       }
 
-      const view = new ResetProfileView(prisonerData)
-
-      return res.render('pages/reset-profile', { ...view.renderArgs })
+      return res.render('pages/reset-profile', { prisonerData })
     } catch (err) {
       return next(err)
     }
@@ -30,13 +34,15 @@ export default class ResetProfileController {
   resetProfileReason: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
+      const validationError = req.flash('validationError')[0] as unknown as ResetProfileValidationError
+      const additionalDetails = req.flash('additionalDetails')[0]
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
 
       if (!resetProfileEnabled) {
         return next(new Error('Reset profile is disabled'))
       }
 
-      const view = new ResetProfileView(prisonerData)
+      const view = new ResetProfileView(prisonerData, validationError, additionalDetails)
 
       return res.render('pages/reset-profile-reason', { ...view.renderArgs })
     } catch (err) {
@@ -56,35 +62,23 @@ export default class ResetProfileController {
       }
 
       if (!resetReason) {
-        validationError = 'MANDATORY_REASON'
-        const view = new ResetProfileView(prisonerData, validationError)
-        return res.render('pages/reset-profile-reason', { ...view.renderArgs })
+        validationError = MANDATORY_REASON
+      } else if (resetReason === 'OTHER' && additionalDetails?.length === 0) {
+        validationError = MANDATORY_OTHER_TEXT
+      } else if (resetReason === 'OTHER' && additionalDetails?.length > 3000) {
+        validationError = MAX_CHARACTER_LIMIT_LONG_TEXT
       }
 
-      if (resetReason === 'OTHER' && !additionalDetails) {
-        validationError = 'MANDATORY_OTHER_TEXT'
-        const view = new ResetProfileView(prisonerData, validationError)
-        return res.render('pages/reset-profile-reason', { ...view.renderArgs })
-      }
-
-      if (resetReason === 'OTHER' && additionalDetails?.length > 3000) {
-        validationError = 'MAX_CHARACTER_LIMIT_LONG_TEXT'
-        const view = new ResetProfileView(prisonerData, validationError, resetReason, additionalDetails)
-        return res.render('pages/reset-profile-reason', { ...view.renderArgs })
+      if (validationError) {
+        req.flash('validationError', validationError)
+        req.flash('additionalDetails', additionalDetails)
+        return res.redirect(`/resetProfile/reason?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
       }
 
       const resetReasonPostBody: ResetReason = {
         resetReason,
         additionalDetails: resetReason === 'OTHER' ? additionalDetails : null,
       }
-
-      const resetReasonTextMap: Record<string, string> = {
-        OTHER: 'Other',
-        RECALL_TO_PRISON: 'The person has been recalled to prison',
-        RETURN_ON_NEW_SENTENCE: 'The person has returned to prison on a new sentence',
-      }
-
-      const resetReasonDisplayText = resetReasonTextMap[resetReason]
 
       const resetProfileResponse = await this.rpService.resetProfile(
         prisonerData.personalDetails.prisonerNumber,
@@ -96,17 +90,22 @@ export default class ResetProfileController {
         return next(new Error(resetProfileResponse.error))
       }
 
-      const userName = res.locals.user.displayName
-      const view = new ResetProfileView(
-        prisonerData,
-        validationError,
-        resetReason,
-        additionalDetails,
-        userName,
-        resetReasonDisplayText,
-      )
+      return res.redirect(`/resetProfile/success?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
+    } catch (err) {
+      return next(err)
+    }
+  }
 
-      return res.render('pages/reset-profile-success', { ...view.renderArgs })
+  resetProfileSuccess: RequestHandler = async (req, res, next): Promise<void> => {
+    try {
+      const { prisonerData } = req
+
+      const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
+      if (!resetProfileEnabled) {
+        return next(new Error('Reset profile is disabled'))
+      }
+
+      return res.render('pages/reset-profile-success', { prisonerData })
     } catch (err) {
       return next(err)
     }
