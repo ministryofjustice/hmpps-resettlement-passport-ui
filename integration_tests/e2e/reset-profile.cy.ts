@@ -53,6 +53,7 @@ context('ResetProfile', () => {
     const todaysDate = getTodaysDate()
     cy.get('.govuk-panel__body').should('contain.text', `Reset by: John Smith on ${todaysDate}`)
     cy.get('.govuk-panel__body').should('contain.text', 'Reason for reset: Other')
+    cy.get('.govuk-panel__body').should('contain.text', "Contact the service desk if you think there's a problem.")
   })
 
   it('Reset profile form validation errors', () => {
