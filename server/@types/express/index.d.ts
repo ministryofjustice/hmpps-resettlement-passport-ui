@@ -60,7 +60,6 @@ export type PrisonerData = {
   isInWatchlist: boolean
   immediateNeedsSubmitted: boolean
   preReleaseSubmitted: boolean
-  showReportInformation?: boolean
 }
 
 export type PathwayStatus = {

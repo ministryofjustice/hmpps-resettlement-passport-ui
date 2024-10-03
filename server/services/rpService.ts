@@ -87,7 +87,7 @@ export default class RpService {
         `Session: ${client.sessionId} Cannot retrieve ${pathway} CRS info for ${prisonerId} ${err.status} ${err}`,
       )
       if (err.status === 404) {
-        assessmentInformation = { error: ERROR_DICTIONARY.DATA_NOT_FOUND }
+        assessmentInformation = { message: 'No report information available' }
       } else {
         assessmentInformation = { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
       }

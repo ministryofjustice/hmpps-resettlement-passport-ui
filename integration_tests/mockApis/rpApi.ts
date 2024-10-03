@@ -52,6 +52,7 @@ import { johnSmithCheckbox, johnSmithCheckboxReportVersion } from './scenarios/j
 import editHealthAssessmentConvergingOnLastQuestion from './scenarios/john-smith/edit-health-assessment-converging-on-last-question'
 import { validateAssessment } from './common'
 import { johnSmithResetProfile } from './scenarios/john-smith/john-smith-reset-profile'
+import { johnSmithReportInfo } from './scenarios/john-smith/john-smith-report-info'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -535,6 +536,9 @@ const stubEditHealthAssessmentConvergingOnLastQuestion = () =>
 const stubJohnSmithProfileReset = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation(), johnSmithResetProfile()])
 
+const stubJohnSmithPostNoReportInfo = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithReportInfo()])
+
 export default {
   stubGetPrisoners,
   stubGetAppointments,
@@ -578,4 +582,5 @@ export default {
   stubDefaultSearchResultsNoPastReleaseDates,
   stubEditHealthAssessmentConvergingOnLastQuestion,
   stubJohnSmithProfileReset,
+  stubJohnSmithPostNoReportInfo,
 }

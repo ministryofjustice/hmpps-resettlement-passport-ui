@@ -350,18 +350,6 @@ export function getCaseNotesText(caseNoteText: string): string | null {
   return caseNoteText || ''
 }
 
-export function shouldShowReportInformation(assessmentRequired: boolean, preReleaseSubmitted: boolean) {
-  if (
-    assessmentRequired === null ||
-    preReleaseSubmitted === null ||
-    assessmentRequired === undefined ||
-    preReleaseSubmitted === undefined
-  ) {
-    return false
-  }
-  return !assessmentRequired || preReleaseSubmitted
-}
-
 export function removeSlashes(s: string): string {
   return s ? s.replaceAll('/', '') : null
 }
