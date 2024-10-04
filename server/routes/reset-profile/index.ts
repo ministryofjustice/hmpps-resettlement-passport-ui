@@ -7,4 +7,5 @@ export default (router: Router, services: Services) => {
   router.get('/resetProfile', [resetProfileController.resetProfile])
   router.get('/resetProfile/reason', [resetProfileController.resetProfileReason])
   router.post('/resetProfile/reason', [resetProfileController.submitResetProfileReason])
+  router.get('/resetProfile/success', [resetProfileController.resetProfileSuccess])
 }

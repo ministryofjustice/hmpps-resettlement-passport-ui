@@ -22,31 +22,17 @@
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      {% if error %}
-        {{ govukErrorSummary({
-          titleText: "There is a problem",
-          errorList: [
-            {
-              text: error,
-              href: "#"
-            }
-          ]
-        }) }}
-      {% else %}
-        <div class="govuk-grid-row ">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-panel govuk-panel--confirmation">
-              <h1 class="govuk-panel__title">Reports and statuses reset</h1>
-              <div class="govuk-panel__body">
-                <p class="text-white">Reset by: {{ userName }} on {{ getTodaysDate() }}</p>
-                <p class="text-white">Reason for reset: {{ resetReasonDisplayText }}</p>
-                <p class="text-white">Contact the service desk if you think there's a problem.</p>
-              </div>
+      <div class="govuk-grid-row ">
+        <div class="govuk-grid-column-three-quarters">
+          <div class="govuk-panel govuk-panel--confirmation">
+            <h1 class="govuk-panel__title">Reports and statuses reset</h1>
+            <div class="govuk-panel__body">
+              <p class="text-white">Contact the service desk if you think there's a problem.</p>
             </div>
           </div>
         </div>
-        <a href="/prisoner-overview?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Return to overview</a>
-      {% endif %}
+      </div>
+      <a href="/prisoner-overview?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Return to overview</a>
     </div>
   </div>
 {% endblock %}

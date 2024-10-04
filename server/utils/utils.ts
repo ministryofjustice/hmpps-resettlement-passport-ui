@@ -56,12 +56,6 @@ export const formatDate = (dateString: string, monthStyle: 'short' | 'long' = 's
   return date.toLocaleDateString('en-GB', options)
 }
 
-export const getTodaysDate = () => {
-  const date = new Date()
-  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }
-  return date.toLocaleDateString('en-GB', options)
-}
-
 export const formatDateExtended = (dateString: string): string => {
   if (!dateString) return null
   const date = new Date(dateString)

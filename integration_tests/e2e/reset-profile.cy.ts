@@ -1,9 +1,3 @@
-export const getTodaysDate = () => {
-  const date = new Date()
-  const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }
-  return date.toLocaleDateString('en-GB', options)
-}
-
 context('ResetProfile', () => {
   beforeEach(() => {
     cy.task('reset')
@@ -49,10 +43,6 @@ context('ResetProfile', () => {
     cy.get('#additionalDetails').type('Some other reason for resetting profile')
     cy.get('.govuk-button').should('contain.text', 'Continue').click()
     cy.get('.govuk-panel__title').should('contain.text', 'Reports and statuses reset')
-
-    const todaysDate = getTodaysDate()
-    cy.get('.govuk-panel__body').should('contain.text', `Reset by: John Smith on ${todaysDate}`)
-    cy.get('.govuk-panel__body').should('contain.text', 'Reason for reset: Other')
     cy.get('.govuk-panel__body').should('contain.text', "Contact the service desk if you think there's a problem.")
   })
 
@@ -65,6 +55,11 @@ context('ResetProfile', () => {
 
     // validate mandatory answer
     cy.get('.govuk-button').should('contain.text', 'Continue').click()
+    cy.get('.govuk-error-summary__title').should('contain.text', 'There is a problem')
+    cy.get('.govuk-error-summary__body').should(
+      'contain.text',
+      'Select a reason why you are resetting the reports and statuses',
+    )
     cy.get('.govuk-error-message').should(
       'contain.text',
       'Select a reason why you are resetting the reports and statuses',
@@ -74,6 +69,8 @@ context('ResetProfile', () => {
     cy.get('#OTHER').click()
     cy.get('.govuk-button').should('contain.text', 'Continue').click()
     cy.url().should('include', '/resetProfile/reason')
+    cy.get('.govuk-error-summary__title').should('contain.text', 'There is a problem')
+    cy.get('.govuk-error-summary__body').should('contain.text', 'Other reason cannot be blank')
     cy.get('.govuk-error-message').should('contain.text', 'Other reason cannot be blank')
 
     // check radio button is pre-selected
@@ -86,7 +83,9 @@ context('ResetProfile', () => {
     cy.url().should('include', '/resetProfile/reason')
     cy.get('#additionalDetails').type(MORE_THAN_3000_CHARACTER_STRING, { delay: 0 })
     cy.get('.govuk-button').should('contain.text', 'Continue').click()
-    cy.get('.govuk-error-message').should('contain.text', 'This field must be 3,000 characters or less')
+    cy.get('.govuk-error-summary__title').should('contain.text', 'There is a problem')
+    cy.get('.govuk-error-summary__body').should('contain.text', 'Other reason must be 3,000 characters or less')
+    cy.get('.govuk-error-message').should('contain.text', 'Other reason must be 3,000 characters or less')
 
     // check textarea contains current input
     cy.get('#additionalDetails').should('contain.text', MORE_THAN_3000_CHARACTER_STRING)

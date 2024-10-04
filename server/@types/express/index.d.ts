@@ -24,6 +24,7 @@ export declare global {
       logout(done: (err: unknown) => void): void
       prisonerData: PrisonerData
       config: ConfigFile
+      flash(type: string, message: unknown): number
     }
 
     interface Response {
