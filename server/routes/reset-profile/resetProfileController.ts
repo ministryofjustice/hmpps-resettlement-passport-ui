@@ -34,10 +34,8 @@ export default class ResetProfileController {
   resetProfileReason: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const validationError = req.flash('validationError')
-        ? (req.flash('validationError')[0] as unknown as ResetProfileValidationError)
-        : null
-      const additionalDetails = req.flash('additionalDetails') ? req.flash('additionalDetails')[0] : null
+      const validationError = req.flash('validationError')?.[0] as unknown as ResetProfileValidationError
+      const additionalDetails = req.flash('additionalDetails')?.[0]
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
 
       if (!resetProfileEnabled) {
