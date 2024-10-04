@@ -55,6 +55,11 @@ context('ResetProfile', () => {
 
     // validate mandatory answer
     cy.get('.govuk-button').should('contain.text', 'Continue').click()
+    cy.get('.govuk-error-summary__title').should('contain.text', 'There is a problem')
+    cy.get('.govuk-error-summary__body').should(
+      'contain.text',
+      'Select a reason why you are resetting the reports and statuses',
+    )
     cy.get('.govuk-error-message').should(
       'contain.text',
       'Select a reason why you are resetting the reports and statuses',
@@ -64,6 +69,8 @@ context('ResetProfile', () => {
     cy.get('#OTHER').click()
     cy.get('.govuk-button').should('contain.text', 'Continue').click()
     cy.url().should('include', '/resetProfile/reason')
+    cy.get('.govuk-error-summary__title').should('contain.text', 'There is a problem')
+    cy.get('.govuk-error-summary__body').should('contain.text', 'Other reason cannot be blank')
     cy.get('.govuk-error-message').should('contain.text', 'Other reason cannot be blank')
 
     // check radio button is pre-selected
@@ -76,6 +83,8 @@ context('ResetProfile', () => {
     cy.url().should('include', '/resetProfile/reason')
     cy.get('#additionalDetails').type(MORE_THAN_3000_CHARACTER_STRING, { delay: 0 })
     cy.get('.govuk-button').should('contain.text', 'Continue').click()
+    cy.get('.govuk-error-summary__title').should('contain.text', 'There is a problem')
+    cy.get('.govuk-error-summary__body').should('contain.text', 'Other reason must be 3,000 characters or less')
     cy.get('.govuk-error-message').should('contain.text', 'Other reason must be 3,000 characters or less')
 
     // check textarea contains current input
