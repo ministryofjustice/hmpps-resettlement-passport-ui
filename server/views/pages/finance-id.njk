@@ -31,16 +31,12 @@
           id: "id"
         }
       ]) %}
-
-      {% if prisonerData.showReportInformation %}
         {% set subNavItems = subNavItems.concat([
           {
             name: "Report information",
             id: "assessment-information"
           }
         ]) %}
-      {% endif %}
-      
       {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
       {{ subNav(subNavItems) }}
     </div>
@@ -315,9 +311,7 @@
           </div>
         </div>
       </section>
-      {% if prisonerData.showReportInformation %}
-        {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
-      {% endif %}
+      {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
       {% include "../partials/crsReferrals.njk" %}
     </div>
   </div>

@@ -5,6 +5,7 @@ type QuestionsAndAnswers = {
 }
 
 export type AssessmentsInformation = {
+  message?: string
   error?: string
   originalAssessment?: Assessment
   latestAssessment?: Assessment
