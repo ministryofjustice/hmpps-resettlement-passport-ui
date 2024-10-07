@@ -490,7 +490,7 @@ const submitAssessment = () => {
   return stubFor({
     name: 'JohnSmith immediate needs report Health Assessment Submit',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/complete?assessmentType=BCST2',
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/complete?assessmentType=BCST2&declaration=false`,
       method: 'POST',
       bodyPatterns: [
         {
@@ -583,7 +583,7 @@ const completeAssessmentHealthFreeText = () => {
   return stubFor({
     name: 'JohnSmith immediate needs report Health Assessment Submit',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/complete?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/complete?assessmentType=BCST2&declaration=false',
       method: 'POST',
       bodyPatterns: [
         {
@@ -1031,7 +1031,7 @@ const submitAccommodationAssessmentEdit1 = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Accommodation Assessment Submit',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2&declaration=false',
       method: 'POST',
       bodyPatterns: [
         {
@@ -1094,7 +1094,7 @@ const submitAccommodationAssessmentEdit2 = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Accommodation Assessment Submit',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2&declaration=false',
       method: 'POST',
       bodyPatterns: [
         {

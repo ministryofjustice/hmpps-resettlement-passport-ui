@@ -46,7 +46,7 @@ function stubPrisonerDetails() {
 }
 
 describe('completeAssessment', () => {
-  it('should submit the assessment to the backend then redirect to the task list', async () => {
+  it('should submit the assessment to the backend then redirect to the task list - v1', async () => {
     stubPrisonerDetails()
 
     const workingCachedAssessment: WorkingCachedAssessment = {
@@ -81,7 +81,84 @@ describe('completeAssessment', () => {
       'DRUGS_AND_ALCOHOL',
       workingCachedAssessment.assessment,
       'BCST2',
+      false,
     )
+  })
+
+  it('should submit the assessment to the backend then redirect to the task list - v2 with declaration', async () => {
+    stubPrisonerDetails()
+
+    const workingCachedAssessment: WorkingCachedAssessment = {
+      assessment: {
+        questionsAndAnswers: [
+          {
+            question: '1',
+            answer: { answer: 'YES', '@class': 'StringAnswer', displayText: 'Yes' },
+            pageId: 'page1',
+            questionTitle: 'question',
+            questionType: 'RADIO',
+          },
+        ],
+        version: 2,
+      },
+      pageLoadHistory: [{ pageId: 'Page1', questions: ['1'] }],
+    }
+    jest.spyOn(assessmentStateService, 'getWorkingAssessment').mockResolvedValue(workingCachedAssessment)
+
+    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
+    jest.spyOn(assessmentStateService, 'onComplete').mockImplementation()
+
+    await request(app)
+      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .send({
+        declaration: 'true',
+      })
+      .expect(302)
+      .expect(res => {
+        expect(res.text).toContain('Found. Redirecting to /assessment-task-list?prisonerNumber=123&type=BCST2')
+      })
+
+    expect(completeAssessmentSpy).toHaveBeenCalledWith(
+      '123',
+      'DRUGS_AND_ALCOHOL',
+      workingCachedAssessment.assessment,
+      'BCST2',
+      true,
+    )
+  })
+
+  it('should not submit the assessment to the backend - v2 with missing declaration', async () => {
+    stubPrisonerDetails()
+
+    const workingCachedAssessment: WorkingCachedAssessment = {
+      assessment: {
+        questionsAndAnswers: [
+          {
+            question: '1',
+            answer: { answer: 'YES', '@class': 'StringAnswer', displayText: 'Yes' },
+            pageId: 'page1',
+            questionTitle: 'question',
+            questionType: 'RADIO',
+          },
+        ],
+        version: 2,
+      },
+      pageLoadHistory: [{ pageId: 'Page1', questions: ['1'] }],
+    }
+    jest.spyOn(assessmentStateService, 'getWorkingAssessment').mockResolvedValue(workingCachedAssessment)
+
+    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
+
+    await request(app)
+      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .expect(302)
+      .expect(res => {
+        expect(res.text).toContain(
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/page/CHECK_ANSWERS?prisonerNumber=123&type=BCST',
+        )
+      })
+
+    expect(completeAssessmentSpy).toHaveBeenCalledTimes(0)
   })
 
   it('it should not submit the assessment if there is no submitted input', async () => {
@@ -103,6 +180,7 @@ describe('completeAssessment', () => {
       'DRUGS_AND_ALCOHOL',
       workingCachedAssessment.assessment,
       'BCST2',
+      false,
     )
   })
 })
@@ -278,7 +356,7 @@ describe('startEdit', () => {
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/MY_PAGE?prisonerNumber=123&edit=true&type=BCST2&submitted=true',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/MY_PAGE?prisonerNumber=123&type=BCST2',
         )
       })
 
@@ -316,7 +394,7 @@ describe('startEdit', () => {
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/MY_PAGE?prisonerNumber=123&edit=true&type=BCST2',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/MY_PAGE?prisonerNumber=123&type=BCST2',
         )
       })
 
@@ -387,7 +465,7 @@ describe('saveAnswerAndGetNextPage', () => {
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_ID?prisonerNumber=123&backButton=false&type=BCST2',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_ID?prisonerNumber=123&type=BCST2',
         )
       })
 
@@ -481,7 +559,7 @@ describe('saveAnswerAndGetNextPage', () => {
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%5D&backButton=false&type=BCST2',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%5D&type=BCST2',
         )
       })
 
@@ -497,5 +575,291 @@ describe('saveAnswerAndGetNextPage', () => {
     expect(answerSpy).toHaveBeenCalledWith(stateKey, expectedDataToSubmit, apiAssessmentPage)
     expect(jest.spyOn(assessmentStateService, 'getWorkingAssessment')).toHaveBeenCalledTimes(0)
     expect(jest.spyOn(rpService, 'fetchNextPage')).toHaveBeenCalledTimes(0)
+  })
+})
+
+describe('getCheckYourAnswers', () => {
+  it('happy path from working cache - render page', async () => {
+    stubPrisonerDetails()
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const workingAssessment: CachedAssessment = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_1',
+          questionTitle: 'Question 1',
+          pageId: 'PAGE_1',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'Some long text here',
+            displayText: 'Some long text here',
+            '@class': 'StringAnswer',
+          },
+        },
+      ],
+      version: 1,
+    }
+    const getAllAnsweredQuestionsFromCacheSpy = jest
+      .spyOn(assessmentStateService, 'getAllAnsweredQuestionsFromCache')
+      .mockResolvedValue(workingAssessment)
+    const validateAssessmentSpy = jest.spyOn(rpService, 'validateAssessment').mockResolvedValue({ valid: true })
+    const updateCachesOnCheckYourAnswers = jest
+      .spyOn(assessmentStateService, 'updateCachesOnCheckYourAnswers')
+      .mockImplementation()
+    const getWorkingAssessmentVersionSpy = jest
+      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
+      .mockResolvedValue(1)
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/CHECK_ANSWERS?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&assessmentType=${stateKey.assessmentType}`,
+      )
+      .expect(200)
+
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'working')
+    expect(validateAssessmentSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      workingAssessment,
+      stateKey.assessmentType,
+    )
+    expect(updateCachesOnCheckYourAnswers).toHaveBeenCalledWith(stateKey, workingAssessment.questionsAndAnswers)
+    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
+  })
+
+  it('happy path with invalid working cache - render page from backup cache', async () => {
+    stubPrisonerDetails()
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const workingAssessment: CachedAssessment = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_2',
+          questionTitle: 'Question 2',
+          pageId: 'PAGE_2',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'Some other long text here',
+            displayText: 'Some other long text here',
+            '@class': 'StringAnswer',
+          },
+        },
+      ],
+      version: 1,
+    }
+
+    const backupAssessment: CachedAssessment = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_1',
+          questionTitle: 'Question 1',
+          pageId: 'PAGE_1',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'Some long text here',
+            displayText: 'Some long text here',
+            '@class': 'StringAnswer',
+          },
+        },
+      ],
+      version: 1,
+    }
+    const getAllAnsweredQuestionsFromCacheSpy = jest
+      .spyOn(assessmentStateService, 'getAllAnsweredQuestionsFromCache')
+      .mockResolvedValueOnce(workingAssessment)
+      .mockResolvedValueOnce(backupAssessment)
+    const validateAssessmentSpy = jest
+      .spyOn(rpService, 'validateAssessment')
+      .mockResolvedValueOnce({ valid: false })
+      .mockResolvedValueOnce({ valid: true })
+    const resetWorkingCacheToBackupCacheSpy = jest
+      .spyOn(assessmentStateService, 'resetWorkingCacheToBackupCache')
+      .mockImplementation()
+    const updateCachesOnCheckYourAnswers = jest
+      .spyOn(assessmentStateService, 'updateCachesOnCheckYourAnswers')
+      .mockImplementation()
+    const getWorkingAssessmentVersionSpy = jest
+      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
+      .mockResolvedValue(1)
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/CHECK_ANSWERS?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&assessmentType=${stateKey.assessmentType}`,
+      )
+      .expect(200)
+
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'working')
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'backup')
+    expect(validateAssessmentSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      workingAssessment,
+      stateKey.assessmentType,
+    )
+    expect(validateAssessmentSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      backupAssessment,
+      stateKey.assessmentType,
+    )
+    expect(resetWorkingCacheToBackupCacheSpy).toHaveBeenCalledWith(stateKey)
+    expect(updateCachesOnCheckYourAnswers).toHaveBeenCalledWith(stateKey, backupAssessment.questionsAndAnswers)
+    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
+  })
+
+  it('happy path with invalid working cache and no backup - redirect to first page', async () => {
+    stubPrisonerDetails()
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const workingAssessment: CachedAssessment = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_2',
+          questionTitle: 'Question 2',
+          pageId: 'PAGE_2',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'Some other long text here',
+            displayText: 'Some other long text here',
+            '@class': 'StringAnswer',
+          },
+        },
+      ],
+      version: 1,
+    }
+
+    const backupAssessment: CachedAssessment = null
+
+    const getAllAnsweredQuestionsFromCacheSpy = jest
+      .spyOn(assessmentStateService, 'getAllAnsweredQuestionsFromCache')
+      .mockResolvedValueOnce(workingAssessment)
+      .mockResolvedValueOnce(backupAssessment)
+    const validateAssessmentSpy = jest.spyOn(rpService, 'validateAssessment').mockResolvedValue({ valid: false })
+    const updateCachesOnCheckYourAnswers = jest
+      .spyOn(assessmentStateService, 'updateCachesOnCheckYourAnswers')
+      .mockImplementation()
+    const getFirstPageAndResetPageLoadHistorySpy = jest
+      .spyOn(assessmentStateService, 'getFirstPageAndResetPageLoadHistory')
+      .mockResolvedValue('THE_FIRST_PAGE')
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/CHECK_ANSWERS?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&assessmentType=${stateKey.assessmentType}`,
+      )
+      .expect(302)
+      .expect(res => {
+        expect(res.text).toContain(
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/THE_FIRST_PAGE?prisonerNumber=123&type=BCST2',
+        )
+      })
+
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'working')
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'backup')
+    expect(validateAssessmentSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      workingAssessment,
+      stateKey.assessmentType,
+    )
+    expect(updateCachesOnCheckYourAnswers).toHaveBeenCalledWith(stateKey, undefined)
+    expect(getFirstPageAndResetPageLoadHistorySpy).toHaveBeenCalledWith(stateKey)
+  })
+
+  it('happy path with invalid working cache and invalid backup - redirect to first page', async () => {
+    stubPrisonerDetails()
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const workingAssessment: CachedAssessment = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_2',
+          questionTitle: 'Question 2',
+          pageId: 'PAGE_2',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'Some other long text here',
+            displayText: 'Some other long text here',
+            '@class': 'StringAnswer',
+          },
+        },
+      ],
+      version: 1,
+    }
+
+    const backupAssessment: CachedAssessment = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_1',
+          questionTitle: 'Question 1',
+          pageId: 'PAGE_1',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'Some long text here',
+            displayText: 'Some long text here',
+            '@class': 'StringAnswer',
+          },
+        },
+      ],
+      version: 1,
+    }
+    const getAllAnsweredQuestionsFromCacheSpy = jest
+      .spyOn(assessmentStateService, 'getAllAnsweredQuestionsFromCache')
+      .mockResolvedValueOnce(workingAssessment)
+      .mockResolvedValueOnce(backupAssessment)
+    const validateAssessmentSpy = jest.spyOn(rpService, 'validateAssessment').mockResolvedValue({ valid: false })
+    const updateCachesOnCheckYourAnswers = jest
+      .spyOn(assessmentStateService, 'updateCachesOnCheckYourAnswers')
+      .mockImplementation()
+    const getFirstPageAndResetPageLoadHistorySpy = jest
+      .spyOn(assessmentStateService, 'getFirstPageAndResetPageLoadHistory')
+      .mockResolvedValue('THE_FIRST_PAGE')
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/CHECK_ANSWERS?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&assessmentType=${stateKey.assessmentType}`,
+      )
+      .expect(302)
+      .expect(res => {
+        expect(res.text).toContain(
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/THE_FIRST_PAGE?prisonerNumber=123&type=BCST2',
+        )
+      })
+
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'working')
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'backup')
+    expect(validateAssessmentSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      workingAssessment,
+      stateKey.assessmentType,
+    )
+    expect(validateAssessmentSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      backupAssessment,
+      stateKey.assessmentType,
+    )
+    expect(updateCachesOnCheckYourAnswers).toHaveBeenCalledWith(stateKey, undefined)
+    expect(getFirstPageAndResetPageLoadHistorySpy).toHaveBeenCalledWith(stateKey)
   })
 })

@@ -119,5 +119,4 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('fullName', fullName)
   njkEnv.addFilter('startsWith', startsWith)
   njkEnv.addFilter('removePrefix', removePrefix)
-  njkEnv.addGlobal('checkAnswersPageId', CHECK_ANSWERS_PAGE_ID)
 }

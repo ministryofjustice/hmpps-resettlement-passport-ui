@@ -464,7 +464,7 @@ const inEducationOrTrainingQuestion = () =>
 const submitEdit = () => {
   return stubFor({
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/complete?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/EDUCATION_SKILLS_AND_WORK/complete?assessmentType=BCST2&declaration=false',
       method: 'POST',
       bodyPatterns: [
         {

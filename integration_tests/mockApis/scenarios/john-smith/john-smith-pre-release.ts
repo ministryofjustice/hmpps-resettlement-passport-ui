@@ -367,7 +367,7 @@ export const johnSmithConfirm = () =>
   stubFor({
     name: 'resettlement-passport_prisoner_a8731dy_resettlement-assessment_accommodation_complete',
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=RESETTLEMENT_PLAN',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=RESETTLEMENT_PLAN&declaration=false',
       method: 'POST',
       bodyPatterns: [
         {

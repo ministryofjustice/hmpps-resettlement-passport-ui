@@ -277,12 +277,10 @@ export function formatAddress(location: AppointmentLocation): string {
 
 export function getAnswerToCurrentQuestion(
   currentQuestionAndAnswer: ApiQuestionsAndAnswer,
-  allQuestionsAndAnswers: CachedAssessment,
+  allQuestionsAndAnswers: CachedQuestionAndAnswer[],
 ): Answer | null {
   if (!currentQuestionAndAnswer || !allQuestionsAndAnswers) return null
-  const qaObject = allQuestionsAndAnswers.questionsAndAnswers.find(
-    qa => qa.question === currentQuestionAndAnswer.question.id,
-  )
+  const qaObject = allQuestionsAndAnswers.find(qa => qa.question === currentQuestionAndAnswer.question.id)
   return qaObject?.answer || null
 }
 

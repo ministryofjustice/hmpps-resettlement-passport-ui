@@ -9,6 +9,7 @@ import ImmediateNeedsReportView from './immediateNeedsReportView'
 import { processReportRequestBody } from '../../utils/processReportRequestBody'
 import { Pathway } from '../../@types/express'
 import { CHECK_ANSWERS_PAGE_ID } from '../../utils/constants'
+import ImmediateNeedsReportCheckYourAnswersView from './immediateNeedsReportCheckYourAnswersView'
 
 export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -81,10 +82,8 @@ export default class ImmediateNeedsReportController {
         nextPageId = currentPageId
       }
 
-      const submitted = nextPageId === CHECK_ANSWERS_PAGE_ID ? '&submitted=true' : ''
-
       return res.redirect(
-        `/ImmediateNeedsReport/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}${submitted}`,
+        `/ImmediateNeedsReport/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
       )
     } catch (err) {
       return next(err)
@@ -96,8 +95,6 @@ export default class ImmediateNeedsReportController {
       const { prisonerData } = req
       const assessmentType = parseAssessmentType(req.body.assessmentType)
       const { pathway, currentPageId } = req.body
-      const edit = req.body.edit === 'true'
-      const backButton = req.query.backButton === 'true'
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
         userId: req.user.username,
@@ -114,8 +111,6 @@ export default class ImmediateNeedsReportController {
         existingWorkingAssessmentVersion || 1,
       )
 
-      const editQueryString = edit ? '&edit=true' : ''
-
       const answeredQuestions = processReportRequestBody(currentApiAssessmentPage, req.body)
 
       const validationErrors = validateAssessmentResponse(answeredQuestions)
@@ -128,7 +123,7 @@ export default class ImmediateNeedsReportController {
       if (validationErrors) {
         const validationErrorsString = encodeURIComponent(JSON.stringify(validationErrors))
         return res.redirect(
-          `/ImmediateNeedsReport/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
+          `/ImmediateNeedsReport/pathway/${pathway}/page/${currentPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&validationErrors=${validationErrorsString}&type=${assessmentType}`,
         )
       }
 
@@ -147,7 +142,7 @@ export default class ImmediateNeedsReportController {
         const { nextPageId } = nextPage
 
         return res.redirect(
-          `/ImmediateNeedsReport/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}${editQueryString}&backButton=${backButton}&type=${assessmentType}`,
+          `/ImmediateNeedsReport/pathway/${pathway}/page/${nextPageId}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
         )
       }
       return next(new Error(nextPage.error))
@@ -161,9 +156,6 @@ export default class ImmediateNeedsReportController {
       const { prisonerData } = req
       const { pathway, currentPageId } = req.params
       const assessmentType = parseAssessmentType(req.query.type)
-      const edit = req.query.edit === 'true'
-      const submitted = req.query.submitted === 'true'
-      const backButton = req.query.backButton === 'true'
       const redirectAsInvalid = req.query.redirectAsInvalid === 'true'
       const validationErrorsString = req.query.validationErrors as string
       const validationErrors: ValidationErrors = validationErrorsString
@@ -188,22 +180,7 @@ export default class ImmediateNeedsReportController {
       )
 
       if (apiAssessmentPage.error) {
-        const view = new ImmediateNeedsReportView(
-          prisonerData,
-          apiAssessmentPage,
-          pathway,
-          {
-            questionsAndAnswers: [],
-            version: null,
-          },
-          validationErrors,
-          edit,
-          submitted,
-          backButton,
-          assessmentType,
-          redirectAsInvalid,
-        )
-        return res.render('pages/immediate-needs-report', { ...view.renderArgs })
+        return next(new Error('Error getting assessment page from API'))
       }
 
       // Get the current page with questions
@@ -214,92 +191,113 @@ export default class ImmediateNeedsReportController {
 
       if (reConverged) {
         return res.redirect(
-          `/ImmediateNeedsReport/pathway/${pathway}/page/${CHECK_ANSWERS_PAGE_ID}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&edit=true&type=${assessmentType}`,
+          `/ImmediateNeedsReport/pathway/${pathway}/page/${CHECK_ANSWERS_PAGE_ID}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
         )
       }
 
-      let mergedQuestionsAndAnswers: CachedQuestionAndAnswer[]
-
-      if (currentPageId === CHECK_ANSWERS_PAGE_ID) {
-        // If we are about to render the check answers page we need to either
-        // - Clear down the working cache to the answered pages if a valid journey has been made
-        // - Reset to the backup cache if we are in an abandoned edit journey
-        // - Validate the answers with the backend and error if required
-        let invalidAssessment = false
-        const workingAssessmentAnsweredQuestions = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
-          stateKey,
-          'working',
-        )
-        const validateWorkingAssessment = await this.rpService.validateAssessment(
-          prisonerData.personalDetails.prisonerNumber as string,
-          pathway as string,
-          workingAssessmentAnsweredQuestions,
-          assessmentType,
-        )
-        if (validateWorkingAssessment.valid) {
-          mergedQuestionsAndAnswers = workingAssessmentAnsweredQuestions.questionsAndAnswers
-        } else {
-          const backupAssessmentAnsweredQuestions = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
-            stateKey,
-            'backup',
-          )
-          if (backupAssessmentAnsweredQuestions) {
-            const validateBackupAssessment = await this.rpService.validateAssessment(
-              prisonerData.personalDetails.prisonerNumber as string,
-              pathway as string,
-              backupAssessmentAnsweredQuestions,
-              assessmentType,
-            )
-            if (validateBackupAssessment.valid) {
-              // Replace working cache with backup cache
-              await this.assessmentStateService.resetWorkingCacheToBackupCache(stateKey)
-              mergedQuestionsAndAnswers = backupAssessmentAnsweredQuestions.questionsAndAnswers
-            } else {
-              invalidAssessment = true
-            }
-          } else {
-            invalidAssessment = true
-          }
-        }
-        // Delete the backup cache and reset the pageLoadHistory in the working cache
-        await this.assessmentStateService.updateCachesOnCheckYourAnswers(stateKey, mergedQuestionsAndAnswers)
-
-        // If the assessment is not valid, remove the page load history and redirect to first page (if possible)
-        if (invalidAssessment) {
-          const firstPage = await this.assessmentStateService.getFirstPageAndResetPageLoadHistory(stateKey)
-          if (firstPage) {
-            return res.redirect(
-              `/ImmediateNeedsReport/pathway/${pathway}/page/${firstPage}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&backButton=false&type=${assessmentType}&redirectAsInvalid=true`,
-            )
-          }
-          return next(new Error('Cannot find the first page to redirect to after validation of assessment failed'))
-        }
-      } else {
-        // For any other page, update page load history
-        await this.assessmentStateService.updatePageLoadHistory(stateKey, pageWithQuestions)
-        // Merge the cache and api assessment answers together
-        mergedQuestionsAndAnswers = await this.assessmentStateService.getMergedQuestionsAndAnswers(
-          stateKey,
-          apiAssessmentPage.questionsAndAnswers,
-        )
-      }
+      // Update page load history
+      await this.assessmentStateService.updatePageLoadHistory(stateKey, pageWithQuestions)
+      // Merge the cache and api assessment answers together
+      const mergedQuestionsAndAnswers = await this.assessmentStateService.getMergedQuestionsAndAnswers(
+        stateKey,
+        apiAssessmentPage.questionsAndAnswers,
+      )
 
       const view = new ImmediateNeedsReportView(
         prisonerData,
         apiAssessmentPage,
         pathway,
-        {
-          questionsAndAnswers: mergedQuestionsAndAnswers,
-          version: null,
-        },
+        mergedQuestionsAndAnswers,
         validationErrors,
-        edit,
-        submitted,
-        backButton,
         assessmentType,
         redirectAsInvalid,
       )
       return res.render('pages/immediate-needs-report', { ...view.renderArgs })
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  getCheckYourAnswers: RequestHandler = async (req, res, next): Promise<void> => {
+    try {
+      const { prisonerData } = req
+      const { pathway } = req.params
+      const assessmentType = parseAssessmentType(req.query.type)
+      const stateKey = {
+        prisonerNumber: prisonerData.personalDetails.prisonerNumber,
+        userId: req.user.username,
+        pathway,
+        assessmentType,
+      }
+      const declarationValidationError = req.flash('declarationValidationError')?.[0] as unknown as boolean
+
+      let mergedQuestionsAndAnswers: CachedQuestionAndAnswer[]
+      // As we are about to render the check answers page we need to
+      // - Clear down the working cache to the answered pages if a valid journey has been made
+      // - Reset to the backup cache if we are in an abandoned edit journey
+      // - Validate the answers with the backend and error if required
+      let invalidAssessment = false
+      const workingAssessmentAnsweredQuestions = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
+        stateKey,
+        'working',
+      )
+      const validateWorkingAssessment = await this.rpService.validateAssessment(
+        prisonerData.personalDetails.prisonerNumber as string,
+        pathway as string,
+        workingAssessmentAnsweredQuestions,
+        assessmentType,
+      )
+      if (validateWorkingAssessment.valid) {
+        mergedQuestionsAndAnswers = workingAssessmentAnsweredQuestions.questionsAndAnswers
+      } else {
+        const backupAssessmentAnsweredQuestions = await this.assessmentStateService.getAllAnsweredQuestionsFromCache(
+          stateKey,
+          'backup',
+        )
+        if (backupAssessmentAnsweredQuestions) {
+          const validateBackupAssessment = await this.rpService.validateAssessment(
+            prisonerData.personalDetails.prisonerNumber as string,
+            pathway as string,
+            backupAssessmentAnsweredQuestions,
+            assessmentType,
+          )
+          if (validateBackupAssessment.valid) {
+            // Replace working cache with backup cache
+            await this.assessmentStateService.resetWorkingCacheToBackupCache(stateKey)
+            mergedQuestionsAndAnswers = backupAssessmentAnsweredQuestions.questionsAndAnswers
+          } else {
+            invalidAssessment = true
+          }
+        } else {
+          invalidAssessment = true
+        }
+      }
+      // Delete the backup cache and reset the pageLoadHistory in the working cache
+      await this.assessmentStateService.updateCachesOnCheckYourAnswers(stateKey, mergedQuestionsAndAnswers)
+
+      // If the assessment is not valid, remove the page load history and redirect to first page (if possible)
+      if (invalidAssessment) {
+        const firstPage = await this.assessmentStateService.getFirstPageAndResetPageLoadHistory(stateKey)
+        if (firstPage) {
+          return res.redirect(
+            `/ImmediateNeedsReport/pathway/${pathway}/page/${firstPage}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}&redirectAsInvalid=true`,
+          )
+        }
+        return next(new Error('Cannot find the first page to redirect to after validation of assessment failed'))
+      }
+
+      // Only show declaration if assessment is v2+
+      const showDeclaration = (await this.assessmentStateService.getWorkingAssessmentVersion(stateKey)) >= 2
+
+      const view = new ImmediateNeedsReportCheckYourAnswersView(
+        prisonerData,
+        pathway,
+        mergedQuestionsAndAnswers,
+        showDeclaration,
+        declarationValidationError,
+        assessmentType,
+      )
+      return res.render('pages/immediate-needs-report-check-your-answers', { ...view.renderArgs })
     } catch (err) {
       return next(err)
     }
@@ -310,6 +308,7 @@ export default class ImmediateNeedsReportController {
       const { prisonerData } = req
       const { pathway } = req.params
       const assessmentType = parseAssessmentType(req.body.assessmentType)
+      const declarationChecked = req.body.declaration === 'true'
 
       const stateKey = {
         prisonerNumber: prisonerData.personalDetails.prisonerNumber,
@@ -319,11 +318,21 @@ export default class ImmediateNeedsReportController {
       }
 
       const assessmentFromCache = await this.assessmentStateService.getWorkingAssessment(stateKey)
+
+      // If we are on v2+ and the declaration checkbox is not clicked then redirect back to check your answers with a validation error
+      if (!declarationChecked && assessmentFromCache.assessment.version >= 2) {
+        req.flash('declarationValidationError', true)
+        return res.redirect(
+          `/ImmediateNeedsReport/pathway/${pathway}/page/${CHECK_ANSWERS_PAGE_ID}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
+        )
+      }
+
       const completeAssessment = (await this.rpService.completeAssessment(
         prisonerData.personalDetails.prisonerNumber as string,
         pathway as string,
         assessmentFromCache.assessment,
         assessmentType,
+        declarationChecked,
       )) as { error?: string }
 
       if (completeAssessment.error) {
@@ -378,9 +387,8 @@ export default class ImmediateNeedsReportController {
         await this.assessmentStateService.initialiseCache(stateKey, version, apiAssessmentPage.questionsAndAnswers)
       }
       await this.assessmentStateService.startEdit(stateKey, pageId)
-      const submittedParam = submitted ? '&submitted=true' : ''
       res.redirect(
-        `/ImmediateNeedsReport/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&edit=true&type=${assessmentType}${submittedParam}`,
+        `/ImmediateNeedsReport/pathway/${pathway}/page/${pageId}?prisonerNumber=${prisonerNumber}&type=${assessmentType}`,
       )
     } catch (error) {
       next(error)

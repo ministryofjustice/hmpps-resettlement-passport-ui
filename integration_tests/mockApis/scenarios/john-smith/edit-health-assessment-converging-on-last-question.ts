@@ -289,7 +289,7 @@ const nextPageMeetHealthcareTeam = () =>
 const submitEdit = () => {
   return stubFor({
     request: {
-      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/complete?assessmentType=BCST2',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/HEALTH/complete?assessmentType=BCST2&declaration=false',
       method: 'POST',
       bodyPatterns: [
         {

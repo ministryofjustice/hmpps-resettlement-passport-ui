@@ -1,0 +1,170 @@
+{% extends "../partials/layout.njk" %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% if assessmentType === "BCST2" %}
+  {% set formType = "Immediate needs" %}
+{% elif assessmentType === "RESETTLEMENT_PLAN" %}
+  {% set formType = "Pre-release" %}
+{% endif %}
+{% set pathwayName = formType + " report form" %}
+{% set pageTitle = applicationName + " - " + pathwayName %}
+{% set mainClasses = "app-container govuk-body" %}
+{% set validationErrorMessage = "Select to confirm that you agree with the declaration" %}
+
+{% block header %}
+  {% if feComponents.header %}
+    {{ feComponents.header | safe }}
+  {% else %}
+    {% include "../partials/header.njk" %}
+  {% endif %}
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: {
+        text: phaseName
+      },
+      html: feedbackText
+    }) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <main id="main-content" role="main">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <button class="govuk-back-link assessment-back-button" track-event-name="ReportBackLinkClicked" track-event-prisoner-id="{{ prisonerData.personalDetails.prisonerNumber }}">Back</button>
+        <div class="govuk-!-padding-top-7">
+          {% if declarationValidationError %}
+            {{ govukErrorSummary({
+              titleText: "There is a problem",
+              errorList: [
+                {
+                  text: validationErrorMessage,
+                  href: "#declaration"
+                }
+              ]
+            }) }}
+          {% endif %}
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Check your answers</h1>
+          <form action="/ImmediateNeedsReport/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" method="post">
+            {% set enumValue = pathway | getEnumValue %}
+            {% set containsAssessmentSummary = false %}
+            {% for questionAndAnswer in allQuestionsAndAnswers %}
+              {% if questionAndAnswer.question == 'CASE_NOTE_SUMMARY' %}
+                {% set containsAssessmentSummary = true %}
+              {% endif %}
+            {% endfor %}
+            <h2 class="govuk-heading-m">{{ enumValue.name }} report</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+              {% for questionAnswer in allQuestionsAndAnswers %}
+                {% if questionAnswer.question not in ['SUPPORT_NEEDS', 'SUPPORT_NEEDS_PRERELEASE', 'CASE_NOTE_SUMMARY'] and 'SUPPORT_NEEDS_CHECKBOXES' not in questionAnswer.question %}
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
+                    <dd class="govuk-summary-list__value">
+                      {% if questionAnswer.questionType === 'ADDRESS' %}
+                        {% for item in questionAnswer.answer.answer %}
+                          {% for key, value in item %}
+                            {% if value %}
+                              {{ value }}<br />
+                            {% endif %}
+                          {% endfor %}
+                        {% endfor %}
+                        {% elif questionAnswer.questionType === 'CHECKBOX' %}
+                        {% set freeTextAnswer = "" %}
+                        {% for answer in questionAnswer.answer.answer %}
+                          {% if answer | startsWith("OTHER_SUPPORT_NEEDS: ") %}
+                            {% set freeTextAnswer = answer | removePrefix("OTHER_SUPPORT_NEEDS: ") %}
+                          {% endif %}
+                        {% endfor %}
+
+                        {% for item in questionAnswer.answer.displayText %}
+                          {{ item }}<br />
+                        {% endfor %}
+                        {{ freeTextAnswer }}
+                      {% else %}
+                        {{ questionAnswer.answer.displayText }}
+                      {% endif %}
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&type={{ assessmentType }}">Change</a>
+                    </dd>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </dl>
+
+            {% if containsAssessmentSummary %}
+              <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                {% for questionAnswer in allQuestionsAndAnswers %}
+                  {% if 'SUPPORT_NEEDS_CHECKBOXES' in questionAnswer.question %}
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
+                      <dd class="govuk-summary-list__value">
+                        {% for item in questionAnswer.answer.displayText %}
+                          {{ item }}<br />
+                        {% endfor %}
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&type={{ assessmentType }}">Change</a>
+                      </dd>
+                    </div>
+                  {% endif %}
+                  {% if questionAnswer.question === 'SUPPORT_NEEDS' or questionAnswer.question === 'SUPPORT_NEEDS_PRERELEASE' %}
+                    {% set statusValue = questionAnswer.answer.answer | getAssessmentEnumValue %}
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
+                      <dd class="govuk-summary-list__value">
+                        <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
+                          {{ statusValue.name }}
+                        </strong>
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&type={{ assessmentType }}">Change</a>
+                      </dd>
+                    </div>
+                  {% endif %}
+                  {% if questionAnswer.question === 'CASE_NOTE_SUMMARY' %}
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
+                      <dd class="govuk-summary-list__value show-line-breaks">{{ questionAnswer.answer.displayText }}</dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&type={{ assessmentType }}">Change</a>
+                      </dd>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </dl>
+            {% endif %}
+            {% if showDeclaration %}
+              <div class="govuk-form-group {{ "govuk-form-group--error" if declarationValidationError }}" id="declaration">
+                <h2 class="govuk-heading-m">Declaration</h2>
+                {% if declarationValidationError %}
+                  <p class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> {{ validationErrorMessage }}
+                  </p>
+                {% endif %}
+                <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="declaration-checkbox" name="declaration" type="checkbox" value="true">
+                    <label class="govuk-label govuk-checkboxes__label" for="declaration-checkbox">
+                      I confirm that I have not included information that could identify anyone other than the person in prison, or any special category data.
+                    </label>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            <input type="hidden" name="pathway" value="{{ pathway }}"/>
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+            <input type="hidden" name="assessmentType" value="{{ assessmentType }}"/>
+
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Confirm</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+{% block bodyEnd %}
+  {{ super() }}
+  <script src="/assets/js/assessment-back-button.js"></script>
+  <script src="/assets/js/disable-on-submit.js"></script>
+{% endblock %}

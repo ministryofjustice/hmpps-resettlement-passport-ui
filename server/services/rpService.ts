@@ -201,12 +201,13 @@ export default class RpService {
     pathway: string,
     questionsAndAnswers: CachedAssessment,
     assessmentType: AssessmentType,
+    declaration: boolean,
   ) {
     let response
     const client = this.createClient()
     try {
       response = await client.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/complete?assessmentType=${assessmentType}`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/${pathway}/complete?assessmentType=${assessmentType}&declaration=${declaration}`,
         questionsAndAnswers,
       )
     } catch (err) {
