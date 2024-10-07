@@ -25,7 +25,7 @@
             name: "Report information",
             id: "assessment-information"
           }
-      {% endif %}
+        ]) %}
       {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
       {{ subNav(subNavItems) }}
     </div>

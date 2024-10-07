@@ -20,5 +20,8 @@ context('Report Information', () => {
     cy.visit('/finance-and-id/?prisonerNumber=A8731DY')
     cy.get('div.govuk-error-summary').should('not.exist')
     cy.get('div.app-summary-card__body').should('not.contain', 'No report information available')
+
+    cy.visit('/drugs-and-alcohol/?prisonerNumber=A8731DY')
+    cy.get('div.app-summary-card__body').should('contain.text', 'No report information available')
   })
 })
