@@ -87,6 +87,7 @@ describe('completeAssessment', () => {
 
   it('should submit the assessment to the backend then redirect to the task list - v2 with declaration', async () => {
     stubPrisonerDetails()
+    configHelper(config, true)
 
     const workingCachedAssessment: WorkingCachedAssessment = {
       assessment: {
@@ -129,6 +130,7 @@ describe('completeAssessment', () => {
 
   it('should not submit the assessment to the backend - v2 with missing declaration', async () => {
     stubPrisonerDetails()
+    configHelper(config, true)
 
     const workingCachedAssessment: WorkingCachedAssessment = {
       assessment: {
@@ -611,9 +613,6 @@ describe('getCheckYourAnswers', () => {
     const updateCachesOnCheckYourAnswers = jest
       .spyOn(assessmentStateService, 'updateCachesOnCheckYourAnswers')
       .mockImplementation()
-    const getWorkingAssessmentVersionSpy = jest
-      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
-      .mockResolvedValue(1)
 
     await request(app)
       .get(
@@ -629,7 +628,6 @@ describe('getCheckYourAnswers', () => {
       stateKey.assessmentType,
     )
     expect(updateCachesOnCheckYourAnswers).toHaveBeenCalledWith(stateKey, workingAssessment.questionsAndAnswers)
-    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
   })
 
   it('happy path with invalid working cache - render page from backup cache', async () => {
@@ -688,9 +686,6 @@ describe('getCheckYourAnswers', () => {
     const updateCachesOnCheckYourAnswers = jest
       .spyOn(assessmentStateService, 'updateCachesOnCheckYourAnswers')
       .mockImplementation()
-    const getWorkingAssessmentVersionSpy = jest
-      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
-      .mockResolvedValue(1)
 
     await request(app)
       .get(
@@ -714,7 +709,6 @@ describe('getCheckYourAnswers', () => {
     )
     expect(resetWorkingCacheToBackupCacheSpy).toHaveBeenCalledWith(stateKey)
     expect(updateCachesOnCheckYourAnswers).toHaveBeenCalledWith(stateKey, backupAssessment.questionsAndAnswers)
-    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
   })
 
   it('happy path with invalid working cache and no backup - redirect to first page', async () => {

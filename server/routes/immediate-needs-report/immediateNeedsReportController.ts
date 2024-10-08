@@ -220,7 +220,7 @@ export default class ImmediateNeedsReportController {
 
   getCheckYourAnswers: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const { prisonerData, config } = req
       const { pathway } = req.params
       const assessmentType = parseAssessmentType(req.query.type)
       const stateKey = {
@@ -286,8 +286,8 @@ export default class ImmediateNeedsReportController {
         return next(new Error('Cannot find the first page to redirect to after validation of assessment failed'))
       }
 
-      // Only show declaration if assessment is v2+
-      const showDeclaration = (await this.assessmentStateService.getWorkingAssessmentVersion(stateKey)) >= 2
+      // Only show declaration if turned on in the config
+      const { showDeclaration } = config.reports
 
       const view = new ImmediateNeedsReportCheckYourAnswersView(
         prisonerData,
@@ -305,7 +305,7 @@ export default class ImmediateNeedsReportController {
 
   completeAssessment: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const { prisonerData, config } = req
       const { pathway } = req.params
       const assessmentType = parseAssessmentType(req.body.assessmentType)
       const declarationChecked = req.body.declaration === 'true'
@@ -319,8 +319,8 @@ export default class ImmediateNeedsReportController {
 
       const assessmentFromCache = await this.assessmentStateService.getWorkingAssessment(stateKey)
 
-      // If we are on v2+ and the declaration checkbox is not clicked then redirect back to check your answers with a validation error
-      if (!declarationChecked && assessmentFromCache.assessment.version >= 2) {
+      // If the declaration is enabled in config and checkbox is not checked then redirect back to check your answers with a validation error
+      if (!declarationChecked && config.reports.showDeclaration) {
         req.flash('declarationValidationError', true)
         return res.redirect(
           `/ImmediateNeedsReport/pathway/${pathway}/page/${CHECK_ANSWERS_PAGE_ID}?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
@@ -332,7 +332,7 @@ export default class ImmediateNeedsReportController {
         pathway as string,
         assessmentFromCache.assessment,
         assessmentType,
-        declarationChecked,
+        declarationChecked && config.reports.showDeclaration,
       )) as { error?: string }
 
       if (completeAssessment.error) {

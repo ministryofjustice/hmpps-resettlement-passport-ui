@@ -76,6 +76,7 @@ export type ConfigFile = {
 export type Reports = {
   immediateNeedsVersion: PathwayVersion
   preReleaseVersion: PathwayVersion
+  showDeclaration: boolean
 }
 
 export type Pathway = keyof typeof PATHWAY_DICTIONARY

@@ -1,6 +1,6 @@
 import Config from '../s3Config'
 
-export function configHelper(config: jest.Mocked<Config>) {
+export function configHelper(config: jest.Mocked<Config>, showDeclaration: boolean = false) {
   const mockStaticConfig = jest.fn().mockReturnValue(config)
   Config.getInstance = mockStaticConfig
   jest.spyOn(config, 'getConfig').mockResolvedValue({
@@ -23,6 +23,7 @@ export function configHelper(config: jest.Mocked<Config>) {
         FINANCE_AND_ID: 1,
         HEALTH: 1,
       },
+      showDeclaration,
     },
   })
 }

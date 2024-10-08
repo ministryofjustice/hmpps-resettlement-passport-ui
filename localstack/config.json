@@ -17,6 +17,7 @@
       "EDUCATION_SKILLS_AND_WORK": 2,
       "FINANCE_AND_ID": 2,
       "HEALTH": 2
-    }
+    },
+    "showDeclaration": false
   }
 }
