@@ -20,7 +20,8 @@ context('Pre Release Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=RESETTLEMENT_PLAN')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Pre-release report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'pre-release report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
     // Status buttons
     cy.get('.govuk-table__cell > .govuk-tag').each(item => {
@@ -66,7 +67,8 @@ context('Pre Release Report', () => {
     clickConfirm()
 
     // Should be back to the task list page
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Pre-release report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'pre-release report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
     // Accommodation should now be completed
     cy.get(':nth-child(1) > .govuk-table__cell > .govuk-tag').should('have.text', 'Completed')
   })

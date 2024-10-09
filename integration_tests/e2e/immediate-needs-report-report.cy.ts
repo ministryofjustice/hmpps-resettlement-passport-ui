@@ -56,7 +56,8 @@ context('Immediate Needs Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
     // // Status buttons
     cy.get('.govuk-table__cell > .govuk-tag').each((item, index) => {
@@ -136,7 +137,8 @@ context('Immediate Needs Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
     // Click Accommodation link
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
@@ -188,7 +190,8 @@ context('Immediate Needs Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
     // Click Accommodation link
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
@@ -247,7 +250,8 @@ context('Immediate Needs Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
     // Click Accommodation link
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
@@ -284,7 +288,8 @@ context('Immediate Needs Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
     // // Status buttons
     cy.get('.govuk-table__cell > .govuk-tag').each((item, index) => {
