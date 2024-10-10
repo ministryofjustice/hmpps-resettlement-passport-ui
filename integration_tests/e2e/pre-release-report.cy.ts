@@ -20,7 +20,8 @@ context('Pre Release Report', () => {
     cy.signIn()
 
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=RESETTLEMENT_PLAN')
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Pre-release report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'pre-release report')
+    cy.get('.govuk-caption-l').should('have.text', 'Smith, John (A8731DY)')
 
     // Status buttons
     cy.get('.govuk-table__cell > .govuk-tag').each(item => {
@@ -32,16 +33,19 @@ context('Pre Release Report', () => {
 
     // Should be on the Accommodation pathway page
     getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    cy.get('.govuk-caption-l').should('have.text', 'Smith, John (A8731DY)')
     // Should have no permanent or fixed address pre-selected from immediate needs report answers
     cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').should('be.checked')
 
     clickContinue()
 
     getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+    cy.get('.govuk-caption-l').should('have.text', 'Smith, John (A8731DY)')
     cy.get('#WHERE_WILL_THEY_LIVE_2-NO_ANSWER').should('be.checked')
 
     clickContinue()
     getHeading().should('have.text', 'Accommodation report summary')
+    cy.get('.govuk-caption-l').should('have.text', 'Smith, John (A8731DY)')
 
     cy.get('#SUPPORT_NEEDS_PRERELEASE-DONE').should('be.checked')
 
@@ -63,10 +67,12 @@ context('Pre Release Report', () => {
     clickContinue()
 
     getHeading().should('have.text', 'Check your answers')
+    cy.get('.govuk-caption-l').should('have.text', 'Smith, John (A8731DY)')
     clickConfirm()
 
     // Should be back to the task list page
-    cy.get('.govuk-grid-column-three-quarters > h2').should('have.text', 'Pre-release report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'pre-release report')
+    cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
     // Accommodation should now be completed
     cy.get(':nth-child(1) > .govuk-table__cell > .govuk-tag').should('have.text', 'Completed')
   })

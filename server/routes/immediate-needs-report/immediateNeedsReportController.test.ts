@@ -41,6 +41,8 @@ function stubPrisonerDetails() {
     personalDetails: {
       prisonerNumber: '123',
       facialImageId: '456',
+      firstName: 'John',
+      lastName: 'Smith',
     } as unknown as PersonalDetails,
   } as unknown as PrisonerData)
 }
