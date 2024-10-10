@@ -385,6 +385,9 @@ context('Immediate Needs Report', () => {
     cy.get('input[type="checkbox"][value="OTHER_SUPPORT_NEEDS"]').click()
     cy.get('textarea[name="freeText"]').should('be.visible')
 
+    clickContinue()
+    cy.get('.govuk-error-message').eq(0).should('contain.text', 'This field is required')
+
     cy.get('textarea[name="freeText"]').type('Random text')
 
     clickContinue()

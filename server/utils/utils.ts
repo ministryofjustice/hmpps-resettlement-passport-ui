@@ -301,8 +301,12 @@ export function getAnswerValueFromArrayOfMaps(answer: Answer, key: string) {
 
 export function getValidationError(validationErrors: ValidationErrors, questionId: string) {
   if (!validationErrors || !questionId) return null
-  const isQuestionInArray = validationErrors.find(item => item.questionId === questionId)
-  return isQuestionInArray
+  return validationErrors.find(item => item.questionId === questionId && item.optionId === undefined)
+}
+
+export function getOptionValidationError(validationErrors: ValidationErrors, questionId: string, optionId: string) {
+  if (!validationErrors || !questionId) return null
+  return validationErrors.find(item => item.questionId === questionId && item.optionId === optionId)
 }
 
 export function parseAssessmentType(type: unknown): AssessmentType {

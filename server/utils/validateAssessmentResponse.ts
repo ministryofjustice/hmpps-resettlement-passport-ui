@@ -1,4 +1,9 @@
-import { ValidationError, ValidationErrors } from '../data/model/immediateNeedsReport'
+import {
+  ApiQuestionOption,
+  ApiQuestionsAndAnswer,
+  ValidationError,
+  ValidationErrors,
+} from '../data/model/immediateNeedsReport'
 import { ResettlementReportUserInput, ResettlementReportUserQuestionAndAnswer } from './assessmentHelperTypes'
 
 const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
@@ -75,6 +80,8 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
         validationErrors = validationErrors ? [...validationErrors, newValidationError] : [newValidationError]
       }
     }
+
+    validationErrors = validateCheckboxFreetextField(questionAndAnswer, answerToQuestion, validationErrors)
   })
 
   return validationErrors
@@ -86,6 +93,47 @@ function getAnswerToQuestion(
   subField: string = undefined,
 ) {
   return allUserQuestionsAndAnswers.find(it => it.questionId === questionId && it.subField === subField)?.answer
+}
+
+function validateCheckboxFreetextField(
+  questionAndAnswer: ApiQuestionsAndAnswer,
+  answerToQuestion: string | string[],
+  validationErrors: ValidationErrors,
+): ValidationErrors {
+  let returnedValidationErrors = validationErrors
+  if (
+    questionAndAnswer.question.type === 'CHECKBOX' &&
+    checkFreeText(questionAndAnswer.question.options) !== undefined
+  ) {
+    const freeTextOption = checkFreeText(questionAndAnswer.question.options)
+    const optionAnswer = checkContains(answerToQuestion, freeTextOption.id)
+    if (optionAnswer !== undefined) {
+      const freeTextValue = optionAnswer.slice(freeTextOption.id.length + 2).trim()
+      if (freeTextValue.length <= 0) {
+        const newValidationError: ValidationError = {
+          validationType: 'MANDATORY_INPUT',
+          questionId: questionAndAnswer.question.id,
+          optionId: freeTextOption.id,
+        }
+        returnedValidationErrors = validationErrors ? [...validationErrors, newValidationError] : [newValidationError]
+      }
+    }
+  }
+  return returnedValidationErrors
+}
+
+function checkFreeText(options: ApiQuestionOption[]) {
+  return options.find(option => option.freeText === true)
+}
+
+function checkContains(value: string | string[], searchString: string): string {
+  if (typeof value === 'string' && value.includes(searchString)) {
+    return searchString
+  }
+  if (Array.isArray(value)) {
+    return value.find(item => item.includes(searchString))
+  }
+  return undefined
 }
 
 function isMissingRequiredField(

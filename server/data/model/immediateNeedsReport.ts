@@ -32,6 +32,7 @@ export type ValidationError = {
   validationType: ValidationErrorType
   questionId: string
   customErrorMessage?: string
+  optionId?: string
 }
 
 export type ValidationErrors = ValidationError[] | null
