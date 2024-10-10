@@ -11,7 +11,7 @@ export const processReportRequestBody = (
     // If a checkbox question has a freeText option, replace the default checkbox value with the freeText input value
     let answer: string | string[] = value
     const freeTextId = 'OTHER_SUPPORT_NEEDS'
-    const freeTextValue = body.freeText ? `${freeTextId}: ${body.freeText}` : ''
+    const freeTextValue = body.freeText ? `${freeTextId}: ${body.freeText}` : `${freeTextId}`
     if (typeof value === 'string' && value.includes(freeTextId)) {
       // Replace in string
       answer = value.replace(freeTextId, freeTextValue)

@@ -47,8 +47,12 @@
             </label>
           </div>
           {% if option.freeText %}
+          {% set optionValidationError = validationErrors | getOptionValidationError(currentQuestionAndAnswer.question.id, option.id) %}
             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-free-text">
-              <div class="govuk-form-group">
+              <div class="govuk-form-group {{ 'govuk-form-group--error' if optionValidationError }}">
+                {% if optionValidationError %}
+                  {{ validationErrorMessage(optionValidationError) }}
+                {% endif %}
                 <textarea class="govuk-textarea" name="freeText" rows="4">{{ existingFreeTextAnswer }}</textarea>
               </div>
             </div>

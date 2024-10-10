@@ -324,6 +324,116 @@ describe('Validate assessment question', () => {
         },
       ],
     ],
+    [
+      'CheckBox - without Other freeText',
+      {
+        questionsAndAnswers: [
+          {
+            questionId: 'CHECKBOX_NO_FREETEXT',
+            answer: 'NEED_1',
+          },
+        ],
+        flattenedQuestionsOnPage: [
+          {
+            question: {
+              id: 'CHECKBOX_NO_FREETEXT',
+              type: 'CHECKBOX',
+              options: [
+                { id: 'NEED_1', displayText: 'Need 1', description: null, exclusive: false, freeText: false },
+                { id: 'NEED_2', displayText: 'Need 2', description: null, exclusive: false, freeText: false },
+                { id: 'NEED_3', displayText: 'Need 3', description: null, exclusive: false, freeText: false },
+              ],
+              validationType: 'MANDATORY',
+            },
+          },
+        ],
+      } as ResettlementReportUserInput,
+      null,
+    ],
+    [
+      'CheckBox - with Other freeText and other not in answers',
+      {
+        questionsAndAnswers: [
+          {
+            questionId: 'CHECKBOX_FREETEXT',
+            answer: 'NEED_1',
+          },
+        ],
+        flattenedQuestionsOnPage: [
+          {
+            question: {
+              id: 'CHECKBOX_FREETEXT',
+              type: 'CHECKBOX',
+              options: [
+                { id: 'NEED_1', displayText: 'Need 1', description: null, exclusive: false, freeText: false },
+                { id: 'NEED_2', displayText: 'Need 2', description: null, exclusive: false, freeText: false },
+                { id: 'NEED_3', displayText: 'Need 3', description: null, exclusive: false, freeText: true },
+              ],
+              validationType: 'MANDATORY',
+            },
+          },
+        ],
+      } as ResettlementReportUserInput,
+      null,
+    ],
+    [
+      'CheckBox - with Other freeText and other in answers filled in',
+      {
+        questionsAndAnswers: [
+          {
+            questionId: 'CHECKBOX_FREETEXT',
+            answer: 'NEED_3: Some text here',
+          },
+        ],
+        flattenedQuestionsOnPage: [
+          {
+            question: {
+              id: 'CHECKBOX_FREETEXT',
+              type: 'CHECKBOX',
+              options: [
+                { id: 'NEED_1', displayText: 'Need 1', description: null, exclusive: false, freeText: false },
+                { id: 'NEED_2', displayText: 'Need 2', description: null, exclusive: false, freeText: false },
+                { id: 'NEED_3', displayText: 'Need 3', description: null, exclusive: false, freeText: true },
+              ],
+              validationType: 'MANDATORY',
+            },
+          },
+        ],
+      } as ResettlementReportUserInput,
+      null,
+    ],
+    [
+      'CheckBox - with Other freeText and other in answers not filled in',
+      {
+        questionsAndAnswers: [
+          {
+            questionId: 'CHECKBOX_FREETEXT',
+            answer: 'NEED_3: ',
+          },
+        ],
+        flattenedQuestionsOnPage: [
+          {
+            question: {
+              id: 'CHECKBOX_FREETEXT',
+              type: 'CHECKBOX',
+              options: [
+                { id: 'NEED_1', displayText: 'Need 1', description: null, exclusive: false, freeText: false },
+                { id: 'NEED_2', displayText: 'Need 2', description: null, exclusive: false, freeText: false },
+                { id: 'NEED_3', displayText: 'Need 3', description: null, exclusive: false, freeText: true },
+              ],
+              validationType: 'MANDATORY',
+            },
+          },
+        ],
+      } as ResettlementReportUserInput,
+      [
+        {
+          questionId: 'CHECKBOX_FREETEXT',
+          validationType: 'MANDATORY_INPUT',
+          optionId: 'NEED_3',
+        },
+      ],
+    ],
   ])(
     '%s validateAssessmentResponse(%s)',
     (_: string, userInput: ResettlementReportUserInput, expected: ValidationObject[] | null) => {

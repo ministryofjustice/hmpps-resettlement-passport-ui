@@ -37,6 +37,7 @@ import {
   fullName,
   startsWith,
   removePrefix,
+  getOptionValidationError,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -114,6 +115,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('feedbackUrl', FEEDBACK_URL)
   njkEnv.addFilter('getAnswerValueFromArrayOfMaps', getAnswerValueFromArrayOfMaps)
   njkEnv.addFilter('getValidationError', getValidationError)
+  njkEnv.addFilter('getOptionValidationError', getOptionValidationError)
   njkEnv.addFilter('formatDocumentCategory', formatDocumentCategory)
   njkEnv.addFilter('removeSlashes', removeSlashes)
   njkEnv.addFilter('fullName', fullName)
