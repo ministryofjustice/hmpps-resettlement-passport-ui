@@ -26,5 +26,9 @@
   {
     "feature": "profileReset",
     "enabled": true
+  },
+  {
+    "feature": "useNewDpsCaseNoteFormat",
+    "enabled": true
   }
 ]
