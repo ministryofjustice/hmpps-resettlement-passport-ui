@@ -128,7 +128,7 @@ function checkFreeText(options: ApiQuestionOption[]) {
 
 function checkContains(value: string | string[], searchString: string): string {
   if (typeof value === 'string' && value.includes(searchString)) {
-    return searchString
+    return value
   }
   if (Array.isArray(value)) {
     return value.find(item => item.includes(searchString))
