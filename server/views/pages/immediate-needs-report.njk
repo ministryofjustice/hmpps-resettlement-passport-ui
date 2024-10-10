@@ -54,9 +54,11 @@
           {% endif %}
           {% if not assessmentPage.error %}
             {% if assessmentPage.id === checkAnswersPageId %}
-              <h1 class="govuk-heading-l govuk-!-margin-bottom-6">Check your answers</h1>
+              <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Check your answers</h1>
+              <span class="govuk-caption-l govuk-!-margin-bottom-6">{{ prisonerData.personalDetails.lastName | toTitleCase }}, {{ prisonerData.personalDetails.firstName | toTitleCase }} ({{ prisonerData.personalDetails.prisonerNumber }})</span>
             {% else %}
-              <h1 class="govuk-heading-l govuk-!-margin-bottom-3">{{ assessmentPage.title or assessmentPage.questionsAndAnswers[0].question.title }}</h1>
+              <h1 class="govuk-heading-l govuk-!-margin-bottom-0">{{ assessmentPage.title or assessmentPage.questionsAndAnswers[0].question.title }}</h1>
+              <span class="govuk-caption-l govuk-!-margin-bottom-3">{{ prisonerData.personalDetails.lastName | toTitleCase }}, {{ prisonerData.personalDetails.firstName | toTitleCase }} ({{ prisonerData.personalDetails.prisonerNumber }})</span>
             {% endif %}
             <form
               {% if assessmentPage.id === checkAnswersPageId %}
