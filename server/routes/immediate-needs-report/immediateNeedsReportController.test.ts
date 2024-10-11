@@ -225,6 +225,7 @@ describe('getView', () => {
         `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/THE_PAGE?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&assessmentType=BCST2`,
       )
       .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
     expect(getAssessmentPageSpy).toHaveBeenCalledWith(stateKey.prisonerNumber, stateKey.pathway, 'THE_PAGE', 'BCST2', 1)
