@@ -2,6 +2,7 @@ import logger from '../../logger'
 import { RPClient } from '../data'
 import RpService from './rpService'
 import { AssessmentSkipRequest } from '../data/model/assessmentInformation'
+import FeatureFlags from '../featureFlag'
 
 jest.mock('../../logger')
 jest.mock('../data')
@@ -9,6 +10,7 @@ jest.mock('../data')
 describe('RpService', () => {
   let rpClient: jest.Mocked<RPClient>
   const loggerSpy = jest.spyOn(logger, 'warn')
+  const featureFlags = new FeatureFlags() as jest.Mocked<FeatureFlags>
   let service: RpService
 
   beforeEach(() => {
@@ -16,6 +18,7 @@ describe('RpService', () => {
     service = new RpService()
     service.createClient = () => rpClient
     Object.defineProperty(rpClient, 'sessionId', { value: 'sessionId', writable: false })
+    FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
   })
 
   afterEach(() => {
@@ -171,6 +174,48 @@ describe('RpService', () => {
     expect(postSpy).toHaveBeenCalledWith(
       `/resettlement-passport/prisoner/${prisonerNumber}/resettlement-assessment/skip`,
       request,
+    )
+  })
+
+  it('should call submit assessment with useNewDpsCaseNoteFormat set to false if feature flag is off', async () => {
+    const spy = jest.spyOn(rpClient, 'post').mockResolvedValue({})
+    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([
+      { feature: 'useNewDeliusCaseNoteFormat', enabled: true },
+      { feature: 'useNewDpsCaseNoteFormat', enabled: false },
+    ])
+    const result = await service.submitAssessment('123', 'BCST2')
+    expect(result).toEqual({})
+    expect(spy).toHaveBeenCalledWith(
+      '/resettlement-passport/prisoner/123/resettlement-assessment/submit?assessmentType=BCST2&useNewDeliusCaseNoteFormat=true&useNewDpsCaseNoteFormat=false',
+      null,
+    )
+  })
+
+  it('should call submit assessment with useNewDpsCaseNoteFormat set to true if feature flag is on', async () => {
+    const spy = jest.spyOn(rpClient, 'post').mockResolvedValue({})
+    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([
+      { feature: 'useNewDeliusCaseNoteFormat', enabled: true },
+      { feature: 'useNewDpsCaseNoteFormat', enabled: true },
+    ])
+    const result = await service.submitAssessment('123', 'BCST2')
+    expect(result).toEqual({})
+    expect(spy).toHaveBeenCalledWith(
+      '/resettlement-passport/prisoner/123/resettlement-assessment/submit?assessmentType=BCST2&useNewDeliusCaseNoteFormat=true&useNewDpsCaseNoteFormat=true',
+      null,
+    )
+  })
+
+  it('should call submit assessment and any exception sets the error flag', async () => {
+    const spy = jest.spyOn(rpClient, 'post').mockRejectedValue(new Error('Something went wrong'))
+    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([
+      { feature: 'useNewDeliusCaseNoteFormat', enabled: true },
+      { feature: 'useNewDpsCaseNoteFormat', enabled: true },
+    ])
+    const result = await service.submitAssessment('123', 'BCST2')
+    expect(result).toEqual({ error: true })
+    expect(spy).toHaveBeenCalledWith(
+      '/resettlement-passport/prisoner/123/resettlement-assessment/submit?assessmentType=BCST2&useNewDeliusCaseNoteFormat=true&useNewDpsCaseNoteFormat=true',
+      null,
     )
   })
 })
