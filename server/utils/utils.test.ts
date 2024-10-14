@@ -19,6 +19,8 @@ import {
   getPagesFromCheckYourAnswers,
   convertApiQuestionAndAnswersToPageWithQuestions,
   findOtherNestedQuestions,
+  getResetReason,
+  getCaseNoteTitle,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -106,6 +108,50 @@ describe('get case notes body text', () => {
     ['Null input', null, ''],
   ])('getCaseNotesText(%s)', (_: string, a: string, expected: string) => {
     expect(getCaseNotesText(a)).toEqual(expected)
+  })
+})
+
+describe('get reset reason from case notes', () => {
+  it.each([
+    [
+      'Contains reset reason',
+      "Prepare someone for release reports and statuses reset\n\nReason for reset: The person has returned to prison on a new sentence\n\nAny previous immediate needs and pre-release reports have been saved in our archive, but are no longer visible in PSfR.\n\nAll pathway resettlement statuses have been set back to 'Not Started'.\n\nContact the service desk if you think there's a problem.",
+      "The person has returned to prison on a new sentence\n\nAny previous immediate needs and pre-release reports have been saved in our archive, but are no longer visible in PSfR.\n\nAll pathway resettlement statuses have been set back to 'Not Started'.\n\nContact the service desk if you think there's a problem.",
+    ],
+    [
+      'Contains reset reason but no reason provided',
+      'Prepare someone for release reports and statuses reset. Reason for reset:',
+      '',
+    ],
+    [
+      'Does not contain reset reason',
+      'Prepare someone for release reports and statuses reset. No reason provided here.',
+      null,
+    ],
+    ['Does not start with the reset prefix', 'Some unrelated case note text: ', null],
+    ['Empty string', '', null],
+    ['Null input', null, null],
+  ])('getResetReason(%s)', (_: string, a: string, expected: string | null) => {
+    expect(getResetReason(a)).toEqual(expected)
+  })
+})
+
+describe('get case note title', () => {
+  it.each([
+    [
+      'Starts with reset prefix',
+      'Prepare someone for release reports and statuses reset. Reason for reset: Delay in paperwork.',
+      'Accommodation',
+      'Prepare someone for release reports and statuses reset',
+    ],
+    ['Does not start with reset prefix', 'Some notes', 'Accommodation', 'Accommodation'],
+    ['Empty string for case note', '', 'Accommodation', 'Accommodation'],
+    ['Null input for case note', null, 'Accommodation', 'Accommodation'],
+    ['No pathway provided', 'Some case note text here.', undefined, ''],
+    ['Null pathway provided', 'Some case note text here.', null, ''],
+    ['Empty string pathway', 'Some case note text here.', '', ''],
+  ])('getCaseNoteTitle(%s)', (_: string, a: string, pathway: string | undefined, expected: string) => {
+    expect(getCaseNoteTitle(a, pathway)).toEqual(expected)
   })
 })
 
