@@ -387,7 +387,7 @@ export default class RpService {
     try {
       const caseNotesResponse = (await rpClient.get(
         `/resettlement-passport/case-notes/${prisonerId}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${pathway}&createdByUserId=${createdByUserId}`,
-      )) as CaseNote[]
+      )) as CaseNote
       caseNotes = { results: caseNotesResponse }
     } catch (err) {
       logger.warn(`Session: ${rpClient.sessionId} Cannot retrieve case notes for ${prisonerId} ${err.status} ${err}`)
