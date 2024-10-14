@@ -253,10 +253,11 @@ export default class RpService {
   async submitAssessment(prisonerId: string, assessmentType: AssessmentType) {
     let response: { error?: boolean }
     const useNewDeliusCaseNoteFormat = await getFeatureFlagBoolean(FEATURE_FLAGS.USE_NEW_DELIUS_CASE_NOTE_FORMAT)
+    const useNewDpsCaseNoteFormat = await getFeatureFlagBoolean(FEATURE_FLAGS.USE_NEW_DPS_CASE_NOTE_FORMAT)
     const client = this.createClient()
     try {
       response = await client.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=${assessmentType}&useNewDeliusCaseNoteFormat=${useNewDeliusCaseNoteFormat}`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=${assessmentType}&useNewDeliusCaseNoteFormat=${useNewDeliusCaseNoteFormat}&useNewDpsCaseNoteFormat=${useNewDpsCaseNoteFormat}`,
         null,
       )
     } catch (err) {
