@@ -5,7 +5,7 @@ import { appWithAllRoutes } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper } from '../configHelperTest'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 let rpService: jest.Mocked<RpService>
@@ -53,7 +53,7 @@ describe('resetProfile', () => {
     await request(app)
       .get('/resetProfile')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 })
 
@@ -71,7 +71,7 @@ describe('resetProfileReason', () => {
     await request(app)
       .get('/resetProfile/reason?prisonerNumber=123')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 
   it('should not render page if prisonerNumber is missing from query string', async () => {
@@ -79,7 +79,7 @@ describe('resetProfileReason', () => {
     await request(app)
       .get('/resetProfile/reason')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 })
 
@@ -143,7 +143,7 @@ describe('submitResetProfileReason', () => {
     await request(app)
       .post('/resetProfile/reason?prisonerNumber=123')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 
   it('should error if call to RP API fails', async () => {
@@ -156,7 +156,7 @@ describe('submitResetProfileReason', () => {
         additionalDetails: 'Some other details',
       })
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 
   it('should not render page if prisonerNumber is missing from query string', async () => {
@@ -164,7 +164,7 @@ describe('submitResetProfileReason', () => {
     await request(app)
       .post('/resetProfile/reason')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 
   it('should redirect back to form page if validation fails - mandatory', async () => {
@@ -227,7 +227,7 @@ describe('resetProfileSuccess', () => {
     await request(app)
       .get('/resetProfile/success?prisonerNumber=123')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 
   it('should not render page if prisonerNumber is missing from query string', async () => {
@@ -235,6 +235,6 @@ describe('resetProfileSuccess', () => {
     await request(app)
       .get('/resetProfile/success')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 })

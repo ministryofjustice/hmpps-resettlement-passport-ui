@@ -377,8 +377,8 @@ exports[`resetProfile should not render page if prisonerNumber is missing from q
           
   <h2></h2>
   <pre>Error: Reset profile is disabled
-    at resetProfile (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/reset-profile/resetProfileController.ts:25:21)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -838,8 +838,8 @@ exports[`resetProfileReason should not render page if feature is disabled 1`] = 
           
   <h2></h2>
   <pre>Error: Reset profile is disabled
-    at resetProfileReason (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/reset-profile/resetProfileController.ts:42:21)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1073,8 +1073,8 @@ exports[`resetProfileReason should not render page if prisonerNumber is missing 
           
   <h2></h2>
   <pre>Error: Reset profile is disabled
-    at resetProfileReason (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/reset-profile/resetProfileController.ts:42:21)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1575,8 +1575,8 @@ exports[`resetProfileSuccess should not render page if feature is disabled 1`] =
           
   <h2></h2>
   <pre>Error: Reset profile is disabled
-    at resetProfileSuccess (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/reset-profile/resetProfileController.ts:105:21)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1810,8 +1810,8 @@ exports[`resetProfileSuccess should not render page if prisonerNumber is missing
           
   <h2></h2>
   <pre>Error: Reset profile is disabled
-    at resetProfileSuccess (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/reset-profile/resetProfileController.ts:105:21)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2250,8 +2250,8 @@ exports[`submitResetProfileReason should error if call to RP API fails 1`] = `
           
   <h2></h2>
   <pre>Error: Reset profile is disabled
-    at submitResetProfileReason (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/reset-profile/resetProfileController.ts:61:21)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2485,8 +2485,8 @@ exports[`submitResetProfileReason should error if feature is disabled 1`] = `
           
   <h2></h2>
   <pre>Error: Reset profile is disabled
-    at submitResetProfileReason (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/reset-profile/resetProfileController.ts:61:21)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2720,8 +2720,8 @@ exports[`submitResetProfileReason should not render page if prisonerNumber is mi
           
   <h2></h2>
   <pre>Error: Reset profile is disabled
-    at submitResetProfileReason (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/reset-profile/resetProfileController.ts:61:21)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
