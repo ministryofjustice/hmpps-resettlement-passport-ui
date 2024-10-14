@@ -45,7 +45,7 @@ describe('resetProfile', () => {
     await request(app)
       .get('/resetProfile?prisonerNumber=123')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 
   it('should not render page if prisonerNumber is missing from query string', async () => {
