@@ -18,6 +18,8 @@ import {
   roundNumberUp,
   getCaseNotesIntro,
   getCaseNotesText,
+  getResetReason,
+  getCaseNoteTitle,
   formatDateToIso,
   formatTime,
   formatTimeWithDuration,
@@ -97,6 +99,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('roundNumberUp', roundNumberUp)
   njkEnv.addFilter('getCaseNotesIntro', getCaseNotesIntro)
   njkEnv.addFilter('getCaseNotesText', getCaseNotesText)
+  njkEnv.addFilter('getResetReason', getResetReason)
+  njkEnv.addFilter('getCaseNoteTitle', getCaseNoteTitle)
   njkEnv.addFilter('formatDateToIso', formatDateToIso)
   njkEnv.addFilter('formatTime', formatTime)
   njkEnv.addFilter('formatTimeWithDuration', formatTimeWithDuration)

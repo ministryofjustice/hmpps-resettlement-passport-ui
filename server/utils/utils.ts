@@ -348,6 +348,28 @@ export function getCaseNotesText(caseNoteText: string): string | null {
   return caseNoteText || ''
 }
 
+export function getResetReason(caseNoteText: string): string | null {
+  const resetPrefix = 'Prepare someone for release reports and statuses reset'
+  const reasonPrefix = 'Reason for reset:'
+  if (caseNoteText?.startsWith(resetPrefix)) {
+    const reasonIndex = caseNoteText.indexOf(reasonPrefix)
+    if (reasonIndex !== -1) {
+      // Extract everything after 'Reason for reset:'
+      const reasonText = caseNoteText.substring(reasonIndex + reasonPrefix.length).trim()
+      return reasonText
+    }
+  }
+  return null
+}
+
+export function getCaseNoteTitle(caseNoteText: string, pathway?: string): string {
+  const resetPrefix = 'Prepare someone for release reports and statuses reset'
+  if (caseNoteText?.startsWith(resetPrefix)) {
+    return resetPrefix
+  }
+  return pathway || ''
+}
+
 export function removeSlashes(s: string): string {
   return s ? s.replaceAll('/', '') : null
 }

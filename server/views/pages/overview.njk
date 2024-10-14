@@ -204,10 +204,21 @@
                 {% for notes in caseNotes.content %}
                   {% set currentPathway = notes.pathway | getEnumValue %}
                   <div class="case-note">
-                    <h3>{{ currentPathway.name }}</h3>
-                    <strong>{{ notes.text | getCaseNotesIntro }}</strong>
+                    {% set caseNoteTitle = notes.text | getCaseNoteTitle(currentPathway.name) %}
+                    {% set caseNoteIntro = notes.text | getCaseNotesIntro %}
+                    {% set resetProfileCaseNote = notes.text | getResetReason %}
+                    {% if caseNoteTitle %}
+                      <h3>{{ caseNoteTitle }}</h3>
+                    {% endif %}
+                    {% if caseNoteIntro %}
+                      <strong>{{ caseNoteIntro }}</strong>
+                    {% endif %}
                     <p class="show-line-breaks">
-                      {{ notes.text | getCaseNotesText }}
+                      {% if resetProfileCaseNote %}
+                        <strong>Reason for reset: </strong>{{ resetProfileCaseNote }}
+                        {% else %}
+                        {{ notes.text | getCaseNotesText }}
+                      {% endif %}
                     </p>
                     <span class="govuk-caption-m">Happened: {{ notes.occurenceDateTime | formatDate('long') }}</span>
                     <span
