@@ -142,9 +142,9 @@ exports[`completeAssessment it should not submit the assessment if there is no s
           
   <h2></h2>
   <pre>TypeError: Cannot read properties of null (reading &#39;deleteWorkingAssessment&#39;)
-    at AssessmentStateService.onComplete (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/data/assessmentStateService.ts:97:22)
-    at completeAssessment (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/immediate-needs-report/immediateNeedsReportController.ts:337:41)
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
