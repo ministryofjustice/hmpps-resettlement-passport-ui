@@ -18,5 +18,5 @@ export type CaseNote = {
 
 export type CaseNotesHistory = {
   error?: string
-  results?: CaseNote[]
+  results?: CaseNote
 }

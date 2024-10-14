@@ -1,6 +1,5 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import { PersonalDetails, PrisonerData } from '../../@types/express'
 import { appWithAllRoutes } from '../testutils/appSetup'
 
 import RpService from '../../services/rpService'
@@ -13,6 +12,7 @@ import {
 } from '../../data/model/immediateNeedsReport'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
+import { stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 let rpService: jest.Mocked<RpService>
@@ -23,6 +23,7 @@ beforeEach(() => {
   rpService = new RpService() as jest.Mocked<RpService>
   assessmentStateService = new AssessmentStateService(null) as jest.Mocked<AssessmentStateService>
   configHelper(config)
+  stubPrisonerDetails(rpService)
 
   app = appWithAllRoutes({
     services: {
@@ -36,21 +37,8 @@ afterEach(() => {
   jest.resetAllMocks()
 })
 
-function stubPrisonerDetails() {
-  jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
-    personalDetails: {
-      prisonerNumber: '123',
-      facialImageId: '456',
-      firstName: 'John',
-      lastName: 'Smith',
-    } as unknown as PersonalDetails,
-  } as unknown as PrisonerData)
-}
-
 describe('completeAssessment', () => {
   it('should submit the assessment to the backend then redirect to the task list', async () => {
-    stubPrisonerDetails()
-
     const workingCachedAssessment: WorkingCachedAssessment = {
       assessment: {
         questionsAndAnswers: [
@@ -87,8 +75,6 @@ describe('completeAssessment', () => {
   })
 
   it('it should not submit the assessment if there is no submitted input', async () => {
-    stubPrisonerDetails()
-
     const workingCachedAssessment = {
       assessment: { questionsAndAnswers: [], version: null },
       pageLoadHistory: [],
@@ -98,7 +84,10 @@ describe('completeAssessment', () => {
 
     const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
 
-    await request(app).post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123').expect(500)
+    await request(app)
+      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(completeAssessmentSpy).toHaveBeenCalledWith(
       '123',
@@ -111,8 +100,6 @@ describe('completeAssessment', () => {
 
 describe('getFirstPage', () => {
   it('Uses default version 1 when there is no version in the cache', async () => {
-    stubPrisonerDetails()
-
     const workingCacheAssessment = {
       assessment: {
         questionsAndAnswers: [
@@ -170,8 +157,6 @@ describe('getFirstPage', () => {
 
 describe('getView', () => {
   it('should use version 1 when existing assessment in cache has no version', async () => {
-    stubPrisonerDetails()
-
     const stateKey = {
       assessmentType: 'BCST2',
       prisonerNumber: '123',
@@ -225,6 +210,7 @@ describe('getView', () => {
         `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/THE_PAGE?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&assessmentType=BCST2`,
       )
       .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
     expect(getAssessmentPageSpy).toHaveBeenCalledWith(stateKey.prisonerNumber, stateKey.pathway, 'THE_PAGE', 'BCST2', 1)
@@ -242,8 +228,6 @@ describe('getView', () => {
 
 describe('startEdit', () => {
   it('should use version 1 when assessment is submitted and db has no version', async () => {
-    stubPrisonerDetails()
-
     const stateKey = {
       assessmentType: 'BCST2',
       prisonerNumber: '123',
@@ -300,8 +284,6 @@ describe('startEdit', () => {
     expect(startEditSpy).toHaveBeenCalledWith(stateKey, 'MY_PAGE')
   })
   it('Happy path when assessment is not submitted', async () => {
-    stubPrisonerDetails()
-
     const stateKey = {
       assessmentType: 'BCST2',
       prisonerNumber: '123',
@@ -328,8 +310,6 @@ describe('startEdit', () => {
 
 describe('saveAnswerAndGetNextPage', () => {
   it('Uses default version 1 when there is no version in the cache', async () => {
-    stubPrisonerDetails()
-
     const apiAssessmentPage: ApiAssessmentPage = {
       id: 'PAGE_1',
       title: 'Page 1 title',
@@ -414,8 +394,6 @@ describe('saveAnswerAndGetNextPage', () => {
     )
   })
   it('Validation errors', async () => {
-    stubPrisonerDetails()
-
     const apiAssessmentPage: ApiAssessmentPage = {
       id: 'PAGE_1',
       title: 'Page 1 title',
