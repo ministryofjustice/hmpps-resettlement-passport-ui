@@ -106,7 +106,7 @@ jobs:
           command: npm run test:ci 
       - run:
           name: compare coverage
-          command: xmllint --xpath '/coverage/project/metrics/@statements' /tmp/workspacecoverage/clover.xml | tr -d -c 0-9
+          command: xmllint --xpath '/coverage/project/metrics/@statements' /tmp/workspace/coverage/clover.xml | tr -d -c 0-9
       - store_test_results:
           path: test_results
       - store_artifacts:
