@@ -132,8 +132,9 @@ jobs:
           name: unit tests
           command: cd hmpps-resettlement-passport-ui/ && npm run test:ci 
       - persist_to_workspace:
-          root: workspace
-          path: hmpps-resettlement-passport-ui/coverage/lcov-report/index.html
+          root: hmpps-resettlement-passport-ui
+          paths: 
+            - /coverage/lcov-report/index.html
 
   integration_test:
     executor: integration-tests-executor
@@ -241,6 +242,7 @@ workflows:
       - unit_test:
           requires:
             - build
+            - get_main_coverage
       - integration_test:
           requires:
             - build
