@@ -134,7 +134,7 @@ jobs:
       - persist_to_workspace:
           root: hmpps-resettlement-passport-ui
           paths: 
-            - /coverage/lcov-report/index.html
+            - coverage/lcov-report/index.html
 
   integration_test:
     executor: integration-tests-executor
