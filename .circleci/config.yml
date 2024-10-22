@@ -119,15 +119,14 @@ jobs:
       - run: touch ~/.ssh/known_hosts
       - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL"        
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install project dependencies
+          command: npm i
       - run:
           name: unit tests
           command: npm run test:ci 
       - store_test_results:
           path: test_results
-      - store_artifacts:
-          path: test_results/unit-test-reports.html
       - store_artifacts:
           path: coverage/lcov-report/index.html
 
@@ -241,8 +240,7 @@ workflows:
           requires:
             - build
       - compare_coverage:
-          requires:
-            - build
+          name: compare_coverage
       - hmpps/helm_lint:
           name: helm_lint
       - hmpps/build_docker:
