@@ -98,6 +98,9 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: ls /tmp/workspace
       - run:
           name: unit tests
           command: npm run test:ci 
@@ -122,16 +125,14 @@ jobs:
       - run: touch ~/.ssh/known_hosts
       - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL"  
-      - run: cd hmpps-resettlement-passport-ui/
       - run:
           name: Install Dependencies
           command: cd hmpps-resettlement-passport-ui/ && npm ci --no-audit
       - run:
           name: unit tests
           command: cd hmpps-resettlement-passport-ui/ && npm run test:ci 
-      - store_test_results:
-          path: hmpps-resettlement-passport-ui/test_results
-      - store_artifacts:
+      - persist_to_workspace:
+          root: workspace
           path: hmpps-resettlement-passport-ui/coverage/lcov-report/index.html
 
   integration_test:
@@ -244,7 +245,7 @@ workflows:
           requires:
             - build
       - get_main_coverage:
-          name: compare_coverage
+          name: get_main_coverage
       - hmpps/helm_lint:
           name: helm_lint
       - hmpps/build_docker:
