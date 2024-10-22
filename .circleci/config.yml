@@ -115,12 +115,7 @@ jobs:
     environment:
       TZ: Europe/London
     steps:
-      - run:
-          name: test
-          command: echo "$CIRCLE_REPOSITORY_URL"      
-      - run:
-          name: checkout main
-          command: git clone -b "main" "$CIRCLE_REPOSITORY_URL"      
+      - run: git clone -b main "$CIRCLE_REPOSITORY_URL"        
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
@@ -243,7 +238,7 @@ workflows:
           requires:
             - build
       - compare_coverage:
-          name: compare_coverageå
+          name: compare_coverage
       - hmpps/helm_lint:
           name: helm_lint
       - hmpps/build_docker:
