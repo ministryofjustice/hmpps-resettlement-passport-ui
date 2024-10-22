@@ -117,7 +117,7 @@ jobs:
     steps:
       - run:
           name: checkout main
-          command: git clone -b "main" "$CIRCLE_REPOSITORY_URL"      
+          command: git clone -b "main" << pipeline.trigger_parameters.github_app.repo_url >>   
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
