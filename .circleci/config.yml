@@ -89,6 +89,9 @@ jobs:
             - .cache/playwright
 
   unit_test:
+    dependencies:
+      pre:
+        - sudo apt-get install libxml2-utils
     executor:
       name: hmpps/node
       tag: << pipeline.parameters.node-version >>
