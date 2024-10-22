@@ -99,7 +99,7 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - attach_workspace:
-          at: /tmp/workspace
+          at: /tmp/workspace/coverage
       - run: ls /tmp/workspace
       - run: sudo apt-get update && sudo apt-get install libxml2-utils
       - run:
