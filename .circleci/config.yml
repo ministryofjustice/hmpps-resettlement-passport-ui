@@ -122,7 +122,7 @@ jobs:
       - run: touch ~/.ssh/known_hosts
       - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL"  
-      - run: ls hmpps-resettlement-passport-ui/
+      - run: cd hmpps-resettlement-passport-ui/
       - run:
           name: Install Dependencies
           command: npm ci --no-audit
