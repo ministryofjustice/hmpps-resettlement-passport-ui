@@ -125,14 +125,14 @@ jobs:
       - run: cd hmpps-resettlement-passport-ui/
       - run:
           name: Install Dependencies
-          command: npm ci --no-audit
+          command: cd hmpps-resettlement-passport-ui/ && npm ci --no-audit
       - run:
           name: unit tests
-          command: npm run test:ci 
+          command: cd hmpps-resettlement-passport-ui/ && npm run test:ci 
       - store_test_results:
-          path: test_results
+          path: hmpps-resettlement-passport-ui/test_results
       - store_artifacts:
-          path: coverage/lcov-report/index.html
+          path: hmpps-resettlement-passport-ui/coverage/lcov-report/index.html
 
   integration_test:
     executor: integration-tests-executor
