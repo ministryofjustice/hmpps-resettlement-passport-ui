@@ -100,7 +100,7 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - attach_workspace:
           at: /tmp/workspace
-      - run: sudo apt-get install libxml2-utils
+      - run: sudo apt-get update && sudo apt-get install libxml2-utils
       - run:
           name: unit tests
           command: npm run test:ci 
