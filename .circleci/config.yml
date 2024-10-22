@@ -243,8 +243,7 @@ workflows:
           requires:
             - build
       - compare_coverage:
-          requires:
-            - build
+          name: compare_coverageå
       - hmpps/helm_lint:
           name: helm_lint
       - hmpps/build_docker:
