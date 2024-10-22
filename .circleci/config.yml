@@ -101,6 +101,9 @@ jobs:
       - run:
           name: unit tests
           command: npm run test:ci 
+      - run:
+          name: list
+          command: ls
       - store_test_results:
           path: test_results
       - store_artifacts:
