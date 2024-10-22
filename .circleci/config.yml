@@ -108,20 +108,23 @@ jobs:
       - store_artifacts:
           path: coverage/lcov-report/index.html
 
-  compare_coverage:
+  get_main_coverage:
     executor:
       name: hmpps/node
       tag: << pipeline.parameters.node-version >>
     environment:
       TZ: Europe/London
     steps:
+      - run:
+          name: Update npm
+          command: 'sudo npm install -g npm@9.8.1'
       - run: mkdir ~/.ssh/
       - run: touch ~/.ssh/known_hosts
       - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL"        
       - run:
-          name: Install project dependencies
-          command: npm i
+          name: Install Dependencies
+          command: npm ci --no-audit
       - run:
           name: unit tests
           command: npm run test:ci 
