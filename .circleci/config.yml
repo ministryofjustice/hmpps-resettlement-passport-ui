@@ -115,7 +115,7 @@ jobs:
     environment:
       TZ: Europe/London
     steps:
-      - run: git clone -b main "$CIRCLE_REPOSITORY_URL"        
+      - run: git checkout main
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - run:
