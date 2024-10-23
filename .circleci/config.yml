@@ -88,6 +88,17 @@ jobs:
             - .cache/Cypress
             - .cache/playwright
 
+  compare_coverage:
+    executor:
+      name: hmpps/node
+      tag: << pipeline.parameters.node-version >>
+    environment:
+      TZ: Europe/London
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: ls /tmp/workspace/coverage
+
   unit_test:
     executor:
       name: hmpps/node
@@ -100,21 +111,20 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
       - attach_workspace:
           at: /tmp/workspace
-      - run: ls /tmp/workspace/coverage
-      - run: sudo apt-get update && sudo apt-get install libxml2-utils && sudo apt-get install bc
       - run:
           name: unit tests
           command: npm run test:ci 
       - run:
           name: compare coverage
           command: python3 ./coverage_checker/coverage_checker.py
-
       - store_test_results:
           path: test_results
       - store_artifacts:
           path: test_results/unit-test-reports.html
-      - store_artifacts:
-          path: coverage/lcov-report/index.html
+      - persist_to_workspace:
+          root: hmpps-resettlement-passport-ui
+          paths: 
+            - coverage/clover.xml
 
   get_main_coverage:
     executor:
@@ -136,10 +146,11 @@ jobs:
       - run:
           name: unit tests
           command: cd hmpps-resettlement-passport-ui/ && npm run test:ci 
+      - run: rm coverage/main_clover.xml
       - persist_to_workspace:
           root: hmpps-resettlement-passport-ui
           paths: 
-            - coverage/clover.xml
+            - coverage/main_clover.xml
 
   integration_test:
     executor: integration-tests-executor
@@ -251,6 +262,9 @@ workflows:
       - integration_test:
           requires:
             - build
+      - compare_coverage:
+           requires:
+            - unit_test     
       - get_main_coverage:
           name: get_main_coverage
       - hmpps/helm_lint:
