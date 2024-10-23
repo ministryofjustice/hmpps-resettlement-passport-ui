@@ -114,7 +114,8 @@ jobs:
             CURRENT_STATMENT_COUNT=$(xmllint --xpath '/coverage/project/metrics/@statements' coverage/clover.xml | tr -d -c 0-9)
             CURRENT_STATMENT_COVERERED=$(xmllint --xpath '/coverage/project/metrics/@coveredstatements' coverage/clover.xml | tr -d -c 0-9)
             CURRENT_STATMENT_PERCENT=$(echo "100*$CURRENT_STATMENT_COVERERED/$CURRENT_STATMENT_COUNT" | bc -l )
-            if [[ $MAIN_STATMENT_PERCENT -ge $CURRENT_STATMENT_PERCENT ]]; then 
+            echo "Current statment%: $CURRENT_STATMENT_PERCENT. Main statment%: $MAIN_STATMENT_PERCENT."
+            if [[ $CURRENT_STATMENT_PERCENT -ge $MAIN_STATMENT_PERCENT ]]; then 
                 echo "true"
             else
                 echo "false"
