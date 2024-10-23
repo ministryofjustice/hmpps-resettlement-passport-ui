@@ -23,6 +23,11 @@ parameters:
     type: string
     default: '7.0'
 
+  skip-code-coverage:
+    description: if set to true will skil checking code coverage
+    type: boolean
+    default: false
+
 executors:
   # same as hmpps/node_redis executor with the addition of gotenberg container
   integration-tests-executor:
@@ -263,6 +268,8 @@ workflows:
           requires:
             - build
       - compare_coverage:
+          when:
+            - equal: [false, <<pipeline.parameters.skip-code-coverage>>]
           filters:
             branches:
               ignore:
