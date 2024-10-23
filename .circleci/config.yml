@@ -274,7 +274,9 @@ workflows:
           type: approval
           when: on_fail
           requires:
-            - compare_coverage   
+            - compare_coverage  
+            - unit_test 
+            - get_main_coverage  
       - get_main_coverage:
           name: get_main_coverage
           filters:
