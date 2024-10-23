@@ -99,6 +99,7 @@ jobs:
           at: /tmp/workspace
       - run: ls /tmp/workspace
       - run: ls /tmp/workspace/coverage
+      - run: ls 
       - run:
           name: compare coverage
           command: python3 coverage_checker/coverage_checker.py
