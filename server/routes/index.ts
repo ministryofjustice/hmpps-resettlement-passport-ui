@@ -11,7 +11,6 @@ import educationSkillsWorkRouter from './education-skills-work'
 import financeIdRouter from './finance-id'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
-import statusUpdateRouter from './status-update/statusUpdateRouter'
 import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
 import assessmentSkipRouter from './assessment-skip'
@@ -24,6 +23,7 @@ import configMiddleware from './configMiddleware'
 import documentRouter from './documents/documentRouter'
 import prisonerOverviewRouter from './prisoner-overview/prisonerOverviewRouter'
 import resetProfileRouter from './reset-profile'
+import statusUpdateRouter from './status-update'
 
 export default function routes(services: Services): Router {
   const router = Router()

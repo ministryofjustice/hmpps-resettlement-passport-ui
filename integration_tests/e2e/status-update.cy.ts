@@ -45,11 +45,11 @@ context('Status Update and add case note', () => {
     // Submit update
     cy.get('.govuk-button').click()
 
-    cy.get('.govuk-notification-banner__content > h3').should(
-      'contain.text',
-      'Unable to update - try again later or contact administrator if problem persists.',
-    )
+    cy.get('h1').should('contain.text', 'Failed to set status')
+
+    // Go back one page and check user input is preserved
+    cy.go(-1)
     cy.get('#IN_PROGRESS').should('be.checked')
-    cy.get('#caseNoteInput_3').should('have.text', 'Long and precious case note')
+    cy.get('#caseNoteInput_3').should('have.value', 'Long and precious case note')
   })
 })
