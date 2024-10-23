@@ -49,7 +49,7 @@ export default function createApp(services: Services): express.Application {
   app.use(userMetricsAndLoggingMiddleware())
   app.use(userContextMiddleware)
 
-  app.get('*', getFrontendComponents(services))
+  app.use(getFrontendComponents(services))
 
   app.use(pdfRenderer(new GotenbergClient(config.apis.gotenberg.apiUrl)))
   app.use(routes(services))

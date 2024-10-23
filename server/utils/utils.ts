@@ -6,7 +6,9 @@ import {
   CHECK_ANSWERS_PAGE_ID,
   ENUMS_DICTIONARY,
   EnumValue,
+  PATHWAY_DICTIONARY,
   RISK_ASSESSMENT_ENUMS_DICTIONARY,
+  STATUS_DICTIONARY,
 } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
@@ -475,4 +477,12 @@ export function removePrefix(string: string, prefix: string): string {
     return string.slice(prefix.length)
   }
   return string
+}
+
+export function isValidPathway(pathwayFromUrl: string): boolean {
+  return Object.keys(PATHWAY_DICTIONARY).includes(getEnumByURL(pathwayFromUrl))
+}
+
+export function isValidStatus(status: string): boolean {
+  return Object.keys(STATUS_DICTIONARY).includes(status)
 }
