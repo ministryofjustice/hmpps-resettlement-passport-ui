@@ -101,7 +101,7 @@ jobs:
       - run: ls /tmp/workspace/coverage
       - run:
           name: compare coverage
-          command: python3 ./coverage_checker/coverage_checker.py
+          command: python3 coverage_checker/coverage_checker.py
 
   unit_test:
     executor:
