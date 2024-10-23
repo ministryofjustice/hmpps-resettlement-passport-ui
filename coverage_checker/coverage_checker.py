@@ -16,7 +16,19 @@ current_statment_percent = (float(current_coverage['coveredstatements'])/float(c
 current_conditionals_percent = (float(current_coverage['coveredconditionals'])/float(current_coverage['conditionals']))*100
 current_methods_percent = (float(current_coverage['coveredmethods'])/float(current_coverage['methods']))*100
 
-
 print(f"{main_statment_percent=}")
 print(f"{main_conditionals_percent=}")
 print(f"{main_methods_percent=}")
+print(f"{current_statment_percent=}")
+print(f"{current_conditionals_percent=}")
+print(f"{current_methods_percent=}")
+
+if main_statment_percent > current_statment_percent:
+    print(f"Statement coverage has decressed from {main_statment_percent} to {current_statment_percent}")
+    sys.exit(1)
+if main_conditionals_percent > current_conditionals_percent:
+    print(f"Conditionals coverage has decressed from {main_conditionals_percent} to {current_conditionals_percent}")
+    sys.exit(1)
+if main_methods_percent > current_methods_percent:
+    print(f"Methods coverage has decressed from {main_methods_percent} to {current_methods_percent}")
+    sys.exit(1)
