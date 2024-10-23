@@ -95,6 +95,7 @@ jobs:
     environment:
       TZ: Europe/London
     steps:
+      - checkout
       - attach_workspace:
           at: /tmp/workspace
       - run: ls /tmp/workspace
