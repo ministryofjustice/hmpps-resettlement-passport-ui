@@ -5,7 +5,6 @@ import logger from '../../../logger'
 import { PsfrEvent, trackEvent } from '../../utils/analytics'
 import RpService from '../../services/rpService'
 import StatusUpdateView from './statusUpdateView'
-import { PATHWAY_DICTIONARY } from '../../utils/constants'
 
 export default class StatusUpdateController {
   constructor(private readonly rpService: RpService, private readonly appInsightsClient: NodeClient) {

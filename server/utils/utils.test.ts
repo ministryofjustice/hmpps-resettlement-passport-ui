@@ -21,6 +21,8 @@ import {
   findOtherNestedQuestions,
   getResetReason,
   getCaseNoteTitle,
+  isValidPathway,
+  isValidStatus,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -1145,4 +1147,37 @@ describe('findOtherNestedQuestions', () => {
       expect(findOtherNestedQuestions(newQandA, existingAssessmentFromCache, apiAssessmentPage)).toEqual(expectedOutput)
     },
   )
+})
+
+describe('test isValidPathway', () => {
+  it.each([
+    ['null', null, false],
+    ['undefined', undefined, false],
+    ['accommodation', 'accommodation', true],
+    ['attitudes, thinking and behaviour', 'attitudes-thinking-and-behaviour', true],
+    ['children, families and communities', 'children-families-and-communities', true],
+    ['drugs and alcohol', 'drugs-and-alcohol', true],
+    ['education, skills and work', 'education-skills-and-work', true],
+    ['finance and id', 'finance-and-id', true],
+    ['health', 'health-status', true],
+    ['not a pathway', 'not-a-pathway', false],
+  ])('%s isValidPathway(%s)', (_: string, pathwayFromUrl: string, expected: boolean) => {
+    expect(isValidPathway(pathwayFromUrl)).toEqual(expected)
+  })
+})
+
+describe('test isValidStatus', () => {
+  it.each([
+    ['null', null, false],
+    ['undefined', undefined, false],
+    ['Not started', 'NOT_STARTED', true],
+    ['Support required', 'SUPPORT_REQUIRED', true],
+    ['In progress', 'IN_PROGRESS', true],
+    ['Support not required', 'SUPPORT_NOT_REQUIRED', true],
+    ['Support declined', 'SUPPORT_DECLINED', true],
+    ['Done', 'DONE', true],
+    ['Not a status', 'NOT_A_STATUS', false],
+  ])('%s isValidStatus(%s)', (_: string, status: string, expected: boolean) => {
+    expect(isValidStatus(status)).toEqual(expected)
+  })
 })

@@ -1,5 +1,5 @@
 import View, { ErrorMessage } from '../view'
-import { Pathway, PrisonerData } from '../../@types/express'
+import { PrisonerData } from '../../@types/express'
 
 export default class StatusUpdateView implements View {
   constructor(
