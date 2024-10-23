@@ -146,7 +146,7 @@ jobs:
       - run:
           name: unit tests
           command: cd hmpps-resettlement-passport-ui/ && npm run test:ci 
-      - run: rm /coverage/main_clover.xml
+      - run: rm hmpps-resettlement-passport-ui/coverage/main_clover.xml
       - persist_to_workspace:
           root: hmpps-resettlement-passport-ui
           paths: 
