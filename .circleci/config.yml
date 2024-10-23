@@ -258,7 +258,6 @@ workflows:
       - unit_test:
           requires:
             - build
-            - get_main_coverage
       - integration_test:
           requires:
             - build
@@ -269,7 +268,8 @@ workflows:
               ignore:
                 - main
           requires:
-            - unit_test  
+            - unit_test 
+            - get_main_coverage 
       - request-coverage-decrease-approval:
           type: approval
           when: on_fail
