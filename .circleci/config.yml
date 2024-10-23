@@ -273,6 +273,10 @@ workflows:
       - request-coverage-decrease-approval:
           type: approval
           when: on_fail
+          filters:
+            branches:
+              ignore:
+                - main
           requires:
             - compare_coverage  
             - unit_test 
