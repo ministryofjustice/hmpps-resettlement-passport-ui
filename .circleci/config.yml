@@ -263,7 +263,12 @@ workflows:
           requires:
             - build
       - compare_coverage:
-           requires:
+          name: get_main_coverage
+          filters:
+            branches:
+              ignore:
+                - main
+          requires:
             - unit_test  
       - request-coverage-decrease-approval:
           type: approval
@@ -272,6 +277,10 @@ workflows:
             - compare_coverage   
       - get_main_coverage:
           name: get_main_coverage
+          filters:
+            branches:
+              ignore:
+                - main
       - hmpps/helm_lint:
           name: helm_lint
       - hmpps/build_docker:
