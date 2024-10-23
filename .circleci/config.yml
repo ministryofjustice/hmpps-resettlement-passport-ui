@@ -99,6 +99,9 @@ jobs:
           at: /tmp/workspace
       - run: ls /tmp/workspace
       - run: ls /tmp/workspace/coverage
+      - run:
+          name: compare coverage
+          command: python3 ./coverage_checker/coverage_checker.py
 
   unit_test:
     executor:
@@ -115,9 +118,6 @@ jobs:
       - run:
           name: unit tests
           command: npm run test:ci 
-      - run:
-          name: compare coverage
-          command: python3 ./coverage_checker/coverage_checker.py
       - store_test_results:
           path: test_results
       - store_artifacts:

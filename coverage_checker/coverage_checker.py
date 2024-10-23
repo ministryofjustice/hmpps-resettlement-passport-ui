@@ -9,7 +9,7 @@ main_statment_percent = (float(main_coverage['coveredstatements'])/float(main_co
 main_conditionals_percent = (float(main_coverage['coveredconditionals'])/float(main_coverage['conditionals']))*100
 main_methods_percent = (float(main_coverage['coveredmethods'])/float(main_coverage['methods']))*100
 
-current_xml_tree = tree = ET.parse('coverage/clover.xml')
+current_xml_tree = tree = ET.parse('/tmp/workspace/clover.xml')
 current_root = tree.getroot()
 current_coverage =  list(current_root.iter('metrics'))[0].attrib
 current_statment_percent = (float(current_coverage['coveredstatements'])/float(current_coverage['statements']))*100
