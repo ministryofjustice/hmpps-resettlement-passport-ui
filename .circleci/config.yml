@@ -97,6 +97,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - run: ls /tmp/workspace
       - run: ls /tmp/workspace/coverage
 
   unit_test:
