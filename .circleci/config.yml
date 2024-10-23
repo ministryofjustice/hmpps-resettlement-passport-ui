@@ -122,9 +122,9 @@ jobs:
       - store_artifacts:
           path: test_results/unit-test-reports.html
       - persist_to_workspace:
-          root: hmpps-resettlement-passport-ui
+          root: coverage
           paths: 
-            - coverage/clover.xml
+            - clover.xml
 
   get_main_coverage:
     executor:
@@ -146,7 +146,7 @@ jobs:
       - run:
           name: unit tests
           command: cd hmpps-resettlement-passport-ui/ && npm run test:ci 
-      - run: mv  hmpps-resettlement-passport-ui/coverage/clover.xml hmpps-resettlement-passport-ui/coverage/main_clover.xml
+      - run: mv hmpps-resettlement-passport-ui/coverage/clover.xml hmpps-resettlement-passport-ui/coverage/main_clover.xml
       - persist_to_workspace:
           root: hmpps-resettlement-passport-ui
           paths: 
