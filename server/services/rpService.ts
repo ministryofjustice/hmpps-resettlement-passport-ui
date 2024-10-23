@@ -430,7 +430,7 @@ export default class RpService {
       caseNoteText: string
     },
   ) {
-    await this.createClient().patch(`/resettlement-passport/prisoner/${prisonerId}/pathway-with-case-noteZZZ`, body)
+    await this.createClient().patch(`/resettlement-passport/prisoner/${prisonerId}/pathway-with-case-note`, body)
   }
 
   async getPrisonerDetails(prisonerId: string): Promise<PrisonerData> {
