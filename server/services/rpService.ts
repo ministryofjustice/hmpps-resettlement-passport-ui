@@ -323,14 +323,6 @@ export default class RpService {
     }
   }
 
-  async fetchAssessment(prisonerNumber: string) {
-    return this.createClient().get(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
-  }
-
-  async postAssessment(prisonerNumber: string, body: Record<never, never>) {
-    return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, body)
-  }
-
   async postBankApplication(prisonerNumber: string, body: Record<never, never>) {
     return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`, body)
   }
