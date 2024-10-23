@@ -98,9 +98,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - run: ls /tmp/workspace
-      - run: ls /tmp/workspace/coverage
-      - run: ls 
       - run:
           name: compare coverage
           command: python3 coverage_checker/coverage_checker.py
@@ -267,7 +264,12 @@ workflows:
             - build
       - compare_coverage:
            requires:
-            - unit_test     
+            - unit_test  
+      - request-coverage-decrease-approval:
+          type: approval
+          when: on_fail
+          requires:
+            - compare_coverage   
       - get_main_coverage:
           name: get_main_coverage
       - hmpps/helm_lint:

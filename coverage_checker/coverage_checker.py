@@ -23,7 +23,7 @@ print(f"{current_statment_percent=}")
 print(f"{current_conditionals_percent=}")
 print(f"{current_methods_percent=}")
 
-if main_statment_percent > current_statment_percent:
+if main_statment_percent >= current_statment_percent:
     print(f"Statement coverage has decressed from {main_statment_percent} to {current_statment_percent}")
     sys.exit(1)
 if main_conditionals_percent > current_conditionals_percent:
