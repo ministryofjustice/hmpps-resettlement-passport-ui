@@ -2,7 +2,7 @@ import sys
 import xml.etree.ElementTree as ET 
 
 
-main_xml_tree = tree = ET.parse('/tmp/workspace/coverage/clover.xml')
+main_xml_tree = tree = ET.parse('/tmp/workspace/coverage/main_clover.xml')
 main_root = tree.getroot()
 main_coverage =  list(main_root.iter('metrics'))[0].attrib
 main_statment_percent = (float(main_coverage['coveredstatements'])/float(main_coverage['statements']))*100
