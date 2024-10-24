@@ -17,7 +17,3 @@ export function stubPrisonerDetails(rpService: RpService) {
     ],
   } as PrisonerData)
 }
-
-export function sanitiseStackTrace(html: string) {
-  return html.replaceAll(/at .*/g, 'at /')
-}

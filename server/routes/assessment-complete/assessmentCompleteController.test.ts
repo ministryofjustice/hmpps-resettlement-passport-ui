@@ -2,7 +2,7 @@ import type { Express } from 'express'
 import request from 'supertest'
 import RpService from '../../services/rpService'
 import { appWithAllRoutes } from '../testutils/appSetup'
-import { sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
+import { stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 import { AssessmentStateService } from '../../data/assessmentStateService'
@@ -42,21 +42,21 @@ describe('getView', () => {
     await request(app)
       .get('/assessment-complete?type=BCST2')
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - missing type', async () => {
     await request(app)
       .get('/assessment-complete?prisonerNumber=123')
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - incorrect type', async () => {
     await request(app)
       .get('/assessment-complete?prisonerNumber=123&type=NOT_A_TYPE')
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
 
@@ -72,9 +72,7 @@ describe('postView', () => {
       })
       .expect(302)
       .expect(res =>
-        expect(sanitiseStackTrace(res.text)).toEqual(
-          'Found. Redirecting to /assessment-complete?prisonerNumber=123&type=BCST2',
-        ),
+        expect(res.text).toEqual('Found. Redirecting to /assessment-complete?prisonerNumber=123&type=BCST2'),
       )
     expect(submitAssessmentSpy).toHaveBeenCalledWith('123', 'BCST2')
     expect(onCompleteSpy).toHaveBeenNthCalledWith(1, {
@@ -128,7 +126,7 @@ describe('postView', () => {
         assessmentType: 'BCST2',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - missing assessmentType', async () => {
@@ -138,7 +136,7 @@ describe('postView', () => {
         prisonerNumber: '123',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - incorrect assessmentType', async () => {
@@ -149,7 +147,7 @@ describe('postView', () => {
         assessmentType: 'NOT_A_TYPE',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - error returned from API', async () => {
@@ -161,7 +159,7 @@ describe('postView', () => {
         assessmentType: 'BCST2',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
     expect(submitAssessmentSpy).toHaveBeenCalledWith('123', 'BCST2')
   })
 
@@ -176,7 +174,7 @@ describe('postView', () => {
         assessmentType: 'BCST2',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
     expect(submitAssessmentSpy).toHaveBeenCalledWith('123', 'BCST2')
   })
 })

@@ -124,7 +124,7 @@ exports[`getView Error case - incorrect type 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Unable to parse assessmentType: NOT_A_TYPE</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -141,18 +141,7 @@ exports[`getView Error case - incorrect type 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Unable to parse assessmentType: NOT_A_TYPE
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -368,7 +357,7 @@ exports[`getView Error case - missing prisonerNumber 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Prisoner number is missing from request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -385,17 +374,7 @@ exports[`getView Error case - missing prisonerNumber 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Prisoner number is missing from request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -611,7 +590,7 @@ exports[`getView Error case - missing type 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Assessment type is missing from request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -628,18 +607,7 @@ exports[`getView Error case - missing type 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Assessment type is missing from request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1060,7 +1028,7 @@ exports[`postView Error case - error returned from API 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Error returned from Resettlement Passport API</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1077,9 +1045,7 @@ exports[`postView Error case - error returned from API 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Error returned from Resettlement Passport API
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1312,22 +1278,7 @@ exports[`postView Error case - error thrown from API call 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Something went wrong
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1543,7 +1494,7 @@ exports[`postView Error case - incorrect assessmentType 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Unable to parse assessmentType: NOT_A_TYPE</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1560,18 +1511,7 @@ exports[`postView Error case - incorrect assessmentType 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Unable to parse assessmentType: NOT_A_TYPE
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1787,7 +1727,7 @@ exports[`postView Error case - missing assessmentType 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Assessment type is missing from request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1804,18 +1744,7 @@ exports[`postView Error case - missing assessmentType 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Assessment type is missing from request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2031,7 +1960,7 @@ exports[`postView Error case - missing prisonerNumber 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Prisoner number is missing from request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -2048,17 +1977,7 @@ exports[`postView Error case - missing prisonerNumber 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Prisoner number is missing from request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>

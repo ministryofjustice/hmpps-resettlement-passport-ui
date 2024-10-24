@@ -124,7 +124,7 @@ exports[`resetProfile should not render page if feature is disabled 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -141,9 +141,7 @@ exports[`resetProfile should not render page if feature is disabled 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -359,7 +357,7 @@ exports[`resetProfile should not render page if prisonerNumber is missing from q
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -376,9 +374,7 @@ exports[`resetProfile should not render page if prisonerNumber is missing from q
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -820,7 +816,7 @@ exports[`resetProfileReason should not render page if feature is disabled 1`] = 
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -837,9 +833,7 @@ exports[`resetProfileReason should not render page if feature is disabled 1`] = 
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1055,7 +1049,7 @@ exports[`resetProfileReason should not render page if prisonerNumber is missing 
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1072,9 +1066,7 @@ exports[`resetProfileReason should not render page if prisonerNumber is missing 
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1557,7 +1549,7 @@ exports[`resetProfileSuccess should not render page if feature is disabled 1`] =
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1574,9 +1566,7 @@ exports[`resetProfileSuccess should not render page if feature is disabled 1`] =
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1792,7 +1782,7 @@ exports[`resetProfileSuccess should not render page if prisonerNumber is missing
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1809,9 +1799,7 @@ exports[`resetProfileSuccess should not render page if prisonerNumber is missing
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2232,7 +2220,7 @@ exports[`submitResetProfileReason should error if call to RP API fails 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -2249,9 +2237,7 @@ exports[`submitResetProfileReason should error if call to RP API fails 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2467,7 +2453,7 @@ exports[`submitResetProfileReason should error if feature is disabled 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -2484,9 +2470,7 @@ exports[`submitResetProfileReason should error if feature is disabled 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2702,7 +2686,7 @@ exports[`submitResetProfileReason should not render page if prisonerNumber is mi
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Reset profile is disabled</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -2719,9 +2703,7 @@ exports[`submitResetProfileReason should not render page if prisonerNumber is mi
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Reset profile is disabled
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>

@@ -12,7 +12,7 @@ import {
 } from '../../data/model/immediateNeedsReport'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
+import { stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 let rpService: jest.Mocked<RpService>
@@ -93,7 +93,7 @@ describe('completeAssessment', () => {
         assessmentType: 'BCST2',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(completeAssessmentSpy).toHaveBeenCalledWith(
       '123',
