@@ -142,16 +142,16 @@ exports[`GET 404 should render content with stack in dev mode 1`] = `
           
   <h2>404</h2>
   <pre>NotFoundError: Not found
-    at /Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/testutils/appSetup.ts:53:47
-    at Layer.handle [as handle_request] (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/node_modules/express/lib/router/layer.js:95:5)
-    at trim_prefix (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/node_modules/express/lib/router/index.js:328:13)
-    at /Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/node_modules/express/lib/router/index.js:286:9
-    at Function.process_params (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/node_modules/express/lib/router/index.js:346:12)
-    at next (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/node_modules/express/lib/router/index.js:280:10)
-    at /Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/node_modules/express/lib/router/index.js:646:15
-    at next (/Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/node_modules/express/lib/router/index.js:265:14)
-    at /Users/james.boobier/Documents/git/hmpps-resettlement-passport-ui/server/routes/configMiddleware.ts:22:5
-    at processTicksAndRejections (node:internal/process/task_queues:95:5)</pre>
+    at /
+    at /
+    at /
+    at /
+    at /
+    at /
+    at /
+    at /
+    at /
+    at /
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
