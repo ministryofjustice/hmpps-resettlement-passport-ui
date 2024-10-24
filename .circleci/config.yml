@@ -138,6 +138,7 @@ jobs:
     environment:
       TZ: Europe/London
     steps:
+      - run: echo "<<pipeline.parameters.skip-code-coverage>>"
       - run:
           name: Update npm
           command: 'sudo npm install -g npm@9.8.1'
@@ -268,8 +269,6 @@ workflows:
           requires:
             - build
       - compare_coverage:
-          when:
-            - equal: [false, <<pipeline.parameters.skip-code-coverage>>]
           filters:
             branches:
               ignore:
