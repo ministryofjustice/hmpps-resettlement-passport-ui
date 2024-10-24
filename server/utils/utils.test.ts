@@ -23,6 +23,7 @@ import {
   getCaseNoteTitle,
   isValidPathway,
   isValidStatus,
+  parseAssessmentType,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -37,6 +38,7 @@ import {
   WorkingCachedAssessment,
 } from '../data/model/immediateNeedsReport'
 import { PersonalDetails, PrisonerData } from '../@types/express'
+import { AssessmentType } from '../data/model/assessmentInformation'
 
 describe('convert to title case', () => {
   it.each([
@@ -1179,5 +1181,23 @@ describe('test isValidStatus', () => {
     ['Not a status', 'NOT_A_STATUS', false],
   ])('%s isValidStatus(%s)', (_: string, status: string, expected: boolean) => {
     expect(isValidStatus(status)).toEqual(expected)
+  })
+})
+
+describe('test parseAssessmentType', () => {
+  it.each([
+    ['null', null, new Error('Unable to parse assessmentType: null')],
+    ['undefined', undefined, new Error('Assessment type is missing from request')],
+    ['BCST2', 'BCST2', 'BCST2' as AssessmentType],
+    ['RESETTLEMENT_PLAN', 'RESETTLEMENT_PLAN', 'RESETTLEMENT_PLAN' as AssessmentType],
+    ['Not a type', 'NOT_A_TYPE', new Error('Unable to parse assessmentType: NOT_A_TYPE')],
+  ])('%s parseAssessmentType(%s)', (_: string, type: unknown, expected: AssessmentType | Error) => {
+    if (typeof expected === 'string') {
+      expect(parseAssessmentType(type)).toEqual(expected)
+    } else {
+      expect(() => {
+        parseAssessmentType(type)
+      }).toThrow(expected)
+    }
   })
 })

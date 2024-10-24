@@ -124,7 +124,7 @@ exports[`getStatusUpdate error case - missing prisonerNumber 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Prisoner number is missing from request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -141,17 +141,7 @@ exports[`getStatusUpdate error case - missing prisonerNumber 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Prisoner number is missing from request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -367,7 +357,7 @@ exports[`getStatusUpdate error case - missing selectedPathway 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">No valid pathway specified in request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -384,17 +374,7 @@ exports[`getStatusUpdate error case - missing selectedPathway 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: No valid pathway specified in request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -610,7 +590,7 @@ exports[`getStatusUpdate error case - pathway does not exist 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">No valid pathway specified in request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -627,17 +607,7 @@ exports[`getStatusUpdate error case - pathway does not exist 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: No valid pathway specified in request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1479,7 +1449,7 @@ exports[`postStatusUpdate error case - invalid pathway 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">No valid pathway specified in request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1496,17 +1466,7 @@ exports[`postStatusUpdate error case - invalid pathway 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: No valid pathway specified in request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1722,7 +1682,7 @@ exports[`postStatusUpdate error case - invalid status 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">No valid status specified in request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1739,17 +1699,7 @@ exports[`postStatusUpdate error case - invalid status 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: No valid status specified in request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -1965,7 +1915,7 @@ exports[`postStatusUpdate error case - missing pathway 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">No valid pathway specified in request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -1982,17 +1932,7 @@ exports[`postStatusUpdate error case - missing pathway 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: No valid pathway specified in request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2208,7 +2148,7 @@ exports[`postStatusUpdate error case - missing prisonerNumber 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Prisoner number is missing from request</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -2225,17 +2165,7 @@ exports[`postStatusUpdate error case - missing prisonerNumber 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Prisoner number is missing from request
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
@@ -2451,7 +2381,7 @@ exports[`postStatusUpdate error thrown during patch operation 1`] = `
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Failed to set status</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -2468,9 +2398,7 @@ exports[`postStatusUpdate error thrown during patch operation 1`] = `
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Error: Failed to set status
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>

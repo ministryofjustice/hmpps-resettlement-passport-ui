@@ -12,7 +12,7 @@ import {
 } from '../../data/model/immediateNeedsReport'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
+import { stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 let rpService: jest.Mocked<RpService>
@@ -61,6 +61,9 @@ describe('completeAssessment', () => {
 
     await request(app)
       .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .send({
+        assessmentType: 'BCST2',
+      })
       .expect(302)
       .expect(res => {
         expect(res.text).toContain('Found. Redirecting to /assessment-task-list?prisonerNumber=123&type=BCST2')
@@ -86,8 +89,11 @@ describe('completeAssessment', () => {
 
     await request(app)
       .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .send({
+        assessmentType: 'BCST2',
+      })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(completeAssessmentSpy).toHaveBeenCalledWith(
       '123',
@@ -207,7 +213,7 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/THE_PAGE?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&assessmentType=BCST2`,
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/THE_PAGE?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&type=BCST2`,
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -259,7 +265,7 @@ describe('startEdit', () => {
 
     await request(app)
       .get(
-        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/MY_PAGE/start-edit?prisonerNumber=${stateKey.prisonerNumber}&assessmentType=${stateKey.assessmentType}&submitted=true`,
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/MY_PAGE/start-edit?prisonerNumber=${stateKey.prisonerNumber}&type=${stateKey.assessmentType}&submitted=true`,
       )
       .expect(302)
       .expect(res => {
@@ -295,7 +301,7 @@ describe('startEdit', () => {
 
     await request(app)
       .get(
-        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/MY_PAGE/start-edit?prisonerNumber=${stateKey.prisonerNumber}&assessmentType=BCST2`,
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/MY_PAGE/start-edit?prisonerNumber=${stateKey.prisonerNumber}&type=BCST2`,
       )
       .expect(302)
       .expect(res => {

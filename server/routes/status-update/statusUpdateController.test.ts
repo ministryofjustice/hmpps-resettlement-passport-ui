@@ -5,7 +5,7 @@ import RpService from '../../services/rpService'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes } from '../testutils/appSetup'
-import { sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
+import { stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 let rpService: jest.Mocked<RpService>
@@ -44,21 +44,21 @@ describe('getStatusUpdate', () => {
     await request(app)
       .get('/status-update?selectedPathway=accommodation')
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('error case - missing selectedPathway', async () => {
     await request(app)
       .get('/status-update?prisonerNumber=123')
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('error case - pathway does not exist', async () => {
     await request(app)
       .get('/status-update?prisonerNumber=123&selectedPathway=NOT_A_PATHWAY')
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
 
@@ -106,7 +106,7 @@ describe('postStatusUpdate', () => {
         caseNoteInput_DONE: 'This is my case note text',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Missing status redirects back to form', async () => {
@@ -135,7 +135,7 @@ describe('postStatusUpdate', () => {
         caseNoteInput_DONE: 'This is my case note text',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('error case - missing pathway', async () => {
@@ -147,7 +147,7 @@ describe('postStatusUpdate', () => {
         caseNoteInput_DONE: 'This is my case note text',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('error case - invalid pathway', async () => {
@@ -160,7 +160,7 @@ describe('postStatusUpdate', () => {
         caseNoteInput_DONE: 'This is my case note text',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('error thrown during patch operation', async () => {
@@ -176,7 +176,7 @@ describe('postStatusUpdate', () => {
         caseNoteInput_DONE: 'This is my case note text',
       })
       .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(patchStatusWithCaseNoteSpy).toHaveBeenCalledWith('123', {
       pathway: 'ACCOMMODATION',
