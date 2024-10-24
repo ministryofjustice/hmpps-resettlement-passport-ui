@@ -312,7 +312,20 @@ export function getOptionValidationError(validationErrors: ValidationErrors, que
 }
 
 export function parseAssessmentType(type: unknown): AssessmentType {
-  return type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
+  switch (type) {
+    case 'BCST2': {
+      return 'BCST2'
+    }
+    case 'RESETTLEMENT_PLAN': {
+      return 'RESETTLEMENT_PLAN'
+    }
+    case undefined: {
+      throw new Error('Assessment type is missing from request')
+    }
+    default: {
+      throw new Error(`Unable to parse assessmentType: ${type}`)
+    }
+  }
 }
 
 export function formatDateAsLocal(dateString: string) {
