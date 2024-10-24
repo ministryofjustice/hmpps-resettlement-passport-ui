@@ -105,7 +105,10 @@ jobs:
           at: /tmp/workspace
       - run:
           name: compare coverage
-          command: python3 coverage_checker/coverage_checker.py
+          command: |
+              if [ <<pipeline.parameters.skip-code-coverage>> = false ] ; then
+                python3 coverage_checker/coverage_checker.py
+              fi
 
   unit_test:
     executor:
@@ -138,7 +141,6 @@ jobs:
     environment:
       TZ: Europe/London
     steps:
-      - run: echo "<<pipeline.parameters.skip-code-coverage>>"
       - run:
           name: Update npm
           command: 'sudo npm install -g npm@9.8.1'
