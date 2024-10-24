@@ -60,7 +60,6 @@ describe('submitForm', () => {
 
 describe('submitForm validation', () => {
   it('Validates  input', async () => {
-    const postAssessmentSkipSpy = jest.spyOn(rpService, 'postAssessmentSkip').mockImplementation()
     const service = {
       supportingInfo: 'Some Info',
       prisonerNumber: '123',
