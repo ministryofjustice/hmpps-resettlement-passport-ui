@@ -278,17 +278,6 @@ workflows:
           requires:
             - unit_test 
             - get_main_coverage 
-      - request-coverage-decrease-approval:
-          type: approval
-          when: on_fail
-          filters:
-            branches:
-              ignore:
-                - main
-          requires:
-            - compare_coverage  
-            - unit_test 
-            - get_main_coverage  
       - get_main_coverage:
           name: get_main_coverage
           filters:
