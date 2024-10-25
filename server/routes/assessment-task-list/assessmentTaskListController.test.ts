@@ -1,12 +1,35 @@
-import { Request, Response } from 'express'
-import { addMonths, format } from 'date-fns'
-import * as utils from '../../utils/utils'
+import { type Express } from 'express'
+import { addMonths } from 'date-fns'
+import request from 'supertest'
 import RpService from '../../services/rpService'
-import AssessmentTaskListController from './assessmentTaskListController'
 import { AssessmentsSummary, PathwayAssessmentStatus } from '../../data/model/assessmentStatus'
+import Config from '../../s3Config'
+import { stubPrisonerDetails } from '../testutils/testUtils'
+import { configHelper } from '../configHelperTest'
+import { appWithAllRoutes } from '../testutils/appSetup'
 
-const dateOutsideReleaseWindow = addMonths(new Date(), 6)
-const dateInsideReleaseWindow = addMonths(new Date(), 1)
+let app: Express
+let rpService: jest.Mocked<RpService>
+const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
+
+beforeEach(() => {
+  rpService = new RpService() as jest.Mocked<RpService>
+  stubPrisonerDetails(rpService)
+  configHelper(config)
+
+  app = appWithAllRoutes({
+    services: {
+      rpService,
+    },
+  })
+})
+
+afterEach(() => {
+  jest.resetAllMocks()
+})
+
+const dateOutsideReleaseWindow = addMonths(new Date(), 6).toISOString().slice(0, 10)
+const dateInsideReleaseWindow = addMonths(new Date(), 1).toISOString().slice(0, 10)
 
 function assessmentSummary(assessmentStatus: PathwayAssessmentStatus): AssessmentsSummary {
   return {
@@ -19,92 +42,120 @@ function assessmentSummary(assessmentStatus: PathwayAssessmentStatus): Assessmen
   }
 }
 
-describe('assessmentTaskListController', () => {
-  let rpService: jest.Mocked<RpService>
-  let res: Response
-  let next: jest.Mock
-  let controller: AssessmentTaskListController
-
-  beforeEach(async () => {
-    rpService = new RpService() as jest.Mocked<RpService>
-    res = { redirect: jest.fn(), render: jest.fn() } as unknown as Response
-    next = jest.fn(() => () => {})
-    controller = new AssessmentTaskListController(rpService)
-  })
-
-  afterEach(() => {
-    jest.restoreAllMocks()
-  })
-
+describe('getView', () => {
   it('Should render when BCST2 is started', async () => {
-    jest.spyOn(utils, 'getFeatureFlagBoolean').mockResolvedValue(true)
-    jest.spyOn(rpService, 'getAssessmentSummary').mockResolvedValue(assessmentSummary('COMPLETE'))
+    const getAssessmentSummarySpy = jest
+      .spyOn(rpService, 'getAssessmentSummary')
+      .mockResolvedValue(assessmentSummary('COMPLETE'))
 
-    const req = aRequest()
+    await request(app)
+      .get('/assessment-task-list?prisonerNumber=123&type=BCST2')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
 
-    await controller.getView(req, res, next)
-
-    expect(next).toHaveBeenCalledTimes(0)
-    expect(res.render).toHaveBeenCalledTimes(1)
+    expect(getAssessmentSummarySpy).toHaveBeenCalledWith('123', 'BCST2')
   })
 
   it('Should redirect to skip when BCST2 is not started and in the pre-release window', async () => {
-    jest.spyOn(utils, 'getFeatureFlagBoolean').mockResolvedValue(true)
-    jest.spyOn(rpService, 'getAssessmentSummary').mockResolvedValue(assessmentSummary('NOT_STARTED'))
+    const getAssessmentSummarySpy = jest
+      .spyOn(rpService, 'getAssessmentSummary')
+      .mockResolvedValue(assessmentSummary('NOT_STARTED'))
+    stubPrisonerDetails(rpService, dateInsideReleaseWindow)
 
-    const req = aRequest(dateInsideReleaseWindow)
+    await request(app)
+      .get('/assessment-task-list?prisonerNumber=123&type=BCST2')
+      .expect(302)
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /assessment-skip?prisonerNumber=123'))
 
-    await controller.getView(req, res, next)
-
-    expect(next).toHaveBeenCalledTimes(0)
-    expect(res.redirect).toHaveBeenCalledTimes(1)
-    expect(res.redirect).toHaveBeenCalledWith('/assessment-skip?prisonerNumber=123')
+    expect(getAssessmentSummarySpy).toHaveBeenNthCalledWith(1, '123', 'BCST2')
+    expect(getAssessmentSummarySpy).toHaveBeenNthCalledWith(2, '123', 'RESETTLEMENT_PLAN')
   })
 
   it('Should not redirect when outside the release window', async () => {
-    jest.spyOn(utils, 'getFeatureFlagBoolean').mockResolvedValue(true)
-    jest.spyOn(rpService, 'getAssessmentSummary').mockResolvedValue(assessmentSummary('NOT_STARTED'))
+    const getAssessmentSummarySpy = jest
+      .spyOn(rpService, 'getAssessmentSummary')
+      .mockResolvedValue(assessmentSummary('NOT_STARTED'))
+    stubPrisonerDetails(rpService, dateOutsideReleaseWindow)
 
-    const req = aRequest(dateOutsideReleaseWindow)
+    await request(app)
+      .get('/assessment-task-list?prisonerNumber=123&type=BCST2')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
 
-    await controller.getView(req, res, next)
-
-    expect(next).toHaveBeenCalledTimes(0)
-    expect(res.redirect).toHaveBeenCalledTimes(0)
-    expect(res.render).toHaveBeenCalledTimes(1)
+    expect(getAssessmentSummarySpy).toHaveBeenCalledWith('123', 'BCST2')
   })
 
   it('Should should redirect to RESETTLEMENT plan if in progress and BCST2 not started', async () => {
-    jest.spyOn(utils, 'getFeatureFlagBoolean').mockResolvedValue(true)
-    jest
+    const getAssessmentSummarySpy = jest
       .spyOn(rpService, 'getAssessmentSummary')
       .mockResolvedValueOnce(assessmentSummary('NOT_STARTED'))
       .mockResolvedValueOnce(assessmentSummary('COMPLETE'))
+    stubPrisonerDetails(rpService, dateInsideReleaseWindow)
 
-    const req = aRequest(dateInsideReleaseWindow)
+    await request(app)
+      .get('/assessment-task-list?prisonerNumber=123&type=BCST2')
+      .expect(302)
+      .expect(res =>
+        expect(res.text).toEqual(
+          'Found. Redirecting to /assessment-task-list?prisonerNumber=123&type=RESETTLEMENT_PLAN',
+        ),
+      )
 
-    await controller.getView(req, res, next)
-
-    expect(next).toHaveBeenCalledTimes(0)
-    expect(res.redirect).toHaveBeenCalledTimes(1)
-    expect(res.redirect).toHaveBeenCalledWith('/assessment-task-list?prisonerNumber=123&type=RESETTLEMENT_PLAN')
+    expect(getAssessmentSummarySpy).toHaveBeenNthCalledWith(1, '123', 'BCST2')
+    expect(getAssessmentSummarySpy).toHaveBeenNthCalledWith(2, '123', 'RESETTLEMENT_PLAN')
   })
 
-  function aRequest(releaseDate = dateInsideReleaseWindow): Request {
-    return {
-      sessionId: 'sessionId',
-      user: {
-        token: 'authToken',
-      },
-      prisonerData: {
-        personalDetails: {
-          prisonerNumber: '123',
-          releaseDate: format(releaseDate, 'yyyy-MM-dd'),
-        },
-      },
-      query: {
-        type: 'BCST2',
-      },
-    } as unknown as Request
-  }
+  it('Should not redirect to skip when BCST2 is not started and in the pre-release window if force is set', async () => {
+    const getAssessmentSummarySpy = jest
+      .spyOn(rpService, 'getAssessmentSummary')
+      .mockResolvedValue(assessmentSummary('NOT_STARTED'))
+    stubPrisonerDetails(rpService, dateInsideReleaseWindow)
+
+    await request(app)
+      .get('/assessment-task-list?prisonerNumber=123&type=BCST2&force=true')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    expect(getAssessmentSummarySpy).toHaveBeenCalledWith('123', 'BCST2')
+  })
+
+  it('Error case - prisonerNumber is missing', async () => {
+    await request(app)
+      .get('/assessment-task-list?type=BCST2')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('Error case - type is missing', async () => {
+    await request(app)
+      .get('/assessment-task-list?prisonerNumber=123')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('Error case - rpService throws error', async () => {
+    const getAssessmentSummarySpy = jest
+      .spyOn(rpService, 'getAssessmentSummary')
+      .mockRejectedValue(new Error('Something went wrong'))
+
+    await request(app)
+      .get('/assessment-task-list?prisonerNumber=123&type=BCST2')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    expect(getAssessmentSummarySpy).toHaveBeenCalledWith('123', 'BCST2')
+  })
+
+  it('Error case - rpService returns error render page with error message', async () => {
+    const getAssessmentSummarySpy = jest
+      .spyOn(rpService, 'getAssessmentSummary')
+      .mockResolvedValue({ error: 'Something went wrong' })
+
+    await request(app)
+      .get('/assessment-task-list?prisonerNumber=123&type=BCST2')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    expect(getAssessmentSummarySpy).toHaveBeenCalledWith('123', 'BCST2')
+  })
 })
