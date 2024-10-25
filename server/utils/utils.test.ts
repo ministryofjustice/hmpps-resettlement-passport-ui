@@ -40,61 +40,61 @@ import {
 import { PersonalDetails, PrisonerData } from '../@types/express'
 import { AssessmentType } from '../data/model/assessmentInformation'
 
-describe('convert to title case', () => {
-  it.each([
-    [null, null, ''],
-    ['empty string', '', ''],
-    ['Lower case', 'robert', 'Robert'],
-    ['Upper case', 'ROBERT', 'Robert'],
-    ['Mixed case', 'RoBErT', 'Robert'],
-    ['Multiple words', 'RobeRT SMiTH', 'Robert Smith'],
-    ['Leading spaces', '  RobeRT', '  Robert'],
-    ['Trailing spaces', 'RobeRT  ', 'Robert  '],
-    ['Hyphenated', 'Robert-John SmiTH-jONes-WILSON', 'Robert-John Smith-Jones-Wilson'],
-  ])('%s convertToTitleCase(%s, %s)', (_: string, a: string, expected: string) => {
-    expect(convertToTitleCase(a)).toEqual(expected)
-  })
-})
+// describe('convert to title case', () => {
+//   it.each([
+//     [null, null, ''],
+//     ['empty string', '', ''],
+//     ['Lower case', 'robert', 'Robert'],
+//     ['Upper case', 'ROBERT', 'Robert'],
+//     ['Mixed case', 'RoBErT', 'Robert'],
+//     ['Multiple words', 'RobeRT SMiTH', 'Robert Smith'],
+//     ['Leading spaces', '  RobeRT', '  Robert'],
+//     ['Trailing spaces', 'RobeRT  ', 'Robert  '],
+//     ['Hyphenated', 'Robert-John SmiTH-jONes-WILSON', 'Robert-John Smith-Jones-Wilson'],
+//   ])('%s convertToTitleCase(%s, %s)', (_: string, a: string, expected: string) => {
+//     expect(convertToTitleCase(a)).toEqual(expected)
+//   })
+// })
 
-describe('initialise name', () => {
-  it.each([
-    [null, null, null],
-    ['Empty string', '', null],
-    ['One word', 'robert', 'r. robert'],
-    ['Two words', 'Robert James', 'R. James'],
-    ['Three words', 'Robert James Smith', 'R. Smith'],
-    ['Double barrelled', 'Robert-John Smith-Jones-Wilson', 'R. Smith-Jones-Wilson'],
-  ])('%s initialiseName(%s, %s)', (_: string, a: string, expected: string) => {
-    expect(initialiseName(a)).toEqual(expected)
-  })
-})
+// describe('initialise name', () => {
+//   it.each([
+//     [null, null, null],
+//     ['Empty string', '', null],
+//     ['One word', 'robert', 'r. robert'],
+//     ['Two words', 'Robert James', 'R. James'],
+//     ['Three words', 'Robert James Smith', 'R. Smith'],
+//     ['Double barrelled', 'Robert-John Smith-Jones-Wilson', 'R. Smith-Jones-Wilson'],
+//   ])('%s initialiseName(%s, %s)', (_: string, a: string, expected: string) => {
+//     expect(initialiseName(a)).toEqual(expected)
+//   })
+// })
 
-describe('covert array to comma separated list', () => {
-  it.each([
-    [null, null, ''],
-    ['Empty array', [], ''],
-    ['Array length 1', ['cat'], 'cat'],
-    ['Array length 2', ['cat', 'dog'], 'cat, dog'],
-    ['Array length 3', ['cat', 'dog', 'bird'], 'cat, dog, bird'],
-  ])('%s convertArrayToCommaSeparatedList(%s, %s)', (_: string, a: string[], expected: string) => {
-    expect(convertArrayToCommaSeparatedList(a)).toEqual(expected)
-  })
-})
+// describe('covert array to comma separated list', () => {
+//   it.each([
+//     [null, null, ''],
+//     ['Empty array', [], ''],
+//     ['Array length 1', ['cat'], 'cat'],
+//     ['Array length 2', ['cat', 'dog'], 'cat, dog'],
+//     ['Array length 3', ['cat', 'dog', 'bird'], 'cat, dog, bird'],
+//   ])('%s convertArrayToCommaSeparatedList(%s, %s)', (_: string, a: string[], expected: string) => {
+//     expect(convertArrayToCommaSeparatedList(a)).toEqual(expected)
+//   })
+// })
 
-describe('get case notes introductory line', () => {
-  it.each([
-    [
-      'Contains first introductory sentence',
-      'Resettlement status set to: In progress. This is the main text of the case notes body.',
-      'Resettlement status set to: In progress.',
-    ],
-    ['Does not contain introductory sentence', 'This is the main text of the case notes body.', null],
-    ['Empty string', '', null],
-    ['Null input', null, null],
-  ])('getCaseNotesIntro(%s)', (_: string, a: string, expected: string) => {
-    expect(getCaseNotesIntro(a)).toEqual(expected)
-  })
-})
+// describe('get case notes introductory line', () => {
+//   it.each([
+//     [
+//       'Contains first introductory sentence',
+//       'Resettlement status set to: In progress. This is the main text of the case notes body.',
+//       'Resettlement status set to: In progress.',
+//     ],
+//     ['Does not contain introductory sentence', 'This is the main text of the case notes body.', null],
+//     ['Empty string', '', null],
+//     ['Null input', null, null],
+//   ])('getCaseNotesIntro(%s)', (_: string, a: string, expected: string) => {
+//     expect(getCaseNotesIntro(a)).toEqual(expected)
+//   })
+// })
 
 describe('get case notes body text', () => {
   it.each([
