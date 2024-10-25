@@ -147,7 +147,7 @@ jobs:
       - run: mkdir ~/.ssh/
       - run: touch ~/.ssh/known_hosts
       - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
-      - run: git clone -b "$CIRCLE_BRANCH" "$CIRCLE_REPOSITORY_URL"  
+      - run: git clone -b main "$CIRCLE_REPOSITORY_URL"  
       - run: cd hmpps-resettlement-passport-ui/ && git log --format=oneline -n 1 $CIRCLE_SHA1 
       - run:
           name: Install Dependencies
