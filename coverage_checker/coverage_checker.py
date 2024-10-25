@@ -1,7 +1,7 @@
 import sys
 import xml.etree.ElementTree as ET 
 
-
+print("Running coverage check")
 main_xml_tree = tree = ET.parse('/tmp/workspace/coverage/main_clover.xml')
 main_root = tree.getroot()
 main_coverage =  list(main_root.iter('metrics'))[0].attrib
@@ -15,6 +15,14 @@ current_coverage =  list(current_root.iter('metrics'))[0].attrib
 current_statment_percent = (float(current_coverage['coveredstatements'])/float(current_coverage['statements']))*100
 current_conditionals_percent = (float(current_coverage['coveredconditionals'])/float(current_coverage['conditionals']))*100
 current_methods_percent = (float(current_coverage['coveredmethods'])/float(current_coverage['methods']))*100
+
+print(f"{main_statment_percent=}")
+print(f"{current_statment_percent=}")
+print(f"{main_conditionals_percent=}")
+print(f"{current_conditionals_percent=}")
+print(f"{main_methods_percent=}")
+print(f"{current_methods_percent=}")
+
 
 if main_statment_percent > current_statment_percent:
     print(f"Statement coverage has decressed from {main_statment_percent} to {current_statment_percent}")
