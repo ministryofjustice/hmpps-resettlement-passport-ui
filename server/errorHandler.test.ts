@@ -19,14 +19,14 @@ afterEach(() => {
 
 describe('GET 404', () => {
   it('should render content with stack in dev mode', () => {
-    return request(app)
+    return request(appWithAllRoutes({ production: false }))
       .get('/unknown')
       .expect(404)
       .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
 
   it('should render content without stack in production mode', () => {
-    return request(appWithAllRoutes({ production: true }))
+    return request(app)
       .get('/unknown')
       .expect(404)
       .expect(res => expect(res.text).toMatchSnapshot())

@@ -124,7 +124,7 @@ exports[`completeAssessment it should not submit the assessment if there is no s
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">Cannot read properties of null (reading &#39;deleteWorkingAssessment&#39;)</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -141,10 +141,7 @@ exports[`completeAssessment it should not submit the assessment if there is no s
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>TypeError: Cannot read properties of null (reading &#39;deleteWorkingAssessment&#39;)
-    at /
-    at /
-    at /
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>

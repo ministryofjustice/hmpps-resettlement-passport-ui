@@ -6,7 +6,9 @@ import {
   CHECK_ANSWERS_PAGE_ID,
   ENUMS_DICTIONARY,
   EnumValue,
+  PATHWAY_DICTIONARY,
   RISK_ASSESSMENT_ENUMS_DICTIONARY,
+  STATUS_DICTIONARY,
 } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
@@ -310,7 +312,20 @@ export function getOptionValidationError(validationErrors: ValidationErrors, que
 }
 
 export function parseAssessmentType(type: unknown): AssessmentType {
-  return type === 'RESETTLEMENT_PLAN' ? 'RESETTLEMENT_PLAN' : 'BCST2'
+  switch (type) {
+    case 'BCST2': {
+      return 'BCST2'
+    }
+    case 'RESETTLEMENT_PLAN': {
+      return 'RESETTLEMENT_PLAN'
+    }
+    case undefined: {
+      throw new Error('Assessment type is missing from request')
+    }
+    default: {
+      throw new Error(`Unable to parse assessmentType: ${type}`)
+    }
+  }
 }
 
 export function formatDateAsLocal(dateString: string) {
@@ -475,4 +490,12 @@ export function removePrefix(string: string, prefix: string): string {
     return string.slice(prefix.length)
   }
   return string
+}
+
+export function isValidPathway(pathwayFromUrl: string): boolean {
+  return Object.keys(PATHWAY_DICTIONARY).includes(getEnumByURL(pathwayFromUrl))
+}
+
+export function isValidStatus(status: string): boolean {
+  return Object.keys(STATUS_DICTIONARY).includes(status)
 }

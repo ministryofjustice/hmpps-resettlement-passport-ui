@@ -55,7 +55,7 @@ context('Immediate Needs Report', () => {
     cy.task('stubJohnSmithImmediateNeedsReportHealth')
     cy.signIn()
 
-    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=BCST2')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
@@ -136,7 +136,7 @@ context('Immediate Needs Report', () => {
     cy.task('stubJohnSmithImmediateNeedsReportAccommodation')
     cy.signIn()
 
-    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=BCST2')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
@@ -189,7 +189,7 @@ context('Immediate Needs Report', () => {
     cy.task('stubJohnSmithImmediateNeedsReportAccommodation')
     cy.signIn()
 
-    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=BCST2')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
@@ -249,7 +249,7 @@ context('Immediate Needs Report', () => {
     cy.task('stubJohnSmithImmediateNeedsReportAccommodation')
     cy.signIn()
 
-    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=BCST2')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
@@ -263,7 +263,7 @@ context('Immediate Needs Report', () => {
     getHeading().should('have.text', 'Where will the person in prison live when they are released?')
 
     // Go back to the task list page
-    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=BCST2')
     // Go back to accommodation
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
@@ -287,7 +287,7 @@ context('Immediate Needs Report', () => {
     cy.task('initRedisCacheForNullExistingAssessment')
     cy.signIn()
 
-    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=BCST2')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Complete immediate needs report')
     cy.get('.govuk-grid-column-two-thirds > h1').should('contain.text', 'Smith, John (A8731DY)')
 
@@ -352,7 +352,7 @@ context('Immediate Needs Report', () => {
     cy.task('stubJohnSmithImmediateNeedsReportHealthFreeText')
     cy.signIn()
 
-    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY')
+    cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=BCST2')
 
     // Click Health link
     cy.get('[data-qa="a-HEALTH"]').click()
