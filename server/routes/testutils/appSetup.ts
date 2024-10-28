@@ -39,7 +39,7 @@ function appSetup(services: Services, production: boolean, userSupplier: () => E
   app.use((req, res, next) => {
     req.user = userSupplier()
     req.flash = flashProvider
-    res.locals = {}
+    res.locals = { userActiveCaseLoad: 'MDI' }
     res.locals.user = { ...req.user }
     next()
   })
