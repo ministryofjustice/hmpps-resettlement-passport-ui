@@ -104,4 +104,100 @@ describe('getAddAnIdView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
+  it('Confirm add an ID - birth certificate submit with cost above zero and gro number', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id/?haveGro=true&countryBornIn=&costOfApplication=100&applicationSubmittedYear=2000&applicationSubmittedMonth=12&applicationSubmittedDay=12&idType=Birth+certificate&prisonerNumber=A8731DY&existingIdTypes=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Confirm add an ID - birth certificate submit with cost above zero, gro number and country', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id/?haveGro=true&isUkNationalBornOverseas=true&countryBornIn=Argentina&costOfApplication=100&applicationSubmittedYear=2000&applicationSubmittedMonth=12&applicationSubmittedDay=12&idType=Birth+certificate&prisonerNumber=A8731DY&existingIdTypes=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Confirm add an ID - birth certificate submit with cost above zero, gro number and no country', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id/?haveGro=true&countryBornIn=Argentina&isUkNationalBornOverseas=false&costOfApplication=100&applicationSubmittedYear=2000&applicationSubmittedMonth=12&applicationSubmittedDay=12&idType=Birth+certificate&prisonerNumber=A8731DY&existingIdTypes=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Confirm add an ID - birth certificate submit with cost above zero, gro number, country and priority application', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id/?haveGro=true&isUkNationalBornOverseas=true&countryBornIn=Argentina&isPriorityApplication=true&costOfApplication=100&applicationSubmittedYear=2000&applicationSubmittedMonth=12&applicationSubmittedDay=12&idType=Birth+certificate&prisonerNumber=A8731DY&existingIdTypes=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Confirm add an ID - birth certificate submit with cost above zero, gro number, country and no priority application', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id/?haveGro=true&isUkNationalBornOverseas=true&countryBornIn=Argentina&isPriorityApplication=false&costOfApplication=100&applicationSubmittedYear=2000&applicationSubmittedMonth=12&applicationSubmittedDay=12&idType=Birth+certificate&prisonerNumber=A8731DY&existingIdTypes=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Confirm add an ID - birth certificate submit with cost above zero, no gro number, country and no priority application', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id/?haveGro=false&isUkNationalBornOverseas=true&countryBornIn=Argentina&isPriorityApplication=false&costOfApplication=100&applicationSubmittedYear=2000&applicationSubmittedMonth=12&applicationSubmittedDay=12&idType=Birth+certificate&prisonerNumber=A8731DY&existingIdTypes=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Confirm add an ID - birth certificate submit with cost above zero, no gro number, country and no priority application', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id/?haveGro=false&isUkNationalBornOverseas=true&countryBornIn=Argentina&isPriorityApplication=false&costOfApplication=100&applicationSubmittedYear=2000&applicationSubmittedMonth=12&applicationSubmittedDay=12&idType=Birth+certificate&prisonerNumber=A8731DY&existingIdTypes=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Get ID application status - birth certificate', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/update-id-status/?prisonerNumber=A8731DY&applicationId=1&idType=Birth%20certificate&applicationSubmittedDate=2000-12-12T00:00:00',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Reject ID application status - birth certificate, no refund', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id-status/?updatedStatus=Rejected&dateIdReceivedDay=&dateIdReceivedMonth=&dateIdReceivedYear=&addedToPersonalItemsDateDay=&addedToPersonalItemsDateMonth=&addedToPersonalItemsDateYear=&refundAmount=&idType=Birth+certificate&applicationId=1&prisonerNumber=A8731DY',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Reject ID application status - birth certificate, refund', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id-status/?updatedStatus=Rejected&dateIdReceivedDay=&dateIdReceivedMonth=&dateIdReceivedYear=&addedToPersonalItemsDateDay=&addedToPersonalItemsDateMonth=&addedToPersonalItemsDateYear=&refundAmount=100&idType=Birth+certificate&applicationId=1&prisonerNumber=A8731DY',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Accept ID application status - birth certificate, no refund', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id-status/?updatedStatus=Accepted&dateIdReceivedDay=&dateIdReceivedMonth=&dateIdReceivedYear=&addedToPersonalItemsDateDay=&addedToPersonalItemsDateMonth=&addedToPersonalItemsDateYear=&refundAmount=&idType=Birth+certificate&applicationId=1&prisonerNumber=A8731DY',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Accept ID application status - birth certificate, refund', async () => {
+    await request(app)
+      .get(
+        '/finance-and-id/confirm-add-an-id-status/?updatedStatus=Accepted&dateIdReceivedDay=&dateIdReceivedMonth=&dateIdReceivedYear=&addedToPersonalItemsDateDay=&addedToPersonalItemsDateMonth=&addedToPersonalItemsDateYear=&refundAmount=100&idType=Birth+certificate&applicationId=1&prisonerNumber=A8731DY',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
 })
