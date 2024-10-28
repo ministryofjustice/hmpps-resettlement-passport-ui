@@ -192,7 +192,7 @@ describe('getAddAnIdView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
-  it('Accept ID application status - birth certificate, refund', async () => {
+  it('Accept ID application status - birth certificate and refund', async () => {
     await request(app)
       .get(
         '/finance-and-id/confirm-add-an-id-status/?updatedStatus=Accepted&dateIdReceivedDay=&dateIdReceivedMonth=&dateIdReceivedYear=&addedToPersonalItemsDateDay=&addedToPersonalItemsDateMonth=&addedToPersonalItemsDateYear=&refundAmount=100&idType=Birth+certificate&applicationId=1&prisonerNumber=A8731DY',
