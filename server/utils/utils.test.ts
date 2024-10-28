@@ -9,8 +9,6 @@ import {
   formatTimeWithDuration,
   getDaysFromGivenDate,
   formatDateAsLocal,
-  getCaseNotesIntro,
-  getCaseNotesText,
   removeSlashes,
   fullName,
   startsWith,
