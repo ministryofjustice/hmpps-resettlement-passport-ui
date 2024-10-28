@@ -81,40 +81,6 @@ describe('covert array to comma separated list', () => {
   })
 })
 
-// describe('get case notes introductory line', () => {
-//   it.each([
-//     [
-//       'Contains first introductory sentence',
-//       'Resettlement status set to: In progress. This is the main text of the case notes body.',
-//       'Resettlement status set to: In progress.',
-//     ],
-//     ['Does not contain introductory sentence', 'This is the main text of the case notes body.', null],
-//     ['Empty string', '', null],
-//     ['Null input', null, null],
-//   ])('getCaseNotesIntro(%s)', (_: string, a: string, expected: string) => {
-//     expect(getCaseNotesIntro(a)).toEqual(expected)
-//   })
-// })
-
-// describe('get case notes body text', () => {
-//   it.each([
-//     [
-//       'Contains first introductory sentence',
-//       'Resettlement status set to: In progress. This is the main text of the case notes body.',
-//       'This is the main text of the case notes body.',
-//     ],
-//     [
-//       'Does not contain introductory sentence',
-//       'This is the main text of the case notes body.',
-//       'This is the main text of the case notes body.',
-//     ],
-//     ['Empty string', '', ''],
-//     ['Null input', null, ''],
-//   ])('getCaseNotesText(%s)', (_: string, a: string, expected: string) => {
-//     expect(getCaseNotesText(a)).toEqual(expected)
-//   })
-// })
-
 describe('get reset reason from case notes', () => {
   it.each([
     [
