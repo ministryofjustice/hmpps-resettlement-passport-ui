@@ -113,7 +113,7 @@ describe('covert array to comma separated list', () => {
 //   ])('getCaseNotesText(%s)', (_: string, a: string, expected: string) => {
 //     expect(getCaseNotesText(a)).toEqual(expected)
 //   })
-})
+// })
 
 describe('get reset reason from case notes', () => {
   it.each([
