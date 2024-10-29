@@ -1176,6 +1176,411 @@ const nextPageHelpToKeepHome = () =>
     },
   })
 
+const nextPageStartAllQuestionTypes = () =>
+  stubFor({
+    name: 'JohnSmith immediate needs report Accommodation Assessment Next Page 1',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=99&assessmentType=BCST2',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          equalToJson: '{"questionsAndAnswers":[]}',
+          ignoreArrayOrder: true,
+          ignoreExtraElements: true,
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'SINGLE_QUESTION_ON_A_PAGE',
+      },
+    },
+  })
+
+const singleQuestionOnPage = () =>
+  stubFor({
+    name: 'Single question on a page, radio question',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=99&assessmentType=BCST2&currentPage=SINGLE_QUESTION_ON_A_PAGE',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'SINGLE_QUESTION_ON_A_PAGE',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'SINGLE_QUESTION_ON_A_PAGE',
+              title: 'Single question on a page This is a radio Question?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'YES',
+                  displayText: 'Yes',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO',
+                  displayText: 'No',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'SINGLE_QUESTION_ON_A_PAGE',
+          },
+        ],
+      },
+    },
+  })
+const multipleQuestionsOnPage = () =>
+  stubFor({
+    name: 'Multiple questions on a page, radio question',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=99&assessmentType=BCST2&currentPage=MULTIPLE_QUESTIONS_ON_A_PAGE',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question0: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+              title: 'Multiple questions on a page Radio question with regex validation?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'YES',
+                  displayText: 'Yes',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO',
+                  displayText: 'No',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            question1: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'ADDRESS_QUESTION',
+              options: null,
+              subTitle: null,
+              title: 'Address question: Enter the address',
+              type: 'ADDRESS',
+              validationType: 'MANDATORY',
+            },
+            question2: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'NESTED_RADIO_QUESTION_TYPES',
+              title: 'Nested Radio question types?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'YES',
+                  displayText: 'Yes',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO',
+                  displayText: 'No',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            question3: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'LONG_TEXT_QUESTION',
+              title: 'Long Text Question',
+              subTitle: 'This will be displayed as a case note in both DPS and nDelius',
+              type: 'LONG_TEXT',
+            },
+            question4: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'CHECKBOX_QUESTIONS_WITH_EXCLUSIVE_OPTIONS',
+              title: 'Checkbox question with exclusive options?',
+              subTitle: 'Select all that apply',
+              type: 'CHECKBOX',
+              options: [
+                {
+                  id: 'ESA',
+                  displayText: 'Employment and support allowance (ESA)',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'HOUSING_BENEFIT',
+                  displayText: 'Housing benefit',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'UNIVERSAL_CREDIT_HOUSING_ELEMENT',
+                  displayText: 'Universal credit housing element',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'UNIVERSAL_CREDIT',
+                  displayText: 'Universal credit',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'PIP',
+                  displayText: 'Personal independence payment (PIP)',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'STATE_PENSION',
+                  displayText: 'State pension',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO_BENEFITS',
+                  displayText: 'No benefits',
+                  description: null,
+                  exclusive: true,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: true,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+
+            answer: null,
+            originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+          },
+        ],
+      },
+    },
+  })
+const divergentFlowOptions = () =>
+  stubFor({
+    name: 'Divergent flow options',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=99&assessmentType=BCST2&currentPage=DIVERGENT_FLOW_OPTIONS',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'DIVERGENT_FLOW_OPTIONS',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'DIVERGENT_FLOW_OPTIONS',
+              title: 'Divergent flow options yes for divergent flow?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'YES',
+                  displayText: 'Yes',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO',
+                  displayText: 'No',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'DIVERGENT_FLOW_OPTIONS',
+          },
+        ],
+      },
+    },
+  })
+const divergentOptionYes = () =>
+  stubFor({
+    name: 'Divergent option Yes',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=99&assessmentType=BCST2&currentPage=DIVERGENT_OPTION',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'DIVERGENT_OPTION',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'DIVERGENT_OPTION',
+              title: 'Divergent option route?',
+              subTitle: null,
+              type: 'CHECKBOX',
+              options: [
+                {
+                  id: 'PHYSICAL_HEALTH',
+                  displayText: 'Physical health',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'MENTAL_HEALTH',
+                  displayText: 'Mental health',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: true,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'DIVERGENT_OPTION',
+          },
+        ],
+      },
+    },
+  })
+const mandatoryAndOptionalQuestionsPage = () =>
+  stubFor({
+    name: 'Mandatory and optional questions',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=99&assessmentType=BCST2&currentPage=MANDATORY_AND_OPTIONAL_QUESTIONS',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'MANDATORY_AND_OPTIONAL_QUESTIONS',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question0: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'MANDATORY_QUESTION',
+              title: 'Mandatory question status',
+              subTitle: 'Select one option',
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'SUPPORT_REQUIRED',
+                  displayText: 'Support required',
+                  description: 'a need for support has been identified and is accepted',
+                  exclusive: false,
+                },
+                {
+                  id: 'SUPPORT_NOT_REQUIRED',
+                  displayText: 'Support not required',
+                  description: 'no need was identified',
+                  exclusive: false,
+                },
+                {
+                  id: 'SUPPORT_DECLINED',
+                  displayText: 'Support declined',
+                  description: 'a need has been identified but support is declined',
+                  exclusive: false,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            question1: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'OPTIONAL_QUESTION',
+              title: 'This is an optional question to enter address select move to new address',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'RETURN_TO_PREVIOUS_ADDRESS',
+                  displayText: 'Return to their previous address',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'MOVE_TO_NEW_ADDRESS',
+                  displayText: 'Move to a new address',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'DOES_NOT_HAVE_ANYWHERE',
+                  displayText: 'Does not have anywhere to live',
+                  description: null,
+                  exclusive: false,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'MANDATORY_AND_OPTIONAL_QUESTIONS',
+          },
+        ],
+      },
+    },
+  })
+
 export const johnSmithImmediateNeedsReportHealth = (): SuperAgentRequest[] => [
   stubJohnSmithPrisonerDetails(),
   initialTaskListAllCompleteButHealth(),
@@ -1228,6 +1633,24 @@ export const johnSmithImmediateNeedsReportAccommodation = (): SuperAgentRequest[
   nextPageWhereDoTheyLiveAfterChoosingNone(),
   whereWillTheyLive2Page(),
   nextPageWhereWillTheyLive(),
+  assessmentSummaryPage('ACCOMMODATION', 'Accommodation'),
+  nextPageSummary('ACCOMMODATION'),
+  checkAnswersPage('ACCOMMODATION'),
+  submitAccommodationAssessmentEdit1(),
+  submitAccommodationAssessmentEdit2(),
+  nextPageHelpToKeepHome(),
+  getResettlementAssessmentVersion('ACCOMMODATION', 'BCST2'),
+  validateAssessment('ACCOMMODATION', 'BCST2'),
+]
+export const johnSmithImmediateNeedsReportAllQuestionTypes = (): SuperAgentRequest[] => [
+  stubJohnSmithPrisonerDetails(),
+  initialTaskList(),
+  nextPageStartAllQuestionTypes(),
+  singleQuestionOnPage(),
+  multipleQuestionsOnPage(),
+  divergentFlowOptions(),
+  divergentOptionYes(),
+  mandatoryAndOptionalQuestionsPage(),
   assessmentSummaryPage('ACCOMMODATION', 'Accommodation'),
   nextPageSummary('ACCOMMODATION'),
   checkAnswersPage('ACCOMMODATION'),

@@ -1,8 +1,7 @@
-import express from 'express'
+import { Router } from 'express'
+import AddBankAccountController from './addBankAccountController'
 
-const addBankAccountRouter = express.Router().get('/', (req, res, next) => {
-  const { prisonerData } = req
-  res.render('pages/add-bank-account', { prisonerData })
-})
-
-export default addBankAccountRouter
+export default (router: Router) => {
+  const addBankAccountController = new AddBankAccountController()
+  router.get('pages/add-bank-account')
+}
