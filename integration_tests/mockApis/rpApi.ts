@@ -52,7 +52,7 @@ import { johnSmithCheckbox, johnSmithCheckboxReportVersion } from './scenarios/j
 import editHealthAssessmentConvergingOnLastQuestion from './scenarios/john-smith/edit-health-assessment-converging-on-last-question'
 import { validateAssessment } from './common'
 import { johnSmithResetProfile } from './scenarios/john-smith/john-smith-reset-profile'
-import { johnSmithReportInfo } from './scenarios/john-smith/john-smith-report-info'
+import { johnSmithLicenceImage, johnSmithOverview } from './scenarios/john-smith/john-smith-overview'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -537,7 +537,10 @@ const stubJohnSmithProfileReset = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation(), johnSmithResetProfile()])
 
 const stubJohnSmithPostNoReportInfo = () =>
-  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithReportInfo()])
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithOverview()])
+
+const stubJohnSmithGetLicenceImage = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithLicenceImage()])
 
 export default {
   stubGetPrisoners,
@@ -583,4 +586,5 @@ export default {
   stubEditHealthAssessmentConvergingOnLastQuestion,
   stubJohnSmithProfileReset,
   stubJohnSmithPostNoReportInfo,
+  stubJohnSmithGetLicenceImage,
 }

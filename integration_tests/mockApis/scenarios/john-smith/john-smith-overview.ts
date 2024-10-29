@@ -88,4 +88,36 @@ const successOnFinanceAndIt = () =>
     requiredScenarioState: 'Started',
   })
 
-export const johnSmithReportInfo = () => [errorOnAccommodation(), successOnFinanceAndIt()]
+const licenceImage404 = () =>
+  stubFor({
+    name: 'John Smith Details',
+    request: {
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/licence-condition/id/101/condition/1008/image`,
+      method: 'GET',
+    },
+    response: {
+      headers: responseHeaders,
+      status: 404,
+    },
+    scenarioName: 'john-smith-prisoner-licence-image',
+    requiredScenarioState: 'Started',
+    newScenarioState: 'licenceImageSuccess',
+  })
+
+const licenceImage200 = () =>
+  stubFor({
+    name: 'John Smith Details',
+    request: {
+      url: `/rpApi/resettlement-passport/prisoner/A8731DY/licence-condition/id/101/condition/1008/image`,
+      method: 'GET',
+    },
+    response: {
+      headers: responseHeaders,
+      status: 200,
+    },
+    scenarioName: 'john-smith-prisoner-licence-image',
+    requiredScenarioState: 'licenceImageSuccess',
+  })
+
+export const johnSmithOverview = () => [errorOnAccommodation(), successOnFinanceAndIt()]
+export const johnSmithLicenceImage = () => [licenceImage404(), licenceImage200()]
