@@ -51,17 +51,19 @@ describe('getView', () => {
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot)
   })
-  // it('Not found Error from RpService', async () => {
-  //   jest.spyOn(rpService, 'getLicenceConditionImage').mockRejectedValue(new Error('Something went wrong'))
-  //   const prisonerNumber = '123'
-  //   const licenceId = '1'
-  //   const conditionId = '2'
-  //
-  //   await request(app)
-  //     .get(`/licence-image/?licenceId=${licenceId}&conditionId=${conditionId}&prisonerNumber=${prisonerNumber}`)
-  //     .expect(404)
-  //     .expect(res => expect(res.text).toMatchSnapshot)
-  // })
+  it('Not found Error from RpService', async () => {
+    const error = new Error('not found') as Error & { status?: number }
+    error.status = 404
+    jest.spyOn(rpService, 'getLicenceConditionImage').mockRejectedValue(error)
+    const prisonerNumber = '123'
+    const licenceId = '1'
+    const conditionId = '2'
+
+    await request(app)
+      .get(`/licence-image/?licenceId=${licenceId}&conditionId=${conditionId}&prisonerNumber=${prisonerNumber}`)
+      .expect(404)
+      .expect(res => expect(res.text).toMatchSnapshot)
+  })
 })
 
 function getMockBase64Image(): string {
@@ -70,67 +72,3 @@ function getMockBase64Image(): string {
     'gljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
   )
 }
-
-// describe('submitForm', () => {
-//   it('Happy path with default inputs', async () => {
-//     const postAssessmentSkipSpy = jest.spyOn(rpService, 'postAssessmentSkip').mockImplementation()
-//     const service = {
-//       whySkipChoice: 'EARLY_RELEASE',
-//       supportingInfo: 'Some Info',
-//       prisonerNumber: '123',
-//     }
-//     await request(app)
-//       .post('/assessment-skip?prisonerNumber=123')
-//       .send(service)
-//       .expect(302)
-//       .expect(res =>
-//         expect(res.headers.location).toEqual('/assessment-task-list?prisonerNumber=123&type=RESETTLEMENT_PLAN'),
-//       )
-//
-//     expect(postAssessmentSkipSpy).toHaveBeenCalledWith('123', {
-//       reason: 'EARLY_RELEASE',
-//       moreInfo: 'Some Info',
-//     })
-//   })
-// })
-//
-// describe('submitForm validation', () => {
-//   it('Validates  input', async () => {
-//     const service = {
-//       supportingInfo: 'Some Info',
-//       prisonerNumber: '123',
-//     }
-//     await request(app)
-//       .post('/assessment-skip?prisonerNumber=123')
-//       .send(service)
-//       .expect(302)
-//       .expect(res => expect(res.headers.location).toContain('validationErrors'))
-//   })
-// })
-//
-// describe('validateAssessmentSkipForm', () => {
-//   it.each(['COMPLETED_IN_OASYS', 'COMPLETED_IN_ANOTHER_PRISON', 'EARLY_RELEASE', 'TRANSFER', 'OTHER'])(
-//     'Returns null on a valid form where %s is chosen',
-//     choice => {
-//       expect(validateAssessmentSkipForm({ whySkipChoice: choice })).toBeNull()
-//     },
-//   )
-// })
-//
-// it('gives an error for missing whySkipChoice', () => {
-//   expect(validateAssessmentSkipForm({ somethingElse: 'earlyRelease' })).toEqual({
-//     whySkipChoice: 'This field is required',
-//   })
-// })
-//
-// it('gives an error for unexpected whySkipChoice', () => {
-//   expect(validateAssessmentSkipForm({ whySkipChoice: 'potato' })).toEqual({
-//     whySkipChoice: 'This field is required',
-//   })
-// })
-//
-// it('gives an error for empty', () => {
-//   expect(validateAssessmentSkipForm({})).toEqual({
-//     whySkipChoice: 'This field is required',
-//   })
-// })
