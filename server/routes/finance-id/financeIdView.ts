@@ -4,6 +4,7 @@ import { CrsReferralResponse } from '../../data/model/crsReferralResponse'
 import { AssessmentsInformation } from '../../data/model/assessmentInformation'
 import { CaseNotesHistory } from '../../data/model/caseNotesHistory'
 import { CaseNotesCreators } from '../../data/model/caseNotesCreators'
+import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
 
 export default class FinanceIdView implements View {
   constructor(
@@ -17,6 +18,8 @@ export default class FinanceIdView implements View {
     private readonly page: string,
     private readonly sort: string,
     private readonly days: string,
+    private readonly finance: BankApplicationResponse,
+    private readonly id: IdApplicationResponse,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -33,6 +36,8 @@ export default class FinanceIdView implements View {
     page: string
     sort: string
     days: string
+    finance: BankApplicationResponse
+    id: IdApplicationResponse
     errors: ErrorMessage[]
   } {
     return {
@@ -46,6 +51,8 @@ export default class FinanceIdView implements View {
       page: this.page,
       sort: this.sort,
       days: this.days,
+      finance: this.finance,
+      id: this.id,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

@@ -57,7 +57,7 @@ function appSetup(services: Services, production: boolean, userSupplier: () => E
 }
 
 export function appWithAllRoutes({
-  production = false,
+  production = true,
   services = {},
   userSupplier = () => user,
 }: {

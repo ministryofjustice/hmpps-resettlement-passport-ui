@@ -1,11 +1,11 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import logger from '../../../logger'
-import { AssessmentErrorMessage } from '../../data/model/assessmentErrorMessage'
 import { BankAccountErrorMessage } from '../../data/model/bankAccountErrorMessage'
 import { IdErrorMessage } from '../../data/model/idErrorMessage'
 import { formatDateAsLocal, isDateValid } from '../../utils/utils'
 import FinanceIdView from './financeIdView'
+import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
 
 export default class FinanceIdController {
   constructor(private readonly rpService: RpService) {
@@ -15,8 +15,10 @@ export default class FinanceIdController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
-        req.query
+      if (!prisonerData) {
+        return next(new Error('Prisoner number is missing from request'))
+      }
+
       const {
         page = '0',
         pageSize = '10',
@@ -26,53 +28,14 @@ export default class FinanceIdController {
       } = req.query
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
 
-      let assessment: { error?: boolean } = {}
-      let assessmentDeleted: { error?: boolean } = {}
-      let finance: { error?: boolean } = {}
-      let financeDeleted: { error?: boolean } = {}
-      let id: { error?: boolean } = {}
-      let idDeleted: { error?: boolean } = {}
-
-      // DELETE ASSESSMENT
-      if (deleteAssessmentConfirmed) {
-        try {
-          assessmentDeleted = await this.rpService.deleteAssessment(prisonerNumber, assessmentId as string)
-        } catch (err) {
-          logger.warn(`Error deleting assessment`, err)
-          assessmentDeleted.error = true
-        }
-      }
-      // FETCH ASSESSMENT
-      try {
-        assessment = await this.rpService.fetchAssessment(prisonerNumber)
-      } catch (err) {
-        logger.warn(`Error fetching assessment data`, err)
-        assessment.error = true
-      }
-      // DELETE FINANCE
-      if (deleteFinanceConfirmed) {
-        try {
-          financeDeleted = await this.rpService.deleteFinance(prisonerNumber, financeId as string)
-        } catch (err) {
-          logger.warn(`Error deleting finance`, err)
-          financeDeleted.error = true
-        }
-      }
+      let finance: BankApplicationResponse = {}
+      let id: IdApplicationResponse = {}
       // FETCH FINANCE
       try {
         finance = await this.rpService.fetchFinance(prisonerNumber)
       } catch (err) {
         logger.warn(`Error fetching finance data`, err)
         finance.error = true
-      }
-      // DELETE ID
-      if (deleteIdConfirmed) {
-        try {
-          idDeleted = await this.rpService.deleteId(prisonerNumber, idId as string)
-        } catch (err) {
-          logger.warn(`Error deleting ID`, err)
-          idDeleted.error = true
-        }
       }
       // FETCH ID
       try {
@@ -118,47 +81,44 @@ export default class FinanceIdController {
         page as string,
         sort as string,
         days as string,
+        finance,
+        id,
       )
-      res.render('pages/finance-id', { ...view.renderArgs, assessment, finance, id })
+      return res.render('pages/finance-id', { ...view.renderArgs })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
-  postAssessmentSubmitView: RequestHandler = async (req, res, next): Promise<void> => {
+  postBankAccountDelete: RequestHandler = async (req, res, next) => {
     try {
-      const { prisonerData } = req
-      const params = req.body
-      const { prisonerNumber, assessmentDate, isBankAccountRequired, isIdRequired } = req.body
-      let idDocuments: object | null | undefined = null
-      idDocuments = req.body.idDocuments
-      if (idDocuments === null) {
-        idDocuments = []
-      }
-      if (typeof idDocuments === 'string') {
-        idDocuments = [idDocuments]
+      const { prisonerNumber, financeId } = req.body
+
+      if (!prisonerNumber || !financeId) {
+        return next(new Error('prisonerNumber or financeId missing from request body'))
       }
 
-      try {
-        await this.rpService.postAssessment(prisonerNumber, {
-          assessmentDate,
-          isBankAccountRequired,
-          isIdRequired,
-          idDocuments,
-          nomsId: prisonerNumber,
-        })
-        res.redirect(`/finance-and-id?prisonerNumber=${prisonerNumber}`)
-      } catch (error) {
-        const errorMessage = error.message
-        logger.error('Error fetching assessment:', error)
-        res.render('pages/assessment-confirmation', {
-          errorMessage,
-          prisonerData,
-          params,
-        })
-      }
+      await this.rpService.deleteFinance(prisonerNumber, financeId as string)
+
+      return res.redirect(`/finance-and-id?prisonerNumber=${prisonerNumber}#finance`)
     } catch (err) {
-      next(err)
+      return next(err)
+    }
+  }
+
+  postIdDelete: RequestHandler = async (req, res, next) => {
+    try {
+      const { prisonerNumber, idId } = req.body
+
+      if (!prisonerNumber || !idId) {
+        return next(new Error('prisonerNumber or idId missing from request body'))
+      }
+
+      await this.rpService.deleteId(prisonerNumber, idId as string)
+
+      return res.redirect(`/finance-and-id?prisonerNumber=${prisonerNumber}#id`)
+    } catch (err) {
+      return next(err)
     }
   }
 
@@ -327,48 +287,6 @@ export default class FinanceIdController {
     const { prisonerData } = req
     const params = req.query
     res.render('pages/add-bank-account-update-status', { prisonerData, params, req })
-  }
-
-  getConfirmAssessmentView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
-    const params = req.query
-    let errorMsg: AssessmentErrorMessage = {
-      idRequired: null,
-      bankAccountRequired: null,
-      dateAssessmentDay: null,
-      dateAssessmentMonth: null,
-      dateAssessmentYear: null,
-      isValidDate: null,
-    }
-
-    const { isIdRequired, isBankAccountRequired, dateAssessmentDay, dateAssessmentMonth, dateAssessmentYear } = params
-
-    const isValidDate = isDateValid(`${dateAssessmentYear}-${dateAssessmentMonth}-${dateAssessmentDay}`)
-
-    if (
-      !isIdRequired ||
-      !isBankAccountRequired ||
-      !dateAssessmentDay ||
-      !dateAssessmentMonth ||
-      !dateAssessmentYear ||
-      !isValidDate
-    ) {
-      const message = 'Select an option'
-      const dateFieldMissingMessage = 'The date of assessment must include a '
-      const dateFieldInvalid = 'The date of assessment must be a real date'
-      errorMsg = {
-        idRequired: isIdRequired ? null : message,
-        bankAccountRequired: isBankAccountRequired ? null : message,
-        dateAssessmentDay: dateAssessmentDay ? null : `${dateFieldMissingMessage} day`,
-        dateAssessmentMonth: dateAssessmentMonth ? null : `${dateFieldMissingMessage} month`,
-        dateAssessmentYear: dateAssessmentYear ? null : `${dateFieldMissingMessage} year`,
-        isValidDate: isValidDate ? null : dateFieldInvalid,
-      }
-      res.render('pages/assessment', { prisonerData, params, req, errorMsg })
-      return
-    }
-
-    res.render('pages/assessment-confirmation', { prisonerData, params, req })
   }
 
   getConfirmAddABankAccountView: RequestHandler = (req, res, next) => {
@@ -701,12 +619,6 @@ export default class FinanceIdController {
     } catch (err) {
       next(err)
     }
-  }
-
-  getAssessmentView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
-    const params = req.query
-    res.render('pages/assessment', { prisonerData, params })
   }
 
   getAddAnIdFurtherView: RequestHandler = (req, res, next) => {
