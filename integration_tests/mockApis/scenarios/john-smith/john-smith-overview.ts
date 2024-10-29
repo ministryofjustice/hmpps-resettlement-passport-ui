@@ -119,5 +119,5 @@ const licenceImage200 = () =>
     requiredScenarioState: 'licenceImageSuccess',
   })
 
-export const johnSmithOverview = () => [errorOnAccommodation(), successOnFinanceAndIt()]
+export const johnSmithReportInfo = () => [errorOnAccommodation(), successOnFinanceAndIt()]
 export const johnSmithLicenceImage = () => [licenceImage404(), licenceImage200()]
