@@ -4,7 +4,7 @@ import RpService from '../../services/rpService'
 import Config from '../../s3Config'
 import { stubPrisonerDetails, stubPrisonersList } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
-import { appWithAllRoutes, user } from '../testutils/appSetup'
+import { appWithAllRoutes } from '../testutils/appSetup'
 import FeatureFlags from '../../featureFlag'
 
 let app: Express
