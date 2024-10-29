@@ -6,6 +6,8 @@ export default (router: Router, services: Services) => {
   const financeIdController = new FinanceIdController(services.rpService)
 
   router.get('/finance-and-id', [financeIdController.getView])
+  router.post('/finance-and-id/bank-account-delete', [financeIdController.postBankAccountDelete])
+  router.post('/finance-and-id/id-delete', [financeIdController.postIdDelete])
   router.post('/finance-and-id/bank-account-submit', [financeIdController.postBankAccountSubmitView])
   router.post('/finance-and-id/id-submit', [financeIdController.postIdSubmitView])
   router.post('/finance-and-id/bank-account-update', [financeIdController.postBankAccountUpdateView])

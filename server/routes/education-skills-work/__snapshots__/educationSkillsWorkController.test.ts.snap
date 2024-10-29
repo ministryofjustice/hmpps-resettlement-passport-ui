@@ -471,7 +471,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
 <html lang="en" class="govuk-template">
   <head>
     <meta charset="utf-8">
-    <title>Prepare someone for release - Accommodation
+    <title>Prepare someone for release - Education, skills and work
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
@@ -675,7 +675,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" aria-current=page>
+                 href="/accommodation/?prisonerNumber=123" >
                 Accommodation
               </a>
             </li>
@@ -707,7 +707,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=123" aria-current=page>
                 Education, skills and work
               </a>
             </li>
@@ -746,7 +746,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l" data-qa="page-title-h2">
-      Accommodation
+      Education, skills and work
     </h2>
     
   </div>
@@ -757,7 +757,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
         Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
+        <strong class="govuk-tag govuk-tag--">  </strong>
       </h3>
     </header>
     <div class="app-summary-card__header">
@@ -766,7 +766,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
         <input type="hidden" id="pathway" name="pathway" value="attitudes" />
         <a
           class="govuk-button"
-          href="/status-update?selectedPathway=accommodation&prisonerNumber=123"
+          href="/status-update?selectedPathway=education-skills-and-work&prisonerNumber=123"
           data-qa="update-pathway-status-button"
         >
           Update status
@@ -792,11 +792,15 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#duty-to-refer">Duty to refer</a>
+            <a href="#work-status">Work status</a>
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#main-address">Main address</a>
+            <a href="#work-interests">Work interests</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#affect-ability-to-work">Things that may affect their ability to work</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -818,12 +822,12 @@ exports[`getView Happy path with default query params and data from endpoints 1`
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
   
   <header class="app-summary-card__header">
-    <h3 class="app-summary-card__title">Accommodation case notes and status history</h3>
+    <h3 class="app-summary-card__title">Education, skills and work case notes and status history</h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
     <div class="govuk-grid-row">
       
-      <form action="/accommodation?prisonerNumber=123#case-notes" method="GET" novalidate>
+      <form action="/education-skills-and-work?prisonerNumber=123#case-notes" method="GET" novalidate>
         <div class="govuk-grid-column-full">
           <label class="govuk-label" for="pathway-select">Created by</label>
           <select name="createdByUserId" class="govuk-select" id="pathway-select">
@@ -848,7 +852,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           
             
             <div class="case-note">
-              <h3>Accommodation</h3>
+              <h3>Education, skills and work</h3>
               <strong></strong>
               <p class="show-line-breaks">
                 This is a case note
@@ -861,7 +865,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             
             
             <div class="case-note">
-              <h3>Accommodation</h3>
+              <h3>Education, skills and work</h3>
               <strong></strong>
               <p class="show-line-breaks">
                 This is another case note
@@ -903,73 +907,60 @@ exports[`getView Happy path with default query params and data from endpoints 1`
       
   </div>
 </section>
-      <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Duty to refer
-            <span class="govuk-caption-m">Data sourced from nDelius</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          
-            <table class="govuk-table">
+      
+        <section id="work-status" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              Work status
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            
+              <table class="govuk-table">
+                <tbody>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Current work status</th>
+                  <td class="govuk-table__cell">In progress</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Last updated</th>
+                  <td class="govuk-table__cell">5 September 2024</td>
+                </tr>
+                </tbody>
+              </table>
+            
+          </div>
+        </section>
 
+        <section id="work-interests" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              Work interests
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            
+              <p>No work interests found</p>
+            
+          </div>
+        </section>
 
-  <tbody class="govuk-table__body">
-
-  
-    <tr class="govuk-table__row">
-    
+        <section id="affect-ability-to-work" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              Things that may affect their ability to work
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            
+              <p>No ability to work data found</p>
+            
+          </div>
+        </section>
       
-      
-      <th scope="row" class="govuk-table__header">Referral date</th>
-      
-    
-      
-      
-      <td class="govuk-table__cell">7 September 2023</td>
-      
-    
-    </tr>
-  
-
-  
-    <tr class="govuk-table__row">
-    
-      
-      
-      <th scope="row" class="govuk-table__header">Status</th>
-      
-    
-      
-      
-      <td class="govuk-table__cell">IN_PROGRESS</td>
-      
-    
-    </tr>
-  
-
-  </tbody>
-</table>
-
-          
-        </div>
-      </section>
-      <section id="main-address" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Main address
-            <span class="govuk-caption-m">Data sourced from nDelius</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          
-            <p>A message</p>
-          
-        </div>
-      </section>
       
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
@@ -986,7 +977,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                 <th class="govuk-table__header" scope="row">This is a question</th>
                 <td class="govuk-table__cell show-line-breaks">Another answer</td>
                 <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
+                  <a href="/ImmediateNeedsReport/pathway/EDUCATION_SKILLS_AND_WORK/page/PAGE_1/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
                 </td>
               </tr>
             
@@ -996,7 +987,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
 Answer2
 Answer3</td>
                 <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
+                  <a href="/ImmediateNeedsReport/pathway/EDUCATION_SKILLS_AND_WORK/page/PAGE_2/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
                 </td>
               </tr>
             
@@ -1320,7 +1311,7 @@ exports[`getView Happy path with default query params and no data from endpoints
 <html lang="en" class="govuk-template">
   <head>
     <meta charset="utf-8">
-    <title>Prepare someone for release - Accommodation
+    <title>Prepare someone for release - Education, skills and work
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
@@ -1524,7 +1515,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" aria-current=page>
+                 href="/accommodation/?prisonerNumber=123" >
                 Accommodation
               </a>
             </li>
@@ -1556,7 +1547,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=123" aria-current=page>
                 Education, skills and work
               </a>
             </li>
@@ -1595,7 +1586,7 @@ exports[`getView Happy path with default query params and no data from endpoints
     
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l" data-qa="page-title-h2">
-      Accommodation
+      Education, skills and work
     </h2>
     
   </div>
@@ -1606,7 +1597,7 @@ exports[`getView Happy path with default query params and no data from endpoints
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
         Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
+        <strong class="govuk-tag govuk-tag--">  </strong>
       </h3>
     </header>
     <div class="app-summary-card__header">
@@ -1615,7 +1606,7 @@ exports[`getView Happy path with default query params and no data from endpoints
         <input type="hidden" id="pathway" name="pathway" value="attitudes" />
         <a
           class="govuk-button"
-          href="/status-update?selectedPathway=accommodation&prisonerNumber=123"
+          href="/status-update?selectedPathway=education-skills-and-work&prisonerNumber=123"
           data-qa="update-pathway-status-button"
         >
           Update status
@@ -1641,11 +1632,15 @@ exports[`getView Happy path with default query params and no data from endpoints
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#duty-to-refer">Duty to refer</a>
+            <a href="#work-status">Work status</a>
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#main-address">Main address</a>
+            <a href="#work-interests">Work interests</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#affect-ability-to-work">Things that may affect their ability to work</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -1667,12 +1662,12 @@ exports[`getView Happy path with default query params and no data from endpoints
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
   
   <header class="app-summary-card__header">
-    <h3 class="app-summary-card__title">Accommodation case notes and status history</h3>
+    <h3 class="app-summary-card__title">Education, skills and work case notes and status history</h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
     <div class="govuk-grid-row">
       
-      <form action="/accommodation?prisonerNumber=123#case-notes" method="GET" novalidate>
+      <form action="/education-skills-and-work?prisonerNumber=123#case-notes" method="GET" novalidate>
         <div class="govuk-grid-column-full">
           <label class="govuk-label" for="pathway-select">Created by</label>
           <select name="createdByUserId" class="govuk-select" id="pathway-select">
@@ -1692,34 +1687,9 @@ exports[`getView Happy path with default query params and no data from endpoints
     
   </div>
 </section>
-      <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Duty to refer
-            <span class="govuk-caption-m">Data sourced from nDelius</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          
-            No data found
-          
-        </div>
-      </section>
-      <section id="main-address" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Main address
-            <span class="govuk-caption-m">Data sourced from nDelius</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          
-            No data found
-          
-        </div>
-      </section>
+      
+        <p>No data found</p>
+      
       
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
@@ -1846,7 +1816,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
 <html lang="en" class="govuk-template">
   <head>
     <meta charset="utf-8">
-    <title>Prepare someone for release - Accommodation
+    <title>Prepare someone for release - Education, skills and work
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
@@ -2050,7 +2020,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" aria-current=page>
+                 href="/accommodation/?prisonerNumber=123" >
                 Accommodation
               </a>
             </li>
@@ -2082,7 +2052,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=123" aria-current=page>
                 Education, skills and work
               </a>
             </li>
@@ -2121,7 +2091,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
     
   <div class="govuk-grid-column-two-thirds">
     <h2 class="govuk-heading-l" data-qa="page-title-h2">
-      Accommodation
+      Education, skills and work
     </h2>
     
   </div>
@@ -2132,7 +2102,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
         Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
+        <strong class="govuk-tag govuk-tag--">  </strong>
       </h3>
     </header>
     <div class="app-summary-card__header">
@@ -2141,7 +2111,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
         <input type="hidden" id="pathway" name="pathway" value="attitudes" />
         <a
           class="govuk-button"
-          href="/status-update?selectedPathway=accommodation&prisonerNumber=123"
+          href="/status-update?selectedPathway=education-skills-and-work&prisonerNumber=123"
           data-qa="update-pathway-status-button"
         >
           Update status
@@ -2167,11 +2137,15 @@ exports[`getView Happy path with specified query params and data from endpoints 
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#duty-to-refer">Duty to refer</a>
+            <a href="#work-status">Work status</a>
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#main-address">Main address</a>
+            <a href="#work-interests">Work interests</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#affect-ability-to-work">Things that may affect their ability to work</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -2193,12 +2167,12 @@ exports[`getView Happy path with specified query params and data from endpoints 
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
   
   <header class="app-summary-card__header">
-    <h3 class="app-summary-card__title">Accommodation case notes and status history</h3>
+    <h3 class="app-summary-card__title">Education, skills and work case notes and status history</h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
     <div class="govuk-grid-row">
       
-      <form action="/accommodation?prisonerNumber=123#case-notes" method="GET" novalidate>
+      <form action="/education-skills-and-work?prisonerNumber=123#case-notes" method="GET" novalidate>
         <div class="govuk-grid-column-full">
           <label class="govuk-label" for="pathway-select">Created by</label>
           <select name="createdByUserId" class="govuk-select" id="pathway-select">
@@ -2223,7 +2197,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
           
             
             <div class="case-note">
-              <h3>Accommodation</h3>
+              <h3>Education, skills and work</h3>
               <strong></strong>
               <p class="show-line-breaks">
                 This is a case note
@@ -2236,7 +2210,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             
             
             <div class="case-note">
-              <h3>Accommodation</h3>
+              <h3>Education, skills and work</h3>
               <strong></strong>
               <p class="show-line-breaks">
                 This is another case note
@@ -2261,12 +2235,12 @@ exports[`getView Happy path with specified query params and data from endpoints 
     <ul class="moj-pagination__list">
       
         <li class="moj-pagination__item  moj-pagination__item--prev">
-          <a class="moj-pagination__link" href="/accommodation?createdByUserId=2&amp;prisonerNumber=123&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ACCOMMODATION#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
+          <a class="moj-pagination__link" href="/education-skills-and-work?createdByUserId=2&amp;prisonerNumber=123&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=EDUCATION_SKILLS_AND_WORK#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
         </li>
       
       
           <li class="moj-pagination__item">
-            <a class="moj-pagination__link" href="/accommodation?createdByUserId=2&amp;prisonerNumber=123&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ACCOMMODATION#case-notes " aria-label="Page 1 of 1">1</a>
+            <a class="moj-pagination__link" href="/education-skills-and-work?createdByUserId=2&amp;prisonerNumber=123&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=EDUCATION_SKILLS_AND_WORK#case-notes " aria-label="Page 1 of 1">1</a>
           </li>
         
       
@@ -2284,73 +2258,60 @@ exports[`getView Happy path with specified query params and data from endpoints 
       
   </div>
 </section>
-      <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Duty to refer
-            <span class="govuk-caption-m">Data sourced from nDelius</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          
-            <table class="govuk-table">
+      
+        <section id="work-status" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              Work status
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            
+              <table class="govuk-table">
+                <tbody>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Current work status</th>
+                  <td class="govuk-table__cell">In progress</td>
+                </tr>
+                <tr class="govuk-table__row">
+                  <th scope="row" class="govuk-table__header">Last updated</th>
+                  <td class="govuk-table__cell">5 September 2024</td>
+                </tr>
+                </tbody>
+              </table>
+            
+          </div>
+        </section>
 
+        <section id="work-interests" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              Work interests
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            
+              <p>No work interests found</p>
+            
+          </div>
+        </section>
 
-  <tbody class="govuk-table__body">
-
-  
-    <tr class="govuk-table__row">
-    
+        <section id="affect-ability-to-work" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              Things that may affect their ability to work
+            </h3>
+            <span class="right"></span>
+          </header>
+          <div class="app-summary-card__body">
+            
+              <p>No ability to work data found</p>
+            
+          </div>
+        </section>
       
-      
-      <th scope="row" class="govuk-table__header">Referral date</th>
-      
-    
-      
-      
-      <td class="govuk-table__cell">7 September 2023</td>
-      
-    
-    </tr>
-  
-
-  
-    <tr class="govuk-table__row">
-    
-      
-      
-      <th scope="row" class="govuk-table__header">Status</th>
-      
-    
-      
-      
-      <td class="govuk-table__cell">IN_PROGRESS</td>
-      
-    
-    </tr>
-  
-
-  </tbody>
-</table>
-
-          
-        </div>
-      </section>
-      <section id="main-address" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Main address
-            <span class="govuk-caption-m">Data sourced from nDelius</span>
-          </h3>
-          <span class="right"></span>
-        </header>
-        <div class="app-summary-card__body">
-          
-            <p>A message</p>
-          
-        </div>
-      </section>
       
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
@@ -2367,7 +2328,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
                 <th class="govuk-table__header" scope="row">This is a question</th>
                 <td class="govuk-table__cell show-line-breaks">Another answer</td>
                 <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
+                  <a href="/ImmediateNeedsReport/pathway/EDUCATION_SKILLS_AND_WORK/page/PAGE_1/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
                 </td>
               </tr>
             
@@ -2377,7 +2338,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
 Answer2
 Answer3</td>
                 <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
+                  <a href="/ImmediateNeedsReport/pathway/EDUCATION_SKILLS_AND_WORK/page/PAGE_2/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
                 </td>
               </tr>
             

@@ -10,6 +10,10 @@ export default class AccommodationController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
+      if (!prisonerData) {
+        return next(new Error('Prisoner number is missing from request'))
+      }
+
       const {
         page = '0',
         pageSize = '10',
@@ -58,9 +62,9 @@ export default class AccommodationController {
         sort as string,
         days as string,
       )
-      res.render('pages/accommodation', { ...view.renderArgs })
+      return res.render('pages/accommodation', { ...view.renderArgs })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }
