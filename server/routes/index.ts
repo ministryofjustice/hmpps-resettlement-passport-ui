@@ -51,6 +51,7 @@ export default function routes(services: Services): Router {
   documentRouter(router, services)
   prisonerOverviewRouter(router, services)
   resetProfileRouter(router, services)
+  licenceImageRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
@@ -68,7 +69,6 @@ export default function routes(services: Services): Router {
       next(err)
     }
   })
-  use('/licence-image', licenceImageRouter)
   use('/add-case-note', (req: Request, res: Response) => {
     const { prisonerData } = req
     res.render('pages/add-case-note', {
