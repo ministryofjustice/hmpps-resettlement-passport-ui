@@ -1,14 +1,3 @@
-/* Basic happy path
-Add bank account application
-Update status (Edit application)
-Delete application
-Change answers once adding
-
-Unhappy paths
-Not filling in Date
-Not selecting type of bank account
-*/
-
 import type { Express } from 'express'
 import request from 'supertest'
 import RpService from '../../services/rpService'
