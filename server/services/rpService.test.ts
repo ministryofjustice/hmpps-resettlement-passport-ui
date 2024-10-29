@@ -97,16 +97,6 @@ describe('RpService', () => {
     )
   })
 
-  it('should call rpClient correctly when deleting an assessment', async () => {
-    rpClient.get.mockResolvedValue({})
-    const spy = jest.spyOn(rpClient, 'delete')
-    const prisonerNumber = '6'
-    const applicationId = '1'
-    await service.deleteAssessment(prisonerNumber, applicationId)
-
-    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${applicationId}`)
-  })
-
   it('should call rpClient correctly when fetching finance', async () => {
     rpClient.get.mockResolvedValue({})
     const spy = jest.spyOn(rpClient, 'get')

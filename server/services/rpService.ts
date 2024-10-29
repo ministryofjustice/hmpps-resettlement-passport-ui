@@ -21,6 +21,7 @@ import { PrisonerData } from '../@types/express'
 import { currentUser } from '../middleware/userContextMiddleware'
 import { getFeatureFlagBoolean } from '../utils/utils'
 import { ResetReason } from '../data/model/resetProfile'
+import { BankApplicationResponse, IdApplication, IdApplicationResponse } from '../data/model/financeId'
 
 export default class RpService {
   constructor() {
@@ -345,12 +346,10 @@ export default class RpService {
     )
   }
 
-  async deleteAssessment(prisonerNumber: string, assessmentId: string) {
-    return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${assessmentId}`)
-  }
-
   async fetchFinance(prisonerNumber: string) {
-    return this.createClient().get(`/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`)
+    return (await this.createClient().get(
+      `/resettlement-passport/prisoner/${prisonerNumber}/bankapplication`,
+    )) as BankApplicationResponse
   }
 
   async deleteFinance(prisonerNumber: string, financeId: string) {
@@ -358,7 +357,10 @@ export default class RpService {
   }
 
   async fetchId(prisonerNumber: string) {
-    return this.createClient().get(`/resettlement-passport/prisoner/${prisonerNumber}/idapplication/all`)
+    const idResponse = (await this.createClient().get(
+      `/resettlement-passport/prisoner/${prisonerNumber}/idapplication/all`,
+    )) as IdApplication[]
+    return { results: idResponse } as IdApplicationResponse
   }
 
   async deleteId(prisonerNumber: string, idId: string) {

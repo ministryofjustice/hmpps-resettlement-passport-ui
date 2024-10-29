@@ -5,6 +5,7 @@ import { BankAccountErrorMessage } from '../../data/model/bankAccountErrorMessag
 import { IdErrorMessage } from '../../data/model/idErrorMessage'
 import { formatDateAsLocal, isDateValid } from '../../utils/utils'
 import FinanceIdView from './financeIdView'
+import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
 
 export default class FinanceIdController {
   constructor(private readonly rpService: RpService) {
@@ -14,8 +15,10 @@ export default class FinanceIdController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { deleteAssessmentConfirmed, assessmentId, deleteFinanceConfirmed, financeId, idId, deleteIdConfirmed } =
-        req.query
+      if (!prisonerData) {
+        return next(new Error('Prisoner number is missing from request'))
+      }
+
       const {
         page = '0',
         pageSize = '10',
@@ -25,45 +28,14 @@ export default class FinanceIdController {
       } = req.query
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
 
-      let assessmentDeleted: { error?: boolean } = {}
-      let finance: { error?: boolean } = {}
-      let financeDeleted: { error?: boolean } = {}
-      let id: { error?: boolean } = {}
-      let idDeleted: { error?: boolean } = {}
-
-      // DELETE ASSESSMENT
-      if (deleteAssessmentConfirmed) {
-        try {
-          assessmentDeleted = await this.rpService.deleteAssessment(prisonerNumber, assessmentId as string)
-        } catch (err) {
-          logger.warn(`Error deleting assessment`, err)
-          assessmentDeleted.error = true
-        }
-      }
-      // DELETE FINANCE
-      if (deleteFinanceConfirmed) {
-        try {
-          financeDeleted = await this.rpService.deleteFinance(prisonerNumber, financeId as string)
-        } catch (err) {
-          logger.warn(`Error deleting finance`, err)
-          financeDeleted.error = true
-        }
-      }
+      let finance: BankApplicationResponse = {}
+      let id: IdApplicationResponse = {}
       // FETCH FINANCE
       try {
         finance = await this.rpService.fetchFinance(prisonerNumber)
       } catch (err) {
         logger.warn(`Error fetching finance data`, err)
         finance.error = true
-      }
-      // DELETE ID
-      if (deleteIdConfirmed) {
-        try {
-          idDeleted = await this.rpService.deleteId(prisonerNumber, idId as string)
-        } catch (err) {
-          logger.warn(`Error deleting ID`, err)
-          idDeleted.error = true
-        }
       }
       // FETCH ID
       try {
@@ -109,10 +81,44 @@ export default class FinanceIdController {
         page as string,
         sort as string,
         days as string,
+        finance,
+        id,
       )
-      res.render('pages/finance-id', { ...view.renderArgs, finance, id })
+      return res.render('pages/finance-id', { ...view.renderArgs })
     } catch (err) {
-      next(err)
+      return next(err)
+    }
+  }
+
+  postBankAccountDelete: RequestHandler = async (req, res, next) => {
+    try {
+      const { prisonerNumber, financeId } = req.body
+
+      if (!prisonerNumber || !financeId) {
+        return next(new Error('prisonerNumber or financeId missing from request body'))
+      }
+
+      await this.rpService.deleteFinance(prisonerNumber, financeId as string)
+
+      return res.redirect(`/finance-and-id?prisonerNumber=${prisonerNumber}#finance`)
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  postIdDelete: RequestHandler = async (req, res, next) => {
+    try {
+      const { prisonerNumber, idId } = req.body
+
+      if (!prisonerNumber || !idId) {
+        return next(new Error('prisonerNumber or idId missing from request body'))
+      }
+
+      await this.rpService.deleteId(prisonerNumber, idId as string)
+
+      return res.redirect(`/finance-and-id?prisonerNumber=${prisonerNumber}#id`)
+    } catch (err) {
+      return next(err)
     }
   }
 
