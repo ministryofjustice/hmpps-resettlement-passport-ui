@@ -32,13 +32,6 @@ afterEach(() => {
   jest.resetAllMocks()
 })
 
-afterAll(() => {
-  user.authSource = 'NOMIS'
-})
-
-beforeAll(() => {
-  user.authSource = 'nomis'
-})
 describe('getView', () => {
   it('Happy path with filter prisoner number', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)

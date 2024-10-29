@@ -24,7 +24,7 @@ export const user = {
   username: 'user1',
   displayName: 'First Last',
   activeCaseLoadId: 'MDI',
-  authSource: 'NOMIS',
+  authSource: 'nomis',
 }
 
 export const flashProvider = jest.fn()
