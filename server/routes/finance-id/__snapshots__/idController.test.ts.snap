@@ -10852,8 +10852,7 @@ exports[`getAddAnIdView Error case - submit ID application without type or date 
     <br />
     
       <span class="govuk-caption-xl">Prepare someone for release</span>
-      <h1 class="govuk-heading-xl" data-qa="page-heading">(/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/server/views/pages/add-id.njk) [Line 7, Column 24]
-  Error: Cannot use &quot;in&quot; operator to search for &quot;Birth certificate&quot; in unexpected types.</h1>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">Something went wrong</h1>
     
 
     
@@ -10870,108 +10869,7 @@ exports[`getAddAnIdView Error case - submit ID application without type or date 
         <main class="govuk-main-wrapper govuk-body" id="main-content">
           
   <h2></h2>
-  <pre>Template render error: (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/server/views/pages/add-id.njk) [Line 7, Column 24]
-  Error: Cannot use &quot;in&quot; operator to search for &quot;Birth certificate&quot; in unexpected types.
-    at Object.handleError (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/runtime.js:227:12)
-    at b_content (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:240:14)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:259:28)
-    at b_beforeContent (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:275:1)
-    at b_main (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:242:34)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:114:83)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:448:1)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:444:1)
-    at fn (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:26:24)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:66:22
-    at executeSync (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:8:15)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:65:11
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:439:1)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:471:11
-    at Template.root [as rootRenderFunc] (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:57:1)
-    at Template.render (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:454:10)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:437:10)
-    at fn (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:26:24)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:66:22
-    at executeSync (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:8:15)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:65:11
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:433:1)
-    at createTemplate (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:254:9)
-    at handle (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:265:11)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:276:9
-    at next (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/lib.js:258:7)
-    at Object.asyncIter (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/lib.js:263:3)
-    at Environment.getTemplate (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:259:9)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:431:5)
-    at fn (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:26:24)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:66:22
-    at executeSync (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:8:15)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:65:11
-    at waterfall (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:71:38)
-    at Environment.waterfall (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:316:12)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:446:5)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:424:1)
-    at fn (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:26:24)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:66:22
-    at executeSync (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:8:15)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:65:11
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:419:1)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:471:11
-    at Template.root [as rootRenderFunc] (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:77:1)
-    at Template.render (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:454:10)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:417:10)
-    at fn (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:26:24)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:66:22
-    at executeSync (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:8:15)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:65:11
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:413:1)
-    at createTemplate (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:254:9)
-    at handle (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:265:11)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:276:9
-    at next (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/lib.js:258:7)
-    at Object.asyncIter (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/lib.js:263:3)
-    at Environment.getTemplate (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:259:9)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:411:5)
-    at fn (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:26:24)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:66:22
-    at executeSync (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:8:15)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:65:11
-    at waterfall (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/a-sync-waterfall/index.js:71:38)
-    at Environment.waterfall (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:316:12)
-    at b_header (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:426:5)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:110:85)
-    at b_skipLink (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:208:1)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:106:87)
-    at b_bodyStart (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:460:1)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:102:88)
-    at b_head (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:263:1)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:76:83)
-    at b_headIcons (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:169:1)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:72:88)
-    at b_pageTitle (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:277:1)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:65:88)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:512:9
-    at Template.root [as rootRenderFunc] (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:48:1)
-    at Template.getExported (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:508:10)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:41:6)
-    at createTemplate (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:254:9)
-    at handle (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:265:11)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:276:9
-    at next (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/lib.js:258:7)
-    at Object.asyncIter (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/lib.js:263:3)
-    at Environment.getTemplate (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:259:9)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:39:5)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:512:9
-    at Template.root [as rootRenderFunc] (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:48:1)
-    at Template.getExported (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:508:10)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:31:5)
-    at createTemplate (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:254:9)
-    at handle (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:265:11)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:276:9
-    at next (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/lib.js:258:7)
-    at Object.asyncIter (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/lib.js:263:3)
-    at Environment.getTemplate (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:259:9)
-    at eval (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:29:5)
-    at /Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:512:9
-    at Template.root [as rootRenderFunc] (eval at _compile (/Users/jean-yves.betton/Documents/hmpps-resettlement-passport-ui/node_modules/nunjucks/src/environment.js:527:18), &lt;anonymous&gt;:48:1)</pre>
+  <pre></pre>
   <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
 
         </main>
