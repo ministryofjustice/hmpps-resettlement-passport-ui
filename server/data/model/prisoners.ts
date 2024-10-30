@@ -1,22 +1,28 @@
+import { PathwayStatus } from '../../@types/express'
+
 export type PrisonersList = {
   content: Prisoners[]
   page: number
   last: boolean
+  pageSize: number
+  sortName: string
+  totalElements: number
 }
 
 type Prisoners = {
+  prisonerNumber: string
   firstName: string
   middleNames?: string
   lastName: string
-  releaseDate?: Date
+  releaseDate?: string
   releaseType: string
-  lastUpdatedDate?: Date
-  status?: string[]
+  lastUpdatedDate?: string
+  status?: PathwayStatus[]
   pathwayStatus?: string
-  homeDetentionCurfewEligibilityDate?: Date
-  paroleEligibilityDate?: Date
-  releaseEligibilityDate?: Date
+  homeDetentionCurfewEligibilityDate?: string
+  paroleEligibilityDate?: string
+  releaseEligibilityDate?: string
   releaseEligibilityType?: string
-  releaseOnTemporaryLicenceDate?: Date
+  releaseOnTemporaryLicenceDate?: string
   assessmentRequired: boolean
 }
