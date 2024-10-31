@@ -49,25 +49,6 @@ describe('RpService', () => {
     expect(loggerSpy).toHaveBeenCalledWith(`Session: sessionId Cannot get otp for ${nomsId} ${error.status} ${error}`)
   })
 
-  it('should call rpClient correctly when fetching assessment', async () => {
-    rpClient.get.mockResolvedValue({})
-    const spy = jest.spyOn(rpClient, 'get')
-    const prisonerNumber = '6'
-    await service.fetchAssessment(prisonerNumber)
-
-    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`)
-  })
-
-  it('should call rpClient correctly when posting assessment', async () => {
-    rpClient.get.mockResolvedValue({})
-    const spy = jest.spyOn(rpClient, 'post')
-    const prisonerNumber = '6'
-    const body = { test: 'test' }
-    await service.postAssessment(prisonerNumber, body)
-
-    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment`, body)
-  })
-
   it('should call rpClient correctly when posting bank application', async () => {
     rpClient.get.mockResolvedValue({})
     const spy = jest.spyOn(rpClient, 'post')
@@ -114,16 +95,6 @@ describe('RpService', () => {
       `/resettlement-passport/prisoner/${prisonerNumber}/idapplication/${applicationId}`,
       body,
     )
-  })
-
-  it('should call rpClient correctly when deleting an assessment', async () => {
-    rpClient.get.mockResolvedValue({})
-    const spy = jest.spyOn(rpClient, 'delete')
-    const prisonerNumber = '6'
-    const applicationId = '1'
-    await service.deleteAssessment(prisonerNumber, applicationId)
-
-    expect(spy).toHaveBeenCalledWith(`/resettlement-passport/prisoner/${prisonerNumber}/assessment/${applicationId}`)
   })
 
   it('should call rpClient correctly when fetching finance', async () => {

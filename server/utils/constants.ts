@@ -38,11 +38,7 @@ export const PATHWAY_DICTIONARY = {
   },
 }
 
-export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
-  ...PATHWAY_DICTIONARY,
-  BENEFITS: {
-    name: 'Benefits',
-  },
+export const STATUS_DICTIONARY = {
   NOT_STARTED: {
     name: 'Not started',
     color: 'red',
@@ -72,6 +68,13 @@ export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
     name: 'Done',
     color: 'green',
     description: 'all required work has been completed successfully',
+  },
+}
+export const ENUMS_DICTIONARY: { [key: string]: EnumValue } = {
+  ...PATHWAY_DICTIONARY,
+  ...STATUS_DICTIONARY,
+  BENEFITS: {
+    name: 'Benefits',
   },
   LOW: {
     name: 'Low',

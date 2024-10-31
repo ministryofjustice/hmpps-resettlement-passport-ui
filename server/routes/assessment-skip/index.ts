@@ -3,8 +3,8 @@ import AssessmentSkipController from './assessmentSkipController'
 import { Services } from '../../services'
 
 export default (router: Router, services: Services) => {
-  const assessmentTaskListController = new AssessmentSkipController(services.rpService)
+  const assessmentSkipController = new AssessmentSkipController(services.rpService)
 
-  router.get('/assessment-skip', [assessmentTaskListController.getView])
-  router.post('/assessment-skip', [assessmentTaskListController.submitForm])
+  router.get('/assessment-skip', [assessmentSkipController.getView])
+  router.post('/assessment-skip', [assessmentSkipController.submitForm])
 }

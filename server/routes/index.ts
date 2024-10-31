@@ -9,9 +9,9 @@ import accommodationRouter from './accommodation'
 import healthStatusRouter from './health-status'
 import educationSkillsWorkRouter from './education-skills-work'
 import financeIdRouter from './finance-id'
+import financeIdAddIdRouter from './finance-id-add-id'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
-import statusUpdateRouter from './status-update/statusUpdateRouter'
 import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
 import assessmentSkipRouter from './assessment-skip'
@@ -24,6 +24,7 @@ import configMiddleware from './configMiddleware'
 import documentRouter from './documents/documentRouter'
 import prisonerOverviewRouter from './prisoner-overview/prisonerOverviewRouter'
 import resetProfileRouter from './reset-profile'
+import statusUpdateRouter from './status-update'
 import financeIdBankAccountRouter from './finance-id-bank-account'
 
 export default function routes(services: Services): Router {
@@ -37,6 +38,7 @@ export default function routes(services: Services): Router {
   attitudesThinkingBehaviourRouter(router, services)
   accommodationRouter(router, services)
   financeIdRouter(router, services)
+  financeIdAddIdRouter(router, services)
   childrenFamiliesCommunitiesRouter(router, services)
   healthStatusRouter(router, services)
   educationSkillsWorkRouter(router, services)
@@ -52,6 +54,7 @@ export default function routes(services: Services): Router {
   documentRouter(router, services)
   prisonerOverviewRouter(router, services)
   resetProfileRouter(router, services)
+  licenceImageRouter(router, services)
   financeIdBankAccountRouter(router, services)
 
   /* ************************************
@@ -70,7 +73,6 @@ export default function routes(services: Services): Router {
       next(err)
     }
   })
-  use('/licence-image', licenceImageRouter)
   use('/add-case-note', (req: Request, res: Response) => {
     const { prisonerData } = req
     res.render('pages/add-case-note', {
