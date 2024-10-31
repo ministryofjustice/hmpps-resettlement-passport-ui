@@ -18,7 +18,6 @@ import {
   johnSmithImmediateNeedsReportAccommodation,
   johnSmithImmediateNeedsReportHealth,
   johnSmithImmediateNeedsReportHealthWithFreeText,
-  johnSmithImmediateNeedsReportAllQuestionTypes,
 } from './scenarios/john-smith/john-smith-immediate-needs-report'
 import johnSmithImmediateNeedsReportEdit from './scenarios/john-smith/john-smith-immediate-needs-report-edit'
 import { johnSmithPostFinanceAndID, johnSmithPostID } from './scenarios/john-smith/john-smith-post-finance-and-ID'
@@ -451,9 +450,6 @@ const stubJohnSmithImmediateNeedsReportEdit = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportEdit()])
 const stubJohnSmithImmediateNeedsReportAccommodation = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation()])
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const stubJohnSmithImmediateNeedsReportAllQuestionTypes = () =>
-  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAllQuestionTypes()])
 const stubJohnSmithPostFinanceAndID = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithPostFinanceAndID()])
 const stubJohnSmithGetFinanceAndID = () =>
@@ -557,7 +553,6 @@ export default {
   stubJohnSmithPreRelease,
   stubJohnSmithImmediateNeedsReportHealth,
   stubJohnSmithImmediateNeedsReportHealthFreeText,
-  stubJohnSmithImmediateNeedsReportAllQuestionTypes,
   stubJohnSmithImmediateNeedsReportEdit,
   stubJohnSmithImmediateNeedsReportAccommodation,
   stubJohnSmithPostFinanceAndID,
