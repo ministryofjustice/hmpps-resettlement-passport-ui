@@ -1,6 +1,5 @@
 import { Request, RequestHandler, Response } from 'express'
 import RpService from '../../services/rpService'
-import { RPClient } from '../../data'
 import logger from '../../../logger'
 
 export default class WatchlistController {
@@ -28,17 +27,13 @@ export default class WatchlistController {
 
   private async watchlistFlow(req: Request, res: Response, addedToYourCase: boolean): Promise<void> {
     const { prisonerData } = req
-    const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
     const errorMessage: string = addedToYourCase ? 'Error adding to your cases' : 'Error removing from your cases'
 
     try {
       if (addedToYourCase) {
-        await rpClient.post(
-          `/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/watch`,
-          null,
-        )
+        await this.rpService.postWatchlist(prisonerData.personalDetails.prisonerNumber)
       } else {
-        await rpClient.delete(`/resettlement-passport/prisoner/${prisonerData.personalDetails.prisonerNumber}/watch`)
+        await this.rpService.deleteWatchlist(prisonerData.personalDetails.prisonerNumber)
       }
 
       res.redirect(`/prisoner-overview/?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)

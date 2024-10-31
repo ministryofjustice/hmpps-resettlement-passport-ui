@@ -465,4 +465,12 @@ export default class RpService {
       `/resettlement-passport/prisoner/${prisonerNumber}/licence-condition/id/${licenceId}/condition/${conditionId}/image`,
     )
   }
+
+  async postWatchlist(prisonerNumber: string) {
+    return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/watch`, null)
+  }
+
+  async deleteWatchlist(prisonerNumber: string) {
+    return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/watch`)
+  }
 }
