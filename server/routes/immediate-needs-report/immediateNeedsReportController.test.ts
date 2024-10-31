@@ -230,6 +230,9 @@ describe('getView', () => {
     })
     expect(getMergedQuestionsAndAnswersSpy).toHaveBeenCalledWith(stateKey, apiAssessmentPage.questionsAndAnswers)
   })
+
+  it('get check your answers - v1 of report', async () => {})
+  it('get check your answers - v2 of report', async () => {})
 })
 
 describe('startEdit', () => {

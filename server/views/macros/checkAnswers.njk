@@ -3,7 +3,7 @@
 
   {% set containsAssessmentSummary = false %}
     {% for questionAndAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-    {% if questionAndAnswer.question == 'CASE_NOTE_SUMMARY' %}
+    {% if questionAndAnswer.question === 'SUPPORT_NEEDS' or questionAndAnswer.question === 'SUPPORT_NEEDS_PRERELEASE' %}
       {% set containsAssessmentSummary = true %}
     {% endif %}
   {% endfor %}
