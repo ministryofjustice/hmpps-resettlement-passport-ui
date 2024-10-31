@@ -329,6 +329,19 @@ describe('getAddAnIdView', () => {
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
+    expect(submitIdSpy).toHaveBeenCalledWith(undefined, {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: '',
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: true,
+      idType: 'Birth certificate',
+      isPriorityApplication: false,
+      isUkNationalBornOverseas: false,
+    })
   })
   it('Error case - post ID submit with empty prisoner ID', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
@@ -346,6 +359,19 @@ describe('getAddAnIdView', () => {
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
+    expect(submitIdSpy).toHaveBeenCalledWith('', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: '',
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: true,
+      idType: 'Birth certificate',
+      isPriorityApplication: false,
+      isUkNationalBornOverseas: false,
+    })
   })
   it('Error case - post ID submit with null prisoner ID', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
@@ -363,6 +389,19 @@ describe('getAddAnIdView', () => {
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
+    expect(submitIdSpy).toHaveBeenCalledWith(null, {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: '',
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: true,
+      idType: 'Birth certificate',
+      isPriorityApplication: false,
+      isUkNationalBornOverseas: false,
+    })
   })
   it('Error case - post ID submit with invalid prisoner ID', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
@@ -380,6 +419,19 @@ describe('getAddAnIdView', () => {
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
+    expect(submitIdSpy).toHaveBeenCalledWith('!?@@?!', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: '',
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: true,
+      idType: 'Birth certificate',
+      isPriorityApplication: false,
+      isUkNationalBornOverseas: false,
+    })
   })
   it('error case - error from API', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Something went wrong'))
@@ -397,6 +449,19 @@ describe('getAddAnIdView', () => {
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
+    expect(submitIdSpy).toHaveBeenCalledWith('123', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: '',
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: true,
+      idType: 'Birth certificate',
+      isPriorityApplication: true,
+      isUkNationalBornOverseas: false,
+    })
   })
   it('Happy path - post ID submit divorce decree absolute certificate', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockImplementation()
