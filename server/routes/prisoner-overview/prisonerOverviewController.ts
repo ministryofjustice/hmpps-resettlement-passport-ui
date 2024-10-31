@@ -63,9 +63,6 @@ export default class PrisonerOverviewController {
         req,
       )
 
-      console.log(JSON.stringify(staffContacts, null, 2))
-      console.log(JSON.stringify(appointments, null, 2))
-
       return res.render('pages/overview', {
         licenceConditions,
         prisonerData,
