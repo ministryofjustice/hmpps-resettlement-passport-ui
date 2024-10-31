@@ -734,7 +734,7 @@ describe('getAddAnIdView', () => {
         refundAmount: '10',
         prisonerNumber: '123',
         applicationId: '1',
-        idType: '	National Insurance Number letter',
+        idType: 'National Insurance Number letter',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
