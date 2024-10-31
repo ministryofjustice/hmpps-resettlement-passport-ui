@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import AssessmentTaskListView from './assessmentTaskListView'
-import { AssessmentStatus } from '../../data/model/assessmentStatus'
+import { AssessmentsSummary, AssessmentStatus } from '../../data/model/assessmentStatus'
 import { AssessmentType } from '../../data/model/assessmentInformation'
 import { parseAssessmentType } from '../../utils/utils'
 import { isInPreReleaseWindow } from '../../utils/preReleaseWindow'
@@ -14,20 +14,24 @@ export default class AssessmentTaskListController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
+      if (!prisonerData) {
+        return next(new Error('Prisoner number is missing from request'))
+      }
+
       const { type, force } = req.query
       const assessmentType: AssessmentType = parseAssessmentType(type)
 
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
       const assessmentsSummary = await this.rpService.getAssessmentSummary(prisonerNumber, assessmentType)
 
-      const immediateNeedsReportNotStarted = assessmentType === 'BCST2' && notStarted(assessmentsSummary.results)
+      const immediateNeedsReportNotStarted = assessmentType === 'BCST2' && notStarted(assessmentsSummary)
       if (
         force !== 'true' &&
         immediateNeedsReportNotStarted &&
         isInPreReleaseWindow(prisonerData.personalDetails.releaseDate)
       ) {
         const preReleaseSummary = await this.rpService.getAssessmentSummary(prisonerNumber, 'RESETTLEMENT_PLAN')
-        if (notStarted(preReleaseSummary.results)) {
+        if (notStarted(preReleaseSummary)) {
           // Optionally skip initial needs assessment if it's not started and we're in the pre-release window
           return res.redirect(`/assessment-skip?prisonerNumber=${prisonerNumber}`)
         }
@@ -52,6 +56,6 @@ export default class AssessmentTaskListController {
   }
 }
 
-function notStarted(summary: AssessmentStatus[]): boolean {
-  return summary.every(({ assessmentStatus }) => assessmentStatus === 'NOT_STARTED')
+function notStarted(summary: AssessmentsSummary): boolean {
+  return !summary.error && summary.results.every(({ assessmentStatus }) => assessmentStatus === 'NOT_STARTED')
 }

@@ -10,6 +10,10 @@ export default class DrugsAlcoholController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
+      if (!prisonerData) {
+        return next(new Error('Prisoner number is missing from request'))
+      }
+
       const {
         page = '0',
         pageSize = '10',
@@ -55,9 +59,9 @@ export default class DrugsAlcoholController {
         sort as string,
         days as string,
       )
-      res.render('pages/drugs-alcohol', { ...view.renderArgs })
+      return res.render('pages/drugs-alcohol', { ...view.renderArgs })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }

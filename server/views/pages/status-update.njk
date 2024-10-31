@@ -3,7 +3,6 @@
 {% from "../macros/pagination.njk" import pagination %}
 {% set pathway = selectedPathway | getNameFromUrl %}
 {% set pageTitle = applicationName + " - " + pathway %}
-{% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% set statuses = ["NOT_STARTED", "SUPPORT_REQUIRED", "IN_PROGRESS", "SUPPORT_NOT_REQUIRED", "SUPPORT_DECLINED", "DONE"] %}
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
@@ -23,6 +22,22 @@
       </p>
     </div>
     <div class="govuk-grid-column-three-quarters">
+      {% if validationError %}
+        <div class="govuk-error-summary" data-module="govuk-error-summary">
+          <div role="alert">
+            <h2 class="govuk-error-summary__title">
+              There is a problem
+            </h2>
+            <div class="govuk-error-summary__body">
+              <ul class="govuk-list govuk-error-summary__list">
+                <li>
+                  <a href="#validation-error">{{ validationError }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endif %}
       <section id="status" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">
@@ -31,10 +46,15 @@
           </h3>
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
-          {% set actionURL = "/status-update#content" %}
+          {% set actionURL = "/status-update" %}
           <form method="POST" action="{{actionURL}}" novalidate>
-            <div class="govuk-form-group">
+            <div class="govuk-form-group {% if validationError %}govuk-form-group--error{% endif %}">
               <fieldset class="govuk-fieldset">
+                {% if validationError %}
+                  <p id="validation-error" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> {{ validationError }}
+                  </p>
+                {% endif %}
                 <div class="govuk-radios" data-module="govuk-radios">
                   {% for statusItem in statuses %}
                       {% set statusInfo = statusItem | getEnumValue %}
@@ -62,7 +82,7 @@
                         <label class="govuk-label govuk-radios__label" for="{{ statusItem }}">
                           {{ statusInfo.name }}
                         </label>
-                        <div id="sign-in-item-hint" class="govuk-hint govuk-radios__hint">
+                        <div class="govuk-hint govuk-radios__hint">
                           {{ statusInfo.description }}
                         </div>
                       </div>
@@ -85,32 +105,6 @@
             <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
             <button class="govuk-button" type="submit" data-qa="update-status-submit">Update</button>
-            {% set errorNotificationHtml %}
-              <h3 class="govuk-notification-banner__heading">
-                Unable to update - try again later or contact administrator if problem persists.
-              </h3>
-            {% endset %}
-            {% set deliusUserErrorHtml %}
-              <h3 class="govuk-notification-banner__heading">
-                Delius users are currently unable to access the case notes feature. If this feature would be useful for you, use the <a class="govuk-link" href="{{ feedbackUrl }}" rel="noreferrer noopener" target="_blank">feedback form</a> to let us know.
-              </h3>
-            {% endset %}
-            {% if serverUpdate === 'error' or serverUpdate === 'deliusUserError' %}
-              <div id='content'></div>
-            {% endif %}
-            {% if serverUpdate === 'error' %}
-              {{ govukNotificationBanner({
-                html: errorNotificationHtml,
-                type: "error",
-                titleId: "caseNotesUpdateError"
-              }) }}
-            {% endif %}
-            {% if serverUpdate === 'deliusUserError' %}
-              {{ govukNotificationBanner({
-                html: deliusUserErrorHtml,
-                type: "error"
-              }) }}
-            {% endif %}
           </form>
         </div>
       </section>
