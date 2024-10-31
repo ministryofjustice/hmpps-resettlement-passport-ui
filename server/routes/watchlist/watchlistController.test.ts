@@ -45,7 +45,10 @@ describe('postWatch', () => {
     expect(postWatchListSpy).toHaveBeenCalledWith('123')
   })
   it('Error case - missing parameter', async () => {
-    await request(app).post('/addToYourCases').expect(500)
+    await request(app)
+      .post('/addToYourCases')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
 
@@ -72,6 +75,9 @@ describe('deleteWatch', () => {
     expect(deleteWatchListSpy).toHaveBeenCalledWith('123')
   })
   it('Error case - missing parameter', async () => {
-    await request(app).post('/removeFromYourCases').expect(500)
+    await request(app)
+      .post('/removeFromYourCases')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
