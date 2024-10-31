@@ -2,17 +2,7 @@ import type { Express } from 'express'
 import request from 'supertest'
 import RpService from '../../services/rpService'
 import { appWithAllRoutes } from '../testutils/appSetup'
-import {
-  stubPrisonerDetails,
-  stubAssessmentInformation,
-  stubCaseNotesCreators,
-  stubCaseNotesHistory,
-  stubCrsReferrals,
-  stubFetchFinance,
-  stubFetchId,
-  stubRpServiceNoData,
-  stubRpServiceThrowError,
-} from '../testutils/testUtils'
+import { stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 
