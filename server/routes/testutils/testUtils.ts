@@ -15,6 +15,30 @@ export function stubPrisonerDetails(rpService: RpService, releaseDate: string = 
         pathway: 'ACCOMMODATION',
         status: 'IN_PROGRESS',
       },
+      {
+        pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR',
+        status: 'IN_PROGRESS',
+      },
+      {
+        pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY',
+        status: 'IN_PROGRESS',
+      },
+      {
+        pathway: 'DRUGS_AND_ALCOHOL',
+        status: 'IN_PROGRESS',
+      },
+      {
+        pathway: 'EDUCATION_SKILLS_AND_WORK',
+        status: 'IN_PROGRESS',
+      },
+      {
+        pathway: 'FINANCE_AND_ID',
+        status: 'IN_PROGRESS',
+      },
+      {
+        pathway: 'HEALTH',
+        status: 'IN_PROGRESS',
+      },
     ],
   } as PrisonerData)
 }

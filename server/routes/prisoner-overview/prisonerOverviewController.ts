@@ -1,20 +1,28 @@
 import { RequestHandler } from 'express'
-import { RPClient } from '../../data'
-import { Appointments } from '../../data/model/appointment'
 import logger from '../../../logger'
 import { ERROR_DICTIONARY } from '../../utils/constants'
-import DocumentService from '../../services/documentService'
+import DocumentService, { DocumentMeta } from '../../services/documentService'
+import RpService from '../../services/rpService'
+import { Appointment } from '../../data/model/appointment'
 
 export default class PrisonerOverviewController {
-  constructor(private readonly documentService: DocumentService) {
+  constructor(private readonly documentService: DocumentService, private readonly rpService: RpService) {
     // no op
   }
 
   getPrisoner: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
-      const { page = 0, size = 10, sort = 'occurenceDateTime%2CDESC', days = 0, selectedPathway = 'All' } = req.query
-      const rpClient = new RPClient(req.user.token, req.sessionID, req.user.username)
+      if (!prisonerData) {
+        return next(new Error('No prisoner data found'))
+      }
+      const {
+        page = '0',
+        size = '10',
+        sort = 'occurenceDateTime%2CDESC',
+        days = '0',
+        selectedPathway = 'All',
+      } = req.query
       const { prisonerNumber } = prisonerData.personalDetails
 
       const [
@@ -27,17 +35,14 @@ export default class PrisonerOverviewController {
         appointmentsResult,
         documentsResult,
       ] = await Promise.allSettled([
-        rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/licence-condition`),
-        rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/scores`),
-        rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/rosh`),
-        rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/mappa`),
-        rpClient.get(
-          `/resettlement-passport/case-notes/${prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway}`,
-        ),
-        rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/staff-contacts`),
-        rpClient
-          .get(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`)
-          .then((a: Appointments) => a.results),
+        ...(await this.rpService.getPrisonerOverviewPageData(
+          prisonerNumber,
+          page as string,
+          size as string,
+          sort as string,
+          days as string,
+          selectedPathway as string,
+        )),
         this.documentService.getDocumentMeta(prisonerNumber),
       ])
 
@@ -47,10 +52,18 @@ export default class PrisonerOverviewController {
       const mappa = extractResultOrError(mappaResult, 'mappa', req)
       const caseNotes = extractResultOrError(caseNotesResult, 'case notes', req)
       const staffContacts = extractResultOrError(staffContactsResult, 'staff contacts', req)
-      const appointments = extractResultsOrErrorList(appointmentsResult, 'appointments', req)
-      const documents = extractResultsOrErrorList(documentsResult, 'documents', req)
+      const appointments = extractResultsOrErrorList(
+        appointmentsResult as PromiseSettledResult<Appointment[]>,
+        'appointments',
+        req,
+      )
+      const documents = extractResultsOrErrorList(
+        documentsResult as PromiseSettledResult<DocumentMeta[]>,
+        'documents',
+        req,
+      )
 
-      res.render('pages/overview', {
+      return res.render('pages/overview', {
         licenceConditions,
         prisonerData,
         caseNotes,
@@ -67,7 +80,7 @@ export default class PrisonerOverviewController {
         documents,
       })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }
