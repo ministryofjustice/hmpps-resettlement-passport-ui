@@ -13052,13 +13052,25 @@ exports[`getAddAnIdView Get add ID application 1`] = `
 "
 `;
 
+exports[`getAddAnIdView Happy path - post ID submit biometric residence permit 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
+
 exports[`getAddAnIdView Happy path - post ID submit birth certificate - no gro, born overseas 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
 
 exports[`getAddAnIdView Happy path - post ID submit birth certificate 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
 
+exports[`getAddAnIdView Happy path - post ID submit deed poll certificate 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
+
+exports[`getAddAnIdView Happy path - post ID submit divorce decree absolute certificate 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
+
+exports[`getAddAnIdView Happy path - post ID submit driving license 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
+
+exports[`getAddAnIdView Happy path - post ID submit national insurance number letter 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
+
 exports[`getAddAnIdView Happy path - post ID update birth certificate - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
 
 exports[`getAddAnIdView Happy path - post ID update birth certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+
+exports[`getAddAnIdView Happy path - post ID update marriage certificate - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
 
 exports[`getAddAnIdView Reject ID application status - birth certificate, no refund 1`] = `
 "<!DOCTYPE html>

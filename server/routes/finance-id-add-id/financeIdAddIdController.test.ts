@@ -408,4 +408,173 @@ describe('getAddAnIdView', () => {
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
+  it('Happy path - post ID submit divorce decree absolute certificate', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Divorce decree absolute certificate',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        caseNumber: '123',
+        courtDetails: '456',
+        prisonerNumber: '789',
+        isPriorityApplication: true,
+        costOfApplication: '10',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=789#id'))
+    expect(submitIdSpy).toHaveBeenCalledWith('789', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: '123',
+      costOfApplication: 10,
+      countryBornIn: undefined,
+      courtDetails: '456',
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: undefined,
+      idType: 'Divorce decree absolute certificate',
+      isPriorityApplication: true,
+      isUkNationalBornOverseas: undefined,
+    })
+  })
+  it('Happy path - post ID submit driving license', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Driving licence',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        driversLicenceType: 'Provisional',
+        driversLicenceApplicationMadeAt: 'Online',
+        prisonerNumber: '789',
+        isPriorityApplication: true,
+        costOfApplication: '10',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=789#id'))
+    expect(submitIdSpy).toHaveBeenCalledWith('789', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: undefined,
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: 'Online',
+      driversLicenceType: 'Provisional',
+      haveGro: undefined,
+      idType: 'Driving licence',
+      isPriorityApplication: true,
+      isUkNationalBornOverseas: undefined,
+    })
+  })
+  it('Happy path - post ID submit biometric residence permit', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Biometric residence permit',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        prisonerNumber: '789',
+        isPriorityApplication: false,
+        costOfApplication: '10',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=789#id'))
+    expect(submitIdSpy).toHaveBeenCalledWith('789', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: undefined,
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: undefined,
+      idType: 'Biometric residence permit',
+      isPriorityApplication: false,
+      isUkNationalBornOverseas: undefined,
+    })
+  })
+  it('Happy path - post ID submit deed poll certificate', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Deed poll certificate',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        prisonerNumber: '789',
+        isPriorityApplication: true,
+        costOfApplication: '10',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=789#id'))
+    expect(submitIdSpy).toHaveBeenCalledWith('789', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: undefined,
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: undefined,
+      idType: 'Deed poll certificate',
+      isPriorityApplication: true,
+      isUkNationalBornOverseas: undefined,
+    })
+  })
+  it('Happy path - post ID submit national insurance number letter', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'National Insurance Number letter',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        prisonerNumber: '789',
+        isPriorityApplication: true,
+        costOfApplication: '10',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=789#id'))
+    expect(submitIdSpy).toHaveBeenCalledWith('789', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: undefined,
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: undefined,
+      idType: 'National Insurance Number letter',
+      isPriorityApplication: true,
+      isUkNationalBornOverseas: undefined,
+    })
+  })
+  it('Happy path - post ID update marriage certificate - accepted', async () => {
+    const updateIdSpy = jest.spyOn(rpService, 'patchIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-update')
+      .send({
+        updatedStatus: 'Accepted',
+        dateIdReceived: '2000-12-01T00:00:00.000Z',
+        addedToPersonalItemsDate: '2000-12-01T00:00:00.000Z',
+        isAddedToPersonalItems: true,
+        prisonerNumber: '123',
+        applicationId: '1',
+        idType: 'Marriage certificate',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      addedToPersonalItemsDate: '2000-12-01T00:00:00',
+      dateIdReceived: '2000-12-01T00:00:00',
+      isAddedToPersonalItems: true,
+      refundAmount: NaN,
+      status: 'Accepted',
+      statusUpdateDate: null,
+    })
+  })
 })
