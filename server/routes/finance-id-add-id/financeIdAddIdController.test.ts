@@ -241,6 +241,37 @@ describe('getAddAnIdView', () => {
       isUkNationalBornOverseas: false,
     })
   })
+  it('Happy path - post ID submit birth certificate - no gro, born overseas', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Birth certificate',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        haveGro: false,
+        isUkNationalBornOverseas: true,
+        countryBornIn: 'Belgium',
+        prisonerNumber: '123',
+        isPriorityApplication: false,
+        costOfApplication: '10',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
+    expect(submitIdSpy).toHaveBeenCalledWith('123', {
+      applicationSubmittedDate: '2000-10-12T01:00:00',
+      caseNumber: undefined,
+      costOfApplication: 10,
+      countryBornIn: 'Belgium',
+      courtDetails: undefined,
+      driversLicenceApplicationMadeAt: undefined,
+      driversLicenceType: undefined,
+      haveGro: false,
+      idType: 'Birth certificate',
+      isPriorityApplication: false,
+      isUkNationalBornOverseas: true,
+    })
+  })
   it('Happy path - post ID update birth certificate - accepted', async () => {
     const updateIdSpy = jest.spyOn(rpService, 'patchIdApplication').mockImplementation()
     await request(app)
@@ -304,6 +335,74 @@ describe('getAddAnIdView', () => {
         isUkNationalBornOverseas: false,
         countryBornIn: '',
         isPriorityApplication: false,
+        costOfApplication: '10',
+      })
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Error case - post ID submit with empty prisoner ID', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Birth certificate',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        haveGro: true,
+        isUkNationalBornOverseas: false,
+        countryBornIn: '',
+        prisonerNumber: '',
+        isPriorityApplication: false,
+        costOfApplication: '10',
+      })
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Error case - post ID submit with null prisoner ID', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Birth certificate',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        haveGro: true,
+        isUkNationalBornOverseas: false,
+        countryBornIn: '',
+        prisonerNumber: null,
+        isPriorityApplication: false,
+        costOfApplication: '10',
+      })
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Error case - post ID submit with invalid prisoner ID', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Birth certificate',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        haveGro: true,
+        isUkNationalBornOverseas: false,
+        countryBornIn: '',
+        prisonerNumber: '!?@@?!',
+        isPriorityApplication: false,
+        costOfApplication: '10',
+      })
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('error case - error from API', async () => {
+    const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Something went wrong'))
+    await request(app)
+      .post('/finance-and-id/id-submit')
+      .send({
+        idType: 'Birth certificate',
+        applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
+        haveGro: true,
+        isUkNationalBornOverseas: false,
+        countryBornIn: '',
+        prisonerNumber: '123',
+        isPriorityApplication: true,
         costOfApplication: '10',
       })
       .expect(500)
