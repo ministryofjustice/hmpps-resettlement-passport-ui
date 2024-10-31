@@ -28,7 +28,7 @@ beforeEach(() => {
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
 
-  stubPrisonerDetails(rpService)
+  stubPrisonerDetails(rpService, '2024-10-29', '1991-10-29')
 })
 
 afterEach(() => {

@@ -170,17 +170,19 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
               </p>
               <p>
                 <b>Date of birth:</b>
-                
+                29 Oct 1991
                 ()</p>
             </div>
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                29 Oct 2024
                 <br />
                 
                 
                 
+                
+                  (2 days ago)
                 
               </p>
             </div>
@@ -1629,17 +1631,19 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
               </p>
               <p>
                 <b>Date of birth:</b>
-                
+                29 Oct 1991
                 ()</p>
             </div>
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                29 Oct 2024
                 <br />
                 
                 
                 
+                
+                  (2 days ago)
                 
               </p>
             </div>

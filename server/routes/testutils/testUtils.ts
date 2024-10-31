@@ -1,7 +1,7 @@
 import { PrisonerData } from '../../@types/express'
 import RpService from '../../services/rpService'
 
-export function stubPrisonerDetails(rpService: RpService, releaseDate: string = null) {
+export function stubPrisonerDetails(rpService: RpService, releaseDate: string = null, dateOfBirth: string = null) {
   jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
     personalDetails: {
       prisonerNumber: '123',
@@ -9,6 +9,7 @@ export function stubPrisonerDetails(rpService: RpService, releaseDate: string = 
       firstName: 'John',
       lastName: 'Smith',
       releaseDate,
+      dateOfBirth,
     },
     pathways: [
       {
