@@ -13066,11 +13066,21 @@ exports[`getAddAnIdView Happy path - post ID submit driving license 1`] = `"Foun
 
 exports[`getAddAnIdView Happy path - post ID submit national insurance number letter 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
 
+exports[`getAddAnIdView Happy path - post ID update biometric residence permit - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+
 exports[`getAddAnIdView Happy path - post ID update birth certificate - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
 
 exports[`getAddAnIdView Happy path - post ID update birth certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
 
+exports[`getAddAnIdView Happy path - post ID update deed poll certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+
+exports[`getAddAnIdView Happy path - post ID update divorce decree absolute certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+
+exports[`getAddAnIdView Happy path - post ID update driving license - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+
 exports[`getAddAnIdView Happy path - post ID update marriage certificate - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+
+exports[`getAddAnIdView Happy path - post ID update national Insurance Number letter - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
 
 exports[`getAddAnIdView Reject ID application status - birth certificate, no refund 1`] = `
 "<!DOCTYPE html>

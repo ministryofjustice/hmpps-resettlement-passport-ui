@@ -577,4 +577,120 @@ describe('getAddAnIdView', () => {
       statusUpdateDate: null,
     })
   })
+  it('Happy path - post ID update divorce decree absolute certificate - rejected', async () => {
+    const updateIdSpy = jest.spyOn(rpService, 'patchIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-update')
+      .send({
+        updatedStatus: 'Rejected',
+        refundAmount: '10',
+        prisonerNumber: '123',
+        applicationId: '1',
+        idType: 'Divorce decree absolute certificate',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      addedToPersonalItemsDate: null,
+      dateIdReceived: null,
+      isAddedToPersonalItems: undefined,
+      refundAmount: 10,
+      status: 'Rejected',
+      statusUpdateDate: null,
+    })
+  })
+  it('Happy path - post ID update driving license - accepted', async () => {
+    const updateIdSpy = jest.spyOn(rpService, 'patchIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-update')
+      .send({
+        updatedStatus: 'Accepted',
+        dateIdReceived: '2000-12-01T00:00:00.000Z',
+        isAddedToPersonalItems: false,
+        prisonerNumber: '123',
+        applicationId: '1',
+        idType: 'Driving licence',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      addedToPersonalItemsDate: null,
+      dateIdReceived: '2000-12-01T00:00:00',
+      isAddedToPersonalItems: false,
+      refundAmount: NaN,
+      status: 'Accepted',
+      statusUpdateDate: null,
+    })
+  })
+  it('Happy path - post ID update biometric residence permit - rejected', async () => {
+    const updateIdSpy = jest.spyOn(rpService, 'patchIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-update')
+      .send({
+        updatedStatus: 'Rejected',
+        refundAmount: '10',
+        prisonerNumber: '123',
+        applicationId: '1',
+        idType: 'Biometric residence permit',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      addedToPersonalItemsDate: null,
+      dateIdReceived: null,
+      isAddedToPersonalItems: undefined,
+      refundAmount: 10,
+      status: 'Rejected',
+      statusUpdateDate: null,
+    })
+  })
+  it('Happy path - post ID update deed poll certificate - rejected', async () => {
+    const updateIdSpy = jest.spyOn(rpService, 'patchIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-update')
+      .send({
+        updatedStatus: 'Rejected',
+        refundAmount: '10',
+        prisonerNumber: '123',
+        applicationId: '1',
+        idType: 'Deed poll certificate',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      addedToPersonalItemsDate: null,
+      dateIdReceived: null,
+      isAddedToPersonalItems: undefined,
+      refundAmount: 10,
+      status: 'Rejected',
+      statusUpdateDate: null,
+    })
+  })
+  it('Happy path - post ID update national Insurance Number letter - rejected', async () => {
+    const updateIdSpy = jest.spyOn(rpService, 'patchIdApplication').mockImplementation()
+    await request(app)
+      .post('/finance-and-id/id-update')
+      .send({
+        updatedStatus: 'Rejected',
+        refundAmount: '10',
+        prisonerNumber: '123',
+        applicationId: '1',
+        idType: '	National Insurance Number letter',
+      })
+      .expect(302)
+      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      addedToPersonalItemsDate: null,
+      dateIdReceived: null,
+      isAddedToPersonalItems: undefined,
+      refundAmount: 10,
+      status: 'Rejected',
+      statusUpdateDate: null,
+    })
+  })
 })
