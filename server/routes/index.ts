@@ -9,6 +9,7 @@ import accommodationRouter from './accommodation'
 import healthStatusRouter from './health-status'
 import educationSkillsWorkRouter from './education-skills-work'
 import financeIdRouter from './finance-id'
+import financeIdAddIdRouter from './finance-id-add-id'
 import licenceImageRouter from './licence-image'
 import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import addAppointmentRouter from './add-appointment'
@@ -36,6 +37,7 @@ export default function routes(services: Services): Router {
   attitudesThinkingBehaviourRouter(router, services)
   accommodationRouter(router, services)
   financeIdRouter(router, services)
+  financeIdAddIdRouter(router, services)
   childrenFamiliesCommunitiesRouter(router, services)
   healthStatusRouter(router, services)
   educationSkillsWorkRouter(router, services)
@@ -51,6 +53,7 @@ export default function routes(services: Services): Router {
   documentRouter(router, services)
   prisonerOverviewRouter(router, services)
   resetProfileRouter(router, services)
+  licenceImageRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
@@ -68,7 +71,6 @@ export default function routes(services: Services): Router {
       next(err)
     }
   })
-  use('/licence-image', licenceImageRouter)
   use('/add-case-note', (req: Request, res: Response) => {
     const { prisonerData } = req
     res.render('pages/add-case-note', {

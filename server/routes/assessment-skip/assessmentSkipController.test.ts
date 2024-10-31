@@ -31,7 +31,7 @@ describe('getView', () => {
     await request(app)
       .get('/assessment-skip?prisonerNumber=123')
       .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
 

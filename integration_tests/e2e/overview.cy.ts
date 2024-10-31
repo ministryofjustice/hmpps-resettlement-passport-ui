@@ -24,4 +24,22 @@ context('Report Information', () => {
     cy.visit('/drugs-and-alcohol/?prisonerNumber=A8731DY')
     cy.get('div.app-summary-card__body').should('contain.text', 'No report information available')
   })
+  it('Licence Condition Map', () => {
+    cy.task('stubJohnSmithGetLicenceImage')
+    cy.signIn()
+
+    cy.visit('/prisoner-overview/?prisonerNumber=A8731DY')
+    cy.get('a[href*="/licence-image/?licenceId="]').should('exist')
+
+    // Temporary removal of 'target' to keep from opening a new tab
+    cy.get('a[href*="/licence-image/?licenceId="]').invoke('removeAttr', 'target').click({ force: true })
+    cy.get('h1').should('contain.text', 'Not Found')
+
+    cy.visit('/prisoner-overview/?prisonerNumber=A8731DY')
+    cy.get('a[href*="/licence-image/?licenceId="]').should('exist')
+
+    // Temporary removal of 'target' to keep from opening a new tab
+    cy.get('a[href*="/licence-image/?licenceId="]').invoke('removeAttr', 'target').click({ force: true })
+    cy.get('img.licence-image').should('exist')
+  })
 })

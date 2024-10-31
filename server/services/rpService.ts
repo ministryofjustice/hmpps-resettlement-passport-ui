@@ -7,9 +7,9 @@ import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../utils/constants'
 import { Accommodation } from '../data/model/accommodation'
 import {
   ApiAssessmentPage,
+  CachedAssessment,
   NextPage,
   ResettlementAssessmentVersion,
-  CachedAssessment,
 } from '../data/model/immediateNeedsReport'
 import { AssessmentsSummary, AssessmentStatus } from '../data/model/assessmentStatus'
 import { AssessmentsInformation, AssessmentSkipRequest, AssessmentType } from '../data/model/assessmentInformation'
@@ -458,6 +458,20 @@ export default class RpService {
     }
 
     return response
+  }
+
+  async getLicenceConditionImage(prisonerNumber: string, licenceId: string, conditionId: string): Promise<string> {
+    return this.createClient().getImageAsBase64String(
+      `/resettlement-passport/prisoner/${prisonerNumber}/licence-condition/id/${licenceId}/condition/${conditionId}/image`,
+    )
+  }
+
+  async postWatchlist(prisonerNumber: string) {
+    return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/watch`, null)
+  }
+
+  async deleteWatchlist(prisonerNumber: string) {
+    return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/watch`)
   }
 
   async getPrisonerOverviewPageData(
