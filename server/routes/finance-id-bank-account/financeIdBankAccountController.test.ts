@@ -41,9 +41,15 @@ describe('getAddBankAccountView', () => {
       .expect(200)
       .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
-  it('error, no prisoner number', async () => {
+  it('error, prisoner number blank', async () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/?prisonerNumber=')
+      .expect(500)
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+  })
+  it('error, prisoner number missing', async () => {
+    await request(app)
+      .get('/finance-and-id/add-a-bank-account/')
       .expect(500)
       .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
@@ -55,15 +61,27 @@ describe('getUpdateBankAccountStatusView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
-  it('error, no prisoner number', async () => {
+  it('error, prisoner number blank', async () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/?prisonerNumber=&applicationId=123')
       .expect(500)
       .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
-  it('no application ID', async () => {
+  it('error, prisoner number missing', async () => {
+    await request(app)
+      .get('/finance-and-id/add-a-bank-account/&applicationId=123')
+      .expect(404)
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+  })
+  it('error application ID blank', async () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/?prisonerNumber=123&applicationId=')
+      .expect(200)
+      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+  })
+  it('error application ID missing', async () => {
+    await request(app)
+      .get('/finance-and-id/add-a-bank-account/?prisonerNumber=123')
       .expect(200)
       .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
   })
@@ -77,7 +95,7 @@ describe('getConfirmAddABankAccountView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
-  it('error, no prisoner number', async () => {
+  it('error, prisoner number missing', async () => {
     await request(app)
       .get(
         '/finance-and-id/confirm-add-a-bank-account/?bankName=Lloyds&applicationSubmittedDay=01&applicationSubmittedMonth=01&applicationSubmittedYear=01&applicationId=&confirmationType=addAccount&applicationType=',
@@ -96,7 +114,7 @@ describe('getConfirmAddABankAccountView', () => {
 })
 describe('postBankAccountSubmitView', () => {
   it('happy path - posting bank account', async () => {
-    const postBankApplicationSpy = jest.spyOn(rpService, 'postBankApplication').mockResolvedValue({})
+    const postBankApplicationSpy = jest.spyOn(rpService, 'postBankApplication').mockImplementation()
     await request(app)
       .post('/finance-and-id/bank-account-submit')
       .send({
@@ -111,7 +129,7 @@ describe('postBankAccountSubmitView', () => {
       bankName: 'BARCLAYS',
     })
   })
-  it('error - missing prisoner number', async () => {
+  it('error - prisoner number blank', async () => {
     await request(app)
       .post('/finance-and-id/bank-account-submit')
       .send({
@@ -122,7 +140,17 @@ describe('postBankAccountSubmitView', () => {
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
-  it('error - missing bank Name, returns to application', async () => {
+  it('error - prisoner number missing', async () => {
+    await request(app)
+      .post('/finance-and-id/bank-account-submit')
+      .send({
+        applicationDate: '01/01/2024',
+        bankName: 'BARCLAYS',
+      })
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('error - bank Name blank', async () => {
     await request(app)
       .post('/finance-and-id/bank-account-submit')
       .send({
@@ -133,12 +161,32 @@ describe('postBankAccountSubmitView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
-  it('error - missing bank application date, returns to application', async () => {
+  it('error - bank Name missing', async () => {
+    await request(app)
+      .post('/finance-and-id/bank-account-submit')
+      .send({
+        prisonerNumber: '123',
+        applicationDate: '01/01/2024',
+      })
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('error - bank application date blank', async () => {
     await request(app)
       .post('/finance-and-id/bank-account-submit')
       .send({
         prisonerNumber: '123',
         applicationDate: '',
+        bankName: 'BARCLAYS',
+      })
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('error - bank application date missing', async () => {
+    await request(app)
+      .post('/finance-and-id/bank-account-submit')
+      .send({
+        prisonerNumber: '123',
         bankName: 'BARCLAYS',
       })
       .expect(200)
@@ -169,11 +217,24 @@ describe('postBankAccountUpdateView', () => {
       status: 'Account opened',
     })
   })
-  it('error - missing prisoner id', async () => {
+  it('error - prisoner number blank', async () => {
     await request(app)
       .post('/finance-and-id/bank-account-update')
       .send({
         prisonerNumber: '',
+        applicationId: '1000',
+        updatedStatus: 'Account opened',
+        bankResponseDate: '01/01/2000',
+        isAddedToPersonalItems: 'Yes',
+        addedToPersonalItemsDate: '01/01/2000',
+        resubmissionDate: '01/01/2000',
+      })
+      .expect(500)
+  })
+  it('error - prisoner number missing', async () => {
+    await request(app)
+      .post('/finance-and-id/bank-account-update')
+      .send({
         applicationId: '1000',
         updatedStatus: 'Account opened',
         bankResponseDate: '01/01/2000',
@@ -198,6 +259,20 @@ describe('postBankAccountUpdateView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
+  it('error - updated status missing', async () => {
+    await request(app)
+      .post('/finance-and-id/bank-account-update')
+      .send({
+        prisonerNumber: '123',
+        applicationId: '1000',
+        bankResponseDate: '01/01/2000',
+        isAddedToPersonalItems: 'Yes',
+        addedToPersonalItemsDate: '01/01/2000',
+        resubmissionDate: '01/01/2000',
+      })
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
   it('error - added to personal items blank', async () => {
     await request(app)
       .post('/finance-and-id/bank-account-update')
@@ -208,6 +283,20 @@ describe('postBankAccountUpdateView', () => {
         bankResponseDate: '01/01/2000',
         isAddedToPersonalItems: 'No',
         addedToPersonalItemsDate: '',
+        resubmissionDate: '01/01/2004',
+      })
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('error - added to personal items missing', async () => {
+    await request(app)
+      .post('/finance-and-id/bank-account-update')
+      .send({
+        prisonerNumber: '123',
+        applicationId: '1000',
+        updatedStatus: 'Account opened',
+        bankResponseDate: '01/01/2000',
+        isAddedToPersonalItems: 'No',
         resubmissionDate: '01/01/2004',
       })
       .expect(200)

@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import logger from '../../../logger'
-import { formatDateAsLocal, isDateValid } from '../../utils/utils'
 import FinanceIdView from './financeIdView'
 import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
 
