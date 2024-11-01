@@ -25,6 +25,7 @@ import documentRouter from './documents/documentRouter'
 import prisonerOverviewRouter from './prisoner-overview/prisonerOverviewRouter'
 import resetProfileRouter from './reset-profile'
 import statusUpdateRouter from './status-update'
+import financeIdBankAccountRouter from './finance-id-bank-account'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -54,6 +55,7 @@ export default function routes(services: Services): Router {
   prisonerOverviewRouter(router, services)
   resetProfileRouter(router, services)
   licenceImageRouter(router, services)
+  financeIdBankAccountRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
