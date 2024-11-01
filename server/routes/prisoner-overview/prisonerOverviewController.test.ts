@@ -28,7 +28,8 @@ beforeEach(() => {
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
 
-  stubPrisonerDetails(rpService, '2024-10-29', '1991-10-29')
+  const today = new Date().toISOString().split('T')[0]
+  stubPrisonerDetails(rpService, today, '1991-10-29')
 })
 
 afterEach(() => {
