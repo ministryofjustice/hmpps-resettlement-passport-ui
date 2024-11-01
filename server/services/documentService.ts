@@ -8,6 +8,7 @@ import { FEATURE_FLAGS } from '../utils/constants'
 
 export type DocumentMeta = {
   id: number
+  fileName?: string
   originalDocumentFileName?: string
   creationDate?: Date
   category: string

@@ -635,7 +635,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
         Resettlement status: 
-        <strong class="govuk-tag govuk-tag--">  </strong>
+        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
       </h3>
     </header>
     <div class="app-summary-card__header">
@@ -1413,7 +1413,7 @@ exports[`getView Happy path with default query params and no data from endpoints
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
         Resettlement status: 
-        <strong class="govuk-tag govuk-tag--">  </strong>
+        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
       </h3>
     </header>
     <div class="app-summary-card__header">
@@ -1856,7 +1856,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
         Resettlement status: 
-        <strong class="govuk-tag govuk-tag--">  </strong>
+        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
       </h3>
     </header>
     <div class="app-summary-card__header">

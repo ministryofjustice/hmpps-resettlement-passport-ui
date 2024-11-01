@@ -13,6 +13,13 @@ context('Generate PDF', () => {
     cy.task('stubGetAppointment')
     cy.task('stubGetAppointments')
     cy.task('stubGetOtp')
+    cy.task('johnSmithLicenseConditions')
+    cy.task('johnSmithRiskScores')
+    cy.task('johnSmithRiskRosh')
+    cy.task('johnSmithRiskMappa')
+    cy.task('johnSmithCaseNotes')
+    cy.task('johnSmithStaffContacts')
+    cy.task('johnSmithAppointments')
   })
 
   after(() => {
