@@ -7,16 +7,20 @@ export default class AnalyticsController {
     // no-op
   }
 
-  track: RequestHandler = async (req, res) => {
-    const { eventName, customTags } = req.body
-    const tags = {
-      ...customTags,
-      sessionId: req.sessionID,
-      username: res.locals.user.username,
+  track: RequestHandler = async (req, res, next): Promise<void> => {
+    try {
+      const { eventName, customTags } = req.body
+      const tags = {
+        ...customTags,
+        sessionId: req.sessionID,
+        username: res.locals.user.username,
+      }
+      if (eventName) {
+        trackEvent(this.appInsightClient, eventName, tags)
+      }
+      res.status(200).send()
+    } catch (err) {
+      next(err)
     }
-    if (eventName) {
-      trackEvent(this.appInsightClient, eventName, tags)
-    }
-    return res.status(200)
   }
 }
