@@ -104,7 +104,7 @@ export default {
       agent: new AgentConfig(Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 20000))),
     },
     gotenberg: {
-      apiUrl: get('GOTENBERG_API_URL', 'http://localhost:3005', requiredInProduction),
+      apiUrl: get('GOTENBERG_API_URL', 'http://localhost:3009', requiredInProduction),
     },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),

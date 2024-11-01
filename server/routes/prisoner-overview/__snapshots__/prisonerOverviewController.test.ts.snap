@@ -825,6 +825,34 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
                 </thead>
                 <tbody class="govuk-table__body">
                 
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Appointment with Charity ABC</td>
+                    <td class="govuk-table__cell">Bob Example</td>
+                    <td class="govuk-table__cell">31 Oct 2024</td>
+                    <td class="govuk-table__cell">15:18</td>
+                    <td class="govuk-table__cell show-line-breaks">SA1 1JG</td>
+                  </tr>
+                
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Appointment with Jobs centre plus</td>
+                    <td class="govuk-table__cell">CRSUATU Staff</td>
+                    <td class="govuk-table__cell">1 Nov 2024</td>
+                    <td class="govuk-table__cell">15:18</td>
+                    <td class="govuk-table__cell show-line-breaks">Unit 7 Parc Tawe North,
+Swansea,
+SA1 2AA</td>
+                  </tr>
+                
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Accommodation Services - North West</td>
+                    <td class="govuk-table__cell">Not provided</td>
+                    <td class="govuk-table__cell">1 Nov 2024</td>
+                    <td class="govuk-table__cell">15:18</td>
+                    <td class="govuk-table__cell show-line-breaks">9 Downing Street,
+Gwent,
+S1 2NP</td>
+                  </tr>
+                
                 </tbody>
               </table>
             
@@ -2165,6 +2193,34 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
                 </tr>
                 </thead>
                 <tbody class="govuk-table__body">
+                
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Appointment with Charity ABC</td>
+                    <td class="govuk-table__cell">Bob Example</td>
+                    <td class="govuk-table__cell">31 Oct 2024</td>
+                    <td class="govuk-table__cell">15:18</td>
+                    <td class="govuk-table__cell show-line-breaks">SA1 1JG</td>
+                  </tr>
+                
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Appointment with Jobs centre plus</td>
+                    <td class="govuk-table__cell">CRSUATU Staff</td>
+                    <td class="govuk-table__cell">1 Nov 2024</td>
+                    <td class="govuk-table__cell">15:18</td>
+                    <td class="govuk-table__cell show-line-breaks">Unit 7 Parc Tawe North,
+Swansea,
+SA1 2AA</td>
+                  </tr>
+                
+                  <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">Accommodation Services - North West</td>
+                    <td class="govuk-table__cell">Not provided</td>
+                    <td class="govuk-table__cell">1 Nov 2024</td>
+                    <td class="govuk-table__cell">15:18</td>
+                    <td class="govuk-table__cell show-line-breaks">9 Downing Street,
+Gwent,
+S1 2NP</td>
+                  </tr>
                 
                 </tbody>
               </table>

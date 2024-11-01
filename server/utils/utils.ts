@@ -252,7 +252,7 @@ export async function getFeatureFlagBoolean(flag: string) {
 
 export function formatAddress(location: AppointmentLocation): string {
   let address = ''
-  const lineSeparator = ',<br />'
+  const lineSeparator = ',\n'
 
   if (location) {
     if (location.buildingNumber) {
