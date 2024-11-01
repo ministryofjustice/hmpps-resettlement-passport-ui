@@ -178,16 +178,13 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                1 Nov 2024
+                30 Nov 2026
                 <br />
                 
                 
-                <span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span>
-                <span class="govuk-visually-hidden"> Warning: release date is a Friday </span>
                 
                 
-                
-                  (0 days ago)
+                  (29 days)
                 
               </p>
             </div>
@@ -1518,16 +1515,13 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                1 Nov 2024
+                30 Nov 2026
                 <br />
                 
                 
-                <span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span>
-                <span class="govuk-visually-hidden"> Warning: release date is a Friday </span>
                 
                 
-                
-                  (0 days ago)
+                  (29 days)
                 
               </p>
             </div>

@@ -27,13 +27,14 @@ beforeEach(() => {
   })
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
+  jest.useFakeTimers({ advanceTimers: true }).setSystemTime(new Date('2026-11-01'))
 
-  const today = new Date().toISOString().split('T')[0]
-  stubPrisonerDetails(rpService, today, '1991-10-29')
+  stubPrisonerDetails(rpService, '2026-11-30', '1991-10-29')
 })
 
 afterEach(() => {
   jest.resetAllMocks()
+  jest.useRealTimers()
 })
 
 describe('prisonerOverview', () => {
