@@ -231,8 +231,496 @@ describe('getView', () => {
     expect(getMergedQuestionsAndAnswersSpy).toHaveBeenCalledWith(stateKey, apiAssessmentPage.questionsAndAnswers)
   })
 
-  it('get check your answers - v1 of report', async () => {})
-  it('get check your answers - v2 of report', async () => {})
+  it('get check your answers - v1 of report', async () => {
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const getWorkingAssessmentVersionSpy = jest
+      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
+      .mockResolvedValue(1)
+
+    const apiAssessmentPage = {
+      id: 'CHECK_ANSWERS',
+      title: '',
+      questionsAndAnswers: [
+        {
+          question: {
+            id: 'QUESTION_1',
+            title: 'Question 1',
+            type: 'LONG_TEXT',
+          },
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_2',
+            title: 'Question 2',
+            type: 'SHORT_TEXT',
+          },
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_3',
+            title: 'Question 3',
+            type: 'RADIO',
+            options: [
+              {
+                id: 'R_OPTION_1',
+                displayText: 'Radio option 1',
+              },
+              {
+                id: 'R_OPTION_2',
+                displayText: 'Radio option 2',
+              },
+            ],
+          },
+          originalPageId: 'PAGE_2',
+        },
+        {
+          question: {
+            id: 'QUESTION_4',
+            title: 'Question 4',
+            type: 'CHECKBOX',
+            options: [
+              {
+                id: 'C_OPTION_1',
+                displayText: 'Checkbox option 1',
+              },
+              {
+                id: 'C_OPTION_2',
+                displayText: 'Checkbox option 2',
+              },
+              {
+                id: 'C_OPTION_3',
+                displayText: 'Checkbox option 3',
+              },
+              {
+                id: 'OTHER',
+                displayText: 'Other',
+                freeText: true,
+              },
+            ],
+          },
+          originalPageId: 'PAGE_2',
+        },
+        {
+          question: {
+            id: 'QUESTION_5',
+            title: 'Question 5',
+            type: 'ADDRESS',
+          },
+          originalPageId: 'PAGE_3',
+        },
+        {
+          question: {
+            id: 'SUPPORT_NEEDS',
+            title: 'Support needs',
+            type: 'RADIO',
+            options: [
+              {
+                id: 'SUPPORT_REQUIRED',
+                displayText: 'Support required',
+                description: 'a need for support has been identified and is accepted',
+              },
+              {
+                id: 'SUPPORT_NOT_REQUIRED',
+                displayText: 'Support not required',
+                description: 'no need was identified',
+              },
+              {
+                id: 'SUPPORT_DECLINED',
+                displayText: 'Support declined',
+                description: 'a need has been identified but support is declined',
+              },
+            ],
+          },
+          originalPageId: 'ASSESSMENT_SUMMARY',
+        },
+        {
+          question: {
+            id: 'CASE_NOTE_SUMMARY',
+            title: 'Case note summary',
+            type: 'LONG_TEXT',
+          },
+          originalPageId: 'ASSESSMENT_SUMMARY',
+        },
+      ],
+    } as ApiAssessmentPage
+    const getAssessmentPageSpy = jest.spyOn(rpService, 'getAssessmentPage').mockResolvedValue(apiAssessmentPage)
+
+    const checkForConvergenceSpy = jest.spyOn(assessmentStateService, 'checkForConvergence').mockResolvedValue(false)
+
+    const workingAssessmentAnsweredQuestions: CachedAssessment = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_1',
+          questionTitle: 'Question 1',
+          pageId: 'PAGE_1',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'This is the answer to question 1',
+            displayText: 'This is the answer to question 1',
+            '@class': 'StringAnswer',
+          },
+        },
+        {
+          question: 'QUESTION_2',
+          questionTitle: 'Question 2',
+          pageId: 'PAGE_1',
+          questionType: 'SHORT_TEXT',
+          answer: {
+            answer: 'This is the answer to question 2',
+            displayText: 'This is the answer to question 2',
+            '@class': 'StringAnswer',
+          },
+        },
+        {
+          question: 'QUESTION_3',
+          questionTitle: 'Question 3',
+          pageId: 'PAGE_2',
+          questionType: 'RADIO',
+          answer: {
+            answer: 'R_OPTION_1',
+            displayText: 'Radio option 1',
+            '@class': 'StringAnswer',
+          },
+        },
+        {
+          question: 'QUESTION_4',
+          questionTitle: 'Question 4',
+          pageId: 'PAGE_2',
+          questionType: 'CHECKBOX',
+          answer: {
+            answer: ['C_OPTION_1', 'C_OPTION_2', 'OTHER_SUPPORT_NEEDS: Another support need'],
+            displayText: ['Checkbox option 1', 'Checkbox option 2'],
+            '@class': 'ListAnswer',
+          },
+        },
+        {
+          question: 'QUESTION_5',
+          questionTitle: 'Question 5',
+          pageId: 'PAGE_3',
+          questionType: 'ADDRESS',
+          answer: {
+            answer: [{ addressLine1: '123 Main Street' }, { postcode: 'AB1 2BC' }],
+            displayText: null,
+            '@class': 'MapAnswer',
+          },
+        },
+        {
+          question: 'SUPPORT_NEEDS',
+          questionTitle: 'Support needs',
+          pageId: 'ASSESSMENT_SUMMARY',
+          questionType: 'RADIO',
+          answer: {
+            answer: 'SUPPORT_REQUIRED',
+            displayText: 'Support required',
+            '@class': 'StringAnswer',
+          },
+        },
+        {
+          question: 'CASE_NOTE_SUMMARY',
+          questionTitle: 'Case note summary',
+          pageId: 'ASSESSMENT_SUMMARY',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'SUPPORT_REQUIRED',
+            displayText: 'This is the case note summary',
+            '@class': 'StringAnswer',
+          },
+        },
+      ],
+      version: 1,
+    }
+
+    const getAllAnsweredQuestionsFromCacheSpy = jest
+      .spyOn(assessmentStateService, 'getAllAnsweredQuestionsFromCache')
+      .mockResolvedValue(workingAssessmentAnsweredQuestions)
+
+    const validateAssessmentSpy = jest.spyOn(rpService, 'validateAssessment').mockResolvedValue({ valid: true })
+
+    const updateCachesOnCheckYourAnswersSpy = jest
+      .spyOn(assessmentStateService, 'updateCachesOnCheckYourAnswers')
+      .mockImplementation()
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/CHECK_ANSWERS?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&type=${stateKey.assessmentType}`,
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      'CHECK_ANSWERS',
+      stateKey.assessmentType,
+      1,
+    )
+    expect(checkForConvergenceSpy).toHaveBeenCalledWith(stateKey, {
+      pageId: 'CHECK_ANSWERS',
+      questions: [
+        'QUESTION_1',
+        'QUESTION_2',
+        'QUESTION_3',
+        'QUESTION_4',
+        'QUESTION_5',
+        'SUPPORT_NEEDS',
+        'CASE_NOTE_SUMMARY',
+      ],
+    })
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'working')
+    expect(validateAssessmentSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      workingAssessmentAnsweredQuestions,
+      stateKey.assessmentType,
+    )
+    expect(updateCachesOnCheckYourAnswersSpy).toHaveBeenCalledWith(
+      stateKey,
+      workingAssessmentAnsweredQuestions.questionsAndAnswers,
+    )
+  })
+  it('get check your answers - v2 of report', async () => {
+    const stateKey = {
+      assessmentType: 'RESETTLEMENT_PLAN',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const getWorkingAssessmentVersionSpy = jest
+      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
+      .mockResolvedValue(2)
+
+    const apiAssessmentPage = {
+      id: 'CHECK_ANSWERS',
+      title: '',
+      questionsAndAnswers: [
+        {
+          question: {
+            id: 'QUESTION_1',
+            title: 'Question 1',
+            type: 'LONG_TEXT',
+          },
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_2',
+            title: 'Question 2',
+            type: 'SHORT_TEXT',
+          },
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_3',
+            title: 'Question 3',
+            type: 'RADIO',
+            options: [
+              {
+                id: 'R_OPTION_1',
+                displayText: 'Radio option 1',
+              },
+              {
+                id: 'R_OPTION_2',
+                displayText: 'Radio option 2',
+              },
+            ],
+          },
+          originalPageId: 'PAGE_2',
+        },
+        {
+          question: {
+            id: 'QUESTION_4',
+            title: 'Question 4',
+            type: 'CHECKBOX',
+            options: [
+              {
+                id: 'C_OPTION_1',
+                displayText: 'Checkbox option 1',
+              },
+              {
+                id: 'C_OPTION_2',
+                displayText: 'Checkbox option 2',
+              },
+              {
+                id: 'C_OPTION_3',
+                displayText: 'Checkbox option 3',
+              },
+            ],
+          },
+          originalPageId: 'PAGE_2',
+        },
+        {
+          question: {
+            id: 'QUESTION_5',
+            title: 'Question 5',
+            type: 'ADDRESS',
+          },
+          originalPageId: 'PAGE_3',
+        },
+        {
+          question: {
+            id: 'SUPPORT_NEEDS_PRERELEASE',
+            title: 'Support needs',
+            type: 'RADIO',
+            options: [
+              {
+                id: 'SUPPORT_REQUIRED',
+                displayText: 'Support required',
+                description: 'a need for support has been identified and is accepted',
+              },
+              {
+                id: 'SUPPORT_NOT_REQUIRED',
+                displayText: 'Support not required',
+                description: 'no need was identified',
+              },
+              {
+                id: 'SUPPORT_DECLINED',
+                displayText: 'Support declined',
+                description: 'a need has been identified but support is declined',
+              },
+              {
+                id: 'IN_PROGRESS',
+                displayText: 'In progress',
+                description: 'work is ongoing',
+              },
+              {
+                id: 'DONE',
+                displayText: 'Done',
+                description: 'all required work has been completed successfully',
+              },
+            ],
+          },
+          originalPageId: 'PRERELEASE_ASSESSMENT_SUMMARY',
+        },
+      ],
+    } as ApiAssessmentPage
+    const getAssessmentPageSpy = jest.spyOn(rpService, 'getAssessmentPage').mockResolvedValue(apiAssessmentPage)
+
+    const checkForConvergenceSpy = jest.spyOn(assessmentStateService, 'checkForConvergence').mockResolvedValue(false)
+
+    const workingAssessmentAnsweredQuestions: CachedAssessment = {
+      questionsAndAnswers: [
+        {
+          question: 'QUESTION_1',
+          questionTitle: 'Question 1',
+          pageId: 'PAGE_1',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: 'This is the answer to question 1',
+            displayText: 'This is the answer to question 1',
+            '@class': 'StringAnswer',
+          },
+        },
+        {
+          question: 'QUESTION_2',
+          questionTitle: 'Question 2',
+          pageId: 'PAGE_1',
+          questionType: 'SHORT_TEXT',
+          answer: {
+            answer: 'This is the answer to question 2',
+            displayText: 'This is the answer to question 2',
+            '@class': 'StringAnswer',
+          },
+        },
+        {
+          question: 'QUESTION_3',
+          questionTitle: 'Question 3',
+          pageId: 'PAGE_2',
+          questionType: 'RADIO',
+          answer: {
+            answer: 'R_OPTION_1',
+            displayText: 'Radio option 1',
+            '@class': 'StringAnswer',
+          },
+        },
+        {
+          question: 'QUESTION_4',
+          questionTitle: 'Question 4',
+          pageId: 'PAGE_2',
+          questionType: 'CHECKBOX',
+          answer: {
+            answer: ['C_OPTION_1', 'C_OPTION_2'],
+            displayText: ['Checkbox option 1', 'Checkbox option 2'],
+            '@class': 'ListAnswer',
+          },
+        },
+        {
+          question: 'QUESTION_5',
+          questionTitle: 'Question 5',
+          pageId: 'PAGE_3',
+          questionType: 'ADDRESS',
+          answer: {
+            answer: [{ addressLine1: '123 Main Street' }, { postcode: 'AB1 2BC' }],
+            displayText: null,
+            '@class': 'MapAnswer',
+          },
+        },
+        {
+          question: 'SUPPORT_NEEDS_PRERELEASE',
+          questionTitle: 'Support needs',
+          pageId: 'PRERELEASE_ASSESSMENT_SUMMARY',
+          questionType: 'RADIO',
+          answer: {
+            answer: 'SUPPORT_NOT_REQUIRED',
+            displayText: 'Support not required',
+            '@class': 'StringAnswer',
+          },
+        },
+      ],
+      version: 1,
+    }
+
+    const getAllAnsweredQuestionsFromCacheSpy = jest
+      .spyOn(assessmentStateService, 'getAllAnsweredQuestionsFromCache')
+      .mockResolvedValue(workingAssessmentAnsweredQuestions)
+
+    const validateAssessmentSpy = jest.spyOn(rpService, 'validateAssessment').mockResolvedValue({ valid: true })
+
+    const updateCachesOnCheckYourAnswersSpy = jest
+      .spyOn(assessmentStateService, 'updateCachesOnCheckYourAnswers')
+      .mockImplementation()
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/CHECK_ANSWERS?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&type=${stateKey.assessmentType}`,
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      'CHECK_ANSWERS',
+      stateKey.assessmentType,
+      2,
+    )
+    expect(checkForConvergenceSpy).toHaveBeenCalledWith(stateKey, {
+      pageId: 'CHECK_ANSWERS',
+      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4', 'QUESTION_5', 'SUPPORT_NEEDS_PRERELEASE'],
+    })
+    expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'working')
+    expect(validateAssessmentSpy).toHaveBeenCalledWith(
+      stateKey.prisonerNumber,
+      stateKey.pathway,
+      workingAssessmentAnsweredQuestions,
+      stateKey.assessmentType,
+    )
+    expect(updateCachesOnCheckYourAnswersSpy).toHaveBeenCalledWith(
+      stateKey,
+      workingAssessmentAnsweredQuestions.questionsAndAnswers,
+    )
+  })
 })
 
 describe('startEdit', () => {
