@@ -10,6 +10,7 @@ export type ApiQuestionOption = {
   exclusive?: boolean
   nestedQuestions?: ApiQuestionsAndAnswer[]
   freeText?: boolean
+  tag?: string
 }
 
 export type AnswerType = 'StringAnswer' | 'MapAnswer' | 'ListAnswer'
@@ -46,6 +47,8 @@ export type ApiQuestionsAndAnswer = {
     options?: ApiQuestionOption[]
     validationType?: ValidationType
     customValidation?: CustomValidation
+    detailsTitle?: string
+    detailsContent?: string
   }
   answer?: Answer
   originalPageId: string
