@@ -13,7 +13,7 @@ import {
   johnSmithWhereWillTheyLive2,
   stubJohnSmithPrisonerDetailsPreRelease,
 } from './scenarios/john-smith/john-smith-pre-release'
-import { getResettlementAssessmentVersion, johnSmithDefaults } from './scenarios/john-smith/john-smith'
+import { getResettlementAssessmentVersion, johnSmithDefaults, johnSmithImage } from './scenarios/john-smith/john-smith'
 import {
   johnSmithImmediateNeedsReportAccommodation,
   johnSmithImmediateNeedsReportHealth,
@@ -546,6 +546,9 @@ const stubJohnSmithPostNoReportInfo = () =>
 const stubJohnSmithGetLicenceImage = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithLicenceImage()])
 
+const stubJohnSmithWithSomeErrors = () =>
+  Promise.all([johnSmithImage(), ...johnSmithGetPrisonerDetails(), ...johnSmithLicenceImage()])
+
 export const johnSmithLicenseConditions = () =>
   stubFor({
     name: 'john-smith-license-conditions',
@@ -945,4 +948,5 @@ export default {
   johnSmithCaseNotes,
   johnSmithStaffContacts,
   johnSmithAppointments,
+  stubJohnSmithWithSomeErrors,
 }

@@ -321,8 +321,8 @@ export function stubFetchId(rpService: RpService) {
 }
 
 export function stubPrisonerOverviewData(rpService: RpService) {
-  return jest.spyOn(rpService, 'getPrisonerOverviewPageData').mockResolvedValue([
-    {
+  return jest.spyOn(rpService, 'getPrisonerOverviewPageData').mockReturnValue([
+    Promise.resolve({
       licenceId: 101,
       status: 'ACTIVE',
       startDate: '20/08/2023',
@@ -391,8 +391,8 @@ export function stubPrisonerOverviewData(rpService: RpService) {
           sequence: 15,
         },
       ],
-    },
-    {
+    }),
+    Promise.resolve({
       completedDate: '2023-07-29T03:07:38',
       assessmentStatus: 'Complete',
       groupReconvictionScore: {
@@ -427,8 +427,8 @@ export function stubPrisonerOverviewData(rpService: RpService) {
         ospIndecentScoreLevel: 'MEDIUM',
         ospContactScoreLevel: 'MEDIUM',
       },
-    },
-    {
+    }),
+    Promise.resolve({
       riskInCommunity: {
         CHILDREN: 'HIGH',
         PUBLIC: 'HIGH',
@@ -438,16 +438,16 @@ export function stubPrisonerOverviewData(rpService: RpService) {
       },
       overallRiskLevel: 'HIGH',
       assessedOn: '2023-07-29T03:07:38',
-    },
-    {
+    }),
+    Promise.resolve({
       level: 1,
       levelDescription: 'MAPPA Level 1',
       category: 3,
       categoryDescription: 'MAPPA Cat 3',
       startDate: '2023-01-27',
       reviewDate: '2023-04-27',
-    },
-    {
+    }),
+    Promise.resolve({
       content: [
         {
           caseNoteId: '47042895',
@@ -514,8 +514,8 @@ export function stubPrisonerOverviewData(rpService: RpService) {
           text: 'Resettlement status set to: Done. form submit redirect to pathway',
         },
       ],
-    },
-    {
+    }),
+    Promise.resolve({
       primaryPom: {
         name: 'David Jones',
       },
@@ -528,8 +528,8 @@ export function stubPrisonerOverviewData(rpService: RpService) {
       keyWorker: {
         name: 'Steve Rendell',
       },
-    },
-    [
+    }),
+    Promise.resolve([
       {
         title: 'Appointment with Charity ABC',
         contact: 'Bob Example',
@@ -590,6 +590,6 @@ export function stubPrisonerOverviewData(rpService: RpService) {
         note: null,
         type: '',
       },
-    ],
+    ]),
   ])
 }

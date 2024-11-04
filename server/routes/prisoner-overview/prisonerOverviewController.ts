@@ -35,14 +35,14 @@ export default class PrisonerOverviewController {
         appointmentsResult,
         documentsResult,
       ] = await Promise.allSettled([
-        ...(await this.rpService.getPrisonerOverviewPageData(
+        ...this.rpService.getPrisonerOverviewPageData(
           prisonerNumber,
           page as string,
           size as string,
           sort as string,
           days as string,
           selectedPathway as string,
-        )),
+        ),
         this.documentService.getDocumentMeta(prisonerNumber),
       ])
 
