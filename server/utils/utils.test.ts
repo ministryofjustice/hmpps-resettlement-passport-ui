@@ -201,7 +201,7 @@ describe('format address', () => {
         postcode: 'LS1 1AA',
         description: 'Testing',
       },
-      '1234 Main Street,<br />Leeds,<br />LS1 1AA',
+      '1234 Main Street,\nLeeds,\nLS1 1AA',
     ],
     [
       'Relevant fields populated',
@@ -211,7 +211,7 @@ describe('format address', () => {
         town: 'Leeds',
         postcode: 'LS1 1AA',
       },
-      '1234 Main Street,<br />Leeds,<br />LS1 1AA',
+      '1234 Main Street,\nLeeds,\nLS1 1AA',
     ],
     [
       'Just building number populated',
@@ -256,7 +256,7 @@ describe('format address', () => {
         streetName: 'Main Street',
         town: 'Leeds',
       },
-      '1234 Main Street,<br />Leeds',
+      '1234 Main Street,\nLeeds',
     ],
     [
       'Just building number, street name and postcode populated',
@@ -265,7 +265,7 @@ describe('format address', () => {
         streetName: 'Main Street',
         postcode: 'LS1 1AA',
       },
-      '1234 Main Street,<br />LS1 1AA',
+      '1234 Main Street,\nLS1 1AA',
     ],
     [
       'Just street name, town and postcode populated',
@@ -274,7 +274,7 @@ describe('format address', () => {
         town: 'Leeds',
         postcode: 'LS1 1AA',
       },
-      'Main Street,<br />Leeds,<br />LS1 1AA',
+      'Main Street,\nLeeds,\nLS1 1AA',
     ],
     [
       'Just building number, town and postcode populated',
@@ -283,7 +283,7 @@ describe('format address', () => {
         town: 'Leeds',
         postcode: 'LS1 1AA',
       },
-      '1234,<br />Leeds,<br />LS1 1AA',
+      '1234,\nLeeds,\nLS1 1AA',
     ],
   ])('%s: formatAddress(%s)', (_: string, a: AppointmentLocation, expected: string) => {
     expect(formatAddress(a)).toEqual(expected)
