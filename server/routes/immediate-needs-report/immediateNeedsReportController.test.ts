@@ -1,3 +1,4 @@
+import { JSDOM } from 'jsdom'
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes } from '../testutils/appSetup'
@@ -974,5 +975,34 @@ describe('saveAnswerAndGetNextPage', () => {
     expect(answerSpy).toHaveBeenCalledWith(stateKey, expectedDataToSubmit, apiAssessmentPage)
     expect(jest.spyOn(assessmentStateService, 'getWorkingAssessment')).toHaveBeenCalledTimes(0)
     expect(jest.spyOn(rpService, 'fetchNextPage')).toHaveBeenCalledTimes(0)
+  })
+
+  it('should do something', async () => {
+    const workingCachedAssessment = {
+      assessment: { questionsAndAnswers: [], version: null },
+      pageLoadHistory: [],
+    } as WorkingCachedAssessment
+
+    jest.spyOn(assessmentStateService, 'getWorkingAssessment').mockResolvedValue(workingCachedAssessment)
+
+    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
+
+    await request(app)
+      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .send({
+        assessmentType: 'BCST2',
+      })
+      .expect(500)
+      .expect(res => {
+        const { document } = new JSDOM(res.text).window
+        expect(document.querySelector("[data-qa='page-heading']").textContent).toBe('Something went wrong')
+      })
+
+    expect(completeAssessmentSpy).toHaveBeenCalledWith(
+      '123',
+      'DRUGS_AND_ALCOHOL',
+      workingCachedAssessment.assessment,
+      'BCST2',
+    )
   })
 })

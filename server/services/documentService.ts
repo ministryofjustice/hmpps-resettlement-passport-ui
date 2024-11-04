@@ -1,4 +1,5 @@
-import { ReadableStream } from 'stream/web'
+import { ReadableStream } from 'node:stream/web'
+import * as stream from 'node:stream'
 import { minutesToMilliseconds } from 'date-fns'
 import config from '../config'
 import { currentUser } from '../middleware/userContextMiddleware'
@@ -65,7 +66,7 @@ export default class DocumentService {
     return new RPClient(token, sessionId, userId)
   }
 
-  async downloadDocument(prisonerNumber: string, documentType: string): Promise<ReadableStream<Uint8Array>> {
+  async downloadDocument(prisonerNumber: string, documentType: string): Promise<NodeJS.ReadableStream> {
     const type = this.readDocumentType(documentType)
     const { token } = currentUser()
     const response = await fetch(
@@ -79,7 +80,7 @@ export default class DocumentService {
       },
     )
     if (response.ok) {
-      return response.body
+      return stream.Readable.fromWeb(response.body as ReadableStream<Uint8Array>)
     }
     throw new Error(`Download failed with ${response.status} ${response.statusText}`)
   }
