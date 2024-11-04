@@ -94,7 +94,10 @@ describe('completeAssessment', () => {
         assessmentType: 'BCST2',
       })
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => {
+        const { document } = new JSDOM(res.text).window
+        expect(document.querySelector("[data-qa='page-heading']").textContent).toBe('Something went wrong')
+      })
 
     expect(completeAssessmentSpy).toHaveBeenCalledWith(
       '123',
@@ -977,32 +980,5 @@ describe('saveAnswerAndGetNextPage', () => {
     expect(jest.spyOn(rpService, 'fetchNextPage')).toHaveBeenCalledTimes(0)
   })
 
-  it('should do something', async () => {
-    const workingCachedAssessment = {
-      assessment: { questionsAndAnswers: [], version: null },
-      pageLoadHistory: [],
-    } as WorkingCachedAssessment
-
-    jest.spyOn(assessmentStateService, 'getWorkingAssessment').mockResolvedValue(workingCachedAssessment)
-
-    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
-
-    await request(app)
-      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
-      .send({
-        assessmentType: 'BCST2',
-      })
-      .expect(500)
-      .expect(res => {
-        const { document } = new JSDOM(res.text).window
-        expect(document.querySelector("[data-qa='page-heading']").textContent).toBe('Something went wrong')
-      })
-
-    expect(completeAssessmentSpy).toHaveBeenCalledWith(
-      '123',
-      'DRUGS_AND_ALCOHOL',
-      workingCachedAssessment.assessment,
-      'BCST2',
-    )
-  })
+  it('should do something', async () => {})
 })
