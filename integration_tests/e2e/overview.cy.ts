@@ -42,4 +42,47 @@ context('Report Information', () => {
     cy.get('a[href*="/licence-image/?licenceId="]').invoke('removeAttr', 'target').click({ force: true })
     cy.get('img.licence-image').should('exist')
   })
+
+  it('Can render page when errors received from non-essential apis', () => {
+    cy.task('stubJohnSmithWithSomeErrors')
+
+    cy.signIn()
+
+    cy.visit('/prisoner-overview/?prisonerNumber=A8731DY')
+
+    cy.get('#staff-contacts').should(
+      'contain.text',
+      'Data unavailable - try again later or contact administrator if problem persists',
+    )
+
+    cy.get('#case-notes').should(
+      'contain.text',
+      'Data unavailable - try again later or contact administrator if problem persists',
+    )
+
+    cy.get('#appointments').should(
+      'contain.text',
+      'Data unavailable - try again later or contact administrator if problem persists',
+    )
+
+    cy.get('#licence-summary').should(
+      'contain.text',
+      'Data unavailable - try again later or contact administrator if problem persists',
+    )
+
+    cy.get('#documents').should(
+      'contain.text',
+      'Data unavailable - try again later or contact administrator if problem persists',
+    )
+
+    cy.get('.rosh').should(
+      'contain.text',
+      'Data unavailable - try again later or contact administrator if problem persists',
+    )
+
+    cy.get('.mappa-section').should(
+      'contain.text',
+      'Data unavailable - try again later or contact administrator if problem persists',
+    )
+  })
 })

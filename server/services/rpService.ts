@@ -474,7 +474,7 @@ export default class RpService {
     return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/watch`)
   }
 
-  async getPrisonerOverviewPageData(
+  getPrisonerOverviewPageData(
     prisonerNumber: string,
     page: string,
     size: string,
@@ -484,15 +484,15 @@ export default class RpService {
   ) {
     const rpClient = this.createClient()
     return [
-      await rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/licence-condition`),
-      await rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/scores`),
-      await rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/rosh`),
-      await rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/mappa`),
-      await rpClient.get(
+      rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/licence-condition`),
+      rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/scores`),
+      rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/rosh`),
+      rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/risk/mappa`),
+      rpClient.get(
         `/resettlement-passport/case-notes/${prisonerNumber}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${selectedPathway}`,
       ),
-      await rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/staff-contacts`),
-      await rpClient
+      rpClient.get(`/resettlement-passport/prisoner/${prisonerNumber}/staff-contacts`),
+      rpClient
         .get(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`)
         .then((a: Appointments) => a.results),
     ]
