@@ -26,6 +26,9 @@ context('Immediate Needs Report All Questions', () => {
   function getQuestionTitle() {
     return cy.get('.govuk-fieldset__legend--m')
   }
+  function getLabel() {
+    return cy.get('.govuk-label--m')
+  }
 
   it('Immediate Needs Report all question types happy path', () => {
     cy.task('stubJohnSmithImmediateNeedsReportAllQuestionTypes')
@@ -56,8 +59,8 @@ context('Immediate Needs Report All Questions', () => {
     getQuestionTitle().eq(0).should('have.text', 'Multiple questions on a page Radio question with regex validation?')
     getQuestionTitle().eq(1).should('have.text', 'Address question: Enter the address')
     getQuestionTitle().eq(2).should('have.text', 'Nested Radio question types?')
-    // getQuestionTitle().eq(3).should('have.text', 'Long Text Question')
-    // getQuestionTitle().eq(4).should('have.text', 'Checkbox question with exclusive options?')
+    getLabel().should('contain.text', 'Long Text Question')
+    getLabel().should('contain.text', 'Checkbox question with exclusive options?')
 
     // Check each question is mandatory
     clickContinue()
@@ -114,15 +117,18 @@ context('Immediate Needs Report All Questions', () => {
     cy.get('#CASE_NOTE_SUMMARY').type('Case Note')
     clickContinue()
 
+    getHeading().should('have.text', 'Check your answers')
     cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'Yes')
     cy.get('.govuk-summary-list__value').eq(1).should('contain.text', 'No')
-    // cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'line1 town postcode')
+    cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'line1')
+    cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'town')
+    cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'postcode')
     cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'No answer provided')
     cy.get('.govuk-summary-list__value').eq(4).should('contain.text', 'Random text')
-    // cy.get('.govuk-summary-list__value').eq(5).should('contain.text', 'Universal Credit')
+    cy.get('.govuk-summary-list__value').eq(5).should('contain.text', 'Universal credit')
     cy.get('.govuk-summary-list__value').eq(6).should('contain.text', 'Yes')
-    // cy.get('.govuk-summary-list__value').eq(7).should('contain.text', 'Physical Health')
-    // cy.get('.govuk-summary-list__value').eq(8).should('contain.text', 'Support Required')
+    cy.get('.govuk-summary-list__value').eq(7).should('contain.text', 'Physical health')
+    cy.get('.govuk-summary-list__value').eq(8).should('contain.text', 'Support required')
     cy.get('.govuk-summary-list__value').eq(9).should('contain.text', 'No answer provided')
 
     clickConfirm()
