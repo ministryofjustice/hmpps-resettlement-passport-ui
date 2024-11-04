@@ -1152,6 +1152,164 @@ const submitAccommodationAssessmentEdit2 = () =>
       headers: submitHeaders,
     },
   })
+const submitAllQuestionTypesAssessment = () =>
+  stubFor({
+    name: 'JohnSmith immediate needs report All Question types Assessment Submit',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/complete?assessmentType=BCST2',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'SINGLE_QUESTION_ON_A_PAGE',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].answer.answer',
+            contains: 'YES',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[1].question',
+            contains: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[1].answer.answer',
+            contains: 'NO',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[2].question',
+            contains: 'ADDRESS_QUESTION',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[2].answer.answer',
+            contains: 'line1',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[3].question',
+            contains: 'NESTED_RADIO_QUESTION_TYPES',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[3].answer.answer',
+            contains: 'NO',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[4].question',
+            contains: 'LONG_TEXT_QUESTION',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[4].answer.answer',
+            contains: 'Random text',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[5].question',
+            contains: 'CHECKBOX_QUESTION_WITH_EXCLUSIVE_OPTIONS',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[5].answer.answer',
+            contains: 'UNIVERSAL_CREDIT',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[6].question',
+            contains: 'DIVERGENT_FLOW_OPTIONS',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[6].answer.answer',
+            contains: 'YES',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[7].question',
+            contains: 'DIVERGENT_OPTION',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[7].answer.answer',
+            contains: 'PHYSICAL_HEALTH',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[8].question',
+            contains: 'MANDATORY_QUESTION',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[8].answer.answer',
+            contains: 'SUPPORT_REQUIRED',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[9].question',
+            contains: 'OPTIONAL_QUESTION',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[9].answer.answer',
+            contains: 'NO_ANSWER',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[10].question',
+            contains: 'SUPPORT_NEEDS',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[10].answer.answer',
+            contains: 'SUPPORT_REQUIRED',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[11].question',
+            contains: 'CASE_NOTE_SUMMARY',
+          },
+        },
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[11].answer.answer',
+            contains: 'Case Note',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: submitHeaders,
+    },
+  })
 const nextPageHelpToKeepHome = () =>
   stubFor({
     name: 'JohnSmith immediate needs report help to keep home next page',
@@ -1173,6 +1331,720 @@ const nextPageHelpToKeepHome = () =>
       jsonBody: {
         nextPageId: 'ASSESSMENT_SUMMARY',
       },
+    },
+  })
+
+const nextPageStartAllQuestionTypes = () =>
+  stubFor({
+    name: 'JohnSmith immediate needs report Accommodation Assessment Next Page 1',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          equalToJson: '{"questionsAndAnswers":[]}',
+          ignoreArrayOrder: true,
+          ignoreExtraElements: true,
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        nextPageId: 'SINGLE_QUESTION_ON_A_PAGE',
+      },
+    },
+  })
+
+const singleQuestionOnPage = () =>
+  stubFor({
+    name: 'Single question on a page, radio question',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/SINGLE_QUESTION_ON_A_PAGE?assessmentType=BCST2&version=1',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'SINGLE_QUESTION_ON_A_PAGE',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              '@class': 'ResettlementAssessmentResponseQuestion',
+              id: 'SINGLE_QUESTION_ON_A_PAGE',
+              title: 'Single question on a page This is a radio Question?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'YES',
+                  displayText: 'Yes',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO',
+                  displayText: 'No',
+                  description: null,
+                  exclusive: false,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                },
+              ],
+              validationType: 'MANDATORY',
+            },
+            answer: null,
+            originalPageId: 'SINGLE_QUESTION_ON_A_PAGE',
+          },
+        ],
+      },
+    },
+  })
+const postSingleQuestionOnAPage = () =>
+  stubFor({
+    name: 'Submitted first question',
+    request: {
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=SINGLE_QUESTION_ON_A_PAGE',
+      method: 'POST',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'SINGLE_QUESTION_ON_A_PAGE',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: { nextPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE' },
+    },
+  })
+const multipleQuestionsOnPage = () =>
+  stubFor({
+    name: 'Multiple questions on a page, radio question',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/MULTIPLE_QUESTIONS_ON_A_PAGE?assessmentType=BCST2&version=1',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+              title: 'Multiple questions on a page Radio question with regex validation?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'YES',
+                  displayText: 'Yes',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: [
+                    {
+                      question: {
+                        id: 'REGEX_NUMBER',
+                        title: 'Number Regex',
+                        subTitle: null,
+                        type: 'SHORT_TEXT',
+                        options: null,
+                        validationType: 'MANDATORY',
+                        customValidation: { regex: '^(?:[1-9])(\\d+)?$', message: 'Number must be a whole number' },
+                        detailsTitle: null,
+                        detailsContent: null,
+                      },
+                      answer: null,
+                      originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+                    },
+                  ],
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO',
+                  displayText: 'No',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+              ],
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+          },
+          {
+            question: {
+              id: 'ADDRESS_QUESTION',
+              title: 'Address question: Enter the address',
+              subTitle: null,
+              type: 'ADDRESS',
+              options: null,
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+          },
+          {
+            question: {
+              id: 'NESTED_RADIO_QUESTION_TYPES',
+              title: 'Nested Radio question types?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'YES',
+                  displayText: 'Yes',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: [
+                    {
+                      question: {
+                        id: 'SHORT_TEXT_NESTED',
+                        title: 'Short text nested',
+                        subTitle: null,
+                        type: 'SHORT_TEXT',
+                        options: null,
+                        validationType: 'MANDATORY',
+                        customValidation: null,
+                        detailsTitle: null,
+                        detailsContent: null,
+                      },
+                      answer: null,
+                      originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+                    },
+                    {
+                      question: {
+                        id: 'ADDRESS_NESTED',
+                        title: 'Enter the address nested',
+                        subTitle: null,
+                        type: 'ADDRESS',
+                        options: null,
+                        validationType: 'MANDATORY',
+                        customValidation: null,
+                        detailsTitle: null,
+                        detailsContent: null,
+                      },
+                      answer: null,
+                      originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+                    },
+                    {
+                      question: {
+                        id: 'LONG_TEXT_NESTED',
+                        title: 'Long text nested',
+                        subTitle: null,
+                        type: 'LONG_TEXT',
+                        options: null,
+                        validationType: 'MANDATORY',
+                        customValidation: null,
+                        detailsTitle: null,
+                        detailsContent: null,
+                      },
+                      answer: null,
+                      originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+                    },
+                  ],
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO',
+                  displayText: 'No',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+              ],
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+          },
+          {
+            question: {
+              id: 'LONG_TEXT_QUESTION',
+              title: 'Long Text Question',
+              subTitle: 'This will be displayed as a case note in both DPS and nDelius',
+              type: 'LONG_TEXT',
+              options: null,
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+          },
+          {
+            question: {
+              id: 'CHECKBOX_QUESTION_WITH_EXCLUSIVE_OPTIONS',
+              title: 'Checkbox question with exclusive options?',
+              subTitle: 'Select all that apply',
+              type: 'CHECKBOX',
+              options: [
+                {
+                  id: 'ESA',
+                  displayText: 'Employment and support allowance (ESA)',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'HOUSING_BENEFIT',
+                  displayText: 'Housing benefit',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'UNIVERSAL_CREDIT_HOUSING_ELEMENT',
+                  displayText: 'Universal credit housing element',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'UNIVERSAL_CREDIT',
+                  displayText: 'Universal credit',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'PIP',
+                  displayText: 'Personal independence payment (PIP)',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'STATE_PENSION',
+                  displayText: 'State pension',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO_BENEFITS',
+                  displayText: 'No benefits',
+                  description: null,
+                  exclusive: true,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: true,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+              ],
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+          },
+        ],
+      },
+    },
+  })
+const postMultipleQuestionsOnAPage = () =>
+  stubFor({
+    name: 'Submitted second question',
+    request: {
+      method: 'POST',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=MULTIPLE_QUESTIONS_ON_A_PAGE',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'MULTIPLE_QUESTIONS_ON_A_PAGE',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: { nextPageId: 'DIVERGENT_FLOW_OPTIONS' },
+    },
+  })
+const divergentFlowOptions = () =>
+  stubFor({
+    name: 'Divergent flow options',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/DIVERGENT_FLOW_OPTIONS?assessmentType=BCST2&version=1',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'DIVERGENT_FLOW_OPTIONS',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'DIVERGENT_FLOW_OPTIONS',
+              title: 'Divergent flow options yes for divergent flow?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'YES',
+                  displayText: 'Yes',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO',
+                  displayText: 'No',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+              ],
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'DIVERGENT_FLOW_OPTIONS',
+          },
+        ],
+      },
+    },
+  })
+const postDivergentFlowOptionYes = () =>
+  stubFor({
+    name: 'Divergent flow option Yes',
+    request: {
+      method: 'POST',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=DIVERGENT_FLOW_OPTIONS',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'DIVERGENT_FLOW_OPTIONS',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: { nextPageId: 'DIVERGENT_OPTION' },
+    },
+  })
+const divergentOptionYes = () =>
+  stubFor({
+    name: 'Divergent option Yes',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/DIVERGENT_OPTION?assessmentType=BCST2&version=1',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'DIVERGENT_OPTION',
+        title: null,
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'DIVERGENT_OPTION',
+              title: 'Divergent option route?',
+              subTitle: null,
+              type: 'CHECKBOX',
+              options: [
+                {
+                  id: 'PHYSICAL_HEALTH',
+                  displayText: 'Physical health',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'MENTAL_HEALTH',
+                  displayText: 'Mental health',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: true,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+              ],
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'DIVERGENT_OPTION',
+          },
+        ],
+      },
+    },
+  })
+const postDivergentAnswerYes = () =>
+  stubFor({
+    name: 'Divergent answer Yes',
+    request: {
+      method: 'POST',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=DIVERGENT_OPTION',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'DIVERGENT_OPTION',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: { nextPageId: 'MANDATORY_AND_OPTIONAL_QUESTIONS' },
+    },
+  })
+const mandatoryAndOptionalQuestionsPage = () =>
+  stubFor({
+    name: 'Mandatory and optional questions',
+    request: {
+      method: 'GET',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/page/MANDATORY_AND_OPTIONAL_QUESTIONS?assessmentType=BCST2&version=1',
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: {
+        id: 'MANDATORY_AND_OPTIONAL_QUESTIONS',
+        title: 'Mandatory and optional questions',
+        questionsAndAnswers: [
+          {
+            question: {
+              id: 'MANDATORY_QUESTION',
+              title: 'Mandatory question status',
+              subTitle: 'Select one option.',
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'SUPPORT_REQUIRED',
+                  displayText: 'Support required',
+                  description: 'a need for support has been identified and is accepted',
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'SUPPORT_NOT_REQUIRED',
+                  displayText: 'Support not required',
+                  description: 'no need was identified',
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'SUPPORT_DECLINED',
+                  displayText: 'Support declined',
+                  description: 'a need has been identified but support is declined',
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+              ],
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'MANDATORY_AND_OPTIONAL_QUESTIONS',
+          },
+          {
+            question: {
+              id: 'OPTIONAL_QUESTION',
+              title: 'This is an optional question to enter address select move to new address?',
+              subTitle: null,
+              type: 'RADIO',
+              options: [
+                {
+                  id: 'RETURN_TO_PREVIOUS_ADDRESS',
+                  displayText: 'Return to their previous address',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'MOVE_TO_NEW_ADDRESS',
+                  displayText: 'Move to a new address',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: [
+                    {
+                      question: {
+                        id: 'WHERE_WILL_THEY_LIVE_ADDRESS_MOVE_TO_NEW_ADDRESS',
+                        title: 'Optional Question enter address?',
+                        subTitle: null,
+                        type: 'ADDRESS',
+                        options: null,
+                        validationType: 'MANDATORY',
+                        customValidation: null,
+                        detailsTitle: null,
+                        detailsContent: null,
+                      },
+                      answer: null,
+                      originalPageId: 'MANDATORY_AND_OPTIONAL_QUESTIONS',
+                    },
+                  ],
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'DOES_NOT_HAVE_ANYWHERE',
+                  displayText: 'Does not have anywhere to live',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+                {
+                  id: 'NO_ANSWER',
+                  displayText: 'No answer provided',
+                  description: null,
+                  exclusive: false,
+                  nestedQuestions: null,
+                  freeText: false,
+                  tag: null,
+                },
+              ],
+              validationType: 'MANDATORY',
+              customValidation: null,
+              detailsTitle: null,
+              detailsContent: null,
+            },
+            answer: null,
+            originalPageId: 'MANDATORY_AND_OPTIONAL_QUESTIONS',
+          },
+        ],
+      },
+    },
+  })
+const postMandatoryAndOptionalQuestionsPage = () =>
+  stubFor({
+    name: 'Mandatory and Option Questions answer',
+    request: {
+      method: 'POST',
+      url: '/rpApi/resettlement-passport/prisoner/A8731DY/resettlement-assessment/ACCOMMODATION/next-page?version=1&assessmentType=BCST2&currentPage=MANDATORY_AND_OPTIONAL_QUESTIONS',
+      bodyPatterns: [
+        {
+          matchesJsonPath: {
+            expression: '$.questionsAndAnswers[0].question',
+            contains: 'MANDATORY_QUESTION',
+          },
+        },
+      ],
+    },
+    response: {
+      status: 200,
+      headers: responseHeaders,
+      jsonBody: { nextPageId: 'ASSESSMENT_SUMMARY' },
     },
   })
 
@@ -1233,6 +2105,28 @@ export const johnSmithImmediateNeedsReportAccommodation = (): SuperAgentRequest[
   checkAnswersPage('ACCOMMODATION'),
   submitAccommodationAssessmentEdit1(),
   submitAccommodationAssessmentEdit2(),
+  nextPageHelpToKeepHome(),
+  getResettlementAssessmentVersion('ACCOMMODATION', 'BCST2'),
+  validateAssessment('ACCOMMODATION', 'BCST2'),
+]
+export const johnSmithImmediateNeedsReportAllQuestionTypes = (): SuperAgentRequest[] => [
+  stubJohnSmithPrisonerDetails(),
+  initialTaskList(),
+  nextPageStartAllQuestionTypes(),
+  singleQuestionOnPage(),
+  postSingleQuestionOnAPage(),
+  multipleQuestionsOnPage(),
+  postMultipleQuestionsOnAPage(),
+  divergentFlowOptions(),
+  postDivergentFlowOptionYes(),
+  divergentOptionYes(),
+  postDivergentAnswerYes(),
+  mandatoryAndOptionalQuestionsPage(),
+  postMandatoryAndOptionalQuestionsPage(),
+  assessmentSummaryPage('ACCOMMODATION', 'Accommodation'),
+  nextPageSummary('ACCOMMODATION'),
+  checkAnswersPage('ACCOMMODATION'),
+  submitAllQuestionTypesAssessment(),
   nextPageHelpToKeepHome(),
   getResettlementAssessmentVersion('ACCOMMODATION', 'BCST2'),
   validateAssessment('ACCOMMODATION', 'BCST2'),
