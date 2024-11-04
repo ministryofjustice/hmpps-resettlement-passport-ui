@@ -36,7 +36,7 @@ describe('getView', () => {
     await request(app)
       .get(`/licence-image/?licenceId=${licenceId}&conditionId=${conditionId}&prisonerNumber=${prisonerNumber}`)
       .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot)
+      .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(rpServiceSpy).toHaveBeenCalledWith(prisonerNumber, licenceId, conditionId)
   })
@@ -49,7 +49,7 @@ describe('getView', () => {
     await request(app)
       .get(`/licence-image/?licenceId=${licenceId}&conditionId=${conditionId}&prisonerNumber=${prisonerNumber}`)
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
   it('Not found Error from RpService', async () => {
     const error = new Error('not found') as Error & { status?: number }
@@ -62,7 +62,7 @@ describe('getView', () => {
     await request(app)
       .get(`/licence-image/?licenceId=${licenceId}&conditionId=${conditionId}&prisonerNumber=${prisonerNumber}`)
       .expect(404)
-      .expect(res => expect(res.text).toMatchSnapshot)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
 
