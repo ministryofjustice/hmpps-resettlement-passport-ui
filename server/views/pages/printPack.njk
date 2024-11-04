@@ -78,6 +78,9 @@
         height: 160px;
         display: block;
       }
+      .show-line-breaks {
+          white-space: pre-line;
+      }
     </style>
 
   </head>
@@ -203,13 +206,11 @@
               <p class="nomargin">
                 <b>{{appointment.title}}</b>
               </p>
-              <p class="nomargin">
-                {{ appointment.location | formatAddress | safe}}
-              </p>
-            Contact: {{appointment.contact}}
+              <p class="nomargin show-line-breaks">{{ appointment.location | formatAddress}}</p>
+              Contact: {{appointment.contact}}
               {% if appointment.contactEmail %}
                 (email: {{appointment.contactEmail}})
-            {% endif %}
+              {% endif %}
             </p>
           </div>
         </div>
