@@ -62,16 +62,16 @@ context('Immediate Needs Report', () => {
     // // Status buttons
     cy.get('.govuk-table__cell > .govuk-tag').each((item, index) => {
       if (index !== 6) {
-        cy.wrap(item).should('have.text', 'Completed')
+        cy.wrap(item).should('contain.text', 'Completed')
       } else {
-        cy.wrap(item).should('have.text', 'Incomplete')
+        cy.wrap(item).should('contain.text', 'Incomplete')
       }
     })
 
     // Click Health link
     cy.get('[data-qa="a-HEALTH"]').click()
 
-    getHeading().should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
+    getHeading().should('contain.text', 'Is the person in prison registered with a GP surgery outside of prison?')
     nothingShouldBeSelected()
 
     // Check validation
@@ -90,24 +90,24 @@ context('Immediate Needs Report', () => {
     cy.get('#GP_PHONE_NUMBER').type('01234567890')
     clickContinue()
 
-    getHeading().should('have.text', 'Does the person in prison want to meet with a prison healthcare team?')
+    getHeading().should('contain.text', 'Does the person in prison want to meet with a prison healthcare team?')
     nothingShouldBeSelected()
     cy.get('#MEET_HEALTHCARE_TEAM-NO').click()
 
     clickContinue()
 
-    getHeading().should('have.text', 'Support needs')
+    getHeading().should('contain.text', 'Support needs')
     noCheckboxesShouldBeSelected()
 
     // Check mandatory validation
     clickContinue()
     cy.get('.govuk-error-message').should('contain.text', 'This field is required')
 
-    cy.get('#NEED_2').click()
+    cy.get('#SUPPORT_REQUIREMENTS-NEED_2').click()
 
     clickContinue()
 
-    getHeading().should('have.text', 'Health report summary')
+    getHeading().should('contain.text', 'Health report summary')
 
     nothingShouldBeSelected()
     cy.get('#SUPPORT_NEEDS-SUPPORT_NOT_REQUIRED').click()
@@ -115,7 +115,7 @@ context('Immediate Needs Report', () => {
 
     clickContinue()
 
-    getHeading().should('have.text', 'Check your answers')
+    getHeading().should('contain.text', 'Check your answers')
 
     cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'Yes')
     cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '01234567890')
@@ -126,7 +126,7 @@ context('Immediate Needs Report', () => {
     clickConfirm()
 
     cy.get('.govuk-table__cell > .govuk-tag').each(item => {
-      cy.wrap(item).should('have.text', 'Completed')
+      cy.wrap(item).should('contain.text', 'Completed')
     })
     clickSubmit()
     cy.get('.govuk-panel__title').should('contain.text', 'Immediate needs report completed')
@@ -143,42 +143,42 @@ context('Immediate Needs Report', () => {
     // Click Accommodation link
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
-    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    getHeading().should('contain.text', 'Where did the person in prison live before custody?')
     cy.get('#WHERE_DID_THEY_LIVE-PRIVATE_RENTED_HOUSING').check()
     clickContinue()
 
-    cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
+    cy.get('.govuk-fieldset__legend').should('contain.text', 'Enter the address')
     cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-line-1').type('line1')
     cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-town').type('town')
     cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-postcode').type('postcode')
     clickContinue()
 
     getHeading().should(
-      'have.text',
+      'contain.text',
       'Does the person in prison or their family need help to keep their home while they are in prison?',
     )
 
     // Go back twice to the where did they live question
     cy.go('back')
-    cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
+    cy.get('.govuk-fieldset__legend').should('contain.text', 'Enter the address')
     cy.go('back')
-    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    getHeading().should('contain.text', 'Where did the person in prison live before custody?')
     cy.get('#WHERE_DID_THEY_LIVE-PRIVATE_RENTED_HOUSING').should('be.checked')
 
     // Change answer to go down a different path
     cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').check()
     clickContinue()
 
-    getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+    getHeading().should('contain.text', 'Where will the person in prison live when they are released?')
     cy.get('#WHERE_WILL_THEY_LIVE_2-DOES_NOT_HAVE_ANYWHERE').check()
     clickContinue()
 
-    getHeading().should('have.text', 'Accommodation report summary')
+    getHeading().should('contain.text', 'Accommodation report summary')
     cy.get('#SUPPORT_NEEDS-SUPPORT_REQUIRED').check()
     cy.get('#CASE_NOTE_SUMMARY').type('Needs somewhere to stay')
     clickContinue()
 
-    getHeading().should('have.text', 'Check your answers')
+    getHeading().should('contain.text', 'Check your answers')
     assertShouldNotHaveAddressAnswer()
 
     clickConfirm()
@@ -196,34 +196,34 @@ context('Immediate Needs Report', () => {
     // Click Accommodation link
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
-    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    getHeading().should('contain.text', 'Where did the person in prison live before custody?')
     cy.get('#WHERE_DID_THEY_LIVE-PRIVATE_RENTED_HOUSING').check()
     clickContinue()
 
-    cy.get('.govuk-fieldset__legend').should('have.text', 'Enter the address')
+    cy.get('.govuk-fieldset__legend').should('contain.text', 'Enter the address')
     cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-line-1').type('line1')
     cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-town').type('town')
     cy.get('#WHERE_DID_THEY_LIVE_ADDRESS-address-postcode').type('postcode')
     clickContinue()
 
     getHeading().should(
-      'have.text',
+      'contain.text',
       'Does the person in prison or their family need help to keep their home while they are in prison?',
     )
 
     cy.get('#HELP_TO_KEEP_HOME-NO').check()
     clickContinue()
 
-    getHeading().should('have.text', 'Accommodation report summary')
+    getHeading().should('contain.text', 'Accommodation report summary')
     cy.get('#SUPPORT_NEEDS-SUPPORT_NOT_REQUIRED').check()
     cy.get('#CASE_NOTE_SUMMARY').type('No support required')
     clickContinue()
 
-    getHeading().should('have.text', 'Check your answers')
+    getHeading().should('contain.text', 'Check your answers')
     // Click change on the first row - Where did the person in prison live before custody?
     cy.get('.govuk-summary-list__actions').eq(0).children('a').click()
 
-    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    getHeading().should('contain.text', 'Where did the person in prison live before custody?')
     cy.get('#WHERE_DID_THEY_LIVE-PRIVATE_RENTED_HOUSING').should('be.checked')
     cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').check()
     clickContinue()
@@ -231,11 +231,11 @@ context('Immediate Needs Report', () => {
     // PSFR-1312 Clicking back at this point should take you to 'Where did the person in prison live before custody?'
     // NOT the check your answers page
     cy.go(-1)
-    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    getHeading().should('contain.text', 'Where did the person in prison live before custody?')
     cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').should('be.checked')
     clickContinue()
 
-    getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+    getHeading().should('contain.text', 'Where will the person in prison live when they are released?')
     cy.get('#WHERE_WILL_THEY_LIVE_2-DOES_NOT_HAVE_ANYWHERE').check()
     clickContinue()
 
@@ -256,27 +256,27 @@ context('Immediate Needs Report', () => {
     // Click Accommodation link
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
-    getHeading().should('have.text', 'Where did the person in prison live before custody?')
+    getHeading().should('contain.text', 'Where did the person in prison live before custody?')
     cy.get('#WHERE_DID_THEY_LIVE-NO_PERMANENT_OR_FIXED').check()
     clickContinue()
 
-    getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+    getHeading().should('contain.text', 'Where will the person in prison live when they are released?')
 
     // Go back to the task list page
     cy.visit('/assessment-task-list/?prisonerNumber=A8731DY&type=BCST2')
     // Go back to accommodation
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
-    getHeading().should('have.text', 'Where will the person in prison live when they are released?')
+    getHeading().should('contain.text', 'Where will the person in prison live when they are released?')
     cy.get('#WHERE_WILL_THEY_LIVE_2-DOES_NOT_HAVE_ANYWHERE').check()
     clickContinue()
 
-    getHeading().should('have.text', 'Accommodation report summary')
+    getHeading().should('contain.text', 'Accommodation report summary')
     cy.get('#SUPPORT_NEEDS-SUPPORT_REQUIRED').check()
     cy.get('#CASE_NOTE_SUMMARY').type('Needs somewhere to stay')
     clickContinue()
 
-    getHeading().should('have.text', 'Check your answers')
+    getHeading().should('contain.text', 'Check your answers')
 
     clickConfirm()
     cy.url().should('contain', '/assessment-task-list?prisonerNumber=A8731DY')
@@ -294,35 +294,35 @@ context('Immediate Needs Report', () => {
     // // Status buttons
     cy.get('.govuk-table__cell > .govuk-tag').each((item, index) => {
       if (index !== 6) {
-        cy.wrap(item).should('have.text', 'Completed')
+        cy.wrap(item).should('contain.text', 'Completed')
       } else {
-        cy.wrap(item).should('have.text', 'Incomplete')
+        cy.wrap(item).should('contain.text', 'Incomplete')
       }
     })
 
     // Click Health link
     cy.get('[data-qa="a-HEALTH"]').click()
 
-    getHeading().should('have.text', 'Does the person in prison want to meet with a prison healthcare team?')
-    cy.get('.govuk-caption-l').should('have.text', 'Smith, John (A8731DY)')
+    getHeading().should('contain.text', 'Does the person in prison want to meet with a prison healthcare team?')
+    cy.get('.govuk-caption-l').should('contain.text', 'Smith, John (A8731DY)')
     nothingShouldBeSelected()
     cy.get('#MEET_HEALTHCARE_TEAM-NO').click()
 
     clickContinue()
 
-    getHeading().should('have.text', 'Support needs')
-    cy.get('.govuk-caption-l').should('have.text', 'Smith, John (A8731DY)')
+    getHeading().should('contain.text', 'Support needs')
+    cy.get('.govuk-caption-l').should('contain.text', 'Smith, John (A8731DY)')
     noCheckboxesShouldBeSelected()
 
     // Check mandatory validation
     clickContinue()
     cy.get('.govuk-error-message').should('contain.text', 'This field is required')
 
-    cy.get('#NEED_2').click()
+    cy.get('#SUPPORT_REQUIREMENTS-NEED_2').click()
 
     clickContinue()
 
-    getHeading().should('have.text', 'Health report summary')
+    getHeading().should('contain.text', 'Health report summary')
 
     nothingShouldBeSelected()
     cy.get('#SUPPORT_NEEDS-SUPPORT_NOT_REQUIRED').click()
@@ -330,8 +330,8 @@ context('Immediate Needs Report', () => {
 
     clickContinue()
 
-    getHeading().should('have.text', 'Check your answers')
-    cy.get('.govuk-caption-l').should('have.text', 'Smith, John (A8731DY)')
+    getHeading().should('contain.text', 'Check your answers')
+    cy.get('.govuk-caption-l').should('contain.text', 'Smith, John (A8731DY)')
 
     cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'Yes')
     cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '01234567890')
@@ -342,7 +342,7 @@ context('Immediate Needs Report', () => {
     clickConfirm()
 
     cy.get('.govuk-table__cell > .govuk-tag').each(item => {
-      cy.wrap(item).should('have.text', 'Completed')
+      cy.wrap(item).should('contain.text', 'Completed')
     })
     clickSubmit()
     cy.get('.govuk-panel__title').should('contain.text', 'Immediate needs report completed')
@@ -357,7 +357,7 @@ context('Immediate Needs Report', () => {
     // Click Health link
     cy.get('[data-qa="a-HEALTH"]').click()
 
-    getHeading().should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
+    getHeading().should('contain.text', 'Is the person in prison registered with a GP surgery outside of prison?')
     nothingShouldBeSelected()
 
     cy.get('#REGISTERED_WITH_GP-YES').click()
@@ -373,20 +373,20 @@ context('Immediate Needs Report', () => {
     cy.get('[data-qa="a-HEALTH"]').click()
 
     // Should go to page 1
-    getHeading().should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
+    getHeading().should('contain.text', 'Is the person in prison registered with a GP surgery outside of prison?')
     cy.get('#REGISTERED_WITH_GP-YES').should('be.checked')
     cy.get('#GP_PHONE_NUMBER').type('01234567890')
     clickContinue()
 
-    getHeading().should('have.text', 'Does the person in prison want to meet with a prison healthcare team?')
+    getHeading().should('contain.text', 'Does the person in prison want to meet with a prison healthcare team?')
     nothingShouldBeSelected()
     cy.get('#MEET_HEALTHCARE_TEAM-NO').click()
 
     clickContinue()
 
-    getHeading().should('have.text', 'Support needs')
+    getHeading().should('contain.text', 'Support needs')
     noCheckboxesShouldBeSelected()
-    cy.get('#NEED_2').click()
+    cy.get('#SUPPORT_REQUIREMENTS-NEED_2').click()
 
     // Verify textarea is toggled and populate input field
     cy.get('textarea[name="freeText"]').should('not.be.visible')
@@ -400,7 +400,7 @@ context('Immediate Needs Report', () => {
 
     clickContinue()
 
-    getHeading().should('have.text', 'Health report summary')
+    getHeading().should('contain.text', 'Health report summary')
 
     nothingShouldBeSelected()
     cy.get('#SUPPORT_NEEDS-SUPPORT_NOT_REQUIRED').click()
@@ -408,7 +408,7 @@ context('Immediate Needs Report', () => {
 
     clickContinue()
 
-    getHeading().should('have.text', 'Check your answers')
+    getHeading().should('contain.text', 'Check your answers')
 
     cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'Yes')
     cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '01234567890')
@@ -420,7 +420,7 @@ context('Immediate Needs Report', () => {
     clickConfirm()
 
     cy.get('.govuk-table__cell > .govuk-tag').each(item => {
-      cy.wrap(item).should('have.text', 'Completed')
+      cy.wrap(item).should('contain.text', 'Completed')
     })
     clickSubmit()
     cy.get('.govuk-panel__title').should('contain.text', 'Immediate needs report completed')

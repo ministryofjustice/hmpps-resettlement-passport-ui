@@ -41,7 +41,7 @@ context('Immediate Needs Report All Questions', () => {
     // Click accommodation link
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
-    getHeading().should('have.text', 'Single question on a page This is a radio Question?')
+    getHeading().should('contain.text', 'Single question on a page This is a radio Question?')
     nothingShouldBeSelected()
 
     // Check mandatory question error
@@ -54,11 +54,13 @@ context('Immediate Needs Report All Questions', () => {
 
     // Check navigated to multiple questions page
 
-    getHeading().should('have.text', 'Multiple questions on a page Radio question with regex validation?')
+    getHeading().should('contain.text', 'Multiple questions on a page Radio question with regex validation?')
     nothingShouldBeSelected()
-    getQuestionTitle().eq(0).should('have.text', 'Multiple questions on a page Radio question with regex validation?')
-    getQuestionTitle().eq(1).should('have.text', 'Address question: Enter the address')
-    getQuestionTitle().eq(2).should('have.text', 'Nested Radio question types?')
+    getQuestionTitle()
+      .eq(0)
+      .should('contain.text', 'Multiple questions on a page Radio question with regex validation?')
+    getQuestionTitle().eq(1).should('contain.text', 'Address question: Enter the address')
+    getQuestionTitle().eq(2).should('contain.text', 'Nested Radio question types?')
     getLabel().should('contain.text', 'Long Text Question')
     getLabel().should('contain.text', 'Checkbox question with exclusive options?')
 
@@ -77,32 +79,32 @@ context('Immediate Needs Report All Questions', () => {
     cy.get('#ADDRESS_QUESTION-address-postcode').type('postcode')
     cy.get('#LONG_TEXT_QUESTION').type('Random text')
     cy.get('#NESTED_RADIO_QUESTION_TYPES-NO_ANSWER').click()
-    cy.get('#UNIVERSAL_CREDIT').click()
+    cy.get('#CHECKBOX_QUESTION_WITH_EXCLUSIVE_OPTIONS-UNIVERSAL_CREDIT').click()
     clickContinue()
 
     // Check navigated to next question page
-    getHeading().should('have.text', 'Divergent flow options yes for divergent flow?')
+    getHeading().should('contain.text', 'Divergent flow options yes for divergent flow?')
     nothingShouldBeSelected()
     clickContinue()
     cy.get('.govuk-error-message').should('contain.text', 'This field is required')
     // Check no divergence first
     cy.get('#DIVERGENT_FLOW_OPTIONS-NO').click()
     clickContinue()
-    getHeading().should('have.text', 'Divergent option route?')
+    getHeading().should('contain.text', 'Divergent option route?')
     // Should go back to previous page
     cy.go('back')
-    getHeading().should('have.text', 'Divergent flow options yes for divergent flow?')
+    getHeading().should('contain.text', 'Divergent flow options yes for divergent flow?')
     // Change answer to yes
     cy.get('#DIVERGENT_FLOW_OPTIONS-YES').click()
     clickContinue()
     // Answer follow up question
-    cy.get('#PHYSICAL_HEALTH').click()
+    cy.get('#DIVERGENT_OPTION-PHYSICAL_HEALTH').click()
     clickContinue()
     // Final page, mandatory and optional question
-    getQuestionTitle().eq(0).should('have.text', 'Mandatory question status')
+    getQuestionTitle().eq(0).should('contain.text', 'Mandatory question status')
     getQuestionTitle()
       .eq(1)
-      .should('have.text', 'This is an optional question to enter address select move to new address?')
+      .should('contain.text', 'This is an optional question to enter address select move to new address?')
 
     clickContinue()
     cy.get('.govuk-error-message').should('contain.text', 'This field is required')
@@ -112,12 +114,12 @@ context('Immediate Needs Report All Questions', () => {
     cy.get('#OPTIONAL_QUESTION-NO_ANSWER').click()
     clickContinue()
 
-    getHeading().should('have.text', 'Accommodation report summary')
+    getHeading().should('contain.text', 'Accommodation report summary')
     cy.get('#SUPPORT_NEEDS-SUPPORT_REQUIRED').click()
     cy.get('#CASE_NOTE_SUMMARY').type('Case Note')
     clickContinue()
 
-    getHeading().should('have.text', 'Check your answers')
+    getHeading().should('contain.text', 'Check your answers')
     cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'Yes')
     cy.get('.govuk-summary-list__value').eq(1).should('contain.text', 'No')
     cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'line1')

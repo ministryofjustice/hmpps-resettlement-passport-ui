@@ -1,3 +1,4 @@
+import { JSDOM } from 'jsdom'
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes } from '../testutils/appSetup'
@@ -720,6 +721,341 @@ describe('getView', () => {
       stateKey,
       workingAssessmentAnsweredQuestions.questionsAndAnswers,
     )
+  })
+
+  it('should render checkboxes with unique ids', async () => {
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'FINANCE_AND_ID',
+    }
+
+    const pageResponse: ApiAssessmentPage = {
+      id: 'FINANCE_AND_ID_REPORT',
+      title: 'Finance and ID report',
+      questionsAndAnswers: [
+        {
+          question: {
+            id: 'HAS_BANK_ACCOUNT',
+            title: 'Does the person in prison have a bank account?',
+            subTitle: null,
+            type: 'RADIO',
+            options: [
+              {
+                id: 'YES',
+                displayText: 'Yes',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'NO',
+                displayText: 'No',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'NO_ANSWER',
+                displayText: 'No answer provided',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+            ],
+            validationType: 'MANDATORY',
+            customValidation: null,
+            detailsTitle: null,
+            detailsContent: null,
+          },
+          answer: null,
+          originalPageId: 'FINANCE_AND_ID_REPORT',
+        },
+        {
+          question: {
+            id: 'WHAT_ID_DOCUMENTS',
+            title: 'What ID documents does the person in prison have?',
+            subTitle: 'Select all that apply',
+            type: 'CHECKBOX',
+            options: [
+              {
+                id: 'BIRTH_CERTIFICATE',
+                displayText: 'Birth or adoption certificate',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'PASSPORT',
+                displayText: 'Passport',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'DRIVING_LICENCE',
+                displayText: 'Driving licence',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'MARRIAGE_CERTIFICATE',
+                displayText: 'Marriage or civil partnership certificate',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'DIVORCE_CERTIFICATE',
+                displayText: 'Divorce decree absolute certificate',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'BIOMETRIC_RESIDENCE_PERMIT',
+                displayText: 'Biometric residence permit',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'DEED_POLL_CERTIFICATE',
+                displayText: 'Deed poll certificate',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'CITIZEN_CARD',
+                displayText: 'CitizenCard',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'NO_ID_DOCUMENTS',
+                displayText: 'No ID documents',
+                description: null,
+                exclusive: true,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'NO_ANSWER',
+                displayText: 'No answer provided',
+                description: null,
+                exclusive: true,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+            ],
+            validationType: 'MANDATORY',
+            customValidation: null,
+            detailsTitle: null,
+            detailsContent: null,
+          },
+          answer: null,
+          originalPageId: 'FINANCE_AND_ID_REPORT',
+        },
+        {
+          question: {
+            id: 'SELECT_BENEFITS',
+            title: 'What benefits was the person in prison receiving before custody?',
+            subTitle: 'Select all that apply',
+            type: 'CHECKBOX',
+            options: [
+              {
+                id: 'ESA',
+                displayText: 'Employment and support allowance (ESA)',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'HOUSING_BENEFIT',
+                displayText: 'Housing benefit',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'UNIVERSAL_CREDIT_HOUSING_ELEMENT',
+                displayText: 'Universal credit housing element',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'UNIVERSAL_CREDIT',
+                displayText: 'Universal credit',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'PIP',
+                displayText: 'Personal independence payment (PIP)',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'STATE_PENSION',
+                displayText: 'State pension',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'NO_BENEFITS',
+                displayText: 'No benefits',
+                description: null,
+                exclusive: true,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'NO_ANSWER',
+                displayText: 'No answer provided',
+                description: null,
+                exclusive: true,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+            ],
+            validationType: 'MANDATORY',
+            customValidation: null,
+            detailsTitle: null,
+            detailsContent: null,
+          },
+          answer: null,
+          originalPageId: 'FINANCE_AND_ID_REPORT',
+        },
+        {
+          question: {
+            id: 'DEBTS_OR_ARREARS',
+            title: 'Does the person in prison have any debts or arrears?',
+            subTitle: null,
+            type: 'RADIO',
+            options: [
+              {
+                id: 'YES',
+                displayText: 'Yes',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'NO',
+                displayText: 'No',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+              {
+                id: 'NO_ANSWER',
+                displayText: 'No answer provided',
+                description: null,
+                exclusive: false,
+                nestedQuestions: null,
+                freeText: false,
+                tag: null,
+              },
+            ],
+            validationType: 'MANDATORY',
+            customValidation: null,
+            detailsTitle: null,
+            detailsContent: null,
+          },
+          answer: null,
+          originalPageId: 'FINANCE_AND_ID_REPORT',
+        },
+      ],
+    }
+    jest.spyOn(rpService, 'getAssessmentPage').mockResolvedValue(pageResponse)
+    jest.spyOn(assessmentStateService, 'checkForConvergence').mockResolvedValue(false)
+    jest
+      .spyOn(assessmentStateService, 'getWorkingAssessment')
+      .mockResolvedValue({ assessment: { questionsAndAnswers: [], version: null }, pageLoadHistory: [] })
+    jest.spyOn(assessmentStateService, 'getWorkingAssessmentVersion').mockResolvedValue(2)
+    jest.spyOn(assessmentStateService, 'updatePageLoadHistory').mockImplementation()
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/${stateKey.pathway}?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&type=${stateKey.assessmentType}`,
+      )
+      .expect(200)
+      .expect(res => {
+        const { document } = new JSDOM(res.text).window
+        const checkboxes = document.querySelectorAll("input[type='checkbox']")
+        expect(checkboxes.length).toBe(18)
+        const ids = Array.from(checkboxes.values()).map(checkbox => checkbox.id)
+        expect(ids).toEqual([
+          'WHAT_ID_DOCUMENTS-BIRTH_CERTIFICATE',
+          'WHAT_ID_DOCUMENTS-PASSPORT',
+          'WHAT_ID_DOCUMENTS-DRIVING_LICENCE',
+          'WHAT_ID_DOCUMENTS-MARRIAGE_CERTIFICATE',
+          'WHAT_ID_DOCUMENTS-DIVORCE_CERTIFICATE',
+          'WHAT_ID_DOCUMENTS-BIOMETRIC_RESIDENCE_PERMIT',
+          'WHAT_ID_DOCUMENTS-DEED_POLL_CERTIFICATE',
+          'WHAT_ID_DOCUMENTS-CITIZEN_CARD',
+          'WHAT_ID_DOCUMENTS-NO_ID_DOCUMENTS',
+          'WHAT_ID_DOCUMENTS-NO_ANSWER',
+          'SELECT_BENEFITS-ESA',
+          'SELECT_BENEFITS-HOUSING_BENEFIT',
+          'SELECT_BENEFITS-UNIVERSAL_CREDIT_HOUSING_ELEMENT',
+          'SELECT_BENEFITS-UNIVERSAL_CREDIT',
+          'SELECT_BENEFITS-PIP',
+          'SELECT_BENEFITS-STATE_PENSION',
+          'SELECT_BENEFITS-NO_BENEFITS',
+          'SELECT_BENEFITS-NO_ANSWER',
+        ])
+      })
   })
 })
 

@@ -32,9 +32,10 @@
             {% if existingAnswer and option.freeText == true and existingFreeTextAnswer %}
               {% set preSelected = true %}
             {% endif %}
+              {%  set customId=[currentQuestionAndAnswer.question.id, '-', option.id ] | join %}
             <input
               class="govuk-checkboxes__input"
-              id="{{ option.id }}"
+              id="{{ customId }}"
               name="{{ currentQuestionAndAnswer.question.id }}"
               value="{{ option.id }}"
               type="checkbox"

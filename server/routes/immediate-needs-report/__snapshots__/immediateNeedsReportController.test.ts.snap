@@ -278,232 +278,234 @@ exports[`getView get check your answers - v1 of report 1`] = `
   <main id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
-
         
-          <button class="govuk-back-link assessment-back-button" track-event-name="ReportBackLinkClicked" track-event-prisoner-id="123">Back</button>
+          <button
+            class="govuk-back-link assessment-back-button"
+            track-event-name="ReportBackLinkClicked"
+            track-event-prisoner-id="123"
+          >
+            Back
+          </button>
         
-
         <div class="govuk-!-padding-top-7">
-          
-          
-            
-              <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Check your answers</h1>
-              <span class="govuk-caption-l govuk-!-margin-bottom-6">Smith, John (123)</span>
-            
-            <form
-              
-                action="/ImmediateNeedsReport/pathway/ACCOMMODATION/complete?prisonerNumber=123"
-              
-              method="post"
-            >
-
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Check your answers</h1>
+          <span class="govuk-caption-l govuk-!-margin-bottom-6">
+            <!-- prettier-ignore -->
+            Smith, John (123)
+          </span>
+          <form
+            action="/ImmediateNeedsReport/pathway/ACCOMMODATION/complete?prisonerNumber=123"
+            method="post"
+          >
+            <h2 class="govuk-heading-m">Accommodation report</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               
                 
-  
-
-  
-    
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      
-    
-  
-    
-  
-
-  <h2 class="govuk-heading-m">Accommodation report</h2>
-  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 1</dt>
-          <dd class="govuk-summary-list__value">
-            
-              This is the answer to question 1
-            
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=BCST2&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 2</dt>
-          <dd class="govuk-summary-list__value">
-            
-              This is the answer to question 2
-            
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=BCST2&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 3</dt>
-          <dd class="govuk-summary-list__value">
-            
-              Radio option 1
-            
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=BCST2&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 4</dt>
-          <dd class="govuk-summary-list__value">
-            
-              
-              
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 1</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        This is the answer to question 1
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
                 
               
                 
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 2</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        This is the answer to question 2
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
+                
               
+                
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 3</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        Radio option 1
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
+                
+              
+                
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 4</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        
+                        
+                          
+                        
+                          
+                        
+                          
+                            
+                          
+                        
+
+                        
+                          Checkbox option 1<br />
+                        
+                          Checkbox option 2<br />
+                        
+                        Another support need
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
+                
+              
+                
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 5</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        
+                          
+                            
+                              123 Main Street<br />
+                            
+                          
+                        
+                          
+                            
+                              AB1 2BC<br />
+                            
+                          
+                        
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_3/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
+                
+              
+                
+              
+                
+              
+            </dl>
+
+            
+              <h2 class="govuk-heading-m">Accommodation summary</h2>
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 
                   
+                  
+                  
                 
-              
-
-              
-                Checkbox option 1<br />
-              
-                Checkbox option 2<br />
-              
-              Another support need
+                  
+                  
+                  
+                
+                  
+                  
+                  
+                
+                  
+                  
+                  
+                
+                  
+                  
+                  
+                
+                  
+                  
+                    
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">Support needs</dt>
+                      <dd class="govuk-summary-list__value">
+                        <strong class="govuk-tag govuk-tag--orange"> Support required </strong>
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a
+                          class="govuk-link govuk-link--no-visited-state"
+                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                          >Change</a
+                        >
+                      </dd>
+                    </div>
+                  
+                  
+                
+                  
+                  
+                  
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">Case note summary</dt>
+                      <dd class="govuk-summary-list__value show-line-breaks">
+                        This is the case note summary
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a
+                          class="govuk-link govuk-link--no-visited-state"
+                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                          >Change</a
+                        >
+                      </dd>
+                    </div>
+                  
+                
+              </dl>
             
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=BCST2&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 5</dt>
-          <dd class="govuk-summary-list__value">
-            
-              
-                
-                  
-                    123 Main Street<br />
-                  
-                
-              
-                
-                  
-                    AB1 2BC<br />
-                  
-                
-              
-            
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_3/start-edit/?prisonerNumber=123&type=BCST2&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-    
-      
-    
-  </dl>
 
-  
-    <h2 class="govuk-heading-m">Accommodation summary</h2>
-    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-          
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Support needs</dt>
-            <dd class="govuk-summary-list__value">
-              <strong class="govuk-tag govuk-tag--orange">
-                Support required
-              </strong>
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false">Change</a>
-            </dd>
-          </div>
-        
-        
-      
-        
-        
-        
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Case note summary</dt>
-            <dd class="govuk-summary-list__value show-line-breaks">This is the case note summary</dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false">Change</a>
-            </dd>
-          </div>
-        
-      
-    </dl>
-  
+            <input type="hidden" name="pageTitle" value="" />
+            <input type="hidden" name="pathway" value="ACCOMMODATION" />
+            <input type="hidden" name="currentPageId" value="CHECK_ANSWERS" />
+            <input type="hidden" name="_csrf" value="" />
+            <input type="hidden" name="edit" value="false" />
+            <input type="hidden" name="assessmentType" value="BCST2" />
 
-              
-              
-              <input type="hidden" name="pageTitle" value=""/>
-              <input type="hidden" name="pathway" value="ACCOMMODATION"/>
-              <input type="hidden" name="currentPageId" value="CHECK_ANSWERS"/>
-              <input type="hidden" name="_csrf" value=""/>
-              <input type="hidden" name="edit" value="false"/>
-              <input type="hidden" name="assessmentType" value="BCST2"/>
-
-              <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">
-                
-                  Confirm
-                
-              </button>
-            </form>
-          
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Confirm</button>
+          </form>
         </div>
       </div>
     </div>
   </main>
- 
 
         </main>
       </div>
@@ -639,212 +641,210 @@ exports[`getView get check your answers - v2 of report 1`] = `
   <main id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
-
         
-          <button class="govuk-back-link assessment-back-button" track-event-name="ReportBackLinkClicked" track-event-prisoner-id="123">Back</button>
+          <button
+            class="govuk-back-link assessment-back-button"
+            track-event-name="ReportBackLinkClicked"
+            track-event-prisoner-id="123"
+          >
+            Back
+          </button>
         
-
         <div class="govuk-!-padding-top-7">
-          
-          
-            
-              <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Check your answers</h1>
-              <span class="govuk-caption-l govuk-!-margin-bottom-6">Smith, John (123)</span>
-            
-            <form
-              
-                action="/ImmediateNeedsReport/pathway/ACCOMMODATION/complete?prisonerNumber=123"
-              
-              method="post"
-            >
-
+          <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Check your answers</h1>
+          <span class="govuk-caption-l govuk-!-margin-bottom-6">
+            <!-- prettier-ignore -->
+            Smith, John (123)
+          </span>
+          <form
+            action="/ImmediateNeedsReport/pathway/ACCOMMODATION/complete?prisonerNumber=123"
+            method="post"
+          >
+            <h2 class="govuk-heading-m">Accommodation report</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
               
                 
-  
-
-  
-    
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      
-    
-  
-
-  <h2 class="govuk-heading-m">Accommodation report</h2>
-  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 1</dt>
-          <dd class="govuk-summary-list__value">
-            
-              This is the answer to question 1
-            
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 2</dt>
-          <dd class="govuk-summary-list__value">
-            
-              This is the answer to question 2
-            
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 3</dt>
-          <dd class="govuk-summary-list__value">
-            
-              Radio option 1
-            
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 4</dt>
-          <dd class="govuk-summary-list__value">
-            
-              
-              
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 1</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        This is the answer to question 1
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
                 
               
                 
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 2</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        This is the answer to question 2
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
+                
               
+                
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 3</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        Radio option 1
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
+                
+              
+                
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 4</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        
+                        
+                          
+                        
+                          
+                        
 
+                        
+                          Checkbox option 1<br />
+                        
+                          Checkbox option 2<br />
+                        
+                        
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
+                
               
-                Checkbox option 1<br />
+                
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">Question 5</dt>
+                    <dd class="govuk-summary-list__value">
+                      
+                        
+                          
+                            
+                              123 Main Street<br />
+                            
+                          
+                        
+                          
+                            
+                              AB1 2BC<br />
+                            
+                          
+                        
+                      
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                      <a
+                        class="govuk-link govuk-link--no-visited-state"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_3/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                      >
+                        Change
+                      </a>
+                    </dd>
+                  </div>
+                
               
-                Checkbox option 2<br />
+                
               
-              
+            </dl>
+
             
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-        <div class="govuk-summary-list__row">
-          <dt class="govuk-summary-list__key">Question 5</dt>
-          <dd class="govuk-summary-list__value">
-            
-              
+              <h2 class="govuk-heading-m">Accommodation summary</h2>
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 
                   
-                    123 Main Street<br />
+                  
                   
                 
-              
-                
                   
-                    AB1 2BC<br />
+                  
                   
                 
-              
+                  
+                  
+                  
+                
+                  
+                  
+                  
+                
+                  
+                  
+                  
+                
+                  
+                  
+                    
+                    <div class="govuk-summary-list__row">
+                      <dt class="govuk-summary-list__key">Support needs</dt>
+                      <dd class="govuk-summary-list__value">
+                        <strong class="govuk-tag govuk-tag--green"> Support not required </strong>
+                      </dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a
+                          class="govuk-link govuk-link--no-visited-state"
+                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PRERELEASE_ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                          >Change</a
+                        >
+                      </dd>
+                    </div>
+                  
+                  
+                
+              </dl>
             
-          </dd>
-          <dd class="govuk-summary-list__actions">
-            <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_3/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false">Change</a>
-          </dd>
-        </div>
-      
-    
-      
-    
-  </dl>
 
-  
-    <h2 class="govuk-heading-m">Accommodation summary</h2>
-    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-        
-      
-        
-        
-          
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">Support needs</dt>
-            <dd class="govuk-summary-list__value">
-              <strong class="govuk-tag govuk-tag--green">
-                Support not required
-              </strong>
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link govuk-link--no-visited-state" href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PRERELEASE_ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false">Change</a>
-            </dd>
-          </div>
-        
-        
-      
-    </dl>
-  
+            <input type="hidden" name="pageTitle" value="" />
+            <input type="hidden" name="pathway" value="ACCOMMODATION" />
+            <input type="hidden" name="currentPageId" value="CHECK_ANSWERS" />
+            <input type="hidden" name="_csrf" value="" />
+            <input type="hidden" name="edit" value="false" />
+            <input type="hidden" name="assessmentType" value="RESETTLEMENT_PLAN" />
 
-              
-              
-              <input type="hidden" name="pageTitle" value=""/>
-              <input type="hidden" name="pathway" value="ACCOMMODATION"/>
-              <input type="hidden" name="currentPageId" value="CHECK_ANSWERS"/>
-              <input type="hidden" name="_csrf" value=""/>
-              <input type="hidden" name="edit" value="false"/>
-              <input type="hidden" name="assessmentType" value="RESETTLEMENT_PLAN"/>
-
-              <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">
-                
-                  Confirm
-                
-              </button>
-            </form>
-          
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Confirm</button>
+          </form>
         </div>
       </div>
     </div>
   </main>
- 
 
         </main>
       </div>
@@ -980,37 +980,41 @@ exports[`getView should use version 1 when existing assessment in cache has no v
   <main id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
-
         
-          <button class="govuk-back-link assessment-back-button" track-event-name="ReportBackLinkClicked" track-event-prisoner-id="123">Back</button>
+          <button
+            class="govuk-back-link assessment-back-button"
+            track-event-name="ReportBackLinkClicked"
+            track-event-prisoner-id="123"
+          >
+            Back
+          </button>
         
 
         <div class="govuk-!-padding-top-7">
           
           
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
+              My page
+            </h1>
+            <span class="govuk-caption-l govuk-!-margin-bottom-3">
+              <!-- prettier-ignore -->
+              Smith, John (123)
+            </span>
+          
+          <form
+            action="/ImmediateNeedsReport-next-page/?prisonerNumber=123&backButton="
+            method="post"
+          >
             
-              <h1 class="govuk-heading-l govuk-!-margin-bottom-0">My page</h1>
-              <span class="govuk-caption-l govuk-!-margin-bottom-3">Smith, John (123)</span>
+
             
-            <form
-              
-                action="/ImmediateNeedsReport-next-page/?prisonerNumber=123&backButton="
-              
-              method="post"
-            >
 
               
+              
+              
 
+              
                 
-
-                
-
-                  
-                  
-                  
-
-                  
-                    
   
 
   <div class="govuk-form-group  govuk-!-padding-top-3">
@@ -1023,29 +1027,22 @@ exports[`getView should use version 1 when existing assessment in cache has no v
     <textarea class="govuk-textarea" id="QUESTION_1" name="QUESTION_1" rows="5" aria-describedby="more-detail-hint">Some long text here</textarea>
   </div>
 
-                  
-                
               
-              
-              <input type="hidden" name="pageTitle" value="My page"/>
-              <input type="hidden" name="pathway" value="ACCOMMODATION"/>
-              <input type="hidden" name="currentPageId" value="MY_PAGE"/>
-              <input type="hidden" name="_csrf" value=""/>
-              <input type="hidden" name="edit" value="false"/>
-              <input type="hidden" name="assessmentType" value="BCST2"/>
+            
 
-              <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">
-                
-                  Continue
-                
-              </button>
-            </form>
-          
+            <input type="hidden" name="pageTitle" value="My page" />
+            <input type="hidden" name="pathway" value="ACCOMMODATION" />
+            <input type="hidden" name="currentPageId" value="MY_PAGE" />
+            <input type="hidden" name="_csrf" value="" />
+            <input type="hidden" name="edit" value="false" />
+            <input type="hidden" name="assessmentType" value="BCST2" />
+
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Continue</button>
+          </form>
         </div>
       </div>
     </div>
   </main>
- 
 
         </main>
       </div>
