@@ -94,10 +94,7 @@ describe('completeAssessment', () => {
         assessmentType: 'BCST2',
       })
       .expect(500)
-      .expect(res => {
-        const { document } = new JSDOM(res.text).window
-        expect(document.querySelector("[data-qa='page-heading']").textContent).toBe('Something went wrong')
-      })
+      .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(completeAssessmentSpy).toHaveBeenCalledWith(
       '123',
