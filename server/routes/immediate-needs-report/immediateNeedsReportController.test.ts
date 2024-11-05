@@ -1311,6 +1311,4 @@ describe('saveAnswerAndGetNextPage', () => {
     expect(jest.spyOn(assessmentStateService, 'getWorkingAssessment')).toHaveBeenCalledTimes(0)
     expect(jest.spyOn(rpService, 'fetchNextPage')).toHaveBeenCalledTimes(0)
   })
-
-  it('should do something', async () => {})
 })
