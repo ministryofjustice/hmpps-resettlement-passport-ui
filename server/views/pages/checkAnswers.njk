@@ -57,47 +57,45 @@
             action="/ImmediateNeedsReport/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
             method="post"
           >
-            <h2 class="govuk-heading-m">{{ enumValue.name }} report</h2>
+            <h2 class="govuk-heading-m">{{ enumValue.name }} report information</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-              {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-                {% if questionAnswer.question not in ['SUPPORT_NEEDS', 'SUPPORT_NEEDS_PRERELEASE', 'CASE_NOTE_SUMMARY'] and 'SUPPORT_NEEDS_CHECKBOXES' not in questionAnswer.question %}
-                  <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
-                    <dd class="govuk-summary-list__value">
-                      {% if questionAnswer.questionType === 'ADDRESS' %}
-                        {% for item in questionAnswer.answer.answer %}
-                          {% for key, value in item %}
-                            {% if value %}
-                              {{ value }}<br />
-                            {% endif %}
-                          {% endfor %}
-                        {% endfor %}
-                      {% elif questionAnswer.questionType === 'CHECKBOX' %}
-                        {% set freeTextAnswer = "" %}
-                        {% for answer in questionAnswer.answer.answer %}
-                          {% if answer | startsWith("OTHER_SUPPORT_NEEDS: ") %}
-                            {% set freeTextAnswer = answer | removePrefix("OTHER_SUPPORT_NEEDS: ") %}
+              {% for questionAnswer in restQuestions %}
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
+                  <dd class="govuk-summary-list__value">
+                    {% if questionAnswer.questionType === 'ADDRESS' %}
+                      {% for item in questionAnswer.answer.answer %}
+                        {% for key, value in item %}
+                          {% if value %}
+                            {{ value }}<br />
                           {% endif %}
                         {% endfor %}
+                      {% endfor %}
+                    {% elif questionAnswer.questionType === 'CHECKBOX' %}
+                      {% set freeTextAnswer = "" %}
+                      {% for answer in questionAnswer.answer.answer %}
+                        {% if answer | startsWith("OTHER_SUPPORT_NEEDS: ") %}
+                          {% set freeTextAnswer = answer | removePrefix("OTHER_SUPPORT_NEEDS: ") %}
+                        {% endif %}
+                      {% endfor %}
 
-                        {% for item in questionAnswer.answer.displayText %}
-                          {{ item }}<br />
-                        {% endfor %}
-                        {{ freeTextAnswer }}
-                      {% else %}
-                        {{ questionAnswer.answer.displayText }}
-                      {% endif %}
-                    </dd>
-                    <dd class="govuk-summary-list__actions">
-                      <a
-                        class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
-                      >
-                        Change
-                      </a>
-                    </dd>
-                  </div>
-                {% endif %}
+                      {% for item in questionAnswer.answer.displayText %}
+                        {{ item }}<br />
+                      {% endfor %}
+                      {{ freeTextAnswer }}
+                    {% else %}
+                      {{ questionAnswer.answer.displayText }}
+                    {% endif %}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
+                    >
+                      Change
+                    </a>
+                  </dd>
+                </div>
               {% endfor %}
             </dl>
 

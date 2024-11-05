@@ -9,6 +9,7 @@ import ImmediateNeedsReportView from './immediateNeedsReportView'
 import { processReportRequestBody } from '../../utils/processReportRequestBody'
 import { Pathway } from '../../@types/express'
 import { CHECK_ANSWERS_PAGE_ID } from '../../utils/constants'
+import { categoriseForCheckYourAnswers } from './checkYourAnswersUtils'
 
 export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -300,7 +301,16 @@ export default class ImmediateNeedsReportController {
         redirectAsInvalid,
       )
       if (currentPageId === CHECK_ANSWERS_PAGE_ID) {
-        return res.render('pages/checkAnswers', { ...view.renderArgs })
+        const { restQuestions, supportNeeds, supportNeedsDetails, status, caseNote } =
+          categoriseForCheckYourAnswers(mergedQuestionsAndAnswers)
+        return res.render('pages/checkAnswers', {
+          ...view.renderArgs,
+          restQuestions,
+          supportNeeds,
+          supportNeedsDetails,
+          status,
+          caseNote,
+        })
       }
       return res.render('pages/immediate-needs-report', { ...view.renderArgs })
     } catch (err) {
