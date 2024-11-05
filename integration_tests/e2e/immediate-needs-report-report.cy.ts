@@ -103,7 +103,7 @@ context('Immediate Needs Report', () => {
     clickContinue()
     cy.get('.govuk-error-message').should('contain.text', 'This field is required')
 
-    cy.get('#NEED_2').click()
+    cy.get('#SUPPORT_REQUIREMENTS-NEED_2').click()
 
     clickContinue()
 
@@ -318,7 +318,7 @@ context('Immediate Needs Report', () => {
     clickContinue()
     cy.get('.govuk-error-message').should('contain.text', 'This field is required')
 
-    cy.get('#NEED_2').click()
+    cy.get('#SUPPORT_REQUIREMENTS-NEED_2').click()
 
     clickContinue()
 
@@ -386,7 +386,7 @@ context('Immediate Needs Report', () => {
 
     getHeading().should('have.text', 'Support needs')
     noCheckboxesShouldBeSelected()
-    cy.get('#NEED_2').click()
+    cy.get('#SUPPORT_REQUIREMENTS-NEED_2').click()
 
     // Verify textarea is toggled and populate input field
     cy.get('textarea[name="freeText"]').should('not.be.visible')
