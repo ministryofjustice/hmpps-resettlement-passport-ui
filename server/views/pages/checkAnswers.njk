@@ -14,6 +14,7 @@
     {% set containsAssessmentSummary = true %}
   {% endif %}
 {% endfor %}
+{% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -48,10 +49,9 @@
         {% endif %}
         <div class="govuk-!-padding-top-7">
           <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Check your answers</h1>
-          <span class="govuk-caption-l govuk-!-margin-bottom-6"
-            >{{ prisonerData.personalDetails.lastName | toTitleCase }},
-            {{ prisonerData.personalDetails.firstName | toTitleCase }}
-            ({{ prisonerData.personalDetails.prisonerNumber }})
+          <span class="govuk-caption-l govuk-!-margin-bottom-6">
+            <!-- prettier-ignore -->
+            {{ prisonerData.personalDetails.lastName | toTitleCase }}, {{ prisonerData.personalDetails.firstName | toTitleCase }} ({{ prisonerData.personalDetails.prisonerNumber }})
           </span>
           <form
             action="/ImmediateNeedsReport/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"

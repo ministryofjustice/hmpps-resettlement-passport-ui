@@ -355,19 +355,19 @@ export default class ImmediateNeedsReportController {
   }
 
   startEdit: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
-    const { pathway, pageId } = req.params
-    const submitted = req.query.submitted === 'true'
-    const assessmentType = parseAssessmentType(req.query.type)
-    const { prisonerNumber } = prisonerData.personalDetails
-    const stateKey = {
-      prisonerNumber: prisonerData.personalDetails.prisonerNumber,
-      userId: req.user.username,
-      pathway,
-      assessmentType,
-    }
-
     try {
+      const { prisonerData } = req
+      const { pathway, pageId } = req.params
+      const submitted = req.query.submitted === 'true'
+      const assessmentType = parseAssessmentType(req.query.type)
+      const { prisonerNumber } = prisonerData.personalDetails
+      const stateKey = {
+        prisonerNumber: prisonerData.personalDetails.prisonerNumber,
+        userId: req.user.username,
+        pathway,
+        assessmentType,
+      }
+
       // If this is a post-submit edit, initialise cache
       if (submitted) {
         const version = (await this.rpService.getLatestAssessmentVersion(prisonerNumber, assessmentType, pathway)) ?? 1

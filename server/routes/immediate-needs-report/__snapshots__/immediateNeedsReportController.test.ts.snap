@@ -289,10 +289,9 @@ exports[`getView get check your answers - v1 of report 1`] = `
         
         <div class="govuk-!-padding-top-7">
           <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Check your answers</h1>
-          <span class="govuk-caption-l govuk-!-margin-bottom-6"
-            >Smith,
-            John
-            (123)
+          <span class="govuk-caption-l govuk-!-margin-bottom-6">
+            <!-- prettier-ignore -->
+            Smith, John (123)
           </span>
           <form
             action="/ImmediateNeedsReport/pathway/ACCOMMODATION/complete?prisonerNumber=123"
@@ -312,7 +311,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=&type=BCST2&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
                       >
                         Change
                       </a>
@@ -331,7 +330,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=&type=BCST2&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
                       >
                         Change
                       </a>
@@ -350,7 +349,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=&type=BCST2&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
                       >
                         Change
                       </a>
@@ -385,7 +384,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=&type=BCST2&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
                       >
                         Change
                       </a>
@@ -416,7 +415,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_3/start-edit/?prisonerNumber=&type=BCST2&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_3/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
                       >
                         Change
                       </a>
@@ -465,7 +464,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                       <dd class="govuk-summary-list__actions">
                         <a
                           class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=&type=BCST2&submitted=false"
+                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
                           >Change</a
                         >
                       </dd>
@@ -484,7 +483,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                       <dd class="govuk-summary-list__actions">
                         <a
                           class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=&type=BCST2&submitted=false"
+                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
                           >Change</a
                         >
                       </dd>
@@ -653,10 +652,9 @@ exports[`getView get check your answers - v2 of report 1`] = `
         
         <div class="govuk-!-padding-top-7">
           <h1 class="govuk-heading-l govuk-!-margin-bottom-0">Check your answers</h1>
-          <span class="govuk-caption-l govuk-!-margin-bottom-6"
-            >Smith,
-            John
-            (123)
+          <span class="govuk-caption-l govuk-!-margin-bottom-6">
+            <!-- prettier-ignore -->
+            Smith, John (123)
           </span>
           <form
             action="/ImmediateNeedsReport/pathway/ACCOMMODATION/complete?prisonerNumber=123"
@@ -676,7 +674,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=&type=RESETTLEMENT_PLAN&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
                       >
                         Change
                       </a>
@@ -695,7 +693,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=&type=RESETTLEMENT_PLAN&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
                       >
                         Change
                       </a>
@@ -714,7 +712,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=&type=RESETTLEMENT_PLAN&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
                       >
                         Change
                       </a>
@@ -745,7 +743,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=&type=RESETTLEMENT_PLAN&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
                       >
                         Change
                       </a>
@@ -776,7 +774,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_3/start-edit/?prisonerNumber=&type=RESETTLEMENT_PLAN&submitted=false"
+                        href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_3/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
                       >
                         Change
                       </a>
@@ -823,7 +821,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                       <dd class="govuk-summary-list__actions">
                         <a
                           class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PRERELEASE_ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=&type=RESETTLEMENT_PLAN&submitted=false"
+                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PRERELEASE_ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
                           >Change</a
                         >
                       </dd>
@@ -998,11 +996,10 @@ exports[`getView should use version 1 when existing assessment in cache has no v
             <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
               My page
             </h1>
-            <span class="govuk-caption-l govuk-!-margin-bottom-3"
-              >Smith,
-              John
-              (123)</span
-            >
+            <span class="govuk-caption-l govuk-!-margin-bottom-3">
+              <!-- prettier-ignore -->
+              Smith, John (123)
+            </span>
           
           <form
             action="/ImmediateNeedsReport-next-page/?prisonerNumber=123&backButton="

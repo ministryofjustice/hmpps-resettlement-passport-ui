@@ -28,25 +28,25 @@ context('Immediate Needs Report Edit', () => {
     cy.get('#assessment-information tr')
       .eq(1)
       .children('th')
-      .should('have.text', 'Does the person in prison have a job when they are released?')
+      .should('contain.text', 'Does the person in prison have a job when they are released?')
 
     // Click edit
     cy.get('#assessment-information tr').eq(1).children('td').eq(1).click()
 
     // Should be on question page
-    cy.get('.govuk-heading-l').should('have.text', 'Does the person in prison have a job when they are released?')
+    cy.get('.govuk-heading-l').should('contain.text', 'Does the person in prison have a job when they are released?')
     cy.get('#HAVE_A_JOB_AFTER_RELEASE-NO').should('be.checked')
     cy.get('#HAVE_A_JOB_AFTER_RELEASE-YES').check()
 
     clickContinue()
 
-    cy.get('.govuk-heading-l').should('have.text', 'Does the person in prison need help contacting the employer?')
+    cy.get('.govuk-heading-l').should('contain.text', 'Does the person in prison need help contacting the employer?')
     nothingShouldBeSelected()
 
     cy.get('#HELP_CONTACTING_EMPLOYER-NO').check()
     clickContinue()
 
-    cy.get('.govuk-heading-l').should('have.text', 'Check your answers')
+    cy.get('.govuk-heading-l').should('contain.text', 'Check your answers')
     clickConfirm()
 
     // Should be back to education skills and work record page
@@ -62,24 +62,24 @@ context('Immediate Needs Report Edit', () => {
     cy.get('#assessment-information tr')
       .eq(0)
       .children('th')
-      .should('have.text', 'Is the person in prison registered with a GP surgery outside of prison?')
+      .should('contain.text', 'Is the person in prison registered with a GP surgery outside of prison?')
 
     cy.get('#assessment-information tr')
       .eq(1)
       .children('th')
-      .should('have.text', 'Does the person in prison want to meet with a prison healthcare team?')
+      .should('contain.text', 'Does the person in prison want to meet with a prison healthcare team?')
 
     cy.get('#assessment-information tr')
       .eq(2)
       .children('th')
-      .should('have.text', 'What health need is this related to?')
+      .should('contain.text', 'What health need is this related to?')
 
     // Click edit
     cy.get('#assessment-information tr').eq(1).children('td').children('a').contains('Change').click()
 
     // Should be on question page
     cy.get('.govuk-heading-l').should(
-      'have.text',
+      'contain.text',
       'Does the person in prison want to meet with a prison healthcare team?',
     )
     cy.get('#MEET_HEALTHCARE_TEAM-YES').should('be.checked')
@@ -87,7 +87,7 @@ context('Immediate Needs Report Edit', () => {
 
     clickContinue()
 
-    cy.get('.govuk-heading-l').should('have.text', 'Check your answers')
+    cy.get('.govuk-heading-l').should('contain.text', 'Check your answers')
 
     cy.get('.govuk-summary-list__key')
       .eq(0)

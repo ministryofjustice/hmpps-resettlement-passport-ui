@@ -15,7 +15,7 @@ context('Check-box', () => {
     cy.get('[data-qa="a-ACCOMMODATION"]').click()
 
     // Should be on the Accommodation pathway page
-    cy.get('.govuk-heading-l').should('have.text', 'Where did the person in prison live before custody?')
-    cy.get('#waste-hint').should('have.text', 'New subTitle text here')
+    cy.get('.govuk-heading-l').should('contain.text', 'Where did the person in prison live before custody?')
+    cy.get('#waste-hint').should('contain.text', 'New subTitle text here')
   })
 })

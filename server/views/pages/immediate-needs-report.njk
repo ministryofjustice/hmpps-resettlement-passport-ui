@@ -70,11 +70,10 @@
             <h1 class="govuk-heading-l govuk-!-margin-bottom-0">
               {{ assessmentPage.title or assessmentPage.questionsAndAnswers[0].question.title }}
             </h1>
-            <span class="govuk-caption-l govuk-!-margin-bottom-3"
-              >{{ prisonerData.personalDetails.lastName | toTitleCase }},
-              {{ prisonerData.personalDetails.firstName | toTitleCase }}
-              ({{ prisonerData.personalDetails.prisonerNumber }})</span
-            >
+            <span class="govuk-caption-l govuk-!-margin-bottom-3">
+              <!-- prettier-ignore -->
+              {{ prisonerData.personalDetails.lastName | toTitleCase }}, {{ prisonerData.personalDetails.firstName | toTitleCase }} ({{ prisonerData.personalDetails.prisonerNumber }})
+            </span>
           {% endif %}
           <form
             action="/ImmediateNeedsReport-next-page/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&backButton={{ true if backButton or submitted }}"
