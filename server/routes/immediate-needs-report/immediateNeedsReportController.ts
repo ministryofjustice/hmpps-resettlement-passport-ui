@@ -299,6 +299,9 @@ export default class ImmediateNeedsReportController {
         assessmentType,
         redirectAsInvalid,
       )
+      if (currentPageId === CHECK_ANSWERS_PAGE_ID) {
+        return res.render('pages/checkAnswers', { ...view.renderArgs })
+      }
       return res.render('pages/immediate-needs-report', { ...view.renderArgs })
     } catch (err) {
       return next(err)
