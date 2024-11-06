@@ -1057,6 +1057,136 @@ describe('getView', () => {
         ])
       })
   })
+
+  it('optional text appears', async () => {
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const getWorkingAssessmentVersionSpy = jest
+      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
+      .mockResolvedValue(3)
+
+    const apiAssessmentPage = {
+      id: 'MY_PAGE',
+      title: 'My page',
+      questionsAndAnswers: [
+        {
+          question: {
+            id: 'QUESTION_1',
+            title: 'Question 1',
+            type: 'LONG_TEXT',
+            validationType: 'OPTIONAL',
+          },
+          originalPageId: 'MY_PAGE',
+        },
+        {
+          question: {
+            id: 'QUESTION_2',
+            title: 'Question 2',
+            type: 'LONG_TEXT',
+            validationType: 'MANDATORY',
+          },
+          originalPageId: 'MY_PAGE',
+        },
+        {
+          question: {
+            id: 'QUESTION_3',
+            title: 'Question 3',
+            type: 'SHORT_TEXT',
+            validationType: 'MANDATORY',
+          },
+          originalPageId: 'MY_PAGE',
+        },
+        {
+          question: {
+            id: 'QUESTION_4',
+            title: 'Question 4',
+            type: 'SHORT_TEXT',
+            validationType: 'OPTIONAL',
+          },
+          originalPageId: 'MY_PAGE',
+        },
+      ],
+    } as ApiAssessmentPage
+    const getAssessmentPageSpy = jest.spyOn(rpService, 'getAssessmentPage').mockResolvedValue(apiAssessmentPage)
+
+    const checkForConvergenceSpy = jest.spyOn(assessmentStateService, 'checkForConvergence').mockResolvedValue(false)
+
+    const updatePageLoadHistorySpy = jest.spyOn(assessmentStateService, 'updatePageLoadHistory').mockImplementation()
+
+    const mergedQuestionsAndAnswers = [
+      {
+        question: 'QUESTION_1',
+        questionTitle: 'Question 1',
+        pageId: 'PAGE_1',
+        questionType: 'LONG_TEXT',
+        answer: {
+          answer: 'Some long text here',
+          displayText: 'Some long text here',
+          '@class': 'StringAnswer',
+        },
+      },
+      {
+        question: 'QUESTION_2',
+        questionTitle: 'Question 2',
+        pageId: 'PAGE_1',
+        questionType: 'LONG_TEXT',
+        answer: {
+          answer: 'Some long text here',
+          displayText: 'Some long text here',
+          '@class': 'StringAnswer',
+        },
+      },
+      {
+        question: 'QUESTION_3',
+        questionTitle: 'Question 3',
+        pageId: 'PAGE_1',
+        questionType: 'SHORT_TEXT',
+        answer: {
+          answer: 'Some long text here',
+          displayText: 'Some long text here',
+          '@class': 'StringAnswer',
+        },
+      },
+      {
+        question: 'QUESTION_4',
+        questionTitle: 'Question 4',
+        pageId: 'PAGE_1',
+        questionType: 'SHORT_TEXT',
+        answer: {
+          answer: 'Some long text here',
+          displayText: 'Some long text here',
+          '@class': 'StringAnswer',
+        },
+      },
+    ] as CachedQuestionAndAnswer[]
+    const getMergedQuestionsAndAnswersSpy = jest
+      .spyOn(assessmentStateService, 'getMergedQuestionsAndAnswers')
+      .mockResolvedValue(mergedQuestionsAndAnswers)
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/THE_PAGE?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&type=BCST2&version=3`,
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith(stateKey.prisonerNumber, stateKey.pathway, 'THE_PAGE', 'BCST2', 3)
+    expect(checkForConvergenceSpy).toHaveBeenCalledWith(stateKey, {
+      pageId: 'MY_PAGE',
+      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4'],
+    })
+    expect(updatePageLoadHistorySpy).toHaveBeenCalledWith(stateKey, {
+      pageId: 'MY_PAGE',
+      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4'],
+    })
+    expect(getMergedQuestionsAndAnswersSpy).toHaveBeenCalledWith(stateKey, apiAssessmentPage.questionsAndAnswers)
+  })
 })
 
 describe('startEdit', () => {
