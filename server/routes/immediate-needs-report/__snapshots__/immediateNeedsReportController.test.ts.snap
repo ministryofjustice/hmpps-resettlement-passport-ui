@@ -416,66 +416,36 @@ exports[`getView get check your answers - v1 of report 1`] = `
             </dl>
 
             
+
+            
+            
               <h2 class="govuk-heading-m">Accommodation summary</h2>
               <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 
-                  
-                  
-                  
-                
-                  
-                  
-                  
-                
-                  
-                  
-                  
-                
-                  
-                  
-                  
-                
-                  
-                  
-                  
-                
-                  
-                  
-                    
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">Support needs</dt>
-                      <dd class="govuk-summary-list__value">
-                        <strong class="govuk-tag govuk-tag--orange"> Support required </strong>
-                      </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a
-                          class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
-                          >Change</a
-                        >
-                      </dd>
-                    </div>
-                  
-                  
-                
-                  
-                  
-                  
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">Case note summary</dt>
-                      <dd class="govuk-summary-list__value show-line-breaks">
-                        This is the case note summary
-                      </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a
-                          class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
-                          >Change</a
-                        >
-                      </dd>
-                    </div>
-                  
-                
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Support needs</dt>
+                  <dd class="govuk-summary-list__value">
+                    <strong class="govuk-tag govuk-tag--orange"> Support required </strong>
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                      >Change</a
+                    >
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Case note summary</dt>
+                  <dd class="govuk-summary-list__value show-line-breaks">This is the case note summary</dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
+                      >Change</a
+                    >
+                  </dd>
+                </div>
               </dl>
             
 
@@ -761,49 +731,26 @@ exports[`getView get check your answers - v2 of report 1`] = `
             </dl>
 
             
+
+            
               <h2 class="govuk-heading-m">Accommodation summary</h2>
               <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 
-                  
-                  
-                  
-                
-                  
-                  
-                  
-                
-                  
-                  
-                  
-                
-                  
-                  
-                  
-                
-                  
-                  
-                  
-                
-                  
-                  
-                    
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">Support needs</dt>
-                      <dd class="govuk-summary-list__value">
-                        <strong class="govuk-tag govuk-tag--green"> Support not required </strong>
-                      </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a
-                          class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PRERELEASE_ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
-                          >Change</a
-                        >
-                      </dd>
-                    </div>
-                  
-                  
-                
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Support needs</dt>
+                  <dd class="govuk-summary-list__value">
+                    <strong class="govuk-tag govuk-tag--green"> Support not required </strong>
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PRERELEASE_ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                      >Change</a
+                    >
+                  </dd>
+                </div>
               </dl>
+            
             
 
             <input type="hidden" name="pageTitle" value="" />

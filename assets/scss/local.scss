@@ -507,3 +507,13 @@ th.fixed-header-width-1000 {
 .text-white {
   color: white;
 }
+
+.support-needs {
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+  li {
+    margin-left: 0;
+    margin-bottom: 6px;
+  }
+}
