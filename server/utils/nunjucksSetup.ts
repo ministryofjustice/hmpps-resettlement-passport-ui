@@ -40,7 +40,7 @@ import {
   startsWith,
   removePrefix,
   getOptionValidationError,
-  isOptional,
+  getOptionalText,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -127,5 +127,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('startsWith', startsWith)
   njkEnv.addFilter('removePrefix', removePrefix)
   njkEnv.addGlobal('checkAnswersPageId', CHECK_ANSWERS_PAGE_ID)
-  njkEnv.addGlobal('isOptional', isOptional)
+  njkEnv.addGlobal('getOptionalText', getOptionalText)
 }

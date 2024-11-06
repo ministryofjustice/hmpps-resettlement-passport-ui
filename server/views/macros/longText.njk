@@ -5,7 +5,7 @@
 
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }} govuk-!-padding-top-3">
     {% if multipleQuestionsOnPage %}
-      <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}{% if isOptional(currentQuestionAndAnswer) %} (optional){% endif %}</label>
+      <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}{{ getOptionalText(currentQuestionAndAnswer) }}</label>
     {% endif %}
     <div class="govuk-hint" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     

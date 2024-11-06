@@ -500,6 +500,5 @@ export function isValidStatus(status: string): boolean {
   return Object.keys(STATUS_DICTIONARY).includes(status)
 }
 
-export function isOptional(questionAndAnswer: ApiQuestionsAndAnswer): boolean {
-  return questionAndAnswer.question.validationType === 'OPTIONAL'
-}
+export const getOptionalText = (questionAndAnswer: ApiQuestionsAndAnswer) =>
+  questionAndAnswer.question.validationType === 'OPTIONAL' ? ' (optional)' : ''
