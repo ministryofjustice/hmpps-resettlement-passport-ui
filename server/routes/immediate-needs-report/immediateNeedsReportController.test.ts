@@ -570,8 +570,26 @@ describe('getView', () => {
         },
         {
           question: {
-            id: 'SUPPORT_NEEDS_PRERELEASE',
+            id: 'SUPPORT_REQUIREMENTS',
             title: 'Support needs',
+            type: 'CHECKBOX',
+            options: [
+              {
+                id: 'NEED_OPTION_1',
+                displayText: 'Support need 1',
+              },
+              {
+                id: 'NEED_OPTION_2',
+                displayText: 'Support need 2',
+              },
+            ],
+          },
+          originalPageId: 'SUPPORT_REQUIREMENTS',
+        },
+        {
+          question: {
+            id: 'SUPPORT_NEEDS_PRERELEASE',
+            title: 'Report summary',
             type: 'RADIO',
             options: [
               {
@@ -667,6 +685,17 @@ describe('getView', () => {
           },
         },
         {
+          question: 'SUPPORT_REQUIREMENTS',
+          questionTitle: 'Support needs',
+          questionType: 'CHECKBOX',
+          pageId: 'SUPPORT_REQUIREMENTS',
+          answer: {
+            answer: ['NEED_OPTION_1', 'NEED_OPTION_2'],
+            displayText: ['Help with need 1', 'Help with need 2'],
+            '@class': 'ListAnswer',
+          },
+        },
+        {
           question: 'SUPPORT_NEEDS_PRERELEASE',
           questionTitle: 'Support needs',
           pageId: 'PRERELEASE_ASSESSMENT_SUMMARY',
@@ -708,7 +737,15 @@ describe('getView', () => {
     )
     expect(checkForConvergenceSpy).toHaveBeenCalledWith(stateKey, {
       pageId: 'CHECK_ANSWERS',
-      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4', 'QUESTION_5', 'SUPPORT_NEEDS_PRERELEASE'],
+      questions: [
+        'QUESTION_1',
+        'QUESTION_2',
+        'QUESTION_3',
+        'QUESTION_4',
+        'QUESTION_5',
+        'SUPPORT_REQUIREMENTS',
+        'SUPPORT_NEEDS_PRERELEASE',
+      ],
     })
     expect(getAllAnsweredQuestionsFromCacheSpy).toHaveBeenCalledWith(stateKey, 'working')
     expect(validateAssessmentSpy).toHaveBeenCalledWith(

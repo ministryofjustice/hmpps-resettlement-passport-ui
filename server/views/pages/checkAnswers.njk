@@ -29,7 +29,7 @@
   </div>
 {% endblock %}
 
-{% block content %}
+{%- block content -%}
   <main id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
@@ -54,7 +54,7 @@
           >
             <h2 class="govuk-heading-m">{{ enumValue.name }} report information</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-              {% for questionAnswer in restQuestions %}
+              {%- for questionAnswer in restQuestions -%}
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
                   <dd class="govuk-summary-list__value">
@@ -145,14 +145,13 @@
             {% endif %}
 
             {% if status and not caseNote %}
-              <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
+              <h2 class="govuk-heading-m">{{ enumValue.name }} resettlement status</h2>
               <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 {% set statusValue = status.answer.answer | getAssessmentEnumValue %}
                 <div class="govuk-summary-list__row">
-                  <dt class="govuk-summary-list__key">{{ status.questionTitle }}</dt>
-                  <dd class="govuk-summary-list__value">
+                  <dt class="govuk-summary-list__value">
                     <strong class="govuk-tag govuk-tag--{{ statusValue.color }}"> {{ statusValue.name }} </strong>
-                  </dd>
+                  </dt>
                   <dd class="govuk-summary-list__actions">
                     <a
                       class="govuk-link govuk-link--no-visited-state"
@@ -162,8 +161,8 @@
                   </dd>
                 </div>
               </dl>
-            {% endif %}
-            {% if status and caseNote %}
+            {%- endif -%}
+            {%- if status and caseNote -%}
               <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
               <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 {% set statusValue = status.answer.answer | getAssessmentEnumValue %}
@@ -176,8 +175,8 @@
                     <a
                       class="govuk-link govuk-link--no-visited-state"
                       href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ status.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
-                      >Change</a
-                    >
+                      >Change
+                    </a>
                   </dd>
                 </div>
                 <div class="govuk-summary-list__row">
@@ -187,12 +186,12 @@
                     <a
                       class="govuk-link govuk-link--no-visited-state"
                       href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ caseNote.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
-                      >Change</a
-                    >
+                      >Change
+                    </a>
                   </dd>
                 </div>
               </dl>
-            {% endif %}
+            {%- endif %}
 
             <input type="hidden" name="pageTitle" value="{{ assessmentPage.title }}" />
             <input type="hidden" name="pathway" value="{{ pathway }}" />

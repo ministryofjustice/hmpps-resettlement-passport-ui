@@ -274,8 +274,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
       <div class="govuk-width-container">
         
         <main class="govuk-main-wrapper app-container govuk-body" id="main-content">
-          
-  <main id="main-content" role="main">
+          <main id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
         
@@ -298,9 +297,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
             method="post"
           >
             <h2 class="govuk-heading-m">Accommodation report information</h2>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-              
-                <div class="govuk-summary-list__row">
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9"><div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 1</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -316,8 +313,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              
-                <div class="govuk-summary-list__row">
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 2</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -333,8 +329,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              
-                <div class="govuk-summary-list__row">
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 3</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -350,8 +345,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              
-                <div class="govuk-summary-list__row">
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 4</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -383,8 +377,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              
-                <div class="govuk-summary-list__row">
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 5</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -417,9 +410,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
 
             
 
-            
-            
-              <h2 class="govuk-heading-m">Accommodation summary</h2>
+            <h2 class="govuk-heading-m">Accommodation summary</h2>
               <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 
                 <div class="govuk-summary-list__row">
@@ -431,8 +422,8 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     <a
                       class="govuk-link govuk-link--no-visited-state"
                       href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
-                      >Change</a
-                    >
+                      >Change
+                    </a>
                   </dd>
                 </div>
                 <div class="govuk-summary-list__row">
@@ -442,12 +433,11 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     <a
                       class="govuk-link govuk-link--no-visited-state"
                       href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/ASSESSMENT_SUMMARY/start-edit/?prisonerNumber=123&type=BCST2&submitted=false"
-                      >Change</a
-                    >
+                      >Change
+                    </a>
                   </dd>
                 </div>
               </dl>
-            
 
             <input type="hidden" name="pageTitle" value="" />
             <input type="hidden" name="pathway" value="ACCOMMODATION" />
@@ -593,8 +583,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
       <div class="govuk-width-container">
         
         <main class="govuk-main-wrapper app-container govuk-body" id="main-content">
-          
-  <main id="main-content" role="main">
+          <main id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
         
@@ -617,9 +606,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
             method="post"
           >
             <h2 class="govuk-heading-m">Accommodation report information</h2>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-              
-                <div class="govuk-summary-list__row">
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9"><div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 1</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -635,8 +622,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              
-                <div class="govuk-summary-list__row">
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 2</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -652,8 +638,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              
-                <div class="govuk-summary-list__row">
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 3</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -669,8 +654,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              
-                <div class="govuk-summary-list__row">
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 4</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -698,8 +682,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              
-                <div class="govuk-summary-list__row">
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 5</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -731,16 +714,48 @@ exports[`getView get check your answers - v2 of report 1`] = `
             </dl>
 
             
-
-            
-              <h2 class="govuk-heading-m">Accommodation summary</h2>
+              <h2 class="govuk-heading-m">Accommodation support needs</h2>
               <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Support needs</dt>
                   <dd class="govuk-summary-list__value">
-                    <strong class="govuk-tag govuk-tag--green"> Support not required </strong>
+                    
+                    
+                      
+                    
+                      
+                    
+
+                    <ul class="support-needs">
+                      
+                        <li>Help with need 1</li>
+                      
+                        <li>Help with need 2</li>
+                      
+                      
+                    </ul>
                   </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/SUPPORT_REQUIREMENTS/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                    >
+                      Change
+                    </a>
+                  </dd>
+                </div>
+                
+              </dl>
+            
+
+            
+              <h2 class="govuk-heading-m">Accommodation resettlement status</h2>
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__value">
+                    <strong class="govuk-tag govuk-tag--green"> Support not required </strong>
+                  </dt>
                   <dd class="govuk-summary-list__actions">
                     <a
                       class="govuk-link govuk-link--no-visited-state"
@@ -750,8 +765,6 @@ exports[`getView get check your answers - v2 of report 1`] = `
                   </dd>
                 </div>
               </dl>
-            
-            
 
             <input type="hidden" name="pageTitle" value="" />
             <input type="hidden" name="pathway" value="ACCOMMODATION" />
