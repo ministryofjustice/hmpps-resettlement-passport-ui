@@ -92,7 +92,7 @@ export default class ResetProfileController {
         return next(new Error(resetProfileResponse.error))
       }
 
-      trackEvent(this.appInsightsClient, PsfrEvent.STATUS_UPDATE_EVENT, {
+      trackEvent(this.appInsightsClient, PsfrEvent.PROFILE_RESET_EVENT, {
         prisonerId: prisonerData.personalDetails.prisonerNumber,
         sessionId: req.sessionID,
         reason: resetReason,
