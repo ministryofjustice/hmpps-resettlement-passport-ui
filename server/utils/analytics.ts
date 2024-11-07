@@ -3,6 +3,7 @@ import { TelemetryClient } from 'applicationinsights'
 // eslint-disable-next-line no-shadow
 export enum PsfrEvent {
   STATUS_UPDATE_EVENT = 'PSFR_StatusUpdate',
+  PROFILE_RESET_EVENT = 'PSFR_ProfileReset',
 }
 
 export type KeyValue = {

@@ -1,5 +1,6 @@
 import type { Express } from 'express'
 import request from 'supertest'
+import NodeClient from 'applicationinsights/out/Library/NodeClient'
 import RpService from '../../services/rpService'
 import { appWithAllRoutes } from '../testutils/appSetup'
 import Config from '../../s3Config'
@@ -9,16 +10,18 @@ import { stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 let rpService: jest.Mocked<RpService>
+let appInsightsClient: jest.Mocked<NodeClient>
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
   rpService = new RpService() as jest.Mocked<RpService>
+  appInsightsClient = new NodeClient('setupString') as jest.Mocked<NodeClient>
   configHelper(config)
-
   app = appWithAllRoutes({
     services: {
       rpService,
+      appInsightsClient,
     },
   })
 
@@ -86,6 +89,8 @@ describe('resetProfileReason', () => {
 describe('submitResetProfileReason', () => {
   it('should redirect to success page if feature is enabled and no validation errors - recall', async () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: true }])
+    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
+    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
     const resetProfileSpy = jest.spyOn(rpService, 'resetProfile').mockResolvedValue({ error: null })
     await request(app)
       .post('/resetProfile/reason?prisonerNumber=123')
@@ -98,6 +103,15 @@ describe('submitResetProfileReason', () => {
         expect(res.text).toContain('Found. Redirecting to /resetProfile/success?prisonerNumber=123')
       })
     expect(resetProfileSpy).toHaveBeenCalledWith('123', { resetReason: 'RECALL_TO_PRISON', additionalDetails: null })
+    expect(trackEventSpy).toHaveBeenCalledWith({
+      name: 'PSFR_ProfileReset',
+      properties: {
+        prisonerId: '123',
+        sessionId: 'sessionId',
+        reason: 'RECALL_TO_PRISON',
+      },
+    })
+    expect(flushSpy).toHaveBeenCalled()
   })
 
   it('should redirect to success page if feature is enabled and no validation errors - return', async () => {
