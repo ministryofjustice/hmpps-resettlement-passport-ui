@@ -104,7 +104,7 @@ describe('submitResetProfileReason', () => {
       })
     expect(resetProfileSpy).toHaveBeenCalledWith('123', { resetReason: 'RECALL_TO_PRISON', additionalDetails: null })
     expect(trackEventSpy).toHaveBeenCalledWith({
-      name: 'PSFR_StatusUpdate',
+      name: 'PSFR_ProfileReset',
       properties: {
         prisonerId: '123',
         sessionId: 'sessionId',
