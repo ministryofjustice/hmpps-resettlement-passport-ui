@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import NodeClient from 'applicationinsights/out/Library/NodeClient'
 import RpService from '../../services/rpService'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { getFeatureFlagBoolean } from '../../utils/utils'
@@ -10,9 +11,10 @@ import {
   ResetProfileValidationError,
   ResetReason,
 } from '../../data/model/resetProfile'
+import { PsfrEvent, trackEvent } from '../../utils/analytics'
 
 export default class ResetProfileController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly appInsightsClient: NodeClient) {
     // no op
   }
 
@@ -89,6 +91,12 @@ export default class ResetProfileController {
       if (resetProfileResponse?.error) {
         return next(new Error(resetProfileResponse.error))
       }
+
+      trackEvent(this.appInsightsClient, PsfrEvent.STATUS_UPDATE_EVENT, {
+        prisonerId: prisonerData.personalDetails.prisonerNumber,
+        sessionId: req.sessionID,
+        reason: resetReason,
+      })
 
       return res.redirect(`/resetProfile/success?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
     } catch (err) {
