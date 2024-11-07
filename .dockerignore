@@ -10,3 +10,6 @@ scss-report.txt
 eslint-report.html
 test-report.html
 docker-compose*
+**/*.test.ts
+**/*.test.json
+**/*.snap
