@@ -4,6 +4,7 @@ import { TelemetryClient } from 'applicationinsights'
 export enum PsfrEvent {
   STATUS_UPDATE_EVENT = 'PSFR_StatusUpdate',
   PROFILE_RESET_EVENT = 'PSFR_ProfileReset',
+  REPORT_SUBMITTED_EVENT = 'PSFR_ReportSubmittedStatusUpdate',
 }
 
 export type KeyValue = {

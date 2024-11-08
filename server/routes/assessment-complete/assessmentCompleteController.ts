@@ -1,13 +1,20 @@
 import { RequestHandler } from 'express'
+import NodeClient from 'applicationinsights/out/Library/NodeClient'
 import RpService from '../../services/rpService'
 import AssessmentCompleteView from './assessmentCompleteView'
 import { AssessmentType } from '../../data/model/assessmentInformation'
 import { parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'
 import { PATHWAY_DICTIONARY } from '../../utils/constants'
+import { PsfrEvent, trackEvent } from '../../utils/analytics'
+import { PathwayStatus } from '../../@types/express'
 
 export default class AssessmentCompleteController {
-  constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
+  constructor(
+    private readonly rpService: RpService,
+    private readonly assessmentStateService: AssessmentStateService,
+    private readonly appInsightsClient: NodeClient,
+  ) {
     // no op
   }
 
@@ -46,9 +53,33 @@ export default class AssessmentCompleteController {
         return this.assessmentStateService.onComplete(stateKey)
       })
       await Promise.all(promises)
+
+      await this.sendEvent(prisonerNumber, req.sessionID, res.locals.user.username, prisonerData.pathways)
+
       return res.redirect(`/assessment-complete?prisonerNumber=${prisonerNumber}&type=${assessmentType}`)
     } catch (err) {
       return next(err)
     }
+  }
+
+  private async sendEvent(
+    prisonerNumber: string,
+    sessionId: string,
+    username: string,
+    oldPathwayStatus: PathwayStatus[],
+  ) {
+    const prisonerData = await this.rpService.getPrisonerDetails(prisonerNumber)
+    const newPathwayStatus = prisonerData.pathways
+
+    Object.entries(PATHWAY_DICTIONARY).forEach(([pathway]) => {
+      trackEvent(this.appInsightsClient, PsfrEvent.REPORT_SUBMITTED_EVENT, {
+        prisonerId: prisonerNumber,
+        sessionId,
+        username,
+        pathway,
+        oldStatus: oldPathwayStatus.find(it => it.pathway === pathway)?.status,
+        newStatus: newPathwayStatus.find(it => it.pathway === pathway)?.status,
+      })
+    })
   }
 }
