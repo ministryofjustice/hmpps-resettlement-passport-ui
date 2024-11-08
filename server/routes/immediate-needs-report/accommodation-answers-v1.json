@@ -1,0 +1,58 @@
+[
+  {
+    "question": "WHERE_DID_THEY_LIVE",
+    "questionTitle": "Where did the person in prison live before custody?",
+    "questionType": "RADIO",
+    "pageId": "WHERE_DID_THEY_LIVE",
+    "answer": { "answer": "HOMEOWNER", "displayText": "Homeowner", "@class": "StringAnswer" }
+  },
+  {
+    "question": "WHERE_DID_THEY_LIVE_ADDRESS",
+    "questionTitle": "Enter the address",
+    "questionType": "ADDRESS",
+    "pageId": "WHERE_DID_THEY_LIVE_ADDRESS",
+    "answer": {
+      "answer": [
+        { "addressLine1": "A Road" },
+        { "addressLine2": "" },
+        { "addressTown": "Some Town" },
+        { "addressCounty": "Yorkshire" },
+        { "addressPostcode": "AB13 C45" }
+      ],
+      "displayText": "A Road",
+      "@class": "MapAnswer"
+    }
+  },
+  {
+    "question": "HELP_TO_KEEP_HOME",
+    "questionTitle": "Does the person in prison or their family need help to keep their home while they are in prison?",
+    "questionType": "RADIO",
+    "pageId": "HELP_TO_KEEP_HOME",
+    "answer": { "answer": "NO", "displayText": "No", "@class": "StringAnswer" }
+  },
+  {
+    "question": "WHERE_WILL_THEY_LIVE_1",
+    "questionTitle": "Where will the person in prison live when they are released?",
+    "questionType": "RADIO",
+    "pageId": "WHERE_WILL_THEY_LIVE_1",
+    "answer": {
+      "answer": "RETURN_TO_PREVIOUS_ADDRESS",
+      "displayText": "Return to their previous address",
+      "@class": "StringAnswer"
+    }
+  },
+  {
+    "question": "SUPPORT_NEEDS",
+    "questionTitle": "Accommodation support needs",
+    "questionType": "RADIO",
+    "pageId": "ASSESSMENT_SUMMARY",
+    "answer": { "answer": "SUPPORT_NOT_REQUIRED", "displayText": "Support not required", "@class": "StringAnswer" }
+  },
+  {
+    "question": "CASE_NOTE_SUMMARY",
+    "questionTitle": "Case note summary",
+    "questionType": "LONG_TEXT",
+    "pageId": "ASSESSMENT_SUMMARY",
+    "answer": { "answer": "Monkey!", "displayText": "Monkey!", "@class": "StringAnswer" }
+  }
+]

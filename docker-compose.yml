@@ -56,26 +56,23 @@ services:
       test: [ 'CMD', 'curl', '-f', 'http://localhost:3005/health' ]
 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        BUILD_NUMBER: 1
+        GIT_REF: local
+        GIT_BRANCH: unknown
     networks:
       - hmpps
     depends_on:
       - redis
       - localstack
+      - gotenberg
     ports:
       - "3000:3000"
-    environment:
-      - REDIS_HOST=redis
-      - HMPPS_AUTH_EXTERNAL_URL=http://localhost:9090/auth
-      - HMPPS_AUTH_URL=http://hmpps-auth:8080/auth
-      # These will need to match new creds in the seed auth service auth
-      - API_CLIENT_ID=client-id
-      - API_CLIENT_SECRET=client-secret
-      - SYSTEM_CLIENT_ID=system-client-id
-      - SYSTEM_CLIENT_SECRET=system-client-secret
-      - AWS_ACCESS_KEY_ID=foobar
-      - AWS_SECRET_ACCESS_KEY=foobar
-      - AWS_ENDPOINT_URL=http://localstack:4566
+    env_file:
+      - .env
+      - docker-compose.env
 
 networks:
   hmpps:

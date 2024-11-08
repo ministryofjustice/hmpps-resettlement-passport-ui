@@ -9,11 +9,6 @@
 {% set mainClasses = "app-container govuk-body" %}
 {% set enumValue = pathway | getEnumValue %}
 {% set containsAssessmentSummary = false %}
-{% for questionAndAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-  {% if questionAndAnswer.question === 'SUPPORT_NEEDS' or questionAndAnswer.question === 'SUPPORT_NEEDS_PRERELEASE' %}
-    {% set containsAssessmentSummary = true %}
-  {% endif %}
-{% endfor %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
 
 {% block header %}
@@ -34,7 +29,7 @@
   </div>
 {% endblock %}
 
-{% block content %}
+{%- block content -%}
   <main id="main-content" role="main">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
@@ -57,105 +52,146 @@
             action="/ImmediateNeedsReport/pathway/{{ pathway }}/complete?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
             method="post"
           >
-            <h2 class="govuk-heading-m">{{ enumValue.name }} report</h2>
+            <h2 class="govuk-heading-m">{{ enumValue.name }} report information</h2>
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-              {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-                {% if questionAnswer.question not in ['SUPPORT_NEEDS', 'SUPPORT_NEEDS_PRERELEASE', 'CASE_NOTE_SUMMARY'] and 'SUPPORT_NEEDS_CHECKBOXES' not in questionAnswer.question %}
-                  <div class="govuk-summary-list__row">
-                    <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
-                    <dd class="govuk-summary-list__value">
-                      {% if questionAnswer.questionType === 'ADDRESS' %}
-                        {% for item in questionAnswer.answer.answer %}
-                          {% for key, value in item %}
-                            {% if value %}
-                              {{ value }}<br />
-                            {% endif %}
-                          {% endfor %}
-                        {% endfor %}
-                      {% elif questionAnswer.questionType === 'CHECKBOX' %}
-                        {% set freeTextAnswer = "" %}
-                        {% for answer in questionAnswer.answer.answer %}
-                          {% if answer | startsWith("OTHER_SUPPORT_NEEDS: ") %}
-                            {% set freeTextAnswer = answer | removePrefix("OTHER_SUPPORT_NEEDS: ") %}
+              {%- for questionAnswer in restQuestions -%}
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
+                  <dd class="govuk-summary-list__value">
+                    {% if questionAnswer.questionType === 'ADDRESS' %}
+                      {% for item in questionAnswer.answer.answer %}
+                        {% for key, value in item %}
+                          {% if value %}
+                            {{ value }}<br />
                           {% endif %}
                         {% endfor %}
+                      {% endfor %}
+                    {% elif questionAnswer.questionType === 'CHECKBOX' %}
+                      {% set freeTextAnswer = "" %}
+                      {% for answer in questionAnswer.answer.answer %}
+                        {% if answer | startsWith("OTHER_SUPPORT_NEEDS: ") %}
+                          {% set freeTextAnswer = answer | removePrefix("OTHER_SUPPORT_NEEDS: ") %}
+                        {% endif %}
+                      {% endfor %}
 
-                        {% for item in questionAnswer.answer.displayText %}
-                          {{ item }}<br />
-                        {% endfor %}
-                        {{ freeTextAnswer }}
-                      {% else %}
-                        {{ questionAnswer.answer.displayText }}
+                      {% for item in questionAnswer.answer.displayText %}
+                        {{ item }}<br />
+                      {% endfor %}
+                      {{ freeTextAnswer }}
+                    {% else %}
+                      {{ questionAnswer.answer.displayText }}
+                    {% endif %}
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
+                    >
+                      Change
+                    </a>
+                  </dd>
+                </div>
+              {% endfor %}
+            </dl>
+
+            {% if supportNeeds %}
+              <h2 class="govuk-heading-m">{{ enumValue.name }} support needs</h2>
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">{{ supportNeeds.questionTitle }}</dt>
+                  <dd class="govuk-summary-list__value">
+                    {% set freeTextAnswer = "" %}
+                    {% for answer in supportNeeds.answer.answer %}
+                      {% if answer | startsWith("OTHER_SUPPORT_NEEDS: ") %}
+                        {% set freeTextAnswer = answer | removePrefix("OTHER_SUPPORT_NEEDS: ") %}
                       {% endif %}
+                    {% endfor %}
+
+                    <ul class="support-needs">
+                      {% for item in supportNeeds.answer.displayText %}
+                        <li>{{ item }}</li>
+                      {% endfor %}
+                      {% if freeTextAnswer %}
+                        <li>{{ freeTextAnswer }}</li>
+                      {% endif %}
+                    </ul>
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ supportNeeds.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
+                    >
+                      Change
+                    </a>
+                  </dd>
+                </div>
+                {% if supportNeedsDetails %}
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">{{ supportNeedsDetails.questionTitle }}</dt>
+                    <dd class="govuk-summary-list__value">
+                      {{ supportNeedsDetails.answer.displayText | default('No details entered', true) }}
                     </dd>
                     <dd class="govuk-summary-list__actions">
                       <a
                         class="govuk-link govuk-link--no-visited-state"
-                        href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
+                        href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ supportNeedsDetails.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
                       >
                         Change
                       </a>
                     </dd>
                   </div>
                 {% endif %}
-              {% endfor %}
-            </dl>
-
-            {% if containsAssessmentSummary %}
-              <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
-              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                {% for questionAnswer in allQuestionsAndAnswers.questionsAndAnswers %}
-                  {% if 'SUPPORT_NEEDS_CHECKBOXES' in questionAnswer.question %}
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
-                      <dd class="govuk-summary-list__value">
-                        {% for item in questionAnswer.answer.displayText %}
-                          {{ item }}<br />
-                        {% endfor %}
-                      </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a
-                          class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
-                          >Change</a
-                        >
-                      </dd>
-                    </div>
-                  {% endif %}
-                  {% if questionAnswer.question === 'SUPPORT_NEEDS' or questionAnswer.question === 'SUPPORT_NEEDS_PRERELEASE' %}
-                    {% set statusValue = questionAnswer.answer.answer | getAssessmentEnumValue %}
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
-                      <dd class="govuk-summary-list__value">
-                        <strong class="govuk-tag govuk-tag--{{ statusValue.color }}"> {{ statusValue.name }} </strong>
-                      </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a
-                          class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
-                          >Change</a
-                        >
-                      </dd>
-                    </div>
-                  {% endif %}
-                  {% if questionAnswer.question === 'CASE_NOTE_SUMMARY' %}
-                    <div class="govuk-summary-list__row">
-                      <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
-                      <dd class="govuk-summary-list__value show-line-breaks">
-                        {{ questionAnswer.answer.displayText }}
-                      </dd>
-                      <dd class="govuk-summary-list__actions">
-                        <a
-                          class="govuk-link govuk-link--no-visited-state"
-                          href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ questionAnswer.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
-                          >Change</a
-                        >
-                      </dd>
-                    </div>
-                  {% endif %}
-                {% endfor %}
               </dl>
             {% endif %}
+
+            {% if status and not caseNote %}
+              <h2 class="govuk-heading-m">{{ enumValue.name }} resettlement status</h2>
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                {% set statusValue = status.answer.answer | getAssessmentEnumValue %}
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__value">
+                    <strong class="govuk-tag govuk-tag--{{ statusValue.color }}"> {{ statusValue.name }} </strong>
+                  </dt>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ status.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
+                      >Change</a
+                    >
+                  </dd>
+                </div>
+              </dl>
+            {%- endif -%}
+            {%- if status and caseNote -%}
+              <h2 class="govuk-heading-m">{{ enumValue.name }} summary</h2>
+              <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                {% set statusValue = status.answer.answer | getAssessmentEnumValue %}
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">{{ status.questionTitle }}</dt>
+                  <dd class="govuk-summary-list__value">
+                    <strong class="govuk-tag govuk-tag--{{ statusValue.color }}"> {{ statusValue.name }} </strong>
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ status.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
+                      >Change
+                    </a>
+                  </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">{{ caseNote.questionTitle }}</dt>
+                  <dd class="govuk-summary-list__value show-line-breaks">{{ caseNote.answer.displayText }}</dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/{{ pathway }}/page/{{ caseNote.pageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&type={{ assessmentType }}&submitted={{ submitted }}"
+                      >Change
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+            {%- endif %}
 
             <input type="hidden" name="pageTitle" value="{{ assessmentPage.title }}" />
             <input type="hidden" name="pathway" value="{{ pathway }}" />
