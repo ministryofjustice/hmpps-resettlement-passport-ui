@@ -102,7 +102,14 @@
           <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
           <input type="hidden" name="assessmentType" value="{{ assessmentType }}"/>
 
-          <button type="submit" {% if not immediateNeedsReportCompleted %}disabled{% endif %} aria-disabled="true" class="govuk-button" data-module="govuk-button">
+          <button
+                  type="submit"
+                  data-prevent-double-click="true"
+                  {% if not immediateNeedsReportCompleted %}disabled{% endif %}
+                  aria-disabled="true"
+                  class="govuk-button"
+                  data-module="govuk-button"
+          >
             Submit report
           </button>
         </div>
@@ -113,5 +120,4 @@
 {% endblock %}
 {% block bodyEnd %}
   {{ super() }}
-  <script src="/assets/js/disable-on-submit.js"></script>
 {% endblock %}

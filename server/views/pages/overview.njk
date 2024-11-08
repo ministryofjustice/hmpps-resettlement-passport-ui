@@ -192,7 +192,7 @@
                 </select>
               </div>
               <div class="govuk-grid-column-one-third">
-                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit" data-prevent-double-click="true">Apply filters
                 </button>
               </div>
             </form>
@@ -603,5 +603,4 @@
 {% endblock %}
 {% block bodyEnd %}
   {{ super() }}
-  <script src="/assets/js/disable-on-submit.js"></script>
 {% endblock %}

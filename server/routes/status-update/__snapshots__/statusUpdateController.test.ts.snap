@@ -1044,7 +1044,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <input type="hidden" name="selectedPathway" value="accommodation">
             <input type="hidden" name="prisonerNumber" value="123">
             <input type="hidden" name="_csrf" value=""/>
-            <button class="govuk-button" type="submit" data-qa="update-status-submit">Update</button>
+            <button class="govuk-button" type="submit" data-prevent-double-click="true" data-qa="update-status-submit">Update</button>
           </form>
         </div>
       </section>
@@ -1070,7 +1070,6 @@ exports[`getStatusUpdate happy path - render page 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>

@@ -446,7 +446,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
             <input type="hidden" name="edit" value="false" />
             <input type="hidden" name="assessmentType" value="BCST2" />
 
-            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Confirm</button>
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit" data-prevent-double-click="true">Confirm</button>
           </form>
         </div>
       </div>
@@ -473,7 +473,6 @@ exports[`getView get check your answers - v1 of report 1`] = `
   <script src="/assets/mojFrontendInit.js"></script>
 
   <script src="/assets/js/assessment-back-button.js"></script>
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -773,7 +772,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
             <input type="hidden" name="edit" value="false" />
             <input type="hidden" name="assessmentType" value="RESETTLEMENT_PLAN" />
 
-            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Confirm</button>
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit" data-prevent-double-click="true">Confirm</button>
           </form>
         </div>
       </div>
@@ -800,7 +799,6 @@ exports[`getView get check your answers - v2 of report 1`] = `
   <script src="/assets/mojFrontendInit.js"></script>
 
   <script src="/assets/js/assessment-back-button.js"></script>
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -1038,7 +1036,7 @@ exports[`getView optional text appears 1`] = `
             <input type="hidden" name="edit" value="false" />
             <input type="hidden" name="assessmentType" value="BCST2" />
 
-            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Continue</button>
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit" data-prevent-double-click="true">Continue</button>
           </form>
         </div>
       </div>
@@ -1065,7 +1063,6 @@ exports[`getView optional text appears 1`] = `
   <script src="/assets/mojFrontendInit.js"></script>
 
   <script src="/assets/js/assessment-back-button.js"></script>
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -1236,7 +1233,7 @@ exports[`getView should use version 1 when existing assessment in cache has no v
             <input type="hidden" name="edit" value="false" />
             <input type="hidden" name="assessmentType" value="BCST2" />
 
-            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit">Continue</button>
+            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit" data-prevent-double-click="true">Continue</button>
           </form>
         </div>
       </div>
@@ -1263,7 +1260,6 @@ exports[`getView should use version 1 when existing assessment in cache has no v
   <script src="/assets/mojFrontendInit.js"></script>
 
   <script src="/assets/js/assessment-back-button.js"></script>
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>

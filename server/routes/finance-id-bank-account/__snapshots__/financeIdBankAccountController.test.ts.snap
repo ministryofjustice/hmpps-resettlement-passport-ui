@@ -3926,7 +3926,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="prisonerNumber" value="123"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
@@ -3950,7 +3950,6 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -4267,7 +4266,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="prisonerNumber" value="123"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
@@ -4291,7 +4290,6 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -4608,7 +4606,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="prisonerNumber" value="123"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
@@ -4632,7 +4630,6 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -4949,7 +4946,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="prisonerNumber" value="123"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
@@ -4973,7 +4970,6 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -5632,7 +5628,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value="1000"/>
         <input type="hidden" name="prisonerNumber" value="123"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
@@ -5656,7 +5652,6 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -5973,7 +5968,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value="1000"/>
         <input type="hidden" name="prisonerNumber" value="123"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
@@ -5997,7 +5992,6 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -6314,7 +6308,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value="1000"/>
         <input type="hidden" name="prisonerNumber" value="123"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
@@ -6338,7 +6332,6 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -6655,7 +6648,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value="1000"/>
         <input type="hidden" name="prisonerNumber" value="123"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
@@ -6679,7 +6672,6 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
