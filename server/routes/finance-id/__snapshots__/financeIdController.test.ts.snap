@@ -825,7 +825,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                 <div class="confirm-delete-finance-form" hidden>
                   <div class="govuk-button-group">
                     <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
-                      <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application
+                      <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
                       </button>
                       <input type="hidden" name="prisonerNumber" value="123">
                       <input type="hidden" name="financeId" value="12">
@@ -923,7 +923,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                     <div class="confirm-delete-id-form" hidden>
                       <div class="govuk-button-group">
                         <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application
+                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
                           </button>
                           <input type="hidden" name="prisonerNumber" value="123">
                           <input type="hidden" name="idId" value="13">
@@ -976,7 +976,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                     <div class="confirm-delete-id-form" hidden>
                       <div class="govuk-button-group">
                         <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application
+                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
                           </button>
                           <input type="hidden" name="prisonerNumber" value="123">
                           <input type="hidden" name="idId" value="17">
@@ -1270,7 +1270,6 @@ Answer3</td>
   <script src="/assets/mojFrontendInit.js"></script>
 
   <script src="/assets/js/finance-id.js"></script>
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -1758,7 +1757,6 @@ exports[`getView Happy path with default query params and no data from endpoints
   <script src="/assets/mojFrontendInit.js"></script>
 
   <script src="/assets/js/finance-id.js"></script>
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -2254,7 +2252,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
                 <div class="confirm-delete-finance-form" hidden>
                   <div class="govuk-button-group">
                     <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
-                      <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application
+                      <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
                       </button>
                       <input type="hidden" name="prisonerNumber" value="123">
                       <input type="hidden" name="financeId" value="12">
@@ -2352,7 +2350,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
                     <div class="confirm-delete-id-form" hidden>
                       <div class="govuk-button-group">
                         <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application
+                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
                           </button>
                           <input type="hidden" name="prisonerNumber" value="123">
                           <input type="hidden" name="idId" value="13">
@@ -2405,7 +2403,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
                     <div class="confirm-delete-id-form" hidden>
                       <div class="govuk-button-group">
                         <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit">Confirm delete application
+                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
                           </button>
                           <input type="hidden" name="prisonerNumber" value="123">
                           <input type="hidden" name="idId" value="17">
@@ -2699,7 +2697,6 @@ Answer3</td>
   <script src="/assets/mojFrontendInit.js"></script>
 
   <script src="/assets/js/finance-id.js"></script>
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>

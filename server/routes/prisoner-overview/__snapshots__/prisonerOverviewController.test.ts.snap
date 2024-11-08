@@ -582,7 +582,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
                 </select>
               </div>
               <div class="govuk-grid-column-one-third">
-                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit" data-prevent-double-click="true">Apply filters
                 </button>
               </div>
             </form>
@@ -1187,7 +1187,6 @@ S1 2NP</td>
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -1947,7 +1946,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
                 </select>
               </div>
               <div class="govuk-grid-column-one-third">
-                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters
+                <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit" data-prevent-double-click="true">Apply filters
                 </button>
               </div>
             </form>
@@ -2537,7 +2536,6 @@ S1 2NP</td>
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>

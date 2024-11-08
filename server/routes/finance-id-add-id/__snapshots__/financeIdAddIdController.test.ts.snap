@@ -6776,7 +6776,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
       <input type="hidden" name="prisonerNumber" value="123"/>
       <input hidden name="isPriorityApplication" value="false"/>
       <input hidden name="costOfApplication" value="100"/>
-      <button class="govuk-button" type="submit">Confirm</button>
+      <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
     </form>
   </div>
 </div>
@@ -6801,7 +6801,6 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -7184,7 +7183,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
       <input type="hidden" name="prisonerNumber" value="123"/>
       <input hidden name="isPriorityApplication" value="true"/>
       <input hidden name="costOfApplication" value="100"/>
-      <button class="govuk-button" type="submit">Confirm</button>
+      <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
     </form>
   </div>
 </div>
@@ -7209,7 +7208,6 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -7592,7 +7590,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
       <input type="hidden" name="prisonerNumber" value="123"/>
       <input hidden name="isPriorityApplication" value="false"/>
       <input hidden name="costOfApplication" value="100"/>
-      <button class="govuk-button" type="submit">Confirm</button>
+      <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
     </form>
   </div>
 </div>
@@ -7617,7 +7615,6 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -8000,7 +7997,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
       <input type="hidden" name="prisonerNumber" value="123"/>
       <input hidden name="isPriorityApplication" value="false"/>
       <input hidden name="costOfApplication" value="100"/>
-      <button class="govuk-button" type="submit">Confirm</button>
+      <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
     </form>
   </div>
 </div>
@@ -8025,7 +8022,6 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>

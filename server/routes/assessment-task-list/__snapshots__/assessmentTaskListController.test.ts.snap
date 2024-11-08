@@ -359,7 +359,6 @@ exports[`getView Error case - rpService returns error render page with error mes
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -890,7 +889,14 @@ exports[`getView Should not redirect to skip when BCST2 is not started and in th
           <input type="hidden" name="prisonerNumber" value="123"/>
           <input type="hidden" name="assessmentType" value="BCST2"/>
 
-          <button type="submit" disabled aria-disabled="true" class="govuk-button" data-module="govuk-button">
+          <button
+                  type="submit"
+                  data-prevent-double-click="true"
+                  disabled
+                  aria-disabled="true"
+                  class="govuk-button"
+                  data-module="govuk-button"
+          >
             Submit report
           </button>
         </div>
@@ -918,7 +924,6 @@ exports[`getView Should not redirect to skip when BCST2 is not started and in th
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -1107,7 +1112,14 @@ exports[`getView Should not redirect when outside the release window 1`] = `
           <input type="hidden" name="prisonerNumber" value="123"/>
           <input type="hidden" name="assessmentType" value="BCST2"/>
 
-          <button type="submit" disabled aria-disabled="true" class="govuk-button" data-module="govuk-button">
+          <button
+                  type="submit"
+                  data-prevent-double-click="true"
+                  disabled
+                  aria-disabled="true"
+                  class="govuk-button"
+                  data-module="govuk-button"
+          >
             Submit report
           </button>
         </div>
@@ -1135,7 +1147,6 @@ exports[`getView Should not redirect when outside the release window 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>
@@ -1324,7 +1335,14 @@ exports[`getView Should render when BCST2 is started 1`] = `
           <input type="hidden" name="prisonerNumber" value="123"/>
           <input type="hidden" name="assessmentType" value="BCST2"/>
 
-          <button type="submit"  aria-disabled="true" class="govuk-button" data-module="govuk-button">
+          <button
+                  type="submit"
+                  data-prevent-double-click="true"
+                  
+                  aria-disabled="true"
+                  class="govuk-button"
+                  data-module="govuk-button"
+          >
             Submit report
           </button>
         </div>
@@ -1352,7 +1370,6 @@ exports[`getView Should render when BCST2 is started 1`] = `
   <script src="/assets/moj/all.js"></script>
   <script src="/assets/mojFrontendInit.js"></script>
 
-  <script src="/assets/js/disable-on-submit.js"></script>
 
   </body>
 </html>

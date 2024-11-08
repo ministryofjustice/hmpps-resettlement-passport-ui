@@ -151,12 +151,11 @@
         <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
         <input type="hidden" name="applicationId" value="{{ params.applicationId }}"/>
         <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
-        <button class="govuk-button" type="submit">Confirm</button>
+        <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
   </div>
 {% endblock %}
 {% block bodyEnd %}
   {{ super() }}
-  <script src="/assets/js/disable-on-submit.js"></script>
 {% endblock %}
