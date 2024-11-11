@@ -10,6 +10,7 @@ import { processReportRequestBody } from '../../utils/processReportRequestBody'
 import { Pathway } from '../../@types/express'
 import { CHECK_ANSWERS_PAGE_ID } from '../../utils/constants'
 import { categoriseForCheckYourAnswers } from './checkYourAnswersUtils'
+import { ErrorMessage } from '../view'
 
 export default class ImmediateNeedsReportController {
   constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
@@ -176,6 +177,35 @@ export default class ImmediateNeedsReportController {
         pathway,
         assessmentType,
       }
+      const errors: ErrorMessage[] = []
+      for (const val in validationErrors) {
+        if (validationErrors[val].validationType === 'MANDATORY_INPUT') {
+          errors.push({
+            text: 'Field is required',
+            href: '#',
+          })
+        } else if (validationErrors[val].validationType === 'MAX_CHARACTER_LIMIT_SHORT_TEXT') {
+          errors.push({
+            text: 'Field must be 500 characters or less',
+            href: '#',
+          })
+        } else if (validationErrors[val].validationType === 'MAX_CHARACTER_LIMIT_LONG_TEXT') {
+          errors.push({
+            text: 'Field must be 3,000 characters or less',
+            href: '#',
+          })
+        } else if (validationErrors[val].validationType === 'MAX_CHARACTER_LIMIT_ADDRESS') {
+          errors.push({
+            text: 'Each field must be 500 characters or less',
+            href: '#',
+          })
+        } else if (validationErrors[val].validationType === 'CUSTOM') {
+          errors.push({
+            text: validationErrors[val].customErrorMessage,
+            href: '#',
+          })
+        }
+      }
 
       const existingWorkingAssessmentVersion = await this.assessmentStateService.getWorkingAssessmentVersion(stateKey)
 
@@ -203,6 +233,7 @@ export default class ImmediateNeedsReportController {
           backButton,
           assessmentType,
           redirectAsInvalid,
+          errors,
         )
         return res.render('pages/immediate-needs-report', { ...view.renderArgs })
       }
@@ -299,6 +330,7 @@ export default class ImmediateNeedsReportController {
         backButton,
         assessmentType,
         redirectAsInvalid,
+        errors,
       )
       if (currentPageId === CHECK_ANSWERS_PAGE_ID) {
         const { restQuestions, supportNeeds, supportNeedsDetails, status, caseNote } =
