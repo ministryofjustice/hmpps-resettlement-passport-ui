@@ -1478,4 +1478,103 @@ describe('saveAnswerAndGetNextPage', () => {
     expect(jest.spyOn(assessmentStateService, 'getWorkingAssessment')).toHaveBeenCalledTimes(0)
     expect(jest.spyOn(rpService, 'fetchNextPage')).toHaveBeenCalledTimes(0)
   })
+
+  it('Validation summary errors', async () => {
+    const apiAssessmentPage: ApiAssessmentPage = {
+      id: 'PAGE_1',
+      title: 'Page 1 title',
+      questionsAndAnswers: [
+        {
+          question: {
+            id: 'QUESTION_1',
+            title: 'Question title',
+            subTitle: 'Question subtitle',
+            type: 'SHORT_TEXT',
+            validationType: 'MANDATORY',
+          },
+          answer: null,
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_2',
+            title: 'Another question title',
+            subTitle: 'Another question subtitle',
+            type: 'SHORT_TEXT',
+            validationType: 'MANDATORY',
+          },
+
+          answer: null,
+          originalPageId: 'PAGE_1',
+        },
+        {
+          question: {
+            id: 'QUESTION_3',
+            title: 'Another question title',
+            subTitle: 'Another question subtitle',
+            type: 'LONG_TEXT',
+            validationType: 'MANDATORY',
+          },
+
+          answer: null,
+          originalPageId: 'PAGE_1',
+        },
+      ],
+    }
+
+    const getWorkingAssessmentVersionSpy = jest
+      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
+      .mockResolvedValue(2)
+    const getAssessmentPageSpy = jest.spyOn(rpService, 'getAssessmentPage').mockResolvedValue(apiAssessmentPage)
+
+    const checkForConvergenceSpy = jest.spyOn(assessmentStateService, 'checkForConvergence').mockResolvedValue(false)
+
+    const updatePageLoadHistorySpy = jest.spyOn(assessmentStateService, 'updatePageLoadHistory').mockImplementation()
+
+    const mergedQuestionsAndAnswers = [
+      {
+        question: 'QUESTION_1',
+        questionTitle: 'Question 1',
+        pageId: 'PAGE_1',
+        questionType: 'SHORT_TEXT',
+        answer: {
+          answer: 'Some short text here',
+          displayText: 'Some short text here',
+          '@class': 'StringAnswer',
+        },
+      },
+    ] as CachedQuestionAndAnswer[]
+    const getMergedQuestionsAndAnswersSpy = jest
+      .spyOn(assessmentStateService, 'getMergedQuestionsAndAnswers')
+      .mockResolvedValue(mergedQuestionsAndAnswers)
+
+    await request(app)
+      .get(
+        '/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%5D&backButton=false&type=BCST2',
+      )
+      .expect(200)
+      .expect(res => {
+        expect(res.text).toContain('<ul class="govuk-list govuk-error-summary__list">')
+      })
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: '123',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 2)
+    expect(checkForConvergenceSpy).toHaveBeenCalledWith(stateKey, {
+      pageId: 'PAGE_1',
+      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3'],
+    })
+    expect(updatePageLoadHistorySpy).toHaveBeenCalledWith(stateKey, {
+      pageId: 'PAGE_1',
+      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3'],
+    })
+    expect(getMergedQuestionsAndAnswersSpy).toHaveBeenCalledWith(stateKey, apiAssessmentPage.questionsAndAnswers)
+  })
 })
