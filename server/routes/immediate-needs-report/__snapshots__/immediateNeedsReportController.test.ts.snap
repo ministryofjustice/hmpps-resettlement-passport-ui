@@ -1416,6 +1416,12 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
           
           </li>
         
+          <li>
+          
+            <a href="#">Each field must be 500 characters or less</a>
+          
+          </li>
+        
         </ul>
       
     </div>
@@ -1527,6 +1533,38 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
 
     
     <textarea class="govuk-textarea" id="QUESTION_3" name="QUESTION_3" rows="5" aria-describedby="more-detail-hint"></textarea>
+  </div>
+
+              
+            
+
+              
+              
+              
+
+              
+                
+  
+
+  <div class="govuk-form-group govuk-form-group--error govuk-!-padding-top-3">
+    
+      <label class="govuk-label govuk-label--m" for="QUESTION_4">Another question title</label>
+    
+    <div class="govuk-hint show-line-breaks" id="QUESTION_4-hint">Another question subtitle</div>
+    
+    
+    
+    
+      
+  <p class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span> 
+    
+      Each field must be 500 characters or less
+    
+  </p>
+
+    
+    <textarea class="govuk-textarea" id="QUESTION_4" name="QUESTION_4" rows="5" aria-describedby="more-detail-hint"></textarea>
   </div>
 
               

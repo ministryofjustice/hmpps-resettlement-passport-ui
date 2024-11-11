@@ -1519,6 +1519,18 @@ describe('saveAnswerAndGetNextPage', () => {
           answer: null,
           originalPageId: 'PAGE_1',
         },
+        {
+          question: {
+            id: 'QUESTION_4',
+            title: 'Another question title',
+            subTitle: 'Another question subtitle',
+            type: 'LONG_TEXT',
+            validationType: 'MANDATORY',
+          },
+
+          answer: null,
+          originalPageId: 'PAGE_1',
+        },
       ],
     }
 
@@ -1550,7 +1562,7 @@ describe('saveAnswerAndGetNextPage', () => {
 
     await request(app)
       .get(
-        '/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_1%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_SHORT_TEXT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_LONG_TEXT%22%2C%22questionId%22%3A%22QUESTION_3%22%7D%5D&backButton=false&type=BCST2',
+        '/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_1%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_SHORT_TEXT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_LONG_TEXT%22%2C%22questionId%22%3A%22QUESTION_3%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_ADDRESS%22%2C%22questionId%22%3A%22QUESTION_4%22%7D%5D&backButton=false&type=BCST2',
       )
       .expect(200)
       .expect(res => {
@@ -1569,11 +1581,11 @@ describe('saveAnswerAndGetNextPage', () => {
     expect(getAssessmentPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 2)
     expect(checkForConvergenceSpy).toHaveBeenCalledWith(stateKey, {
       pageId: 'PAGE_1',
-      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3'],
+      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4'],
     })
     expect(updatePageLoadHistorySpy).toHaveBeenCalledWith(stateKey, {
       pageId: 'PAGE_1',
-      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3'],
+      questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4'],
     })
     expect(getMergedQuestionsAndAnswersSpy).toHaveBeenCalledWith(stateKey, apiAssessmentPage.questionsAndAnswers)
   })
