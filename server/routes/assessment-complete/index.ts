@@ -6,6 +6,7 @@ export default (router: Router, services: Services) => {
   const assessmentCompleteController = new AssessmentCompleteController(
     services.rpService,
     services.assessmentStateService,
+    services.appInsightsClient,
   )
 
   router.get('/assessment-complete', [assessmentCompleteController.getView])
