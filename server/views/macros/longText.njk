@@ -7,7 +7,7 @@
     {% if multipleQuestionsOnPage %}
       <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}{{ getOptionalText(currentQuestionAndAnswer) }}</label>
     {% endif %}
-    <div class="govuk-hint" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
+    <div class="govuk-hint show-line-breaks" id="{{ currentQuestionAndAnswer.question.id }}-hint">{{ currentQuestionAndAnswer.question.subTitle }}</div>
     
     {% if currentQuestionAndAnswer.question.detailsTitle and currentQuestionAndAnswer.question.detailsContent %}
       <details class="govuk-details govuk-!-padding-top-3" data-module="govuk-details">

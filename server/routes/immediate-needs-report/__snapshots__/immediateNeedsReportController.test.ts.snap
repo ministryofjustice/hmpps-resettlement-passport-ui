@@ -955,7 +955,7 @@ exports[`getView optional text appears 1`] = `
     
       <label class="govuk-label govuk-label--m" for="QUESTION_1">Question 1 (optional)</label>
     
-    <div class="govuk-hint" id="QUESTION_1-hint"></div>
+    <div class="govuk-hint show-line-breaks" id="QUESTION_1-hint"></div>
     
     
     
@@ -978,7 +978,7 @@ exports[`getView optional text appears 1`] = `
     
       <label class="govuk-label govuk-label--m" for="QUESTION_2">Question 2</label>
     
-    <div class="govuk-hint" id="QUESTION_2-hint"></div>
+    <div class="govuk-hint show-line-breaks" id="QUESTION_2-hint"></div>
     
     
     
@@ -1215,7 +1215,7 @@ exports[`getView should use version 1 when existing assessment in cache has no v
 
   <div class="govuk-form-group  govuk-!-padding-top-3">
     
-    <div class="govuk-hint" id="QUESTION_1-hint"></div>
+    <div class="govuk-hint show-line-breaks" id="QUESTION_1-hint"></div>
     
     
     
