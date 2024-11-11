@@ -34,7 +34,7 @@
 
 {% block content %}
   <main id="main-content" role="main">
-    <div class="govuk-grid-row">
+        <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters">
         {% if submitted or backButton or not edit %}
           <button
@@ -60,6 +60,14 @@
               })
             }}
           {% endif %}
+            {% if errors | length > 0 %}
+                {{
+                govukErrorSummary({
+                    titleText: 'There is a problem',
+                    errorList: errors
+                })
+                }}
+            {% endif %}
           {% if assessmentPage.error %}
             <h1 class="govuk-heading-l govuk-!-margin-top-6 govuk-!-margin-bottom-3">Something went wrong</h1>
             <p>
@@ -121,7 +129,7 @@
           </form>
         </div>
       </div>
-    </div>
+      </div>
   </main>
 {% endblock %}
 {% block bodyEnd %}
