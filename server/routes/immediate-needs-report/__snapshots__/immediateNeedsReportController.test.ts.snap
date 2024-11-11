@@ -1404,6 +1404,12 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
           
           </li>
         
+          <li>
+          
+            <a href="#">Field must be 500 characters or less</a>
+          
+          </li>
+        
         </ul>
       
     </div>
@@ -1438,11 +1444,20 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
                 
   
 
-  <div class="govuk-form-group govuk-!-padding-top-3 ">
+  <div class="govuk-form-group govuk-!-padding-top-3 govuk-form-group--error">
     
       <label class="govuk-label govuk-label--m" for="QUESTION_1">Question title</label>
     
     <div id="QUESTION_1-hint" class='govuk-hint'>Question subtitle</div>
+    
+      
+  <p class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span> 
+    
+      This field is required
+    
+  </p>
+
     
     <input class="govuk-input govuk-!-width-two-thirds" id="QUESTION_1" name="QUESTION_1" type="text" value="Some short text here" />
   </div>
@@ -1468,7 +1483,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
   <p class="govuk-error-message">
     <span class="govuk-visually-hidden">Error:</span> 
     
-      This field is required
+      This field must be 500 characters or less
     
   </p>
 
