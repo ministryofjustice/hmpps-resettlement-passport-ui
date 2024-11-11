@@ -1410,6 +1410,12 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
           
           </li>
         
+          <li>
+          
+            <a href="#">Field must be 3,000 characters or less</a>
+          
+          </li>
+        
         </ul>
       
     </div>
@@ -1502,7 +1508,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
                 
   
 
-  <div class="govuk-form-group  govuk-!-padding-top-3">
+  <div class="govuk-form-group govuk-form-group--error govuk-!-padding-top-3">
     
       <label class="govuk-label govuk-label--m" for="QUESTION_3">Another question title</label>
     
@@ -1510,6 +1516,15 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
     
     
     
+    
+      
+  <p class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span> 
+    
+      This field must be 3,000 characters or less
+    
+  </p>
+
     
     <textarea class="govuk-textarea" id="QUESTION_3" name="QUESTION_3" rows="5" aria-describedby="more-detail-hint"></textarea>
   </div>

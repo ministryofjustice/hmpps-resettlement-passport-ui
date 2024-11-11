@@ -1550,7 +1550,7 @@ describe('saveAnswerAndGetNextPage', () => {
 
     await request(app)
       .get(
-        '/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_1%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_SHORT_TEXT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%5D&backButton=false&type=BCST2',
+        '/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_1%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_SHORT_TEXT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_LONG_TEXT%22%2C%22questionId%22%3A%22QUESTION_3%22%7D%5D&backButton=false&type=BCST2',
       )
       .expect(200)
       .expect(res => {
