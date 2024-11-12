@@ -151,7 +151,13 @@
             <div class="govuk-button-group">
               <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
               <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" />
-              <button type="submit" class="govuk-button" data-module="govuk-button">Start pre-release report</button>
+              <button type="submit"
+                      class="govuk-button"
+                      data-module="govuk-button"
+                      data-prevent-double-click="true"
+              >
+                Start pre-release report
+              </button>
             </div>
           </form>
         </div>
