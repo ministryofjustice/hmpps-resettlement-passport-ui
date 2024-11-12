@@ -28,40 +28,45 @@ export default function prisonerDetailsMiddleware({ rpService }: Services) {
     let { prisonerNumber }: { prisonerNumber?: string } = req.query
     let prisonerData = null
 
-    if (!prisonerNumber) {
-      const { prisonerNumber: bodyPrisonerNumber } = req.body
-      prisonerNumber = prisonerNumber || bodyPrisonerNumber
-    }
+    try {
+      if (!prisonerNumber) {
+        const { prisonerNumber: bodyPrisonerNumber } = req.body
+        prisonerNumber = prisonerNumber || bodyPrisonerNumber
+      }
 
-    if (prisonerNumber) {
-      try {
-        prisonerData = await rpService.getPrisonerDetails(prisonerNumber)
-      } catch (err) {
-        if (err.status === 404) {
-          err.customMessage = 'No data found for prisoner'
+      if (prisonerNumber) {
+        try {
+          prisonerData = await rpService.getPrisonerDetails(prisonerNumber)
+        } catch (err) {
+          if (err.status === 404) {
+            err.customMessage = 'No data found for prisoner'
+          }
+          next(err)
+          return
         }
-        next(err)
-        return
+
+        prisonerData.prisonerImage = await getPrisonerImage(rpService, prisonerData, prisonerNumber)
+
+        // RP2-490 If the prisoner's prison does not match the user's caseload then we need to treat this as not found
+        if (
+          res.locals.user.authSource === 'nomis' &&
+          res.locals.userActiveCaseLoad.caseLoadId !== prisonerData?.personalDetails.prisonId
+        ) {
+          logger.warn(
+            `User ${res.locals.user.username} trying to access prisoner ${prisonerNumber} in ${prisonerData?.personalDetails.prisonId} from outside caseload ${res.locals.userActiveCaseLoad.caseLoadId}.`,
+          )
+          next({
+            customMessage: 'No data found for prisoner',
+          })
+          return
+        }
       }
 
-      prisonerData.prisonerImage = await getPrisonerImage(rpService, prisonerData, prisonerNumber)
-
-      // RP2-490 If the prisoner's prison does not match the user's caseload then we need to treat this as not found
-      if (
-        res.locals.user.authSource === 'nomis' &&
-        res.locals.userActiveCaseLoad.caseLoadId !== prisonerData?.personalDetails.prisonId
-      ) {
-        logger.warn(
-          `User ${res.locals.user.username} trying to access prisoner ${prisonerNumber} in ${prisonerData?.personalDetails.prisonId} from outside caseload ${res.locals.userActiveCaseLoad.caseLoadId}.`,
-        )
-        next({
-          customMessage: 'No data found for prisoner',
-        })
-        return
-      }
+      req.prisonerData = prisonerData
+      next()
+    } catch (err) {
+      err.customMessage = 'No data found for prisoner'
+      next(err)
     }
-
-    req.prisonerData = prisonerData
-    next()
   }
 }
