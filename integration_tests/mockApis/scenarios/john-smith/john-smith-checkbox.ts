@@ -38,7 +38,7 @@ export const johnSmithCheckbox = () =>
                 },
                 { id: 'NO_ANSWER', displayText: 'No answer provided', description: null, exclusive: false },
               ],
-              validationType: 'MANDATORY',
+              validation: { type: 'MANDATORY' },
             },
             answer: { '@class': 'StringAnswer', answer: 'NO_PERMANENT_OR_FIXED' },
             originalPageId: 'WHERE_DID_THEY_LIVE',
