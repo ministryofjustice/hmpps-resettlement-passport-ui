@@ -179,7 +179,12 @@ export default class ImmediateNeedsReportController {
       }
       const errors: ErrorMessage[] = []
       for (const val in validationErrors) {
-        if (validationErrors[val].validationType === 'MANDATORY_INPUT') {
+        if (validationErrors[val].customErrorMessage) {
+          errors.push({
+            text: validationErrors[val].customErrorMessage,
+            href: '#',
+          })
+        } else if (validationErrors[val].validationType === 'MANDATORY_INPUT') {
           errors.push({
             text: 'Field is required',
             href: '#',
@@ -197,11 +202,6 @@ export default class ImmediateNeedsReportController {
         } else if (validationErrors[val].validationType === 'MAX_CHARACTER_LIMIT_ADDRESS') {
           errors.push({
             text: 'Each field must be 500 characters or less',
-            href: '#',
-          })
-        } else if (validationErrors[val].validationType === 'CUSTOM') {
-          errors.push({
-            text: validationErrors[val].customErrorMessage,
             href: '#',
           })
         }

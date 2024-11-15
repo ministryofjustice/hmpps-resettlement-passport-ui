@@ -45,8 +45,7 @@ export type ApiQuestionsAndAnswer = {
     subTitle?: string
     type?: string
     options?: ApiQuestionOption[]
-    validationType?: ValidationType
-    customValidation?: CustomValidation
+    validation?: Validation
     detailsTitle?: string
     detailsContent?: string
   }
@@ -93,9 +92,10 @@ export type ResettlementAssessmentVersion = {
   version: number
 }
 
-export type CustomValidation = {
-  regex: string
-  message: string
+export type Validation = {
+  type: ValidationType
+  regex?: string
+  message?: string
 }
 
 export type PageWithQuestions = {

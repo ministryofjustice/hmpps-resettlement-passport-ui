@@ -501,4 +501,4 @@ export function isValidStatus(status: string): boolean {
 }
 
 export const getOptionalText = (questionAndAnswer: ApiQuestionsAndAnswer) =>
-  questionAndAnswer.question.validationType === 'OPTIONAL' ? ' (optional)' : ''
+  questionAndAnswer.question.validation.type === 'OPTIONAL' ? ' (optional)' : ''

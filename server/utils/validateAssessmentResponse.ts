@@ -12,7 +12,7 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
   userInput?.flattenedQuestionsOnPage.forEach(questionAndAnswer => {
     const answerToQuestion = getAnswerToQuestion(questionAndAnswer.question.id, userInput.questionsAndAnswers)
 
-    if (questionAndAnswer.question.validationType === 'MANDATORY') {
+    if (questionAndAnswer.question.validation?.type === 'MANDATORY') {
       const isMissingAnswer = isMissingRequiredField(
         questionAndAnswer.question.id,
         questionAndAnswer.question.type,
@@ -22,6 +22,7 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
         const newValidationError: ValidationError = {
           validationType: 'MANDATORY_INPUT',
           questionId: questionAndAnswer.question.id,
+          customErrorMessage: questionAndAnswer.question.validation.message,
         }
         validationErrors = validationErrors ? [...validationErrors, newValidationError] : [newValidationError]
       }
@@ -68,14 +69,14 @@ const validateAssessmentResponse = (userInput: ResettlementReportUserInput) => {
       }
     }
 
-    if (questionAndAnswer.question.customValidation && typeof answerToQuestion === 'string') {
-      const regex = new RegExp(questionAndAnswer.question.customValidation.regex)
+    if (questionAndAnswer.question.validation?.regex && typeof answerToQuestion === 'string') {
+      const regex = new RegExp(questionAndAnswer.question.validation.regex)
       const answer = answerToQuestion as string
       if (!regex.test(answer)) {
         const newValidationError: ValidationError = {
           validationType: 'CUSTOM',
           questionId: questionAndAnswer.question.id,
-          customErrorMessage: questionAndAnswer.question.customValidation.message,
+          customErrorMessage: questionAndAnswer.question.validation.message,
         }
         validationErrors = validationErrors ? [...validationErrors, newValidationError] : [newValidationError]
       }
