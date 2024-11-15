@@ -4,6 +4,7 @@
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
 
   <div class="govuk-form-group govuk-!-padding-top-3 {{ 'govuk-form-group--error' if validationError }}">
+    <span id="{{ currentQuestionAndAnswer.question.id }}"></span>
     {% if multipleQuestionsOnPage %}
       <label class="govuk-label govuk-label--m" for="{{ currentQuestionAndAnswer.question.id }}">{{ currentQuestionAndAnswer.question.title }}{{ getOptionalText(currentQuestionAndAnswer) }}</label>
     {% endif %}

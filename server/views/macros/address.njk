@@ -4,6 +4,7 @@
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
 
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
+    <span id="{{ currentQuestionAndAnswer.question.id }}"></span>
     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">{{ currentQuestionAndAnswer.question.title }}</legend>
     <fieldset class="govuk-fieldset">
       <div id="{{ currentQuestionAndAnswer.question.id }}-hint" class="govuk-hint"> {{ currentQuestionAndAnswer.question.subTitle }}</div>

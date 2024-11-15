@@ -953,6 +953,7 @@ exports[`getView optional text appears 1`] = `
   
 
   <div class="govuk-form-group  govuk-!-padding-top-3">
+    <span id="QUESTION_1"></span>
     
       <label class="govuk-label govuk-label--m" for="QUESTION_1">Question 1 (optional)</label>
     
@@ -976,6 +977,7 @@ exports[`getView optional text appears 1`] = `
   
 
   <div class="govuk-form-group  govuk-!-padding-top-3">
+    <span id="QUESTION_2"></span>
     
       <label class="govuk-label govuk-label--m" for="QUESTION_2">Question 2</label>
     
@@ -999,6 +1001,7 @@ exports[`getView optional text appears 1`] = `
   
 
   <div class="govuk-form-group govuk-!-padding-top-3 ">
+    <span id="QUESTION_3"></span>
     
       <label class="govuk-label govuk-label--m" for="QUESTION_3">Question 3</label>
     
@@ -1019,6 +1022,7 @@ exports[`getView optional text appears 1`] = `
   
 
   <div class="govuk-form-group govuk-!-padding-top-3 ">
+    <span id="QUESTION_4"></span>
     
       <label class="govuk-label govuk-label--m" for="QUESTION_4">Question 4 (optional)</label>
     
@@ -1216,6 +1220,7 @@ exports[`getView should use version 1 when existing assessment in cache has no v
   
 
   <div class="govuk-form-group  govuk-!-padding-top-3">
+    <span id="QUESTION_1"></span>
     
     <div class="govuk-hint show-line-breaks" id="QUESTION_1-hint"></div>
     
@@ -1457,6 +1462,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
   
 
   <div class="govuk-form-group govuk-!-padding-top-3 govuk-form-group--error">
+    <span id="QUESTION_1"></span>
     
       <label class="govuk-label govuk-label--m" for="QUESTION_1">Question title</label>
     
@@ -1486,6 +1492,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
   
 
   <div class="govuk-form-group govuk-!-padding-top-3 govuk-form-group--error">
+    <span id="QUESTION_2"></span>
     
       <label class="govuk-label govuk-label--m" for="QUESTION_2">Another question title</label>
     
@@ -1515,6 +1522,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
   
 
   <div class="govuk-form-group govuk-form-group--error govuk-!-padding-top-3">
+    <span id="QUESTION_3"></span>
     
       <label class="govuk-label govuk-label--m" for="QUESTION_3">Another question title</label>
     
@@ -1547,6 +1555,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
   
 
   <div class="govuk-form-group govuk-form-group--error govuk-!-padding-top-3">
+    <span id="QUESTION_4"></span>
     
       <label class="govuk-label govuk-label--m" for="QUESTION_4">Another question title</label>
     
