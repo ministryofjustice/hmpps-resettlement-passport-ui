@@ -6,7 +6,6 @@
 {% macro radio(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors, allQuestionsAndAnswers) %}
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
-    <span id="{{ currentQuestionAndAnswer.question.id }}"></span>
     {% if multipleQuestionsOnPage %}
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-top-6 govuk-!-margin-bottom-5">{{ currentQuestionAndAnswer.question.title }}</legend>
     {% endif %}

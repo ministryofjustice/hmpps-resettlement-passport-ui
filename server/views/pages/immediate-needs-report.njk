@@ -96,7 +96,7 @@
               {# get answer to current question #}
               {% set existingAnswer = currentQuestionAndAnswer | getAnswerToCurrentQuestion(allQuestionsAndAnswers) %}
               {% set currentIndex = loop.index %}
-
+              <span id="{{ currentQuestionAndAnswer.question.id }}"></span>
               {% if currentQuestionAndAnswer.question.type === 'RADIO' %}
                 {{ radio(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors, allQuestionsAndAnswers) }}
               {% elif currentQuestionAndAnswer.question.type === 'LONG_TEXT' %}
