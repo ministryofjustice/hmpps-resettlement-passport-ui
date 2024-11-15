@@ -182,27 +182,27 @@ export default class ImmediateNeedsReportController {
         if (validationErrors[val].customErrorMessage) {
           errors.push({
             text: validationErrors[val].customErrorMessage,
-            href: '#',
+            href: `#${validationErrors[val].questionId}`,
           })
         } else if (validationErrors[val].validationType === 'MANDATORY_INPUT') {
           errors.push({
             text: 'Field is required',
-            href: '#',
+            href: `#${validationErrors[val].questionId}`,
           })
         } else if (validationErrors[val].validationType === 'MAX_CHARACTER_LIMIT_SHORT_TEXT') {
           errors.push({
             text: 'Field must be 500 characters or less',
-            href: '#',
+            href: `#${validationErrors[val].questionId}`,
           })
         } else if (validationErrors[val].validationType === 'MAX_CHARACTER_LIMIT_LONG_TEXT') {
           errors.push({
             text: 'Field must be 3,000 characters or less',
-            href: '#',
+            href: `#${validationErrors[val].questionId}`,
           })
         } else if (validationErrors[val].validationType === 'MAX_CHARACTER_LIMIT_ADDRESS') {
           errors.push({
             text: 'Each field must be 500 characters or less',
-            href: '#',
+            href: `#${validationErrors[val].questionId}`,
           })
         }
       }
