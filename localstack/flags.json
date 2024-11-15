@@ -8,15 +8,11 @@
     "enabled": true
   },
   {
-    "feature": "viewAppointmentsEndUser",
-    "enabled": true
-  },
-  {
     "feature": "useNewDeliusCaseNoteFormat",
     "enabled": true
   },
   {
-    "feature": "viewDocuments",
+    "feature": "viewAppointmentsEndUser",
     "enabled": true
   },
   {
@@ -28,15 +24,7 @@
     "enabled": true
   },
   {
-    "feature": "knowledgeVerification",
-    "enabled": true
-  },
-  {
     "feature": "profileReset",
-    "enabled": true
-  },
-  {
-    "feature": "todoList",
     "enabled": true
   },
   {

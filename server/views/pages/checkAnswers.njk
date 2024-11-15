@@ -79,7 +79,11 @@
                       {% endfor %}
                       {{ freeTextAnswer }}
                     {% else %}
-                      {{ questionAnswer.answer.displayText }}
+                      {% if isAdditionalDetails(questionAnswer) -%}
+                        {{ questionAnswer.answer.displayText | trim | default('No details entered', true) }}
+                      {% else -%}
+                        {{ questionAnswer.answer.displayText }}
+                      {%- endif %}
                     {% endif %}
                   </dd>
                   <dd class="govuk-summary-list__actions">
@@ -191,7 +195,7 @@
                   </dd>
                 </div>
               </dl>
-            {%- endif %}
+            {%- endif -%}
 
             <input type="hidden" name="pageTitle" value="{{ assessmentPage.title }}" />
             <input type="hidden" name="pathway" value="{{ pathway }}" />
@@ -200,7 +204,13 @@
             <input type="hidden" name="edit" value="{{ edit }}" />
             <input type="hidden" name="assessmentType" value="{{ assessmentType }}" />
 
-            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit" data-prevent-double-click="true">Confirm</button>
+            <button
+              class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8"
+              type="submit"
+              data-prevent-double-click="true"
+            >
+              Confirm
+            </button>
           </form>
         </div>
       </div>
