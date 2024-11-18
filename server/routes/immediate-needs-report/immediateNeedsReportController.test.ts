@@ -1086,6 +1086,7 @@ describe('getView', () => {
       .expect(res => {
         const { document } = new JSDOM(res.text).window
         const checkboxes = document.querySelectorAll("input[type='checkbox']")
+        expect(document.getElementById('WHAT_ID_DOCUMENTS')).toBeTruthy()
         expect(checkboxes.length).toBe(18)
         const ids = Array.from(checkboxes.values()).map(checkbox => checkbox.id)
         expect(ids).toEqual([
