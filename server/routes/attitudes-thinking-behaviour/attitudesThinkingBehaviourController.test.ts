@@ -42,14 +42,14 @@ describe('getView', () => {
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
 
     await request(app)
-      .get('/attitudes-thinking-and-behaviour?prisonerNumber=123')
+      .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'ATTITUDES_THINKING_AND_BEHAVIOUR',
       '0',
       '10',
@@ -57,7 +57,7 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -67,14 +67,14 @@ describe('getView', () => {
     const getCaseNotesCreatorsSpy = stubRpServiceNoData(rpService, 'getCaseNotesCreators')
 
     await request(app)
-      .get('/attitudes-thinking-and-behaviour?prisonerNumber=123')
+      .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'ATTITUDES_THINKING_AND_BEHAVIOUR',
       '0',
       '10',
@@ -82,7 +82,7 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -93,15 +93,15 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/attitudes-thinking-and-behaviour?prisonerNumber=123&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
+        '/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'ATTITUDES_THINKING_AND_BEHAVIOUR',
       '2',
       '20',
@@ -109,7 +109,7 @@ describe('getView', () => {
       'occurenceDateTime,ASC',
       '30',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
   })
 
   it('Error case - missing prisonerNumber', async () => {
@@ -122,7 +122,7 @@ describe('getView', () => {
   it('Error case - error thrown from rpService', async () => {
     stubRpServiceThrowError(rpService, 'getCrsReferrals')
     await request(app)
-      .get('/attitudes-thinking-and-behaviour?prisonerNumber=123')
+      .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })

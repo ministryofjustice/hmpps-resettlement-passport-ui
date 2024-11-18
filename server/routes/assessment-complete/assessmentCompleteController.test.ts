@@ -39,7 +39,7 @@ afterEach(() => {
 describe('getView', () => {
   it('Happy path', async () => {
     await request(app)
-      .get('/assessment-complete?prisonerNumber=123&type=BCST2')
+      .get('/assessment-complete?prisonerNumber=A1234DY&type=BCST2')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
@@ -53,14 +53,14 @@ describe('getView', () => {
 
   it('Error case - missing type', async () => {
     await request(app)
-      .get('/assessment-complete?prisonerNumber=123')
+      .get('/assessment-complete?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - incorrect type', async () => {
     await request(app)
-      .get('/assessment-complete?prisonerNumber=123&type=NOT_A_TYPE')
+      .get('/assessment-complete?prisonerNumber=A1234DY&type=NOT_A_TYPE')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
@@ -70,7 +70,7 @@ describe('postView', () => {
   it('Happy path - should redirect back to assessment complete page', async () => {
     jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValueOnce({
       personalDetails: {
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         prisonId: 'MDI',
         facialImageId: '456',
         firstName: 'John',
@@ -111,7 +111,7 @@ describe('postView', () => {
     } as PrisonerData)
     jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValueOnce({
       personalDetails: {
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         prisonId: 'MDI',
         facialImageId: '456',
         firstName: 'John',
@@ -158,54 +158,54 @@ describe('postView', () => {
     await request(app)
       .post('/assessment-complete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         assessmentType: 'BCST2',
       })
       .expect(302)
       .expect(res =>
-        expect(res.text).toEqual('Found. Redirecting to /assessment-complete?prisonerNumber=123&type=BCST2'),
+        expect(res.text).toEqual('Found. Redirecting to /assessment-complete?prisonerNumber=A1234DY&type=BCST2'),
       )
-    expect(submitAssessmentSpy).toHaveBeenCalledWith('123', 'BCST2')
+    expect(submitAssessmentSpy).toHaveBeenCalledWith('A1234DY', 'BCST2')
     expect(onCompleteSpy).toHaveBeenNthCalledWith(1, {
       assessmentType: 'BCST2',
       pathway: 'ACCOMMODATION',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
     })
     expect(onCompleteSpy).toHaveBeenNthCalledWith(2, {
       assessmentType: 'BCST2',
       pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
     })
     expect(onCompleteSpy).toHaveBeenNthCalledWith(3, {
       assessmentType: 'BCST2',
       pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
     })
     expect(onCompleteSpy).toHaveBeenNthCalledWith(4, {
       assessmentType: 'BCST2',
       pathway: 'DRUGS_AND_ALCOHOL',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
     })
     expect(onCompleteSpy).toHaveBeenNthCalledWith(5, {
       assessmentType: 'BCST2',
       pathway: 'EDUCATION_SKILLS_AND_WORK',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
     })
     expect(onCompleteSpy).toHaveBeenNthCalledWith(6, {
       assessmentType: 'BCST2',
       pathway: 'FINANCE_AND_ID',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
     })
     expect(onCompleteSpy).toHaveBeenNthCalledWith(7, {
       assessmentType: 'BCST2',
       pathway: 'HEALTH',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
     })
     Object.entries(PATHWAY_DICTIONARY).forEach(([pathway]) => {
@@ -215,7 +215,7 @@ describe('postView', () => {
           newStatus: 'SUPPORT_REQUIRED',
           oldStatus: 'IN_PROGRESS',
           pathway,
-          prisonerId: '123',
+          prisonerId: 'A1234DY',
           sessionId: 'sessionId',
           username: 'user1',
         },
@@ -246,7 +246,7 @@ describe('postView', () => {
     await request(app)
       .post('/assessment-complete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -261,7 +261,7 @@ describe('postView', () => {
     await request(app)
       .post('/assessment-complete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         assessmentType: 'NOT_A_TYPE',
       })
       .expect(500)
@@ -278,12 +278,12 @@ describe('postView', () => {
     await request(app)
       .post('/assessment-complete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         assessmentType: 'BCST2',
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(submitAssessmentSpy).toHaveBeenCalledWith('123', 'BCST2')
+    expect(submitAssessmentSpy).toHaveBeenCalledWith('A1234DY', 'BCST2')
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
     expect(flushSpy).toHaveBeenCalledTimes(0)
   })
@@ -298,12 +298,12 @@ describe('postView', () => {
     await request(app)
       .post('/assessment-complete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         assessmentType: 'BCST2',
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(submitAssessmentSpy).toHaveBeenCalledWith('123', 'BCST2')
+    expect(submitAssessmentSpy).toHaveBeenCalledWith('A1234DY', 'BCST2')
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
     expect(flushSpy).toHaveBeenCalledTimes(0)
   })

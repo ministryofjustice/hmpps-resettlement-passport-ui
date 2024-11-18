@@ -143,7 +143,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -151,9 +151,9 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -165,7 +165,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -203,7 +203,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -211,7 +211,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -219,7 +219,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -227,7 +227,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -235,7 +235,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -243,7 +243,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -251,7 +251,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -259,7 +259,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -418,7 +418,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
                         
                         <input hidden name="idType" value="Birth certificate"/>
                         <input type="hidden" name="applicationId" value="1"/>
-                        <input type="hidden" name="prisonerNumber" value="123">
+                        <input type="hidden" name="prisonerNumber" value="A1234DY">
                         <button class="govuk-button" type="submit">Submit</button>
                     </form>
 
@@ -596,7 +596,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -604,9 +604,9 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -618,7 +618,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -656,7 +656,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -664,7 +664,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -672,7 +672,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -680,7 +680,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -688,7 +688,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -696,7 +696,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -704,7 +704,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -712,7 +712,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -871,7 +871,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
                         
                         <input hidden name="idType" value="Birth certificate"/>
                         <input type="hidden" name="applicationId" value="1"/>
-                        <input type="hidden" name="prisonerNumber" value="123">
+                        <input type="hidden" name="prisonerNumber" value="A1234DY">
                         <button class="govuk-button" type="submit">Submit</button>
                     </form>
 
@@ -1049,7 +1049,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -1057,9 +1057,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -1071,7 +1071,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -1109,7 +1109,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -1117,7 +1117,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -1125,7 +1125,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -1133,7 +1133,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -1141,7 +1141,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -1149,7 +1149,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -1157,7 +1157,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -1165,7 +1165,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -1791,7 +1791,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <input type="hidden" name="applicationSubmittedMonth" value="12">
         <input type="hidden" name="applicationSubmittedDay" value="12">
         <input type="hidden" name="idType" value="Birth certificate">
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input hidden name="existingIdTypes" value=""/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
@@ -1965,7 +1965,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -1973,9 +1973,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -1987,7 +1987,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -2025,7 +2025,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -2033,7 +2033,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -2041,7 +2041,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -2049,7 +2049,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -2057,7 +2057,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -2065,7 +2065,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -2073,7 +2073,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -2081,7 +2081,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -2707,7 +2707,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <input type="hidden" name="applicationSubmittedMonth" value="12">
         <input type="hidden" name="applicationSubmittedDay" value="12">
         <input type="hidden" name="idType" value="Birth certificate">
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input hidden name="existingIdTypes" value=""/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
@@ -2881,7 +2881,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -2889,9 +2889,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -2903,7 +2903,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -2941,7 +2941,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -2949,7 +2949,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -2957,7 +2957,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -2965,7 +2965,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -2973,7 +2973,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -2981,7 +2981,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -2989,7 +2989,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -2997,7 +2997,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -3625,7 +3625,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <input type="hidden" name="applicationSubmittedMonth" value="12">
         <input type="hidden" name="applicationSubmittedDay" value="12">
         <input type="hidden" name="idType" value="Birth certificate">
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input hidden name="existingIdTypes" value=""/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
@@ -3799,7 +3799,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -3807,9 +3807,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -3821,7 +3821,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -3859,7 +3859,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -3867,7 +3867,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -3875,7 +3875,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -3883,7 +3883,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -3891,7 +3891,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -3899,7 +3899,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -3907,7 +3907,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -3915,7 +3915,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -4541,7 +4541,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <input type="hidden" name="applicationSubmittedMonth" value="12">
         <input type="hidden" name="applicationSubmittedDay" value="12">
         <input type="hidden" name="idType" value="Birth certificate">
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input hidden name="existingIdTypes" value=""/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
@@ -4715,7 +4715,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -4723,9 +4723,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -4737,7 +4737,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -4775,7 +4775,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -4783,7 +4783,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -4791,7 +4791,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -4799,7 +4799,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -4807,7 +4807,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -4815,7 +4815,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -4823,7 +4823,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -4831,7 +4831,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -5455,7 +5455,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <input type="hidden" name="applicationSubmittedMonth" value="12">
         <input type="hidden" name="applicationSubmittedDay" value="12">
         <input type="hidden" name="idType" value="Birth certificate">
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input hidden name="existingIdTypes" value=""/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
@@ -5629,7 +5629,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -5637,9 +5637,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -5651,7 +5651,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -5689,7 +5689,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -5697,7 +5697,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -5705,7 +5705,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -5713,7 +5713,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -5721,7 +5721,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -5729,7 +5729,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -5737,7 +5737,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -5745,7 +5745,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -6369,7 +6369,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <input type="hidden" name="applicationSubmittedMonth" value="12">
         <input type="hidden" name="applicationSubmittedDay" value="12">
         <input type="hidden" name="idType" value="Birth certificate">
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input hidden name="existingIdTypes" value=""/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
@@ -6543,7 +6543,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -6551,9 +6551,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -6565,7 +6565,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -6603,7 +6603,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -6611,7 +6611,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -6619,7 +6619,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -6627,7 +6627,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -6635,7 +6635,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -6643,7 +6643,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -6651,7 +6651,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -6659,7 +6659,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -6773,7 +6773,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         
       </dl>
       <input type="hidden" name="_csrf" value=""/>
-      <input type="hidden" name="prisonerNumber" value="123"/>
+      <input type="hidden" name="prisonerNumber" value="A1234DY"/>
       <input hidden name="isPriorityApplication" value="false"/>
       <input hidden name="costOfApplication" value="100"/>
       <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
@@ -6950,7 +6950,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -6958,9 +6958,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -6972,7 +6972,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -7010,7 +7010,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -7018,7 +7018,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -7026,7 +7026,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -7034,7 +7034,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -7042,7 +7042,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -7050,7 +7050,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -7058,7 +7058,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -7066,7 +7066,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -7180,7 +7180,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         
       </dl>
       <input type="hidden" name="_csrf" value=""/>
-      <input type="hidden" name="prisonerNumber" value="123"/>
+      <input type="hidden" name="prisonerNumber" value="A1234DY"/>
       <input hidden name="isPriorityApplication" value="true"/>
       <input hidden name="costOfApplication" value="100"/>
       <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
@@ -7357,7 +7357,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -7365,9 +7365,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -7379,7 +7379,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -7417,7 +7417,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -7425,7 +7425,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -7433,7 +7433,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -7441,7 +7441,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -7449,7 +7449,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -7457,7 +7457,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -7465,7 +7465,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -7473,7 +7473,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -7587,7 +7587,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         
       </dl>
       <input type="hidden" name="_csrf" value=""/>
-      <input type="hidden" name="prisonerNumber" value="123"/>
+      <input type="hidden" name="prisonerNumber" value="A1234DY"/>
       <input hidden name="isPriorityApplication" value="false"/>
       <input hidden name="costOfApplication" value="100"/>
       <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
@@ -7764,7 +7764,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -7772,9 +7772,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -7786,7 +7786,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -7824,7 +7824,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -7832,7 +7832,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -7840,7 +7840,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -7848,7 +7848,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -7856,7 +7856,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -7864,7 +7864,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -7872,7 +7872,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -7880,7 +7880,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -7994,7 +7994,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
         
       </dl>
       <input type="hidden" name="_csrf" value=""/>
-      <input type="hidden" name="prisonerNumber" value="123"/>
+      <input type="hidden" name="prisonerNumber" value="A1234DY"/>
       <input hidden name="isPriorityApplication" value="false"/>
       <input hidden name="costOfApplication" value="100"/>
       <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
@@ -8171,7 +8171,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -8179,9 +8179,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -8193,7 +8193,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -8231,7 +8231,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -8239,7 +8239,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -8247,7 +8247,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -8255,7 +8255,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -8263,7 +8263,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -8271,7 +8271,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -8279,7 +8279,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -8287,7 +8287,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -8911,7 +8911,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
         <input type="hidden" name="applicationSubmittedMonth" value="12">
         <input type="hidden" name="applicationSubmittedDay" value="12">
         <input type="hidden" name="idType" value="Birth certificate">
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input hidden name="existingIdTypes" value=""/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
@@ -9085,7 +9085,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -9093,9 +9093,9 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -9107,7 +9107,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -9145,7 +9145,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -9153,7 +9153,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -9161,7 +9161,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -9169,7 +9169,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -9177,7 +9177,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -9185,7 +9185,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -9193,7 +9193,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -9201,7 +9201,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -9825,7 +9825,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
         <input type="hidden" name="applicationSubmittedMonth" value="12">
         <input type="hidden" name="applicationSubmittedDay" value="12">
         <input type="hidden" name="idType" value="Birth certificate">
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input hidden name="existingIdTypes" value=""/>
         <button class="govuk-button" type="submit">Submit</button>
       </form>
@@ -11025,7 +11025,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -11033,9 +11033,9 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -11047,7 +11047,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -11085,7 +11085,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -11093,7 +11093,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -11101,7 +11101,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -11109,7 +11109,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -11117,7 +11117,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -11125,7 +11125,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -11133,7 +11133,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -11141,7 +11141,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -11273,7 +11273,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
                         
                         <input hidden name="idType" value="Birth certificate"/>
                         <input type="hidden" name="applicationId" value="1"/>
-                        <input type="hidden" name="prisonerNumber" value="123">
+                        <input type="hidden" name="prisonerNumber" value="A1234DY">
                         <button class="govuk-button" type="submit">Submit</button>
                     </form>
 
@@ -11451,7 +11451,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -11459,9 +11459,9 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -11473,7 +11473,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -11511,7 +11511,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -11519,7 +11519,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -11527,7 +11527,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -11535,7 +11535,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -11543,7 +11543,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -11551,7 +11551,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -11559,7 +11559,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -11567,7 +11567,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -11644,7 +11644,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="prisonerNumber" value="123">
+                <input type="hidden" name="prisonerNumber" value="A1234DY">
                 <input hidden name="isPriorityApplication" value=""/>
                 <input hidden name="costOfApplication" value=""/>
                 <input hidden name="driversLicenceApplicationMadeAt" value=""/>
@@ -11684,11 +11684,182 @@ exports[`getAddAnIdView Get add ID application 1`] = `
 "
 `;
 
+exports[`getAddAnIdView Get add ID application invalid prisoner number with special characters, no api call 1`] = `
+"<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+  <head>
+    <meta charset="utf-8">
+    <title>Prepare someone for release - Error
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0c0c">
+
+    
+      <link rel="icon" sizes="48x48" href="/assets/images/favicon.ico">
+      <link rel="icon" sizes="any" href="/assets/images/favicon.svg" type="image/svg+xml">
+      <link rel="mask-icon" href="/assets/images/govuk-icon-mask.svg" color="#0b0c0c">
+      <link rel="apple-touch-icon" href="/assets/images/govuk-icon-180.png">
+      <link rel="manifest" href="/assets/manifest.json">
+    
+
+    
+  <link href="/assets/stylesheets/application.css?" rel="stylesheet" />
+  <script src="/assets/js/jquery.min.js"></script>
+  
+  <!--<![endif]-->
+  
+  
+  <script src="/assets/analytics.js" nonce=""></script>
+  <meta name="csrf-token" content="">
+
+    
+  </head>
+  <body class="govuk-template__body">
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+    
+
+    
+      <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+
+    
+
+    
+  
+    
+    
+<header class="fallback-dps-header" role="banner">
+  <div class="fallback-dps-header__container">
+    <div class="fallback-dps-header__title">
+      <a class="fallback-dps-header__link fallback-dps-header__link--no-underline fallback-dps-header__title__service-name" href="#">
+        <svg role="presentation" focusable="false" class="fallback-dps-header__logo" xmlns="http://www.w3.org/2000/svg" width="41" height="30" viewBox="0 0 41 30">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M7.54677 9.20065C8.64351 9.65301 9.88802 9.13584 10.3347 8.05183C10.7839 6.97073 10.27 5.71374 9.17342 5.26352C8.09836 4.82212 6.84843 5.34938 6.40124 6.4349C5.95404 7.515 6.47121 8.76014 7.54677 9.20065Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M2.71865 12.0298C3.81564 12.4821 5.0599 11.965 5.50659 10.881C5.9558 9.79984 5.44191 8.54286 4.34529 8.09264C3.27023 7.65124 2.02031 8.17837 1.57311 9.26402C1.12592 10.3441 1.64308 11.5891 2.71865 12.0298Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M1.3065 17.397C2.4035 17.8494 3.648 17.3322 4.09469 16.2481C4.54391 15.1669 4.02977 13.91 2.9334 13.4599C1.85834 13.0183 0.608415 13.5457 0.160968 14.6311C-0.286227 15.7112 0.231192 16.9565 1.3065 17.397Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12.9335 10.9018C14.0302 11.3542 15.2747 10.837 15.7214 9.75301C16.1706 8.6719 15.6568 7.41491 14.5601 6.96469C13.4851 6.52329 12.2351 7.05055 11.788 8.13607C11.3408 9.21617 11.8579 10.4613 12.9335 10.9018Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M32.4543 9.20065C31.3573 9.65301 30.1131 9.13584 29.6661 8.05183C29.2172 6.97073 29.7308 5.71374 30.8274 5.26352C31.9027 4.82212 33.1527 5.34938 33.5999 6.4349C34.0471 7.515 33.5299 8.76014 32.4543 9.20065Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M37.2805 12.0298C36.1833 12.4821 34.939 11.965 34.4923 10.881C34.0433 9.79984 34.557 8.54286 35.6536 8.09264C36.7289 7.65124 37.9788 8.17837 38.426 9.26402C38.8732 10.3441 38.3558 11.5891 37.2805 12.0298Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M38.6944 17.397C37.5977 17.8494 36.3532 17.3322 35.9065 16.2481C35.4573 15.1669 35.9712 13.91 37.0678 13.4599C38.1428 13.0183 39.3928 13.5457 39.84 14.6311C40.2874 15.7112 39.77 16.9565 38.6944 17.397Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M27.0657 10.9018C25.9687 11.3542 24.7244 10.837 24.2775 9.75301C23.8285 8.6719 24.3421 7.41491 25.4388 6.96469C26.5141 6.52329 27.764 7.05055 28.2112 8.13607C28.6584 9.21617 28.1412 10.4613 27.0657 10.9018Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M21.1246 5.39912L21.1311 5.39294L23.8259 6.80828V2.83635L21.1342 3.68851L21.1266 3.68044C21.0512 3.58147 20.9639 3.49284 20.8653 3.41656L20.858 3.40899L21.9407 0L19.9961 0.000252154L18.0507 0L19.1337 3.40899L19.1263 3.41656C19.0281 3.49284 18.9402 3.58147 18.8653 3.68044L18.8573 3.68851L16.166 2.83635V6.80828L18.8609 5.39294L18.8673 5.39912C18.9471 5.50351 19.0407 5.5963 19.1458 5.67498L17.5981 10.344C17.5962 10.3498 17.5942 10.3556 17.5925 10.3611L17.5908 10.366L17.5913 10.3666C17.5193 10.5997 17.4807 10.847 17.4807 11.1036C17.4807 12.3669 18.4127 13.4095 19.6264 13.5887C19.6445 13.5915 19.6621 13.5946 19.6804 13.5968C19.7838 13.61 19.8884 13.6188 19.9956 13.6188H19.9961H19.9964C20.1031 13.6188 20.2079 13.61 20.3116 13.5968C20.3295 13.5946 20.3472 13.5915 20.3655 13.5887C21.5788 13.4095 22.5112 12.3669 22.5112 11.1036C22.5112 10.847 22.4721 10.5997 22.4006 10.3666L22.4009 10.366L22.3994 10.3611C22.3975 10.3556 22.3955 10.3498 22.3935 10.344L20.8461 5.67498C20.951 5.5963 21.0448 5.50351 21.1246 5.39912Z"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M19.9961 28.2469C25.1126 28.2469 29.9557 28.5936 34.2707 29.2111C35.4958 24.0612 36.9865 21.1103 38.5258 19.0092L35.6272 17.978C35.9156 19.4496 35.9616 20.1346 35.6388 21.0806C35.1608 20.6133 34.7078 19.7539 34.3542 18.4405L32.95 23.1175C33.8045 22.529 34.4635 22.1489 35.2174 22.1306C33.8799 25.0107 32.2103 25.7519 31.1284 25.552C29.8069 25.3094 29.1998 24.1313 29.4046 23.1324C29.7085 21.7159 31.1616 21.3468 31.8404 22.994C33.1384 20.3461 30.9362 19.5212 29.5189 20.3045C31.6957 18.1333 31.9448 16.2036 30.1877 13.8682C27.7395 15.7394 27.7109 17.5926 28.8127 20.1999C27.383 18.5638 25.1586 19.4422 25.9621 22.0859C26.9932 20.4897 28.3578 21.4937 28.1436 23.0095C27.9627 24.3308 26.2183 25.3978 24.0464 25.2087C20.9338 24.9265 20.7484 22.7785 20.6709 21.0011C21.4362 20.8593 22.814 21.5684 23.9887 23.2183L24.4217 18.2575C23.1434 19.5894 21.9821 19.8421 20.6921 19.8829C21.1215 18.5433 23.0951 16.3481 23.0951 16.3481L20.2276 16.3478H20.2261H20.2248L16.9033 16.3481C16.9033 16.3481 18.877 18.5433 19.3061 19.8829C18.0163 19.8421 16.8551 19.5894 15.5765 18.2575L16.0097 23.2183C17.1847 21.5684 18.5623 20.8593 19.3276 21.0011C19.2503 22.7785 19.0648 24.9265 15.9521 25.2087C13.7802 25.3978 12.036 24.3308 11.8548 23.0095C11.6406 21.4937 13.0053 20.4897 14.0365 22.0859C14.8401 19.4422 12.6152 18.5638 11.186 20.1999C12.2877 17.5926 12.2587 15.7394 9.81076 13.8682C8.0535 16.2036 8.3025 18.1333 10.4793 20.3045C9.06211 19.5212 6.86005 20.3461 8.15814 22.994C8.83681 21.3468 10.2902 21.7159 10.5941 23.1324C10.7989 24.1313 10.1911 25.3094 8.87035 25.552C7.78836 25.7519 6.11859 25.0107 4.78117 22.1306C5.53523 22.1489 6.19361 22.529 7.04866 23.1175L5.64454 18.4405C5.29039 19.7539 4.8379 20.6133 4.35969 21.0806C4.03656 20.1346 4.08283 19.4496 4.37091 17.978L1.47266 19.0092C3.01218 21.11 4.50241 24.0607 5.72725 29.21C10.041 28.5931 14.8817 28.2469 19.9961 28.2469Z"/>
+        </svg>
+        Digital Prison Services
+      </a>
+
+      
+    </div>
+
+    <nav aria-label="Account navigation">
+      <ul class="fallback-dps-header__navigation">
+        
+          <li class="fallback-dps-header__navigation__item">
+            <span data-qa=header-user-name>F. Last</span>
+          </li>
+        
+
+        <li class="fallback-dps-header__navigation__item">
+          <a data-qa="signOut" class="fallback-dps-header__link fallback-dps-header__link--no-underline fallback-dps-header__sign-out" href="/sign-out">Sign out</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  
+
+  <div class="govuk-width-container">
+    
+<div class="govuk-phase-banner">
+  <p class="govuk-phase-banner__content">
+    <strong class="govuk-tag govuk-phase-banner__content__tag">
+      BETA
+    </strong>
+    <span class="govuk-phase-banner__text">
+      This is a new service – your <a class="govuk-link"
+                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+    </span>
+  </p>
+</div>
+
+    
+      
+    
+    
+      
+    
+
+    
+  
+  
+
+  
+<nav class="govuk-breadcrumbs govuk-!-display-none-print govuk-breadcrumbs--collapse-on-mobile" aria-label="Breadcrumb">
+  <ol class="govuk-breadcrumbs__list">
+
+  
+    <li class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" href="#">Digital Prison Services</a>
+    </li>
+  
+
+  </ol>
+</nav>
+
+
+
+    <br />
+    
+      <span class="govuk-caption-xl">Prepare someone for release</span>
+      <h1 class="govuk-heading-xl" data-qa="page-heading">No data found for prisoner</h1>
+    
+
+    
+    
+
+
+
+  </div>
+
+
+    
+      <div class="govuk-width-container">
+        
+        <main class="govuk-main-wrapper govuk-body" id="main-content">
+          
+  <h2></h2>
+  <pre></pre>
+  <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
+
+        </main>
+      </div>
+    
+
+    
+  
+    
+    <footer class="govuk-footer govuk-!-display-none-print"></footer>
+
+  
+
+
+    
+  
+  
+  <script type="module" src="/assets/govukFrontendInit.js"></script>
+  <script src="/assets/moj/all.js"></script>
+  <script src="/assets/mojFrontendInit.js"></script>
+
+
+  </body>
+</html>
+"
+`;
+
 exports[`getAddAnIdView Happy path - post ID submit biometric residence permit 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
 
-exports[`getAddAnIdView Happy path - post ID submit birth certificate - no gro, born overseas 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID submit birth certificate - no gro, born overseas 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
-exports[`getAddAnIdView Happy path - post ID submit birth certificate 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID submit birth certificate 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
 exports[`getAddAnIdView Happy path - post ID submit deed poll certificate 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
 
@@ -11698,21 +11869,21 @@ exports[`getAddAnIdView Happy path - post ID submit driving license 1`] = `"Foun
 
 exports[`getAddAnIdView Happy path - post ID submit national insurance number letter 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=789#id"`;
 
-exports[`getAddAnIdView Happy path - post ID update biometric residence permit - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID update biometric residence permit - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
-exports[`getAddAnIdView Happy path - post ID update birth certificate - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID update birth certificate - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
-exports[`getAddAnIdView Happy path - post ID update birth certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID update birth certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
-exports[`getAddAnIdView Happy path - post ID update deed poll certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID update deed poll certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
-exports[`getAddAnIdView Happy path - post ID update divorce decree absolute certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID update divorce decree absolute certificate - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
-exports[`getAddAnIdView Happy path - post ID update driving license - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID update driving license - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
-exports[`getAddAnIdView Happy path - post ID update marriage certificate - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID update marriage certificate - accepted 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
-exports[`getAddAnIdView Happy path - post ID update national Insurance Number letter - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=123#id"`;
+exports[`getAddAnIdView Happy path - post ID update national Insurance Number letter - rejected 1`] = `"Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id"`;
 
 exports[`getAddAnIdView Reject ID application status - birth certificate, no refund 1`] = `
 "<!DOCTYPE html>
@@ -11857,7 +12028,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -11865,9 +12036,9 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -11879,7 +12050,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -11917,7 +12088,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -11925,7 +12096,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -11933,7 +12104,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -11941,7 +12112,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -11949,7 +12120,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -11957,7 +12128,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -11965,7 +12136,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -11973,7 +12144,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -12107,7 +12278,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
                         
                         <input hidden name="idType" value="Birth certificate"/>
                         <input type="hidden" name="applicationId" value="1"/>
-                        <input type="hidden" name="prisonerNumber" value="123">
+                        <input type="hidden" name="prisonerNumber" value="A1234DY">
                         <button class="govuk-button" type="submit">Submit</button>
                     </form>
 
@@ -12285,7 +12456,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -12293,9 +12464,9 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -12307,7 +12478,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -12345,7 +12516,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -12353,7 +12524,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -12361,7 +12532,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -12369,7 +12540,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -12377,7 +12548,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -12385,7 +12556,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -12393,7 +12564,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -12401,7 +12572,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -12463,7 +12634,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
           
         </dl>
         <input type="hidden" name="_csrf" value=""/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <input type="hidden" name="applicationId" value="1"/>
         <input hidden name="idType" value="Birth certificate"/>
         <button class="govuk-button" type="submit">Confirm</button>
@@ -12638,7 +12809,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -12646,9 +12817,9 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -12660,7 +12831,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -12698,7 +12869,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -12706,7 +12877,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -12714,7 +12885,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -12722,7 +12893,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -12730,7 +12901,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -12738,7 +12909,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -12746,7 +12917,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -12754,7 +12925,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -12854,7 +13025,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="prisonerNumber" value="123">
+                <input type="hidden" name="prisonerNumber" value="A1234DY">
                 <input hidden name="isPriorityApplication" value=""/>
                 <input hidden name="costOfApplication" value=""/>
                 <input hidden name="driversLicenceApplicationMadeAt" value=""/>
@@ -13037,7 +13208,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -13045,9 +13216,9 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -13059,7 +13230,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -13097,7 +13268,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -13105,7 +13276,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -13113,7 +13284,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -13121,7 +13292,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -13129,7 +13300,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -13137,7 +13308,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -13145,7 +13316,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -13153,7 +13324,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -13257,7 +13428,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="prisonerNumber" value="123">
+                <input type="hidden" name="prisonerNumber" value="A1234DY">
                 <input hidden name="isPriorityApplication" value=""/>
                 <input hidden name="costOfApplication" value=""/>
                 <input hidden name="driversLicenceApplicationMadeAt" value=""/>
@@ -13440,7 +13611,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -13448,9 +13619,9 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -13462,7 +13633,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -13500,7 +13671,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -13508,7 +13679,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -13516,7 +13687,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -13524,7 +13695,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -13532,7 +13703,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -13540,7 +13711,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -13548,7 +13719,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -13556,7 +13727,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -13644,7 +13815,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
                         </div>
                     </div>
                 </div>
-                <input type="hidden" name="prisonerNumber" value="123">
+                <input type="hidden" name="prisonerNumber" value="A1234DY">
                 <input hidden name="isPriorityApplication" value=""/>
                 <input hidden name="costOfApplication" value=""/>
                 <input hidden name="driversLicenceApplicationMadeAt" value=""/>

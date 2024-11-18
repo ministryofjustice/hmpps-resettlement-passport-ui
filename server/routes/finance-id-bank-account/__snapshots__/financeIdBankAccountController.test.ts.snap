@@ -143,7 +143,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -151,9 +151,9 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -165,7 +165,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -203,7 +203,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -211,7 +211,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -219,7 +219,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -227,7 +227,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -235,7 +235,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -243,7 +243,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -251,7 +251,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -259,7 +259,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -354,7 +354,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             </div>
           </div>
         
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="confirmationType" value="addAccount">
         <input type="hidden" name="applicationType" value="">
@@ -874,7 +874,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -882,9 +882,9 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -896,7 +896,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -934,7 +934,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -942,7 +942,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -950,7 +950,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -958,7 +958,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -966,7 +966,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -974,7 +974,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -982,7 +982,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -990,7 +990,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -1085,7 +1085,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             </div>
           </div>
         
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="confirmationType" value="addAccount">
         <input type="hidden" name="applicationType" value="">
@@ -1263,7 +1263,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -1271,9 +1271,9 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -1285,7 +1285,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -1323,7 +1323,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -1331,7 +1331,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -1339,7 +1339,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -1347,7 +1347,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -1355,7 +1355,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -1363,7 +1363,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -1371,7 +1371,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -1379,7 +1379,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -1485,7 +1485,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             </div>
           </div>
         
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="confirmationType" value="addAccount">
         <input type="hidden" name="applicationType" value="">
@@ -1834,7 +1834,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -1842,9 +1842,9 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -1856,7 +1856,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -1894,7 +1894,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -1902,7 +1902,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -1910,7 +1910,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -1918,7 +1918,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -1926,7 +1926,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -1934,7 +1934,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -1942,7 +1942,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -1950,7 +1950,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -2072,7 +2072,7 @@ exports[`getConfirmAddABankAccountView only prisoner number, no day/month/year/b
             </div>
           </div>
         
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="confirmationType" value="addAccount">
         <input type="hidden" name="applicationType" value="">
@@ -2250,7 +2250,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -2258,9 +2258,9 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -2272,7 +2272,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -2310,7 +2310,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -2318,7 +2318,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -2326,7 +2326,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -2334,7 +2334,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -2342,7 +2342,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -2350,7 +2350,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -2358,7 +2358,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -2366,7 +2366,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -2461,8 +2461,8 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             </div>
           </div>
         
-        <input type="hidden" name="prisonerNumber" value="123">
-        <input type="hidden" name="applicationId" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
+        <input type="hidden" name="applicationId" value="A1234DY"/>
         <input type="hidden" name="confirmationType" value="addAccount">
         <input type="hidden" name="applicationType" value="">
         <button class="govuk-button" type="submit">Submit</button>
@@ -2639,7 +2639,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -2647,9 +2647,9 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -2661,7 +2661,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -2699,7 +2699,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -2707,7 +2707,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -2715,7 +2715,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -2723,7 +2723,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -2731,7 +2731,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -2739,7 +2739,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -2747,7 +2747,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -2755,7 +2755,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -2850,7 +2850,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             </div>
           </div>
         
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="confirmationType" value="addAccount">
         <input type="hidden" name="applicationType" value="">
@@ -3028,7 +3028,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -3036,9 +3036,9 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -3050,7 +3050,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -3088,7 +3088,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -3096,7 +3096,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -3104,7 +3104,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -3112,7 +3112,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -3120,7 +3120,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -3128,7 +3128,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -3136,7 +3136,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -3144,7 +3144,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -3239,7 +3239,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             </div>
           </div>
         
-        <input type="hidden" name="prisonerNumber" value="123">
+        <input type="hidden" name="prisonerNumber" value="A1234DY">
         <input type="hidden" name="applicationId" value=""/>
         <input type="hidden" name="confirmationType" value="addAccount">
         <input type="hidden" name="applicationType" value="">
@@ -3759,7 +3759,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -3767,9 +3767,9 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -3781,7 +3781,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -3819,7 +3819,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -3827,7 +3827,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -3835,7 +3835,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -3843,7 +3843,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -3851,7 +3851,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -3859,7 +3859,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -3867,7 +3867,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -3875,7 +3875,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -3925,7 +3925,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
         </dl>
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value=""/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
@@ -4099,7 +4099,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -4107,9 +4107,9 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -4121,7 +4121,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -4159,7 +4159,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -4167,7 +4167,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -4175,7 +4175,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -4183,7 +4183,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -4191,7 +4191,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -4199,7 +4199,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -4207,7 +4207,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -4215,7 +4215,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -4265,7 +4265,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
         </dl>
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value=""/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
@@ -4439,7 +4439,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -4447,9 +4447,9 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -4461,7 +4461,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -4499,7 +4499,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -4507,7 +4507,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -4515,7 +4515,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -4523,7 +4523,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -4531,7 +4531,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -4539,7 +4539,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -4547,7 +4547,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -4555,7 +4555,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -4605,7 +4605,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
         </dl>
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value=""/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
@@ -4779,7 +4779,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -4787,9 +4787,9 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -4801,7 +4801,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -4839,7 +4839,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -4847,7 +4847,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -4855,7 +4855,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -4863,7 +4863,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -4871,7 +4871,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -4879,7 +4879,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -4887,7 +4887,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -4895,7 +4895,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -4945,7 +4945,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
         </dl>
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value=""/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
@@ -5461,7 +5461,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -5469,9 +5469,9 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -5483,7 +5483,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -5521,7 +5521,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -5529,7 +5529,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -5537,7 +5537,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -5545,7 +5545,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -5553,7 +5553,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -5561,7 +5561,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -5569,7 +5569,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -5577,7 +5577,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -5627,7 +5627,7 @@ exports[`postBankAccountUpdateView error - added to personal items blank 1`] = `
         </dl>
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value="1000"/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
@@ -5801,7 +5801,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -5809,9 +5809,9 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -5823,7 +5823,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -5861,7 +5861,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -5869,7 +5869,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -5877,7 +5877,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -5885,7 +5885,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -5893,7 +5893,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -5901,7 +5901,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -5909,7 +5909,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -5917,7 +5917,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -5967,7 +5967,7 @@ exports[`postBankAccountUpdateView error - added to personal items missing 1`] =
         </dl>
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value="1000"/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
@@ -6141,7 +6141,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -6149,9 +6149,9 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -6163,7 +6163,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -6201,7 +6201,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -6209,7 +6209,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -6217,7 +6217,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -6225,7 +6225,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -6233,7 +6233,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -6241,7 +6241,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -6249,7 +6249,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -6257,7 +6257,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -6307,7 +6307,7 @@ exports[`postBankAccountUpdateView error - updated status blank 1`] = `
         </dl>
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value="1000"/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>
@@ -6481,7 +6481,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -6489,9 +6489,9 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -6503,7 +6503,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -6541,7 +6541,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -6549,7 +6549,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -6557,7 +6557,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -6565,7 +6565,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -6573,7 +6573,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -6581,7 +6581,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -6589,7 +6589,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" aria-current=page>
+                 href="/finance-and-id/?prisonerNumber=A1234DY" aria-current=page>
                 Finance and ID
               </a>
             </li>
@@ -6597,7 +6597,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -6647,7 +6647,7 @@ exports[`postBankAccountUpdateView error - updated status missing 1`] = `
         </dl>
         <input type="hidden" name="_csrf" value=""/>
         <input type="hidden" name="applicationId" value="1000"/>
-        <input type="hidden" name="prisonerNumber" value="123"/>
+        <input type="hidden" name="prisonerNumber" value="A1234DY"/>
         <button class="govuk-button" data-prevent-double-click="true" type="submit">Confirm</button>
       </form>
     </div>

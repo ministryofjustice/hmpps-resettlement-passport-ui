@@ -628,7 +628,7 @@ exports[`getView Happy path 1`] = `
             
           </h1>
         </div>
-        <a href="/prisoner-overview/?prisonerNumber=123" class="govuk-link">Return to overview</a>
+        <a href="/prisoner-overview/?prisonerNumber=A1234DY" class="govuk-link">Return to overview</a>
       </div>
     </div>
   </main>

@@ -29,7 +29,7 @@ afterEach(() => {
 describe('getView', () => {
   it('Happy path with default query params', async () => {
     await request(app)
-      .get('/assessment-skip?prisonerNumber=123')
+      .get('/assessment-skip?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
@@ -41,17 +41,17 @@ describe('submitForm', () => {
     const service = {
       whySkipChoice: 'EARLY_RELEASE',
       supportingInfo: 'Some Info',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
     }
     await request(app)
-      .post('/assessment-skip?prisonerNumber=123')
+      .post('/assessment-skip?prisonerNumber=A1234DY')
       .send(service)
       .expect(302)
       .expect(res =>
-        expect(res.headers.location).toEqual('/assessment-task-list?prisonerNumber=123&type=RESETTLEMENT_PLAN'),
+        expect(res.headers.location).toEqual('/assessment-task-list?prisonerNumber=A1234DY&type=RESETTLEMENT_PLAN'),
       )
 
-    expect(postAssessmentSkipSpy).toHaveBeenCalledWith('123', {
+    expect(postAssessmentSkipSpy).toHaveBeenCalledWith('A1234DY', {
       reason: 'EARLY_RELEASE',
       moreInfo: 'Some Info',
     })
@@ -62,10 +62,10 @@ describe('submitForm validation', () => {
   it('Validates  input', async () => {
     const service = {
       supportingInfo: 'Some Info',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
     }
     await request(app)
-      .post('/assessment-skip?prisonerNumber=123')
+      .post('/assessment-skip?prisonerNumber=A1234DY')
       .send(service)
       .expect(302)
       .expect(res => expect(res.headers.location).toContain('validationErrors'))

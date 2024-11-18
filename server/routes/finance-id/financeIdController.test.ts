@@ -46,14 +46,14 @@ describe('getView', () => {
     const getIdSpy = stubFetchId(rpService)
 
     await request(app)
-      .get('/finance-and-id?prisonerNumber=123')
+      .get('/finance-and-id?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'FINANCE_AND_ID',
       '0',
       '10',
@@ -61,9 +61,9 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
-    expect(getFinanceSpy).toHaveBeenCalledWith('123')
-    expect(getIdSpy).toHaveBeenCalledWith('123')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getFinanceSpy).toHaveBeenCalledWith('A1234DY')
+    expect(getIdSpy).toHaveBeenCalledWith('A1234DY')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -75,14 +75,14 @@ describe('getView', () => {
     const getIdSpy = stubRpServiceNoData(rpService, 'fetchId')
 
     await request(app)
-      .get('/finance-and-id?prisonerNumber=123')
+      .get('/finance-and-id?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'FINANCE_AND_ID',
       '0',
       '10',
@@ -90,9 +90,9 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
-    expect(getFinanceSpy).toHaveBeenCalledWith('123')
-    expect(getIdSpy).toHaveBeenCalledWith('123')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getFinanceSpy).toHaveBeenCalledWith('A1234DY')
+    expect(getIdSpy).toHaveBeenCalledWith('A1234DY')
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -105,15 +105,15 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/finance-and-id?prisonerNumber=123&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
+        '/finance-and-id?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'FINANCE_AND_ID',
       '2',
       '20',
@@ -121,9 +121,9 @@ describe('getView', () => {
       'occurenceDateTime,ASC',
       '30',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'FINANCE_AND_ID')
-    expect(getFinanceSpy).toHaveBeenCalledWith('123')
-    expect(getIdSpy).toHaveBeenCalledWith('123')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getFinanceSpy).toHaveBeenCalledWith('A1234DY')
+    expect(getIdSpy).toHaveBeenCalledWith('A1234DY')
   })
 
   it('Error case - missing prisonerNumber', async () => {
@@ -136,7 +136,7 @@ describe('getView', () => {
   it('Error case - error thrown from rpService', async () => {
     stubRpServiceThrowError(rpService, 'getCrsReferrals')
     await request(app)
-      .get('/finance-and-id?prisonerNumber=123')
+      .get('/finance-and-id?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
@@ -148,12 +148,12 @@ describe('postBankAccountDelete', () => {
     await request(app)
       .post('/finance-and-id/bank-account-delete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         financeId: '56',
       })
       .expect(302)
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id?prisonerNumber=123#finance'))
-    expect(deleteFinanceSpy).toHaveBeenCalledWith('123', '56')
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id?prisonerNumber=A1234DY#finance'))
+    expect(deleteFinanceSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 
   it('error case - missing prisonerNumber', async () => {
@@ -170,7 +170,7 @@ describe('postBankAccountDelete', () => {
     await request(app)
       .post('/finance-and-id/bank-account-delete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -181,12 +181,12 @@ describe('postBankAccountDelete', () => {
     await request(app)
       .post('/finance-and-id/bank-account-delete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         financeId: '56',
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(deleteFinanceSpy).toHaveBeenCalledWith('123', '56')
+    expect(deleteFinanceSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 })
 
@@ -196,12 +196,12 @@ describe('postIdDelete', () => {
     await request(app)
       .post('/finance-and-id/id-delete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         idId: '56',
       })
       .expect(302)
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id?prisonerNumber=123#id'))
-    expect(deleteIdSpy).toHaveBeenCalledWith('123', '56')
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id?prisonerNumber=A1234DY#id'))
+    expect(deleteIdSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 
   it('error case - missing prisonerNumber', async () => {
@@ -218,7 +218,7 @@ describe('postIdDelete', () => {
     await request(app)
       .post('/finance-and-id/id-delete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -229,11 +229,11 @@ describe('postIdDelete', () => {
     await request(app)
       .post('/finance-and-id/id-delete')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         idId: '56',
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(deleteIdSpy).toHaveBeenCalledWith('123', '56')
+    expect(deleteIdSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 })
