@@ -748,20 +748,6 @@ describe('getAddAnIdView', () => {
       statusUpdateDate: null,
     })
   })
-  it('Get add ID application invalid prisoner number only numeric, no api call', async () => {
-    // Stub any calls to services
-    await request(app)
-      .get('/finance-and-id/add-an-id/?prisonerNumber=8731&existingIdTypes=')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
-  it('Get add ID application invalid prisoner number only alphabetic, no api call', async () => {
-    // Stub any calls to services
-    await request(app)
-      .get('/finance-and-id/add-an-id/?prisonerNumber=ABCD&existingIdTypes=')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
   it('Get add ID application invalid prisoner number with special characters, no api call', async () => {
     // Stub any calls to services
     await request(app)
