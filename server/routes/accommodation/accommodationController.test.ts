@@ -44,15 +44,15 @@ describe('getView', () => {
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
 
     await request(app)
-      .get('/accommodation?prisonerNumber=123')
+      .get('/accommodation?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
-    expect(getAccommodationSpy).toHaveBeenCalledWith('123')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+    expect(getAccommodationSpy).toHaveBeenCalledWith('A1234DY')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'ACCOMMODATION',
       '0',
       '10',
@@ -60,7 +60,7 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -71,15 +71,15 @@ describe('getView', () => {
     const getCaseNotesCreatorsSpy = stubRpServiceNoData(rpService, 'getCaseNotesCreators')
 
     await request(app)
-      .get('/accommodation?prisonerNumber=123')
+      .get('/accommodation?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
-    expect(getAccommodationSpy).toHaveBeenCalledWith('123')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+    expect(getAccommodationSpy).toHaveBeenCalledWith('A1234DY')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'ACCOMMODATION',
       '0',
       '10',
@@ -87,7 +87,7 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -99,16 +99,16 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/accommodation?prisonerNumber=123&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
+        '/accommodation?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
-    expect(getAccommodationSpy).toHaveBeenCalledWith('123')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+    expect(getAccommodationSpy).toHaveBeenCalledWith('A1234DY')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'ACCOMMODATION',
       '2',
       '20',
@@ -116,7 +116,7 @@ describe('getView', () => {
       'occurenceDateTime,ASC',
       '30',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
   })
 
   it('Error case - missing prisonerNumber', async () => {
@@ -129,7 +129,7 @@ describe('getView', () => {
   it('Error case - error thrown from rpService', async () => {
     stubRpServiceThrowError(rpService, 'getCrsReferrals')
     await request(app)
-      .get('/accommodation?prisonerNumber=123')
+      .get('/accommodation?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })

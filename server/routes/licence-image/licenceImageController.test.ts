@@ -29,7 +29,7 @@ afterEach(() => {
 describe('getView', () => {
   it('Happy path', async () => {
     const rpServiceSpy = jest.spyOn(rpService, 'getLicenceConditionImage').mockResolvedValue(getMockBase64Image())
-    const prisonerNumber = '123'
+    const prisonerNumber = 'A1234DY'
     const licenceId = '1'
     const conditionId = '2'
 
@@ -42,7 +42,7 @@ describe('getView', () => {
   })
   it('Error from RpService', async () => {
     jest.spyOn(rpService, 'getLicenceConditionImage').mockRejectedValue(new Error('Something went wrong'))
-    const prisonerNumber = '123'
+    const prisonerNumber = 'A1234DY'
     const licenceId = '1'
     const conditionId = '2'
 
@@ -55,7 +55,7 @@ describe('getView', () => {
     const error = new Error('not found') as Error & { status?: number }
     error.status = 404
     jest.spyOn(rpService, 'getLicenceConditionImage').mockRejectedValue(error)
-    const prisonerNumber = '123'
+    const prisonerNumber = 'A1234DY'
     const licenceId = '1'
     const conditionId = '2'
 

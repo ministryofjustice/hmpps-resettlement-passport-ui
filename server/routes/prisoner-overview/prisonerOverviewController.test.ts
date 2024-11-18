@@ -58,18 +58,18 @@ describe('prisonerOverview', () => {
     ])
 
     await request(app)
-      .get('/prisoner-overview?prisonerNumber=123')
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerOverviewPageDataSpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       '0',
       '10',
       'occurenceDateTime%2CDESC',
       '0',
       'All',
     )
-    expect(getDocumentMetaSpy).toHaveBeenCalledWith('123')
+    expect(getDocumentMetaSpy).toHaveBeenCalledWith('A1234DY')
   })
 
   it('should render the prisoner overview page with correct query params', async () => {
@@ -84,12 +84,12 @@ describe('prisonerOverview', () => {
     const getPrisonerOverviewPageDataSpy = stubPrisonerOverviewData(rpService)
 
     await request(app)
-      .get('/prisoner-overview?prisonerNumber=123')
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
       .query(queryParams)
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerOverviewPageDataSpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       '1',
       '5',
       'occurenceDateTime%2CDESC',

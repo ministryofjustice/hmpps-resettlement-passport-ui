@@ -127,7 +127,7 @@ exports[`getView Happy path with default query params 1`] = `
 
   
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=123"> Smith, John (123)</a>
+      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=A1234DY"> Smith, John (A1234DY)</a>
     </li>
   
 
@@ -230,7 +230,7 @@ exports[`getView Happy path with default query params 1`] = `
 
             <div class="govuk-button-group">
               <input type="hidden" name="_csrf" value="" />
-              <input type="hidden" name="prisonerNumber" value="123" />
+              <input type="hidden" name="prisonerNumber" value="A1234DY" />
               <button type="submit"
                       class="govuk-button"
                       data-module="govuk-button"
@@ -243,7 +243,7 @@ exports[`getView Happy path with default query params 1`] = `
         </div>
       </div>
       <a
-        href="/assessment-task-list?prisonerNumber=123&type=BCST2&force=true"
+        href="/assessment-task-list?prisonerNumber=A1234DY&type=BCST2&force=true"
         data-qa="completeImmediateNeedsReport"
       >
         Complete immediate needs report

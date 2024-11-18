@@ -39,7 +39,7 @@ describe('getView', () => {
       .spyOn(featureFlags, 'getFeatureFlags')
       .mockResolvedValue([{ feature: 'includePastReleaseDates', enabled: true }])
     await request(app)
-      .get('/?releaseTime=84&searchInput=123')
+      .get('/?releaseTime=84&searchInput=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith(
@@ -48,7 +48,7 @@ describe('getView', () => {
       20,
       'releaseDate',
       'ASC',
-      '123',
+      'A1234DY',
       '84',
       '',
       '',
