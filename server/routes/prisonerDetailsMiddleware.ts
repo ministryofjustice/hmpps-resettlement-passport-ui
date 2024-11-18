@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
+import { ValidationChain } from 'express-validator'
 import { PrisonerData } from '../@types/express'
 import logger from '../../logger'
 import { Services } from '../services'
@@ -69,4 +70,8 @@ export default function prisonerDetailsMiddleware({ rpService }: Services) {
       next(err)
     }
   }
+}
+
+export const validate = (validations: ValidationChain[]) => {
+  return [validations]
 }

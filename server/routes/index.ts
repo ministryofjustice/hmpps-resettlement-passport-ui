@@ -26,12 +26,15 @@ import prisonerOverviewRouter from './prisoner-overview/prisonerOverviewRouter'
 import resetProfileRouter from './reset-profile'
 import statusUpdateRouter from './status-update'
 import financeIdBankAccountRouter from './finance-id-bank-account'
+import { requestSchema } from './request-schema'
+import { validateRequestSchema } from './validate-request'
 
 export default function routes(services: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
-  router.use(prisonerDetailsMiddleware(services))
+  router.use(requestSchema, validateRequestSchema, prisonerDetailsMiddleware(services))
   router.use(configMiddleware())
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)

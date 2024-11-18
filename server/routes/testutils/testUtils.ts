@@ -6,7 +6,7 @@ import { PrisonersList } from '../../data/model/prisoners'
 export function stubPrisonerDetails(rpService: RpService, releaseDate: string = null, dateOfBirth: string = null) {
   jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
     personalDetails: {
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       prisonId: 'MDI',
       facialImageId: '456',
       firstName: 'John',

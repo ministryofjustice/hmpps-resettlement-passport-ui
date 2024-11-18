@@ -61,17 +61,17 @@ describe('completeAssessment', () => {
     jest.spyOn(assessmentStateService, 'onComplete').mockImplementation()
 
     await request(app)
-      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=A1234DY')
       .send({
         assessmentType: 'BCST2',
       })
       .expect(302)
       .expect(res => {
-        expect(res.text).toContain('Found. Redirecting to /assessment-task-list?prisonerNumber=123&type=BCST2')
+        expect(res.text).toContain('Found. Redirecting to /assessment-task-list?prisonerNumber=A1234DY&type=BCST2')
       })
 
     expect(completeAssessmentSpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'DRUGS_AND_ALCOHOL',
       workingCachedAssessment.assessment,
       'BCST2',
@@ -89,7 +89,7 @@ describe('completeAssessment', () => {
     const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
 
     await request(app)
-      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')
+      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=A1234DY')
       .send({
         assessmentType: 'BCST2',
       })
@@ -97,7 +97,7 @@ describe('completeAssessment', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(completeAssessmentSpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'DRUGS_AND_ALCOHOL',
       workingCachedAssessment.assessment,
       'BCST2',
@@ -138,20 +138,20 @@ describe('getFirstPage', () => {
     const fetchNextPageSpy = jest.spyOn(rpService, 'fetchNextPage')
 
     await request(app)
-      .get('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=123')
+      .get('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=A1234DY')
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/page1?prisonerNumber=123&type=BCST2',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/page1?prisonerNumber=A1234DY&type=BCST2',
         )
       })
 
-    expect(getLatestAssessmentVersionSpy).toHaveBeenCalledWith('123', 'BCST2', 'ACCOMMODATION')
-    expect(getAssessmentPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', 'CHECK_ANSWERS', 'BCST2', 2)
+    expect(getLatestAssessmentVersionSpy).toHaveBeenCalledWith('A1234DY', 'BCST2', 'ACCOMMODATION')
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION', 'CHECK_ANSWERS', 'BCST2', 2)
     expect(initialiseCacheSpy).toHaveBeenCalledWith(
       {
         assessmentType: 'BCST2',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         userId: 'user1',
         pathway: 'ACCOMMODATION',
       },
@@ -166,7 +166,7 @@ describe('getView', () => {
   it('should use version 1 when existing assessment in cache has no version', async () => {
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -235,7 +235,7 @@ describe('getView', () => {
   it('get check your answers - v1 of report', async () => {
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -408,7 +408,7 @@ describe('getView', () => {
           pageId: 'PAGE_3',
           questionType: 'ADDRESS',
           answer: {
-            answer: [{ addressLine1: '123 Main Street' }, { postcode: 'AB1 2BC' }],
+            answer: [{ addressLine1: 'A1234DY Main Street' }, { postcode: 'AB1 2BC' }],
             displayText: null,
             '@class': 'MapAnswer',
           },
@@ -491,7 +491,7 @@ describe('getView', () => {
   it('get check your answers - v2 of report', async () => {
     const stateKey = {
       assessmentType: 'RESETTLEMENT_PLAN',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -679,7 +679,7 @@ describe('getView', () => {
           pageId: 'PAGE_3',
           questionType: 'ADDRESS',
           answer: {
-            answer: [{ addressLine1: '123 Main Street' }, { postcode: 'AB1 2BC' }],
+            answer: [{ addressLine1: 'A1234DY Main Street' }, { postcode: 'AB1 2BC' }],
             displayText: null,
             '@class': 'MapAnswer',
           },
@@ -763,7 +763,7 @@ describe('getView', () => {
   it('should render checkboxes with unique ids', async () => {
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'FINANCE_AND_ID',
     }
@@ -1094,7 +1094,7 @@ describe('getView', () => {
   it('optional text appears', async () => {
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -1226,7 +1226,7 @@ describe('startEdit', () => {
   it('should use version 1 when assessment is submitted and db has no version', async () => {
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -1260,7 +1260,7 @@ describe('startEdit', () => {
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/MY_PAGE?prisonerNumber=123&edit=true&type=BCST2&submitted=true',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/MY_PAGE?prisonerNumber=A1234DY&edit=true&type=BCST2&submitted=true',
         )
       })
 
@@ -1282,7 +1282,7 @@ describe('startEdit', () => {
   it('Happy path when assessment is not submitted', async () => {
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
@@ -1296,7 +1296,7 @@ describe('startEdit', () => {
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/MY_PAGE?prisonerNumber=123&edit=true&type=BCST2',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/MY_PAGE?prisonerNumber=A1234DY&edit=true&type=BCST2',
         )
       })
 
@@ -1355,7 +1355,7 @@ describe('saveAnswerAndGetNextPage', () => {
     const fetchNextPageSpy = jest.spyOn(rpService, 'fetchNextPage').mockResolvedValue({ nextPageId: 'PAGE_ID' })
 
     await request(app)
-      .post('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=123')
+      .post('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=A1234DY')
       .send({
         assessmentType: 'BCST2',
         pathway: 'ACCOMMODATION',
@@ -1365,19 +1365,19 @@ describe('saveAnswerAndGetNextPage', () => {
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_ID?prisonerNumber=123&backButton=false&type=BCST2',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_ID?prisonerNumber=A1234DY&backButton=false&type=BCST2',
         )
       })
 
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
-    expect(getAssessmentPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 1)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 1)
     expect(answerSpy).toHaveBeenCalledWith(stateKey, workingAssessment.assessment, apiAssessmentPage)
     expect(getWorkingAssessmentSpy).toHaveBeenCalledWith(stateKey)
     expect(fetchNextPageSpy).toHaveBeenCalledWith(
@@ -1447,7 +1447,7 @@ describe('saveAnswerAndGetNextPage', () => {
     const answerSpy = jest.spyOn(assessmentStateService, 'answer').mockImplementation()
 
     await request(app)
-      .post('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=123')
+      .post('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=A1234DY')
       .send({
         assessmentType: 'BCST2',
         pathway: 'ACCOMMODATION',
@@ -1457,19 +1457,19 @@ describe('saveAnswerAndGetNextPage', () => {
       .expect(302)
       .expect(res => {
         expect(res.text).toContain(
-          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%5D&backButton=false&type=BCST2',
+          'Found. Redirecting to /ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=A1234DY&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%5D&backButton=false&type=BCST2',
         )
       })
 
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
-    expect(getAssessmentPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 2)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 2)
     expect(answerSpy).toHaveBeenCalledWith(stateKey, expectedDataToSubmit, apiAssessmentPage)
     expect(jest.spyOn(assessmentStateService, 'getWorkingAssessment')).toHaveBeenCalledTimes(0)
     expect(jest.spyOn(rpService, 'fetchNextPage')).toHaveBeenCalledTimes(0)
@@ -1558,7 +1558,7 @@ describe('saveAnswerAndGetNextPage', () => {
 
     await request(app)
       .get(
-        '/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=123&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_1%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_SHORT_TEXT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_LONG_TEXT%22%2C%22questionId%22%3A%22QUESTION_3%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_ADDRESS%22%2C%22questionId%22%3A%22QUESTION_4%22%7D%5D&backButton=false&type=BCST2',
+        '/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1?prisonerNumber=A1234DY&validationErrors=%5B%7B%22validationType%22%3A%22MANDATORY_INPUT%22%2C%22questionId%22%3A%22QUESTION_1%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_SHORT_TEXT%22%2C%22questionId%22%3A%22QUESTION_2%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_LONG_TEXT%22%2C%22questionId%22%3A%22QUESTION_3%22%7D%2C%7B%22validationType%22%3A%22MAX_CHARACTER_LIMIT_ADDRESS%22%2C%22questionId%22%3A%22QUESTION_4%22%7D%5D&backButton=false&type=BCST2',
       )
       .expect(200)
       .expect(res => {
@@ -1568,13 +1568,13 @@ describe('saveAnswerAndGetNextPage', () => {
 
     const stateKey = {
       assessmentType: 'BCST2',
-      prisonerNumber: '123',
+      prisonerNumber: 'A1234DY',
       userId: 'user1',
       pathway: 'ACCOMMODATION',
     }
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
-    expect(getAssessmentPageSpy).toHaveBeenCalledWith('123', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 2)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 2)
     expect(checkForConvergenceSpy).toHaveBeenCalledWith(stateKey, {
       pageId: 'PAGE_1',
       questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4'],

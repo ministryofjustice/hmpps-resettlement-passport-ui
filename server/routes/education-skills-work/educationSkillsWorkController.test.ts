@@ -44,14 +44,14 @@ describe('getView', () => {
     const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
 
     await request(app)
-      .get('/education-skills-and-work?prisonerNumber=123')
+      .get('/education-skills-and-work?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'EDUCATION_SKILLS_AND_WORK',
       '0',
       '10',
@@ -59,8 +59,8 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
-    expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('123')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('A1234DY')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -71,14 +71,14 @@ describe('getView', () => {
     const getEducationSkillsWorkSpy = stubRpServiceNoData(rpService, 'getEducationSkillsWork')
 
     await request(app)
-      .get('/education-skills-and-work?prisonerNumber=123')
+      .get('/education-skills-and-work?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'EDUCATION_SKILLS_AND_WORK',
       '0',
       '10',
@@ -86,8 +86,8 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
-    expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('123')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('A1234DY')
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -99,15 +99,15 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/education-skills-and-work?prisonerNumber=123&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
+        '/education-skills-and-work?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'EDUCATION_SKILLS_AND_WORK',
       '2',
       '20',
@@ -115,8 +115,8 @@ describe('getView', () => {
       'occurenceDateTime,ASC',
       '30',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'EDUCATION_SKILLS_AND_WORK')
-    expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('123')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
+    expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('A1234DY')
   })
 
   it('Error case - missing prisonerNumber', async () => {
@@ -129,7 +129,7 @@ describe('getView', () => {
   it('Error case - error thrown from rpService', async () => {
     stubRpServiceThrowError(rpService, 'getCrsReferrals')
     await request(app)
-      .get('/education-skills-and-work?prisonerNumber=123')
+      .get('/education-skills-and-work?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })

@@ -210,14 +210,14 @@ describe('getAddAnIdView', () => {
         haveGro: true,
         isUkNationalBornOverseas: false,
         countryBornIn: '',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         isPriorityApplication: true,
         costOfApplication: '10',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(submitIdSpy).toHaveBeenCalledWith('123', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(submitIdSpy).toHaveBeenCalledWith('A1234DY', {
       applicationSubmittedDate: '2000-10-12T01:00:00',
       caseNumber: undefined,
       costOfApplication: 10,
@@ -241,14 +241,14 @@ describe('getAddAnIdView', () => {
         haveGro: false,
         isUkNationalBornOverseas: true,
         countryBornIn: 'Belgium',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         isPriorityApplication: false,
         costOfApplication: '10',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(submitIdSpy).toHaveBeenCalledWith('123', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(submitIdSpy).toHaveBeenCalledWith('A1234DY', {
       applicationSubmittedDate: '2000-10-12T01:00:00',
       caseNumber: undefined,
       costOfApplication: 10,
@@ -269,14 +269,14 @@ describe('getAddAnIdView', () => {
       .send({
         updatedStatus: 'Accepted',
         refundAmount: '10',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         applicationId: '1',
         idType: 'Birth certificate',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('A1234DY', '1', {
       addedToPersonalItemsDate: null,
       dateIdReceived: null,
       isAddedToPersonalItems: undefined,
@@ -292,14 +292,14 @@ describe('getAddAnIdView', () => {
       .send({
         updatedStatus: 'Rejected',
         refundAmount: '10',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         applicationId: '1',
         idType: 'Birth certificate',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('A1234DY', '1', {
       addedToPersonalItemsDate: null,
       dateIdReceived: null,
       isAddedToPersonalItems: undefined,
@@ -443,13 +443,13 @@ describe('getAddAnIdView', () => {
         haveGro: true,
         isUkNationalBornOverseas: false,
         countryBornIn: '',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         isPriorityApplication: true,
         costOfApplication: '10',
       })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(submitIdSpy).toHaveBeenCalledWith('123', {
+    expect(submitIdSpy).toHaveBeenCalledWith('A1234DY', {
       applicationSubmittedDate: '2000-10-12T01:00:00',
       caseNumber: undefined,
       costOfApplication: 10,
@@ -470,7 +470,7 @@ describe('getAddAnIdView', () => {
       .send({
         idType: 'Divorce decree absolute certificate',
         applicationSubmittedDate: '2000-10-12T00:00:00.000Z',
-        caseNumber: '123',
+        caseNumber: 'A1234DY',
         courtDetails: '456',
         prisonerNumber: '789',
         isPriorityApplication: true,
@@ -481,7 +481,7 @@ describe('getAddAnIdView', () => {
       .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=789#id'))
     expect(submitIdSpy).toHaveBeenCalledWith('789', {
       applicationSubmittedDate: '2000-10-12T01:00:00',
-      caseNumber: '123',
+      caseNumber: 'A1234DY',
       costOfApplication: 10,
       countryBornIn: undefined,
       courtDetails: '456',
@@ -616,14 +616,14 @@ describe('getAddAnIdView', () => {
         dateIdReceived: '2000-12-01T00:00:00.000Z',
         addedToPersonalItemsDate: '2000-12-01T00:00:00.000Z',
         isAddedToPersonalItems: true,
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         applicationId: '1',
         idType: 'Marriage certificate',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('A1234DY', '1', {
       addedToPersonalItemsDate: '2000-12-01T00:00:00',
       dateIdReceived: '2000-12-01T00:00:00',
       isAddedToPersonalItems: true,
@@ -639,14 +639,14 @@ describe('getAddAnIdView', () => {
       .send({
         updatedStatus: 'Rejected',
         refundAmount: '10',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         applicationId: '1',
         idType: 'Divorce decree absolute certificate',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('A1234DY', '1', {
       addedToPersonalItemsDate: null,
       dateIdReceived: null,
       isAddedToPersonalItems: undefined,
@@ -663,14 +663,14 @@ describe('getAddAnIdView', () => {
         updatedStatus: 'Accepted',
         dateIdReceived: '2000-12-01T00:00:00.000Z',
         isAddedToPersonalItems: false,
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         applicationId: '1',
         idType: 'Driving licence',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('A1234DY', '1', {
       addedToPersonalItemsDate: null,
       dateIdReceived: '2000-12-01T00:00:00',
       isAddedToPersonalItems: false,
@@ -686,14 +686,14 @@ describe('getAddAnIdView', () => {
       .send({
         updatedStatus: 'Rejected',
         refundAmount: '10',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         applicationId: '1',
         idType: 'Biometric residence permit',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('A1234DY', '1', {
       addedToPersonalItemsDate: null,
       dateIdReceived: null,
       isAddedToPersonalItems: undefined,
@@ -709,14 +709,14 @@ describe('getAddAnIdView', () => {
       .send({
         updatedStatus: 'Rejected',
         refundAmount: '10',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         applicationId: '1',
         idType: 'Deed poll certificate',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('A1234DY', '1', {
       addedToPersonalItemsDate: null,
       dateIdReceived: null,
       isAddedToPersonalItems: undefined,
@@ -732,14 +732,14 @@ describe('getAddAnIdView', () => {
       .send({
         updatedStatus: 'Rejected',
         refundAmount: '10',
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         applicationId: '1',
         idType: 'National Insurance Number letter',
       })
       .expect(302)
       .expect(res => expect(res.text).toMatchSnapshot())
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=123#id'))
-    expect(updateIdSpy).toHaveBeenCalledWith('123', '1', {
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /finance-and-id/?prisonerNumber=A1234DY#id'))
+    expect(updateIdSpy).toHaveBeenCalledWith('A1234DY', '1', {
       addedToPersonalItemsDate: null,
       dateIdReceived: null,
       isAddedToPersonalItems: undefined,
@@ -747,5 +747,26 @@ describe('getAddAnIdView', () => {
       status: 'Rejected',
       statusUpdateDate: null,
     })
+  })
+  it('Get add ID application invalid prisoner number only numeric, no api call', async () => {
+    // Stub any calls to services
+    await request(app)
+      .get('/finance-and-id/add-an-id/?prisonerNumber=8731&existingIdTypes=')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Get add ID application invalid prisoner number only alphabetic, no api call', async () => {
+    // Stub any calls to services
+    await request(app)
+      .get('/finance-and-id/add-an-id/?prisonerNumber=ABCD&existingIdTypes=')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+  it('Get add ID application invalid prisoner number with special characters, no api call', async () => {
+    // Stub any calls to services
+    await request(app)
+      .get('/finance-and-id/add-an-id/?prisonerNumber=A8731DY%2F&existingIdTypes=')
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
