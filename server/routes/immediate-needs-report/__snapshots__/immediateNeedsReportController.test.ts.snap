@@ -696,7 +696,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
                   <dd class="govuk-summary-list__actions">
                     <a
                       class="govuk-link govuk-link--no-visited-state"
-                      href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&type=RESETTLEMENT_PLAN&submitted=false"
+                      href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&type=RESETTLEMENT_PLAN&submitted=false"
                     >
                       Change
                     </a>
