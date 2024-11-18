@@ -437,16 +437,20 @@ exports[`getView get check your answers - v1 of report 1`] = `
                     </a>
                   </dd>
                 </div>
-              </dl>
-
-            <input type="hidden" name="pageTitle" value="" />
+              </dl><input type="hidden" name="pageTitle" value="" />
             <input type="hidden" name="pathway" value="ACCOMMODATION" />
             <input type="hidden" name="currentPageId" value="CHECK_ANSWERS" />
             <input type="hidden" name="_csrf" value="" />
             <input type="hidden" name="edit" value="false" />
             <input type="hidden" name="assessmentType" value="BCST2" />
 
-            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit" data-prevent-double-click="true">Confirm</button>
+            <button
+              class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8"
+              type="submit"
+              data-prevent-double-click="true"
+            >
+              Confirm
+            </button>
           </form>
         </div>
       </div>
@@ -682,6 +686,23 @@ exports[`getView get check your answers - v2 of report 1`] = `
                   </dd>
                 </div>
               <div class="govuk-summary-list__row">
+                  <dt class="govuk-summary-list__key">Question 4 Additional details</dt>
+                  <dd class="govuk-summary-list__value">
+                    
+                      No details entered
+                      
+                    
+                  </dd>
+                  <dd class="govuk-summary-list__actions">
+                    <a
+                      class="govuk-link govuk-link--no-visited-state"
+                      href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&type=RESETTLEMENT_PLAN&submitted=false"
+                    >
+                      Change
+                    </a>
+                  </dd>
+                </div>
+              <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Question 5</dt>
                   <dd class="govuk-summary-list__value">
                     
@@ -763,16 +784,20 @@ exports[`getView get check your answers - v2 of report 1`] = `
                     >
                   </dd>
                 </div>
-              </dl>
-
-            <input type="hidden" name="pageTitle" value="" />
+              </dl><input type="hidden" name="pageTitle" value="" />
             <input type="hidden" name="pathway" value="ACCOMMODATION" />
             <input type="hidden" name="currentPageId" value="CHECK_ANSWERS" />
             <input type="hidden" name="_csrf" value="" />
             <input type="hidden" name="edit" value="false" />
             <input type="hidden" name="assessmentType" value="RESETTLEMENT_PLAN" />
 
-            <button class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8" type="submit" data-prevent-double-click="true">Confirm</button>
+            <button
+              class="govuk-button govuk-!-margin-bottom-4 govuk-!-margin-top-8"
+              type="submit"
+              data-prevent-double-click="true"
+            >
+              Confirm
+            </button>
           </form>
         </div>
       </div>

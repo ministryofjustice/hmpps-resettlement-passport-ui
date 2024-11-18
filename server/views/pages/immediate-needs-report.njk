@@ -106,9 +106,7 @@
               {% elif currentQuestionAndAnswer.question.type === 'SHORT_TEXT' %}
                 {{ shortText(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
               {% elif currentQuestionAndAnswer.question.type === 'ADDRESS' %}
-                {% if not nextQuestionAndAnswer %}
                   {{ address(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) }}
-                {% endif %}
               {% else %}
                 <p class="govuk-error-message govuk-!-padding-top-6">
                   There was a problem getting the next question.<br />

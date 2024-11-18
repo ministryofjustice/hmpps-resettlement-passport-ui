@@ -1,5 +1,5 @@
 import { CachedQuestionAndAnswer } from '../../data/model/immediateNeedsReport'
-import { categoriseForCheckYourAnswers } from './checkYourAnswersUtils'
+import { categoriseForCheckYourAnswers, isAdditionalDetails } from './checkYourAnswersUtils'
 import accommodationV3Answers from './accommodation-answers-v3.json'
 import accommodationV1Answers from './accommodation-answers-v1.json'
 
@@ -42,3 +42,16 @@ describe('categoriseForCheckYourAnswers', () => {
 function questionIdsOf(questionAndAnswers: CachedQuestionAndAnswer[]): string[] {
   return questionAndAnswers.map(qAndA => qAndA.question)
 }
+
+describe('isAdditionalDetails', () => {
+  it.each([
+    [{ question: 'WHERE_DID_THEY_LIVE_ADDITIONAL_DETAILS' }, true],
+    [{ question: 'ARE_THEY_BATMAN_ADDITIONAL_DETAILS' }, true],
+    [{}, false],
+    [{ question: null }, false],
+    [null, false],
+    [undefined, false],
+  ])('isAdditionalDetail(%o) should be %s', (questionAndAnswer: Partial<CachedQuestionAndAnswer>, result: boolean) => {
+    expect(isAdditionalDetails(questionAndAnswer as CachedQuestionAndAnswer)).toEqual(result)
+  })
+})

@@ -80,6 +80,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
       autoescape: true,
       express: app,
       dev: !production,
+      watch: !production && process.env.NODE_ENV !== 'test',
     },
   )
 

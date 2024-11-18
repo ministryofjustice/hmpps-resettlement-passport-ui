@@ -562,6 +562,14 @@ describe('getView', () => {
         },
         {
           question: {
+            id: 'QUESTION_4_ADDITIONAL_DETAILS',
+            title: 'Question 4 Additional details',
+            type: 'LONG_TEXT',
+          },
+          originalPageId: 'PAGE_2',
+        },
+        {
+          question: {
             id: 'QUESTION_5',
             title: 'Question 5',
             type: 'ADDRESS',
@@ -674,6 +682,17 @@ describe('getView', () => {
           },
         },
         {
+          question: 'QUESTION_4_ADDITIONAL_DETAILS',
+          questionTitle: 'Question 4 Additional details',
+          pageId: 'PAGE_2',
+          questionType: 'LONG_TEXT',
+          answer: {
+            answer: '',
+            displayText: '',
+            '@class': 'StringAnswer',
+          },
+        },
+        {
           question: 'QUESTION_5',
           questionTitle: 'Question 5',
           pageId: 'PAGE_3',
@@ -742,6 +761,7 @@ describe('getView', () => {
         'QUESTION_2',
         'QUESTION_3',
         'QUESTION_4',
+        'QUESTION_4_ADDITIONAL_DETAILS',
         'QUESTION_5',
         'SUPPORT_REQUIREMENTS',
         'SUPPORT_NEEDS_PRERELEASE',
