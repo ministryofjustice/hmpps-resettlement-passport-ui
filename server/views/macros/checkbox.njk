@@ -3,7 +3,7 @@
 {% macro checkbox(currentQuestionAndAnswer, existingAnswer, multipleQuestionsOnPage, validationErrors) %}
   {% set validationError = validationErrors | getValidationError(currentQuestionAndAnswer.question.id) %}
   <div class="govuk-form-group {{ 'govuk-form-group--error' if validationError }}">
-    <fieldset class="govuk-fieldset" aria-describedby="waste-hint">
+    <fieldset id="{{ currentQuestionAndAnswer.question.id }}" class="govuk-fieldset" aria-describedby="waste-hint">
       {% if multipleQuestionsOnPage %}
         <label class="govuk-label govuk-label--m govuk-!-padding-top-6 govuk-!-margin-bottom-5" for="{{ currentQuestionAndAnswer.question.id }}">
           {{ currentQuestionAndAnswer.question.title }}

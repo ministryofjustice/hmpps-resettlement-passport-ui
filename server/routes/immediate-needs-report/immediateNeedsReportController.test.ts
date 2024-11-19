@@ -1086,6 +1086,7 @@ describe('getView', () => {
       .expect(res => {
         const { document } = new JSDOM(res.text).window
         const checkboxes = document.querySelectorAll("input[type='checkbox']")
+        expect(document.getElementById('WHAT_ID_DOCUMENTS')).toBeTruthy()
         expect(checkboxes.length).toBe(18)
         const ids = Array.from(checkboxes.values()).map(checkbox => checkbox.id)
         expect(ids).toEqual([
@@ -1239,6 +1240,79 @@ describe('getView', () => {
       questions: ['QUESTION_1', 'QUESTION_2', 'QUESTION_3', 'QUESTION_4'],
     })
     expect(getMergedQuestionsAndAnswersSpy).toHaveBeenCalledWith(stateKey, apiAssessmentPage.questionsAndAnswers)
+  })
+
+  it('should render an address question', async () => {
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: 'A1234DY',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const pageResponse: ApiAssessmentPage = {
+      id: 'ACCOMMODATION_REPORT',
+      title: 'Accommodation report',
+      questionsAndAnswers: [
+        {
+          question: {
+            id: 'WHERE_DID_THEY_LIVE',
+            title: 'Where did the person in prison live before custody?',
+            subTitle: null,
+            type: 'RADIO',
+            options: [
+              {
+                id: 'PRIVATE_RENTED_HOUSING',
+                displayText: 'Private housing rented by them',
+                description: null,
+                exclusive: false,
+                nestedQuestions: [
+                  {
+                    question: {
+                      id: 'WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING',
+                      title: 'Enter the address',
+                      subTitle: null,
+                      type: 'ADDRESS',
+                      options: null,
+                      detailsTitle: null,
+                      detailsContent: null,
+                      validation: { type: 'MANDATORY', regex: '', message: '' },
+                    },
+                    answer: null,
+                    originalPageId: 'ACCOMMODATION_REPORT',
+                  },
+                ],
+                freeText: false,
+                tag: null,
+              },
+            ],
+            detailsTitle: null,
+            detailsContent: null,
+            validation: { type: 'MANDATORY', regex: '', message: '' },
+          },
+          answer: null,
+          originalPageId: 'ACCOMMODATION_REPORT',
+        },
+      ],
+    }
+    jest.spyOn(rpService, 'getAssessmentPage').mockResolvedValue(pageResponse)
+    jest.spyOn(assessmentStateService, 'checkForConvergence').mockResolvedValue(false)
+    jest
+      .spyOn(assessmentStateService, 'getWorkingAssessment')
+      .mockResolvedValue({ assessment: { questionsAndAnswers: [], version: null }, pageLoadHistory: [] })
+    jest.spyOn(assessmentStateService, 'getWorkingAssessmentVersion').mockResolvedValue(3)
+    jest.spyOn(assessmentStateService, 'updatePageLoadHistory').mockImplementation()
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/ACCOMMODATION/page/${stateKey.pathway}?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&type=${stateKey.assessmentType}`,
+      )
+      .expect(200)
+      .expect(res => {
+        const { document } = new JSDOM(res.text).window
+        const addressForm = document.getElementById('WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING')
+        expect(addressForm.outerHTML).toMatchSnapshot('address fieldset')
+      })
   })
 })
 

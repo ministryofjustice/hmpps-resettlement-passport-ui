@@ -1095,6 +1095,34 @@ exports[`getView optional text appears 1`] = `
 "
 `;
 
+exports[`getView should render an address question: address fieldset 1`] = `
+"<fieldset id="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING" class="govuk-fieldset">
+     <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Enter the address</legend>
+      <div id="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-hint" class="govuk-hint"> </div>
+      
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-line-1">Address line 1</label>
+        <input class="govuk-input govuk-!-width-two-thirds" id="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-line-1" name="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-addressLine1" type="text" autocomplete="address-line1" value=""> 
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-line-2">Address line 2 (optional)</label>
+        <input class="govuk-input govuk-!-width-two-thirds" id="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-line-2" name="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-addressLine2" type="text" autocomplete="address-line2" value="">
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-town">Town or city</label>
+        <input class="govuk-input govuk-!-width-one-half" id="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-town" name="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-addressTown" type="text" autocomplete="address-level2" value="">
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-county">County (optional)</label>
+        <input class="govuk-input govuk-!-width-one-half" id="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-county" name="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-addressCounty" type="text" value="">
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-postcode">Postcode</label>
+        <input class="govuk-input govuk-input--width-10" id="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-address-postcode" name="WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING-addressPostcode" type="text" autocomplete="postal-code" value="">
+      </div>
+    </fieldset>"
+`;
+
 exports[`getView should use version 1 when existing assessment in cache has no version 1`] = `
 "<!DOCTYPE html>
 <html lang="en" class="govuk-template">
