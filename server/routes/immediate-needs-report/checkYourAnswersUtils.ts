@@ -40,7 +40,3 @@ export function categoriseForCheckYourAnswers(
     caseNote,
   }
 }
-
-export function isAdditionalDetails(questionAnswer: CachedQuestionAndAnswer): boolean {
-  return questionAnswer?.question?.endsWith('_ADDITIONAL_DETAILS') ?? false
-}

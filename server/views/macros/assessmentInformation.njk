@@ -21,7 +21,13 @@
             {% for questionAnswer in assessmentData.latestAssessment.questionsAndAnswers %}
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">{{ questionAnswer.questionTitle }}</th>
-                <td class="govuk-table__cell show-line-breaks">{{ questionAnswer.answer }}</td>
+                <td class="govuk-table__cell show-line-breaks">
+                  {%- if isAdditionalDetails(questionAnswer) -%}
+                    {{ questionAnswer.answer | trim | default('No details entered', true) }}
+                  {%- else -%}
+                    {{ questionAnswer.answer }}
+                  {%- endif -%}
+                </td>
                 <td class="govuk-table__cell">
                   <a href="/ImmediateNeedsReport/pathway/{{ pathway | getEnumByName }}/page/{{ questionAnswer.originalPageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&submitted=true&type={{ assessmentData.latestAssessment.assessmentType }}">Change</a>
                 </td>
