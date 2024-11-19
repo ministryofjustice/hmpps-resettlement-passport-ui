@@ -9,7 +9,7 @@ import ImmediateNeedsReportView from './immediateNeedsReportView'
 import { processReportRequestBody } from '../../utils/processReportRequestBody'
 import { Pathway } from '../../@types/express'
 import { CHECK_ANSWERS_PAGE_ID } from '../../utils/constants'
-import { categoriseForCheckYourAnswers, isAdditionalDetails } from './checkYourAnswersUtils'
+import { categoriseForCheckYourAnswers } from './checkYourAnswersUtils'
 import { ErrorMessage } from '../view'
 
 export default class ImmediateNeedsReportController {
@@ -342,7 +342,6 @@ export default class ImmediateNeedsReportController {
           supportNeedsDetails,
           status,
           caseNote,
-          isAdditionalDetails,
         })
       }
       return res.render('pages/immediate-needs-report', { ...view.renderArgs })
