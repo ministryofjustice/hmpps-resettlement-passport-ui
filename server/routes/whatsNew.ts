@@ -10,7 +10,7 @@ function cookieId(userId: string) {
 
 export function handleWhatsNewBanner(req: Request, res: Response) {
   if (!req.config.whatsNew?.enabled) {
-    res.locals.whwhatsNewEnabled = false
+    res.locals.whatsNewEnabled = false
     return
   }
   const version = req.config.whatsNew?.version
