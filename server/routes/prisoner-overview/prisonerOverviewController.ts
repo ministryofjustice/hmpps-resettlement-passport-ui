@@ -4,6 +4,7 @@ import { ERROR_DICTIONARY } from '../../utils/constants'
 import DocumentService, { DocumentMeta } from '../../services/documentService'
 import RpService from '../../services/rpService'
 import { Appointment } from '../../data/model/appointment'
+import { handleWhatsNewBanner } from '../whatsNew'
 
 export default class PrisonerOverviewController {
   constructor(private readonly documentService: DocumentService, private readonly rpService: RpService) {
@@ -16,6 +17,7 @@ export default class PrisonerOverviewController {
       if (!prisonerData) {
         return next(new Error('No prisoner data found'))
       }
+      handleWhatsNewBanner(req, res)
       const {
         page = '0',
         size = '10',

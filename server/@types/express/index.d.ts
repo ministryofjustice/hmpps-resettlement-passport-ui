@@ -71,11 +71,17 @@ export type PathwayStatus = {
 
 export type ConfigFile = {
   reports: Reports
+  whatsNew?: WhatsNewConfig
 }
 
 export type Reports = {
   immediateNeedsVersion: PathwayVersion
   preReleaseVersion: PathwayVersion
+}
+
+export type WhatsNewConfig = {
+  enabled: boolean
+  version: string
 }
 
 export type Pathway = keyof typeof PATHWAY_DICTIONARY
