@@ -1,0 +1,58 @@
+{% extends "./layout.njk" %}
+{% set mainClasses = "app-container govuk-body" %}
+{% set pageTitle = applicationName + " - " + pageName %}
+
+{% block header %}
+  {% if feComponents.header %}
+    {{ feComponents.header | safe }}
+  {% else %}
+    {% include "../partials/header.njk" %}
+  {% endif %}
+
+  <div class="govuk-width-container">
+    {{
+      govukPhaseBanner({
+        tag: {
+          text: phaseName
+        },
+        html: feedbackText
+      })
+    }}
+    {% if pageName === "Service updates" %}
+      {% set breadcrumbItems = [
+        {
+          text: "Prepare someone for release",
+          href: '/'
+        },
+        {
+          text: "Service updates",
+          href: ""
+        }
+      ]%}
+    {% else %}
+      {% set breadcrumbItems = [
+        {
+          text: "Prepare someone for release",
+          href: '/'
+        },
+        {
+          text: "Service updates",
+          href: '/service-updates'
+        },
+        {
+          text: pageName,
+          href: ""
+        }
+      ]%}
+    {% endif %}
+    {{ breadCrumb(breadcrumbItems) }}
+    <div class="govuk-grid-row govuk-!-padding-top-8">
+      <div class="govuk-grid-column-two-thirds">
+        {% if pageName !== "Service updates" %}
+          <span class="govuk-caption-xl">Service updates</span>
+        {% endif %}
+        <h1 class="govuk-heading-l">{{ pageName }}</h1>
+      </div>
+    </div>
+  </div>
+{% endblock %}
