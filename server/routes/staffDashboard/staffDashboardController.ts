@@ -4,6 +4,7 @@ import { ErrorMessage } from '../view'
 import RpService from '../../services/rpService'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import { handleWhatsNewBanner } from '../whatsNew'
 
 export default class StaffDashboardController {
   constructor(private readonly rpService: RpService) {
@@ -47,6 +48,7 @@ export default class StaffDashboardController {
       let prisonersList = null
 
       try {
+        handleWhatsNewBanner(req, res)
         // Only NOMIS users can access the list prisoners functionality at present
         if (res.locals.user.authSource === 'nomis') {
           const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)

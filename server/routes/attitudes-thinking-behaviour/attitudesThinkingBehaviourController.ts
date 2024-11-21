@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
+import { handleWhatsNewBanner } from '../whatsNew'
 
 export default class AttitudesThinkingBehaviourController {
   constructor(private readonly prisonService: RpService) {
@@ -13,6 +14,7 @@ export default class AttitudesThinkingBehaviourController {
       if (!prisonerData) {
         return next(new Error('Prisoner number is missing from request'))
       }
+      handleWhatsNewBanner(req, res)
 
       const {
         page = '0',

@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import HealthStatusView from './healthStatusView'
+import { handleWhatsNewBanner } from '../whatsNew'
 
 export default class HealthStatusController {
   constructor(private readonly rpService: RpService) {
@@ -10,6 +11,7 @@ export default class HealthStatusController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { prisonerData } = req
+      handleWhatsNewBanner(req, res)
       const {
         page = '0',
         pageSize = '10',

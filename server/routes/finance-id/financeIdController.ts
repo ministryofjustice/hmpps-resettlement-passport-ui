@@ -3,6 +3,7 @@ import RpService from '../../services/rpService'
 import logger from '../../../logger'
 import FinanceIdView from './financeIdView'
 import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
+import { handleWhatsNewBanner } from '../whatsNew'
 
 export default class FinanceIdController {
   constructor(private readonly rpService: RpService) {
@@ -15,6 +16,7 @@ export default class FinanceIdController {
       if (!prisonerData) {
         return next(new Error('Prisoner number is missing from request'))
       }
+      handleWhatsNewBanner(req, res)
 
       const {
         page = '0',
