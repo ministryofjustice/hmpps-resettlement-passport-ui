@@ -11,7 +11,8 @@
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% set feedbackText %}This is a new service – your <a class="govuk-link"
-                                                      href="{{ feedbackUrl }}">feedback</a> will help us to improve it.{% endset %}
+                                                      href="{{ feedbackUrl }}">feedback</a> will help us to improve it.
+                                                      <a class="govuk-link" href="/service-updates">View updates and changes.</a>{% endset %}
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet" />
