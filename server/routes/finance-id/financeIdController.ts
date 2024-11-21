@@ -3,7 +3,7 @@ import RpService from '../../services/rpService'
 import logger from '../../../logger'
 import FinanceIdView from './financeIdView'
 import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
-import { handleWhatsNewBanner } from '../whatsNew'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class FinanceIdController {
   constructor(private readonly rpService: RpService) {

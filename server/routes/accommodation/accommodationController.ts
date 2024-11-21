@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import AccommodationView from './accommodationView'
 import RpService from '../../services/rpService'
-import { handleWhatsNewBanner } from '../whatsNew'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class AccommodationController {
   constructor(private readonly rpService: RpService) {

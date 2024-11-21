@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
-import { handleWhatsNewBanner } from '../whatsNew'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class AttitudesThinkingBehaviourController {
   constructor(private readonly prisonService: RpService) {

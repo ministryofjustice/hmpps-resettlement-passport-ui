@@ -2583,6 +2583,7 @@ exports[`prisonerOverview should render whats new banner when it is enabled 1`] 
         <a
           class="ghost-button"
           href="http://localhost:3000/prisoner-overview?prisonerNumber=A1234DY&dismissWhatsNew=true"
+          id="whats-new-dismiss"
         >
           Dismiss
         </a>
@@ -2643,10 +2644,9 @@ exports[`prisonerOverview should render whats new banner when it is enabled 1`] 
         </ul>
         
     
-    
         <p>
           <a
-            href="#"
+            href="/whats-new/inputting-immediate-needs-and-pre-release-report-answers"
           >
             Find out more about this update
           </a>

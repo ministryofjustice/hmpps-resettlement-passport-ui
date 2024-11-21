@@ -4,7 +4,7 @@ import { ErrorMessage } from '../view'
 import RpService from '../../services/rpService'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
-import { handleWhatsNewBanner } from '../whatsNew'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class StaffDashboardController {
   constructor(private readonly rpService: RpService) {

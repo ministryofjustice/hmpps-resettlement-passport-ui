@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import DrugsAlcoholView from './drugsAlcoholView'
-import { handleWhatsNewBanner } from '../whatsNew'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class DrugsAlcoholController {
   constructor(private readonly rpService: RpService) {

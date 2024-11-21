@@ -4,7 +4,7 @@ import { ERROR_DICTIONARY } from '../../utils/constants'
 import DocumentService, { DocumentMeta } from '../../services/documentService'
 import RpService from '../../services/rpService'
 import { Appointment } from '../../data/model/appointment'
-import { handleWhatsNewBanner } from '../whatsNew'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class PrisonerOverviewController {
   constructor(private readonly documentService: DocumentService, private readonly rpService: RpService) {

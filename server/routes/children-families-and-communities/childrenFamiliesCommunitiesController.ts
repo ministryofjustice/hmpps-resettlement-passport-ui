@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import ChildrenFamiliesCommunitiesView from './childrenFamiliesCommunitiesView'
-import { handleWhatsNewBanner } from '../whatsNew'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class ChildrenFamiliesCommunitiesController {
   constructor(private readonly rpService: RpService) {
