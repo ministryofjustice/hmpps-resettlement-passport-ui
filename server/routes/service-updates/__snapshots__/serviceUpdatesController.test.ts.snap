@@ -326,7 +326,44 @@ exports[`ServiceUpdatesController getView should render the service updates subp
         
         <main class="govuk-main-wrapper app-container govuk-body" id="main-content">
           
-  <p class="govuk-body-s">21 Nov 2024</p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-s">21 Nov 2024</p>
+      <h2 class="govuk-heading-m">Add context to report answers</h2>
+      <p>Users told us that the previous report format in PSfR was too limiting.</p>
+      <p>You can now add optional context to most of the report answers. This will give your colleagues, who work with the person in prison, the information they need. For example, their COM, who will be able to see the information in PSfR, so you do not need to send a separate email.</p>
+      <p>Some questions include suggestions of what type of information you should be adding. For other questions, it is down to your professional judgement.</p>
+      <img
+        class="service-updates-image"
+        src="/assets/images/service-updates/free-text-example.jpg"
+        alt="Does the person in prison have parental responsibility for any children under 16?' The answer options are 'Yes', 'No' and 'No answer'. There is a text box underneath with the label 'Additional details (optional)"
+      >
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">Answer all the questions for each pathway on a single page</h2>
+      <p>We have now put all the pathway questions on a single page. All users will see all the questions in one place each time they input the answers.</p>
+      <p>We have done this because users told us it could be frustrating to input the report answers across multiple pages when using slow WiFi.</p>
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">Identify support needs</h2>
+      <p>We have introduced a new page for where you can tick the support needs that are relevant to the person in prison. There is one for each pathway. We have also added new support needs options, where users have told us that they’re needed.</p>
+      <p>You can add a support need that is not on the list by using the ‘Other’ option.</p>
+      <img
+        class="service-updates-image"
+        src="/assets/images/service-updates/support-needs-example.jpg"
+        alt="A support needs page for the drugs and alcohol pathway. There is a checklist of support needs, including an 'other' option and a 'No support needs identified' option. There is a text box underneath with the label 'Additional details (optional)"
+      >
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">New questions added</h2>
+      <p>We have added questions about domestic abuse, sexual abuse and sex work to the Children, families and communities pathway. Users told us that this information is important to understanding the needs of the person in prison. We were also told how important it is to treat this information with sensitivity and caution.</p>
+      <p>For now, you cannot add any further context to these questions. This is because we cannot currently control who would be able to see this information.</p>
+      <p>We are hoping to release a separate pathway for these questions in March 2025. We will restrict access to this pathway. Only users who need to access this sensitive information will be able to see it. You will then be able to add context to these questions.</p>
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">New answer options added</h2>
+      <p>We have added new answer options to questions, in response to users telling us they are missing. For example, we have added more options to the ‘Where did the person in prison live before custody?’ question, like ‘With family or friends’.</p>
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">Pathway case notes are no longer needed when inputting report answers</h2>
+      <p>You can no longer add a case note when you enter the report answers for each pathway. This is because you can now add context to most of the report answers, and also on the support needs page. </p>
+      <p>You can still add a case note when you update a pathway status.</p>
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">Give feedback on these updates</h2>
+      <p>We really want to hear what you think of these updates. You can let us know using our
+        <a href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback form</a>.
+      </p>
+    </div>
+  </div>
 
         </main>
       </div>
