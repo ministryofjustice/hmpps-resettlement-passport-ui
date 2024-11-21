@@ -1,10 +1,11 @@
 import type { Express } from 'express'
 import request from 'supertest'
+import { JSDOM } from 'jsdom'
 import RpService from '../../services/rpService'
 import { appWithAllRoutes } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
-import { configHelper } from '../configHelperTest'
+import { configHelper, defaultTestConfig } from '../configHelperTest'
 import { stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
 import DocumentService from '../../services/documentService'
 
@@ -96,5 +97,24 @@ describe('prisonerOverview', () => {
       '7',
       'Education',
     )
+  })
+
+  it('should render whats new banner when it is enabled', async () => {
+    configHelper(config, {
+      ...defaultTestConfig,
+      whatsNew: {
+        enabled: true,
+        version: '20241120',
+      },
+    })
+
+    stubPrisonerOverviewData(rpService)
+
+    const response = await request(app).get('/prisoner-overview?prisonerNumber=A1234DY').expect(200)
+
+    const { document } = new JSDOM(response.text).window
+    const banner = document.getElementById('whats-new-banner')
+    expect(banner).toBeTruthy()
+    expect(banner.outerHTML).toMatchSnapshot()
   })
 })
