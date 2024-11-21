@@ -115,6 +115,6 @@ describe('prisonerOverview', () => {
     const { document } = new JSDOM(response.text).window
     const banner = document.getElementById('whats-new-banner')
     expect(banner).toBeTruthy()
-    expect(banner).toMatchSnapshot()
+    expect(banner.outerHTML).toMatchSnapshot()
   })
 })
