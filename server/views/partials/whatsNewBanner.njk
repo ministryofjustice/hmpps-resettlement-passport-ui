@@ -1,0 +1,37 @@
+{%- if whatsNewEnabled and whatsNewVersion === '20241120' -%}
+  {% set whatsNewContent %}
+    <h3 class="govuk-heading-s">20 Nov 2024</h3>
+
+    <p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>add context to most of the answers</li>
+      <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
+      <li>input answers about domestic abuse, sexual abuse, and sex work</li>
+    </ul>
+    <p><a href="/service-updates/inputting-report-answers">Find out more about this update</a></p>
+
+    <p>
+      Let us know what you think of these changes using our
+      <a class="govuk-link" href="{{ feedbackUrl }}">feedback form</a>.
+    </p>
+  {% endset %}
+{%- endif -%}
+{%- if whatsNewEnabled -%}
+  <div id="whats-new-banner" class="govuk-grid-row whats-new-banner">
+    <div class="govuk-grid-column-full">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <h2 class="govuk-heading-m">What's new</h2>
+        </div>
+
+        <div class="govuk-grid-column-one-quarter whats-new-banner-dismiss">
+          <a id="whats-new-dismiss" class="ghost-button" href="{{ whatsNewDismissUrl }}">Dismiss</a>
+        </div>
+      </div>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">{{ whatsNewContent | safe }}</div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

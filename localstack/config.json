@@ -18,5 +18,9 @@
       "FINANCE_AND_ID": 2,
       "HEALTH": 2
     }
+  },
+  "whatsNew": {
+    "enabled": true,
+    "version": "20241120"
   }
 }

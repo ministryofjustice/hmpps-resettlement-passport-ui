@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import EducationSkillsWorkView from './educationSkillsWorkView'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class EducationSkillsWorkController {
   constructor(private readonly rpService: RpService) {
@@ -13,6 +14,7 @@ export default class EducationSkillsWorkController {
       if (!prisonerData) {
         return next(new Error('Prisoner number is missing from request'))
       }
+      handleWhatsNewBanner(req, res)
 
       const {
         page = '0',
