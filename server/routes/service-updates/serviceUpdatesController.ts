@@ -7,7 +7,7 @@ export default class ServiceUpdatesController {
 
     res.render(template, (err: Error | null, html: string | undefined) => {
       if (err) {
-        res.status(404)
+        res.status(404).send('Page not found')
       } else {
         res.send(html)
       }
