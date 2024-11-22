@@ -93,7 +93,6 @@ exports[`resetProfile should not render page if feature is disabled 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -265,7 +264,6 @@ exports[`resetProfile should not render page if prisonerNumber is missing from q
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -436,7 +434,6 @@ exports[`resetProfile should render page if feature is enabled 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -602,7 +599,6 @@ exports[`resetProfileReason should not render page if feature is disabled 1`] = 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -774,7 +770,6 @@ exports[`resetProfileReason should not render page if prisonerNumber is missing 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -945,7 +940,6 @@ exports[`resetProfileReason should render page if feature is enabled and no vali
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1152,7 +1146,6 @@ exports[`resetProfileSuccess should not render page if feature is disabled 1`] =
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1324,7 +1317,6 @@ exports[`resetProfileSuccess should not render page if prisonerNumber is missing
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1495,7 +1487,6 @@ exports[`resetProfileSuccess should render page if feature is enabled 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1640,7 +1631,6 @@ exports[`submitResetProfileReason should error if call to RP API fails 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1812,7 +1802,6 @@ exports[`submitResetProfileReason should error if feature is disabled 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1984,7 +1973,6 @@ exports[`submitResetProfileReason should not render page if prisonerNumber is mi
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
