@@ -23,7 +23,8 @@ describe('postWatch', () => {
   it('Happy path', async () => {
     const postWatchListSpy = jest.spyOn(rpService, 'postWatchlist').mockImplementation()
     await request(app)
-      .post('/addToYourCases?prisonerNumber=A1234DY')
+      .post('/addToYourCases')
+      .send({ prisonerNumber: 'A1234DY' })
       .expect(302)
       .expect(res => expect(res.headers.location).toEqual('/prisoner-overview/?prisonerNumber=A1234DY'))
 
@@ -32,7 +33,8 @@ describe('postWatch', () => {
   it('Error case - rpService throws error', async () => {
     const postWatchListSpy = jest.spyOn(rpService, 'postWatchlist').mockRejectedValue(new Error('Something went wrong'))
     await request(app)
-      .post('/addToYourCases?prisonerNumber=A1234DY')
+      .post('/addToYourCases')
+      .send({ prisonerNumber: 'A1234DY' })
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
 
@@ -53,7 +55,8 @@ describe('deleteWatch', () => {
   it('Happy path', async () => {
     const deleteWatchListSpy = jest.spyOn(rpService, 'deleteWatchlist').mockImplementation()
     await request(app)
-      .post('/removeFromYourCases?prisonerNumber=A1234DY')
+      .post('/removeFromYourCases')
+      .send({ prisonerNumber: 'A1234DY' })
       .expect(302)
       .expect(res => expect(res.headers.location).toEqual('/prisoner-overview/?prisonerNumber=A1234DY'))
 
@@ -65,7 +68,8 @@ describe('deleteWatch', () => {
       .mockImplementation()
       .mockRejectedValue(new Error('Something went wrong'))
     await request(app)
-      .post('/removeFromYourCases?prisonerNumber=A1234DY')
+      .post('/removeFromYourCases')
+      .send({ prisonerNumber: 'A1234DY' })
       .expect(500)
       .expect(res => {
         const document = parseHtmlDocument(res.text)
@@ -74,7 +78,7 @@ describe('deleteWatch', () => {
 
     expect(deleteWatchListSpy).toHaveBeenCalledWith('A1234DY')
   })
-  it('Error case - missing parameter', async () => {
+  it('Error case - missing prisoner number from body', async () => {
     await request(app)
       .post('/removeFromYourCases')
       .expect(404)

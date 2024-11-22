@@ -27,7 +27,7 @@ export default class WatchlistController {
   }
 
   private async watchlistFlow(req: Request, res: Response, addedToYourCase: boolean): Promise<void> {
-    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
     const errorMessage: string = addedToYourCase ? 'Error adding to your cases' : 'Error removing from your cases'
 
     try {

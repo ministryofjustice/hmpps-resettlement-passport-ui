@@ -35,7 +35,7 @@ export default class DocumentController {
   }
 
   viewUploadPage: RequestHandler = async (req, res, next): Promise<void> => {
-    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const { uploadError } = req.query
     const errorMessageText = errorMessageMap[uploadError?.toString()]
     const errorMessage = errorMessageText ? { text: errorMessageText } : null
@@ -52,8 +52,7 @@ export default class DocumentController {
   }
 
   uploadDocument: RequestHandler = async (req, res, _): Promise<void> => {
-    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
-    const { prisonerNumber } = prisonerData.personalDetails
+    const { prisonerNumber } = req.params
     try {
       const form = formidable({
         uploadDir: config.uploads.tempPath,

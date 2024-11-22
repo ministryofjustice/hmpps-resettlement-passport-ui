@@ -13,7 +13,7 @@ export class AppInsightsService {
   }
 
   trackEvent(name: string, properties: object) {
-    if (name) {
+    if (name && this.appInsightsClient) {
       this.appInsightsClient.trackEvent({ name, properties })
       this.appInsightsClient.flush()
     }

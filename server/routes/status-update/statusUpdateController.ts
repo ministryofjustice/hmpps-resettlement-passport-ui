@@ -35,7 +35,7 @@ export default class StatusUpdateController {
 
   postStatusUpdate: RequestHandler = async (req, res, next) => {
     try {
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, true)
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
       const { prisonerNumber } = prisonerData.personalDetails
 
       const { selectedStatus, selectedPathway } = req.body
