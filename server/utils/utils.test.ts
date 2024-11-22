@@ -24,6 +24,7 @@ import {
   isValidPathway,
   isValidStatus,
   parseAssessmentType,
+  isAdditionalDetails,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -1199,5 +1200,20 @@ describe('test parseAssessmentType', () => {
         parseAssessmentType(type)
       }).toThrow(expected)
     }
+  })
+})
+
+describe('isAdditionalDetails', () => {
+  it.each([
+    [{ question: 'WHERE_DID_THEY_LIVE_ADDITIONAL_DETAILS' }, true],
+    [{ question: 'ARE_THEY_BATMAN_ADDITIONAL_DETAILS' }, true],
+    [{ questionTitle: 'Additional details' }, true],
+    [{ questionTitle: 'Something something additional details' }, true],
+    [{}, false],
+    [{ question: null }, false],
+    [null, false],
+    [undefined, false],
+  ])('isAdditionalDetail(%o) should be %s', (questionAndAnswer, result) => {
+    expect(isAdditionalDetails(questionAndAnswer as CachedQuestionAndAnswer)).toEqual(result)
   })
 })

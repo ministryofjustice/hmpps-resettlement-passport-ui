@@ -26,10 +26,14 @@ import prisonerOverviewRouter from './prisoner-overview/prisonerOverviewRouter'
 import resetProfileRouter from './reset-profile'
 import statusUpdateRouter from './status-update'
 import financeIdBankAccountRouter from './finance-id-bank-account'
+import { prisonerNumberSchema } from './prisonerNumberSchema'
+import { prisonerNumberValidate } from './validate-request'
+import serviceUpdates from './service-updates'
 
 export default function routes(services: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(configMiddleware())
   staffDashboard(router, services)
@@ -55,6 +59,7 @@ export default function routes(services: Services): Router {
   resetProfileRouter(router, services)
   licenceImageRouter(router, services)
   financeIdBankAccountRouter(router, services)
+  serviceUpdates(router)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 

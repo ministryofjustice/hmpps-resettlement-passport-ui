@@ -1,10 +1,11 @@
 import type { Express } from 'express'
 import request from 'supertest'
+import { JSDOM } from 'jsdom'
 import RpService from '../../services/rpService'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
-import { configHelper } from '../configHelperTest'
+import { configHelper, defaultTestConfig } from '../configHelperTest'
 import { stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
 
 let app: Express
@@ -49,18 +50,18 @@ describe('prisonerOverview', () => {
     ])
 
     await request(app)
-      .get('/prisoner-overview?prisonerNumber=123')
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerOverviewPageDataSpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       '0',
       '10',
       'occurenceDateTime%2CDESC',
       '0',
       'All',
     )
-    expect(getDocumentMetaSpy).toHaveBeenCalledWith('123')
+    expect(getDocumentMetaSpy).toHaveBeenCalledWith('A1234DY')
   })
 
   it('should render the prisoner overview page with correct query params', async () => {
@@ -75,17 +76,36 @@ describe('prisonerOverview', () => {
     const getPrisonerOverviewPageDataSpy = stubPrisonerOverviewData(rpService)
 
     await request(app)
-      .get('/prisoner-overview?prisonerNumber=123')
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
       .query(queryParams)
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerOverviewPageDataSpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       '1',
       '5',
       'occurenceDateTime%2CDESC',
       '7',
       'Education',
     )
+  })
+
+  it('should render whats new banner when it is enabled', async () => {
+    configHelper(config, {
+      ...defaultTestConfig,
+      whatsNew: {
+        enabled: true,
+        version: '20241120',
+      },
+    })
+
+    stubPrisonerOverviewData(rpService)
+
+    const response = await request(app).get('/prisoner-overview?prisonerNumber=A1234DY').expect(200)
+
+    const { document } = new JSDOM(response.text).window
+    const banner = document.getElementById('whats-new-banner')
+    expect(banner).toBeTruthy()
+    expect(banner.outerHTML).toMatchSnapshot()
   })
 })

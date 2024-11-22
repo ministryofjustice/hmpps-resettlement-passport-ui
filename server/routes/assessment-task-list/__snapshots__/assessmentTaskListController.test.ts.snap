@@ -93,6 +93,7 @@ exports[`getView Error case - prisonerNumber is missing 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -264,6 +265,7 @@ exports[`getView Error case - rpService returns error render page with error mes
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -298,7 +300,7 @@ exports[`getView Error case - rpService returns error render page with error mes
 
   
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=123"> Smith, John (123)</a>
+      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=A1234DY"> Smith, John (A1234DY)</a>
     </li>
   
 
@@ -319,7 +321,7 @@ exports[`getView Error case - rpService returns error render page with error mes
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l" data-qa="page-title-h2">
         Complete immediate needs report <br />
-        <span class="govuk-caption-l">Smith, John (123)</span>
+        <span class="govuk-caption-l">Smith, John (A1234DY)</span>
       </h1>
     </div>
   </div>
@@ -458,6 +460,7 @@ exports[`getView Error case - rpService throws error 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -629,6 +632,7 @@ exports[`getView Error case - type is missing 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -800,6 +804,7 @@ exports[`getView Should not redirect to skip when BCST2 is not started and in th
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -834,7 +839,7 @@ exports[`getView Should not redirect to skip when BCST2 is not started and in th
 
   
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=123"> Smith, John (123)</a>
+      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=A1234DY"> Smith, John (A1234DY)</a>
     </li>
   
 
@@ -855,7 +860,7 @@ exports[`getView Should not redirect to skip when BCST2 is not started and in th
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l" data-qa="page-title-h2">
         Complete immediate needs report <br />
-        <span class="govuk-caption-l">Smith, John (123)</span>
+        <span class="govuk-caption-l">Smith, John (A1234DY)</span>
       </h1>
     </div>
   </div>
@@ -873,7 +878,7 @@ exports[`getView Should not redirect to skip when BCST2 is not started and in th
                   
                     
                   
-                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber=123&pathway=ACCOMMODATION&type=BCST2" data-qa="a-ACCOMMODATION">Accommodation</a>
+                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber=A1234DY&pathway=ACCOMMODATION&type=BCST2" data-qa="a-ACCOMMODATION">Accommodation</a>
                 </th>
                 <td class="govuk-table__cell">
                   <strong class="govuk-tag govuk-tag--grey">Incomplete</strong>
@@ -886,7 +891,7 @@ exports[`getView Should not redirect to skip when BCST2 is not started and in th
       <form action="/assessment-complete" method="post" novalidate>
         <div class="govuk-button-group">
           <input type="hidden" name="_csrf" value=""/>
-          <input type="hidden" name="prisonerNumber" value="123"/>
+          <input type="hidden" name="prisonerNumber" value="A1234DY"/>
           <input type="hidden" name="assessmentType" value="BCST2"/>
 
           <button
@@ -1023,6 +1028,7 @@ exports[`getView Should not redirect when outside the release window 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1057,7 +1063,7 @@ exports[`getView Should not redirect when outside the release window 1`] = `
 
   
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=123"> Smith, John (123)</a>
+      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=A1234DY"> Smith, John (A1234DY)</a>
     </li>
   
 
@@ -1078,7 +1084,7 @@ exports[`getView Should not redirect when outside the release window 1`] = `
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l" data-qa="page-title-h2">
         Complete immediate needs report <br />
-        <span class="govuk-caption-l">Smith, John (123)</span>
+        <span class="govuk-caption-l">Smith, John (A1234DY)</span>
       </h1>
     </div>
   </div>
@@ -1096,7 +1102,7 @@ exports[`getView Should not redirect when outside the release window 1`] = `
                   
                     
                   
-                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber=123&pathway=ACCOMMODATION&type=BCST2" data-qa="a-ACCOMMODATION">Accommodation</a>
+                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber=A1234DY&pathway=ACCOMMODATION&type=BCST2" data-qa="a-ACCOMMODATION">Accommodation</a>
                 </th>
                 <td class="govuk-table__cell">
                   <strong class="govuk-tag govuk-tag--grey">Incomplete</strong>
@@ -1109,7 +1115,7 @@ exports[`getView Should not redirect when outside the release window 1`] = `
       <form action="/assessment-complete" method="post" novalidate>
         <div class="govuk-button-group">
           <input type="hidden" name="_csrf" value=""/>
-          <input type="hidden" name="prisonerNumber" value="123"/>
+          <input type="hidden" name="prisonerNumber" value="A1234DY"/>
           <input type="hidden" name="assessmentType" value="BCST2"/>
 
           <button
@@ -1246,6 +1252,7 @@ exports[`getView Should render when BCST2 is started 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1280,7 +1287,7 @@ exports[`getView Should render when BCST2 is started 1`] = `
 
   
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=123"> Smith, John (123)</a>
+      <a class="govuk-breadcrumbs__link" href="/prisoner-overview/?prisonerNumber=A1234DY"> Smith, John (A1234DY)</a>
     </li>
   
 
@@ -1301,7 +1308,7 @@ exports[`getView Should render when BCST2 is started 1`] = `
     <div class="govuk-grid-column-two-thirds">
       <h1 class="govuk-heading-l" data-qa="page-title-h2">
         Complete immediate needs report <br />
-        <span class="govuk-caption-l">Smith, John (123)</span>
+        <span class="govuk-caption-l">Smith, John (A1234DY)</span>
       </h1>
     </div>
   </div>
@@ -1319,7 +1326,7 @@ exports[`getView Should render when BCST2 is started 1`] = `
                   
                     
                   
-                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber=123&pathway=ACCOMMODATION&type=BCST2" data-qa="a-ACCOMMODATION">Accommodation</a>
+                  <a href="/ImmediateNeedsReport-next-page?prisonerNumber=A1234DY&pathway=ACCOMMODATION&type=BCST2" data-qa="a-ACCOMMODATION">Accommodation</a>
                 </th>
                 <td class="govuk-table__cell">
                   <strong class="govuk-tag govuk-tag--green">Completed</strong>
@@ -1332,7 +1339,7 @@ exports[`getView Should render when BCST2 is started 1`] = `
       <form action="/assessment-complete" method="post" novalidate>
         <div class="govuk-button-group">
           <input type="hidden" name="_csrf" value=""/>
-          <input type="hidden" name="prisonerNumber" value="123"/>
+          <input type="hidden" name="prisonerNumber" value="A1234DY"/>
           <input type="hidden" name="assessmentType" value="BCST2"/>
 
           <button

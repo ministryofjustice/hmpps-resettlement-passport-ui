@@ -5,6 +5,7 @@ import DocumentService, { DocumentMeta } from '../../services/documentService'
 import RpService from '../../services/rpService'
 import { Appointment } from '../../data/model/appointment'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class PrisonerOverviewController {
   constructor(
@@ -18,6 +19,7 @@ export default class PrisonerOverviewController {
   getPrisoner: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+      handleWhatsNewBanner(req, res)
       const {
         page = '0',
         size = '10',

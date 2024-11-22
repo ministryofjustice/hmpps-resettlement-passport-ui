@@ -41,6 +41,7 @@ import {
   removePrefix,
   getOptionValidationError,
   getOptionalText,
+  isAdditionalDetails,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -80,6 +81,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
       autoescape: true,
       express: app,
       dev: !production,
+      watch: !production && process.env.NODE_ENV !== 'test',
     },
   )
 
@@ -128,4 +130,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('removePrefix', removePrefix)
   njkEnv.addGlobal('checkAnswersPageId', CHECK_ANSWERS_PAGE_ID)
   njkEnv.addGlobal('getOptionalText', getOptionalText)
+  njkEnv.addGlobal('isAdditionalDetails', isAdditionalDetails)
 }

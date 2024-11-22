@@ -28,7 +28,7 @@ afterEach(() => {
 describe('getStatusUpdate', () => {
   it('happy path - render page', async () => {
     await request(app)
-      .get('/status-update?prisonerNumber=123&selectedPathway=accommodation')
+      .get('/status-update?prisonerNumber=A1234DY&selectedPathway=accommodation')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
@@ -42,14 +42,14 @@ describe('getStatusUpdate', () => {
 
   it('error case - missing selectedPathway', async () => {
     await request(app)
-      .get('/status-update?prisonerNumber=123')
+      .get('/status-update?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('error case - pathway does not exist', async () => {
     await request(app)
-      .get('/status-update?prisonerNumber=123&selectedPathway=NOT_A_PATHWAY')
+      .get('/status-update?prisonerNumber=A1234DY&selectedPathway=NOT_A_PATHWAY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
@@ -63,15 +63,15 @@ describe('postStatusUpdate', () => {
     await request(app)
       .post('/status-update')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         selectedStatus: 'DONE',
         selectedPathway: 'accommodation',
         caseNoteInput_DONE: 'This is my case note text',
       })
       .expect(302)
-      .expect(res => expect(res.text).toEqual('Found. Redirecting to /accommodation?prisonerNumber=123#case-notes'))
+      .expect(res => expect(res.text).toEqual('Found. Redirecting to /accommodation?prisonerNumber=A1234DY#case-notes'))
 
-    expect(patchStatusWithCaseNoteSpy).toHaveBeenCalledWith('123', {
+    expect(patchStatusWithCaseNoteSpy).toHaveBeenCalledWith('A1234DY', {
       pathway: 'ACCOMMODATION',
       status: 'DONE',
       caseNoteText: 'Resettlement status set to: Done. This is my case note text',
@@ -82,7 +82,7 @@ describe('postStatusUpdate', () => {
         newStatus: 'DONE',
         oldStatus: 'IN_PROGRESS',
         pathway: 'ACCOMMODATION',
-        prisonerId: '123',
+        prisonerId: 'A1234DY',
         sessionId: 'sessionId',
         username: 'user1',
       },
@@ -106,14 +106,14 @@ describe('postStatusUpdate', () => {
     await request(app)
       .post('/status-update')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         selectedPathway: 'accommodation',
         caseNoteInput_DONE: 'This is my case note text',
       })
       .expect(302)
       .expect(res =>
         expect(res.text).toEqual(
-          'Found. Redirecting to /status-update?prisonerNumber=123&selectedPathway=accommodation',
+          'Found. Redirecting to /status-update?prisonerNumber=A1234DY&selectedPathway=accommodation',
         ),
       )
   })
@@ -122,7 +122,7 @@ describe('postStatusUpdate', () => {
     await request(app)
       .post('/status-update')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         selectedStatus: 'NOT_A_STATUS',
         selectedPathway: 'accommodation',
         caseNoteInput_DONE: 'This is my case note text',
@@ -135,7 +135,7 @@ describe('postStatusUpdate', () => {
     await request(app)
       .post('/status-update')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         selectedStatus: 'DONE',
         caseNoteInput_DONE: 'This is my case note text',
       })
@@ -147,7 +147,7 @@ describe('postStatusUpdate', () => {
     await request(app)
       .post('/status-update')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         selectedStatus: 'DONE',
         selectedPathway: 'not a pathway',
         caseNoteInput_DONE: 'This is my case note text',
@@ -163,7 +163,7 @@ describe('postStatusUpdate', () => {
     await request(app)
       .post('/status-update')
       .send({
-        prisonerNumber: '123',
+        prisonerNumber: 'A1234DY',
         selectedStatus: 'DONE',
         selectedPathway: 'accommodation',
         caseNoteInput_DONE: 'This is my case note text',
@@ -171,7 +171,7 @@ describe('postStatusUpdate', () => {
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(patchStatusWithCaseNoteSpy).toHaveBeenCalledWith('123', {
+    expect(patchStatusWithCaseNoteSpy).toHaveBeenCalledWith('A1234DY', {
       pathway: 'ACCOMMODATION',
       status: 'DONE',
       caseNoteText: 'Resettlement status set to: Done. This is my case note text',

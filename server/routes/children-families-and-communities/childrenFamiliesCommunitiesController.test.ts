@@ -36,14 +36,14 @@ describe('getView', () => {
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
 
     await request(app)
-      .get('/children-families-and-communities?prisonerNumber=123')
+      .get('/children-families-and-communities?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'CHILDREN_FAMILIES_AND_COMMUNITY',
       '0',
       '10',
@@ -51,7 +51,7 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -61,14 +61,14 @@ describe('getView', () => {
     const getCaseNotesCreatorsSpy = stubRpServiceNoData(rpService, 'getCaseNotesCreators')
 
     await request(app)
-      .get('/children-families-and-communities?prisonerNumber=123')
+      .get('/children-families-and-communities?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'CHILDREN_FAMILIES_AND_COMMUNITY',
       '0',
       '10',
@@ -76,7 +76,7 @@ describe('getView', () => {
       'occurenceDateTime%2CDESC',
       '0',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -87,15 +87,15 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/children-families-and-communities?prisonerNumber=123&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
+        '/children-families-and-communities?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getCrsReferralsSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
-    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
     expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
-      '123',
+      'A1234DY',
       'CHILDREN_FAMILIES_AND_COMMUNITY',
       '2',
       '20',
@@ -103,7 +103,7 @@ describe('getView', () => {
       'occurenceDateTime,ASC',
       '30',
     )
-    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('123', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
   })
 
   it('Error case - missing prisonerNumber', async () => {
@@ -116,7 +116,7 @@ describe('getView', () => {
   it('Error case - error thrown from rpService', async () => {
     stubRpServiceThrowError(rpService, 'getCrsReferrals')
     await request(app)
-      .get('/children-families-and-communities?prisonerNumber=123')
+      .get('/children-families-and-communities?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })

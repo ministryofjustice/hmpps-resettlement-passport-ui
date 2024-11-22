@@ -448,14 +448,14 @@ exports[`resetProfile should render page if feature is enabled 1`] = `
           
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <a href="/prisoner-overview?prisonerNumber=123" class="govuk-back-link">Back</a>
+      <a href="/prisoner-overview?prisonerNumber=A1234DY" class="govuk-back-link">Back</a>
 
       
         <div class="govuk-grid-row ">
           <div class="govuk-grid-column-three-quarters">
             <h1 class="govuk-heading-l govuk-!-padding-top-4">Reset reports and statuses
               <br>
-              <span class="govuk-caption-l">Smith, John (123)</span>
+              <span class="govuk-caption-l">Smith, John (A1234DY)</span>
             </h1>
             <p>Resetting will:</p>
             <ul class="govuk-list govuk-list--bullet">
@@ -470,11 +470,11 @@ exports[`resetProfile should render page if feature is enabled 1`] = `
             <div class="govuk-grid-row govuk-!-padding-top-4">
               <div class="govuk-grid-column-one-half">
                 <p class="govuk-body-m">
-                  <a href="/prisoner-overview?prisonerNumber=123">Go back to profile</a>
+                  <a href="/prisoner-overview?prisonerNumber=A1234DY">Go back to profile</a>
                 </p>
               </div>
               <div class="govuk-grid-column-one-half">
-                <a href="/resetProfile/reason?prisonerNumber=123" class="govuk-button" id="reset-profile-continue-btn">Continue</a>
+                <a href="/resetProfile/reason?prisonerNumber=A1234DY" class="govuk-button" id="reset-profile-continue-btn">Continue</a>
               </div>
             </div>
           </div>
@@ -954,7 +954,7 @@ exports[`resetProfileReason should render page if feature is enabled and no vali
           
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <a href="/resetProfile?prisonerNumber=123" class="govuk-back-link">Back</a>
+      <a href="/resetProfile?prisonerNumber=A1234DY" class="govuk-back-link">Back</a>
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-three-quarters">
@@ -965,14 +965,14 @@ exports[`resetProfileReason should render page if feature is enabled and no vali
             <span class="govuk-caption-l">
               Smith,
               John
-              (123)
+              (A1234DY)
             </span>
           </h1>
 
           <form id="reset-profile-reason" action="/resetProfile/reason" method="POST" novalidate>
             <div class="govuk-form-group  govuk-!-margin-0">
               <input type="hidden" name="_csrf" value=""/>
-              <input type="hidden" name="prisonerNumber" value="123"/>
+              <input type="hidden" name="prisonerNumber" value="A1234DY"/>
               
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
@@ -1017,7 +1017,7 @@ exports[`resetProfileReason should render page if feature is enabled and no vali
             <div class="govuk-grid-row govuk-!-padding-top-8">
               <div class="govuk-grid-column-one-half">
                 <p class="govuk-body-m">
-                  <a href="/prisoner-overview?prisonerNumber=123">Go back to profile</a>
+                  <a href="/prisoner-overview?prisonerNumber=A1234DY">Go back to profile</a>
                 </p>
               </div>
               <div class="govuk-grid-column-one-half">
@@ -1511,7 +1511,7 @@ exports[`resetProfileSuccess should render page if feature is enabled 1`] = `
           </div>
         </div>
       </div>
-      <a href="/prisoner-overview?prisonerNumber=123">Return to overview</a>
+      <a href="/prisoner-overview?prisonerNumber=A1234DY">Return to overview</a>
     </div>
   </div>
 

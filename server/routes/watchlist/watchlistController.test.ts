@@ -24,20 +24,20 @@ describe('postWatch', () => {
   it('Happy path', async () => {
     const postWatchListSpy = jest.spyOn(rpService, 'postWatchlist').mockImplementation()
     await request(app)
-      .post('/addToYourCases?prisonerNumber=123')
+      .post('/addToYourCases?prisonerNumber=A1234DY')
       .expect(302)
-      .expect(res => expect(res.headers.location).toEqual('/prisoner-overview/?prisonerNumber=123'))
+      .expect(res => expect(res.headers.location).toEqual('/prisoner-overview/?prisonerNumber=A1234DY'))
 
-    expect(postWatchListSpy).toHaveBeenCalledWith('123')
+    expect(postWatchListSpy).toHaveBeenCalledWith('A1234DY')
   })
   it('Error case - rpService throws error', async () => {
     const postWatchListSpy = jest.spyOn(rpService, 'postWatchlist').mockRejectedValue(new Error('Something went wrong'))
     await request(app)
-      .post('/addToYourCases?prisonerNumber=123')
+      .post('/addToYourCases?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(postWatchListSpy).toHaveBeenCalledWith('123')
+    expect(postWatchListSpy).toHaveBeenCalledWith('A1234DY')
   })
   it('Error case - missing parameter', async () => {
     await request(app)
@@ -51,11 +51,11 @@ describe('deleteWatch', () => {
   it('Happy path', async () => {
     const deleteWatchListSpy = jest.spyOn(rpService, 'deleteWatchlist').mockImplementation()
     await request(app)
-      .post('/removeFromYourCases?prisonerNumber=123')
+      .post('/removeFromYourCases?prisonerNumber=A1234DY')
       .expect(302)
-      .expect(res => expect(res.headers.location).toEqual('/prisoner-overview/?prisonerNumber=123'))
+      .expect(res => expect(res.headers.location).toEqual('/prisoner-overview/?prisonerNumber=A1234DY'))
 
-    expect(deleteWatchListSpy).toHaveBeenCalledWith('123')
+    expect(deleteWatchListSpy).toHaveBeenCalledWith('A1234DY')
   })
   it('Error case - rpService throws error', async () => {
     const deleteWatchListSpy = jest
@@ -63,11 +63,11 @@ describe('deleteWatch', () => {
       .mockImplementation()
       .mockRejectedValue(new Error('Something went wrong'))
     await request(app)
-      .post('/removeFromYourCases?prisonerNumber=123')
+      .post('/removeFromYourCases?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(deleteWatchListSpy).toHaveBeenCalledWith('123')
+    expect(deleteWatchListSpy).toHaveBeenCalledWith('A1234DY')
   })
   it('Error case - missing parameter', async () => {
     await request(app)

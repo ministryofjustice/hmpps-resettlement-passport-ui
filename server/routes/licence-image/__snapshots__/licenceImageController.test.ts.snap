@@ -93,6 +93,7 @@ exports[`getView Error from RpService 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -264,6 +265,7 @@ exports[`getView Happy path 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -314,7 +316,7 @@ exports[`getView Happy path 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -322,9 +324,9 @@ exports[`getView Happy path 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -336,7 +338,7 @@ exports[`getView Happy path 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -374,7 +376,7 @@ exports[`getView Happy path 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" aria-current=page>
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" aria-current=page>
                 Resettlement overview
               </a>
             </li>
@@ -382,7 +384,7 @@ exports[`getView Happy path 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" >
+                 href="/accommodation/?prisonerNumber=A1234DY" >
                 Accommodation
               </a>
             </li>
@@ -390,7 +392,7 @@ exports[`getView Happy path 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -398,7 +400,7 @@ exports[`getView Happy path 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -406,7 +408,7 @@ exports[`getView Happy path 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -414,7 +416,7 @@ exports[`getView Happy path 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -422,7 +424,7 @@ exports[`getView Happy path 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" >
+                 href="/finance-and-id/?prisonerNumber=A1234DY" >
                 Finance and ID
               </a>
             </li>
@@ -430,7 +432,7 @@ exports[`getView Happy path 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -574,6 +576,7 @@ exports[`getView Not found Error from RpService 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>

@@ -93,6 +93,7 @@ exports[`getView Error case - error thrown from rpService 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -264,6 +265,7 @@ exports[`getView Error case - missing prisonerNumber 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -435,6 +437,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -485,7 +488,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -493,9 +496,9 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -507,7 +510,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -545,7 +548,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -553,7 +556,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" aria-current=page>
+                 href="/accommodation/?prisonerNumber=A1234DY" aria-current=page>
                 Accommodation
               </a>
             </li>
@@ -561,7 +564,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -569,7 +572,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -577,7 +580,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -585,7 +588,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -593,7 +596,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" >
+                 href="/finance-and-id/?prisonerNumber=A1234DY" >
                 Finance and ID
               </a>
             </li>
@@ -601,7 +604,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -644,7 +647,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
         <input type="hidden" id="pathway" name="pathway" value="attitudes" />
         <a
           class="govuk-button"
-          href="/status-update?selectedPathway=accommodation&prisonerNumber=123"
+          href="/status-update?selectedPathway=accommodation&prisonerNumber=A1234DY"
           data-qa="update-pathway-status-button"
         >
           Update status
@@ -701,7 +704,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
   <div class="app-summary-card__body govuk-!-padding-top-4">
     <div class="govuk-grid-row">
       
-      <form action="/accommodation?prisonerNumber=123#case-notes" method="GET" novalidate>
+      <form action="/accommodation?prisonerNumber=A1234DY#case-notes" method="GET" novalidate>
         <div class="govuk-grid-column-full">
           <label class="govuk-label" for="pathway-select">Created by</label>
           <select name="createdByUserId" class="govuk-select" id="pathway-select">
@@ -712,7 +715,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             
           </select>
           
-          <input type="hidden" name="prisonerNumber" value="123">
+          <input type="hidden" name="prisonerNumber" value="A1234DY">
         </div>
         <div class="govuk-grid-column-full">
           <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
@@ -864,7 +867,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                 <th class="govuk-table__header" scope="row">This is a question</th>
                 <td class="govuk-table__cell show-line-breaks">Another answer</td>
                 <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
+                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
                 </td>
               </tr>
             
@@ -874,7 +877,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
 Answer2
 Answer3</td>
                 <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
+                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
                 </td>
               </tr>
             
@@ -1222,6 +1225,7 @@ exports[`getView Happy path with default query params and no data from endpoints
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1272,7 +1276,7 @@ exports[`getView Happy path with default query params and no data from endpoints
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -1280,9 +1284,9 @@ exports[`getView Happy path with default query params and no data from endpoints
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -1294,7 +1298,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -1332,7 +1336,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -1340,7 +1344,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" aria-current=page>
+                 href="/accommodation/?prisonerNumber=A1234DY" aria-current=page>
                 Accommodation
               </a>
             </li>
@@ -1348,7 +1352,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -1356,7 +1360,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -1364,7 +1368,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -1372,7 +1376,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -1380,7 +1384,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" >
+                 href="/finance-and-id/?prisonerNumber=A1234DY" >
                 Finance and ID
               </a>
             </li>
@@ -1388,7 +1392,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -1431,7 +1435,7 @@ exports[`getView Happy path with default query params and no data from endpoints
         <input type="hidden" id="pathway" name="pathway" value="attitudes" />
         <a
           class="govuk-button"
-          href="/status-update?selectedPathway=accommodation&prisonerNumber=123"
+          href="/status-update?selectedPathway=accommodation&prisonerNumber=A1234DY"
           data-qa="update-pathway-status-button"
         >
           Update status
@@ -1488,7 +1492,7 @@ exports[`getView Happy path with default query params and no data from endpoints
   <div class="app-summary-card__body govuk-!-padding-top-4">
     <div class="govuk-grid-row">
       
-      <form action="/accommodation?prisonerNumber=123#case-notes" method="GET" novalidate>
+      <form action="/accommodation?prisonerNumber=A1234DY#case-notes" method="GET" novalidate>
         <div class="govuk-grid-column-full">
           <label class="govuk-label" for="pathway-select">Created by</label>
           <select name="createdByUserId" class="govuk-select" id="pathway-select">
@@ -1496,7 +1500,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             
           </select>
           
-          <input type="hidden" name="prisonerNumber" value="123">
+          <input type="hidden" name="prisonerNumber" value="A1234DY">
         </div>
         <div class="govuk-grid-column-full">
           <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
@@ -1686,6 +1690,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1736,7 +1741,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -1744,9 +1749,9 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -1758,7 +1763,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -1796,7 +1801,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -1804,7 +1809,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" aria-current=page>
+                 href="/accommodation/?prisonerNumber=A1234DY" aria-current=page>
                 Accommodation
               </a>
             </li>
@@ -1812,7 +1817,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -1820,7 +1825,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -1828,7 +1833,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -1836,7 +1841,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -1844,7 +1849,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" >
+                 href="/finance-and-id/?prisonerNumber=A1234DY" >
                 Finance and ID
               </a>
             </li>
@@ -1852,7 +1857,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -1895,7 +1900,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
         <input type="hidden" id="pathway" name="pathway" value="attitudes" />
         <a
           class="govuk-button"
-          href="/status-update?selectedPathway=accommodation&prisonerNumber=123"
+          href="/status-update?selectedPathway=accommodation&prisonerNumber=A1234DY"
           data-qa="update-pathway-status-button"
         >
           Update status
@@ -1952,7 +1957,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
   <div class="app-summary-card__body govuk-!-padding-top-4">
     <div class="govuk-grid-row">
       
-      <form action="/accommodation?prisonerNumber=123#case-notes" method="GET" novalidate>
+      <form action="/accommodation?prisonerNumber=A1234DY#case-notes" method="GET" novalidate>
         <div class="govuk-grid-column-full">
           <label class="govuk-label" for="pathway-select">Created by</label>
           <select name="createdByUserId" class="govuk-select" id="pathway-select">
@@ -1963,7 +1968,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             
           </select>
           
-          <input type="hidden" name="prisonerNumber" value="123">
+          <input type="hidden" name="prisonerNumber" value="A1234DY">
         </div>
         <div class="govuk-grid-column-full">
           <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
@@ -2015,12 +2020,12 @@ exports[`getView Happy path with specified query params and data from endpoints 
     <ul class="moj-pagination__list">
       
         <li class="moj-pagination__item  moj-pagination__item--prev">
-          <a class="moj-pagination__link" href="/accommodation?createdByUserId=2&amp;prisonerNumber=123&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ACCOMMODATION#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
+          <a class="moj-pagination__link" href="/accommodation?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ACCOMMODATION#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
         </li>
       
       
           <li class="moj-pagination__item">
-            <a class="moj-pagination__link" href="/accommodation?createdByUserId=2&amp;prisonerNumber=123&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ACCOMMODATION#case-notes " aria-label="Page 1 of 1">1</a>
+            <a class="moj-pagination__link" href="/accommodation?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ACCOMMODATION#case-notes " aria-label="Page 1 of 1">1</a>
           </li>
         
       
@@ -2121,7 +2126,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
                 <th class="govuk-table__header" scope="row">This is a question</th>
                 <td class="govuk-table__cell show-line-breaks">Another answer</td>
                 <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
+                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
                 </td>
               </tr>
             
@@ -2131,7 +2136,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
 Answer2
 Answer3</td>
                 <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=123&submitted=true&type=BCST2">Change</a>
+                  <a href="/ImmediateNeedsReport/pathway/ACCOMMODATION/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
                 </td>
               </tr>
             

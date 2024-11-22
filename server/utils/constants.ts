@@ -164,6 +164,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   INCLUDE_PAST_RELEASE_DATES: 'includePastReleaseDates',
   RESET_PROFILE: 'profileReset',
   USE_NEW_DPS_CASE_NOTE_FORMAT: 'useNewDpsCaseNoteFormat',
+  WHATS_NEW_BANNER: 'whatsNewBanner',
 }
 
 export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'

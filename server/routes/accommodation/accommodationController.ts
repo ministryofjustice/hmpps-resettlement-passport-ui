@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express'
 import AccommodationView from './accommodationView'
 import RpService from '../../services/rpService'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class AccommodationController {
@@ -14,6 +15,7 @@ export default class AccommodationController {
       if (!prisonerData) {
         return next(new Error('Prisoner number is missing from request'))
       }
+      handleWhatsNewBanner(req, res)
 
       const {
         page = '0',

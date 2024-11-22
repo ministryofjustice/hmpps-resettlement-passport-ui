@@ -2,6 +2,7 @@ import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import ChildrenFamiliesCommunitiesView from './childrenFamiliesCommunitiesView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class ChildrenFamiliesCommunitiesController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -11,6 +12,7 @@ export default class ChildrenFamiliesCommunitiesController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+      handleWhatsNewBanner(req, res)
 
       const {
         page = '0',

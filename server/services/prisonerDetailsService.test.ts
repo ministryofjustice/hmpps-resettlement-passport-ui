@@ -55,4 +55,18 @@ describe('Prisoner Details Middleware', () => {
 
     expect(spy).toHaveBeenCalledTimes(0)
   })
+
+  it('Should not call the api if there is prisoner number not valid', async () => {
+    const spy = jest.spyOn(rpService, 'getPrisonerImage')
+
+    const prisonerData = {
+      personalDetails: {
+        facialImageId: null as string,
+      },
+    }
+    const prisonerImage = await getPrisonerImage(rpService, prisonerData as PrisonerData, 'abc')
+    expect(prisonerImage).toBe(null)
+
+    expect(spy).toHaveBeenCalledTimes(0)
+  })
 })

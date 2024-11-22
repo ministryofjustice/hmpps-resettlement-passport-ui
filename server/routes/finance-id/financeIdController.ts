@@ -4,6 +4,7 @@ import logger from '../../../logger'
 import FinanceIdView from './financeIdView'
 import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
+import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class FinanceIdController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -12,7 +13,9 @@ export default class FinanceIdController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
+      handleWhatsNewBanner(req, res)
+
       const {
         page = '0',
         pageSize = '10',

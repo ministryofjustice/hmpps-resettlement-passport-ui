@@ -93,6 +93,7 @@ exports[`getStatusUpdate error case - missing prisonerNumber 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -264,6 +265,7 @@ exports[`getStatusUpdate error case - missing selectedPathway 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -435,6 +437,7 @@ exports[`getStatusUpdate error case - pathway does not exist 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -606,6 +609,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -656,7 +660,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
         <div class="govuk-grid-column-one-half">
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-one-quarter">
-              <a href="/prisoner-overview/?prisonerNumber=123">
+              <a href="/prisoner-overview/?prisonerNumber=A1234DY">
                 <img src="data:image/jpeg;base64, " alt="view prisoner profile"
                      class="govuk-!-width-full profile-header__person-photo">
               </a>
@@ -664,9 +668,9 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <div class="govuk-grid-column-three-quarters">
               <h1 class="govuk-heading-xl" data-qa="profile-heading-full-name">
                 Smith, John
-                <span class="govuk-caption-l">123</span>
+                <span class="govuk-caption-l">A1234DY</span>
                 <p class="govuk-body-s govuk-!-padding-top-2">
-                  <a href="#/prisoner/123">View full DPS
+                  <a href="#/prisoner/A1234DY">View full DPS
                     profile</a>
                 </p>
               </h1>
@@ -678,7 +682,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Prisoner number:</b><br>
-                123</p>
+                A1234DY</p>
               <p>
                 <b>Location:</b>
                 
@@ -716,7 +720,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-prisoner-overview"
-                 href="/prisoner-overview/?prisonerNumber=123" >
+                 href="/prisoner-overview/?prisonerNumber=A1234DY" >
                 Resettlement overview
               </a>
             </li>
@@ -724,7 +728,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-accommodation"
-                 href="/accommodation/?prisonerNumber=123" aria-current=page>
+                 href="/accommodation/?prisonerNumber=A1234DY" aria-current=page>
                 Accommodation
               </a>
             </li>
@@ -732,7 +736,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-attitudes-thinking-and-behaviour"
-                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=123" >
+                 href="/attitudes-thinking-and-behaviour/?prisonerNumber=A1234DY" >
                 Attitudes, thinking and behaviour
               </a>
             </li>
@@ -740,7 +744,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-children-families-and-communities"
-                 href="/children-families-and-communities/?prisonerNumber=123" >
+                 href="/children-families-and-communities/?prisonerNumber=A1234DY" >
                 Children, families and communities
               </a>
             </li>
@@ -748,7 +752,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-drugs-and-alcohol"
-                 href="/drugs-and-alcohol/?prisonerNumber=123" >
+                 href="/drugs-and-alcohol/?prisonerNumber=A1234DY" >
                 Drugs and alcohol
               </a>
             </li>
@@ -756,7 +760,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-education-skills-and-work"
-                 href="/education-skills-and-work/?prisonerNumber=123" >
+                 href="/education-skills-and-work/?prisonerNumber=A1234DY" >
                 Education, skills and work
               </a>
             </li>
@@ -764,7 +768,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-finance-and-id"
-                 href="/finance-and-id/?prisonerNumber=123" >
+                 href="/finance-and-id/?prisonerNumber=A1234DY" >
                 Finance and ID
               </a>
             </li>
@@ -772,7 +776,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
             <li class="moj-sub-navigation__item">
               <a class="moj-sub-navigation__link"
                  data-qa="sub-nav-health-status"
-                 href="/health-status/?prisonerNumber=123" >
+                 href="/health-status/?prisonerNumber=A1234DY" >
                 Health
               </a>
             </li>
@@ -818,7 +822,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
   </ul>
 
       <p class="govuk-body-s govuk-!-padding-bottom-4">
-        <a href="/accommodation/?prisonerNumber=123">Back to Accommodation</a>
+        <a href="/accommodation/?prisonerNumber=A1234DY">Back to Accommodation</a>
       </p>
     </div>
     <div class="govuk-grid-column-three-quarters">
@@ -1042,7 +1046,7 @@ exports[`getStatusUpdate happy path - render page 1`] = `
               </fieldset>
             </div>
             <input type="hidden" name="selectedPathway" value="accommodation">
-            <input type="hidden" name="prisonerNumber" value="123">
+            <input type="hidden" name="prisonerNumber" value="A1234DY">
             <input type="hidden" name="_csrf" value=""/>
             <button class="govuk-button" type="submit" data-prevent-double-click="true" data-qa="update-status-submit">Update</button>
           </form>
@@ -1169,6 +1173,7 @@ exports[`postStatusUpdate error case - invalid pathway 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1340,6 +1345,7 @@ exports[`postStatusUpdate error case - invalid status 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1511,6 +1517,7 @@ exports[`postStatusUpdate error case - missing pathway 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1682,6 +1689,7 @@ exports[`postStatusUpdate error case - missing prisonerNumber 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1853,6 +1861,7 @@ exports[`postStatusUpdate error thrown during patch operation 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>

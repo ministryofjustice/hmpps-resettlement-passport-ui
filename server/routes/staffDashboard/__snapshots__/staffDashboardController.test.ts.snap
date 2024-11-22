@@ -3037,7 +3037,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
             <div class="govuk-grid-column-one-third">
               <div class="govuk-form-group">
                 <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="123">
+                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="A1234DY">
               </div>
             </div>
           </div>
@@ -3069,22 +3069,22 @@ exports[`getView Happy path with filter prisoner number 1`] = `
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
             <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=123&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+              <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
                 <button>Name</button>
               </a>
             </th>
             <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=123&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+              <a aria-sort="ascending" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
                 <button>Release date</button>
               </a>
             </th>
             <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=123&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+              <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
                 <button>Release eligibility</button>
               </a>
             </th>
             <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=123&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+              <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
                 <button>Release on temporary licence</button>
               </a>
             </th>
@@ -3094,7 +3094,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
               
             </th>
             <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=123&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+              <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
                 <button>Last updated</button>
               </a>
             </th>
@@ -3322,27 +3322,27 @@ exports[`getView Happy path with filter prisoner number 1`] = `
               
               
                 <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=123&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                  <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
                 </li>
               
               
                 <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=123&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                  <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
                 </li>
               
               
                 <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=123&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                  <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
                 </li>
               
               
                 <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=123&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                  <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
                 </li>
               
             
               <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=123&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
               </li>
             
           </ul>
