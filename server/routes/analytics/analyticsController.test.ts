@@ -5,7 +5,7 @@ import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
 let app: Express
-const { appInsightsClient } = mockedServices
+const { appInsightsService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
@@ -20,8 +20,7 @@ afterEach(() => {
 
 describe('track', () => {
   it('Happy path', async () => {
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
     const name = 'eventName'
     const properties = {
@@ -43,10 +42,10 @@ describe('track', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot)
 
-    expect(trackEventSpy).toHaveBeenCalledWith({ name, properties })
+    expect(trackEventSpy).toHaveBeenCalledWith(name, properties)
   })
   it('No request body', async () => {
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
     await request(app)
       .post(`/track`)
@@ -56,7 +55,7 @@ describe('track', () => {
     expect(trackEventSpy).not.toHaveBeenCalled()
   })
   it('Error from trackEvent', async () => {
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementationOnce(() => {
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementationOnce(() => {
       throw new Error('Something went wrong')
     })
 
@@ -80,12 +79,12 @@ describe('track', () => {
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot)
 
-    expect(trackEventSpy).toHaveBeenCalledWith({ name, properties })
+    expect(trackEventSpy).toHaveBeenCalledWith(name, properties)
   })
   it('Not found Error from trackEvent', async () => {
     const error = new Error('not found') as Error & { status?: number }
     error.status = 404
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementationOnce(() => {
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementationOnce(() => {
       throw error
     })
     const name = 'eventName'
@@ -108,6 +107,6 @@ describe('track', () => {
       .expect(404)
       .expect(res => expect(res.text).toMatchSnapshot)
 
-    expect(trackEventSpy).toHaveBeenCalledWith({ name, properties })
+    expect(trackEventSpy).toHaveBeenCalledWith(name, properties)
   })
 })

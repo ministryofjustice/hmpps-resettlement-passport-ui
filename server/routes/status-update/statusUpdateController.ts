@@ -1,8 +1,7 @@
 import { RequestHandler } from 'express'
-import NodeClient from 'applicationinsights/out/Library/NodeClient'
 import { getEnumByURL, getEnumValue, isValidPathway, isValidStatus } from '../../utils/utils'
 import logger from '../../../logger'
-import { PsfrEvent, trackEvent } from '../../utils/analytics'
+import { AppInsightsService, PsfrEvent } from '../../utils/analytics'
 import RpService from '../../services/rpService'
 import StatusUpdateView from './statusUpdateView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
@@ -10,7 +9,7 @@ import PrisonerDetailsService from '../../services/prisonerDetailsService'
 export default class StatusUpdateController {
   constructor(
     private readonly rpService: RpService,
-    private readonly appInsightsClient: NodeClient,
+    private readonly appInsightsService: AppInsightsService,
     private readonly prisonerDetailsService: PrisonerDetailsService,
   ) {
     // no op
@@ -62,7 +61,7 @@ export default class StatusUpdateController {
         status: selectedStatus,
         caseNoteText: `Resettlement status set to: ${status}. ${caseNoteInput || ''}`,
       })
-      trackEvent(this.appInsightsClient, PsfrEvent.STATUS_UPDATE_EVENT, {
+      this.appInsightsService.trackEvent(PsfrEvent.STATUS_UPDATE_EVENT, {
         prisonerId: prisonerNumber,
         sessionId: req.sessionID,
         username: res.locals.user.username,

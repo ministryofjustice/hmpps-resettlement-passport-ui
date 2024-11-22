@@ -1,8 +1,7 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import RpService from '../../services/rpService'
 import Config from '../../s3Config'
-import { sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
@@ -39,14 +38,20 @@ describe('getAddBankAccountView', () => {
   it('error, prisoner number blank', async () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/?prisonerNumber=')
-      .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
   it('error, prisoner number missing', async () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/')
-      .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 })
 describe('getUpdateBankAccountStatusView', () => {
@@ -59,20 +64,26 @@ describe('getUpdateBankAccountStatusView', () => {
   it('error, prisoner number blank', async () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/?prisonerNumber=&applicationId=A1234DY')
-      .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
   it('error, prisoner number missing', async () => {
     await request(app)
-      .get('/finance-and-id/add-a-bank-account/&applicationId=AA1234DY4DY')
+      .get('/finance-and-id/add-a-bank-account?applicationId=AA1234DY4DY')
       .expect(404)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
   it('error application ID blank', async () => {
     await request(app)
-      .get('/finance-and-id/add-a-bank-account/?prisonerNumber=AA1234DY4DY&applicationId=')
+      .get('/finance-and-id/add-a-bank-account?prisonerNumber=AA1234DY4DY&applicationId=')
       .expect(200)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
   it('error application ID missing', async () => {
     await request(app)
@@ -95,8 +106,11 @@ describe('getConfirmAddABankAccountView', () => {
       .get(
         '/finance-and-id/confirm-add-a-bank-account/?bankName=Lloyds&applicationSubmittedDay=01&applicationSubmittedMonth=01&applicationSubmittedYear=01&applicationId=&confirmationType=addAccount&applicationType=',
       )
-      .expect(500)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
   it('only prisoner number, no day/month/year/bank name', async () => {
     await request(app)
@@ -132,8 +146,11 @@ describe('postBankAccountSubmitView', () => {
         applicationDate: '01/01/2024',
         bankName: 'BARCLAYS',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
   it('error - prisoner number missing', async () => {
     await request(app)
@@ -142,10 +159,14 @@ describe('postBankAccountSubmitView', () => {
         applicationDate: '01/01/2024',
         bankName: 'BARCLAYS',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
   it('error - bank Name blank', async () => {
+    rpService.postBankApplication = jest.fn().mockRejectedValue(new Error('bank name is required'))
     await request(app)
       .post('/finance-and-id/bank-account-submit')
       .send({
@@ -157,6 +178,7 @@ describe('postBankAccountSubmitView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
   it('error - bank Name missing', async () => {
+    rpService.postBankApplication = jest.fn().mockRejectedValue(new Error('bank name is required'))
     await request(app)
       .post('/finance-and-id/bank-account-submit')
       .send({
@@ -167,6 +189,7 @@ describe('postBankAccountSubmitView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
   it('error - bank application date blank', async () => {
+    rpService.postBankApplication = jest.fn().mockRejectedValue(new Error('bank application date is required'))
     await request(app)
       .post('/finance-and-id/bank-account-submit')
       .send({
@@ -178,6 +201,7 @@ describe('postBankAccountSubmitView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
   it('error - bank application date missing', async () => {
+    rpService.postBankApplication = jest.fn().mockRejectedValue(new Error('bank application date is required'))
     await request(app)
       .post('/finance-and-id/bank-account-submit')
       .send({
@@ -224,7 +248,7 @@ describe('postBankAccountUpdateView', () => {
         addedToPersonalItemsDate: '01/01/2000',
         resubmissionDate: '01/01/2000',
       })
-      .expect(500)
+      .expect(404)
   })
   it('error - prisoner number missing', async () => {
     await request(app)
@@ -237,9 +261,10 @@ describe('postBankAccountUpdateView', () => {
         addedToPersonalItemsDate: '01/01/2000',
         resubmissionDate: '01/01/2000',
       })
-      .expect(500)
+      .expect(404)
   })
   it('error - updated status blank', async () => {
+    rpService.patchBankApplication = jest.fn().mockRejectedValue(new Error('status is required'))
     await request(app)
       .post('/finance-and-id/bank-account-update')
       .send({
@@ -255,6 +280,7 @@ describe('postBankAccountUpdateView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
   it('error - updated status missing', async () => {
+    rpService.patchBankApplication = jest.fn().mockRejectedValue(new Error('status is required'))
     await request(app)
       .post('/finance-and-id/bank-account-update')
       .send({
@@ -269,6 +295,7 @@ describe('postBankAccountUpdateView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
   it('error - added to personal items blank', async () => {
+    rpService.patchBankApplication = jest.fn().mockRejectedValue(new Error('missing required field'))
     await request(app)
       .post('/finance-and-id/bank-account-update')
       .send({
@@ -284,6 +311,7 @@ describe('postBankAccountUpdateView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
   it('error - added to personal items missing', async () => {
+    rpService.patchBankApplication = jest.fn().mockRejectedValue(new Error('missing required field'))
     await request(app)
       .post('/finance-and-id/bank-account-update')
       .send({

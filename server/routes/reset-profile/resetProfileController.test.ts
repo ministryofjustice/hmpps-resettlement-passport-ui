@@ -4,7 +4,7 @@ import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper } from '../configHelperTest'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 const { rpService, appInsightsService } = mockedServices
@@ -46,7 +46,10 @@ describe('resetProfile', () => {
     await request(app)
       .get('/resetProfile')
       .expect(404)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 })
 
@@ -243,6 +246,9 @@ describe('resetProfileSuccess', () => {
     await request(app)
       .get('/resetProfile/success')
       .expect(404)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 })

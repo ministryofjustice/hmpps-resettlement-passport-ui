@@ -1,6 +1,5 @@
 import request from 'supertest'
 import type { Express } from 'express'
-import RpService from '../../services/rpService'
 import Config from '../../s3Config'
 import { stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'

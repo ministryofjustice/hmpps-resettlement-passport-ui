@@ -398,7 +398,6 @@ export default class ImmediateNeedsReportController {
         `/assessment-task-list?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}&type=${assessmentType}`,
       )
     } catch (err) {
-      console.log(err)
       return next(err)
     }
   }

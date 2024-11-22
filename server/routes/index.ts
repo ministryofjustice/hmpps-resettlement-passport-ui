@@ -26,8 +26,6 @@ import prisonerOverviewRouter from './prisoner-overview/prisonerOverviewRouter'
 import resetProfileRouter from './reset-profile'
 import statusUpdateRouter from './status-update'
 import financeIdBankAccountRouter from './finance-id-bank-account'
-import { prisonerNumberSchema } from './prisonerNumberSchema'
-import { prisonerNumberValidate } from './validate-request'
 import serviceUpdates from './service-updates'
 
 export default function routes(services: Services): Router {

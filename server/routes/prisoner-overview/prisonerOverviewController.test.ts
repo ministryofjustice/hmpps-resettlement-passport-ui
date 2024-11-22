@@ -1,12 +1,11 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { JSDOM } from 'jsdom'
-import RpService from '../../services/rpService'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper, defaultTestConfig } from '../configHelperTest'
-import { stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
 
 let app: Express
 const { rpService, documentService } = mockedServices
@@ -33,8 +32,11 @@ describe('prisonerOverview', () => {
   it('should not render page if prisonerData does not exist', async () => {
     await request(app)
       .get('/prisoner-overview')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 
   it('happy path with default query parameters', async () => {
@@ -66,17 +68,17 @@ describe('prisonerOverview', () => {
 
   it('should render the prisoner overview page with correct query params', async () => {
     const queryParams = {
+      prisonerNumber: 'A1234DY',
       page: '1',
       size: '5',
       sort: 'occurenceDateTime%2CDESC',
       days: '7',
       selectedPathway: 'Education',
     }
-
     const getPrisonerOverviewPageDataSpy = stubPrisonerOverviewData(rpService)
 
     await request(app)
-      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .get('/prisoner-overview')
       .query(queryParams)
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())

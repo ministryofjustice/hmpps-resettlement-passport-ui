@@ -5,7 +5,7 @@ import StatusUpdateController from './statusUpdateController'
 export default (router: Router, services: Services) => {
   const statusUpdateController = new StatusUpdateController(
     services.rpService,
-    services.appInsightsClient,
+    services.appInsightsService,
     services.prisonerDetailsService,
   )
   router.get('/status-update', [statusUpdateController.getStatusUpdate])

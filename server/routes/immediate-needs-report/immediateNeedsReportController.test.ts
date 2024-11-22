@@ -1,4 +1,3 @@
-import { JSDOM } from 'jsdom'
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
@@ -11,7 +10,7 @@ import {
 } from '../../data/model/immediateNeedsReport'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 const { rpService, assessmentStateService } = mockedServices
@@ -1077,7 +1076,7 @@ describe('getView', () => {
       )
       .expect(200)
       .expect(res => {
-        const { document } = new JSDOM(res.text).window
+        const document = parseHtmlDocument(res.text)
         const checkboxes = document.querySelectorAll("input[type='checkbox']")
         expect(document.getElementById('WHAT_ID_DOCUMENTS')).toBeTruthy()
         expect(checkboxes.length).toBe(18)
@@ -1302,7 +1301,7 @@ describe('getView', () => {
       )
       .expect(200)
       .expect(res => {
-        const { document } = new JSDOM(res.text).window
+        const document = parseHtmlDocument(res.text)
         const addressForm = document.getElementById('WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING')
         expect(addressForm.outerHTML).toMatchSnapshot('address fieldset')
       })

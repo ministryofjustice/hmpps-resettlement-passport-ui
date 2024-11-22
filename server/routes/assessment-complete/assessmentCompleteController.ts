@@ -1,12 +1,11 @@
 import { RequestHandler } from 'express'
-import NodeClient from 'applicationinsights/out/Library/NodeClient'
 import RpService from '../../services/rpService'
 import AssessmentCompleteView from './assessmentCompleteView'
 import { AssessmentType } from '../../data/model/assessmentInformation'
 import { parseAssessmentType } from '../../utils/utils'
 import { AssessmentStateService } from '../../data/assessmentStateService'
 import { PATHWAY_DICTIONARY } from '../../utils/constants'
-import { PsfrEvent, trackEvent } from '../../utils/analytics'
+import { AppInsightsService, PsfrEvent } from '../../utils/analytics'
 import { PathwayStatus } from '../../@types/express'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
@@ -14,7 +13,7 @@ export default class AssessmentCompleteController {
   constructor(
     private readonly rpService: RpService,
     private readonly assessmentStateService: AssessmentStateService,
-    private readonly appInsightsClient: NodeClient,
+    private readonly appInsightsService: AppInsightsService,
     private readonly prisonerDetailsService: PrisonerDetailsService,
   ) {
     // no op
@@ -66,7 +65,7 @@ export default class AssessmentCompleteController {
     const newPathwayStatus = prisonerData.pathways
 
     Object.entries(PATHWAY_DICTIONARY).forEach(([pathway]) => {
-      trackEvent(this.appInsightsClient, PsfrEvent.REPORT_SUBMITTED_EVENT, {
+      this.appInsightsService.trackEvent(PsfrEvent.REPORT_SUBMITTED_EVENT, {
         prisonerId: prisonerNumber,
         sessionId,
         username,

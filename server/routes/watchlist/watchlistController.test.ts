@@ -1,10 +1,9 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
-import RpService from '../../services/rpService'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 const { rpService } = mockedServices
@@ -42,8 +41,11 @@ describe('postWatch', () => {
   it('Error case - missing parameter', async () => {
     await request(app)
       .post('/addToYourCases')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 })
 
@@ -65,14 +67,20 @@ describe('deleteWatch', () => {
     await request(app)
       .post('/removeFromYourCases?prisonerNumber=A1234DY')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Error removing from your cases')
+      })
 
     expect(deleteWatchListSpy).toHaveBeenCalledWith('A1234DY')
   })
   it('Error case - missing parameter', async () => {
     await request(app)
       .post('/removeFromYourCases')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 })

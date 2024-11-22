@@ -1,10 +1,9 @@
 import { type Express } from 'express'
 import { addMonths } from 'date-fns'
 import request from 'supertest'
-import RpService from '../../services/rpService'
 import { AssessmentsSummary, PathwayAssessmentStatus } from '../../data/model/assessmentStatus'
 import Config from '../../s3Config'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
@@ -117,8 +116,11 @@ describe('getView', () => {
   it('Error case - prisonerNumber is missing', async () => {
     await request(app)
       .get('/assessment-task-list?type=BCST2')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 
   it('Error case - type is missing', async () => {

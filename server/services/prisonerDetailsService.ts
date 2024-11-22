@@ -3,7 +3,6 @@ import { isAlphanumeric } from 'validator'
 import { PrisonerData } from '../@types/express'
 import logger from '../../logger'
 import RpService from './rpService'
-import { Status } from '@cucumber/cucumber'
 
 const notFoundMessage = 'No data found for prisoner'
 
@@ -76,11 +75,13 @@ export default class PrisonerDetailsService {
 
 interface ErrorWithStatus extends Error {
   status?: number
+  customMessage?: string
   message: string
 }
 
 function notFoundError(): ErrorWithStatus {
   const error = new Error(notFoundMessage) as ErrorWithStatus
   error.status = 404
+  error.customMessage = notFoundMessage
   return error
 }

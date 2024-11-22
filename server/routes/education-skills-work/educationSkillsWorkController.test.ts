@@ -2,6 +2,8 @@ import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import {
+  pageHeading,
+  parseHtmlDocument,
   stubAssessmentInformation,
   stubCaseNotesCreators,
   stubCaseNotesHistory,
@@ -116,8 +118,11 @@ describe('getView', () => {
   it('Error case - missing prisonerNumber', async () => {
     await request(app)
       .get('/education-skills-and-work')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 
   it('Error case - error thrown from rpService', async () => {
@@ -125,6 +130,9 @@ describe('getView', () => {
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Something went wrong')
+      })
   })
 })

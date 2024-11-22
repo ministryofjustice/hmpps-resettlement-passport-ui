@@ -1,14 +1,14 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 import { PATHWAY_DICTIONARY } from '../../utils/constants'
 import { PrisonerData } from '../../@types/express'
 
 let app: Express
-const { rpService, assessmentStateService, appInsightsClient } = mockedServices
+const { rpService, assessmentStateService, appInsightsService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
@@ -33,8 +33,11 @@ describe('getView', () => {
   it('Error case - missing prisonerNumber', async () => {
     await request(app)
       .get('/assessment-complete?type=BCST2')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 
   it('Error case - missing type', async () => {
@@ -138,8 +141,7 @@ describe('postView', () => {
     } as PrisonerData)
     const submitAssessmentSpy = jest.spyOn(rpService, 'submitAssessment').mockResolvedValue({})
     const onCompleteSpy = jest.spyOn(assessmentStateService, 'onComplete').mockImplementation()
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
     await request(app)
       .post('/assessment-complete')
@@ -195,39 +197,35 @@ describe('postView', () => {
       userId: 'user1',
     })
     Object.entries(PATHWAY_DICTIONARY).forEach(([pathway]) => {
-      expect(trackEventSpy).toHaveBeenCalledWith({
-        name: 'PSFR_ReportSubmittedStatusUpdate',
-        properties: {
-          newStatus: 'SUPPORT_REQUIRED',
-          oldStatus: 'IN_PROGRESS',
-          pathway,
-          prisonerId: 'A1234DY',
-          sessionId: 'sessionId',
-          username: 'user1',
-        },
+      expect(trackEventSpy).toHaveBeenCalledWith('PSFR_ReportSubmittedStatusUpdate', {
+        newStatus: 'SUPPORT_REQUIRED',
+        oldStatus: 'IN_PROGRESS',
+        pathway,
+        prisonerId: 'A1234DY',
+        sessionId: 'sessionId',
+        username: 'user1',
       })
     })
-    expect(flushSpy).toHaveBeenCalledTimes(7)
   })
 
   it('Error case - missing prisonerNumber', async () => {
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
     await request(app)
       .post('/assessment-complete')
       .send({
         assessmentType: 'BCST2',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
-    expect(flushSpy).toHaveBeenCalledTimes(0)
   })
 
   it('Error case - missing assessmentType', async () => {
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
     await request(app)
       .post('/assessment-complete')
@@ -237,12 +235,10 @@ describe('postView', () => {
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
-    expect(flushSpy).toHaveBeenCalledTimes(0)
   })
 
   it('Error case - incorrect assessmentType', async () => {
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
     await request(app)
       .post('/assessment-complete')
@@ -253,12 +249,10 @@ describe('postView', () => {
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
-    expect(flushSpy).toHaveBeenCalledTimes(0)
   })
 
   it('Error case - error returned from API', async () => {
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
     const submitAssessmentSpy = jest.spyOn(rpService, 'submitAssessment').mockResolvedValue({ error: true })
     await request(app)
@@ -271,12 +265,10 @@ describe('postView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(submitAssessmentSpy).toHaveBeenCalledWith('A1234DY', 'BCST2')
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
-    expect(flushSpy).toHaveBeenCalledTimes(0)
   })
 
   it('Error case - error thrown from API call', async () => {
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
     const submitAssessmentSpy = jest
       .spyOn(rpService, 'submitAssessment')
@@ -291,6 +283,5 @@ describe('postView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(submitAssessmentSpy).toHaveBeenCalledWith('A1234DY', 'BCST2')
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
-    expect(flushSpy).toHaveBeenCalledTimes(0)
   })
 })

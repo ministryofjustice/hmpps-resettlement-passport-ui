@@ -1,7 +1,7 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
@@ -308,14 +308,14 @@ describe('getAddAnIdView', () => {
     })
   })
   it('Error case - post ID submit without parameters', async () => {
-    await request(app)
-      .post('/finance-and-id/id-submit')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+    const res = await request(app).post('/finance-and-id/id-submit').expect(404)
+
+    const document = parseHtmlDocument(res.text)
+    expect(pageHeading(document)).toEqual('No data found for prisoner')
   })
   it('Error case - post ID submit without prisoner ID', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
-    await request(app)
+    const res = await request(app)
       .post('/finance-and-id/id-submit')
       .send({
         idType: 'Birth certificate',
@@ -326,25 +326,15 @@ describe('getAddAnIdView', () => {
         isPriorityApplication: false,
         costOfApplication: '10',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-    expect(submitIdSpy).toHaveBeenCalledWith(undefined, {
-      applicationSubmittedDate: '2000-10-12T01:00:00',
-      caseNumber: undefined,
-      costOfApplication: 10,
-      countryBornIn: '',
-      courtDetails: undefined,
-      driversLicenceApplicationMadeAt: undefined,
-      driversLicenceType: undefined,
-      haveGro: true,
-      idType: 'Birth certificate',
-      isPriorityApplication: false,
-      isUkNationalBornOverseas: false,
-    })
+      .expect(404)
+
+    const document = parseHtmlDocument(res.text)
+    expect(pageHeading(document)).toEqual('No data found for prisoner')
+    expect(submitIdSpy).toHaveBeenCalledTimes(0)
   })
   it('Error case - post ID submit with empty prisoner ID', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
-    await request(app)
+    const res = await request(app)
       .post('/finance-and-id/id-submit')
       .send({
         idType: 'Birth certificate',
@@ -356,25 +346,15 @@ describe('getAddAnIdView', () => {
         isPriorityApplication: false,
         costOfApplication: '10',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-    expect(submitIdSpy).toHaveBeenCalledWith('', {
-      applicationSubmittedDate: '2000-10-12T01:00:00',
-      caseNumber: undefined,
-      costOfApplication: 10,
-      countryBornIn: '',
-      courtDetails: undefined,
-      driversLicenceApplicationMadeAt: undefined,
-      driversLicenceType: undefined,
-      haveGro: true,
-      idType: 'Birth certificate',
-      isPriorityApplication: false,
-      isUkNationalBornOverseas: false,
-    })
+      .expect(404)
+
+    const document = parseHtmlDocument(res.text)
+    expect(pageHeading(document)).toEqual('No data found for prisoner')
+    expect(submitIdSpy).toHaveBeenCalledTimes(0)
   })
   it('Error case - post ID submit with null prisoner ID', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
-    await request(app)
+    const res = await request(app)
       .post('/finance-and-id/id-submit')
       .send({
         idType: 'Birth certificate',
@@ -386,25 +366,16 @@ describe('getAddAnIdView', () => {
         isPriorityApplication: false,
         costOfApplication: '10',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-    expect(submitIdSpy).toHaveBeenCalledWith(null, {
-      applicationSubmittedDate: '2000-10-12T01:00:00',
-      caseNumber: undefined,
-      costOfApplication: 10,
-      countryBornIn: '',
-      courtDetails: undefined,
-      driversLicenceApplicationMadeAt: undefined,
-      driversLicenceType: undefined,
-      haveGro: true,
-      idType: 'Birth certificate',
-      isPriorityApplication: false,
-      isUkNationalBornOverseas: false,
-    })
+      .expect(404)
+
+    const document = parseHtmlDocument(res.text)
+    expect(pageHeading(document)).toEqual('No data found for prisoner')
+    expect(submitIdSpy).toHaveBeenCalledTimes(0)
   })
+
   it('Error case - post ID submit with invalid prisoner ID', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Some error'))
-    await request(app)
+    const res = await request(app)
       .post('/finance-and-id/id-submit')
       .send({
         idType: 'Birth certificate',
@@ -416,21 +387,11 @@ describe('getAddAnIdView', () => {
         isPriorityApplication: false,
         costOfApplication: '10',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-    expect(submitIdSpy).toHaveBeenCalledWith('!?@@?!', {
-      applicationSubmittedDate: '2000-10-12T01:00:00',
-      caseNumber: undefined,
-      costOfApplication: 10,
-      countryBornIn: '',
-      courtDetails: undefined,
-      driversLicenceApplicationMadeAt: undefined,
-      driversLicenceType: undefined,
-      haveGro: true,
-      idType: 'Birth certificate',
-      isPriorityApplication: false,
-      isUkNationalBornOverseas: false,
-    })
+      .expect(404)
+
+    const document = parseHtmlDocument(res.text)
+    expect(pageHeading(document)).toEqual('No data found for prisoner')
+    expect(submitIdSpy).toHaveBeenCalledTimes(0)
   })
   it('error case - error from API', async () => {
     const submitIdSpy = jest.spyOn(rpService, 'postIdApplication').mockRejectedValue(new Error('Something went wrong'))
@@ -751,7 +712,7 @@ describe('getAddAnIdView', () => {
     // Stub any calls to services
     await request(app)
       .get('/finance-and-id/add-an-id/?prisonerNumber=A8731DY%2F&existingIdTypes=')
-      .expect(500)
+      .expect(404)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
