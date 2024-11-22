@@ -1,30 +1,21 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import RpService from '../../services/rpService'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper } from '../configHelperTest'
 import { stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
-import DocumentService from '../../services/documentService'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
-let documentService: jest.Mocked<DocumentService>
+const { rpService, documentService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
-  documentService = new DocumentService() as jest.Mocked<DocumentService>
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-      documentService,
-    },
-  })
+  app = appWithAllRoutes({})
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
   jest.useFakeTimers({ advanceTimers: true }).setSystemTime(new Date('2026-11-01'))

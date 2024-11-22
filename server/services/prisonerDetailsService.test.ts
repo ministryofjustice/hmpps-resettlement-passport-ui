@@ -1,6 +1,6 @@
-import { getPrisonerImage } from './prisonerDetailsMiddleware'
+import { getPrisonerImage } from './prisonerDetailsService'
 import { PrisonerData } from '../@types/express'
-import RpService from '../services/rpService'
+import RpService from './rpService'
 
 describe('Prisoner Details Middleware', () => {
   let rpService: jest.Mocked<RpService>

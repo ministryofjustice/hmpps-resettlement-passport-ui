@@ -1,9 +1,10 @@
 import { Request, RequestHandler, Response } from 'express'
 import RpService from '../../services/rpService'
 import logger from '../../../logger'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class WatchlistController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
@@ -26,7 +27,7 @@ export default class WatchlistController {
   }
 
   private async watchlistFlow(req: Request, res: Response, addedToYourCase: boolean): Promise<void> {
-    const { prisonerData } = req
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
     const errorMessage: string = addedToYourCase ? 'Error adding to your cases' : 'Error removing from your cases'
 
     try {

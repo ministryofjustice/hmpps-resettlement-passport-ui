@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express'
-import NodeClient from 'applicationinsights/out/Library/NodeClient'
 import RpService from '../../services/rpService'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { getFeatureFlagBoolean } from '../../utils/utils'
@@ -11,16 +10,21 @@ import {
   ResetProfileValidationError,
   ResetReason,
 } from '../../data/model/resetProfile'
-import { PsfrEvent, trackEvent } from '../../utils/analytics'
+import { AppInsightsService, PsfrEvent } from '../../utils/analytics'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class ResetProfileController {
-  constructor(private readonly rpService: RpService, private readonly appInsightsClient: NodeClient) {
+  constructor(
+    private readonly rpService: RpService,
+    private readonly appInsightsService: AppInsightsService,
+    private readonly prisonerDetailsService: PrisonerDetailsService,
+  ) {
     // no op
   }
 
   resetProfile: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
 
       if (!resetProfileEnabled) {
@@ -35,7 +39,6 @@ export default class ResetProfileController {
 
   resetProfileReason: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
       const validationError = req.flash('validationError')?.[0] as unknown as ResetProfileValidationError
       const additionalDetails = req.flash('additionalDetails')?.[0]
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
@@ -43,6 +46,7 @@ export default class ResetProfileController {
       if (!resetProfileEnabled) {
         return next(new Error('Reset profile is disabled'))
       }
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
 
       const view = new ResetProfileView(prisonerData, validationError, additionalDetails)
 
@@ -54,14 +58,14 @@ export default class ResetProfileController {
 
   submitResetProfileReason: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
-      const { resetReason, additionalDetails } = req.body
-      let validationError: ResetProfileValidationError
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
 
       if (!resetProfileEnabled) {
         return next(new Error('Reset profile is disabled'))
       }
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
+      const { resetReason, additionalDetails } = req.body
+      let validationError: ResetProfileValidationError
 
       if (!resetReason) {
         validationError = MANDATORY_REASON
@@ -92,7 +96,7 @@ export default class ResetProfileController {
         return next(new Error(resetProfileResponse.error))
       }
 
-      trackEvent(this.appInsightsClient, PsfrEvent.PROFILE_RESET_EVENT, {
+      this.appInsightsService.trackEvent(PsfrEvent.PROFILE_RESET_EVENT, {
         prisonerId: prisonerData.personalDetails.prisonerNumber,
         sessionId: req.sessionID,
         reason: resetReason,
@@ -106,7 +110,7 @@ export default class ResetProfileController {
 
   resetProfileSuccess: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
 
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
       if (!resetProfileEnabled) {

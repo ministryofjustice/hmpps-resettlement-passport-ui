@@ -282,7 +282,7 @@ export function getAnswerToCurrentQuestion(
   allQuestionsAndAnswers: CachedAssessment,
 ): Answer | null {
   if (!currentQuestionAndAnswer || !allQuestionsAndAnswers) return null
-  const qaObject = allQuestionsAndAnswers.questionsAndAnswers.find(
+  const qaObject = allQuestionsAndAnswers.questionsAndAnswers?.find(
     qa => qa.question === currentQuestionAndAnswer.question.id,
   )
   return qaObject?.answer || null

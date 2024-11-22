@@ -4,22 +4,17 @@ import RpService from '../../services/rpService'
 import Config from '../../s3Config'
 import { sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
+const { rpService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
   stubPrisonerDetails(rpService)
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-    },
-  })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {

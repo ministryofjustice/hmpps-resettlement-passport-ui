@@ -4,18 +4,20 @@ import { ERROR_DICTIONARY } from '../../utils/constants'
 import DocumentService, { DocumentMeta } from '../../services/documentService'
 import RpService from '../../services/rpService'
 import { Appointment } from '../../data/model/appointment'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class PrisonerOverviewController {
-  constructor(private readonly documentService: DocumentService, private readonly rpService: RpService) {
+  constructor(
+    private readonly documentService: DocumentService,
+    private readonly rpService: RpService,
+    private readonly prisonerDetailsService: PrisonerDetailsService,
+  ) {
     // no op
   }
 
   getPrisoner: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
-      if (!prisonerData) {
-        return next(new Error('No prisoner data found'))
-      }
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       const {
         page = '0',
         size = '10',

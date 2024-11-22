@@ -1,10 +1,8 @@
 import { JSDOM } from 'jsdom'
 import type { Express } from 'express'
 import request from 'supertest'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
-import RpService from '../../services/rpService'
-import { AssessmentStateService } from '../../data/assessmentStateService'
 import {
   ApiAssessmentPage,
   CachedAssessment,
@@ -16,22 +14,14 @@ import { configHelper } from '../configHelperTest'
 import { stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
-let assessmentStateService: jest.Mocked<AssessmentStateService>
+const { rpService, assessmentStateService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
-  assessmentStateService = new AssessmentStateService(null) as jest.Mocked<AssessmentStateService>
   configHelper(config)
   stubPrisonerDetails(rpService)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-      assessmentStateService,
-    },
-  })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {
@@ -78,15 +68,18 @@ describe('completeAssessment', () => {
     )
   })
 
-  it('it should not submit the assessment if there is no submitted input', async () => {
+  it('when api returns error from complete assessment', async () => {
     const workingCachedAssessment = {
       assessment: { questionsAndAnswers: [], version: null },
       pageLoadHistory: [],
     } as WorkingCachedAssessment
 
+    jest.spyOn(assessmentStateService, 'onComplete').mockImplementation()
     jest.spyOn(assessmentStateService, 'getWorkingAssessment').mockResolvedValue(workingCachedAssessment)
 
-    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
+    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({
+      error: 'errorful',
+    })
 
     await request(app)
       .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=123')

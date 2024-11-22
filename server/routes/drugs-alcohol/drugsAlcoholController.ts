@@ -1,15 +1,16 @@
 import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import DrugsAlcoholView from './drugsAlcoholView'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class DrugsAlcoholController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       if (!prisonerData) {
         return next(new Error('Prisoner number is missing from request'))
       }

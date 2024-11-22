@@ -5,15 +5,16 @@ import { AssessmentsSummary, AssessmentStatus } from '../../data/model/assessmen
 import { AssessmentType } from '../../data/model/assessmentInformation'
 import { parseAssessmentType } from '../../utils/utils'
 import { isInPreReleaseWindow } from '../../utils/preReleaseWindow'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class AssessmentTaskListController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       if (!prisonerData) {
         return next(new Error('Prisoner number is missing from request'))
       }
@@ -21,7 +22,7 @@ export default class AssessmentTaskListController {
       const { type, force } = req.query
       const assessmentType: AssessmentType = parseAssessmentType(type)
 
-      const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
+      const { prisonerNumber } = prisonerData.personalDetails
       const assessmentsSummary = await this.rpService.getAssessmentSummary(prisonerNumber, assessmentType)
 
       const immediateNeedsReportNotStarted = assessmentType === 'BCST2' && notStarted(assessmentsSummary)

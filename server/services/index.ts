@@ -4,6 +4,8 @@ import ComponentService from './componentService'
 import RpService from './rpService'
 import { createAssessmentStateService } from '../data/assessmentStateService'
 import DocumentService from './documentService'
+import PrisonerDetailsService from './prisonerDetailsService'
+import { AppInsightsService } from '../utils/analytics'
 
 export const services = () => {
   const { applicationInfo, componentClient, appInsightsClient } = dataAccess()
@@ -13,6 +15,8 @@ export const services = () => {
   const componentService = new ComponentService(componentClient)
   const assessmentStateService = createAssessmentStateService()
   const documentService = new DocumentService()
+  const prisonerDetailsService = new PrisonerDetailsService(rpService)
+  const appInsightsService = new AppInsightsService(appInsightsClient)
 
   return {
     applicationInfo,
@@ -20,8 +24,9 @@ export const services = () => {
     rpService,
     componentService,
     assessmentStateService,
-    appInsightsClient,
+    appInsightsService,
     documentService,
+    prisonerDetailsService,
   }
 }
 

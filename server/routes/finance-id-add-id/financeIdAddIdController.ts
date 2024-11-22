@@ -3,15 +3,16 @@ import RpService from '../../services/rpService'
 import { formatDateAsLocal, isDateValid } from '../../utils/utils'
 import logger from '../../../logger'
 import { IdErrorMessage } from '../../data/model/idErrorMessage'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class FinanceIdAddIdController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
   postIdSubmitView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
       const params = req.body
       const {
         prisonerNumber,
@@ -58,7 +59,7 @@ export default class FinanceIdAddIdController {
 
   postIdUpdateView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
       const params = req.body
       const {
         prisonerNumber,
@@ -95,35 +96,38 @@ export default class FinanceIdAddIdController {
     }
   }
 
-  getAddAnIdView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
-    const params = req.query
-    res.render('pages/add-id', { prisonerData, params })
+  getAddAnIdView: RequestHandler = async (req, res, next) => {
+    try {
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
+      const params = req.query
+      res.render('pages/add-id', { prisonerData, params })
+    } catch (error) {
+      next(error)
+    }
   }
 
-  getConfirmAddAnIdView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
-    const params = req.query
-
-    const {
-      haveGro,
-      isUkNationalBornOverseas,
-      countryBornIn,
-      isPriorityApplication,
-      idType,
-      caseNumber,
-      courtDetails,
-      driversLicenceType,
-      driversLicenceApplicationMadeAt,
-      costOfApplication,
-    } = params
-
+  getConfirmAddAnIdView: RequestHandler = async (req, res, next) => {
     function checkIsValidCurrency(str: string): boolean {
       const regex = /^[0-9]+(\.[0-9]{2})?$/
       return regex.test(str)
     }
 
     try {
+      const params = req.query
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
+
+      const {
+        haveGro,
+        isUkNationalBornOverseas,
+        countryBornIn,
+        isPriorityApplication,
+        idType,
+        caseNumber,
+        courtDetails,
+        driversLicenceType,
+        driversLicenceApplicationMadeAt,
+        costOfApplication,
+      } = params
       const costIsValid: boolean = checkIsValidCurrency(<string>costOfApplication)
 
       if (!costOfApplication || !costIsValid) {
@@ -199,63 +203,67 @@ export default class FinanceIdAddIdController {
     }
   }
 
-  getAddAnIdFurtherView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
-    const params = req.query
+  getAddAnIdFurtherView: RequestHandler = async (req, res, next) => {
+    try {
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
+      const params = req.query
 
-    let errorMsg: IdErrorMessage = {
-      idType: null,
-      applicationSubmittedDay: null,
-      applicationSubmittedMonth: null,
-      applicationSubmittedYear: null,
-      isValidDate: null,
-    }
-
-    const { idType, applicationSubmittedDay, applicationSubmittedMonth, applicationSubmittedYear } = params
-
-    const isValidDate = isDateValid(
-      `${applicationSubmittedYear}-${applicationSubmittedMonth}-${applicationSubmittedDay}`,
-    )
-    if (
-      !idType ||
-      !applicationSubmittedDay ||
-      !applicationSubmittedMonth ||
-      !applicationSubmittedYear ||
-      !isValidDate
-    ) {
-      const message = 'Select an option'
-      const dateFieldMissingMessage = 'The date of application submitted must include a '
-      const dateFieldInvalid = 'The date of application submitted must be a real date'
-      errorMsg = {
-        idType: idType ? null : message,
-        applicationSubmittedDay: applicationSubmittedDay ? null : `${dateFieldMissingMessage} day`,
-        applicationSubmittedMonth: applicationSubmittedMonth ? null : `${dateFieldMissingMessage} month`,
-        applicationSubmittedYear: applicationSubmittedYear ? null : `${dateFieldMissingMessage} year`,
-        isValidDate: isValidDate ? null : dateFieldInvalid,
+      let errorMsg: IdErrorMessage = {
+        idType: null,
+        applicationSubmittedDay: null,
+        applicationSubmittedMonth: null,
+        applicationSubmittedYear: null,
+        isValidDate: null,
       }
-      res.render('pages/add-id', { prisonerData, params, req, errorMsg })
-      return
+
+      const { idType, applicationSubmittedDay, applicationSubmittedMonth, applicationSubmittedYear } = params
+
+      const isValidDate = isDateValid(
+        `${applicationSubmittedYear}-${applicationSubmittedMonth}-${applicationSubmittedDay}`,
+      )
+      if (
+        !idType ||
+        !applicationSubmittedDay ||
+        !applicationSubmittedMonth ||
+        !applicationSubmittedYear ||
+        !isValidDate
+      ) {
+        const message = 'Select an option'
+        const dateFieldMissingMessage = 'The date of application submitted must include a '
+        const dateFieldInvalid = 'The date of application submitted must be a real date'
+        errorMsg = {
+          idType: idType ? null : message,
+          applicationSubmittedDay: applicationSubmittedDay ? null : `${dateFieldMissingMessage} day`,
+          applicationSubmittedMonth: applicationSubmittedMonth ? null : `${dateFieldMissingMessage} month`,
+          applicationSubmittedYear: applicationSubmittedYear ? null : `${dateFieldMissingMessage} year`,
+          isValidDate: isValidDate ? null : dateFieldInvalid,
+        }
+        res.render('pages/add-id', { prisonerData, params, req, errorMsg })
+        return
+      }
+      if (params.idType === 'National Insurance Number letter') {
+        res.render('pages/add-id-confirm', { prisonerData, params, req })
+        return
+      }
+      res.render('pages/add-id-further', { prisonerData, params, req })
+    } catch (err) {
+      next(err)
     }
-    if (params.idType === 'National Insurance Number letter') {
-      res.render('pages/add-id-confirm', { prisonerData, params, req })
-      return
-    }
-    res.render('pages/add-id-further', { prisonerData, params, req })
   }
 
-  getUpdateIdStatusView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
+  getUpdateIdStatusView: RequestHandler = async (req, res, next) => {
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const params = req.query
     res.render('pages/add-id-update-status', { prisonerData, params, req })
   }
 
-  getConfirmAddAnIdStatusView: RequestHandler = (req, res, next) => {
+  getConfirmAddAnIdStatusView: RequestHandler = async (req, res, next) => {
     function checkIsValidCurrency(str: string): boolean {
       const regex = /^[0-9]+(\.[0-9]{2})?$/
       return regex.test(str)
     }
 
-    const { prisonerData } = req
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const params = req.query
 
     const {

@@ -1,7 +1,7 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import RpService from '../../services/rpService'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import {
   stubAccommodation,
   stubAssessmentInformation,
@@ -16,19 +16,14 @@ import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
+const { rpService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
   stubPrisonerDetails(rpService)
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-    },
-  })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {

@@ -1,35 +1,21 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import NodeClient from 'applicationinsights/out/Library/NodeClient'
-import RpService from '../../services/rpService'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import { stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
-import { AssessmentStateService } from '../../data/assessmentStateService'
 import { PATHWAY_DICTIONARY } from '../../utils/constants'
 import { PrisonerData } from '../../@types/express'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
-let assessmentStateService: jest.Mocked<AssessmentStateService>
-let appInsightsClient: jest.Mocked<NodeClient>
+const { rpService, assessmentStateService, appInsightsClient } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
-  assessmentStateService = new AssessmentStateService(null) as jest.Mocked<AssessmentStateService>
-  appInsightsClient = new NodeClient('setupString') as jest.Mocked<NodeClient>
   stubPrisonerDetails(rpService)
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-      assessmentStateService,
-      appInsightsClient,
-    },
-  })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {

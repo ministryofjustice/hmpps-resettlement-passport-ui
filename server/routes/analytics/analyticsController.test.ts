@@ -1,24 +1,17 @@
 import request from 'supertest'
 import type { Express } from 'express'
-import { TelemetryClient } from 'applicationinsights'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
 let app: Express
-let appInsightsClient: jest.Mocked<TelemetryClient>
+const { appInsightsClient } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
   configHelper(config)
   jest.mock('applicationinsights', () => jest.fn())
-  appInsightsClient = new TelemetryClient('setupString') as jest.Mocked<TelemetryClient>
-
-  app = appWithAllRoutes({
-    services: {
-      appInsightsClient,
-    },
-  })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {

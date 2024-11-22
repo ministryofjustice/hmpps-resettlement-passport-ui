@@ -1,29 +1,22 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import NodeClient from 'applicationinsights/out/Library/NodeClient'
-import RpService from '../../services/rpService'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import { stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
+const { rpService } = mockedServices
 let appInsightsClient: jest.Mocked<NodeClient>
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
   jest.mock('applicationinsights', () => jest.fn())
   appInsightsClient = new NodeClient('setupString') as jest.Mocked<NodeClient>
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-      appInsightsClient,
-    },
-  })
+  app = appWithAllRoutes({})
 
   stubPrisonerDetails(rpService)
 })

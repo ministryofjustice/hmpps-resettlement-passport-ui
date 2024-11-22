@@ -8,22 +8,20 @@ import { AssessmentStateService } from '../../data/assessmentStateService'
 import { PATHWAY_DICTIONARY } from '../../utils/constants'
 import { PsfrEvent, trackEvent } from '../../utils/analytics'
 import { PathwayStatus } from '../../@types/express'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class AssessmentCompleteController {
   constructor(
     private readonly rpService: RpService,
     private readonly assessmentStateService: AssessmentStateService,
     private readonly appInsightsClient: NodeClient,
+    private readonly prisonerDetailsService: PrisonerDetailsService,
   ) {
     // no op
   }
 
-  getView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
-    if (!prisonerData) {
-      return next(new Error('Prisoner number is missing from request'))
-    }
-
+  getView: RequestHandler = async (req, res, next) => {
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const assessmentType = parseAssessmentType(req.query.type)
     const view = new AssessmentCompleteView(prisonerData, assessmentType)
     return res.render('pages/assessment-complete', { ...view.renderArgs })
@@ -31,11 +29,7 @@ export default class AssessmentCompleteController {
 
   postView: RequestHandler = async (req, res, next) => {
     try {
-      const { prisonerData } = req
-      if (!prisonerData) {
-        return next(new Error('Prisoner number is missing from request'))
-      }
-
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
       const assessmentType: AssessmentType = parseAssessmentType(req.body.assessmentType)
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
       const response = await this.rpService.submitAssessment(prisonerNumber, assessmentType)

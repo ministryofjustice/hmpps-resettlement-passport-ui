@@ -1,4 +1,5 @@
 import { Request, type RequestHandler, Response, Router } from 'express'
+import { isAlphanumeric } from 'validator'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import staffDashboard from './staffDashboard'
@@ -11,7 +12,6 @@ import educationSkillsWorkRouter from './education-skills-work'
 import financeIdRouter from './finance-id'
 import financeIdAddIdRouter from './finance-id-add-id'
 import licenceImageRouter from './licence-image'
-import prisonerDetailsMiddleware from './prisonerDetailsMiddleware'
 import addAppointmentRouter from './add-appointment'
 import assessmentTaskListRouter from './assessment-task-list'
 import assessmentSkipRouter from './assessment-skip'
@@ -31,7 +31,6 @@ export default function routes(services: Services): Router {
   const router = Router()
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
-  router.use(prisonerDetailsMiddleware(services))
   router.use(configMiddleware())
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
@@ -64,7 +63,7 @@ export default function routes(services: Services): Router {
   get('/resettlement', (req, res, next) => {
     try {
       const { noms } = req.query
-      if (noms) {
+      if (noms && isAlphanumeric(noms as string)) {
         res.redirect(`/prisoner-overview/?prisonerNumber=${noms}`)
       } else {
         next()
@@ -73,8 +72,8 @@ export default function routes(services: Services): Router {
       next(err)
     }
   })
-  use('/add-case-note', (req: Request, res: Response) => {
-    const { prisonerData } = req
+  use('/add-case-note', async (req: Request, res: Response) => {
+    const prisonerData = await services.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     res.render('pages/add-case-note', {
       prisonerData,
     })

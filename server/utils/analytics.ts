@@ -7,14 +7,15 @@ export enum PsfrEvent {
   REPORT_SUBMITTED_EVENT = 'PSFR_ReportSubmittedStatusUpdate',
 }
 
-export type KeyValue = {
-  key: string
-  value: string
-}
+export class AppInsightsService {
+  constructor(private readonly appInsightsClient: TelemetryClient) {
+    // no-op
+  }
 
-export const trackEvent = (appInsightsClient: TelemetryClient, name: string, properties: object) => {
-  if (name && appInsightsClient) {
-    appInsightsClient.trackEvent({ name, properties })
-    appInsightsClient.flush()
+  trackEvent(name: string, properties: object) {
+    if (name) {
+      this.appInsightsClient.trackEvent({ name, properties })
+      this.appInsightsClient.flush()
+    }
   }
 }
