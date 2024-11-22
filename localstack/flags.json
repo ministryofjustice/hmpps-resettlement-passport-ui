@@ -42,5 +42,9 @@
   {
     "feature": "useNewDpsCaseNoteFormat",
     "enabled": true
+  },
+  {
+    "feature": "whatsNewBanner",
+    "enabled": true
   }
 ]

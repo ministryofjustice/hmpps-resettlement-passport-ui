@@ -5,10 +5,12 @@ import { appWithAllRoutes } from '../testutils/appSetup'
 import { stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
+import FeatureFlags from '../../featureFlag'
 
 let app: Express
 let rpService: jest.Mocked<RpService>
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
+const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
   rpService = new RpService() as jest.Mocked<RpService>
@@ -20,6 +22,9 @@ beforeEach(() => {
       rpService,
     },
   })
+
+  FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
+  jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'whatsNewBanner', enabled: true }])
 })
 
 afterEach(() => {

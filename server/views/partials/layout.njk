@@ -9,9 +9,16 @@
 {% from "../macros/tasks-details.njk" import tasksDetails %}
 {% from "../macros/pathway-subnav.njk" import subNav %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% set whatsNewBannerEnabled = features.WHATS_NEW_BANNER | getFeatureFlag %}
 
+{% if whatsNewBannerEnabled %}
+{% set feedbackText %}This is a new service – your <a class="govuk-link"
+                                                      href="{{ feedbackUrl }}">feedback</a> will help us to improve it.
+                                                      <a class="govuk-link" href="/service-updates">View updates and changes.</a>{% endset %}
+{% else %}
 {% set feedbackText %}This is a new service – your <a class="govuk-link"
                                                       href="{{ feedbackUrl }}">feedback</a> will help us to improve it.{% endset %}
+{% endif %}
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet" />

@@ -93,6 +93,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1286,6 +1287,7 @@ exports[`prisonerOverview should not render page if prisonerData does not exist 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1457,6 +1459,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>

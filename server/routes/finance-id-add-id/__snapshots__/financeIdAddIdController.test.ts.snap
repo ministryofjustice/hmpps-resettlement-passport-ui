@@ -93,6 +93,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -546,6 +547,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -999,6 +1001,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1915,6 +1918,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -2831,6 +2835,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -3749,6 +3754,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -4665,6 +4671,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -5579,6 +5586,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -6493,6 +6501,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -6900,6 +6909,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -7307,6 +7317,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -7714,6 +7725,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -8121,6 +8133,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -9035,6 +9048,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -9949,6 +9963,7 @@ exports[`getAddAnIdView Error case - post ID submit with empty prisoner ID 1`] =
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -10120,6 +10135,7 @@ exports[`getAddAnIdView Error case - post ID submit with invalid prisoner ID 1`]
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -10291,6 +10307,7 @@ exports[`getAddAnIdView Error case - post ID submit with null prisoner ID 1`] = 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -10462,6 +10479,7 @@ exports[`getAddAnIdView Error case - post ID submit without parameters 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -10633,6 +10651,7 @@ exports[`getAddAnIdView Error case - post ID submit without prisoner ID 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -10804,6 +10823,7 @@ exports[`getAddAnIdView Error case - submit ID application without type or date 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -10975,6 +10995,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -11401,6 +11422,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -11777,6 +11799,7 @@ exports[`getAddAnIdView Get add ID application invalid prisoner number with spec
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -11978,6 +12001,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -12406,6 +12430,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -12759,6 +12784,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -13158,6 +13184,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -13561,6 +13588,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -13948,6 +13976,7 @@ exports[`getAddAnIdView error case - error from API 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
