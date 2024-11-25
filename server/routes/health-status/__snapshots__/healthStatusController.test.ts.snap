@@ -91,9 +91,10 @@ exports[`getView Error case - error thrown from rpService 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -263,9 +264,10 @@ exports[`getView Error case - missing prisonerNumber 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -435,9 +437,10 @@ exports[`getView Happy path with default query params and data from endpoints 1`
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1148,9 +1151,10 @@ exports[`getView Happy path with default query params and no data from endpoints
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1577,9 +1581,10 @@ exports[`getView Happy path with specified query params and data from endpoints 
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
