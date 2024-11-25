@@ -15,9 +15,6 @@ export default class AssessmentTaskListController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
-      if (!prisonerData) {
-        return next(new Error('Prisoner number is missing from request'))
-      }
 
       const { type, force } = req.query
       const assessmentType: AssessmentType = parseAssessmentType(type)

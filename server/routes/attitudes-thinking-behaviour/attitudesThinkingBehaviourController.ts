@@ -15,9 +15,7 @@ export default class AttitudesThinkingBehaviourController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
-      if (!prisonerData) {
-        return next(new Error('Prisoner number is missing from request'))
-      }
+
       handleWhatsNewBanner(req, res)
 
       const {

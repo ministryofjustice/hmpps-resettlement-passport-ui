@@ -304,12 +304,12 @@ export default class FinanceIdBankAccountController {
     try {
       if (confirmationType === 'addAccount') {
         validateNewAccount()
-      }
-      if (confirmationType === 'resubmit' || applicationType === 'resubmit') {
+      } else if (confirmationType === 'resubmit' || applicationType === 'resubmit') {
         validateResubmit()
-      }
-      if (confirmationType === 'updateStatus') {
+      } else if (confirmationType === 'updateStatus') {
         validateUpdate()
+      } else {
+        next(new Error('Unknown confirmation/application type'))
       }
     } catch (err) {
       next(err)

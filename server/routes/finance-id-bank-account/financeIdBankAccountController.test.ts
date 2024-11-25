@@ -95,32 +95,218 @@ describe('getUpdateBankAccountStatusView', () => {
 describe('getConfirmAddABankAccountView', () => {
   it('Happy path confirm add bank account', async () => {
     await request(app)
-      .get(
-        '/finance-and-id/confirm-add-a-bank-account/?bankName=Lloyds&applicationSubmittedDay=01&applicationSubmittedMonth=01&applicationSubmittedYear=01&prisonerNumber=AA1234DY4DY&applicationId=&confirmationType=addAccount&applicationType=',
-      )
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .query({
+        bankName: 'Lloyds',
+        applicationSubmittedDay: '01',
+        applicationSubmittedMonth: '01',
+        applicationSubmittedYear: 2025,
+        prisonerNumber: 'AA1234DY4DY',
+        applicationId: '',
+        confirmationType: 'addAccount',
+        applicationType: '',
+      })
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
+
+  it('Successfully update status and go to confirm page', async () => {
+    // http://localhost:3000/finance-and-id/confirm-add-a-bank-account/?updatedStatus=Account+opened&accountOpenedDay=1&accountOpenedMonth=1&accountOpenedYear=2025&dateAddedDay=&dateAddedMonth=&dateAddedYear=&addedToPersonalItems=No&heardBackDay=&heardBackMonth=&heardBackYear=&prisonerNumber=A8731DY&applicationId=2&confirmationType=updateStatus
+    await request(app)
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .expect(200)
+      .query({
+        accountOpenedDay: '1',
+        accountOpenedMonth: '1',
+        accountOpenedYear: 2025,
+        addedToPersonalItems: 'No',
+        prisonerNumber: 'AA1234DY4DY',
+        confirmationType: 'updateStatus',
+        applicationId: '2',
+        applicationType: '',
+        updatedStatus: 'Account opened',
+      })
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(errorMessages(document)).toHaveLength(0)
+        expect(document.querySelector('.govuk-heading-m').textContent).toContain(
+          'Check your answers before adding a bank account application',
+        )
+      })
+  })
+
+  it('Happy path confirm resubmit bank account when account was declined', async () => {
+    await request(app)
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .expect(200)
+      .query({
+        bankName: 'Lloyds',
+        applicationResubmittedDay: '01',
+        applicationResubmittedMonth: '01',
+        applicationResubmittedYear: 2025,
+        prisonerNumber: 'AA1234DY4DY',
+        applicationId: '',
+        confirmationType: 'resubmit',
+        applicationType: '',
+        status: 'Account declined',
+        dateResubmittedHeardDay: 1,
+        dateResubmittedHeardMonth: 1,
+        dateResubmittedHeardYear: 2025,
+      })
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(errorMessages(document)).toHaveLength(0)
+        expect(document.querySelector('.govuk-heading-m').textContent).toContain(
+          'Check your answers before adding a bank account application',
+        )
+      })
+  })
   it('error, prisoner number missing', async () => {
     await request(app)
-      .get(
-        '/finance-and-id/confirm-add-a-bank-account/?bankName=Lloyds&applicationSubmittedDay=01&applicationSubmittedMonth=01&applicationSubmittedYear=01&applicationId=&confirmationType=addAccount&applicationType=',
-      )
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .query({
+        bankName: 'Lloyds',
+        applicationSubmittedDay: '01',
+        applicationSubmittedMonth: '01',
+        applicationSubmittedYear: 2025,
+        applicationId: '',
+        confirmationType: 'addAccount',
+        applicationType: '',
+      })
       .expect(404)
       .expect(res => {
         const document = parseHtmlDocument(res.text)
         expect(pageHeading(document)).toEqual('No data found for prisoner')
       })
   })
-  it('only prisoner number, no day/month/year/bank name', async () => {
+  it('only prisoner number, no day/month/year/bank name - adding a new account', async () => {
     await request(app)
-      .get(
-        '/finance-and-id/confirm-add-a-bank-account/?prisonerNumber=AA1234DY4DY&applicationId=&confirmationType=addAccount&applicationType=',
-      )
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .query({
+        prisonerNumber: 'AA1234DY4DY',
+        applicationId: '',
+        confirmationType: 'addAccount',
+        applicationType: '',
+      })
       .expect(200)
-      .expect(res => expect(sanitiseStackTrace(res.text)).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(document.querySelector('h3').textContent).toContain('Apply for a bank account')
+        expect(errorMessages(document)).toEqual([
+          'The application must include a bank name',
+          'The date must include a day',
+          'The date must include a month',
+          'The date must include a year',
+          'The date must be a real date',
+        ])
+      })
+  })
+
+  it('Validation error on update status to declined', async () => {
+    await request(app)
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .expect(200)
+      .query({
+        bankName: 'Lloyds',
+        prisonerNumber: 'A1234DY',
+        applicationId: '1',
+        confirmationType: 'updateStatus',
+        applicationType: '',
+        updatedStatus: 'Account declined',
+      })
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(document.querySelector('.govuk-heading-m').textContent).toContain('Apply for a bank account')
+        expect(errorMessages(document)).toEqual([
+          'The date must include a day',
+          'The date must include a month',
+          'The date must include a year',
+          'The date must be a real date',
+        ])
+      })
+  })
+
+  it('Validation error on update status to opened', async () => {
+    await request(app)
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .expect(200)
+      .query({
+        bankName: 'Lloyds',
+        prisonerNumber: 'A1234DY',
+        applicationId: '1',
+        confirmationType: 'updateStatus',
+        applicationType: '',
+        updatedStatus: 'Account opened',
+      })
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(document.querySelector('.govuk-heading-m').textContent).toContain('Apply for a bank account')
+        expect(errorMessages(document)).toEqual([
+          'The date must include a month',
+          'The date must include a year',
+          'The date must be a real date',
+          'Select if it was added to personal items',
+        ])
+      })
+  })
+
+  it('Validation error on update status to opened with personalised items', async () => {
+    await request(app)
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .expect(200)
+      .query({
+        bankName: 'Lloyds',
+        prisonerNumber: 'A1234DY',
+        applicationId: '1',
+        confirmationType: 'updateStatus',
+        applicationType: '',
+        addedToPersonalItems: 'Yes',
+        updatedStatus: 'Account opened',
+      })
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(document.querySelector('.govuk-heading-m').textContent).toContain('Apply for a bank account')
+        expect(errorMessages(document)).toEqual([
+          'The date must include a month',
+          'The date must include a year',
+          'The date must be a real date',
+          'The date must include a day',
+          'The date must include a month',
+          'The date must include a year',
+          'The date must be a real date',
+        ])
+      })
+  })
+
+  it('Validation error on resubmit', async () => {
+    await request(app)
+      .get('/finance-and-id/confirm-add-a-bank-account')
+      .expect(200)
+      .query({
+        bankName: 'Lloyds',
+        prisonerNumber: 'A1234DY',
+        applicationId: '',
+        confirmationType: 'resubmit',
+        applicationType: 'resubmit',
+      })
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(document.querySelector('.govuk-heading-m').textContent).toContain('Apply for a bank account')
+        expect(errorMessages(document)).toEqual([
+          'The date must include a day',
+          'The date must include a month',
+          'The date must include a year',
+          'The date must be a real date',
+          'The application must include a status',
+        ])
+      })
   })
 })
+
+export function errorMessages(document: Document): string[] {
+  return Array.from(document.querySelectorAll('.govuk-error-message')).map(message => message.textContent?.trim())
+}
+
 describe('postBankAccountSubmitView', () => {
   it('happy path - posting bank account', async () => {
     const postBankApplicationSpy = jest.spyOn(rpService, 'postBankApplication').mockImplementation()
@@ -263,7 +449,7 @@ describe('postBankAccountUpdateView', () => {
       })
       .expect(404)
   })
-  it('error - updated status blank', async () => {
+  it('error - API rejects submission', async () => {
     rpService.patchBankApplication = jest.fn().mockRejectedValue(new Error('status is required'))
     await request(app)
       .post('/finance-and-id/bank-account-update')
@@ -275,52 +461,6 @@ describe('postBankAccountUpdateView', () => {
         isAddedToPersonalItems: 'Yes',
         addedToPersonalItemsDate: '01/01/2000',
         resubmissionDate: '01/01/2000',
-      })
-      .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
-  it('error - updated status missing', async () => {
-    rpService.patchBankApplication = jest.fn().mockRejectedValue(new Error('status is required'))
-    await request(app)
-      .post('/finance-and-id/bank-account-update')
-      .send({
-        prisonerNumber: 'A1234DY',
-        applicationId: '1000',
-        bankResponseDate: '01/01/2000',
-        isAddedToPersonalItems: 'Yes',
-        addedToPersonalItemsDate: '01/01/2000',
-        resubmissionDate: '01/01/2000',
-      })
-      .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
-  it('error - added to personal items blank', async () => {
-    rpService.patchBankApplication = jest.fn().mockRejectedValue(new Error('missing required field'))
-    await request(app)
-      .post('/finance-and-id/bank-account-update')
-      .send({
-        prisonerNumber: 'A1234DY',
-        applicationId: '1000',
-        updatedStatus: 'Account opened',
-        bankResponseDate: '01/01/2000',
-        isAddedToPersonalItems: 'No',
-        addedToPersonalItemsDate: '',
-        resubmissionDate: '01/01/2004',
-      })
-      .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
-  it('error - added to personal items missing', async () => {
-    rpService.patchBankApplication = jest.fn().mockRejectedValue(new Error('missing required field'))
-    await request(app)
-      .post('/finance-and-id/bank-account-update')
-      .send({
-        prisonerNumber: 'A1234DY',
-        applicationId: '1000',
-        updatedStatus: 'Account opened',
-        bankResponseDate: '01/01/2000',
-        isAddedToPersonalItems: 'No',
-        resubmissionDate: '01/01/2004',
       })
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
