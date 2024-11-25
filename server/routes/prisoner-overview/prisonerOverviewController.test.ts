@@ -25,6 +25,7 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.resetAllMocks()
+  jest.restoreAllMocks()
   jest.useRealTimers()
 })
 
@@ -76,7 +77,7 @@ describe('prisonerOverview', () => {
       selectedPathway: 'Education',
     }
     const getPrisonerOverviewPageDataSpy = stubPrisonerOverviewData(rpService)
-
+    documentService.getDocumentMeta = jest.fn().mockResolvedValue([])
     await request(app)
       .get('/prisoner-overview')
       .query(queryParams)

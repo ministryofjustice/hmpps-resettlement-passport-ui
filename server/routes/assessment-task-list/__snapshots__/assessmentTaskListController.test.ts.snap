@@ -91,9 +91,10 @@ exports[`getView Error case - rpService returns error render page with error mes
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -286,9 +287,10 @@ exports[`getView Error case - rpService throws error 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -458,9 +460,10 @@ exports[`getView Error case - type is missing 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -630,9 +633,10 @@ exports[`getView Should not redirect to skip when BCST2 is not started and in th
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -854,9 +858,10 @@ exports[`getView Should not redirect when outside the release window 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1078,9 +1083,10 @@ exports[`getView Should render when BCST2 is started 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>

@@ -91,9 +91,10 @@ exports[`getStatusUpdate error case - missing selectedPathway 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -263,9 +264,10 @@ exports[`getStatusUpdate error case - pathway does not exist 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -435,9 +437,10 @@ exports[`getStatusUpdate happy path - render page 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -999,9 +1002,10 @@ exports[`postStatusUpdate error case - invalid pathway 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1171,9 +1175,10 @@ exports[`postStatusUpdate error case - invalid status 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1343,9 +1348,10 @@ exports[`postStatusUpdate error case - missing pathway 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1515,9 +1521,10 @@ exports[`postStatusUpdate error case - missing prisonerNumber 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1687,9 +1694,10 @@ exports[`postStatusUpdate error thrown during patch operation 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" href="/service-updates">View updates and changes.</a>
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
+                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
