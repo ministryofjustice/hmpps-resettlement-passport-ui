@@ -12,11 +12,12 @@
 {% set whatsNewBannerEnabled = features.WHATS_NEW_BANNER | getFeatureFlag %}
 
 {% if whatsNewBannerEnabled %}
-{% set feedbackText %}This is a new service – your <a class="govuk-link"
+{% set feedbackText %}This is a new service – your <a class="govuk-link" target="_blank"
                                                       href="{{ feedbackUrl }}">feedback</a> will help us to improve it.
-                                                      <a class="govuk-link" href="/service-updates">View updates and changes.</a>{% endset %}
+                                                      <a class="govuk-link" target="_blank"
+                                                      href="/service-updates">View updates and changes.</a>{% endset %}
 {% else %}
-{% set feedbackText %}This is a new service – your <a class="govuk-link"
+{% set feedbackText %}This is a new service – your <a class="govuk-link" target="_blank"
                                                       href="{{ feedbackUrl }}">feedback</a> will help us to improve it.{% endset %}
 {% endif %}
 
