@@ -91,9 +91,9 @@ exports[`deleteWatch Error case - missing parameter 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link" target="_blank"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank"
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
   </p>
@@ -264,9 +264,9 @@ exports[`deleteWatch Error case - rpService throws error 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link" target="_blank"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank"
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
   </p>
@@ -437,9 +437,9 @@ exports[`postWatch Error case - missing parameter 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link" target="_blank"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank"
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
   </p>
@@ -610,9 +610,9 @@ exports[`postWatch Error case - rpService throws error 1`] = `
       BETA
     </strong>
     <span class="govuk-phase-banner__text">
-      This is a new service – your <a class="govuk-link" target="_blank"
+      This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank"
+                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
   </p>
