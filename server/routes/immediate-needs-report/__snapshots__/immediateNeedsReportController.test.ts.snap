@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`completeAssessment it should not submit the assessment if there is no submitted input 1`] = `
+exports[`completeAssessment when api returns error from complete assessment 1`] = `
 "<!DOCTYPE html>
 <html lang="en" class="govuk-template">
   <head>

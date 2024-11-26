@@ -1,29 +1,19 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import NodeClient from 'applicationinsights/out/Library/NodeClient'
-import RpService from '../../services/rpService'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper } from '../configHelperTest'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
-let appInsightsClient: jest.Mocked<NodeClient>
+const { rpService, appInsightsService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
-  appInsightsClient = new NodeClient('setupString') as jest.Mocked<NodeClient>
   configHelper(config)
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-      appInsightsClient,
-    },
-  })
+  app = appWithAllRoutes({})
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
 
@@ -55,8 +45,11 @@ describe('resetProfile', () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: false }])
     await request(app)
       .get('/resetProfile')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 })
 
@@ -80,7 +73,7 @@ describe('resetProfileReason', () => {
   it('should not render page if prisonerNumber is missing from query string', async () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: false }])
     await request(app)
-      .get('/resetProfile/reason')
+      .get('/resetProfile/reason?prisonerNumber=123')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
@@ -89,14 +82,14 @@ describe('resetProfileReason', () => {
 describe('submitResetProfileReason', () => {
   it('should redirect to success page if feature is enabled and no validation errors - recall', async () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: true }])
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
     const resetProfileSpy = jest.spyOn(rpService, 'resetProfile').mockResolvedValue({ error: null })
     await request(app)
       .post('/resetProfile/reason?prisonerNumber=A1234DY')
       .send({
         resetReason: 'RECALL_TO_PRISON',
         additionalDetails: '',
+        prisonerNumber: '123',
       })
       .expect(302)
       .expect(res => {
@@ -106,25 +99,22 @@ describe('submitResetProfileReason', () => {
       resetReason: 'RECALL_TO_PRISON',
       additionalDetails: null,
     })
-    expect(trackEventSpy).toHaveBeenCalledWith({
-      name: 'PSFR_ProfileReset',
-      properties: {
-        prisonerId: 'A1234DY',
-        sessionId: 'sessionId',
-        reason: 'RECALL_TO_PRISON',
-      },
+    expect(trackEventSpy).toHaveBeenCalledWith('PSFR_ProfileReset', {
+      prisonerId: 'A1234DY',
+      sessionId: 'sessionId',
+      reason: 'RECALL_TO_PRISON',
     })
-    expect(flushSpy).toHaveBeenCalled()
   })
 
   it('should redirect to success page if feature is enabled and no validation errors - return', async () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: true }])
     const resetProfileSpy = jest.spyOn(rpService, 'resetProfile').mockResolvedValue({ error: null })
     await request(app)
-      .post('/resetProfile/reason?prisonerNumber=A1234DY')
+      .post('/resetProfile/reason')
       .send({
         resetReason: 'RETURN_ON_NEW_SENTENCE',
         additionalDetails: '',
+        prisonerNumber: 'A1234DY',
       })
       .expect(302)
       .expect(res => {
@@ -140,10 +130,11 @@ describe('submitResetProfileReason', () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: true }])
     const resetProfileSpy = jest.spyOn(rpService, 'resetProfile').mockResolvedValue({ error: null })
     await request(app)
-      .post('/resetProfile/reason?prisonerNumber=A1234DY')
+      .post('/resetProfile/reason')
       .send({
         resetReason: 'OTHER',
         additionalDetails: 'Some other details',
+        prisonerNumber: 'A1234DY',
       })
       .expect(302)
       .expect(res => {
@@ -187,10 +178,11 @@ describe('submitResetProfileReason', () => {
   it('should redirect back to form page if validation fails - mandatory', async () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: true }])
     await request(app)
-      .post('/resetProfile/reason?prisonerNumber=A1234DY')
+      .post('/resetProfile/reason')
       .send({
         resetReason: null,
         additionalDetails: null,
+        prisonerNumber: 'A1234DY',
       })
       .expect(302)
       .expect(res => {
@@ -202,14 +194,15 @@ describe('submitResetProfileReason', () => {
   it('should redirect back to form page if validation fails - mandatory other text', async () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: true }])
     await request(app)
-      .post('/resetProfile/reason?prisonerNumber=A1234DY')
+      .post('/resetProfile/reason')
       .send({
         resetReason: 'OTHER',
         additionalDetails: '',
+        prisonerNumber: 'A1234DY',
       })
       .expect(302)
       .expect(res => {
-        expect(res.text).toContain('Found. Redirecting to /resetProfile/reason?prisonerNumber=A1234DY')
+        expect(res.headers.location).toContain('/resetProfile/reason?prisonerNumber=A1234DY')
       })
     expect(jest.spyOn(rpService, 'resetProfile')).toHaveBeenCalledTimes(0)
   })
@@ -217,14 +210,15 @@ describe('submitResetProfileReason', () => {
   it('should redirect back to form page if validation fails - other text too long', async () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: true }])
     await request(app)
-      .post('/resetProfile/reason?prisonerNumber=A1234DY')
+      .post('/resetProfile/reason')
       .send({
         resetReason: 'OTHER',
         additionalDetails: 'a'.repeat(3001),
+        prisonerNumber: 'A1234DY',
       })
       .expect(302)
       .expect(res => {
-        expect(res.text).toContain('Found. Redirecting to /resetProfile/reason?prisonerNumber=A1234DY')
+        expect(res.headers.location).toContain('/resetProfile/reason?prisonerNumber=A1234DY')
       })
     expect(jest.spyOn(rpService, 'resetProfile')).toHaveBeenCalledTimes(0)
   })
@@ -251,7 +245,10 @@ describe('resetProfileSuccess', () => {
     jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'profileReset', enabled: false }])
     await request(app)
       .get('/resetProfile/success')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 })

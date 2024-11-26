@@ -4,19 +4,21 @@ import { ERROR_DICTIONARY } from '../../utils/constants'
 import DocumentService, { DocumentMeta } from '../../services/documentService'
 import RpService from '../../services/rpService'
 import { Appointment } from '../../data/model/appointment'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class PrisonerOverviewController {
-  constructor(private readonly documentService: DocumentService, private readonly rpService: RpService) {
+  constructor(
+    private readonly documentService: DocumentService,
+    private readonly rpService: RpService,
+    private readonly prisonerDetailsService: PrisonerDetailsService,
+  ) {
     // no op
   }
 
   getPrisoner: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
-      if (!prisonerData) {
-        return next(new Error('No prisoner data found'))
-      }
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       handleWhatsNewBanner(req, res)
       const {
         page = '0',
@@ -48,21 +50,23 @@ export default class PrisonerOverviewController {
         this.documentService.getDocumentMeta(prisonerNumber),
       ])
 
-      const licenceConditions = extractResultOrError(licenceConditionsResult, 'licence conditions', req)
-      const riskScores = extractResultOrError(riskResult, 'risk scores', req)
-      const rosh = extractResultOrError(roshResult, 'rosh', req)
-      const mappa = extractResultOrError(mappaResult, 'mappa', req)
-      const caseNotes = extractResultOrError(caseNotesResult, 'case notes', req)
-      const staffContacts = extractResultOrError(staffContactsResult, 'staff contacts', req)
+      const licenceConditions = extractResultOrError(licenceConditionsResult, 'licence conditions', req, prisonerNumber)
+      const riskScores = extractResultOrError(riskResult, 'risk scores', req, prisonerNumber)
+      const rosh = extractResultOrError(roshResult, 'rosh', req, prisonerNumber)
+      const mappa = extractResultOrError(mappaResult, 'mappa', req, prisonerNumber)
+      const caseNotes = extractResultOrError(caseNotesResult, 'case notes', req, prisonerNumber)
+      const staffContacts = extractResultOrError(staffContactsResult, 'staff contacts', req, prisonerNumber)
       const appointments = extractResultsOrErrorList(
         appointmentsResult as PromiseSettledResult<Appointment[]>,
         'appointments',
         req,
+        prisonerNumber,
       )
       const documents = extractResultsOrErrorList(
         documentsResult as PromiseSettledResult<DocumentMeta[]>,
         'documents',
         req,
+        prisonerNumber,
       )
 
       return res.render('pages/overview', {
@@ -91,13 +95,14 @@ function extractResultOrError<T>(
   result: PromiseSettledResult<unknown>,
   name: string,
   req: Express.Request,
+  prisonerNumber: string,
 ): { error?: boolean } | T {
   if (result.status === 'fulfilled') {
     return result.value
   }
   if (result.status === 'rejected') {
     logger.warn(
-      `Session: ${req.sessionID} Cannot retrieve ${name} for ${req.prisonerData.personalDetails.prisonerNumber} ${result.status} ${result.reason}`,
+      `Session: ${req.sessionID} Cannot retrieve ${name} for ${prisonerNumber} ${result.status} ${result.reason}`,
     )
     return { error: true }
   }
@@ -108,13 +113,14 @@ function extractResultsOrErrorList<T>(
   result: PromiseSettledResult<T[]>,
   name: string,
   req: Express.Request,
+  prisonerNumber: string,
 ): ResultListOrError<T> {
   if (result.status === 'fulfilled') {
     return { results: result.value }
   }
   if (result.status === 'rejected') {
     logger.warn(
-      `Session: ${req.sessionID} Cannot retrieve ${name} for ${req.prisonerData.personalDetails.prisonerNumber} ${result.status} ${result.reason}`,
+      `Session: ${req.sessionID} Cannot retrieve ${name} for ${prisonerNumber} ${result.status} ${result.reason}`,
     )
     return { error: ERROR_DICTIONARY.DATA_UNAVAILABLE }
   }

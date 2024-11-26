@@ -1,24 +1,24 @@
 import { RequestHandler } from 'express'
-import RpService from '../../services/rpService'
 import AddAppointmentView from './addAppointmentView'
 import { AppointmentErrorMessage } from '../../data/model/appointmentErrorMessage'
 import { RPClient } from '../../data'
 import logger from '../../../logger'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class AddAppointmentController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
-  getAddAppointmentView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
+  getAddAppointmentView: RequestHandler = async (req, res, next) => {
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const params = req.query
     const view = new AddAppointmentView(prisonerData)
     res.render('pages/add-appointment', { ...view.renderArgs, params })
   }
 
-  getConfirmAppointmentView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
+  getConfirmAppointmentView: RequestHandler = async (req, res, next) => {
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const params = req.query
     let errorMsg: AppointmentErrorMessage = {
       appointmentType: null,
@@ -52,7 +52,7 @@ export default class AddAppointmentController {
 
   postAppointmentView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
       const params = req.body
       const {
         prisonerNumber,

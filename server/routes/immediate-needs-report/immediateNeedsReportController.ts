@@ -11,15 +11,21 @@ import { Pathway } from '../../@types/express'
 import { CHECK_ANSWERS_PAGE_ID } from '../../utils/constants'
 import { categoriseForCheckYourAnswers } from './checkYourAnswersUtils'
 import { ErrorMessage } from '../view'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class ImmediateNeedsReportController {
-  constructor(private readonly rpService: RpService, private readonly assessmentStateService: AssessmentStateService) {
+  constructor(
+    private readonly rpService: RpService,
+    private readonly assessmentStateService: AssessmentStateService,
+    private readonly prisonerDetailsService: PrisonerDetailsService,
+  ) {
     // no op
   }
 
   getFirstPage: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData, config } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+      const { config } = req
       const { type } = req.query
       const pathway = req.query.pathway as Pathway
       const assessmentType = parseAssessmentType(type)
@@ -95,7 +101,7 @@ export default class ImmediateNeedsReportController {
 
   saveAnswerAndGetNextPage: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
       const assessmentType = parseAssessmentType(req.body.assessmentType)
       const { pathway, currentPageId } = req.body
       const edit = req.body.edit === 'true'
@@ -160,7 +166,7 @@ export default class ImmediateNeedsReportController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
       const { pathway, currentPageId } = req.params
       const assessmentType = parseAssessmentType(req.query.type)
       const edit = req.query.edit === 'true'
@@ -352,7 +358,7 @@ export default class ImmediateNeedsReportController {
 
   completeAssessment: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
       const { pathway } = req.params
       const assessmentType = parseAssessmentType(req.body.assessmentType)
 
@@ -398,7 +404,7 @@ export default class ImmediateNeedsReportController {
 
   startEdit: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
       const { pathway, pageId } = req.params
       const submitted = req.query.submitted === 'true'
       const assessmentType = parseAssessmentType(req.query.type)

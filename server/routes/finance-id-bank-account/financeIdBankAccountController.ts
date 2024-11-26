@@ -3,17 +3,19 @@ import RpService from '../../services/rpService'
 import logger from '../../../logger'
 import { formatDateAsLocal, isDateValid } from '../../utils/utils'
 import { BankAccountErrorMessage } from '../../data/model/bankAccountErrorMessage'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class FinanceIdBankAccountController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
   postBankAccountSubmitView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
+      const { prisonerNumber } = prisonerData.personalDetails
       const params = req.body
-      const { prisonerNumber, applicationDate, bankName } = req.body
+      const { applicationDate, bankName } = req.body
 
       try {
         await this.rpService.postBankApplication(prisonerNumber, {
@@ -36,56 +38,52 @@ export default class FinanceIdBankAccountController {
   }
 
   postBankAccountUpdateView: RequestHandler = async (req, res, next): Promise<void> => {
-    try {
-      const { prisonerData } = req
-      const params = req.body
-      const {
-        prisonerNumber,
-        applicationId,
-        updatedStatus,
-        bankResponseDate,
-        isAddedToPersonalItems,
-        addedToPersonalItemsDate,
-        resubmissionDate,
-      } = req.body
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
+    const { prisonerNumber } = prisonerData.personalDetails
+    const params = req.body
+    const {
+      applicationId,
+      updatedStatus,
+      bankResponseDate,
+      isAddedToPersonalItems,
+      addedToPersonalItemsDate,
+      resubmissionDate,
+    } = req.body
 
-      try {
-        await this.rpService.patchBankApplication(prisonerNumber, applicationId, {
-          status: updatedStatus,
-          bankResponseDate: formatDateAsLocal(bankResponseDate),
-          isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
-          addedToPersonalItemsDate: formatDateAsLocal(addedToPersonalItemsDate),
-          resubmissionDate: formatDateAsLocal(resubmissionDate),
-        })
-        res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#finance`)
-      } catch (error) {
-        const errorMessage = error.message
-        logger.error('Error updating banking application:', error)
-        res.render('pages/add-bank-account-confirm', {
-          errorMessage,
-          prisonerData,
-          params,
-        })
-      }
-    } catch (err) {
-      next(err)
+    try {
+      await this.rpService.patchBankApplication(prisonerNumber, applicationId, {
+        status: updatedStatus,
+        bankResponseDate: formatDateAsLocal(bankResponseDate),
+        isAddedToPersonalItems: isAddedToPersonalItems === 'Yes',
+        addedToPersonalItemsDate: formatDateAsLocal(addedToPersonalItemsDate),
+        resubmissionDate: formatDateAsLocal(resubmissionDate),
+      })
+      res.redirect(`/finance-and-id/?prisonerNumber=${prisonerNumber}#finance`)
+    } catch (error) {
+      const errorMessage = error.message
+      logger.error('Error updating banking application:', error)
+      res.render('pages/add-bank-account-confirm', {
+        errorMessage,
+        prisonerData,
+        params,
+      })
     }
   }
 
-  getAddABankAccountView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
+  getAddABankAccountView: RequestHandler = async (req, res) => {
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const params = req.query
     res.render('pages/add-bank-account', { prisonerData, params })
   }
 
-  getUpdateBankAccountStatusView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
+  getUpdateBankAccountStatusView: RequestHandler = async (req, res) => {
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const params = req.query
     res.render('pages/add-bank-account-update-status', { prisonerData, params, req })
   }
 
-  getConfirmAddABankAccountView: RequestHandler = (req, res, next) => {
-    const { prisonerData } = req
+  getConfirmAddABankAccountView: RequestHandler = async (req, res, next) => {
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const params = req.query
 
     let errorMsg: BankAccountErrorMessage = {
@@ -306,12 +304,12 @@ export default class FinanceIdBankAccountController {
     try {
       if (confirmationType === 'addAccount') {
         validateNewAccount()
-      }
-      if (confirmationType === 'resubmit' || applicationType === 'resubmit') {
+      } else if (confirmationType === 'resubmit' || applicationType === 'resubmit') {
         validateResubmit()
-      }
-      if (confirmationType === 'updateStatus') {
+      } else if (confirmationType === 'updateStatus') {
         validateUpdate()
+      } else {
+        next(new Error('Unknown confirmation/application type'))
       }
     } catch (err) {
       next(err)

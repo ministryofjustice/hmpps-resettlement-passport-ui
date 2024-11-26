@@ -6,6 +6,7 @@ export default (router: Router, services: Services) => {
   const immediateNeedsReportController = new ImmediateNeedsReportController(
     services.rpService,
     services.assessmentStateService,
+    services.prisonerDetailsService,
   )
 
   router.get('/ImmediateNeedsReport-next-page', [immediateNeedsReportController.getFirstPage])

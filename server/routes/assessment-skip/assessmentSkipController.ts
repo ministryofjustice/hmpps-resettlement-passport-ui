@@ -3,15 +3,16 @@ import { ValidationErrors } from '../../data/model/immediateNeedsReport'
 import { AssessmentSkipReason, assessmentSkipReasons } from '../../data/model/assessmentInformation'
 import RpService from '../../services/rpService'
 import logger from '../../../logger'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 export default class AssessmentSkipController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       const validationErrorsString = req.query.validationErrors as string
       const validationErrors: ValidationErrors = validationErrorsString
         ? JSON.parse(decodeURIComponent(validationErrorsString))
@@ -24,7 +25,8 @@ export default class AssessmentSkipController {
   }
 
   submitForm: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerNumber } = req.body
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
+    const { prisonerNumber } = prisonerData.personalDetails
     const validationErrors = validateAssessmentSkipForm(req.body)
     if (validationErrors) {
       return res.redirect(
