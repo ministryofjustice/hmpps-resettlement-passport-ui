@@ -26,6 +26,7 @@ import {
 } from '../data/model/immediateNeedsReport'
 import { AssessmentType } from '../data/model/assessmentInformation'
 import { toCachedQuestionAndAnswer } from './formatAssessmentResponse'
+import { badRequestError } from '../errorHandler'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -320,10 +321,10 @@ export function parseAssessmentType(type: unknown): AssessmentType {
       return 'RESETTLEMENT_PLAN'
     }
     case undefined: {
-      throw new Error('Assessment type is missing from request')
+      throw badRequestError('Assessment type is missing from request')
     }
     default: {
-      throw new Error(`Unable to parse assessmentType: ${type}`)
+      throw badRequestError(`Unable to parse assessmentType: ${type}`)
     }
   }
 }

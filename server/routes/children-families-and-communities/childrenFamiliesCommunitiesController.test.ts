@@ -2,8 +2,7 @@ import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import {
-  pageHeading,
-  parseHtmlDocument,
+  expectPrisonerNotFoundPage,
   stubAssessmentInformation,
   stubCaseNotesCreators,
   stubCaseNotesHistory,
@@ -112,10 +111,7 @@ describe('getView', () => {
     await request(app)
       .get('/children-families-and-communities')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 
   it('Error case - error thrown from rpService', async () => {

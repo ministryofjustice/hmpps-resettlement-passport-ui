@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom'
+import supertest from 'supertest'
 import { PrisonerData } from '../../@types/express'
 import RpService from '../../services/rpService'
 import { PrisonersList } from '../../data/model/prisoners'
@@ -601,4 +602,14 @@ export function parseHtmlDocument(documentText: string): Document {
 
 export function pageHeading(document: Document): string {
   return document.querySelector('[data-qa="page-heading"]')?.textContent
+}
+
+export function expectSomethingWentWrongPage(res: supertest.Response) {
+  const document = parseHtmlDocument(res.text)
+  expect(pageHeading(document)).toEqual('Something went wrong')
+}
+
+export function expectPrisonerNotFoundPage(res: supertest.Response) {
+  const document = parseHtmlDocument(res.text)
+  expect(pageHeading(document)).toEqual('No data found for prisoner')
 }

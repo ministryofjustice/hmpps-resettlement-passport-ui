@@ -3,7 +3,7 @@ import { addMonths } from 'date-fns'
 import request from 'supertest'
 import { AssessmentsSummary, PathwayAssessmentStatus } from '../../data/model/assessmentStatus'
 import Config from '../../s3Config'
-import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
+import { expectPrisonerNotFoundPage, expectSomethingWentWrongPage, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
@@ -117,17 +117,16 @@ describe('getView', () => {
     await request(app)
       .get('/assessment-task-list?type=BCST2')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 
   it('Error case - type is missing', async () => {
     await request(app)
       .get('/assessment-task-list?prisonerNumber=A1234DY')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        expectSomethingWentWrongPage(res)
+      })
   })
 
   it('Error case - rpService throws error', async () => {

@@ -2,8 +2,8 @@ import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import {
-  pageHeading,
-  parseHtmlDocument,
+  expectPrisonerNotFoundPage,
+  expectSomethingWentWrongPage,
   stubAssessmentInformation,
   stubCaseNotesCreators,
   stubCaseNotesHistory,
@@ -126,10 +126,7 @@ describe('getView', () => {
     await request(app)
       .get('/finance-and-id')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 
   it('Error case - error thrown from rpService', async () => {
@@ -137,10 +134,7 @@ describe('getView', () => {
     await request(app)
       .get('/finance-and-id?prisonerNumber=A1234DY')
       .expect(500)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('Something went wrong')
-      })
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 })
 
@@ -168,10 +162,7 @@ describe('postBankAccountDelete', () => {
       .post('/finance-and-id/bank-account-delete')
       .send(requestBody)
       .expect(400)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('Something went wrong')
-      })
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('error case - error from API', async () => {
@@ -183,10 +174,7 @@ describe('postBankAccountDelete', () => {
         financeId: '56',
       })
       .expect(500)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('Something went wrong')
-      })
+      .expect(res => expectSomethingWentWrongPage(res))
     expect(deleteFinanceSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 })
@@ -215,10 +203,7 @@ describe('postIdDelete', () => {
       .post('/finance-and-id/id-delete')
       .send(requestBody)
       .expect(400)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('Something went wrong')
-      })
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('error case - error from API', async () => {
@@ -230,10 +215,7 @@ describe('postIdDelete', () => {
         idId: '56',
       })
       .expect(500)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('Something went wrong')
-      })
+      .expect(res => expectSomethingWentWrongPage(res))
     expect(deleteIdSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 })
