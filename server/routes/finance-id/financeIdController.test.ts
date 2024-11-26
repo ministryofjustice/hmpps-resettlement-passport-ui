@@ -137,7 +137,10 @@ describe('getView', () => {
     await request(app)
       .get('/finance-and-id?prisonerNumber=A1234DY')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Something went wrong')
+      })
   })
 })
 
@@ -161,8 +164,11 @@ describe('postBankAccountDelete', () => {
       .send({
         financeId: '56',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Something went wrong')
+      })
   })
 
   it('error case - missing financeId', async () => {
@@ -171,8 +177,11 @@ describe('postBankAccountDelete', () => {
       .send({
         prisonerNumber: 'A1234DY',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Something went wrong')
+      })
   })
 
   it('error case - error from API', async () => {
@@ -184,7 +193,10 @@ describe('postBankAccountDelete', () => {
         financeId: '56',
       })
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Something went wrong')
+      })
     expect(deleteFinanceSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 })
@@ -209,8 +221,11 @@ describe('postIdDelete', () => {
       .send({
         idId: '56',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Something went wrong')
+      })
   })
 
   it('error case - missing idId', async () => {
@@ -219,8 +234,11 @@ describe('postIdDelete', () => {
       .send({
         prisonerNumber: 'A1234DY',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Something went wrong')
+      })
   })
 
   it('error case - error from API', async () => {
@@ -232,7 +250,10 @@ describe('postIdDelete', () => {
         idId: '56',
       })
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('Something went wrong')
+      })
     expect(deleteIdSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 })
