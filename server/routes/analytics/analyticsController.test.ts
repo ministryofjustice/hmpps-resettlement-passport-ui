@@ -3,6 +3,7 @@ import type { Express } from 'express'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
+import { expectSomethingWentWrongPage } from '../testutils/testUtils'
 
 let app: Express
 const { appInsightsService } = mockedServices
@@ -40,17 +41,13 @@ describe('track', () => {
         },
       })
       .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot)
 
     expect(trackEventSpy).toHaveBeenCalledWith(name, properties)
   })
   it('No request body', async () => {
     const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
 
-    await request(app)
-      .post(`/track`)
-      .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot)
+    await request(app).post(`/track`).expect(200)
 
     expect(trackEventSpy).not.toHaveBeenCalled()
   })
@@ -77,7 +74,7 @@ describe('track', () => {
         },
       })
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot)
+      .expect(res => expectSomethingWentWrongPage(res))
 
     expect(trackEventSpy).toHaveBeenCalledWith(name, properties)
   })
@@ -105,7 +102,6 @@ describe('track', () => {
         },
       })
       .expect(404)
-      .expect(res => expect(res.text).toMatchSnapshot)
 
     expect(trackEventSpy).toHaveBeenCalledWith(name, properties)
   })
