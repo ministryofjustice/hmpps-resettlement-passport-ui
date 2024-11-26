@@ -1,7 +1,7 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
-import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
+import { expectPrisonerNotFoundPage, expectSomethingWentWrongPage, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 import { PATHWAY_DICTIONARY } from '../../utils/constants'
@@ -34,24 +34,25 @@ describe('getView', () => {
     await request(app)
       .get('/assessment-complete?type=BCST2')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 
   it('Error case - missing type', async () => {
     await request(app)
       .get('/assessment-complete?prisonerNumber=A1234DY')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        expectSomethingWentWrongPage(res)
+      })
   })
 
   it('Error case - incorrect type', async () => {
     await request(app)
       .get('/assessment-complete?prisonerNumber=A1234DY&type=NOT_A_TYPE')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        expectSomethingWentWrongPage(res)
+      })
   })
 })
 
@@ -217,10 +218,7 @@ describe('postView', () => {
         assessmentType: 'BCST2',
       })
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
   })
 
@@ -232,8 +230,10 @@ describe('postView', () => {
       .send({
         prisonerNumber: 'A1234DY',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        expectSomethingWentWrongPage(res)
+      })
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
   })
 
@@ -246,8 +246,10 @@ describe('postView', () => {
         prisonerNumber: 'A1234DY',
         assessmentType: 'NOT_A_TYPE',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => {
+        expectSomethingWentWrongPage(res)
+      })
     expect(trackEventSpy).toHaveBeenCalledTimes(0)
   })
 

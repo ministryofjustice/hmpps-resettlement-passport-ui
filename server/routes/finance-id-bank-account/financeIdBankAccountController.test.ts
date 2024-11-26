@@ -1,7 +1,12 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import Config from '../../s3Config'
-import { pageHeading, parseHtmlDocument, sanitiseStackTrace, stubPrisonerDetails } from '../testutils/testUtils'
+import {
+  expectPrisonerNotFoundPage,
+  parseHtmlDocument,
+  sanitiseStackTrace,
+  stubPrisonerDetails,
+} from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
@@ -39,19 +44,13 @@ describe('getAddBankAccountView', () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/?prisonerNumber=')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
   it('error, prisoner number missing', async () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 })
 describe('getUpdateBankAccountStatusView', () => {
@@ -65,19 +64,13 @@ describe('getUpdateBankAccountStatusView', () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account/?prisonerNumber=&applicationId=A1234DY')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
   it('error, prisoner number missing', async () => {
     await request(app)
       .get('/finance-and-id/add-a-bank-account?applicationId=AA1234DY4DY')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
   it('error application ID blank', async () => {
     await request(app)
@@ -174,10 +167,7 @@ describe('getConfirmAddABankAccountView', () => {
         applicationType: '',
       })
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
   it('only prisoner number, no day/month/year/bank name - adding a new account', async () => {
     await request(app)
@@ -333,10 +323,7 @@ describe('postBankAccountSubmitView', () => {
         bankName: 'BARCLAYS',
       })
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
   it('error - prisoner number missing', async () => {
     await request(app)
@@ -346,10 +333,7 @@ describe('postBankAccountSubmitView', () => {
         bankName: 'BARCLAYS',
       })
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
   it('error - bank Name blank', async () => {
     rpService.postBankApplication = jest.fn().mockRejectedValue(new Error('bank name is required'))

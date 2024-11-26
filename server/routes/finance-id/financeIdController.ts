@@ -1,10 +1,12 @@
 import { RequestHandler } from 'express'
+import { isAlphanumeric, isNumeric } from 'validator'
 import RpService from '../../services/rpService'
 import logger from '../../../logger'
 import FinanceIdView from './financeIdView'
 import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { badRequestError } from '../../errorHandler'
 
 export default class FinanceIdController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -91,8 +93,8 @@ export default class FinanceIdController {
     try {
       const { prisonerNumber, financeId } = req.body
 
-      if (!prisonerNumber || !financeId) {
-        return next(new Error('prisonerNumber or financeId missing from request body'))
+      if (!isValidPrisonerNumber(prisonerNumber) || !isValidId(financeId)) {
+        return next(badRequestError('prisonerNumber or financeId are invalid or not present in request'))
       }
 
       await this.rpService.deleteFinance(prisonerNumber, financeId as string)
@@ -107,8 +109,8 @@ export default class FinanceIdController {
     try {
       const { prisonerNumber, idId } = req.body
 
-      if (!prisonerNumber || !idId) {
-        return next(new Error('prisonerNumber or idId missing from request body'))
+      if (!isValidPrisonerNumber(prisonerNumber) || !isValidId(idId)) {
+        return next(badRequestError('prisonerNumber or idId are invalid or not present in request'))
       }
 
       await this.rpService.deleteId(prisonerNumber, idId as string)
@@ -118,4 +120,12 @@ export default class FinanceIdController {
       return next(err)
     }
   }
+}
+
+function isValidPrisonerNumber(prisonerNumber: string): boolean {
+  return prisonerNumber && isAlphanumeric(prisonerNumber)
+}
+
+function isValidId(id: string): boolean {
+  return id && isNumeric(id)
 }

@@ -7,6 +7,8 @@ interface CustomHTTPError extends HTTPError {
   customMessage?: string
 }
 
+const defaultErrorMessage = 'Something went wrong'
+
 export default function createErrorHandler(production: boolean) {
   return (error: CustomHTTPError, req: Request, res: Response, _: NextFunction): void => {
     logger.error(`Error handling request for '${req.originalUrl}', user '${res.locals.user?.username}'`, error)
@@ -20,7 +22,7 @@ export default function createErrorHandler(production: boolean) {
       res.locals.message = error.customMessage
     } else {
       if (production) {
-        res.locals.message = 'Something went wrong'
+        res.locals.message = defaultErrorMessage
       } else {
         res.locals.message = error.message
       }
@@ -32,4 +34,11 @@ export default function createErrorHandler(production: boolean) {
 
     return res.render('pages/error')
   }
+}
+
+export function badRequestError(message?: string, customMessage: string = defaultErrorMessage): CustomHTTPError {
+  const error = new Error(message) as CustomHTTPError
+  error.status = 400
+  error.customMessage = customMessage
+  return error
 }

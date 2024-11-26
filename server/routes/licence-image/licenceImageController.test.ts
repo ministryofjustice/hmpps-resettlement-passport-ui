@@ -1,7 +1,7 @@
 import request from 'supertest'
 import type { Express } from 'express'
 import Config from '../../s3Config'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { expectSomethingWentWrongPage, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
@@ -43,11 +43,12 @@ describe('getView', () => {
     await request(app)
       .get(`/licence-image/?licenceId=${licenceId}&conditionId=${conditionId}&prisonerNumber=${prisonerNumber}`)
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expectSomethingWentWrongPage(res))
   })
   it('Not found Error from RpService', async () => {
-    const error = new Error('not found') as Error & { status?: number }
+    const error = new Error('not found') as Error & { status?: number; customMessage?: string }
     error.status = 404
+
     jest.spyOn(rpService, 'getLicenceConditionImage').mockRejectedValue(error)
     const prisonerNumber = 'A1234DY'
     const licenceId = '1'
@@ -56,7 +57,20 @@ describe('getView', () => {
     await request(app)
       .get(`/licence-image/?licenceId=${licenceId}&conditionId=${conditionId}&prisonerNumber=${prisonerNumber}`)
       .expect(404)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it.each([
+    ['Missing licence id', { conditionId: '202' }],
+    ['Missing condition id', { licenceId: '3' }],
+    ['Path in licence id', { licenceId: '/something/we/dont/want', conditionId: '202' }],
+    ['Path in condition id', { licenceId: '4', condition: '56/stuff' }],
+  ])('bad request error case - %s', async (_, params) => {
+    await request(app)
+      .get('/licence-image')
+      .query({ ...params, prisonerNumber: 'A1234DY' })
+      .expect(400)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 })
 

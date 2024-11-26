@@ -12,6 +12,7 @@ const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
+  jest.resetAllMocks()
   stubPrisonerDetails(rpService)
   configHelper(config)
 

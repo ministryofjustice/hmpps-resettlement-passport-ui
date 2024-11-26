@@ -5,7 +5,7 @@ import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper, defaultTestConfig } from '../configHelperTest'
-import { pageHeading, parseHtmlDocument, stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
+import { expectPrisonerNotFoundPage, stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
 import { PrisonerData } from '../../@types/express'
 
 let app: Express
@@ -35,10 +35,7 @@ describe('prisonerOverview', () => {
     await request(app)
       .get('/prisoner-overview')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 
   it('happy path with default query parameters', async () => {
