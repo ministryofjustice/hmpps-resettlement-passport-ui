@@ -1,3 +1,5 @@
+import { differenceInMonths } from 'date-fns'
+
 context(`What's new banner`, () => {
   beforeEach(() => {
     cy.task('reset')
@@ -23,5 +25,12 @@ context(`What's new banner`, () => {
     cy.visit('/')
     cy.get('[data-qa="page-heading"]').should('contain.text', 'All pathways overview')
     cy.get('#whats-new-banner').should('not.exist')
+    cy.getCookie('whatsnew-USER1').should(cookie => {
+      expect(cookie.sameSite).to.equal('lax')
+      const now = new Date()
+      const expiry = new Date()
+      expiry.setTime(cookie.expiry * 1000)
+      expect(differenceInMonths(expiry, now)).to.be.gte(11)
+    })
   })
 })
