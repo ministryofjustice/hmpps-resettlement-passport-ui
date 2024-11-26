@@ -158,25 +158,15 @@ describe('postBankAccountDelete', () => {
     expect(deleteFinanceSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 
-  it('error case - missing prisonerNumber', async () => {
+  it.each([
+    ['Missing prisoner number', { financeId: '56' }],
+    ['Missing financeId', { prisonerNumber: 'A1234DY' }],
+    ['Path in prisonerNumber', { prisonerNumber: 'A1234DY/potato', financeId: '56' }],
+    ['Path in financeId', { prisonerNumber: 'A1234DY', financeId: '56/onion' }],
+  ])('bad request error case - %s', async (_, requestBody) => {
     await request(app)
       .post('/finance-and-id/bank-account-delete')
-      .send({
-        financeId: '56',
-      })
-      .expect(400)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('Something went wrong')
-      })
-  })
-
-  it('error case - missing financeId', async () => {
-    await request(app)
-      .post('/finance-and-id/bank-account-delete')
-      .send({
-        prisonerNumber: 'A1234DY',
-      })
+      .send(requestBody)
       .expect(400)
       .expect(res => {
         const document = parseHtmlDocument(res.text)
@@ -215,25 +205,15 @@ describe('postIdDelete', () => {
     expect(deleteIdSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 
-  it('error case - missing prisonerNumber', async () => {
+  it.each([
+    ['Missing prisoner number', { idId: '56' }],
+    ['Missing idId', { prisonerNumber: 'A1234DY' }],
+    ['Path in prisonerNumber', { prisonerNumber: 'A1234DY/potato', idId: '56' }],
+    ['Path in idId', { prisonerNumber: 'A1234DY', idId: '56/onion' }],
+  ])('bad request error case - %s', async (_, requestBody) => {
     await request(app)
       .post('/finance-and-id/id-delete')
-      .send({
-        idId: '56',
-      })
-      .expect(400)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('Something went wrong')
-      })
-  })
-
-  it('error case - missing idId', async () => {
-    await request(app)
-      .post('/finance-and-id/id-delete')
-      .send({
-        prisonerNumber: 'A1234DY',
-      })
+      .send(requestBody)
       .expect(400)
       .expect(res => {
         const document = parseHtmlDocument(res.text)
