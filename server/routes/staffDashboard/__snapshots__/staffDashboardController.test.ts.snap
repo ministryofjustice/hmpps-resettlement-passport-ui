@@ -373,7 +373,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -906,7 +906,7 @@ exports[`getView Happy path with default query params with tabs nav 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -1431,7 +1431,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -1954,7 +1954,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -2477,7 +2477,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -3005,7 +3005,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -3533,7 +3533,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -4056,7 +4056,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -4579,7 +4579,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
@@ -5102,7 +5102,7 @@ exports[`getView Happy path with sorting by name 1`] = `
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
-        </div>
+        
       </div>
     </form>
   </div>
