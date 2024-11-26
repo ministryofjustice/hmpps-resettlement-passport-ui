@@ -29,6 +29,7 @@ import financeIdBankAccountRouter from './finance-id-bank-account'
 import { prisonerNumberSchema } from './prisonerNumberSchema'
 import { prisonerNumberValidate } from './validate-request'
 import serviceUpdates from './service-updates'
+import assignCaseRouter from './assign-case'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -61,6 +62,7 @@ export default function routes(services: Services): Router {
   licenceImageRouter(router, services)
   financeIdBankAccountRouter(router, services)
   serviceUpdates(router)
+  assignCaseRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 

@@ -315,117 +315,127 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84" >Within 12 weeks</option>
-                  <option value="168" >Within 24 weeks</option>
-                  <option value="0"  selected >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  selected  value="">All pathways</option>
-                  <option  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option  selected  value="">All statuses</option>
-                    <option  value="true">Report required</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84" >Within 12 weeks</option>
+                      <option value="168" >Within 24 weeks</option>
+                      <option value="0"  selected >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  selected  value="">All pathways</option>
+                      <option  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
+                
+                
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                      <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                        <option  selected  value="">All statuses</option>
+                        <option  value="true">Report required</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
-                Resettlement statuses
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    Resettlement statuses
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -632,53 +642,55 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>
@@ -848,117 +860,127 @@ exports[`getView Happy path with default query params 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84" >Within 12 weeks</option>
-                  <option value="168" >Within 24 weeks</option>
-                  <option value="0"  selected >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  selected  value="">All pathways</option>
-                  <option  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option  selected  value="">All statuses</option>
-                    <option  value="true">Report required</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84" >Within 12 weeks</option>
+                      <option value="168" >Within 24 weeks</option>
+                      <option value="0"  selected >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  selected  value="">All pathways</option>
+                      <option  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
+                
+                
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                      <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                        <option  selected  value="">All statuses</option>
+                        <option  value="true">Report required</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
-                Resettlement statuses
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    Resettlement statuses
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -1165,53 +1187,55 @@ exports[`getView Happy path with default query params 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>
@@ -1381,117 +1405,127 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84"  selected >Within 12 weeks</option>
-                  <option value="168" >Within 24 weeks</option>
-                  <option value="0" >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  selected  value="">All pathways</option>
-                  <option  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option  value="">All statuses</option>
-                    <option  selected  value="true">Report required</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84"  selected >Within 12 weeks</option>
+                      <option value="168" >Within 24 weeks</option>
+                      <option value="0" >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  selected  value="">All pathways</option>
+                      <option  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
+                
+                
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                      <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                        <option  value="">All statuses</option>
+                        <option  selected  value="true">Report required</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=true#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=true#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=true#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=true#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
-                Resettlement statuses
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=true#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=true#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=true#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=true#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=true#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    Resettlement statuses
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=true#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -1698,53 +1732,55 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>
@@ -1914,117 +1950,127 @@ exports[`getView Happy path with filter  watchList true 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84"  selected >Within 12 weeks</option>
-                  <option value="168" >Within 24 weeks</option>
-                  <option value="0" >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  selected  value="">All pathways</option>
-                  <option  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option  selected  value="">All statuses</option>
-                    <option  value="true">Report required</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" checked>
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84"  selected >Within 12 weeks</option>
+                      <option value="168" >Within 24 weeks</option>
+                      <option value="0" >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  selected  value="">All pathways</option>
+                      <option  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
+                
+                
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                      <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                        <option  selected  value="">All statuses</option>
+                        <option  value="true">Report required</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" checked>
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
-                Resettlement statuses
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    Resettlement statuses
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -2231,53 +2277,55 @@ exports[`getView Happy path with filter  watchList true 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>
@@ -2447,127 +2495,137 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84"  selected >Within 12 weeks</option>
-                  <option value="168" >Within 24 weeks</option>
-                  <option value="0" >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  value="">All pathways</option>
-                  <option  selected  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="pathwayStatus">Pathway status</label>
-                  <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" >
-                    <option  selected  value="">All statuses</option>
-                    <option  value="NOT_STARTED">Not started</option>
-                    <option  value="SUPPORT_REQUIRED">Support required</option>
-                    <option  value="IN_PROGRESS">In progress</option>
-                    <option  value="SUPPORT_NOT_REQUIRED">Support not required</option>
-                    <option  value="SUPPORT_DECLINED">Support declined</option>
-                    <option  value="DONE">Done</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84"  selected >Within 12 weeks</option>
+                      <option value="168" >Within 24 weeks</option>
+                      <option value="0" >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
-            </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  value="">All pathways</option>
+                      <option  selected  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
                 
-                <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=pathwayStatus&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                  <button>
-                    Accommodation status
-                  </button>
-                </a>
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="pathwayStatus">Pathway status</label>
+                      <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" >
+                        <option  selected  value="">All statuses</option>
+                        <option  value="NOT_STARTED">Not started</option>
+                        <option  value="SUPPORT_REQUIRED">Support required</option>
+                        <option  value="IN_PROGRESS">In progress</option>
+                        <option  value="SUPPORT_NOT_REQUIRED">Support not required</option>
+                        <option  value="SUPPORT_DECLINED">Support declined</option>
+                        <option  value="DONE">Done</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    
+                    <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=pathwayStatus&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                      <button>
+                        Accommodation status
+                      </button>
+                    </a>
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -2774,53 +2832,55 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>
@@ -2990,117 +3050,127 @@ exports[`getView Happy path with filter prisoner number 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84"  selected >Within 12 weeks</option>
-                  <option value="168" >Within 24 weeks</option>
-                  <option value="0" >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  selected  value="">All pathways</option>
-                  <option  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option  selected  value="">All statuses</option>
-                    <option  value="true">Report required</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="A1234DY">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84"  selected >Within 12 weeks</option>
+                      <option value="168" >Within 24 weeks</option>
+                      <option value="0" >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  selected  value="">All pathways</option>
+                      <option  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
+                
+                
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                      <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                        <option  selected  value="">All statuses</option>
+                        <option  value="true">Report required</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="A1234DY">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
-                Resettlement statuses
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="ascending" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    Resettlement statuses
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -3307,53 +3377,55 @@ exports[`getView Happy path with filter prisoner number 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>
@@ -3523,117 +3595,127 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84"  selected >Within 12 weeks</option>
-                  <option value="168" >Within 24 weeks</option>
-                  <option value="0" >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  selected  value="">All pathways</option>
-                  <option  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option  selected  value="">All statuses</option>
-                    <option  value="true">Report required</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="xxxx">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84"  selected >Within 12 weeks</option>
+                      <option value="168" >Within 24 weeks</option>
+                      <option value="0" >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  selected  value="">All pathways</option>
+                      <option  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
+                
+                
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                      <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                        <option  selected  value="">All statuses</option>
+                        <option  value="true">Report required</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="xxxx">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
-                Resettlement statuses
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="ascending" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    Resettlement statuses
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -3840,53 +3922,55 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>
@@ -4056,117 +4140,127 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84" >Within 12 weeks</option>
-                  <option value="168"  selected >Within 24 weeks</option>
-                  <option value="0" >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  selected  value="">All pathways</option>
-                  <option  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option  selected  value="">All statuses</option>
-                    <option  value="true">Report required</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84" >Within 12 weeks</option>
+                      <option value="168"  selected >Within 24 weeks</option>
+                      <option value="0" >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  selected  value="">All pathways</option>
+                      <option  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
+                
+                
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                      <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                        <option  selected  value="">All statuses</option>
+                        <option  value="true">Report required</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="ascending" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
-                Resettlement statuses
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="ascending" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    Resettlement statuses
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -4373,53 +4467,55 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>
@@ -4589,117 +4685,127 @@ exports[`getView Happy path with sorting by name 1`] = `
           
   
   
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84"  selected >Within 12 weeks</option>
-                  <option value="168" >Within 24 weeks</option>
-                  <option value="0" >All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option  selected  value="">All pathways</option>
-                  <option  value="ACCOMMODATION">Accommodation</option>
-                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option  value="FINANCE_AND_ID">Finance and ID</option>
-                  <option  value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            
-            
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option  selected  value="">All statuses</option>
-                    <option  value="true">Report required</option>
-                  </select>
+    <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="tab-links" href="/">People in prison</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="tab-links" href="/assign-a-case">Assign a case</a>
+        </li>
+      </ul>
+      <div class="govuk-tabs__panel">
+        <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+          <form action="/#prisonersFilter" method="GET" novalidate>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-three-quarters">
+                <div class="govuk-grid-column-full">
+                  <h3 class="govuk-heading-m">Filter by</h3>
                 </div>
-              </div>
-            
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="releaseTime">Time to release</label>
+                    <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                      <option value="84"  selected >Within 12 weeks</option>
+                      <option value="168" >Within 24 weeks</option>
+                      <option value="0" >All prisoners</option>
+                    </select>
                   </div>
                 </div>
-              </fieldset>
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label" for="pathwayView">Pathway view</label>
+                    <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                      <option  selected  value="">All pathways</option>
+                      <option  value="ACCOMMODATION">Accommodation</option>
+                      <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                      <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                      <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                      <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                      <option  value="FINANCE_AND_ID">Finance and ID</option>
+                      <option  value="HEALTH">Health</option>
+                    </select>
+                  </div>
+                </div>
+                
+                
+                  <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                      <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                      <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                        <option  selected  value="">All statuses</option>
+                        <option  value="true">Report required</option>
+                      </select>
+                    </div>
+                  </div>
+                
+                <div class="govuk-grid-column-one-third">
+                  <div class="govuk-form-group">
+                    <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+                    <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
+                  </div>
+                </div>
+              </div>
+              <div class="govuk-grid-column-one-quarter">
+                <div class="govuk-form-group">
+                  <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                      <div class="govuk-fieldset__heading">Show</div>
+                    </legend>
+                    <div class="govuk-checkboxes govuk-checkboxes--small">
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" >
+                        <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <div class="govuk-grid-column-full">
+                <div class="govuk-grid-column-one-quarter">
+                  <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+          </form>
         </div>
-      </form>
-    </div>
-    
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="descending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              
-                Resettlement statuses
-              
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
         
+          <table class="govuk-table" id="prisonersTable">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="descending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Name</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release date</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release eligibility</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Release on temporary licence</button>
+                  </a>
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  
+                    Resettlement statuses
+                  
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                    <button>Last updated</button>
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            
   <tbody class="govuk-table__body">
   
     
@@ -4906,53 +5012,55 @@ exports[`getView Happy path with sorting by name 1`] = `
   
   </tbody>
 
-      </table>
-      
-        
-        
-        
-        
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            
-            
-              
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-                </li>
-              
-              
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-                </li>
-              
-            
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            
-          </ul>
-          
+          </table>
           
             
+            
+            
+            
+            <nav class="moj-pagination" aria-label="Pagination navigation">
+              <ul class="moj-pagination__list">
+                
+                
+                  
+                    <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
+                    </li>
+                  
+                  
+                    <li class="moj-pagination__item">
+                      <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
+                    </li>
+                  
+                
+                  <li class="moj-pagination__item  moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
+                  </li>
+                
+              </ul>
+              
+              
+                
+              
+              <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
+            </nav>
           
-          <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-        </nav>
-      
-    
+        
+      </div>
+    </div>
   
 
         </main>

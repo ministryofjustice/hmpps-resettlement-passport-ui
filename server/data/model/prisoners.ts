@@ -25,4 +25,6 @@ type Prisoners = {
   releaseEligibilityType?: string
   releaseOnTemporaryLicenceDate?: string
   assessmentRequired: boolean
+  assignedWorkerFirstname?: string
+  assignedWorkerLastname?: string
 }
