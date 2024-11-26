@@ -50,6 +50,12 @@ export default class RpService {
     )
   }
 
+  async getListOfPrisonerCases(prisonSelected: string, includePastReleaseDates: boolean) {
+    return this.createClient().get<PrisonersList>(
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?includePastReleaseDates=${includePastReleaseDates}`,
+    )
+  }
+
   createClient() {
     const { token, sessionId, userId } = currentUser()
     return new RPClient(token, sessionId, userId)

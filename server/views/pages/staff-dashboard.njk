@@ -1,180 +1,201 @@
 {% extends "../partials/layout.njk" %}
 {% set pageHeading = "All pathways overview" %}
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
+{% set assignCaseEnabled = features.ASSIGN_CASE_TAB | getFeatureFlag %}
+
+{% set tabContent %}
+  <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
+    <form action="/#prisonersFilter" method="GET" novalidate>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+          <div class="govuk-grid-column-full">
+            <h3 class="govuk-heading-m">Filter by</h3>
+          </div>
+          <div class="govuk-grid-column-one-third">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="releaseTime">Time to release</label>
+              <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
+                <option value="84" {% if releaseTime == '84' %} selected {% endif %}>Within 12 weeks</option>
+                <option value="168" {% if releaseTime == '168' %} selected {% endif %}>Within 24 weeks</option>
+                <option value="0" {% if releaseTime == '0' %} selected {% endif %}>All prisoners</option>
+              </select>
+            </div>
+          </div>
+          <div class="govuk-grid-column-one-third">
+            <div class="govuk-form-group">
+              <label class="govuk-label" for="pathwayView">Pathway view</label>
+              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                <option {% if pathwayView == "" %} selected {% endif %} value="">All pathways</option>
+                <option {% if pathwayView == "ACCOMMODATION" %} selected {% endif %} value="ACCOMMODATION">Accommodation</option>
+                <option {% if pathwayView == "ATTITUDES_THINKING_AND_BEHAVIOUR" %} selected {% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                <option {% if pathwayView == "CHILDREN_FAMILIES_AND_COMMUNITY" %} selected {% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                <option {% if pathwayView == "DRUGS_AND_ALCOHOL" %} selected {% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                <option {% if pathwayView == "EDUCATION_SKILLS_AND_WORK" %} selected {% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                <option {% if pathwayView == "FINANCE_AND_ID" %} selected {% endif %} value="FINANCE_AND_ID">Finance and ID</option>
+                <option {% if pathwayView == "HEALTH" %} selected {% endif %} value="HEALTH">Health</option>
+              </select>
+            </div>
+          </div>
+          {% if pathwayView %}
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayStatus">Pathway status</label>
+                <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
+                  <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
+                  <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">{{ ("NOT_STARTED" | getEnumValue).name }}</option>
+                  <option {% if pathwayStatus == "SUPPORT_REQUIRED" %} selected {% endif %} value="SUPPORT_REQUIRED">{{ ("SUPPORT_REQUIRED" | getEnumValue).name }}</option>
+                  <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">{{ ("IN_PROGRESS" | getEnumValue).name }}</option>
+                  <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">{{ ("SUPPORT_NOT_REQUIRED" | getEnumValue).name }}</option>
+                  <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">{{ ("SUPPORT_DECLINED" | getEnumValue).name }}</option>
+                  <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">{{ ("DONE" | getEnumValue).name }}</option>
+                </select>
+              </div>
+            </div>
+          {% endif %}
+          {% if not pathwayView %}
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
+                <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
+                  <option {% if assessmentRequired == "" %} selected {% endif %} value="">All statuses</option>
+                  <option {% if assessmentRequired == "true" %} selected {% endif %} value="true">Report required</option>
+                </select>
+              </div>
+            </div>
+          {% endif %}
+          <div class="govuk-grid-column-one-third">
+            <div class="govuk-form-group">
+              <label class="govuk-label " for="searchInput">Prisoner name or number</label>
+              <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="{{ searchInput }}">
+            </div>
+          </div>
+        </div>
+        <div class="govuk-grid-column-one-quarter">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <div class="govuk-fieldset__heading">Show</div>
+              </legend>
+              <div class="govuk-checkboxes govuk-checkboxes--small">
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" {% if watchList == "true" %}checked{% endif %}>
+                  <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="govuk-grid-column-full">
+          <div class="govuk-grid-column-one-quarter">
+            <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% if prisonersList %}
+    <table class="govuk-table" id="prisonersTable">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">
+            <a aria-sort="{% if sortField == 'name' and sortDirection == 'ASC' %}ascending{% elif sortField == 'name' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=name&sortDirection={{ 'DESC' if (sortField == 'name' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+              <button>Name</button>
+            </a>
+          </th>
+          <th scope="col" class="govuk-table__header">
+            <a aria-sort="{% if sortField == 'releaseDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseDate&sortDirection={{ 'DESC' if (sortField == 'releaseDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+              <button>Release date</button>
+            </a>
+          </th>
+          <th scope="col" class="govuk-table__header">
+            <a aria-sort="{% if sortField == 'releaseEligibilityDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseEligibilityDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseEligibilityDate&sortDirection={{ 'DESC' if (sortField == 'releaseEligibilityDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+              <button>Release eligibility</button>
+            </a>
+          </th>
+          <th scope="col" class="govuk-table__header">
+            <a aria-sort="{% if sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseOnTemporaryLicenceDate&sortDirection={{ 'DESC' if (sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+              <button>Release on temporary licence</button>
+            </a>
+          </th>
+          <th scope="col" class="govuk-table__header">
+            {% if pathwayView %}
+              {% set pathwayValues = pathwayView | getEnumValue %}
+              <a aria-sort="{% if sortField == 'pathwayStatus' and sortDirection == 'ASC' %}ascending{% elif sortField == 'pathwayStatus' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=pathwayStatus&sortDirection={{ 'DESC' if (sortField == 'pathwayStatus' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+                <button>
+                  {{ pathwayValues.name }} status
+                </button>
+              </a>
+            {% else %}
+              Resettlement statuses
+            {% endif %}
+          </th>
+          <th scope="col" class="govuk-table__header">
+            <a aria-sort="{% if sortField == 'lastUpdatedDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'lastUpdatedDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=lastUpdatedDate&sortDirection={{ 'DESC' if (sortField == 'lastUpdatedDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+              <button>Last updated</button>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      {{ prisonersTable(prisonersList.content, pathwayView) }}
+    </table>
+    {% if prisonersList.content | length %}
+      {% set nextPage = page | float + 1 | float %}
+      {% set prevPage = page | float - 1 | float %}
+      {% set size = 20 %}
+      {% set totalPages = (prisonersList.totalElements / size) | roundNumberUp %}
+      <nav class="moj-pagination" aria-label="Pagination navigation">
+        <ul class="moj-pagination__list">
+          {% if page > 0 %}
+            <li class="moj-pagination__item  moj-pagination__item--prev">
+              <a class="moj-pagination__link" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&assessmentRequired={{ assessmentRequired }}">Previous<span class="govuk-visually-hidden"> page</span></a>
+            </li>
+          {% endif %}
+          {% for i in range(0, totalPages) %}
+            {% if page | float === i | float %}
+              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
+            {% else %}
+              <li class="moj-pagination__item">
+                <a class="moj-pagination__link" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&assessmentRequired={{ assessmentRequired }}" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
+              </li>
+            {% endif %}
+          {%- endfor %}
+          {% if prisonersList.last === false %}
+            <li class="moj-pagination__item  moj-pagination__item--next">
+              <a class="moj-pagination__link" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&assessmentRequired={{ assessmentRequired }}">Next<span class="govuk-visually-hidden"> page</span></a>
+            </li>
+          {% endif %}
+        </ul>
+        {% set fromPage = (page | float + 1 | float) * (size | float) - 19 | float %}
+        {% if prisonersList.last === false %}
+          {% set toPage = (page | float + 1 | float) * size | float %}
+        {% else %}
+          {% set toPage = totalElements %}
+        {% endif %}
+        <p class="moj-pagination__results">Showing <b>{{ fromPage }}</b> to <b>{{ toPage }}</b> of <b>{{ prisonersList.totalElements }}</b> results</p>
+      </nav>
+    {% endif %}
+  {% endif %}
+{% endset %}
 
 {% block content %}
   {# Only NOMIS users can access the list prisoners functionality at present #}
   {% if isPrisonUser %}
-    <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
-      <form action="/#prisonersFilter" method="GET" novalidate>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-three-quarters">
-            <div class="govuk-grid-column-full">
-              <h3 class="govuk-heading-m">Filter by</h3>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="releaseTime">Time to release</label>
-                <select class="govuk-select filter-input" id="releaseTime" name="releaseTime">
-                  <option value="84" {% if releaseTime == '84' %} selected {% endif %}>Within 12 weeks</option>
-                  <option value="168" {% if releaseTime == '168' %} selected {% endif %}>Within 24 weeks</option>
-                  <option value="0" {% if releaseTime == '0' %} selected {% endif %}>All prisoners</option>
-                </select>
-              </div>
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayView">Pathway view</label>
-                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                  <option {% if pathwayView == "" %} selected {% endif %} value="">All pathways</option>
-                  <option {% if pathwayView == "ACCOMMODATION" %} selected {% endif %} value="ACCOMMODATION">Accommodation</option>
-                  <option {% if pathwayView == "ATTITUDES_THINKING_AND_BEHAVIOUR" %} selected {% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                  <option {% if pathwayView == "CHILDREN_FAMILIES_AND_COMMUNITY" %} selected {% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                  <option {% if pathwayView == "DRUGS_AND_ALCOHOL" %} selected {% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                  <option {% if pathwayView == "EDUCATION_SKILLS_AND_WORK" %} selected {% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                  <option {% if pathwayView == "FINANCE_AND_ID" %} selected {% endif %} value="FINANCE_AND_ID">Finance and ID</option>
-                  <option {% if pathwayView == "HEALTH" %} selected {% endif %} value="HEALTH">Health</option>
-                </select>
-              </div>
-            </div>
-            {% if pathwayView %}
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="pathwayStatus">Pathway status</label>
-                  <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
-                    <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
-                    <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">{{ ("NOT_STARTED" | getEnumValue).name }}</option>
-                    <option {% if pathwayStatus == "SUPPORT_REQUIRED" %} selected {% endif %} value="SUPPORT_REQUIRED">{{ ("SUPPORT_REQUIRED" | getEnumValue).name }}</option>
-                    <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">{{ ("IN_PROGRESS" | getEnumValue).name }}</option>
-                    <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">{{ ("SUPPORT_NOT_REQUIRED" | getEnumValue).name }}</option>
-                    <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">{{ ("SUPPORT_DECLINED" | getEnumValue).name }}</option>
-                    <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">{{ ("DONE" | getEnumValue).name }}</option>
-                  </select>
-                </div>
-              </div>
-            {% endif %}
-            {% if not pathwayView %}
-              <div class="govuk-grid-column-one-third">
-                <div class="govuk-form-group">
-                  <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                  <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                    <option {% if assessmentRequired == "" %} selected {% endif %} value="">All statuses</option>
-                    <option {% if assessmentRequired == "true" %} selected {% endif %} value="true">Report required</option>
-                  </select>
-                </div>
-              </div>
-            {% endif %}
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label " for="searchInput">Prisoner name or number</label>
-                <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="{{ searchInput }}">
-              </div>
-            </div>
-          </div>
-          <div class="govuk-grid-column-one-quarter">
-            <div class="govuk-form-group">
-              <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                  <div class="govuk-fieldset__heading">Show</div>
-                </legend>
-                <div class="govuk-checkboxes govuk-checkboxes--small">
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="watchList" name="watchList" type="checkbox" value="true" {% if watchList == "true" %}checked{% endif %}>
-                    <label class="govuk-label govuk-checkboxes__label" for="watchList">Your cases</label>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
-          </div>
-          <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
-              <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
-            </div>
-          </div>
+    {% if assignCaseEnabled %}
+      <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+        <ul class="govuk-tabs__list">
+          <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+            <a class="tab-links" href="/">People in prison</a>
+          </li>
+          <li class="govuk-tabs__list-item">
+            <a class="tab-links" href="/assign-a-case">Assign a case</a>
+          </li>
+        </ul>
+        <div class="govuk-tabs__panel">
+          {{ tabContent | safe }}
         </div>
-      </form>
-    </div>
-    {% if prisonersList %}
-      <table class="govuk-table" id="prisonersTable">
-        <thead class="govuk-table__head">
-          <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="{% if sortField == 'name' and sortDirection == 'ASC' %}ascending{% elif sortField == 'name' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=name&sortDirection={{ 'DESC' if (sortField == 'name' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
-                <button>Name</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="{% if sortField == 'releaseDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseDate&sortDirection={{ 'DESC' if (sortField == 'releaseDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
-                <button>Release date</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="{% if sortField == 'releaseEligibilityDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseEligibilityDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseEligibilityDate&sortDirection={{ 'DESC' if (sortField == 'releaseEligibilityDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
-                <button>Release eligibility</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="{% if sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseOnTemporaryLicenceDate&sortDirection={{ 'DESC' if (sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
-                <button>Release on temporary licence</button>
-              </a>
-            </th>
-            <th scope="col" class="govuk-table__header">
-              {% if pathwayView %}
-                {% set pathwayValues = pathwayView | getEnumValue %}
-                <a aria-sort="{% if sortField == 'pathwayStatus' and sortDirection == 'ASC' %}ascending{% elif sortField == 'pathwayStatus' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=pathwayStatus&sortDirection={{ 'DESC' if (sortField == 'pathwayStatus' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
-                  <button>
-                    {{ pathwayValues.name }} status
-                  </button>
-                </a>
-              {% else %}
-                Resettlement statuses
-              {% endif %}
-            </th>
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="{% if sortField == 'lastUpdatedDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'lastUpdatedDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=lastUpdatedDate&sortDirection={{ 'DESC' if (sortField == 'lastUpdatedDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
-                <button>Last updated</button>
-              </a>
-            </th>
-          </tr>
-        </thead>
-        {{ prisonersTable(prisonersList.content, pathwayView) }}
-      </table>
-      {% if prisonersList.content | length %}
-        {% set nextPage = page | float + 1 | float %}
-        {% set prevPage = page | float - 1 | float %}
-        {% set size = 20 %}
-        {% set totalPages = (prisonersList.totalElements / size) | roundNumberUp %}
-        <nav class="moj-pagination" aria-label="Pagination navigation">
-          <ul class="moj-pagination__list">
-            {% if page > 0 %}
-              <li class="moj-pagination__item  moj-pagination__item--prev">
-                <a class="moj-pagination__link" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ prevPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&assessmentRequired={{ assessmentRequired }}">Previous<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            {% endif %}
-            {% for i in range(0, totalPages) %}
-              {% if page | float === i | float %}
-                <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</li>
-              {% else %}
-                <li class="moj-pagination__item">
-                  <a class="moj-pagination__link" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ i }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&assessmentRequired={{ assessmentRequired }}" aria-label="Page {{ i + 1 }} of {{ totalPages }}">{{ i + 1 }}</a>
-                </li>
-              {% endif %}
-            {%- endfor %}
-            {% if prisonersList.last === false %}
-              <li class="moj-pagination__item  moj-pagination__item--next">
-                <a class="moj-pagination__link" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&page={{ nextPage }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&assessmentRequired={{ assessmentRequired }}">Next<span class="govuk-visually-hidden"> page</span></a>
-              </li>
-            {% endif %}
-          </ul>
-          {% set fromPage = (page | float + 1 | float) * (size | float) - 19 | float %}
-          {% if prisonersList.last === false %}
-            {% set toPage = (page | float + 1 | float) * size | float %}
-          {% else %}
-            {% set toPage = totalElements %}
-          {% endif %}
-          <p class="moj-pagination__results">Showing <b>{{ fromPage }}</b> to <b>{{ toPage }}</b> of <b>{{ prisonersList.totalElements }}</b> results</p>
-        </nav>
-      {% endif %}
+      </div>
+    {% else %}
+      {{ tabContent | safe }}
     {% endif %}
   {% else %}
     <p>This functionality is only currently available for NOMIS users. Please log in as a NOMIS user and try again.</p>
