@@ -5,6 +5,7 @@ import { AppInsightsService, PsfrEvent } from '../../utils/analytics'
 import RpService from '../../services/rpService'
 import StatusUpdateView from './statusUpdateView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
+import { badRequestError } from '../../errorHandler'
 
 export default class StatusUpdateController {
   constructor(
@@ -42,7 +43,7 @@ export default class StatusUpdateController {
       const caseNoteInput = req.body[`caseNoteInput_${selectedStatus}`] || null
 
       if (!selectedPathway || !isValidPathway(selectedPathway)) {
-        return next(new Error('No valid pathway specified in request'))
+        return next(badRequestError('No valid pathway specified in request'))
       }
 
       if (!selectedStatus) {
@@ -51,7 +52,7 @@ export default class StatusUpdateController {
       }
 
       if (!isValidStatus(selectedStatus)) {
-        return next(new Error('No valid status specified in request'))
+        return next(badRequestError('No valid status specified in request'))
       }
 
       const status = getEnumValue(selectedStatus).name

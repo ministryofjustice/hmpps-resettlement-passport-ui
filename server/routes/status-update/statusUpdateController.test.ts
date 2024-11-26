@@ -3,7 +3,7 @@ import request from 'supertest'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
-import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
+import { expectPrisonerNotFoundPage, expectSomethingWentWrongPage, stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
 const { rpService, appInsightsService } = mockedServices
@@ -34,10 +34,7 @@ describe('getStatusUpdate', () => {
     await request(app)
       .get('/status-update?selectedPathway=accommodation')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 
   it('error case - missing selectedPathway', async () => {
@@ -122,8 +119,8 @@ describe('postStatusUpdate', () => {
         selectedPathway: 'accommodation',
         caseNoteInput_DONE: 'This is my case note text',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('error case - missing pathway', async () => {
@@ -134,8 +131,8 @@ describe('postStatusUpdate', () => {
         selectedStatus: 'DONE',
         caseNoteInput_DONE: 'This is my case note text',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('error case - invalid pathway', async () => {
@@ -147,8 +144,8 @@ describe('postStatusUpdate', () => {
         selectedPathway: 'not a pathway',
         caseNoteInput_DONE: 'This is my case note text',
       })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(400)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('error thrown during patch operation', async () => {
@@ -164,7 +161,7 @@ describe('postStatusUpdate', () => {
         caseNoteInput_DONE: 'This is my case note text',
       })
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expectSomethingWentWrongPage(res))
 
     expect(patchStatusWithCaseNoteSpy).toHaveBeenCalledWith('A1234DY', {
       pathway: 'ACCOMMODATION',

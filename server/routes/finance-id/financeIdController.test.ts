@@ -2,8 +2,8 @@ import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import {
-  pageHeading,
-  parseHtmlDocument,
+  expectPrisonerNotFoundPage,
+  expectSomethingWentWrongPage,
   stubAssessmentInformation,
   stubCaseNotesCreators,
   stubCaseNotesHistory,
@@ -126,10 +126,7 @@ describe('getView', () => {
     await request(app)
       .get('/finance-and-id')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 
   it('Error case - error thrown from rpService', async () => {
@@ -137,7 +134,7 @@ describe('getView', () => {
     await request(app)
       .get('/finance-and-id?prisonerNumber=A1234DY')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 })
 
@@ -155,24 +152,17 @@ describe('postBankAccountDelete', () => {
     expect(deleteFinanceSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 
-  it('error case - missing prisonerNumber', async () => {
+  it.each([
+    ['Missing prisoner number', { financeId: '56' }],
+    ['Missing financeId', { prisonerNumber: 'A1234DY' }],
+    ['Path in prisonerNumber', { prisonerNumber: 'A1234DY/potato', financeId: '56' }],
+    ['Path in financeId', { prisonerNumber: 'A1234DY', financeId: '56/onion' }],
+  ])('bad request error case - %s', async (_, requestBody) => {
     await request(app)
       .post('/finance-and-id/bank-account-delete')
-      .send({
-        financeId: '56',
-      })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
-
-  it('error case - missing financeId', async () => {
-    await request(app)
-      .post('/finance-and-id/bank-account-delete')
-      .send({
-        prisonerNumber: 'A1234DY',
-      })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .send(requestBody)
+      .expect(400)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('error case - error from API', async () => {
@@ -184,7 +174,7 @@ describe('postBankAccountDelete', () => {
         financeId: '56',
       })
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expectSomethingWentWrongPage(res))
     expect(deleteFinanceSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 })
@@ -203,24 +193,17 @@ describe('postIdDelete', () => {
     expect(deleteIdSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 
-  it('error case - missing prisonerNumber', async () => {
+  it.each([
+    ['Missing prisoner number', { idId: '56' }],
+    ['Missing idId', { prisonerNumber: 'A1234DY' }],
+    ['Path in prisonerNumber', { prisonerNumber: 'A1234DY/potato', idId: '56' }],
+    ['Path in idId', { prisonerNumber: 'A1234DY', idId: '56/onion' }],
+  ])('bad request error case - %s', async (_, requestBody) => {
     await request(app)
       .post('/finance-and-id/id-delete')
-      .send({
-        idId: '56',
-      })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
-
-  it('error case - missing idId', async () => {
-    await request(app)
-      .post('/finance-and-id/id-delete')
-      .send({
-        prisonerNumber: 'A1234DY',
-      })
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .send(requestBody)
+      .expect(400)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('error case - error from API', async () => {
@@ -232,7 +215,7 @@ describe('postIdDelete', () => {
         idId: '56',
       })
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(res => expectSomethingWentWrongPage(res))
     expect(deleteIdSpy).toHaveBeenCalledWith('A1234DY', '56')
   })
 })

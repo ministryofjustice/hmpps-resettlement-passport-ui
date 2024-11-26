@@ -16,7 +16,7 @@ import DocumentService from '../../services/documentService'
 import { AssessmentStateService } from '../../data/assessmentStateService'
 import { AppInsightsService } from '../../utils/analytics'
 
-const testAppInfo: ApplicationInfo = {
+export const testAppInfo: ApplicationInfo = {
   applicationName: 'test',
   buildNumber: '1',
   gitRef: 'long ref',

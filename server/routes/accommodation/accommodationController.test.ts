@@ -2,8 +2,8 @@ import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import {
-  pageHeading,
-  parseHtmlDocument,
+  expectPrisonerNotFoundPage,
+  expectSomethingWentWrongPage,
   stubAccommodation,
   stubAssessmentInformation,
   stubCaseNotesCreators,
@@ -119,10 +119,7 @@ describe('getView', () => {
     await request(app)
       .get('/accommodation')
       .expect(404)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('No data found for prisoner')
-      })
+      .expect(res => expectPrisonerNotFoundPage(res))
   })
 
   it('Error case - error thrown from rpService', async () => {
@@ -130,9 +127,6 @@ describe('getView', () => {
     await request(app)
       .get('/accommodation?prisonerNumber=A1234DY')
       .expect(500)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(pageHeading(document)).toEqual('Something went wrong')
-      })
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 })
