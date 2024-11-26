@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import { millisecondsToSeconds, milliseconds } from 'date-fns'
+import { milliseconds } from 'date-fns'
 import config from '../config'
 
-const expiryTime = millisecondsToSeconds(milliseconds({ years: 1 }))
+const expiryTime = milliseconds({ years: 1 })
 
 function cookieId(userId: string) {
   return `whatsnew-${userId}`
@@ -19,7 +19,7 @@ export function handleWhatsNewBanner(req: Request, res: Response) {
   let dismissCookieSet = req.cookies[cookieId(username)] === version
   if (req.query.dismissWhatsNew === 'true') {
     dismissCookieSet = true
-    res.cookie(cookieId(username), version, { httpOnly: true, secure: true, maxAge: expiryTime })
+    res.cookie(cookieId(username), version, { httpOnly: true, secure: true, maxAge: expiryTime, sameSite: 'lax' })
   }
 
   res.locals.whatsNewEnabled = !dismissCookieSet
