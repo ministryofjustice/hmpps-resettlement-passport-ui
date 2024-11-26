@@ -1,6 +1,5 @@
 import express, { Express } from 'express'
 import request from 'supertest'
-import cookieParser from 'cookie-parser'
 import { appWithAllRoutes, testAppInfo } from './routes/testutils/appSetup'
 import Config from './s3Config'
 import { configHelper } from './routes/configHelperTest'
