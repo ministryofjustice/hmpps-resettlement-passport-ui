@@ -48,6 +48,10 @@
     "enabled": true
   },
   {
+    "feature": "assignCaseTab",
+    "enabled": true
+  },
+  {
     "feature": "myCases",
     "enabled": false
   }

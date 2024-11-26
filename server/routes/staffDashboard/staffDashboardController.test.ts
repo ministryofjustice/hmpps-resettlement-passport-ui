@@ -201,11 +201,25 @@ describe('getView', () => {
     expect(getPrisonersListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
   })
 
-  it('Happy path with default query params', async () => {
+  it('Happy path with default query params without tabs nav', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
-    jest
-      .spyOn(featureFlags, 'getFeatureFlags')
-      .mockResolvedValue([{ feature: 'includePastReleaseDates', enabled: true }])
+    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([
+      { feature: 'includePastReleaseDates', enabled: true },
+      { feature: 'assignCaseTab', enabled: false },
+    ])
+    await request(app)
+      .get('/')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
+  })
+
+  it('Happy path with default query params with tabs nav', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([
+      { feature: 'includePastReleaseDates', enabled: true },
+      { feature: 'assignCaseTab', enabled: true },
+    ])
     await request(app)
       .get('/')
       .expect(200)

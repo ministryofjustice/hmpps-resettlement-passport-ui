@@ -165,6 +165,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   RESET_PROFILE: 'profileReset',
   USE_NEW_DPS_CASE_NOTE_FORMAT: 'useNewDpsCaseNoteFormat',
   WHATS_NEW_BANNER: 'whatsNewBanner',
+  ASSIGN_CASE_TAB: 'assignCaseTab',
   MY_CASES: 'myCases',
 }
 
