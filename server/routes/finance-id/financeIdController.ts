@@ -3,19 +3,17 @@ import RpService from '../../services/rpService'
 import logger from '../../../logger'
 import FinanceIdView from './financeIdView'
 import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class FinanceIdController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
-      if (!prisonerData) {
-        return next(new Error('Prisoner number is missing from request'))
-      }
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       handleWhatsNewBanner(req, res)
 
       const {

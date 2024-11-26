@@ -1,25 +1,19 @@
 import request from 'supertest'
 import type { Express } from 'express'
-import RpService from '../../services/rpService'
 import Config from '../../s3Config'
 import { stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
+const { rpService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
   configHelper(config)
   stubPrisonerDetails(rpService)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-    },
-  })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {

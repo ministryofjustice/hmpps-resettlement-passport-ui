@@ -1,25 +1,18 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import RpService from '../../services/rpService'
 import { appWithAllRoutes } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper } from '../configHelperTest'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-    },
-  })
+  app = appWithAllRoutes({})
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
 })

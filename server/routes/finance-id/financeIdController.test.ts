@@ -1,8 +1,9 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import RpService from '../../services/rpService'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import {
+  pageHeading,
+  parseHtmlDocument,
   stubAssessmentInformation,
   stubCaseNotesCreators,
   stubCaseNotesHistory,
@@ -17,19 +18,14 @@ import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
+const { rpService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
   stubPrisonerDetails(rpService)
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-    },
-  })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {
@@ -129,8 +125,11 @@ describe('getView', () => {
   it('Error case - missing prisonerNumber', async () => {
     await request(app)
       .get('/finance-and-id')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 
   it('Error case - error thrown from rpService', async () => {

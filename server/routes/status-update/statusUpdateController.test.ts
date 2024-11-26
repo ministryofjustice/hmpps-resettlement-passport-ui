@@ -1,29 +1,19 @@
 import type { Express } from 'express'
 import request from 'supertest'
-import NodeClient from 'applicationinsights/out/Library/NodeClient'
-import RpService from '../../services/rpService'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { appWithAllRoutes } from '../testutils/appSetup'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
-let appInsightsClient: jest.Mocked<NodeClient>
+const { rpService, appInsightsService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
   jest.mock('applicationinsights', () => jest.fn())
-  appInsightsClient = new NodeClient('setupString') as jest.Mocked<NodeClient>
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-      appInsightsClient,
-    },
-  })
+  app = appWithAllRoutes({})
 
   stubPrisonerDetails(rpService)
 })
@@ -43,8 +33,11 @@ describe('getStatusUpdate', () => {
   it('error case - missing prisonerNumber', async () => {
     await request(app)
       .get('/status-update?selectedPathway=accommodation')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 
   it('error case - missing selectedPathway', async () => {
@@ -65,8 +58,7 @@ describe('getStatusUpdate', () => {
 describe('postStatusUpdate', () => {
   it('happy path - redirect back to overview', async () => {
     const patchStatusWithCaseNoteSpy = jest.spyOn(rpService, 'patchStatusWithCaseNote').mockImplementation()
-    const trackEventSpy = jest.spyOn(appInsightsClient, 'trackEvent').mockImplementation()
-    const flushSpy = jest.spyOn(appInsightsClient, 'flush').mockImplementation()
+    const trackEventSpy = jest.spyOn(appInsightsService, 'trackEvent').mockImplementation()
     await request(app)
       .post('/status-update')
       .send({
@@ -83,18 +75,14 @@ describe('postStatusUpdate', () => {
       status: 'DONE',
       caseNoteText: 'Resettlement status set to: Done. This is my case note text',
     })
-    expect(trackEventSpy).toHaveBeenCalledWith({
-      name: 'PSFR_StatusUpdate',
-      properties: {
-        newStatus: 'DONE',
-        oldStatus: 'IN_PROGRESS',
-        pathway: 'ACCOMMODATION',
-        prisonerId: 'A1234DY',
-        sessionId: 'sessionId',
-        username: 'user1',
-      },
+    expect(trackEventSpy).toHaveBeenCalledWith('PSFR_StatusUpdate', {
+      newStatus: 'DONE',
+      oldStatus: 'IN_PROGRESS',
+      pathway: 'ACCOMMODATION',
+      prisonerId: 'A1234DY',
+      sessionId: 'sessionId',
+      username: 'user1',
     })
-    expect(flushSpy).toHaveBeenCalled()
   })
 
   it('error case - missing prisonerNumber', async () => {

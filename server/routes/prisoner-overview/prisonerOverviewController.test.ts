@@ -1,31 +1,21 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { JSDOM } from 'jsdom'
-import RpService from '../../services/rpService'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper, defaultTestConfig } from '../configHelperTest'
-import { stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
-import DocumentService from '../../services/documentService'
+import { pageHeading, parseHtmlDocument, stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
-let documentService: jest.Mocked<DocumentService>
+const { rpService, documentService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
-  documentService = new DocumentService() as jest.Mocked<DocumentService>
   configHelper(config)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-      documentService,
-    },
-  })
+  app = appWithAllRoutes({})
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
   jest.useFakeTimers({ advanceTimers: true }).setSystemTime(new Date('2026-11-01'))
@@ -35,6 +25,7 @@ beforeEach(() => {
 
 afterEach(() => {
   jest.resetAllMocks()
+  jest.restoreAllMocks()
   jest.useRealTimers()
 })
 
@@ -42,8 +33,11 @@ describe('prisonerOverview', () => {
   it('should not render page if prisonerData does not exist', async () => {
     await request(app)
       .get('/prisoner-overview')
-      .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
+      .expect(404)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(pageHeading(document)).toEqual('No data found for prisoner')
+      })
   })
 
   it('happy path with default query parameters', async () => {
@@ -75,17 +69,17 @@ describe('prisonerOverview', () => {
 
   it('should render the prisoner overview page with correct query params', async () => {
     const queryParams = {
+      prisonerNumber: 'A1234DY',
       page: '1',
       size: '5',
       sort: 'occurenceDateTime%2CDESC',
       days: '7',
       selectedPathway: 'Education',
     }
-
     const getPrisonerOverviewPageDataSpy = stubPrisonerOverviewData(rpService)
-
+    documentService.getDocumentMeta = jest.fn().mockResolvedValue([])
     await request(app)
-      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .get('/prisoner-overview')
       .query(queryParams)
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())

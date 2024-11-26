@@ -1,9 +1,8 @@
 import { RequestHandler } from 'express'
-import { TelemetryClient } from 'applicationinsights'
-import { trackEvent } from '../../utils/analytics'
+import { AppInsightsService } from '../../utils/analytics'
 
 export default class AnalyticsController {
-  constructor(private readonly appInsightClient: TelemetryClient) {
+  constructor(private readonly appInsightService: AppInsightsService) {
     // no-op
   }
 
@@ -16,7 +15,7 @@ export default class AnalyticsController {
         username: res.locals.user.username,
       }
       if (eventName) {
-        trackEvent(this.appInsightClient, eventName, tags)
+        this.appInsightService.trackEvent(eventName, tags)
       }
       res.status(200).send()
     } catch (err) {

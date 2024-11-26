@@ -7,6 +7,7 @@ import { FEATURE_FLAGS } from '../../utils/constants'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { Appointment } from '../../data/model/appointment'
 import logger from '../../../logger'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 const pdfOptions = {
   marginTop: '2.4',
@@ -16,13 +17,13 @@ const pdfOptions = {
 }
 
 export default class PrintController {
-  constructor(private readonly rpService: RpService) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
   printPackPdf: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       const { prisonerNumber, prisonName } = prisonerData.personalDetails
 
       const appointmentsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.VIEW_APPOINTMENTS_END_USER)
@@ -52,7 +53,7 @@ export default class PrintController {
 
   printOtp: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      const { prisonerData } = req
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
 
       const otpData = await this.rpService.recreateOtp(prisonerData.personalDetails.prisonerNumber as string)
       let error

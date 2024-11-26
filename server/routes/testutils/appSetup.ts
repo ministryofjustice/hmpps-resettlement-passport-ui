@@ -7,8 +7,14 @@ import routes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
 import * as auth from '../../authentication/auth'
-import type { Services } from '../../services'
+import { Services, UserService } from '../../services'
 import type { ApplicationInfo } from '../../applicationInfo'
+import RpService from '../../services/rpService'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
+import ComponentService from '../../services/componentService'
+import DocumentService from '../../services/documentService'
+import { AssessmentStateService } from '../../data/assessmentStateService'
+import { AppInsightsService } from '../../utils/analytics'
 
 const testAppInfo: ApplicationInfo = {
   applicationName: 'test',
@@ -60,13 +66,25 @@ function appSetup(services: Services, production: boolean, userSupplier: () => E
 
 export function appWithAllRoutes({
   production = true,
-  services = {},
+  services = mockedServices,
   userSupplier = () => user,
 }: {
   production?: boolean
-  services?: Partial<Services>
+  services?: Services
   userSupplier?: () => Express.User
 }): Express {
   auth.default.authenticationMiddleware = () => (req, res, next) => next()
-  return appSetup(services as Services, production, userSupplier)
+  return appSetup(services, production, userSupplier)
+}
+
+const rpService = jest.mocked(new RpService())
+export const mockedServices: Services = {
+  rpService,
+  prisonerDetailsService: jest.mocked(new PrisonerDetailsService(rpService)),
+  appInsightsService: jest.mocked(new AppInsightsService(null)),
+  userService: jest.mocked(new UserService()),
+  applicationInfo: testAppInfo,
+  componentService: jest.mocked(new ComponentService(null)),
+  documentService: jest.mocked(new DocumentService()),
+  assessmentStateService: jest.mocked(new AssessmentStateService(null)),
 }

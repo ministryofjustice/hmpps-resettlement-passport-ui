@@ -8,6 +8,7 @@ import config from '../../config'
 import { SanitisedError } from '../../sanitisedError'
 import { RPError } from '../../data/rpClient'
 import logger from '../../../logger'
+import PrisonerDetailsService from '../../services/prisonerDetailsService'
 
 const errorMessageMap: Record<string, string> = {
   badFormat: 'The selected file must be a PDF, DOCX or DOC',
@@ -26,12 +27,15 @@ const formidableErrors = {
 }
 
 export default class DocumentController {
-  constructor(private readonly documentService: DocumentService) {
+  constructor(
+    private readonly documentService: DocumentService,
+    private readonly prisonerDetailsService: PrisonerDetailsService,
+  ) {
     // no-op
   }
 
   viewUploadPage: RequestHandler = async (req, res, next): Promise<void> => {
-    const { prisonerData } = req
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     const { uploadError } = req.query
     const errorMessageText = errorMessageMap[uploadError?.toString()]
     const errorMessage = errorMessageText ? { text: errorMessageText } : null
@@ -103,8 +107,10 @@ export default class DocumentController {
       if (!(await getFeatureFlagBoolean(FEATURE_FLAGS.UPLOAD_DOCUMENTS))) {
         return res.redirect('/')
       }
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+      const { prisonerNumber } = prisonerData.personalDetails
 
-      const { prisonerNumber, documentType } = req.params
+      const { documentType } = req.params
 
       const docResponse = await this.documentService.downloadDocument(prisonerNumber, documentType)
       res.setHeader('Content-Type', 'application/pdf')

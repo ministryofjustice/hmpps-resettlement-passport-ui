@@ -1,5 +1,5 @@
+import { JSDOM } from 'jsdom'
 import { PrisonerData } from '../../@types/express'
-
 import RpService from '../../services/rpService'
 import { PrisonersList } from '../../data/model/prisoners'
 
@@ -660,4 +660,13 @@ export function stubPrisonerOverviewData(rpService: RpService) {
       },
     ]),
   ])
+}
+
+export function parseHtmlDocument(documentText: string): Document {
+  const { document } = new JSDOM(documentText).window
+  return document
+}
+
+export function pageHeading(document: Document): string {
+  return document.querySelector('[data-qa="page-heading"]')?.textContent
 }

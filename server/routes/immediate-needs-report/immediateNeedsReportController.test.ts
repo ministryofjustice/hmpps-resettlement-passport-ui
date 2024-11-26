@@ -1,10 +1,7 @@
-import { JSDOM } from 'jsdom'
 import type { Express } from 'express'
 import request from 'supertest'
-import { appWithAllRoutes } from '../testutils/appSetup'
+import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 
-import RpService from '../../services/rpService'
-import { AssessmentStateService } from '../../data/assessmentStateService'
 import {
   ApiAssessmentPage,
   CachedAssessment,
@@ -13,25 +10,17 @@ import {
 } from '../../data/model/immediateNeedsReport'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { stubPrisonerDetails } from '../testutils/testUtils'
+import { parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 
 let app: Express
-let rpService: jest.Mocked<RpService>
-let assessmentStateService: jest.Mocked<AssessmentStateService>
+const { rpService, assessmentStateService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
-  rpService = new RpService() as jest.Mocked<RpService>
-  assessmentStateService = new AssessmentStateService(null) as jest.Mocked<AssessmentStateService>
   configHelper(config)
   stubPrisonerDetails(rpService)
 
-  app = appWithAllRoutes({
-    services: {
-      rpService,
-      assessmentStateService,
-    },
-  })
+  app = appWithAllRoutes({})
 })
 
 afterEach(() => {
@@ -78,15 +67,18 @@ describe('completeAssessment', () => {
     )
   })
 
-  it('it should not submit the assessment if there is no submitted input', async () => {
+  it('when api returns error from complete assessment', async () => {
     const workingCachedAssessment = {
       assessment: { questionsAndAnswers: [], version: null },
       pageLoadHistory: [],
     } as WorkingCachedAssessment
 
+    jest.spyOn(assessmentStateService, 'onComplete').mockImplementation()
     jest.spyOn(assessmentStateService, 'getWorkingAssessment').mockResolvedValue(workingCachedAssessment)
 
-    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({})
+    const completeAssessmentSpy = jest.spyOn(rpService, 'completeAssessment').mockResolvedValue({
+      error: 'errorful',
+    })
 
     await request(app)
       .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=A1234DY')
@@ -1084,7 +1076,7 @@ describe('getView', () => {
       )
       .expect(200)
       .expect(res => {
-        const { document } = new JSDOM(res.text).window
+        const document = parseHtmlDocument(res.text)
         const checkboxes = document.querySelectorAll("input[type='checkbox']")
         expect(document.getElementById('WHAT_ID_DOCUMENTS')).toBeTruthy()
         expect(checkboxes.length).toBe(18)
@@ -1309,7 +1301,7 @@ describe('getView', () => {
       )
       .expect(200)
       .expect(res => {
-        const { document } = new JSDOM(res.text).window
+        const document = parseHtmlDocument(res.text)
         const addressForm = document.getElementById('WHERE_DID_THEY_LIVE_ADDRESS_PRIVATE_RENTED_HOUSING')
         expect(addressForm.outerHTML).toMatchSnapshot('address fieldset')
       })
