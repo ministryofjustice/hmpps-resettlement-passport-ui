@@ -1,0 +1,68 @@
+{% extends "../partials/layout.njk" %}
+{% set pageHeading = "All pathways overview" %}
+{% from "../macros/prisoners-table.njk" import prisonersTable %}
+
+{% block content %}
+  <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item">
+        <a class="tab-links" href="/">People in prison</a>
+      </li>
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <a class="tab-links" href="/assign-a-case">Assign a case</a>
+      </li>
+    </ul>
+    <div class="govuk-tabs__panel">
+      {% if prisonersList %}
+        <table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th class="govuk-table__header" scope="col" id="select-all"></th>
+              <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
+                <button type="button">Name</button>
+              </th>
+              <th scope="col" class="govuk-table__header" data-column="release" aria-sort="release">
+                <button type="button">Release date</button>
+              </th>
+              <th scope="col" class="govuk-table__header" data-column="status" aria-sort="status">
+                <button type="button">Assigned resettlement worker</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for prisoner in prisonersList.content %}
+              <tr class="govuk-table__row govuk-table__row--selected">
+                <td class="govuk-table__cell">
+                  <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                    <input type="checkbox" class="govuk-checkboxes__input" id="{{ prisoner.prisonerNumber }}">
+                    <label class="govuk-label govuk-checkboxes__label" for="{{ prisoner.prisonerNumber }}">
+                      <span class="govuk-visually-hidden">Select {{ prisoner.firstName }} {{ prisoner.lastName }}</span>
+                    </label>
+                  </div>
+                </td>
+                <td class="govuk-table__cell">
+                  <a href="/prisoner-overview/?prisonerNumber={{ prisoner.prisonerNumber }}">{{ prisoner.lastName | toTitleCase }}, {{ prisoner.firstName | toTitleCase }}</a>
+                  <br/>
+                  <span class="govuk-hint" id="prisonerNumber">
+                    {{ prisoner.prisonerNumber }}
+                  </span>
+                </td>
+                <td class="govuk-table__cell" id="releaseDate">
+                  <span class="no-wrap">{{ prisoner.releaseDate | formatDate }}</span> <br/>
+                  {% if prisoner.releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span><span class="govuk-visually-hidden"> Warning: release date is a Friday </span>{% endif %}
+                </td>
+                <td class="govuk-table__cell">
+                  {% if prisoner.assignedWorkerFirstname and prisoner.assignedWorkerLastname %}
+                    <span class="no-wrap">{{ prisoner.assignedWorkerFirstname }} {{ prisoner.assignedWorkerLastname }}</span> <br/>
+                  {% else %}
+                    – <span class="govuk-visually-hidden">No resettlement worker assigned</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
