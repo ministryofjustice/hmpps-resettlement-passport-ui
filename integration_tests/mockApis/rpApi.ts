@@ -16,9 +16,9 @@ import {
 import { getResettlementAssessmentVersion, johnSmithDefaults, johnSmithImage } from './scenarios/john-smith/john-smith'
 import {
   johnSmithImmediateNeedsReportAccommodation,
+  johnSmithImmediateNeedsReportAllQuestionTypes,
   johnSmithImmediateNeedsReportHealth,
   johnSmithImmediateNeedsReportHealthWithFreeText,
-  johnSmithImmediateNeedsReportAllQuestionTypes,
 } from './scenarios/john-smith/john-smith-immediate-needs-report'
 import johnSmithImmediateNeedsReportEdit from './scenarios/john-smith/john-smith-immediate-needs-report-edit'
 import { johnSmithPostFinanceAndID, johnSmithPostID } from './scenarios/john-smith/john-smith-post-finance-and-ID'
@@ -27,12 +27,6 @@ import johnSmithGetPrisonerDetails from './scenarios/john-smith/john-smith-priso
 import { johnSmithDeleteFinanceAndID, johnSmithDeleteID } from './scenarios/john-smith/john-smith-delete-finance-and-ID'
 import johnSmithGetFinanceAndIDUpdated from './scenarios/john-smith/john-smith-get-finance-and-ID-updated'
 import { johnSmithPatchFinanceAndID, johnSmithPatchID } from './scenarios/john-smith/john-smith-patch-finance-and-ID'
-import {
-  johnSmithDeleteWatchlist,
-  johnSmithDeleteWatchlist404,
-  johnSmithPostWatchlist,
-  johnSmithPostWatchlist404,
-} from './scenarios/john-smith/john-smith-watchlist'
 import {
   stubJohnSmithSkipInsidePreReleaseWindow,
   stubJohnSmithSkipOutsidePreReleaseWindow,
@@ -44,11 +38,7 @@ import {
   stubJohnSmithStatusUpdateFailure,
   stubJohnSmithStatusUpdateSuccess,
 } from './scenarios/john-smith/john-smith-status-update'
-import {
-  defaultPrisonersSearch,
-  defaultPrisonersSearchNoPastReleaseDates,
-  prisonersSearchWithWatchlist,
-} from './scenarios/prisonersSearch'
+import { defaultPrisonersSearch, defaultPrisonersSearchNoPastReleaseDates } from './scenarios/prisonersSearch'
 import { johnSmithCheckbox, johnSmithCheckboxReportVersion } from './scenarios/john-smith/john-smith-checkbox'
 import editHealthAssessmentConvergingOnLastQuestion from './scenarios/john-smith/edit-health-assessment-converging-on-last-question'
 import { validateAssessment } from './common'
@@ -502,21 +492,6 @@ const stubJohnSmithUpdateID = () =>
     ...johnSmithGetFinanceAndID(),
     ...johnSmithPatchID(),
   ])
-const stubJohnSmithPostWatchlist = () =>
-  Promise.all([...johnSmithDefaults(), ...johnSmithGetFinanceAndID(), ...johnSmithPostWatchlist()])
-const stubJohnSmithPostWatchlistNotFound = () =>
-  Promise.all([
-    ...johnSmithDefaults(),
-    ...johnSmithGetPrisonerDetails(),
-    ...johnSmithGetFinanceAndID(),
-    ...johnSmithPostWatchlist404(),
-  ])
-const stubJohnSmithDeleteWatchlist = () =>
-  Promise.all([...johnSmithDefaults(), ...johnSmithGetFinanceAndID(), ...johnSmithDeleteWatchlist()])
-const stubJohnSmithDeleteWatchlistNotFound = () =>
-  Promise.all([...johnSmithDefaults(), ...johnSmithGetFinanceAndID(), ...johnSmithDeleteWatchlist404()])
-const stubJohnSmithWatchlistFilterResults = () =>
-  Promise.all([...johnSmithDefaults(), prisonersSearchWithWatchlist(), defaultPrisonersSearch()])
 const stubDefaultSearchResults = () => Promise.all([...johnSmithDefaults(), defaultPrisonersSearch()])
 const stubDefaultSearchResultsNoPastReleaseDates = () =>
   Promise.all([...johnSmithDefaults(), defaultPrisonersSearchNoPastReleaseDates()])
@@ -918,16 +893,11 @@ export default {
   stubJohnSmithDeleteID,
   stubJohnSmithUpdateID,
   stubJohnSmithAdd2ndID,
-  stubJohnSmithPostWatchlist,
-  stubJohnSmithPostWatchlistNotFound,
-  stubJohnSmithDeleteWatchlist,
-  stubJohnSmithDeleteWatchlistNotFound,
   stubJohnSmithSkipInsidePreReleaseWindow,
   stubJohnSmithSkipOutsidePreReleaseWindow,
   stubAssessmentSummary,
   stubJohnSmithStatusUpdateSuccess,
   stubJohnSmithStatusUpdateFailure,
-  stubJohnSmithWatchlistFilterResults,
   stubDefaultSearchResults,
   stubJohnSmithDefaults: () => Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails()]),
   stubDocumentUploadSuccess,

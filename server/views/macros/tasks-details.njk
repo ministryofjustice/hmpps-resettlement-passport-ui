@@ -1,22 +1,24 @@
-{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, isInWatchlist, resetProfileEnabled) %}
+{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, isInWatchlist, resetProfileEnabled, myCasesEnabled) %}
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
         <h3 class="app-summary-card__title">Actions:</h3>
       </header>
       <div class="app-summary-card__body">
-        {% if isInWatchlist == true %}
-          <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/removeFromYourCases/" method="POST" novalidate>
-            <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Remove from your cases</button>
-            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-            <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
-          </form>
-        {% else %}
-          <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/addToYourCases/" method="POST" novalidate>
-            <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Add to your cases</button>
-            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-            <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
-          </form>
+        {% if myCasesEnabled %}
+            {% if isInWatchlist == true %}
+              <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/removeFromYourCases/" method="POST" novalidate>
+                <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Remove from your cases</button>
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+              </form>
+            {% else %}
+              <form class="govuk-form-group govuk-!-margin-0" id="add-to-cases-form" action="/addToYourCases/" method="POST" novalidate>
+                <button class="govuk-button govuk-button--primary" id="add-to-your-cases-btn" type="submit">Add to your cases</button>
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+              </form>
+            {% endif %}
         {% endif %}
         {% if resetProfileEnabled %}
           <a href="/resetProfile?prisonerNumber={{prisonerNumber}}" class="govuk-button" id="reset-profile-btn" track-event-name="ResetReportsAndStatusesLinkClicked" track-event-prisoner-id="{{ prisonerNumber }}">
