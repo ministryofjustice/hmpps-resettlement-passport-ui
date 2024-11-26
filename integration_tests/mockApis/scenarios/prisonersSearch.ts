@@ -220,29 +220,3 @@ export const defaultPrisonersSearchNoPastReleaseDates = () =>
       },
     },
   })
-
-export const prisonersSearchWithWatchlist = () =>
-  stubFor({
-    name: 'watchList filter response',
-    request: {
-      urlPathPattern: '/rpApi/resettlement-passport/prison/1/prisoners',
-      method: 'GET',
-      queryParameters: {
-        watchList: {
-          equalTo: 'true',
-        },
-      },
-    },
-    response: {
-      status: 200,
-      headers: responseHeaders,
-      jsonBody: {
-        content: [chrisyClemenceSearchResponse],
-        pageSize: 1,
-        page: 0,
-        sortName: 'releaseDate,ASC',
-        totalElements: 1,
-        last: true,
-      },
-    },
-  })

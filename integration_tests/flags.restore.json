@@ -46,5 +46,9 @@
   {
     "feature": "whatsNewBanner",
     "enabled": true
+  },
+  {
+    "feature": "myCases",
+    "enabled": false
   }
 ]
