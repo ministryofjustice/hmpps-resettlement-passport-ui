@@ -1,7 +1,12 @@
 import request from 'supertest'
 import type { Express } from 'express'
 import Config from '../../s3Config'
-import { expectSomethingWentWrongPage, stubPrisonerDetails, stubPrisonersCasesList } from '../testutils/testUtils'
+import {
+  expectSomethingWentWrongPage,
+  redirectedToPath,
+  stubPrisonerDetails,
+  stubPrisonersCasesList,
+} from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import FeatureFlags from '../../featureFlag'
@@ -69,5 +74,43 @@ describe('getView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
+  })
+})
+
+describe('post', () => {
+  test('successfully assign a single case', async () => {
+    await request(app)
+      .post('/assign-a-case')
+      .send({
+        prisonerNumber: 'A8731DY',
+        worker: JSON.stringify({ staffId: 123, firstName: 'First', lastName: 'Last' }),
+      })
+      .expect(302)
+      .expect(res => expect(redirectedToPath(res)).toEqual('/assign-a-case'))
+
+    expect(rpService.postCaseAllocations).toHaveBeenCalledWith({
+      nomsIds: ['A8731DY'],
+      staffId: 123,
+      staffFirstName: 'First',
+      staffLastName: 'Last',
+    })
+  })
+
+  test('successfully assign a multiple cases', async () => {
+    await request(app)
+      .post('/assign-a-case')
+      .send({
+        prisonerNumber: ['A8731DY', 'G4161UF', 'G5384GE'],
+        worker: JSON.stringify({ staffId: 123, firstName: 'First', lastName: 'Last' }),
+      })
+      .expect(302)
+      .expect(res => expect(redirectedToPath(res)).toEqual('/assign-a-case'))
+
+    expect(rpService.postCaseAllocations).toHaveBeenCalledWith({
+      nomsIds: ['A8731DY', 'G4161UF', 'G5384GE'],
+      staffId: 123,
+      staffFirstName: 'First',
+      staffLastName: 'Last',
+    })
   })
 })

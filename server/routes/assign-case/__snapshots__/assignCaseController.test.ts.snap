@@ -144,7 +144,7 @@ exports[`getView Happy path with default query params 1`] = `
         
         <main class="govuk-main-wrapper" id="main-content">
           
-  <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+  <div class="govuk-tabs" id="tabs">
     <ul class="govuk-tabs__list">
       <li class="govuk-tabs__list-item">
         <a class="tab-links" href="/">People in prison</a>
@@ -177,8 +177,14 @@ exports[`getView Happy path with default query params 1`] = `
                 <tr class="govuk-table__row govuk-table__row--selected">
                   <td class="govuk-table__cell">
                     <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                      <input type="checkbox" class="govuk-checkboxes__input" id="G9808UX" />
-                      <label class="govuk-label govuk-checkboxes__label" for="G9808UX">
+                      <input
+                        type="checkbox"
+                        class="govuk-checkboxes__input"
+                        name="prisonerNumber"
+                        id="assign-checkbox-G9808UX"
+                        value="G9808UX"
+                      />
+                      <label class="govuk-label govuk-checkboxes__label" for="assign-checkbox-G9808UX">
                         <span class="govuk-visually-hidden"
                           >Select CASEY CHAVAN</span
                         >
@@ -220,10 +226,9 @@ exports[`getView Happy path with default query params 1`] = `
             <div class="govuk-grid-column-one-third">
               <div class="govuk-form-group">
                 <label class="govuk-label" for="workerName">Resettlement worker</label>
-                <select class="govuk-select" id="workerName" name="workerName">
-                  <option value="#">Choose a resettlement worker</option>
-                  <option value="1">Staff1First Staff1Last</option>
-                  <option value="2">Staff2First Staff2Last</option>
+                <select class="govuk-select" id="workerName" name="worker" required>
+                  <option value="">Choose a resettlement worker</option><option value='{&quot;staffId&quot;:1,&quot;firstName&quot;:&quot;Staff1First&quot;,&quot;lastName&quot;:&quot;Staff1Last&quot;}'>Staff1First Staff1Last</option>
+                  <option value='{&quot;staffId&quot;:2,&quot;firstName&quot;:&quot;Staff2First&quot;,&quot;lastName&quot;:&quot;Staff2Last&quot;}'>Staff2First Staff2Last</option>
                   
                   <option value="_unassign">Unassign</option>
                 </select>

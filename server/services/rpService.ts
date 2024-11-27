@@ -23,6 +23,7 @@ import { getFeatureFlagBoolean } from '../utils/utils'
 import { ResetReason } from '../data/model/resetProfile'
 import { BankApplicationResponse, IdApplication, IdApplicationResponse } from '../data/model/financeId'
 import { ResettlementWorker } from '../data/model/resettlementWorkers'
+import { CaseAllocationRequestBody } from '../data/model/caseAllocation'
 
 export default class RpService {
   constructor() {
@@ -507,5 +508,9 @@ export default class RpService {
         .get(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`)
         .then((a: Appointments) => a.results),
     ]
+  }
+
+  async postCaseAllocations(caseAllocations: CaseAllocationRequestBody): Promise<void> {
+    await this.createClient().post(`/resettlement-passport/workers/cases`, caseAllocations)
   }
 }

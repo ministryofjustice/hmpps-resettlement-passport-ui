@@ -10,7 +10,7 @@ export default class AssignCaseController {
     // no op
   }
 
-  getView: RequestHandler = async (req, res, next): Promise<void> => {
+  getView: RequestHandler = async (_req, res): Promise<void> => {
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []
 
@@ -23,5 +23,20 @@ export default class AssignCaseController {
     return res.render('pages/assign-a-case', { ...view.renderArgs })
   }
 
-  assignCases: RequestHandler = async (req, res, next): Promise<void> => {}
+  assignCases: RequestHandler = async (req, res): Promise<void> => {
+    const chosenPrisoners: string[] | string = req.body.prisonerNumber
+    const prisonersToAllocate = Array.isArray(chosenPrisoners) ? chosenPrisoners : [chosenPrisoners]
+    const worker = JSON.parse(req.body.worker)
+    const assignToId = worker.staffId
+    const assignToFirstName = worker.firstName
+    const assignToLastName = worker.lastName
+
+    await this.rpService.postCaseAllocations({
+      nomsIds: prisonersToAllocate,
+      staffId: assignToId,
+      staffFirstName: assignToFirstName,
+      staffLastName: assignToLastName,
+    })
+    res.redirect('/assign-a-case')
+  }
 }
