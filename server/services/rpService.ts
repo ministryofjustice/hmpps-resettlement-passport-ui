@@ -22,6 +22,7 @@ import { currentUser } from '../middleware/userContextMiddleware'
 import { getFeatureFlagBoolean } from '../utils/utils'
 import { ResetReason } from '../data/model/resetProfile'
 import { BankApplicationResponse, IdApplication, IdApplicationResponse } from '../data/model/financeId'
+import { ResettlementWorker } from '../data/model/resettlementWorkers'
 
 export default class RpService {
   constructor() {
@@ -54,6 +55,10 @@ export default class RpService {
     return this.createClient().get<PrisonersList>(
       `/resettlement-passport/prison/${prisonSelected}/prisoners?includePastReleaseDates=${includePastReleaseDates}`,
     )
+  }
+
+  async getAvailableResettlementWorkers(prisonId: string): Promise<ResettlementWorker[]> {
+    return this.createClient().get<ResettlementWorker[]>(`/resettlement-passport/workers?prisonId=${prisonId}`)
   }
 
   createClient() {
@@ -472,12 +477,12 @@ export default class RpService {
     )
   }
 
-  async postWatchlist(prisonerNumber: string) {
-    return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/watch`, null)
+  async postWatchlist(prisonerNumber: string): Promise<void> {
+    await this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/watch`, null)
   }
 
-  async deleteWatchlist(prisonerNumber: string) {
-    return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/watch`)
+  async deleteWatchlist(prisonerNumber: string): Promise<void> {
+    await this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/watch`)
   }
 
   getPrisonerOverviewPageData(

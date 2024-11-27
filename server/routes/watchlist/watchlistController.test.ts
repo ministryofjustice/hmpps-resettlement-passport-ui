@@ -4,9 +4,10 @@ import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
 import { expectPrisonerNotFoundPage, pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
+import { Services } from '../../services'
 
 let app: Express
-const { rpService } = mockedServices
+const { rpService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {
@@ -62,7 +63,6 @@ describe('deleteWatch', () => {
   it('Error case - rpService throws error', async () => {
     const deleteWatchListSpy = jest
       .spyOn(rpService, 'deleteWatchlist')
-      .mockImplementation()
       .mockRejectedValue(new Error('Something went wrong'))
     await request(app)
       .post('/removeFromYourCases')

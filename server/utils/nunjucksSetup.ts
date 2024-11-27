@@ -46,7 +46,7 @@ import {
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
 import { CHECK_ANSWERS_PAGE_ID, FEATURE_FLAGS, FEEDBACK_URL } from './constants'
-import { formatDocumentCategory } from '../services/documentService'
+import { formatDocumentCategory } from './documentUtils'
 
 const production = process.env.NODE_ENV === 'production'
 

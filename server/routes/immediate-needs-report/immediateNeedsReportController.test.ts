@@ -11,9 +11,10 @@ import {
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
 import { parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
+import { Services } from '../../services'
 
 let app: Express
-const { rpService, assessmentStateService } = mockedServices
+const { rpService, assessmentStateService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {

@@ -6,22 +6,11 @@ import { currentUser } from '../middleware/userContextMiddleware'
 import { RPClient } from '../data'
 import { getFeatureFlagBoolean } from '../utils/utils'
 import { FEATURE_FLAGS } from '../utils/constants'
+import { latestByCategory } from '../utils/documentUtils'
+import { DocumentMeta, DocumentMetaType } from '../data/model/documents'
 
-export type DocumentMeta = {
-  id: number
-  fileName?: string
-  originalDocumentFileName?: string
-  creationDate?: Date
-  category: string
-}
-
-// eslint-disable-next-line no-shadow
-const enum DocumentType {
-  LICENCE_CONDITIONS = 'LICENCE_CONDITIONS',
-}
-
-const docTypes: Record<string, DocumentType> = {
-  'licence-conditions': DocumentType.LICENCE_CONDITIONS,
+const docTypes: Record<string, DocumentMetaType> = {
+  'licence-conditions': DocumentMetaType.LICENCE_CONDITIONS,
 }
 
 export default class DocumentService {
@@ -84,28 +73,6 @@ export default class DocumentService {
     }
     throw new Error(`Download failed with ${response.status} ${response.statusText}`)
   }
-}
-
-const categoryNames: Record<string, string> = {
-  'licence-conditions': 'Licence conditions',
-}
-
-export function formatDocumentCategory(category: string) {
-  const convertedCategory = category?.toLowerCase()?.replace('_', '-')
-  return categoryNames[convertedCategory] || 'Unknown category'
-}
-
-export function latestByCategory(documents: DocumentMeta[]): DocumentMeta[] {
-  // Note: results coming back from API are ordered, so we don't need to sort
-  const seenCategories = new Set<string>()
-
-  return documents.filter(doc => {
-    if (seenCategories.has(doc.category)) {
-      return false
-    }
-    seenCategories.add(doc.category)
-    return true
-  })
 }
 
 export type DocumentUploadResponse = {

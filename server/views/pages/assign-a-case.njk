@@ -13,56 +13,93 @@
       </li>
     </ul>
     <div class="govuk-tabs__panel">
-      {% if prisonersList %}
-        <table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th class="govuk-table__header" scope="col" id="select-all"></th>
-              <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
-                <button type="button">Name</button>
-              </th>
-              <th scope="col" class="govuk-table__header" data-column="release" aria-sort="release">
-                <button type="button">Release date</button>
-              </th>
-              <th scope="col" class="govuk-table__header" data-column="status" aria-sort="status">
-                <button type="button">Assigned resettlement worker</button>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-            {% for prisoner in prisonersList.content %}
-              <tr class="govuk-table__row govuk-table__row--selected">
-                <td class="govuk-table__cell">
-                  <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                    <input type="checkbox" class="govuk-checkboxes__input" id="{{ prisoner.prisonerNumber }}">
-                    <label class="govuk-label govuk-checkboxes__label" for="{{ prisoner.prisonerNumber }}">
-                      <span class="govuk-visually-hidden">Select {{ prisoner.firstName }} {{ prisoner.lastName }}</span>
-                    </label>
-                  </div>
-                </td>
-                <td class="govuk-table__cell">
-                  <a href="/prisoner-overview/?prisonerNumber={{ prisoner.prisonerNumber }}">{{ prisoner.lastName | toTitleCase }}, {{ prisoner.firstName | toTitleCase }}</a>
-                  <br/>
-                  <span class="govuk-hint" id="prisonerNumber">
-                    {{ prisoner.prisonerNumber }}
-                  </span>
-                </td>
-                <td class="govuk-table__cell" id="releaseDate">
-                  <span class="no-wrap">{{ prisoner.releaseDate | formatDate }}</span> <br/>
-                  {% if prisoner.releaseDate | isFriday %}<span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br/></span><span class="govuk-visually-hidden"> Warning: release date is a Friday </span>{% endif %}
-                </td>
-                <td class="govuk-table__cell">
-                  {% if prisoner.assignedWorkerFirstname and prisoner.assignedWorkerLastname %}
-                    <span class="no-wrap">{{ prisoner.assignedWorkerFirstname }} {{ prisoner.assignedWorkerLastname }}</span> <br/>
-                  {% else %}
-                    – <span class="govuk-visually-hidden">No resettlement worker assigned</span>
-                  {% endif %}
-                </td>
+      <form id="assign-a-case-form" class="form" action="/assign-a-case" method="post">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+        {% if prisonersList %}
+          <table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" scope="col" id="select-all"></th>
+                <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
+                  <button type="button">Name</button>
+                </th>
+                <th scope="col" class="govuk-table__header" data-column="release" aria-sort="release">
+                  <button type="button">Release date</button>
+                </th>
+                <th scope="col" class="govuk-table__header" data-column="status" aria-sort="status">
+                  <button type="button">Assigned resettlement worker</button>
+                </th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% endif %}
+            </thead>
+            <tbody class="govuk-table__body">
+              {% for prisoner in prisonersList.content %}
+                <tr class="govuk-table__row govuk-table__row--selected">
+                  <td class="govuk-table__cell">
+                    <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                      <input type="checkbox" class="govuk-checkboxes__input" id="{{ prisoner.prisonerNumber }}" />
+                      <label class="govuk-label govuk-checkboxes__label" for="{{ prisoner.prisonerNumber }}">
+                        <span class="govuk-visually-hidden"
+                          >Select {{ prisoner.firstName }} {{ prisoner.lastName }}</span
+                        >
+                      </label>
+                    </div>
+                  </td>
+                  <td class="govuk-table__cell">
+                    <a href="/prisoner-overview/?prisonerNumber={{ prisoner.prisonerNumber }}"
+                      >{{ prisoner.lastName | toTitleCase }}, {{ prisoner.firstName | toTitleCase }}</a
+                    >
+                    <br />
+                    <span class="govuk-hint" id="prisonerNumber"> {{ prisoner.prisonerNumber }} </span>
+                  </td>
+                  <td class="govuk-table__cell" id="releaseDate">
+                    <span class="no-wrap">{{ prisoner.releaseDate | formatDate }}</span> <br />
+                    {% if prisoner.releaseDate | isFriday %}
+                      <span class="govuk-body-s" id="fridayRelease" aria-hidden="true">⚠️ Friday <br /></span
+                      ><span class="govuk-visually-hidden"> Warning: release date is a Friday </span>
+                    {% endif %}
+                  </td>
+                  <td class="govuk-table__cell">
+                    {% if prisoner.assignedWorkerFirstname and prisoner.assignedWorkerLastname %}
+                      <span class="no-wrap"
+                        >{{ prisoner.assignedWorkerFirstname }} {{ prisoner.assignedWorkerLastname }}</span
+                      >
+                      <br />
+                    {% else %}
+                      – <span class="govuk-visually-hidden">No resettlement worker assigned</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+
+        <section id="assign-case-control">
+          <h3 class="govuk-heading-m">Assign a case</h3>
+          <p>
+            Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them to.
+          </p>
+          <p>
+            Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
+            service for them to appear in this list.
+          </p>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="workerName">Resettlement worker</label>
+                <select class="govuk-select" id="workerName" name="workerName">
+                  <option value="#">Choose a resettlement worker</option>
+                  {% for worker in resettlementWorkers -%}
+                    <option value="{{ worker.staffId }}">{{ worker.firstName }} {{ worker.lastName }}</option>
+                  {% endfor %}
+                  <option value="_unassign">Unassign</option>
+                </select>
+              </div>
+              <button class="govuk-button" data-prevent-double-click="true" type="submit">Assign</button>
+            </div>
+          </div>
+        </section>
+      </form>
     </div>
   </div>
 {% endblock %}

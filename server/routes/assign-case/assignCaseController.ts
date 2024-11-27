@@ -13,18 +13,15 @@ export default class AssignCaseController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []
-    let prisonersList = null
 
-    try {
-      const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
-      prisonersList = await this.rpService.getListOfPrisonerCases(
-        userActiveCaseLoad.caseLoadId,
-        includePastReleaseDates,
-      )
-      const view = new AssignCaseView(prisonersList, errors)
-      return res.render('pages/assign-a-case', { ...view.renderArgs })
-    } catch (err) {
-      return next(err)
-    }
+    const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
+    const [prisonersList, resettlementWorkers] = await Promise.all([
+      this.rpService.getListOfPrisonerCases(userActiveCaseLoad.caseLoadId, includePastReleaseDates),
+      this.rpService.getAvailableResettlementWorkers(userActiveCaseLoad.caseLoadId),
+    ])
+    const view = new AssignCaseView(prisonersList, resettlementWorkers, errors)
+    return res.render('pages/assign-a-case', { ...view.renderArgs })
   }
+
+  assignCases: RequestHandler = async (req, res, next): Promise<void> => {}
 }

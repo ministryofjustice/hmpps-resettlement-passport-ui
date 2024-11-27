@@ -1,7 +1,7 @@
 import request from 'supertest'
 import type { Express } from 'express'
 import Config from '../../s3Config'
-import { stubPrisonerDetails, stubPrisonersCasesList } from '../testutils/testUtils'
+import { expectSomethingWentWrongPage, stubPrisonerDetails, stubPrisonersCasesList } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import FeatureFlags from '../../featureFlag'
@@ -26,25 +26,44 @@ afterEach(() => {
 })
 
 describe('getView', () => {
-  it('Error case - rpService throws error', async () => {
-    const getPrisonersListSpy = jest
-      .spyOn(rpService, 'getListOfPrisonerCases')
-      .mockRejectedValue(new Error('Something went wrong'))
-    jest
-      .spyOn(featureFlags, 'getFeatureFlags')
-      .mockResolvedValue([{ feature: 'includePastReleaseDates', enabled: true }])
+  it('Error case - rpService throws error getting prisoner list', async () => {
+    rpService.getListOfPrisonerCases.mockRejectedValue(new Error('Something went wrong'))
+
     await request(app)
       .get('/assign-a-case')
       .expect(500)
-      .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonersListSpy).toHaveBeenCalledWith('MDI', true)
+      .expect(res => expectSomethingWentWrongPage(res))
+    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true)
+  })
+
+  it('Error case - rpService throws error getting resettlement workers', async () => {
+    stubPrisonersCasesList(rpService)
+    rpService.getAvailableResettlementWorkers.mockRejectedValue(new Error('Something went wrong'))
+
+    await request(app)
+      .get('/assign-a-case')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true)
+
+    expect(rpService.getAvailableResettlementWorkers).toHaveBeenCalledWith('MDI')
   })
 
   it('Happy path with default query params', async () => {
     const getPrisonerListSpy = stubPrisonersCasesList(rpService)
-    jest
-      .spyOn(featureFlags, 'getFeatureFlags')
-      .mockResolvedValue([{ feature: 'includePastReleaseDates', enabled: true }])
+    rpService.getAvailableResettlementWorkers.mockResolvedValue([
+      {
+        staffId: 1,
+        firstName: 'Staff1First',
+        lastName: 'Staff1Last',
+      },
+      {
+        staffId: 2,
+        firstName: 'Staff2First',
+        lastName: 'Staff2Last',
+      },
+    ])
+
     await request(app)
       .get('/assign-a-case')
       .expect(200)

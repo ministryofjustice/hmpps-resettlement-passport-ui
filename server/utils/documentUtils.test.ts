@@ -1,4 +1,5 @@
-import { DocumentMeta, formatDocumentCategory, latestByCategory } from './documentService'
+import { DocumentMeta, DocumentMetaType } from '../data/model/documents'
+import { formatDocumentCategory, latestByCategory } from './documentUtils'
 
 describe('documentService', () => {
   describe('formatDocumentCategory', () => {
@@ -8,7 +9,7 @@ describe('documentService', () => {
       [null, 'Unknown category'],
       [undefined, 'Unknown category'],
     ])('%s converts to %s', (input, expected) => {
-      expect(formatDocumentCategory(input)).toEqual(expected)
+      expect(formatDocumentCategory(input as DocumentMetaType)).toEqual(expected)
     })
   })
 

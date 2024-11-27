@@ -7,9 +7,10 @@ import FeatureFlags from '../../featureFlag'
 import { configHelper, defaultTestConfig } from '../configHelperTest'
 import { expectPrisonerNotFoundPage, stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
 import { PrisonerData } from '../../@types/express'
+import { Services } from '../../services'
 
 let app: Express
-const { rpService, documentService } = mockedServices
+const { rpService, documentService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
