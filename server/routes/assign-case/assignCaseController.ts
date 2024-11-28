@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import RpService from '../../services/rpService'
 import AssignCaseView from './assignCaseView'
 import { ErrorMessage } from '../view'
-import { getFeatureFlagBoolean } from '../../utils/utils'
+import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class AssignCaseController {
@@ -11,6 +11,9 @@ export default class AssignCaseController {
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
+    const pagination = {
+      pages: getPaginationPages(3, 80, 1),
+    }
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []
     let prisonersList = null
@@ -21,7 +24,7 @@ export default class AssignCaseController {
         userActiveCaseLoad.caseLoadId,
         includePastReleaseDates,
       )
-      const view = new AssignCaseView(prisonersList, errors)
+      const view = new AssignCaseView(prisonersList, pagination, errors)
       return res.render('pages/assign-a-case', { ...view.renderArgs })
     } catch (err) {
       return next(err)
