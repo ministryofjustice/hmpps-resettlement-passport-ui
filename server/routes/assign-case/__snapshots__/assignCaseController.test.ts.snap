@@ -144,6 +144,8 @@ exports[`getView Happy path with default query params 1`] = `
         
         <main class="govuk-main-wrapper" id="main-content">
           
+  
+
   <div class="govuk-tabs" id="tabs">
     <ul class="govuk-tabs__list">
       <li class="govuk-tabs__list-item">
@@ -180,11 +182,14 @@ exports[`getView Happy path with default query params 1`] = `
                       <input
                         type="checkbox"
                         class="govuk-checkboxes__input"
-                        name="prisonerNumber"
+                        name="prisonerNumbers"
                         id="assign-checkbox-G9808UX"
                         value="G9808UX"
                       />
-                      <label class="govuk-label govuk-checkboxes__label" for="assign-checkbox-G9808UX">
+                      <label
+                        class="govuk-label govuk-checkboxes__label"
+                        for="assign-checkbox-G9808UX"
+                      >
                         <span class="govuk-visually-hidden"
                           >Select CASEY CHAVAN</span
                         >
@@ -192,7 +197,7 @@ exports[`getView Happy path with default query params 1`] = `
                     </div>
                   </td>
                   <td class="govuk-table__cell">
-                    <a href="/prisoner-overview/?prisonerNumber=G9808UX"
+                    <a href="/prisoner-overview?prisonerNumber=G9808UX"
                       >Chavan, Casey</a
                     >
                     <br />
@@ -227,8 +232,8 @@ exports[`getView Happy path with default query params 1`] = `
               <div class="govuk-form-group">
                 <label class="govuk-label" for="workerName">Resettlement worker</label>
                 <select class="govuk-select" id="workerName" name="worker" required>
-                  <option value="">Choose a resettlement worker</option><option value='{&quot;staffId&quot;:1,&quot;firstName&quot;:&quot;Staff1First&quot;,&quot;lastName&quot;:&quot;Staff1Last&quot;}'>Staff1First Staff1Last</option>
-                  <option value='{&quot;staffId&quot;:2,&quot;firstName&quot;:&quot;Staff2First&quot;,&quot;lastName&quot;:&quot;Staff2Last&quot;}'>Staff2First Staff2Last</option>
+                  <option value="">Choose a resettlement worker</option><option value="{&quot;staffId&quot;:1,&quot;firstName&quot;:&quot;Staff1First&quot;,&quot;lastName&quot;:&quot;Staff1Last&quot;}">Staff1First Staff1Last</option>
+                  <option value="{&quot;staffId&quot;:2,&quot;firstName&quot;:&quot;Staff2First&quot;,&quot;lastName&quot;:&quot;Staff2Last&quot;}">Staff2First Staff2Last</option>
                   
                   <option value="_unassign">Unassign</option>
                 </select>
@@ -262,4 +267,17 @@ exports[`getView Happy path with default query params 1`] = `
   </body>
 </html>
 "
+`;
+
+exports[`getView shows success dialog 1`] = `
+"<div id="success-alert" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">Success</h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          You have successfully assigned to following people in prison to Joe Blogs
+        </h3>
+        <ul class="govuk-list govuk-list--bullet"><li>John Smith, A1234DY</li><li>Some Guy, G4161UF</li><li>A.n Other, G5384GE</li></ul><p>and 7 others</p></div>
+    </div>"
 `;

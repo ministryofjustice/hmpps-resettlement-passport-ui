@@ -3,6 +3,7 @@ import type { Express } from 'express'
 import Config from '../../s3Config'
 import {
   expectSomethingWentWrongPage,
+  parseHtmlDocument,
   redirectedToPath,
   stubPrisonerDetails,
   stubPrisonersCasesList,
@@ -10,6 +11,7 @@ import {
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import FeatureFlags from '../../featureFlag'
+import { PersonalDetails, PrisonerData } from '../../@types/express'
 
 let app: Express
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
@@ -29,6 +31,21 @@ beforeEach(() => {
 afterEach(() => {
   jest.resetAllMocks()
 })
+
+function stubAvailableResettlementWorkers() {
+  rpService.getAvailableResettlementWorkers.mockResolvedValue([
+    {
+      staffId: 1,
+      firstName: 'Staff1First',
+      lastName: 'Staff1Last',
+    },
+    {
+      staffId: 2,
+      firstName: 'Staff2First',
+      lastName: 'Staff2Last',
+    },
+  ])
+}
 
 describe('getView', () => {
   it('Error case - rpService throws error getting prisoner list', async () => {
@@ -56,18 +73,7 @@ describe('getView', () => {
 
   it('Happy path with default query params', async () => {
     const getPrisonerListSpy = stubPrisonersCasesList(rpService)
-    rpService.getAvailableResettlementWorkers.mockResolvedValue([
-      {
-        staffId: 1,
-        firstName: 'Staff1First',
-        lastName: 'Staff1Last',
-      },
-      {
-        staffId: 2,
-        firstName: 'Staff2First',
-        lastName: 'Staff2Last',
-      },
-    ])
+    stubAvailableResettlementWorkers()
 
     await request(app)
       .get('/assign-a-case')
@@ -75,18 +81,47 @@ describe('getView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
   })
+
+  test('shows success dialog', async () => {
+    const getPrisonerListSpy = stubPrisonersCasesList(rpService)
+    stubAvailableResettlementWorkers()
+
+    await request(app)
+      .get('/assign-a-case')
+      .expect(200)
+      .query({
+        allocationSuccess: true,
+        allocatedCases: ['John Smith, A1234DY', 'Some Guy, G4161UF', 'A.n Other, G5384GE'],
+        allocatedTo: 'Joe Blogs',
+        allocatedOtherCount: 7,
+      })
+      .expect(res => {
+        const doc = parseHtmlDocument(res.text)
+        expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
+      })
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
+  })
 })
 
 describe('post', () => {
   test('successfully assign a single case', async () => {
-    await request(app)
+    rpService.postCaseAllocations.mockResolvedValue([
+      { nomsId: 'A8731DY', staffId: 123, staffFirstName: 'First', staffLastName: 'Last' },
+    ])
+
+    const res = await request(app)
       .post('/assign-a-case')
       .send({
-        prisonerNumber: 'A8731DY',
+        prisonerNumbers: 'A8731DY',
         worker: JSON.stringify({ staffId: 123, firstName: 'First', lastName: 'Last' }),
       })
       .expect(302)
-      .expect(res => expect(redirectedToPath(res)).toEqual('/assign-a-case'))
+
+    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    expect(pathname).toEqual('/assign-a-case')
+    expect(searchParams.getAll('allocatedCases')).toEqual(['John Smith, A1234DY'])
+    expect(searchParams.get('allocationSuccess')).toEqual('true')
+    expect(searchParams.get('allocatedTo')).toEqual('First Last')
 
     expect(rpService.postCaseAllocations).toHaveBeenCalledWith({
       nomsIds: ['A8731DY'],
@@ -97,14 +132,33 @@ describe('post', () => {
   })
 
   test('successfully assign a multiple cases', async () => {
-    await request(app)
+    rpService.postCaseAllocations.mockResolvedValue([
+      { nomsId: 'A8731DY', staffId: 123, staffFirstName: 'First', staffLastName: 'Last' },
+      { nomsId: 'G4161UF', staffId: 123, staffFirstName: 'First', staffLastName: 'Last' },
+      { nomsId: 'G4161UF', staffId: 123, staffFirstName: 'First', staffLastName: 'Last' },
+    ])
+    rpService.getPrisonerDetails
+      .mockResolvedValueOnce(prisonerData('A1234DY', 'John', 'Smith'))
+      .mockResolvedValueOnce(prisonerData('G4161UF', 'SOME', 'GUY'))
+      .mockResolvedValueOnce(prisonerData('G5384GE', 'A.N', 'Other'))
+
+    const res = await request(app)
       .post('/assign-a-case')
       .send({
-        prisonerNumber: ['A8731DY', 'G4161UF', 'G5384GE'],
+        prisonerNumbers: ['A8731DY', 'G4161UF', 'G5384GE'],
         worker: JSON.stringify({ staffId: 123, firstName: 'First', lastName: 'Last' }),
       })
       .expect(302)
-      .expect(res => expect(redirectedToPath(res)).toEqual('/assign-a-case'))
+
+    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    expect(pathname).toEqual('/assign-a-case')
+    expect(searchParams.getAll('allocatedCases')).toEqual([
+      'John Smith, A1234DY',
+      'Some Guy, G4161UF',
+      'A.n Other, G5384GE',
+    ])
+    expect(searchParams.get('allocationSuccess')).toEqual('true')
+    expect(searchParams.get('allocatedTo')).toEqual('First Last')
 
     expect(rpService.postCaseAllocations).toHaveBeenCalledWith({
       nomsIds: ['A8731DY', 'G4161UF', 'G5384GE'],
@@ -114,3 +168,7 @@ describe('post', () => {
     })
   })
 })
+
+function prisonerData(prisonerNumber: string, firstName: string, lastName: string): PrisonerData {
+  return { personalDetails: { prisonerNumber, firstName, lastName } as PersonalDetails } as PrisonerData
+}

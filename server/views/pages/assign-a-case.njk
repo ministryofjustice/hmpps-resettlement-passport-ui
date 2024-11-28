@@ -3,6 +3,31 @@
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 
 {% block content %}
+  {% if allocationSuccess %}
+    <div
+      id="success-alert"
+      class="govuk-notification-banner govuk-notification-banner--success"
+      role="alert"
+      aria-labelledby="govuk-notification-banner-title"
+      data-module="govuk-notification-banner"
+    >
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">Success</h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          You have successfully assigned to following people in prison to {{ allocatedTo }}
+        </h3>
+        <ul class="govuk-list govuk-list--bullet">
+          {%- for case in allocatedCases -%}<li>{{ case }}</li>{%- endfor -%}
+        </ul>
+        {%- if allocatedOtherCount > 0 -%}
+          <p>and {{ allocatedOtherCount }} others</p>
+        {%- endif -%}
+      </div>
+    </div>
+  {% endif %}
+
   <div class="govuk-tabs" id="tabs">
     <ul class="govuk-tabs__list">
       <li class="govuk-tabs__list-item">
@@ -39,11 +64,14 @@
                       <input
                         type="checkbox"
                         class="govuk-checkboxes__input"
-                        name="prisonerNumber"
+                        name="prisonerNumbers"
                         id="assign-checkbox-{{ prisoner.prisonerNumber }}"
                         value="{{ prisoner.prisonerNumber }}"
                       />
-                      <label class="govuk-label govuk-checkboxes__label" for="assign-checkbox-{{ prisoner.prisonerNumber }}">
+                      <label
+                        class="govuk-label govuk-checkboxes__label"
+                        for="assign-checkbox-{{ prisoner.prisonerNumber }}"
+                      >
                         <span class="govuk-visually-hidden"
                           >Select {{ prisoner.firstName }} {{ prisoner.lastName }}</span
                         >
@@ -51,7 +79,7 @@
                     </div>
                   </td>
                   <td class="govuk-table__cell">
-                    <a href="/prisoner-overview/?prisonerNumber={{ prisoner.prisonerNumber }}"
+                    <a href="/prisoner-overview?prisonerNumber={{ prisoner.prisonerNumber }}"
                       >{{ prisoner.lastName | toTitleCase }}, {{ prisoner.firstName | toTitleCase }}</a
                     >
                     <br />
@@ -96,7 +124,7 @@
                 <select class="govuk-select" id="workerName" name="worker" required>
                   <option value="">Choose a resettlement worker</option>
                   {%- for worker in resettlementWorkers -%}
-                    <option value='{{ worker | dump }}'>{{ worker.firstName }} {{ worker.lastName }}</option>
+                    <option value="{{ worker | dump }}">{{ worker.firstName }} {{ worker.lastName }}</option>
                   {% endfor %}
                   <option value="_unassign">Unassign</option>
                 </select>
