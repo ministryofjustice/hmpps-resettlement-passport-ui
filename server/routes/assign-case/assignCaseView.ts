@@ -7,6 +7,8 @@ export default class AssignCaseView implements View {
     private readonly prisonersList: PrisonersList,
     private readonly pagination: Pagination,
     private readonly page: string,
+    private readonly pageSize: number,
+    private readonly totalElements: number,
     private readonly errors: ErrorMessage[],
   ) {
     // no op
@@ -16,12 +18,16 @@ export default class AssignCaseView implements View {
     prisonersList: PrisonersList
     pagination: Pagination
     page: string
+    pageSize: number
+    totalElements: number
     errors: ErrorMessage[]
   } {
     return {
       prisonersList: this.prisonersList,
       pagination: this.pagination,
       page: this.page,
+      pageSize: this.pageSize,
+      totalElements: this.totalElements,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

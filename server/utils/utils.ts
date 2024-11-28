@@ -27,7 +27,7 @@ import {
 import { AssessmentType } from '../data/model/assessmentInformation'
 import { toCachedQuestionAndAnswer } from './formatAssessmentResponse'
 import { badRequestError } from '../errorHandler'
-import { PaginationPage } from '../data/model/pagination'
+import { Pagination, PaginationPage } from '../data/model/pagination'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -516,8 +516,17 @@ export function isAdditionalDetails(questionAnswer: { question?: string; questio
 export function getPaginationPages(
   currentPage: number,
   totalPages: number,
+  pageSize: number,
+  totalElements: number,
   pagesAroundCurrent: number = 1,
-): PaginationPage[] {
+): Pagination {
+  // Only get pagination if more than 1 page of data
+  const requiresPagination = totalElements > pageSize
+
+  if (!requiresPagination) {
+    return { pages: null, startItem: 1, endItem: totalElements }
+  }
+
   const pages: PaginationPage[] = []
 
   // Add "previous" button if not on the first page
@@ -561,5 +570,9 @@ export function getPaginationPages(
     pages.push({ pageType: 'next', isCurrent: false, pageNumber: currentPage + 1 })
   }
 
-  return pages
+  // Calculate the range of items being displayed
+  const startItem = currentPage * pageSize + 1
+  const endItem = Math.min(startItem + pageSize - 1, totalElements)
+
+  return { pages, startItem, endItem }
 }

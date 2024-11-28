@@ -25,18 +25,12 @@ export default class AssignCaseController {
         parseInt(currentPage, 10),
         pageSize,
       )
-
       const { page, totalElements } = prisonersList
       const totalPages = Math.ceil(totalElements / pageSize)
 
-      // Only get pagination if more than 1 page of data
-      const requiresPagination = totalElements > pageSize
+      const pagination = getPaginationPages(page, totalPages, pageSize, totalElements)
 
-      const pagination = {
-        pages: requiresPagination ? getPaginationPages(page, totalPages) : null,
-      }
-
-      const view = new AssignCaseView(prisonersList, pagination, currentPage, errors)
+      const view = new AssignCaseView(prisonersList, pagination, currentPage, pageSize, totalElements, errors)
       return res.render('pages/assign-a-case', { ...view.renderArgs })
     } catch (err) {
       return next(err)

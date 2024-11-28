@@ -6,4 +6,6 @@ export type PaginationPage = {
 
 export type Pagination = {
   pages?: PaginationPage[]
+  startItem?: number
+  endItem?: number
 }
