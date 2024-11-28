@@ -12,7 +12,7 @@ export default class AssignCaseController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     const pagination = {
-      pages: getPaginationPages(3, 80, 1),
+      pages: getPaginationPages(2, 5, undefined),
     }
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []

@@ -522,11 +522,11 @@ export function getPaginationPages(
 
   // Add "previous" button if not on the first page
   if (currentPage > 1) {
-    pages.push({ pageType: 'previous', isCurrent: false })
+    pages.push({ pageType: 'previous', isCurrent: false, pageNumber: currentPage - 1 })
   }
 
   // Add the first page
-  pages.push({ displayName: 1, pageType: 'number', isCurrent: currentPage === 1 })
+  pages.push({ pageNumber: 1, pageType: 'number', isCurrent: currentPage === 1 })
 
   // Add leading ellipsis if necessary
   if (currentPage - pagesAroundCurrent > 2) {
@@ -539,7 +539,7 @@ export function getPaginationPages(
     i <= Math.min(totalPages - 1, currentPage + pagesAroundCurrent);
     i += 1
   ) {
-    pages.push({ displayName: i, pageType: 'number', isCurrent: i === currentPage })
+    pages.push({ pageNumber: i, pageType: 'number', isCurrent: i === currentPage })
   }
 
   // Add trailing ellipsis if necessary
@@ -549,12 +549,12 @@ export function getPaginationPages(
 
   // Add the last page
   if (totalPages > 1) {
-    pages.push({ displayName: totalPages, pageType: 'number', isCurrent: currentPage === totalPages })
+    pages.push({ pageNumber: totalPages, pageType: 'number', isCurrent: currentPage === totalPages })
   }
 
   // Add "next" button if not on the last page
   if (currentPage < totalPages) {
-    pages.push({ pageType: 'next', isCurrent: false })
+    pages.push({ pageType: 'next', isCurrent: false, pageNumber: currentPage + 1 })
   }
 
   return pages

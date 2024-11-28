@@ -1,8 +1,6 @@
-export type PageType = 'next' | 'previous' | 'number' | 'ellipses'
-
 export type PaginationPage = {
-  displayName?: number
-  pageType: PageType
+  pageNumber?: number
+  pageType: 'next' | 'previous' | 'number' | 'ellipses'
   isCurrent: boolean
 }
 

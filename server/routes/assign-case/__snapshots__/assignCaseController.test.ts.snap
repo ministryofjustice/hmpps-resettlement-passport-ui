@@ -375,7 +375,7 @@ exports[`getView Happy path with default query params 1`] = `
             
               
                 <div class="govuk-pagination__prev">
-                  <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
+                  <a class="govuk-link govuk-pagination__link" href="#1" rel="prev">
                     <svg class="govuk-pagination__icon govuk-pagination__icon--prev" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
                       <path d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"></path>
                     </svg>
@@ -384,8 +384,6 @@ exports[`getView Happy path with default query params 1`] = `
                     </span>
                   </a>
                 </div>
-              
-            
               
             
               
@@ -420,7 +418,7 @@ exports[`getView Happy path with default query params 1`] = `
               
                 
                 
-                  <li class="govuk-pagination__item ">
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
                       href="#2"
@@ -433,26 +431,13 @@ exports[`getView Happy path with default query params 1`] = `
               
                 
                 
-                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                  <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
                       href="#3"
                       aria-label="Page 3"
                     >
                       3
-                    </a>
-                  </li>
-                
-              
-                
-                
-                  <li class="govuk-pagination__item ">
-                    <a
-                      class="govuk-link govuk-pagination__link"
-                      href="#4"
-                      aria-label="Page 4"
-                    >
-                      4
                     </a>
                   </li>
                 
@@ -469,10 +454,10 @@ exports[`getView Happy path with default query params 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="#80"
-                      aria-label="Page 80"
+                      href="#5"
+                      aria-label="Page 5"
                     >
-                      80
+                      5
                     </a>
                   </li>
                 
@@ -495,10 +480,8 @@ exports[`getView Happy path with default query params 1`] = `
               
             
               
-            
-              
                 <div class="govuk-pagination__next">
-                  <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+                  <a class="govuk-link govuk-pagination__link" href="#3" rel="next">
                     <span class="govuk-pagination__link-title">
                       Next<span class="govuk-visually-hidden"> page</span>
                     </span>

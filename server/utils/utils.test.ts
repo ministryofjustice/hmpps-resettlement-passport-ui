@@ -25,6 +25,7 @@ import {
   isValidStatus,
   parseAssessmentType,
   isAdditionalDetails,
+  getPaginationPages,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -40,6 +41,7 @@ import {
 } from '../data/model/immediateNeedsReport'
 import { PersonalDetails, PrisonerData } from '../@types/express'
 import { AssessmentType } from '../data/model/assessmentInformation'
+import { PaginationPage } from '../data/model/pagination'
 
 describe('convert to title case', () => {
   it.each([
@@ -1216,4 +1218,78 @@ describe('isAdditionalDetails', () => {
   ])('isAdditionalDetail(%o) should be %s', (questionAndAnswer, result) => {
     expect(isAdditionalDetails(questionAndAnswer as CachedQuestionAndAnswer)).toEqual(result)
   })
+})
+
+describe('getPaginationPages', () => {
+  it.each([
+    [
+      'current page is 1 of 5 pages',
+      1,
+      5,
+      undefined,
+      [
+        { pageType: 'number', pageNumber: 1, isCurrent: true },
+        { pageType: 'number', pageNumber: 2, isCurrent: false },
+        { pageType: 'ellipses', isCurrent: false },
+        { pageType: 'number', pageNumber: 5, isCurrent: false },
+        { pageType: 'next', pageNumber: 2, isCurrent: false },
+      ] as PaginationPage[],
+    ],
+    [
+      'current page is 3 of 5 pages',
+      3,
+      5,
+      undefined,
+      [
+        { pageType: 'previous', pageNumber: 2, isCurrent: false },
+        { pageType: 'number', pageNumber: 1, isCurrent: false },
+        { pageType: 'number', pageNumber: 2, isCurrent: false },
+        { pageType: 'number', pageNumber: 3, isCurrent: true },
+        { pageType: 'number', pageNumber: 4, isCurrent: false },
+        { pageType: 'number', pageNumber: 5, isCurrent: false },
+        { pageType: 'next', pageNumber: 4, isCurrent: false },
+      ] as PaginationPage[],
+    ],
+    [
+      'current page is 5 of 5 pages',
+      5,
+      5,
+      undefined,
+      [
+        { pageType: 'previous', pageNumber: 4, isCurrent: false },
+        { pageType: 'number', pageNumber: 1, isCurrent: false },
+        { pageType: 'ellipses', isCurrent: false },
+        { pageType: 'number', pageNumber: 4, isCurrent: false },
+        { pageType: 'number', pageNumber: 5, isCurrent: true },
+      ] as PaginationPage[],
+    ],
+    [
+      'current page is 3 of 10 pages with 2 pages around current',
+      3,
+      10,
+      2,
+      [
+        { pageType: 'previous', pageNumber: 2, isCurrent: false },
+        { pageType: 'number', pageNumber: 1, isCurrent: false },
+        { pageType: 'number', pageNumber: 2, isCurrent: false },
+        { pageType: 'number', pageNumber: 3, isCurrent: true },
+        { pageType: 'number', pageNumber: 4, isCurrent: false },
+        { pageType: 'number', pageNumber: 5, isCurrent: false },
+        { pageType: 'ellipses', isCurrent: false },
+        { pageType: 'number', pageNumber: 10, isCurrent: false },
+        { pageType: 'next', pageNumber: 4, isCurrent: false },
+      ] as PaginationPage[],
+    ],
+  ])(
+    '%s',
+    (
+      _description: string,
+      currentPage: number,
+      totalPages: number,
+      pagesAroundCurrent: number,
+      expected: PaginationPage[],
+    ) => {
+      expect(getPaginationPages(currentPage, totalPages, pagesAroundCurrent)).toEqual(expected)
+    },
+  )
 })
