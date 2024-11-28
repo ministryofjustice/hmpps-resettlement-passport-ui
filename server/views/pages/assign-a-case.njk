@@ -16,7 +16,11 @@
       </div>
       <div class="govuk-notification-banner__content">
         <h3 class="govuk-notification-banner__heading">
-          You have successfully assigned to following people in prison to {{ allocatedTo }}
+          {%- if isUnassign -%}
+            You have successfully unassigned to following people in prison:
+          {%- else -%}
+            You have successfully assigned to following people in prison to {{ allocatedTo }}:
+          {%- endif -%}
         </h3>
         <ul class="govuk-list govuk-list--bullet">
           {%- for case in allocatedCases -%}<li>{{ case }}</li>{%- endfor -%}

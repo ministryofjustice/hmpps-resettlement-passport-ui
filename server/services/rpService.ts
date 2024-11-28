@@ -23,7 +23,11 @@ import { getFeatureFlagBoolean } from '../utils/utils'
 import { ResetReason } from '../data/model/resetProfile'
 import { BankApplicationResponse, IdApplication, IdApplicationResponse } from '../data/model/financeId'
 import { ResettlementWorker } from '../data/model/resettlementWorkers'
-import { CaseAllocationRequestBody, CaseAllocationResponseItem } from '../data/model/caseAllocation'
+import {
+  CaseAllocationRequestBody,
+  CaseAllocationResponseItem,
+  CaseAllocationUnassignRequestBody,
+} from '../data/model/caseAllocation'
 
 export default class RpService {
   constructor() {
@@ -512,5 +516,9 @@ export default class RpService {
 
   async postCaseAllocations(caseAllocations: CaseAllocationRequestBody): Promise<CaseAllocationResponseItem[]> {
     return this.createClient().post(`/resettlement-passport/workers/cases`, caseAllocations)
+  }
+
+  async unassignCaseAllocations(caseAllocations: CaseAllocationUnassignRequestBody): Promise<void> {
+    await this.createClient().patch(`/resettlement-passport/workers/cases`, caseAllocations)
   }
 }

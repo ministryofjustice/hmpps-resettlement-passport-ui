@@ -82,7 +82,7 @@ describe('getView', () => {
     expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
   })
 
-  test('shows success dialog', async () => {
+  test('shows success dialog for assign', async () => {
     const getPrisonerListSpy = stubPrisonersCasesList(rpService)
     stubAvailableResettlementWorkers()
 
@@ -94,6 +94,27 @@ describe('getView', () => {
         allocatedCases: ['John Smith, A1234DY', 'Some Guy, G4161UF', 'A.n Other, G5384GE'],
         allocatedTo: 'Joe Blogs',
         allocatedOtherCount: 7,
+      })
+      .expect(res => {
+        const doc = parseHtmlDocument(res.text)
+        expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
+      })
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
+  })
+
+  test('shows success dialog for unassign', async () => {
+    const getPrisonerListSpy = stubPrisonersCasesList(rpService)
+    stubAvailableResettlementWorkers()
+
+    await request(app)
+      .get('/assign-a-case')
+      .expect(200)
+      .query({
+        allocationSuccess: true,
+        allocatedCases: ['John Smith, A1234DY', 'Some Guy, G4161UF', 'A.n Other, G5384GE'],
+        allocatedTo: 'Joe Blogs',
+        allocatedOtherCount: 7,
+        isUnassign: true,
       })
       .expect(res => {
         const doc = parseHtmlDocument(res.text)
@@ -179,6 +200,55 @@ describe('post', () => {
       })
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  test('successfully unassign a single case', async () => {
+    const res = await request(app)
+      .post('/assign-a-case')
+      .send({
+        prisonerNumbers: 'A8731DY',
+        worker: '_unassign',
+      })
+      .expect(302)
+
+    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    expect(pathname).toEqual('/assign-a-case')
+    expect(searchParams.getAll('allocatedCases')).toEqual(['John Smith, A1234DY'])
+    expect(searchParams.get('allocationSuccess')).toEqual('true')
+    expect(searchParams.get('isUnassign')).toEqual('true')
+
+    expect(rpService.unassignCaseAllocations).toHaveBeenCalledWith({
+      nomsIds: ['A8731DY'],
+    })
+  })
+
+  test('successfully unassign a multiple cases', async () => {
+    rpService.getPrisonerDetails
+      .mockResolvedValueOnce(prisonerData('A1234DY', 'John', 'Smith'))
+      .mockResolvedValueOnce(prisonerData('G4161UF', 'SOME', 'GUY'))
+      .mockResolvedValueOnce(prisonerData('G5384GE', 'A.N', 'Other'))
+
+    const res = await request(app)
+      .post('/assign-a-case')
+      .send({
+        prisonerNumbers: ['A8731DY', 'G4161UF', 'G5384GE'],
+        worker: '_unassign',
+      })
+      .expect(302)
+
+    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    expect(pathname).toEqual('/assign-a-case')
+    expect(searchParams.getAll('allocatedCases')).toEqual([
+      'John Smith, A1234DY',
+      'Some Guy, G4161UF',
+      'A.n Other, G5384GE',
+    ])
+    expect(searchParams.get('allocationSuccess')).toEqual('true')
+    expect(searchParams.get('isUnassign')).toEqual('true')
+
+    expect(rpService.unassignCaseAllocations).toHaveBeenCalledWith({
+      nomsIds: ['A8731DY', 'G4161UF', 'G5384GE'],
+    })
   })
 })
 

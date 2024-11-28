@@ -5,6 +5,10 @@ export type CaseAllocationRequestBody = {
   staffLastName: string
 }
 
+export type CaseAllocationUnassignRequestBody = {
+  nomsIds: string[]
+}
+
 export type CaseAllocationResponseItem = {
   nomsId: string
   staffId?: number

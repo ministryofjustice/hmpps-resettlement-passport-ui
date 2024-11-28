@@ -269,15 +269,24 @@ exports[`getView Happy path with default query params 1`] = `
 "
 `;
 
-exports[`getView shows success dialog 1`] = `
+exports[`getView shows success dialog for assign 1`] = `
 "<div id="success-alert" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
       <div class="govuk-notification-banner__header">
         <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">Success</h2>
       </div>
       <div class="govuk-notification-banner__content">
-        <h3 class="govuk-notification-banner__heading">
-          You have successfully assigned to following people in prison to Joe Blogs
-        </h3>
+        <h3 class="govuk-notification-banner__heading">You have successfully assigned to following people in prison to Joe Blogs:</h3>
+        <ul class="govuk-list govuk-list--bullet"><li>John Smith, A1234DY</li><li>Some Guy, G4161UF</li><li>A.n Other, G5384GE</li></ul><p>and 7 others</p></div>
+    </div>"
+`;
+
+exports[`getView shows success dialog for unassign 1`] = `
+"<div id="success-alert" class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">Success</h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">You have successfully unassigned to following people in prison:</h3>
         <ul class="govuk-list govuk-list--bullet"><li>John Smith, A1234DY</li><li>Some Guy, G4161UF</li><li>A.n Other, G5384GE</li></ul><p>and 7 others</p></div>
     </div>"
 `;
