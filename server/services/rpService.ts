@@ -50,9 +50,14 @@ export default class RpService {
     )
   }
 
-  async getListOfPrisonerCases(prisonSelected: string, includePastReleaseDates: boolean) {
+  async getListOfPrisonerCases(
+    prisonSelected: string,
+    includePastReleaseDates: boolean,
+    page: number,
+    pageSize: number,
+  ) {
     return this.createClient().get<PrisonersList>(
-      `/resettlement-passport/prison/${prisonSelected}/prisoners?includePastReleaseDates=${includePastReleaseDates}`,
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&includePastReleaseDates=${includePastReleaseDates}`,
     )
   }
 

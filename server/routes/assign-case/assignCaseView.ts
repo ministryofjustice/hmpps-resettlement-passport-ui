@@ -6,6 +6,7 @@ export default class AssignCaseView implements View {
   constructor(
     private readonly prisonersList: PrisonersList,
     private readonly pagination: Pagination,
+    private readonly page: string,
     private readonly errors: ErrorMessage[],
   ) {
     // no op
@@ -14,11 +15,13 @@ export default class AssignCaseView implements View {
   get renderArgs(): {
     prisonersList: PrisonersList
     pagination: Pagination
+    page: string
     errors: ErrorMessage[]
   } {
     return {
       prisonersList: this.prisonersList,
       pagination: this.pagination,
+      page: this.page,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

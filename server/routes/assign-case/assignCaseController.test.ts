@@ -37,7 +37,7 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonersListSpy).toHaveBeenCalledWith('MDI', true)
+    expect(getPrisonersListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
   })
 
   it('Happy path with default query params', async () => {
@@ -49,6 +49,6 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
   })
 })

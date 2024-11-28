@@ -1223,61 +1223,61 @@ describe('isAdditionalDetails', () => {
 describe('getPaginationPages', () => {
   it.each([
     [
-      'current page is 1 of 5 pages',
-      1,
-      5,
+      'current page is 1 (index 0) of 5 pages (index 0 to 4)',
+      0, // currentPage (zero-based index)
+      5, // totalPages
       undefined,
       [
-        { pageType: 'number', pageNumber: 1, isCurrent: true },
-        { pageType: 'number', pageNumber: 2, isCurrent: false },
-        { pageType: 'ellipses', isCurrent: false },
-        { pageType: 'number', pageNumber: 5, isCurrent: false },
-        { pageType: 'next', pageNumber: 2, isCurrent: false },
-      ] as PaginationPage[],
-    ],
-    [
-      'current page is 3 of 5 pages',
-      3,
-      5,
-      undefined,
-      [
-        { pageType: 'previous', pageNumber: 2, isCurrent: false },
-        { pageType: 'number', pageNumber: 1, isCurrent: false },
-        { pageType: 'number', pageNumber: 2, isCurrent: false },
-        { pageType: 'number', pageNumber: 3, isCurrent: true },
-        { pageType: 'number', pageNumber: 4, isCurrent: false },
-        { pageType: 'number', pageNumber: 5, isCurrent: false },
-        { pageType: 'next', pageNumber: 4, isCurrent: false },
-      ] as PaginationPage[],
-    ],
-    [
-      'current page is 5 of 5 pages',
-      5,
-      5,
-      undefined,
-      [
-        { pageType: 'previous', pageNumber: 4, isCurrent: false },
+        { pageType: 'number', pageNumber: 0, isCurrent: true },
         { pageType: 'number', pageNumber: 1, isCurrent: false },
         { pageType: 'ellipses', isCurrent: false },
         { pageType: 'number', pageNumber: 4, isCurrent: false },
-        { pageType: 'number', pageNumber: 5, isCurrent: true },
+        { pageType: 'next', pageNumber: 1, isCurrent: false },
       ] as PaginationPage[],
     ],
     [
-      'current page is 3 of 10 pages with 2 pages around current',
-      3,
-      10,
-      2,
+      'current page is 3 (index 2) of 5 pages (index 0 to 4)',
+      2, // currentPage
+      5, // totalPages
+      undefined,
       [
-        { pageType: 'previous', pageNumber: 2, isCurrent: false },
+        { pageType: 'previous', pageNumber: 1, isCurrent: false },
+        { pageType: 'number', pageNumber: 0, isCurrent: false },
         { pageType: 'number', pageNumber: 1, isCurrent: false },
-        { pageType: 'number', pageNumber: 2, isCurrent: false },
-        { pageType: 'number', pageNumber: 3, isCurrent: true },
+        { pageType: 'number', pageNumber: 2, isCurrent: true },
+        { pageType: 'number', pageNumber: 3, isCurrent: false },
         { pageType: 'number', pageNumber: 4, isCurrent: false },
-        { pageType: 'number', pageNumber: 5, isCurrent: false },
+        { pageType: 'next', pageNumber: 3, isCurrent: false },
+      ] as PaginationPage[],
+    ],
+    [
+      'current page is 5 (index 4) of 5 pages (index 0 to 4)',
+      4, // currentPage
+      5, // totalPages
+      undefined,
+      [
+        { pageType: 'previous', pageNumber: 3, isCurrent: false },
+        { pageType: 'number', pageNumber: 0, isCurrent: false },
         { pageType: 'ellipses', isCurrent: false },
-        { pageType: 'number', pageNumber: 10, isCurrent: false },
-        { pageType: 'next', pageNumber: 4, isCurrent: false },
+        { pageType: 'number', pageNumber: 3, isCurrent: false },
+        { pageType: 'number', pageNumber: 4, isCurrent: true },
+      ] as PaginationPage[],
+    ],
+    [
+      'current page is 3 (index 2) of 10 pages (index 0 to 9) with 2 pages around current',
+      2, // currentPage
+      10, // totalPages
+      2, // pagesAroundCurrent
+      [
+        { pageType: 'previous', pageNumber: 1, isCurrent: false },
+        { pageType: 'number', pageNumber: 0, isCurrent: false },
+        { pageType: 'number', pageNumber: 1, isCurrent: false },
+        { pageType: 'number', pageNumber: 2, isCurrent: true },
+        { pageType: 'number', pageNumber: 3, isCurrent: false },
+        { pageType: 'number', pageNumber: 4, isCurrent: false },
+        { pageType: 'ellipses', isCurrent: false },
+        { pageType: 'number', pageNumber: 9, isCurrent: false },
+        { pageType: 'next', pageNumber: 3, isCurrent: false },
       ] as PaginationPage[],
     ],
   ])(

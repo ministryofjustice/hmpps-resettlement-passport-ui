@@ -521,39 +521,43 @@ export function getPaginationPages(
   const pages: PaginationPage[] = []
 
   // Add "previous" button if not on the first page
-  if (currentPage > 1) {
+  if (currentPage > 0) {
     pages.push({ pageType: 'previous', isCurrent: false, pageNumber: currentPage - 1 })
   }
 
   // Add the first page
-  pages.push({ pageNumber: 1, pageType: 'number', isCurrent: currentPage === 1 })
+  pages.push({ pageNumber: 0, pageType: 'number', isCurrent: currentPage === 0 })
 
   // Add leading ellipsis if necessary
-  if (currentPage - pagesAroundCurrent > 2) {
+  if (currentPage - pagesAroundCurrent > 1) {
     pages.push({ pageType: 'ellipses', isCurrent: false })
   }
 
   // Add pages around the current page
   for (
-    let i = Math.max(2, currentPage - pagesAroundCurrent);
-    i <= Math.min(totalPages - 1, currentPage + pagesAroundCurrent);
+    let i = Math.max(1, currentPage - pagesAroundCurrent);
+    i <= Math.min(totalPages - 2, currentPage + pagesAroundCurrent);
     i += 1
   ) {
     pages.push({ pageNumber: i, pageType: 'number', isCurrent: i === currentPage })
   }
 
   // Add trailing ellipsis if necessary
-  if (currentPage + pagesAroundCurrent < totalPages - 1) {
+  if (currentPage + pagesAroundCurrent < totalPages - 2) {
     pages.push({ pageType: 'ellipses', isCurrent: false })
   }
 
   // Add the last page
   if (totalPages > 1) {
-    pages.push({ pageNumber: totalPages, pageType: 'number', isCurrent: currentPage === totalPages })
+    pages.push({
+      pageNumber: totalPages - 1,
+      pageType: 'number',
+      isCurrent: currentPage === totalPages - 1,
+    })
   }
 
   // Add "next" button if not on the last page
-  if (currentPage < totalPages) {
+  if (currentPage < totalPages - 1) {
     pages.push({ pageType: 'next', isCurrent: false, pageNumber: currentPage + 1 })
   }
 

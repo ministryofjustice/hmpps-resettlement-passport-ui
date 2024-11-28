@@ -11,9 +11,8 @@ export default class AssignCaseController {
   }
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
-    const pagination = {
-      pages: getPaginationPages(2, 5, undefined),
-    }
+    const pageSize = 20
+    const { currentPage = '0' } = req.query as { currentPage: string }
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []
     let prisonersList = null
@@ -23,8 +22,21 @@ export default class AssignCaseController {
       prisonersList = await this.rpService.getListOfPrisonerCases(
         userActiveCaseLoad.caseLoadId,
         includePastReleaseDates,
+        parseInt(currentPage, 10),
+        pageSize,
       )
-      const view = new AssignCaseView(prisonersList, pagination, errors)
+
+      const { page, totalElements } = prisonersList
+      const totalPages = Math.ceil(totalElements / pageSize)
+
+      // Only get pagination if more than 1 page of data
+      const requiresPagination = totalElements > pageSize
+
+      const pagination = {
+        pages: requiresPagination ? getPaginationPages(page, totalPages) : null,
+      }
+
+      const view = new AssignCaseView(prisonersList, pagination, currentPage, errors)
       return res.render('pages/assign-a-case', { ...view.renderArgs })
     } catch (err) {
       return next(err)
