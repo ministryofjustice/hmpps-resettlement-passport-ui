@@ -167,6 +167,19 @@ describe('post', () => {
       staffLastName: 'Last',
     })
   })
+
+  test('Shows error page when API throws error when assigning', async () => {
+    rpService.postCaseAllocations.mockRejectedValue(new Error('Boom!'))
+
+    await request(app)
+      .post('/assign-a-case')
+      .send({
+        prisonerNumbers: ['A8731DY', 'G4161UF', 'G5384GE'],
+        worker: JSON.stringify({ staffId: 123, firstName: 'First', lastName: 'Last' }),
+      })
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
 })
 
 function prisonerData(prisonerNumber: string, firstName: string, lastName: string): PrisonerData {
