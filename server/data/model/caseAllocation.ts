@@ -3,6 +3,7 @@ export type CaseAllocationRequestBody = {
   staffId?: number
   staffFirstName: string
   staffLastName: string
+  prisonId: string
 }
 
 export type CaseAllocationUnassignRequestBody = {

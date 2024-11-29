@@ -55,7 +55,7 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
-    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true)
+    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true, 0, 20)
   })
 
   it('Error case - rpService throws error getting resettlement workers', async () => {
@@ -66,7 +66,7 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
-    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true)
+    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true, 0, 20)
 
     expect(rpService.getAvailableResettlementWorkers).toHaveBeenCalledWith('MDI')
   })
@@ -79,7 +79,7 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
   })
 
   test('shows success dialog for assign', async () => {
@@ -99,7 +99,7 @@ describe('getView', () => {
         const doc = parseHtmlDocument(res.text)
         expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
       })
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
   })
 
   test('shows success dialog for unassign', async () => {
@@ -120,7 +120,7 @@ describe('getView', () => {
         const doc = parseHtmlDocument(res.text)
         expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
       })
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
   })
 })
 
@@ -145,6 +145,7 @@ describe('post', () => {
     expect(searchParams.get('allocatedTo')).toEqual('First Last')
 
     expect(rpService.postCaseAllocations).toHaveBeenCalledWith({
+      prisonId: 'MDI',
       nomsIds: ['A8731DY'],
       staffId: 123,
       staffFirstName: 'First',
@@ -182,6 +183,7 @@ describe('post', () => {
     expect(searchParams.get('allocatedTo')).toEqual('First Last')
 
     expect(rpService.postCaseAllocations).toHaveBeenCalledWith({
+      prisonId: 'MDI',
       nomsIds: ['A8731DY', 'G4161UF', 'G5384GE'],
       staffId: 123,
       staffFirstName: 'First',

@@ -27,6 +27,7 @@ import {
 import { AssessmentType } from '../data/model/assessmentInformation'
 import { toCachedQuestionAndAnswer } from './formatAssessmentResponse'
 import { badRequestError } from '../errorHandler'
+import { Pagination, PaginationPage } from '../data/model/pagination'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -510,4 +511,68 @@ export function isAdditionalDetails(questionAnswer: { question?: string; questio
     questionAnswer?.questionTitle?.toLowerCase()?.endsWith('additional details') ??
     false
   )
+}
+
+export function getPaginationPages(
+  currentPage: number,
+  totalPages: number,
+  pageSize: number,
+  totalElements: number,
+  pagesAroundCurrent: number = 1,
+): Pagination {
+  // Only get pagination if more than 1 page of data
+  const requiresPagination = totalElements > pageSize
+
+  if (!requiresPagination) {
+    return { pages: null, startItem: 1, endItem: totalElements }
+  }
+
+  const pages: PaginationPage[] = []
+
+  // Add "previous" button if not on the first page
+  if (currentPage > 0) {
+    pages.push({ pageType: 'previous', isCurrent: false, pageNumber: currentPage - 1 })
+  }
+
+  // Add the first page
+  pages.push({ pageNumber: 0, pageType: 'number', isCurrent: currentPage === 0 })
+
+  // Add leading ellipsis if necessary
+  if (currentPage - pagesAroundCurrent > 1) {
+    pages.push({ pageType: 'ellipses', isCurrent: false })
+  }
+
+  // Add pages around the current page
+  for (
+    let i = Math.max(1, currentPage - pagesAroundCurrent);
+    i <= Math.min(totalPages - 2, currentPage + pagesAroundCurrent);
+    i += 1
+  ) {
+    pages.push({ pageNumber: i, pageType: 'number', isCurrent: i === currentPage })
+  }
+
+  // Add trailing ellipsis if necessary
+  if (currentPage + pagesAroundCurrent < totalPages - 2) {
+    pages.push({ pageType: 'ellipses', isCurrent: false })
+  }
+
+  // Add the last page
+  if (totalPages > 1) {
+    pages.push({
+      pageNumber: totalPages - 1,
+      pageType: 'number',
+      isCurrent: currentPage === totalPages - 1,
+    })
+  }
+
+  // Add "next" button if not on the last page
+  if (currentPage < totalPages - 1) {
+    pages.push({ pageType: 'next', isCurrent: false, pageNumber: currentPage + 1 })
+  }
+
+  // Calculate the range of items being displayed
+  const startItem = currentPage * pageSize + 1
+  const endItem = Math.min(startItem + pageSize - 1, totalElements)
+
+  return { pages, startItem, endItem }
 }
