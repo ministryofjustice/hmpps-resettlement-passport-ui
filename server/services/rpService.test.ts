@@ -6,6 +6,7 @@ import FeatureFlags from '../featureFlag'
 
 jest.mock('../../logger')
 jest.mock('../data')
+jest.mock('../data/rpClient')
 
 describe('RpService', () => {
   let rpClient: jest.Mocked<RPClient>
@@ -14,7 +15,7 @@ describe('RpService', () => {
   let service: RpService
 
   beforeEach(() => {
-    rpClient = new RPClient('token', 'sessionId', 'userId') as jest.Mocked<RPClient>
+    rpClient = jest.mocked(new RPClient('token', 'sessionId', 'userId'))
     service = new RpService()
     service.createClient = () => rpClient
     Object.defineProperty(rpClient, 'sessionId', { value: 'sessionId', writable: false })
@@ -188,5 +189,35 @@ describe('RpService', () => {
       '/resettlement-passport/prisoner/123/resettlement-assessment/submit?assessmentType=BCST2&useNewDeliusCaseNoteFormat=true&useNewDpsCaseNoteFormat=true',
       null,
     )
+  })
+
+  it('should post case allocations', async () => {
+    const response = [
+      {
+        nomsId: 'ABC',
+        staffId: '123',
+      },
+    ]
+    rpClient.post.mockResolvedValue(response)
+
+    const body = {
+      staffId: 123,
+      nomsIds: ['ABC'],
+      staffFirstName: 'first',
+      staffLastName: 'last',
+      prisonId: 'prison',
+    }
+    const result = await service.postCaseAllocations(body)
+    expect(result).toEqual(response)
+    expect(rpClient.post).toHaveBeenCalledWith('/resettlement-passport/workers/cases', body)
+  })
+
+  it('should unassign case allocations', async () => {
+    const body = {
+      nomsIds: ['ABC'],
+    }
+    await service.unassignCaseAllocations(body)
+
+    expect(rpClient.patch).toHaveBeenCalledWith('/resettlement-passport/workers/cases', body)
   })
 })
