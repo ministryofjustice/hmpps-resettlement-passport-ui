@@ -508,13 +508,13 @@ exports[`getView Happy path 1`] = `
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">
-                <button type="button">Assigned resettlement worker</button>
+                Assigned resettlement worker
               </th>
               <th scope="col" class="govuk-table__header">
-                <button type="button">Number of prisoners assigned to them</button>
+                Number of prisoners assigned to them
               </th>
               <th scope="col" class="govuk-table__header">
-                <button type="button">Actions</button>
+                Actions
               </th>
             </tr>
           </thead>
@@ -540,7 +540,7 @@ exports[`getView Happy path 1`] = `
                     <span class="no-wrap">1</span>
                 </td>
                 <td class="govuk-table__cell">
-                    <a href="/assign-a-case'">View unassigned prisoners</a>
+                    <a href="/assign-a-case">View unassigned prisoners</a>
                 </td>
               </tr>
           </tbody>
@@ -734,13 +734,13 @@ exports[`getView Happy path empty list 1`] = `
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">
-                <button type="button">Assigned resettlement worker</button>
+                Assigned resettlement worker
               </th>
               <th scope="col" class="govuk-table__header">
-                <button type="button">Number of prisoners assigned to them</button>
+                Number of prisoners assigned to them
               </th>
               <th scope="col" class="govuk-table__header">
-                <button type="button">Actions</button>
+                Actions
               </th>
             </tr>
           </thead>
@@ -754,7 +754,7 @@ exports[`getView Happy path empty list 1`] = `
                     <span class="no-wrap">10</span>
                 </td>
                 <td class="govuk-table__cell">
-                    <a href="/assign-a-case'">View unassigned prisoners</a>
+                    <a href="/assign-a-case">View unassigned prisoners</a>
                 </td>
               </tr>
           </tbody>
