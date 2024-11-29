@@ -1,0 +1,63 @@
+{% extends "../partials/layout.njk" %}
+{% set pageHeading = "All pathways overview" %}
+
+{% block content %}
+  <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
+   <ul class="govuk-tabs__list">
+     <li class="govuk-tabs__list-item">
+       <a class="tab-links" href="/">People in prison</a>
+     </li>
+     <li class="govuk-tabs__list-item">
+       <a class="tab-links" href="/assign-a-case">Assign a case</a>
+     </li>
+     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+       <a class="tab-links" href="/staff-capacity">Staff Capacity</a>
+     </li>
+   </ul>
+    <div class="govuk-tabs__panel">
+      {% if workerList %}
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">
+                <button type="button">Assigned resettlement worker</button>
+              </th>
+              <th scope="col" class="govuk-table__header">
+                <button type="button">Number of prisoners assigned to them</button>
+              </th>
+              <th scope="col" class="govuk-table__header">
+                <button type="button">Actions</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for worker in workerList.assignedList %}
+              <tr class="govuk-table__row govuk-table__row--selected">
+                <td class="govuk-table__cell">
+                    <span class="no-wrap">{{ worker.firstName }} {{ worker.lastName }}</span>
+                </td>
+                <td class="govuk-table__cell">
+                    <span class="no-wrap">{{ worker.count }}</span>
+                </td>
+                <td class="govuk-table__cell">
+                    <a href="/assign-a-case">View assigned prisoners</a>
+                </td>
+              </tr>
+            {% endfor %}
+              <tr class="govuk-table__row govuk-table__row--selected">
+                <td class="govuk-table__cell">
+                    <span class="no-wrap">Unassigned</span>
+                </td>
+                <td class="govuk-table__cell">
+                    <span class="no-wrap">{{ workerList.unassignedCount }}</span>
+                </td>
+                <td class="govuk-table__cell">
+                    <a href="/assign-a-case'">View unassigned prisoners</a>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

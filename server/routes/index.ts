@@ -28,6 +28,7 @@ import statusUpdateRouter from './status-update'
 import financeIdBankAccountRouter from './finance-id-bank-account'
 import serviceUpdates from './service-updates'
 import assignCaseRouter from './assign-case'
+import staffCapacityRouter from './staff-capacity'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -60,6 +61,7 @@ export default function routes(services: Services): Router {
   financeIdBankAccountRouter(router, services)
   serviceUpdates(router)
   assignCaseRouter(router, services)
+  staffCapacityRouter(router, services)
 
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
