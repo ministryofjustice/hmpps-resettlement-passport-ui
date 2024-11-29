@@ -22,6 +22,7 @@ import { currentUser } from '../middleware/userContextMiddleware'
 import { getFeatureFlagBoolean } from '../utils/utils'
 import { ResetReason } from '../data/model/resetProfile'
 import { BankApplicationResponse, IdApplication, IdApplicationResponse } from '../data/model/financeId'
+import { WorkerList } from '../data/model/resettlementWorker'
 
 export default class RpService {
   constructor() {
@@ -507,5 +508,9 @@ export default class RpService {
         .get(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`)
         .then((a: Appointments) => a.results),
     ]
+  }
+
+  async getAssignedWorkerList(prisonId: string) {
+    return this.createClient().get<WorkerList>(`/resettlement-passport/workers/capacity?prisonId=${prisonId}`)
   }
 }
