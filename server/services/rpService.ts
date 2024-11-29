@@ -28,6 +28,7 @@ import {
   CaseAllocationResponseItem,
   CaseAllocationUnassignRequestBody,
 } from '../data/model/caseAllocation'
+import { WorkerList } from '../data/model/resettlementWorker'
 
 export default class RpService {
   constructor() {
@@ -525,5 +526,9 @@ export default class RpService {
 
   async unassignCaseAllocations(caseAllocations: CaseAllocationUnassignRequestBody): Promise<void> {
     await this.createClient().patch(`/resettlement-passport/workers/cases`, caseAllocations)
+  }
+
+  async getAssignedWorkerList(prisonId: string) {
+    return this.createClient().get<WorkerList>(`/resettlement-passport/workers/capacity?prisonId=${prisonId}`)
   }
 }
