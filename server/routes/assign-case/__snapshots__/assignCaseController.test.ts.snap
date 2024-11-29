@@ -159,17 +159,22 @@ exports[`getView Happy path with default query params 1`] = `
       <form id="assign-a-case-form" class="form" action="/assign-a-case" method="post">
         <input type="hidden" name="_csrf" value="" />
         
-          <table class="govuk-table" data-module="moj-multi-select" data-multi-select-checkbox="#select-all">
+          <table
+            id="cases-table"
+            class="govuk-table"
+            data-module="moj-multi-select"
+            data-multi-select-checkbox="#select-all"
+          >
             <thead class="govuk-table__head">
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col" id="select-all"></th>
                 <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
                   <button type="button">Name</button>
                 </th>
-                <th scope="col" class="govuk-table__header" data-column="release" aria-sort="release">
+                <th scope="col" class="govuk-table__header" data-column="release" aria-sort="none">
                   <button type="button">Release date</button>
                 </th>
-                <th scope="col" class="govuk-table__header" data-column="status" aria-sort="status">
+                <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
                   <button type="button">Assigned resettlement worker</button>
                 </th>
               </tr>
@@ -216,102 +221,118 @@ exports[`getView Happy path with default query params 1`] = `
               
             </tbody>
           </table>
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
-            
-              <nav class="govuk-pagination" aria-label="Pagination">
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                <ul class="govuk-pagination__list">
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+              
+                <nav class="govuk-pagination" aria-label="Pagination">
                   
                     
+                  
                     
-                      <li class="govuk-pagination__item govuk-pagination__item--current">
+                  
+                    
+                  
+                    
+                  
+                    
+                  
+                  <ul class="govuk-pagination__list">
+                    
+                      
+                      
+                        <li class="govuk-pagination__item govuk-pagination__item--current">
+                          <a
+                            class="govuk-link govuk-pagination__link"
+                            href="/assign-a-case?currentPage=0"
+                            aria-label="Page 1"
+                          >
+                            1
+                          </a>
+                        </li>
+                      
+                    
+                      
+                      
+                        <li class="govuk-pagination__item ">
+                          <a
+                            class="govuk-link govuk-pagination__link"
+                            href="/assign-a-case?currentPage=1"
+                            aria-label="Page 2"
+                          >
+                            2
+                          </a>
+                        </li>
+                      
+                    
+                      
+                        <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                      
+                      
+                    
+                      
+                      
+                        <li class="govuk-pagination__item ">
+                          <a
+                            class="govuk-link govuk-pagination__link"
+                            href="/assign-a-case?currentPage=4"
+                            aria-label="Page 5"
+                          >
+                            5
+                          </a>
+                        </li>
+                      
+                    
+                      
+                      
+                    
+                  </ul>
+                  
+                    
+                  
+                    
+                  
+                    
+                  
+                    
+                  
+                    
+                      <div class="govuk-pagination__next">
                         <a
                           class="govuk-link govuk-pagination__link"
-                          href="/assign-a-case/?currentPage=0"
-                          aria-label="Page 1"
+                          href="/assign-a-case?currentPage=1"
+                          rel="next"
                         >
-                          1
+                          <span class="govuk-pagination__link-title">
+                            Next<span class="govuk-visually-hidden"> page</span>
+                          </span>
+                          <svg
+                            class="govuk-pagination__icon govuk-pagination__icon--next"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="13"
+                            width="15"
+                            aria-hidden="true"
+                            focusable="false"
+                            viewBox="0 0 15 13"
+                          >
+                            <path
+                              d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                            ></path>
+                          </svg>
                         </a>
-                      </li>
+                      </div>
                     
                   
-                    
-                    
-                      <li class="govuk-pagination__item ">
-                        <a
-                          class="govuk-link govuk-pagination__link"
-                          href="/assign-a-case/?currentPage=1"
-                          aria-label="Page 2"
-                        >
-                          2
-                        </a>
-                      </li>
-                    
-                  
-                    
-                      <li class="govuk-pagination__item govuk-pagination__item--ellipses">
-                        &ctdot;
-                      </li>
-                    
-                    
-                  
-                    
-                    
-                      <li class="govuk-pagination__item ">
-                        <a
-                          class="govuk-link govuk-pagination__link"
-                          href="/assign-a-case/?currentPage=4"
-                          aria-label="Page 5"
-                        >
-                          5
-                        </a>
-                      </li>
-                    
-                  
-                    
-                    
-                  
-                </ul>
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                    <div class="govuk-pagination__next">
-                      <a class="govuk-link govuk-pagination__link" href="/assign-a-case/?currentPage=1" rel="next">
-                        <span class="govuk-pagination__link-title">
-                          Next<span class="govuk-visually-hidden"> page</span>
-                        </span>
-                        <svg class="govuk-pagination__icon govuk-pagination__icon--next" xmlns="http://www.w3.org/2000/svg" height="13" width="15" aria-hidden="true" focusable="false" viewBox="0 0 15 13">
-                          <path d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"></path>
-                        </svg>
-                      </a>
-                    </div>
-                  
-                
-              </nav>
-            
+                </nav>
+              
+            </div>
+            <div class="govuk-grid-column-one-third">
+              <p class="pagination-results">
+                Showing <b>1</b> to <b>20</b> of
+                <b></b> results
+              </p>
+            </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <p class="pagination-results">Showing <b>1</b> to <b>20</b> of <b></b> results</p>
-          </div>
-        </div>
+        
 
         <section id="assign-case-control">
           <h3 class="govuk-heading-m">Assign a case</h3>
@@ -362,6 +383,22 @@ exports[`getView Happy path with default query params 1`] = `
   </body>
 </html>
 "
+`;
+
+exports[`getView shows error dialog for unassign 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 class="govuk-error-summary__title">There is a problem</h2>
+        <div class="govuk-error-summary__body">
+          <ul class="govuk-list govuk-error-summary__list">
+            <li><a href="#cases-table">Select at least one person in prison to assign/unassign</a></li>
+            <li><a href="#workerName">Select resettlement worker to assign to, or unassign</a></li>
+              
+            
+          </ul>
+        </div>
+      </div>
+    </div>"
 `;
 
 exports[`getView shows success dialog for assign 1`] = `

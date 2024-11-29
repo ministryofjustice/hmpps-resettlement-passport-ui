@@ -122,6 +122,22 @@ describe('getView', () => {
       })
     expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
   })
+
+  test('shows error dialog for unassign', async () => {
+    stubPrisonersCasesList(rpService)
+    stubAvailableResettlementWorkers()
+
+    await request(app)
+      .get('/assign-a-case')
+      .expect(200)
+      .query({
+        allocationErrors: ['noPrisonersSelected', 'noStaffSelected'],
+      })
+      .expect(res => {
+        const doc = parseHtmlDocument(res.text)
+        expect(doc.querySelector('.govuk-error-summary').outerHTML).toMatchSnapshot()
+      })
+  })
 })
 
 describe('post', () => {
@@ -258,8 +274,7 @@ describe('post', () => {
     const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(searchParams.get('allocationSuccess')).toBeFalsy()
-    expect(searchParams.get('noPrisonersSelected')).toEqual('true')
-    expect(searchParams.get('noStaffSelected')).toEqual('true')
+    expect(searchParams.getAll('allocationErrors')).toEqual(['noPrisonersSelected', 'noStaffSelected'])
 
     expect(rpService.unassignCaseAllocations).toHaveBeenCalledTimes(0)
     expect(rpService.postCaseAllocations).toHaveBeenCalledTimes(0)
@@ -270,8 +285,7 @@ describe('post', () => {
     const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(searchParams.get('allocationSuccess')).toBeFalsy()
-    expect(searchParams.get('noPrisonersSelected')).toEqual('true')
-    expect(searchParams.get('noStaffSelected')).toBeFalsy()
+    expect(searchParams.getAll('allocationErrors')).toEqual(['noPrisonersSelected'])
 
     expect(rpService.unassignCaseAllocations).toHaveBeenCalledTimes(0)
     expect(rpService.postCaseAllocations).toHaveBeenCalledTimes(0)
@@ -282,8 +296,7 @@ describe('post', () => {
     const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(searchParams.get('allocationSuccess')).toBeFalsy()
-    expect(searchParams.get('noStaffSelected')).toEqual('true')
-    expect(searchParams.get('noPrisonersSelected')).toBeFalsy()
+    expect(searchParams.getAll('allocationErrors')).toEqual(['noStaffSelected'])
 
     expect(rpService.unassignCaseAllocations).toHaveBeenCalledTimes(0)
     expect(rpService.postCaseAllocations).toHaveBeenCalledTimes(0)

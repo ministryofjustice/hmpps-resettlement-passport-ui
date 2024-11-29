@@ -15,8 +15,15 @@ export default class AssignCaseController {
     const pageSize = 20
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []
-    const { currentPage, allocationSuccess, allocatedCases, allocatedOtherCount, allocatedTo, isUnassign } =
-      req.query as AssignPageQuery
+    const {
+      currentPage,
+      allocationSuccess,
+      allocatedCases,
+      allocatedOtherCount,
+      allocatedTo,
+      isUnassign,
+      allocationErrors,
+    } = req.query as AssignPageQuery
 
     const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
     const listOfPrisonerCasesPromise = this.rpService.getListOfPrisonerCases(
@@ -39,11 +46,12 @@ export default class AssignCaseController {
       resettlementWorkers,
       errors,
       allocationSuccess,
-      allocatedCases: Array.isArray(allocatedCases) ? allocatedCases : [allocatedCases],
+      allocatedCases: queryParamToArray(allocatedCases),
       allocatedOtherCount,
       allocatedTo,
       isUnassign,
       pagination,
+      allocationErrors: queryParamToArray(allocationErrors),
     })
   }
 
@@ -53,7 +61,7 @@ export default class AssignCaseController {
       return res.redirect(`/assign-a-case?${errorParams}`)
     }
     const { currentPage, prisonerNumbers, worker } = req.body as AllocationRequestBody
-    const prisonersToAllocate = Array.isArray(prisonerNumbers) ? prisonerNumbers : [prisonerNumbers]
+    const prisonersToAllocate = queryParamToArray(prisonerNumbers)
 
     let params: ParsedUrlQueryInput
     if (worker === '_unassign') {
@@ -104,15 +112,15 @@ export default class AssignCaseController {
 
 function validateAssignSubmission(req: Request): string | null {
   const { currentPage, prisonerNumbers, worker } = req.body as AllocationRequestBody
-  const errors: AllocationRequestErrors = {}
+  const errors: string[] = []
   if (!prisonerNumbers) {
-    errors.noPrisonersSelected = true
+    errors.push('noPrisonersSelected')
   }
   if (!worker) {
-    errors.noStaffSelected = true
+    errors.push('noStaffSelected')
   }
-  if (Object.keys(errors).length > 0) {
-    return querystring.stringify({ ...errors, currentPage })
+  if (errors.length > 0) {
+    return querystring.stringify({ allocationErrors: errors, currentPage })
   }
   return null
 }
@@ -120,11 +128,13 @@ function validateAssignSubmission(req: Request): string | null {
 type AssignPageQuery = {
   currentPage: string
 
-  allocationSuccess: string
-  allocatedCases: string[] | string
-  allocatedOtherCount: string
-  allocatedTo: string
-  isUnassign: string
+  allocationSuccess?: string
+  allocatedCases?: string[] | string
+  allocatedOtherCount?: string
+  allocatedTo?: string
+  isUnassign?: string
+
+  allocationErrors?: string[]
 }
 
 type AllocationRequestBody = {
@@ -133,7 +143,9 @@ type AllocationRequestBody = {
   currentPage?: string
 }
 
-type AllocationRequestErrors = {
-  noPrisonersSelected?: boolean
-  noStaffSelected?: boolean
+function queryParamToArray(paramValue: string | string[]): string[] {
+  if (Array.isArray(paramValue)) {
+    return paramValue
+  }
+  return paramValue ? [paramValue] : []
 }
