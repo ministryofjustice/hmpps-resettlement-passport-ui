@@ -2,7 +2,7 @@ import View, { ErrorMessage } from '../view'
 import { WorkerList } from '../../data/model/resettlementWorker'
 
 export default class StaffCapacityView implements View {
-  constructor(private readonly workerList: WorkerList, private readonly errors: ErrorMessage[]) {
+  constructor(private readonly workerList: WorkerList) {
     // no op
   }
 
@@ -12,7 +12,7 @@ export default class StaffCapacityView implements View {
   } {
     return {
       workerList: this.workerList,
-      errors: this.errors.length !== 0 ? this.errors : null,
+      errors: null,
     }
   }
 }
