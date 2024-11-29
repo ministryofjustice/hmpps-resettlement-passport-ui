@@ -252,6 +252,42 @@ describe('post', () => {
       nomsIds: ['A8731DY', 'G4161UF', 'G5384GE'],
     })
   })
+
+  test('validation failure, missing prisoner number and staff id', async () => {
+    const res = await request(app).post('/assign-a-case').send({}).expect(302)
+    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    expect(pathname).toEqual('/assign-a-case')
+    expect(searchParams.get('allocationSuccess')).toBeFalsy()
+    expect(searchParams.get('noPrisonersSelected')).toEqual('true')
+    expect(searchParams.get('noStaffSelected')).toEqual('true')
+
+    expect(rpService.unassignCaseAllocations).toHaveBeenCalledTimes(0)
+    expect(rpService.postCaseAllocations).toHaveBeenCalledTimes(0)
+  })
+
+  test('validation failure, missing prisoner number', async () => {
+    const res = await request(app).post('/assign-a-case').send({ worker: '_unassign' }).expect(302)
+    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    expect(pathname).toEqual('/assign-a-case')
+    expect(searchParams.get('allocationSuccess')).toBeFalsy()
+    expect(searchParams.get('noPrisonersSelected')).toEqual('true')
+    expect(searchParams.get('noStaffSelected')).toBeFalsy()
+
+    expect(rpService.unassignCaseAllocations).toHaveBeenCalledTimes(0)
+    expect(rpService.postCaseAllocations).toHaveBeenCalledTimes(0)
+  })
+
+  test('validation failure, missing worker', async () => {
+    const res = await request(app).post('/assign-a-case').send({ prisonerNumbers: '123' }).expect(302)
+    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    expect(pathname).toEqual('/assign-a-case')
+    expect(searchParams.get('allocationSuccess')).toBeFalsy()
+    expect(searchParams.get('noStaffSelected')).toEqual('true')
+    expect(searchParams.get('noPrisonersSelected')).toBeFalsy()
+
+    expect(rpService.unassignCaseAllocations).toHaveBeenCalledTimes(0)
+    expect(rpService.postCaseAllocations).toHaveBeenCalledTimes(0)
+  })
 })
 
 function prisonerData(prisonerNumber: string, firstName: string, lastName: string): PrisonerData {

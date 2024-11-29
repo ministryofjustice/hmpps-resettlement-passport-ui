@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express'
+import { RequestHandler, Request } from 'express'
 import * as querystring from 'node:querystring'
 import { ParsedUrlQueryInput } from 'node:querystring'
 import RpService from '../../services/rpService'
@@ -15,20 +15,14 @@ export default class AssignCaseController {
     const pageSize = 20
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []
-    const {
-      currentPage = '0',
-      allocationSuccess,
-      allocatedCases,
-      allocatedOtherCount,
-      allocatedTo,
-      isUnassign,
-    } = req.query as AssignPageQuery
+    const { currentPage, allocationSuccess, allocatedCases, allocatedOtherCount, allocatedTo, isUnassign } =
+      req.query as AssignPageQuery
 
     const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
     const listOfPrisonerCasesPromise = this.rpService.getListOfPrisonerCases(
       userActiveCaseLoad.caseLoadId,
       includePastReleaseDates,
-      parseInt(currentPage, 10),
+      parseInt(currentPage || '0', 10),
       pageSize,
     )
     const [prisonersList, resettlementWorkers] = await Promise.all([
@@ -39,6 +33,7 @@ export default class AssignCaseController {
     const { page, totalElements } = prisonersList
     const totalPages = Math.ceil(totalElements / pageSize)
     const pagination = getPaginationPages(page, totalPages, pageSize, totalElements)
+
     return res.render('pages/assign-a-case', {
       prisonersList,
       resettlementWorkers,
@@ -53,10 +48,14 @@ export default class AssignCaseController {
   }
 
   assignCases: RequestHandler = async (req, res): Promise<void> => {
+    const errorParams = validateAssignSubmission(req)
+    if (errorParams) {
+      return res.redirect(`/assign-a-case?${errorParams}`)
+    }
     const { currentPage, prisonerNumbers, worker } = req.body as AllocationRequestBody
     const prisonersToAllocate = Array.isArray(prisonerNumbers) ? prisonerNumbers : [prisonerNumbers]
 
-    let params: ParsedUrlQueryInput = null
+    let params: ParsedUrlQueryInput
     if (worker === '_unassign') {
       await this.rpService.unassignCaseAllocations({
         nomsIds: prisonersToAllocate,
@@ -84,7 +83,7 @@ export default class AssignCaseController {
       }
     }
 
-    res.redirect(`/assign-a-case?${querystring.stringify(params)}`)
+    return res.redirect(`/assign-a-case?${querystring.stringify(params)}`)
   }
 
   private async buildAllocatedCasesParams(allocatedPrisoners: string[]) {
@@ -103,6 +102,21 @@ export default class AssignCaseController {
   }
 }
 
+function validateAssignSubmission(req: Request): string | null {
+  const { currentPage, prisonerNumbers, worker } = req.body as AllocationRequestBody
+  const errors: AllocationRequestErrors = {}
+  if (!prisonerNumbers) {
+    errors.noPrisonersSelected = true
+  }
+  if (!worker) {
+    errors.noStaffSelected = true
+  }
+  if (Object.keys(errors).length > 0) {
+    return querystring.stringify({ ...errors, currentPage })
+  }
+  return null
+}
+
 type AssignPageQuery = {
   currentPage: string
 
@@ -117,4 +131,9 @@ type AllocationRequestBody = {
   worker: string
   prisonerNumbers: string[] | string
   currentPage?: string
+}
+
+type AllocationRequestErrors = {
+  noPrisonersSelected?: boolean
+  noStaffSelected?: boolean
 }
