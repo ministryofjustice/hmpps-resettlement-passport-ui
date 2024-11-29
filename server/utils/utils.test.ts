@@ -25,6 +25,7 @@ import {
   isValidStatus,
   parseAssessmentType,
   isAdditionalDetails,
+  getPaginationPages,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -40,6 +41,7 @@ import {
 } from '../data/model/immediateNeedsReport'
 import { PersonalDetails, PrisonerData } from '../@types/express'
 import { AssessmentType } from '../data/model/assessmentInformation'
+import { Pagination } from '../data/model/pagination'
 
 describe('convert to title case', () => {
   it.each([
@@ -1216,4 +1218,116 @@ describe('isAdditionalDetails', () => {
   ])('isAdditionalDetail(%o) should be %s', (questionAndAnswer, result) => {
     expect(isAdditionalDetails(questionAndAnswer as CachedQuestionAndAnswer)).toEqual(result)
   })
+})
+describe('getPaginationPages', () => {
+  it.each([
+    [
+      'only enough results for one page, should not display pagination',
+      0, // currentPage
+      1, // totalPages
+      20, // pageSize
+      10, // totalElements (less than pageSize)
+      undefined, // pagesAroundCurrent
+      {
+        pages: null, // No pagination required
+        startItem: 1,
+        endItem: 10,
+      },
+    ],
+    [
+      'current page is 1 (index 0) of 5 pages (index 0 to 4)',
+      0, // currentPage (zero-based index)
+      5, // totalPages
+      20, // pageSize
+      96, // totalElements
+      undefined, // pagesAroundCurrent
+      {
+        pages: [
+          { pageType: 'number', pageNumber: 0, isCurrent: true },
+          { pageType: 'number', pageNumber: 1, isCurrent: false },
+          { pageType: 'ellipses', isCurrent: false },
+          { pageType: 'number', pageNumber: 4, isCurrent: false },
+          { pageType: 'next', pageNumber: 1, isCurrent: false },
+        ],
+        startItem: 1,
+        endItem: 20,
+      } as Pagination,
+    ],
+    [
+      'current page is 3 (index 2) of 5 pages (index 0 to 4)',
+      2, // currentPage
+      5, // totalPages
+      20, // pageSize
+      96, // totalElements
+      undefined, // pagesAroundCurrent
+      {
+        pages: [
+          { pageType: 'previous', pageNumber: 1, isCurrent: false },
+          { pageType: 'number', pageNumber: 0, isCurrent: false },
+          { pageType: 'number', pageNumber: 1, isCurrent: false },
+          { pageType: 'number', pageNumber: 2, isCurrent: true },
+          { pageType: 'number', pageNumber: 3, isCurrent: false },
+          { pageType: 'number', pageNumber: 4, isCurrent: false },
+          { pageType: 'next', pageNumber: 3, isCurrent: false },
+        ],
+        startItem: 41,
+        endItem: 60,
+      } as Pagination,
+    ],
+    [
+      'current page is 5 (index 4) of 5 pages (index 0 to 4)',
+      4, // currentPage
+      5, // totalPages
+      20, // pageSize
+      96, // totalElements
+      undefined, // pagesAroundCurrent
+      {
+        pages: [
+          { pageType: 'previous', pageNumber: 3, isCurrent: false },
+          { pageType: 'number', pageNumber: 0, isCurrent: false },
+          { pageType: 'ellipses', isCurrent: false },
+          { pageType: 'number', pageNumber: 3, isCurrent: false },
+          { pageType: 'number', pageNumber: 4, isCurrent: true },
+        ],
+        startItem: 81,
+        endItem: 96,
+      } as Pagination,
+    ],
+    [
+      'current page is 3 (index 2) of 10 pages (index 0 to 9) with 2 pages around current',
+      2, // currentPage
+      10, // totalPages
+      10, // pageSize
+      96, // totalElements
+      2, // pagesAroundCurrent
+      {
+        pages: [
+          { pageType: 'previous', pageNumber: 1, isCurrent: false },
+          { pageType: 'number', pageNumber: 0, isCurrent: false },
+          { pageType: 'number', pageNumber: 1, isCurrent: false },
+          { pageType: 'number', pageNumber: 2, isCurrent: true },
+          { pageType: 'number', pageNumber: 3, isCurrent: false },
+          { pageType: 'number', pageNumber: 4, isCurrent: false },
+          { pageType: 'ellipses', isCurrent: false },
+          { pageType: 'number', pageNumber: 9, isCurrent: false },
+          { pageType: 'next', pageNumber: 3, isCurrent: false },
+        ],
+        startItem: 21,
+        endItem: 30,
+      } as Pagination,
+    ],
+  ])(
+    '%s',
+    (
+      _description: string,
+      currentPage: number,
+      totalPages: number,
+      pageSize: number,
+      totalElements: number,
+      pagesAroundCurrent: number,
+      expected: Pagination,
+    ) => {
+      expect(getPaginationPages(currentPage, totalPages, pageSize, totalElements, pagesAroundCurrent)).toEqual(expected)
+    },
+  )
 })
