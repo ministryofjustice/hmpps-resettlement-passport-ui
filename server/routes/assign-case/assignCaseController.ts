@@ -1,10 +1,12 @@
-import { RequestHandler, Request } from 'express'
+import { Request, RequestHandler } from 'express'
 import * as querystring from 'node:querystring'
 import { ParsedUrlQueryInput } from 'node:querystring'
+import { isNumeric } from 'validator'
 import RpService from '../../services/rpService'
 import { ErrorMessage } from '../view'
-import { getFeatureFlagBoolean, toTitleCase, getPaginationPages } from '../../utils/utils'
+import { getFeatureFlagBoolean, getPaginationPages, toTitleCase } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import { CaseAllocationResponseItem } from '../../data/model/caseAllocation'
 
 export default class AssignCaseController {
   constructor(private readonly rpService: RpService) {
@@ -60,11 +62,11 @@ export default class AssignCaseController {
     if (errorParams) {
       return res.redirect(`/assign-a-case?${errorParams}`)
     }
-    const { currentPage, prisonerNumbers, worker } = req.body as AllocationRequestBody
+    const { currentPage, prisonerNumbers, staffId } = req.body as AllocationRequestBody
     const prisonersToAllocate = queryParamToArray(prisonerNumbers)
 
     let params: ParsedUrlQueryInput
-    if (worker === '_unassign') {
+    if (staffId === '_unassign') {
       await this.rpService.unassignCaseAllocations({
         nomsIds: prisonersToAllocate,
       })
@@ -74,19 +76,19 @@ export default class AssignCaseController {
         currentPage,
       }
     } else {
-      const workerDetails = JSON.parse(worker)
-      const { staffId, firstName, lastName } = workerDetails
-
-      await this.rpService.postCaseAllocations({
+      const response: CaseAllocationResponseItem[] = await this.rpService.postCaseAllocations({
         nomsIds: prisonersToAllocate,
-        staffId,
-        staffFirstName: firstName,
-        staffLastName: lastName,
+        staffId: Number(staffId),
         prisonId: res.locals.userActiveCaseLoad?.caseLoadId,
       })
+      if (response.length === 0) {
+        throw new Error('Unexpected response with 0 allocations')
+      }
+      const { staffFirstname, staffLastname } = response[0]
+
       params = {
         ...(await this.buildAllocatedCasesParams(prisonersToAllocate)),
-        allocatedTo: `${firstName} ${lastName}`,
+        allocatedTo: `${staffFirstname} ${staffLastname}`,
         currentPage,
       }
     }
@@ -110,13 +112,17 @@ export default class AssignCaseController {
   }
 }
 
+function validStaffId(staffId: string) {
+  return staffId === '_unassign' || isNumeric(staffId, { no_symbols: true })
+}
+
 function validateAssignSubmission(req: Request): string | null {
-  const { currentPage, prisonerNumbers, worker } = req.body as AllocationRequestBody
+  const { currentPage, prisonerNumbers, staffId } = req.body as AllocationRequestBody
   const errors: string[] = []
   if (!prisonerNumbers) {
     errors.push('noPrisonersSelected')
   }
-  if (!worker) {
+  if (!staffId || !validStaffId(staffId)) {
     errors.push('noStaffSelected')
   }
   if (errors.length > 0) {
@@ -138,7 +144,7 @@ type AssignPageQuery = {
 }
 
 type AllocationRequestBody = {
-  worker: string
+  staffId: string
   prisonerNumbers: string[] | string
   currentPage?: string
 }

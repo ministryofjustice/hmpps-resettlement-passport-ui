@@ -203,8 +203,6 @@ describe('RpService', () => {
     const body = {
       staffId: 123,
       nomsIds: ['ABC'],
-      staffFirstName: 'first',
-      staffLastName: 'last',
       prisonId: 'prison',
     }
     const result = await service.postCaseAllocations(body)

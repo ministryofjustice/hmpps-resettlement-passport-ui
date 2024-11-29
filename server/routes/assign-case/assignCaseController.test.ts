@@ -143,14 +143,14 @@ describe('getView', () => {
 describe('post', () => {
   test('successfully assign a single case', async () => {
     rpService.postCaseAllocations.mockResolvedValue([
-      { nomsId: 'A8731DY', staffId: 123, staffFirstName: 'First', staffLastName: 'Last' },
+      { nomsId: 'A8731DY', staffId: 123, staffFirstname: 'First', staffLastname: 'Last' },
     ])
 
     const res = await request(app)
       .post('/assign-a-case')
       .send({
         prisonerNumbers: 'A8731DY',
-        worker: JSON.stringify({ staffId: 123, firstName: 'First', lastName: 'Last' }),
+        staffId: '123',
       })
       .expect(302)
 
@@ -164,16 +164,14 @@ describe('post', () => {
       prisonId: 'MDI',
       nomsIds: ['A8731DY'],
       staffId: 123,
-      staffFirstName: 'First',
-      staffLastName: 'Last',
     })
   })
 
   test('successfully assign a multiple cases', async () => {
     rpService.postCaseAllocations.mockResolvedValue([
-      { nomsId: 'A8731DY', staffId: 123, staffFirstName: 'First', staffLastName: 'Last' },
-      { nomsId: 'G4161UF', staffId: 123, staffFirstName: 'First', staffLastName: 'Last' },
-      { nomsId: 'G4161UF', staffId: 123, staffFirstName: 'First', staffLastName: 'Last' },
+      { nomsId: 'A8731DY', staffId: 123, staffFirstname: 'First', staffLastname: 'Last' },
+      { nomsId: 'G4161UF', staffId: 123, staffFirstname: 'First', staffLastname: 'Last' },
+      { nomsId: 'G4161UF', staffId: 123, staffFirstname: 'First', staffLastname: 'Last' },
     ])
     rpService.getPrisonerDetails
       .mockResolvedValueOnce(prisonerData('A1234DY', 'John', 'Smith'))
@@ -184,7 +182,7 @@ describe('post', () => {
       .post('/assign-a-case')
       .send({
         prisonerNumbers: ['A8731DY', 'G4161UF', 'G5384GE'],
-        worker: JSON.stringify({ staffId: 123, firstName: 'First', lastName: 'Last' }),
+        staffId: '123',
       })
       .expect(302)
 
@@ -202,8 +200,6 @@ describe('post', () => {
       prisonId: 'MDI',
       nomsIds: ['A8731DY', 'G4161UF', 'G5384GE'],
       staffId: 123,
-      staffFirstName: 'First',
-      staffLastName: 'Last',
     })
   })
 
@@ -214,7 +210,7 @@ describe('post', () => {
       .post('/assign-a-case')
       .send({
         prisonerNumbers: ['A8731DY', 'G4161UF', 'G5384GE'],
-        worker: JSON.stringify({ staffId: 123, firstName: 'First', lastName: 'Last' }),
+        staffId: 123,
       })
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
@@ -225,7 +221,7 @@ describe('post', () => {
       .post('/assign-a-case')
       .send({
         prisonerNumbers: 'A8731DY',
-        worker: '_unassign',
+        staffId: '_unassign',
       })
       .expect(302)
 
@@ -250,7 +246,7 @@ describe('post', () => {
       .post('/assign-a-case')
       .send({
         prisonerNumbers: ['A8731DY', 'G4161UF', 'G5384GE'],
-        worker: '_unassign',
+        staffId: '_unassign',
       })
       .expect(302)
 
@@ -281,7 +277,7 @@ describe('post', () => {
   })
 
   test('validation failure, missing prisoner number', async () => {
-    const res = await request(app).post('/assign-a-case').send({ worker: '_unassign' }).expect(302)
+    const res = await request(app).post('/assign-a-case').send({ staffId: '_unassign' }).expect(302)
     const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(searchParams.get('allocationSuccess')).toBeFalsy()

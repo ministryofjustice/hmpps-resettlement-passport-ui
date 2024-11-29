@@ -238,10 +238,10 @@
             <div class="govuk-grid-column-one-third">
               <div class="govuk-form-group">
                 <label class="govuk-label" for="workerName">Resettlement worker</label>
-                <select class="govuk-select" id="workerName" name="worker" required>
+                <select class="govuk-select" id="workerName" name="staffId" required>
                   <option value="">Choose a resettlement worker</option>
                   {%- for worker in resettlementWorkers -%}
-                    <option value="{{ worker | dump }}">{{ worker.firstName }} {{ worker.lastName }}</option>
+                    <option value="{{ worker.staffId }}">{{ worker.firstName }} {{ worker.lastName }}</option>
                   {% endfor %}
                   <option value="_unassign">Unassign</option>
                 </select>

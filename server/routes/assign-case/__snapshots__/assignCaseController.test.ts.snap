@@ -350,9 +350,9 @@ exports[`getView Happy path with default query params 1`] = `
             <div class="govuk-grid-column-one-third">
               <div class="govuk-form-group">
                 <label class="govuk-label" for="workerName">Resettlement worker</label>
-                <select class="govuk-select" id="workerName" name="worker" required>
-                  <option value="">Choose a resettlement worker</option><option value="{&quot;staffId&quot;:1,&quot;firstName&quot;:&quot;Staff1First&quot;,&quot;lastName&quot;:&quot;Staff1Last&quot;}">Staff1First Staff1Last</option>
-                  <option value="{&quot;staffId&quot;:2,&quot;firstName&quot;:&quot;Staff2First&quot;,&quot;lastName&quot;:&quot;Staff2Last&quot;}">Staff2First Staff2Last</option>
+                <select class="govuk-select" id="workerName" name="staffId" required>
+                  <option value="">Choose a resettlement worker</option><option value="1">Staff1First Staff1Last</option>
+                  <option value="2">Staff2First Staff2Last</option>
                   
                   <option value="_unassign">Unassign</option>
                 </select>
