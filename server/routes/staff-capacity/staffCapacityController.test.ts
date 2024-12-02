@@ -50,7 +50,7 @@ describe('getView', () => {
           staffId: '1',
           firstName: 'Joe',
           lastName: 'Bloggs',
-          count: 10,
+          casesAssigned: 10,
         },
       ],
       unassignedCount: 1,
