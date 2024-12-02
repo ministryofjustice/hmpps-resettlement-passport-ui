@@ -1,5 +1,4 @@
 import { Request, type RequestHandler, Response, Router } from 'express'
-import { isAlphanumeric } from 'validator'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import staffDashboard from './staffDashboard'
@@ -32,7 +31,6 @@ import staffCapacityRouter from './staff-capacity'
 
 export default function routes(services: Services): Router {
   const router = Router()
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
 
   const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(configMiddleware())
