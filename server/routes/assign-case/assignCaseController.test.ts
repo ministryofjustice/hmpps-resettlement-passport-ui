@@ -82,6 +82,19 @@ describe('getView', () => {
     expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
   })
 
+  test('Should show message that assignments cannot be made with no resettlement workers available', async () => {
+    stubPrisonersCasesList(rpService)
+    rpService.getAvailableResettlementWorkers.mockResolvedValue([])
+
+    await request(app)
+      .get('/assign-a-case')
+      .expect(200)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(document.getElementById('assign-case-control')).toMatchSnapshot()
+      })
+  })
+
   test('shows success dialog for assign', async () => {
     const getPrisonerListSpy = stubPrisonersCasesList(rpService)
     stubAvailableResettlementWorkers()

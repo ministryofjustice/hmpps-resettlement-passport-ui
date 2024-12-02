@@ -339,9 +339,8 @@ exports[`getView Happy path with default query params 1`] = `
 
         <section id="assign-case-control">
           <h3 class="govuk-heading-m">Assign a case</h3>
-          <p>
-            Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them to.
-          </p>
+          <p>Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them
+              to.</p>
           <p>
             Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
             service for them to appear in this list.
@@ -386,6 +385,101 @@ exports[`getView Happy path with default query params 1`] = `
   </body>
 </html>
 "
+`;
+
+exports[`getView Should show message that assignments cannot be made with no resettlement workers available 1`] = `
+<section
+  id="assign-case-control"
+>
+  
+          
+  <h3
+    class="govuk-heading-m"
+  >
+    Assign a case
+  </h3>
+  
+          
+  <p>
+    You cannot assign a case as no staff have been assigned to the resettlement worker role.
+  </p>
+  
+          
+  <p>
+    
+            Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
+            service for them to appear in this list.
+          
+  </p>
+  
+          
+  <div
+    class="govuk-grid-row"
+  >
+    
+            
+    <div
+      class="govuk-grid-column-one-third"
+    >
+      
+              
+      <div
+        class="govuk-form-group"
+      >
+        
+                
+        <label
+          class="govuk-label"
+          for="workerName"
+        >
+          Resettlement worker
+        </label>
+        
+                
+        <select
+          class="govuk-select"
+          id="workerName"
+          name="staffId"
+          required=""
+        >
+          
+                  
+          <option
+            value=""
+          >
+            Choose a resettlement worker
+          </option>
+          
+                  
+          <option
+            value="_unassign"
+          >
+            Unassign
+          </option>
+          
+                
+        </select>
+        
+              
+      </div>
+      
+              
+      <button
+        class="govuk-button"
+        data-prevent-double-click="true"
+        type="submit"
+      >
+        Assign
+      </button>
+      
+            
+    </div>
+    
+          
+  </div>
+  
+        
+</section>
 `;
 
 exports[`getView shows error dialog for unassign 1`] = `

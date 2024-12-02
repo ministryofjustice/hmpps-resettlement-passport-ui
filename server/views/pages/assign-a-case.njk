@@ -228,7 +228,12 @@
         <section id="assign-case-control">
           <h3 class="govuk-heading-m">Assign a case</h3>
           <p>
-            Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them to.
+            {%- if resettlementWorkers.length > 0 -%}
+              Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them
+              to.
+            {%- else -%}
+              You cannot assign a case as no staff have been assigned to the resettlement worker role.
+            {%- endif -%}
           </p>
           <p>
             Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
