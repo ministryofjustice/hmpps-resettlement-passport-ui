@@ -91,7 +91,7 @@ describe('getView', () => {
       .expect(200)
       .expect(res => {
         const document = parseHtmlDocument(res.text)
-        expect(document.getElementById('assign-case-control')).toMatchSnapshot()
+        expect(document.getElementById('assign-case-control').outerHTML).toMatchSnapshot()
       })
   })
 
