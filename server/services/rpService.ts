@@ -22,6 +22,12 @@ import { currentUser } from '../middleware/userContextMiddleware'
 import { getFeatureFlagBoolean } from '../utils/utils'
 import { ResetReason } from '../data/model/resetProfile'
 import { BankApplicationResponse, IdApplication, IdApplicationResponse } from '../data/model/financeId'
+import { ResettlementWorker } from '../data/model/resettlementWorkers'
+import {
+  CaseAllocationRequestBody,
+  CaseAllocationResponseItem,
+  CaseAllocationUnassignRequestBody,
+} from '../data/model/caseAllocation'
 import { WorkerList } from '../data/model/resettlementWorker'
 
 export default class RpService {
@@ -60,6 +66,10 @@ export default class RpService {
     return this.createClient().get<PrisonersList>(
       `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&includePastReleaseDates=${includePastReleaseDates}`,
     )
+  }
+
+  async getAvailableResettlementWorkers(prisonId: string): Promise<ResettlementWorker[]> {
+    return this.createClient().get<ResettlementWorker[]>(`/resettlement-passport/workers?prisonId=${prisonId}`)
   }
 
   createClient() {
@@ -478,12 +488,12 @@ export default class RpService {
     )
   }
 
-  async postWatchlist(prisonerNumber: string) {
-    return this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/watch`, null)
+  async postWatchlist(prisonerNumber: string): Promise<void> {
+    await this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/watch`, null)
   }
 
-  async deleteWatchlist(prisonerNumber: string) {
-    return this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/watch`)
+  async deleteWatchlist(prisonerNumber: string): Promise<void> {
+    await this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/watch`)
   }
 
   getPrisonerOverviewPageData(
@@ -508,6 +518,14 @@ export default class RpService {
         .get(`/resettlement-passport/prisoner/${prisonerNumber}/appointments`)
         .then((a: Appointments) => a.results),
     ]
+  }
+
+  async postCaseAllocations(caseAllocations: CaseAllocationRequestBody): Promise<CaseAllocationResponseItem[]> {
+    return this.createClient().post(`/resettlement-passport/workers/cases`, caseAllocations)
+  }
+
+  async unassignCaseAllocations(caseAllocations: CaseAllocationUnassignRequestBody): Promise<void> {
+    await this.createClient().patch(`/resettlement-passport/workers/cases`, caseAllocations)
   }
 
   async getAssignedWorkerList(prisonId: string) {

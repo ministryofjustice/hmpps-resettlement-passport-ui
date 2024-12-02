@@ -681,3 +681,7 @@ export function expectPrisonerNotFoundPage(res: supertest.Response) {
   const document = parseHtmlDocument(res.text)
   expect(pageHeading(document)).toEqual('No data found for prisoner')
 }
+
+export function redirectedToPath(res: supertest.Response): string {
+  return res.headers.location
+}

@@ -77,9 +77,16 @@ export function appWithAllRoutes({
   return appSetup(services, production, userSupplier)
 }
 
-const rpService = jest.mocked(new RpService())
-export const mockedServices: Services = {
-  rpService,
+jest.mock('../../services/rpService')
+jest.mock('../../utils/analytics')
+jest.mock('../../services/userService')
+jest.mock('../../services/componentService')
+jest.mock('../../services/documentService')
+jest.mock('../../data/assessmentStateService')
+const rpService = new RpService()
+
+export const mockedServices = {
+  rpService: jest.mocked(rpService),
   prisonerDetailsService: jest.mocked(new PrisonerDetailsService(rpService)),
   appInsightsService: jest.mocked(new AppInsightsService(null)),
   userService: jest.mocked(new UserService()),

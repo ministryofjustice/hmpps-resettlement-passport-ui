@@ -29,8 +29,8 @@ export default class RPClient {
     })
   }
 
-  async post(path: string, body: Record<never, never>) {
-    return this.restClient.post({
+  async post<T = unknown>(path: string, body: Record<never, never>) {
+    return this.restClient.post<T>({
       path,
       data: body,
     })

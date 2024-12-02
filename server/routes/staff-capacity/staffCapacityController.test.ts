@@ -19,34 +19,32 @@ afterEach(() => {
 
 describe('getView', () => {
   it('Error case - rpService throws error', async () => {
-    const getWorkerListSpy = jest
-      .spyOn(rpService, 'getAssignedWorkerList')
-      .mockRejectedValue(new Error('Something went wrong'))
+    rpService.getAssignedWorkerList.mockRejectedValue(new Error('Something went wrong'))
 
     await request(app)
       .get('/staff-capacity')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getWorkerListSpy).toHaveBeenCalledWith('MDI')
+    expect(rpService.getAssignedWorkerList).toHaveBeenCalledWith('MDI')
   })
 
   it('Error case - rpService throws 404 error', async () => {
     const error = new Error('not found') as Error & { status?: number }
     error.status = 404
 
-    const getWorkerListSpy = jest.spyOn(rpService, 'getAssignedWorkerList').mockRejectedValue(error)
+    rpService.getAssignedWorkerList.mockRejectedValue(error)
 
     await request(app)
       .get('/staff-capacity')
       .expect(404)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getWorkerListSpy).toHaveBeenCalledWith('MDI')
+    expect(rpService.getAssignedWorkerList).toHaveBeenCalledWith('MDI')
   })
 
   it('Happy path', async () => {
-    const getWorkerListSpy = jest.spyOn(rpService, 'getAssignedWorkerList').mockResolvedValue({
+    rpService.getAssignedWorkerList.mockResolvedValue({
       assignedList: [
         {
           staffId: '1',
@@ -63,11 +61,11 @@ describe('getView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getWorkerListSpy).toHaveBeenCalledWith('MDI')
+    expect(rpService.getAssignedWorkerList).toHaveBeenCalledWith('MDI')
   })
 
   it('Happy path empty list', async () => {
-    const getWorkerListSpy = jest.spyOn(rpService, 'getAssignedWorkerList').mockResolvedValue({
+    rpService.getAssignedWorkerList.mockResolvedValue({
       assignedList: [],
       unassignedCount: 10,
     })
@@ -77,6 +75,6 @@ describe('getView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getWorkerListSpy).toHaveBeenCalledWith('MDI')
+    expect(rpService.getAssignedWorkerList).toHaveBeenCalledWith('MDI')
   })
 })

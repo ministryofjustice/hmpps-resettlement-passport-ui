@@ -5,9 +5,10 @@ import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper } from '../configHelperTest'
 import { expectPrisonerNotFoundPage, expectSomethingWentWrongPage, stubPrisonerDetails } from '../testutils/testUtils'
+import { Services } from '../../services'
 
 let app: Express
-const { rpService, appInsightsService } = mockedServices
+const { rpService, appInsightsService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 

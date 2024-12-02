@@ -1,11 +1,12 @@
 import { RequestHandler } from 'express'
 import logger from '../../../logger'
 import { ERROR_DICTIONARY } from '../../utils/constants'
-import DocumentService, { DocumentMeta } from '../../services/documentService'
+import DocumentService from '../../services/documentService'
 import RpService from '../../services/rpService'
 import { Appointment } from '../../data/model/appointment'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { DocumentMeta } from '../../data/model/documents'
 
 export default class PrisonerOverviewController {
   constructor(

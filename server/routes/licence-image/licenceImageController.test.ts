@@ -4,9 +4,10 @@ import Config from '../../s3Config'
 import { expectSomethingWentWrongPage, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
+import { Services } from '../../services'
 
 let app: Express
-const { rpService } = mockedServices
+const { rpService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 
 beforeEach(() => {

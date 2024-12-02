@@ -5,9 +5,10 @@ import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutil
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
+import { Services } from '../../services'
 
 let app: Express
-const { rpService } = mockedServices
+const { rpService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 

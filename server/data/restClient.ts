@@ -97,14 +97,14 @@ export default class RestClient {
     }
   }
 
-  async post({
+  async post<T = unknown>({
     path = null,
     headers = {},
     responseType = '',
     data = {},
     raw = false,
     retry = false,
-  }: PostRequest = {}): Promise<unknown> {
+  }: PostRequest = {}): Promise<T> {
     try {
       if (this.userId) {
         logger.info(`User: ${this.userId} Session: ${this.sessionId} making POST request to ${path}`)
