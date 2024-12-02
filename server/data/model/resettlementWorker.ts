@@ -7,5 +7,5 @@ type ResettlementWorker = {
   staffId: string
   firstName: string
   lastName: string
-  count: number
+  casesAssigned: number
 }
