@@ -66,19 +66,6 @@ export default function routes(services: Services): Router {
   /* ************************************
     REFACTOR USING prisonerOverviewRouter 
   ************************************** */
-  // RP2-622 Temporary redirect for access from Delius
-  get('/resettlement', (req, res, next) => {
-    try {
-      const { noms } = req.query
-      if (noms && isAlphanumeric(noms as string)) {
-        res.redirect(`/prisoner-overview/?prisonerNumber=${noms}`)
-      } else {
-        next()
-      }
-    } catch (err) {
-      next(err)
-    }
-  })
   use('/add-case-note', async (req: Request, res: Response) => {
     const prisonerData = await services.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
     res.render('pages/add-case-note', {
