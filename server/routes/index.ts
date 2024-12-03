@@ -1,5 +1,4 @@
-import { Request, type RequestHandler, Response, Router } from 'express'
-import asyncMiddleware from '../middleware/asyncMiddleware'
+import { Router } from 'express'
 import type { Services } from '../services'
 import staffDashboard from './staffDashboard'
 import attitudesThinkingBehaviourRouter from './attitudes-thinking-behaviour'
@@ -28,11 +27,10 @@ import financeIdBankAccountRouter from './finance-id-bank-account'
 import serviceUpdates from './service-updates'
 import assignCaseRouter from './assign-case'
 import staffCapacityRouter from './staff-capacity'
+import caseNoteRouter from './case-note'
 
 export default function routes(services: Services): Router {
   const router = Router()
-
-  const use = (path: string | string[], handler: RequestHandler) => router.use(path, asyncMiddleware(handler))
   router.use(configMiddleware())
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
@@ -60,16 +58,6 @@ export default function routes(services: Services): Router {
   serviceUpdates(router)
   assignCaseRouter(router, services)
   staffCapacityRouter(router, services)
-
-  /* ************************************
-    REFACTOR USING prisonerOverviewRouter 
-  ************************************** */
-  use('/add-case-note', async (req: Request, res: Response) => {
-    const prisonerData = await services.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
-    res.render('pages/add-case-note', {
-      prisonerData,
-    })
-  })
-
+  caseNoteRouter(router, services)
   return router
 }
