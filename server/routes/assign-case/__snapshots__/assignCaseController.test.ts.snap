@@ -160,7 +160,7 @@ exports[`Happy path with filter parameters 1`] = `
     </ul>
     <div class="govuk-tabs__panel">
       <div class="filters govuk-!-margin-bottom-4" id="assignFilter">
-        <form action="/#assignFilter" method="GET" novalidate>
+        <form action="/assign-a-case#assignFilter" method="GET" novalidate>
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full" >
               <div class="govuk-grid-column-full">
@@ -594,7 +594,7 @@ exports[`getView Happy path with default query params 1`] = `
     </ul>
     <div class="govuk-tabs__panel">
       <div class="filters govuk-!-margin-bottom-4" id="assignFilter">
-        <form action="/#assignFilter" method="GET" novalidate>
+        <form action="/assign-a-case#assignFilter" method="GET" novalidate>
           <div class="govuk-grid-row">
             <div class="govuk-grid-column-full" >
               <div class="govuk-grid-column-full">
