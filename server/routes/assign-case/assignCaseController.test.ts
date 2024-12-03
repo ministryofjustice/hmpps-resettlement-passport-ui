@@ -49,13 +49,27 @@ function stubAvailableResettlementWorkers() {
 
 describe('getView', () => {
   it('Error case - rpService throws error getting prisoner list', async () => {
-    rpService.getListOfPrisonerCases.mockRejectedValue(new Error('Something went wrong'))
+    rpService.getListOfPrisoners.mockRejectedValue(new Error('Something went wrong'))
 
     await request(app)
       .get('/assign-a-case')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
-    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
+    expect(rpService.getListOfPrisoners).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      '',
+      true,
+      '',
+    )
   })
 
   it('Error case - rpService throws error getting resettlement workers', async () => {
@@ -66,7 +80,21 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
-    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
+    expect(rpService.getListOfPrisoners).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      '',
+      true,
+      '',
+    )
 
     expect(rpService.getAvailableResettlementWorkers).toHaveBeenCalledWith('MDI')
   })
@@ -79,7 +107,21 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      '',
+      true,
+      '',
+    )
   })
 
   test('Should show message that assignments cannot be made with no resettlement workers available', async () => {
@@ -112,7 +154,21 @@ describe('getView', () => {
         const doc = parseHtmlDocument(res.text)
         expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
       })
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      '',
+      true,
+      '',
+    )
   })
 
   test('shows success dialog for unassign', async () => {
@@ -133,7 +189,21 @@ describe('getView', () => {
         const doc = parseHtmlDocument(res.text)
         expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
       })
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      '',
+      true,
+      '',
+    )
   })
 
   test('shows error dialog for unassign', async () => {
@@ -310,6 +380,36 @@ describe('post', () => {
     expect(rpService.unassignCaseAllocations).toHaveBeenCalledTimes(0)
     expect(rpService.postCaseAllocations).toHaveBeenCalledTimes(0)
   })
+})
+
+it('Happy path with filter parameters', async () => {
+  const getPrisonerListSpy = stubPrisonersCasesList(rpService)
+  stubAvailableResettlementWorkers()
+
+  await request(app)
+    .get('/assign-a-case')
+    .query({
+      searchInput: 'smith',
+      releaseTime: '84',
+      workerId: '1',
+    })
+    .expect(200)
+    .expect(res => expect(res.text).toMatchSnapshot())
+  expect(getPrisonerListSpy).toHaveBeenCalledWith(
+    'MDI',
+    0,
+    20,
+    'releaseDate',
+    'ASC',
+    'smith',
+    '84',
+    '',
+    '',
+    '',
+    '',
+    true,
+    '1',
+  )
 })
 
 function prisonerData(prisonerNumber: string, firstName: string, lastName: string): PrisonerData {

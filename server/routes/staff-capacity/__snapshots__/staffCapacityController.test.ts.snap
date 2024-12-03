@@ -528,7 +528,7 @@ exports[`getView Happy path 1`] = `
                     <span class="no-wrap">10</span>
                 </td>
                 <td class="govuk-table__cell">
-                    <a href="/assign-a-case">View assigned prisoners</a>
+                    <a href="/assign-a-case?workerId=1">View assigned prisoners</a>
                 </td>
               </tr>
             
@@ -540,7 +540,7 @@ exports[`getView Happy path 1`] = `
                     <span class="no-wrap">1</span>
                 </td>
                 <td class="govuk-table__cell">
-                    <a href="/assign-a-case">View unassigned prisoners</a>
+                    <a href="/assign-a-case?workerId=none">View unassigned prisoners</a>
                 </td>
               </tr>
           </tbody>
@@ -754,7 +754,7 @@ exports[`getView Happy path empty list 1`] = `
                     <span class="no-wrap">10</span>
                 </td>
                 <td class="govuk-table__cell">
-                    <a href="/assign-a-case">View unassigned prisoners</a>
+                    <a href="/assign-a-case?workerId=none">View unassigned prisoners</a>
                 </td>
               </tr>
           </tbody>
