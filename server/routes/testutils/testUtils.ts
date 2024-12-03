@@ -179,7 +179,7 @@ export function stubPrisonersCasesList(rpService: RpService) {
     totalElements: 92,
     last: false,
   }
-  return jest.spyOn(rpService, 'getListOfPrisonerCases').mockResolvedValue(prisonerList)
+  return jest.spyOn(rpService, 'getListOfPrisoners').mockResolvedValue(prisonerList)
 }
 
 export function sanitiseStackTrace(html: string) {

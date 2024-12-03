@@ -48,12 +48,13 @@ export default class RpService {
     assessmentRequired: string,
     watchList: string,
     includePastReleaseDates: boolean,
+    workerId: string = '',
   ) {
     // If pathwayView is set then set assessmentRequired to blank
     const assessmentRequiredValue = !pathwayView ? assessmentRequired : ''
 
     return this.createClient().get<PrisonersList>(
-      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&assessmentRequired=${assessmentRequiredValue}&watchList=${watchList}&includePastReleaseDates=${includePastReleaseDates}`,
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&assessmentRequired=${assessmentRequiredValue}&watchList=${watchList}&includePastReleaseDates=${includePastReleaseDates}&workerId=${workerId}`,
     )
   }
 

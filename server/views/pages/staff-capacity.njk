@@ -40,7 +40,7 @@
                     <span class="no-wrap">{{ worker.casesAssigned }}</span>
                 </td>
                 <td class="govuk-table__cell">
-                    <a href="/assign-a-case">View assigned prisoners</a>
+                    <a href="/assign-a-case?workerId={{ worker.staffId }}">View assigned prisoners</a>
                 </td>
               </tr>
             {% endfor %}
@@ -52,7 +52,7 @@
                     <span class="no-wrap">{{ workerList.unassignedCount }}</span>
                 </td>
                 <td class="govuk-table__cell">
-                    <a href="/assign-a-case">View unassigned prisoners</a>
+                    <a href="/assign-a-case?workerId=none">View unassigned prisoners</a>
                 </td>
               </tr>
           </tbody>
