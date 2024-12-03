@@ -55,7 +55,7 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
-    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true, 0, 20)
+    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
   })
 
   it('Error case - rpService throws error getting resettlement workers', async () => {
@@ -66,7 +66,7 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
-    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true, 0, 20)
+    expect(rpService.getListOfPrisonerCases).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
 
     expect(rpService.getAvailableResettlementWorkers).toHaveBeenCalledWith('MDI')
   })
@@ -79,7 +79,7 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
   })
 
   test('Should show message that assignments cannot be made with no resettlement workers available', async () => {
@@ -112,7 +112,7 @@ describe('getView', () => {
         const doc = parseHtmlDocument(res.text)
         expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
       })
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
   })
 
   test('shows success dialog for unassign', async () => {
@@ -133,7 +133,7 @@ describe('getView', () => {
         const doc = parseHtmlDocument(res.text)
         expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
       })
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', true, 0, 20, 'releaseDate', 'ASC')
   })
 
   test('shows error dialog for unassign', async () => {

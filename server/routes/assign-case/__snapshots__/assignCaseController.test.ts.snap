@@ -172,10 +172,14 @@ exports[`getView Happy path with default query params 1`] = `
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="col" id="select-all"></th>
                 <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
-                  <button type="button">Name</button>
+                  <a aria-sort="none" href="/assign-a-case/?sortField=name&sortDirection=ASC">
+                    <button type="button">Name</button>
+                  </a>
                 </th>
                 <th scope="col" class="govuk-table__header" data-column="release" aria-sort="none">
-                  <button type="button">Release date</button>
+                  <a aria-sort="ascending" href="/assign-a-case/?sortField=releaseDate&sortDirection=DESC">
+                    <button type="button">Release date</button>
+                  </a>
                 </th>
                 <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
                   <button type="button">Assigned resettlement worker</button>
@@ -246,7 +250,7 @@ exports[`getView Happy path with default query params 1`] = `
                         <li class="govuk-pagination__item govuk-pagination__item--current">
                           <a
                             class="govuk-link govuk-pagination__link"
-                            href="/assign-a-case?currentPage=0"
+                            href="/assign-a-case?currentPage=0&sortField=releaseDate&sortDirection=ASC"
                             aria-label="Page 1"
                           >
                             1
@@ -259,7 +263,7 @@ exports[`getView Happy path with default query params 1`] = `
                         <li class="govuk-pagination__item ">
                           <a
                             class="govuk-link govuk-pagination__link"
-                            href="/assign-a-case?currentPage=1"
+                            href="/assign-a-case?currentPage=1&sortField=releaseDate&sortDirection=ASC"
                             aria-label="Page 2"
                           >
                             2
@@ -277,7 +281,7 @@ exports[`getView Happy path with default query params 1`] = `
                         <li class="govuk-pagination__item ">
                           <a
                             class="govuk-link govuk-pagination__link"
-                            href="/assign-a-case?currentPage=4"
+                            href="/assign-a-case?currentPage=4&sortField=releaseDate&sortDirection=ASC"
                             aria-label="Page 5"
                           >
                             5
@@ -302,7 +306,7 @@ exports[`getView Happy path with default query params 1`] = `
                       <div class="govuk-pagination__next">
                         <a
                           class="govuk-link govuk-pagination__link"
-                          href="/assign-a-case?currentPage=1"
+                          href="/assign-a-case?currentPage=1&sortField=releaseDate&sortDirection=ASC"
                           rel="next"
                         >
                           <span class="govuk-pagination__link-title">
