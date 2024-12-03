@@ -4,6 +4,6 @@ import ServiceUpdatesController from './serviceUpdatesController'
 export default (router: Router) => {
   const serviceUpdatesController = new ServiceUpdatesController()
 
-  router.get('/service-updates', serviceUpdatesController.getView)
-  router.get('/service-updates/:page', serviceUpdatesController.getView)
+  router.get('/service-updates', serviceUpdatesController.getServiceUpdatesView)
+  router.get('/service-updates/:page', serviceUpdatesController.getServiceUpdatesDetailsView)
 }
