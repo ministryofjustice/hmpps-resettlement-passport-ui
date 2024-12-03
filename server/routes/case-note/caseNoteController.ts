@@ -1,10 +1,9 @@
 import { RequestHandler } from 'express'
-import RpService from '../../services/rpService'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 
 export default class CaseNoteController {
-  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
+  constructor(private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
