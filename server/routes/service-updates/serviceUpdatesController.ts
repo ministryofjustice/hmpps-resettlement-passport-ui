@@ -1,16 +1,13 @@
 import { RequestHandler } from 'express'
 
 export default class ServiceUpdatesController {
-  getView: RequestHandler = (req, res): void => {
-    const { page } = req.params
-    const template = page ? `pages/service-updates/${page}` : 'pages/service-updates'
+  getServiceUpdatesView: RequestHandler = (req, res): void => {
+    const whatsNewVersion = req.config.whatsNew?.version
+    res.render('pages/service-updates', { whatsNewVersion })
+  }
 
-    res.render(template, (err: Error | null, html: string | undefined) => {
-      if (err) {
-        res.status(404).send('Page not found')
-      } else {
-        res.send(html)
-      }
-    })
+  getServiceUpdatesDetailsView: RequestHandler = (req, res): void => {
+    const { page } = req.params
+    res.render(`pages/service-updates/${page}`)
   }
 }
