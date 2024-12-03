@@ -62,9 +62,11 @@ export default class RpService {
     includePastReleaseDates: boolean,
     page: number,
     pageSize: number,
+    sortField: string,
+    sortDirection: string,
   ) {
     return this.createClient().get<PrisonersList>(
-      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&includePastReleaseDates=${includePastReleaseDates}`,
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&includePastReleaseDates=${includePastReleaseDates}&sort=${sortField},${sortDirection}`,
     )
   }
 
