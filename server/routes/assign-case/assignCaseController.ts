@@ -27,16 +27,26 @@ export default class AssignCaseController {
       allocatedTo,
       isUnassign,
       allocationErrors,
+      searchInput = '',
+      releaseTime = '0',
+      workerId = '',
     } = req.query as AssignPageQuery
 
     const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
-    const listOfPrisonerCasesPromise = this.rpService.getListOfPrisonerCases(
+    const listOfPrisonerCasesPromise = this.rpService.getListOfPrisoners(
       userActiveCaseLoad.caseLoadId,
-      includePastReleaseDates,
       parseInt(currentPage || '0', 10),
       pageSize,
       sortField,
       sortDirection,
+      searchInput,
+      releaseTime,
+      '',
+      '',
+      '',
+      '',
+      includePastReleaseDates,
+      workerId,
     )
     const [prisonersList, resettlementWorkers] = await Promise.all([
       listOfPrisonerCasesPromise,
@@ -60,6 +70,9 @@ export default class AssignCaseController {
       sortField,
       sortDirection,
       allocationErrors: queryParamToArray(allocationErrors),
+      searchInput,
+      releaseTime,
+      workerId,
     })
   }
 
@@ -149,6 +162,10 @@ type AssignPageQuery = {
   isUnassign?: string
 
   allocationErrors?: string[]
+
+  searchInput: string
+  releaseTime: string
+  workerId: string
 }
 
 type AllocationRequestBody = {
