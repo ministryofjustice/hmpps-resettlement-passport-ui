@@ -19,6 +19,8 @@ export default class AssignCaseController {
     const errors: ErrorMessage[] = []
     const {
       currentPage,
+      sortField = 'releaseDate',
+      sortDirection = 'ASC',
       allocationSuccess,
       allocatedCases,
       allocatedOtherCount,
@@ -33,6 +35,8 @@ export default class AssignCaseController {
       includePastReleaseDates,
       parseInt(currentPage || '0', 10),
       pageSize,
+      sortField,
+      sortDirection,
     )
     const [prisonersList, resettlementWorkers] = await Promise.all([
       listOfPrisonerCasesPromise,
@@ -53,6 +57,8 @@ export default class AssignCaseController {
       allocatedTo,
       isUnassign,
       pagination,
+      sortField,
+      sortDirection,
       allocationErrors: queryParamToArray(allocationErrors),
     })
   }
@@ -133,6 +139,8 @@ function validateAssignSubmission(req: Request): string | null {
 
 type AssignPageQuery = {
   currentPage: string
+  sortField: string
+  sortDirection: string
 
   allocationSuccess?: string
   allocatedCases?: string[] | string
