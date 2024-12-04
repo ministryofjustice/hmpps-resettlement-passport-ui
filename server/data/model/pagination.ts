@@ -8,4 +8,5 @@ export type Pagination = {
   pages?: PaginationPage[]
   startItem?: number
   endItem?: number
+  totalElements?: number
 }

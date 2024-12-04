@@ -515,7 +515,6 @@ export function isAdditionalDetails(questionAnswer: { question?: string; questio
 
 export function getPaginationPages(
   currentPage: number,
-  totalPages: number,
   pageSize: number,
   totalElements: number,
   pagesAroundCurrent: number = 1,
@@ -524,9 +523,9 @@ export function getPaginationPages(
   const requiresPagination = totalElements > pageSize
 
   if (!requiresPagination) {
-    return { pages: null, startItem: 1, endItem: totalElements }
+    return { pages: null, startItem: 1, endItem: totalElements, totalElements }
   }
-
+  const totalPages = Math.ceil(totalElements / pageSize)
   const pages: PaginationPage[] = []
 
   // Add "previous" button if not on the first page
@@ -574,5 +573,5 @@ export function getPaginationPages(
   const startItem = currentPage * pageSize + 1
   const endItem = Math.min(startItem + pageSize - 1, totalElements)
 
-  return { pages, startItem, endItem }
+  return { pages, startItem, endItem, totalElements }
 }
