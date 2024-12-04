@@ -1224,7 +1224,6 @@ describe('getPaginationPages', () => {
     [
       'only enough results for one page, should not display pagination',
       0, // currentPage
-      1, // totalPages
       20, // pageSize
       10, // totalElements (less than pageSize)
       undefined, // pagesAroundCurrent
@@ -1232,12 +1231,12 @@ describe('getPaginationPages', () => {
         pages: null, // No pagination required
         startItem: 1,
         endItem: 10,
+        totalElements: 10,
       },
     ],
     [
       'current page is 1 (index 0) of 5 pages (index 0 to 4)',
       0, // currentPage (zero-based index)
-      5, // totalPages
       20, // pageSize
       96, // totalElements
       undefined, // pagesAroundCurrent
@@ -1251,12 +1250,12 @@ describe('getPaginationPages', () => {
         ],
         startItem: 1,
         endItem: 20,
+        totalElements: 96,
       } as Pagination,
     ],
     [
       'current page is 3 (index 2) of 5 pages (index 0 to 4)',
       2, // currentPage
-      5, // totalPages
       20, // pageSize
       96, // totalElements
       undefined, // pagesAroundCurrent
@@ -1272,12 +1271,12 @@ describe('getPaginationPages', () => {
         ],
         startItem: 41,
         endItem: 60,
+        totalElements: 96,
       } as Pagination,
     ],
     [
       'current page is 5 (index 4) of 5 pages (index 0 to 4)',
       4, // currentPage
-      5, // totalPages
       20, // pageSize
       96, // totalElements
       undefined, // pagesAroundCurrent
@@ -1291,12 +1290,12 @@ describe('getPaginationPages', () => {
         ],
         startItem: 81,
         endItem: 96,
+        totalElements: 96,
       } as Pagination,
     ],
     [
       'current page is 3 (index 2) of 10 pages (index 0 to 9) with 2 pages around current',
       2, // currentPage
-      10, // totalPages
       10, // pageSize
       96, // totalElements
       2, // pagesAroundCurrent
@@ -1314,6 +1313,7 @@ describe('getPaginationPages', () => {
         ],
         startItem: 21,
         endItem: 30,
+        totalElements: 96,
       } as Pagination,
     ],
   ])(
@@ -1321,13 +1321,12 @@ describe('getPaginationPages', () => {
     (
       _description: string,
       currentPage: number,
-      totalPages: number,
       pageSize: number,
       totalElements: number,
       pagesAroundCurrent: number,
       expected: Pagination,
     ) => {
-      expect(getPaginationPages(currentPage, totalPages, pageSize, totalElements, pagesAroundCurrent)).toEqual(expected)
+      expect(getPaginationPages(currentPage, pageSize, totalElements, pagesAroundCurrent)).toEqual(expected)
     },
   )
 })

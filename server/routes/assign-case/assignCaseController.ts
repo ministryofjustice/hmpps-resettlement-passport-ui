@@ -54,8 +54,7 @@ export default class AssignCaseController {
     ])
 
     const { page, totalElements } = prisonersList
-    const totalPages = Math.ceil(totalElements / pageSize)
-    const pagination = getPaginationPages(page, totalPages, pageSize, totalElements)
+    const pagination = getPaginationPages(page, pageSize, totalElements)
 
     return res.render('pages/assign-a-case', {
       prisonersList,
