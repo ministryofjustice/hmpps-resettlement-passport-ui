@@ -514,6 +514,10 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
                 <th class="govuk-table__header" scope="row">Community Offender Manager</th>
                 <td class="govuk-table__cell govuk-table__cell--min-width-100">John Doe</td>
               </tr>
+              <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Resettlement Worker</th>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
+              </tr>
               </tbody>
             </table>
           
@@ -1692,6 +1696,10 @@ exports[`prisonerOverview should display add to your cases when enabled 1`] = `
                 <th class="govuk-table__header" scope="row">Community Offender Manager</th>
                 <td class="govuk-table__cell govuk-table__cell--min-width-100">John Doe</td>
               </tr>
+              <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Resettlement Worker</th>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
+              </tr>
               </tbody>
             </table>
           
@@ -2826,6 +2834,10 @@ exports[`prisonerOverview should display remove from your cases when enabled and
                 <th class="govuk-table__header" scope="row">Community Offender Manager</th>
                 <td class="govuk-table__cell govuk-table__cell--min-width-100">John Doe</td>
               </tr>
+              <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Resettlement Worker</th>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
+              </tr>
               </tbody>
             </table>
           
@@ -3953,6 +3965,10 @@ exports[`prisonerOverview should not display add to your cases when disabled 1`]
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">Community Offender Manager</th>
                 <td class="govuk-table__cell govuk-table__cell--min-width-100">John Doe</td>
+              </tr>
+              <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Resettlement Worker</th>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
               </tr>
               </tbody>
             </table>
@@ -5100,6 +5116,10 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">Community Offender Manager</th>
                 <td class="govuk-table__cell govuk-table__cell--min-width-100">John Doe</td>
+              </tr>
+              <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Resettlement Worker</th>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
               </tr>
               </tbody>
             </table>
