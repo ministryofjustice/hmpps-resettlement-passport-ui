@@ -127,6 +127,10 @@
                 <th class="govuk-table__header" scope="row">Community Offender Manager</th>
                 <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.com["name"] if staffContacts.com["name"] | length else "-" }}</td>
               </tr>
+              <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="row">Resettlement Worker</th>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">{{ staffContacts.resettlementWorker["name"] if staffContacts.resettlementWorker["name"] | length else "-" }}</td>
+              </tr>
               </tbody>
             </table>
           {% else %}
