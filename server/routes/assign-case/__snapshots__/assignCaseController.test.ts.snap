@@ -378,7 +378,7 @@ exports[`Happy path with filter parameters 1`] = `
             <div class="govuk-grid-column-one-third">
               <p class="pagination-results">
                 Showing <b>1</b> to <b>20</b> of
-                <b></b> results
+                <b>92</b> results
               </p>
             </div>
           </div>
@@ -812,7 +812,7 @@ exports[`getView Happy path with default query params 1`] = `
             <div class="govuk-grid-column-one-third">
               <p class="pagination-results">
                 Showing <b>1</b> to <b>20</b> of
-                <b></b> results
+                <b>92</b> results
               </p>
             </div>
           </div>
