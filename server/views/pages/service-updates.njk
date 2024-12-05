@@ -2,26 +2,25 @@
 {% set pageName = "Service updates" %}
 
 {% block content %}
-  {% if whatsNewVersion >= 20241120 %}
+  {% for bannerFile in banners %}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-summary-card">
           <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">21 Nov 2024</h2>
+            <h2 class="govuk-summary-card__title">{{ bannerFile.banner.date }}</h2>
           </div>
           <div class="govuk-summary-card__content">
-            <p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p>
+            <p class="govuk-body">{{ bannerFile.banner.bodyText }}</p>
             <ul class="govuk-list govuk-list--bullet">
-              <li>add context to most of the answers</li>
-              <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
-              <li>input answers about domestic abuse, sexual abuse, and sex work</li>
+              {% for point in bannerFile.banner.bulletPoints %}
+              <li>{{ point }}</li>{% endfor %}
             </ul>
             <p>
-              <a href="/service-updates/inputting-report-answers">Find out more about this update</a>
+              <a href="{{ bannerFile.banner.detailsLink }}">Find out more about this update</a>
             </p>
           </div>
         </div>
       </div>
     </div>
-  {% endif %}
+  {% endfor %}
 {% endblock %}

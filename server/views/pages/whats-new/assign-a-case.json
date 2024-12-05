@@ -1,0 +1,12 @@
+{
+  "version": "20241210",
+  "banner": {
+    "date": "10 Dec 2024",
+    "bodyText": "You can now:",
+    "bulletPoints": [
+      "assign people in prison to a resettlement worker",
+      "see how many people are assigned to each resettlement worker (staff capacity)"
+    ],
+    "detailsLink": "/service-updates/assign-a-case"
+  }
+}

@@ -1,14 +1,13 @@
-{%- if whatsNewEnabled and whatsNewVersion === '20241120' -%}
+{%- if whatsNewEnabled -%}
   {% set whatsNewContent %}
-    <h3 class="govuk-heading-s">20 Nov 2024</h3>
+    <h3 class="govuk-heading-s">{{ banner.date }}</h3>
 
-    <p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p>
+    <p class="govuk-body">{{ banner.bodyText }}</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>add context to most of the answers</li>
-      <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
-      <li>input answers about domestic abuse, sexual abuse, and sex work</li>
+      {% for point in banner.bulletPoints %}
+      <li>{{ point }}</li>{% endfor %}
     </ul>
-    <p><a target="_blank" rel="noopener noreferrer" href="/service-updates/inputting-report-answers">Find out more about this update</a></p>
+    <p><a target="_blank" rel="noopener noreferrer" href="{{ banner.detailsLink }}">Find out more about this update</a></p>
 
     <p>
       Let us know what you think of these changes using our
