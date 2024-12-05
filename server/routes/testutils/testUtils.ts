@@ -597,6 +597,9 @@ export function stubPrisonerOverviewData(rpService: RpService) {
       keyWorker: {
         name: 'Steve Rendell',
       },
+      resettlementWorker: {
+        name: 'Pso Lastname',
+      },
     }),
     Promise.resolve([
       {

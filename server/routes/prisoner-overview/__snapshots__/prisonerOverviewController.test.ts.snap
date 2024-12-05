@@ -516,7 +516,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
               </tr>
               <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Resettlement Worker</th>
-                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">Pso Lastname</td>
               </tr>
               </tbody>
             </table>
@@ -1698,7 +1698,7 @@ exports[`prisonerOverview should display add to your cases when enabled 1`] = `
               </tr>
               <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Resettlement Worker</th>
-                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">Pso Lastname</td>
               </tr>
               </tbody>
             </table>
@@ -2836,7 +2836,7 @@ exports[`prisonerOverview should display remove from your cases when enabled and
               </tr>
               <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Resettlement Worker</th>
-                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">Pso Lastname</td>
               </tr>
               </tbody>
             </table>
@@ -3968,7 +3968,7 @@ exports[`prisonerOverview should not display add to your cases when disabled 1`]
               </tr>
               <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Resettlement Worker</th>
-                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">Pso Lastname</td>
               </tr>
               </tbody>
             </table>
@@ -5119,7 +5119,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
               </tr>
               <tr class="govuk-table__row">
                   <th class="govuk-table__header" scope="row">Resettlement Worker</th>
-                  <td class="govuk-table__cell govuk-table__cell--min-width-100">-</td>
+                  <td class="govuk-table__cell govuk-table__cell--min-width-100">Pso Lastname</td>
               </tr>
               </tbody>
             </table>
