@@ -87,3 +87,15 @@ export type WhatsNewConfig = {
 export type Pathway = keyof typeof PATHWAY_DICTIONARY
 
 export type PathwayVersion = Record<Pathway, number>
+
+export type BannerFile = {
+  version: string
+  banner: BannerDetails
+}
+
+type BannerDetails = {
+  date: string
+  bodyText: string
+  bulletPoints: string[]
+  detailsLink: string
+}

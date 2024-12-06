@@ -5800,6 +5800,7 @@ exports[`prisonerOverview should render whats new banner when it is enabled 1`] 
 
     <p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p>
     <ul class="govuk-list govuk-list--bullet">
+      
       <li>add context to most of the answers</li>
       <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
       <li>input answers about domestic abuse, sexual abuse, and sex work</li>
