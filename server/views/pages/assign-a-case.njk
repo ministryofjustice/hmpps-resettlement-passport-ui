@@ -129,7 +129,9 @@
                   </a>
                 </th>
                 <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
-                  <button type="button">Assigned resettlement worker</button>
+                  <a aria-sort="{% if sortField == 'assignedWorkerLastname' and sortDirection == 'ASC' %}ascending{% elif sortField == 'assignedWorkerLastname' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/assign-a-case/?sortField=assignedWorkerLastname&sortDirection={{ 'DESC' if (sortField == 'assignedWorkerLastname' and sortDirection == 'ASC') else 'ASC' }}&searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&workerId={{ workerId }}">
+                    <button type="button">Assigned resettlement worker</button>
+                  </a>
                 </th>
               </tr>
             </thead>

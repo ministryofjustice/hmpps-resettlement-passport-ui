@@ -225,7 +225,9 @@ exports[`Happy path with filter parameters 1`] = `
                   </a>
                 </th>
                 <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
-                  <button type="button">Assigned resettlement worker</button>
+                  <a aria-sort="none" href="/assign-a-case/?sortField=assignedWorkerLastname&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1">
+                    <button type="button">Assigned resettlement worker</button>
+                  </a>
                 </th>
               </tr>
             </thead>
@@ -659,7 +661,9 @@ exports[`getView Happy path with default query params 1`] = `
                   </a>
                 </th>
                 <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
-                  <button type="button">Assigned resettlement worker</button>
+                  <a aria-sort="none" href="/assign-a-case/?sortField=assignedWorkerLastname&sortDirection=ASC&searchInput=&releaseTime=0&workerId=">
+                    <button type="button">Assigned resettlement worker</button>
+                  </a>
                 </th>
               </tr>
             </thead>
