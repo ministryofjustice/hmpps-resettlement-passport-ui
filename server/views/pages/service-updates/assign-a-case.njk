@@ -1,0 +1,72 @@
+{% extends "../../partials/serviceUpdatesLayout.njk" %}
+{% set pageName = "Assigning cases and seeing staff capacity" %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-s">10 Dec 2024</p>
+      <p>When you go into PSfR, there are now 3 tabs on the homepage:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>People in prison</li>
+        <li>Assign a case (new)</li>
+        <li>Staff capacity (new)</li>
+      </ul>
+      <h2 class="govuk-heading-m">Assign a case</h2>
+      <p>On the ‘Assign a case’ tab, you can select people in prison and choose a resettlement worker to assign them to.</p>
+      <p>Staff need to be assigned to the resettlement worker role in the Manage user accounts service for them to appear in the drop down list.</p>
+      <img
+        class="service-updates-image"
+        src="/assets/images/service-updates/20241210/assign-a-case.jpg"
+        alt="Assign a case. Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them to"
+      >
+
+      <h3 class="govuk-heading-s govuk-!-padding-top-8">What does assigning a case do?</h3>
+      <p>You can no longer:</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>add people in prison to your cases using the ‘Add to your cases’ action button</li>
+        <li>filter by ‘Your cases’ on the ‘People in prison’ tab.</li>
+      </ul>
+      <p>Instead, use the ‘Assigned resettlement worker’ filter on the ‘Assign a case’ tab to view a list of people who have been assigned to you.</p>
+
+      <h3 class="govuk-heading-s govuk-!-padding-top-4">Replacing the ‘Add to your cases’ feature</h3>
+      <p>Assigning a case means the resettlement worker’s name will be shown in the:</p>
+        <ul class="govuk-list govuk-list--bullet">
+          <li>‘People in prison’ tab</li>
+          <li>‘Staff contacts’ on the person in prison’s overview tab</li>
+        </ul>
+      <img
+        class="service-updates-image"
+        src="/assets/images/service-updates/20241210/filter-by.jpg"
+        alt="Filter By. assigned resettlement worker"
+      >
+
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">Staff Capacity</h2>
+      <p>On the ‘Staff capacity’ tab, you can see how many people in prison are assigned to each resettlement worker.</p>
+      <img
+          class="service-updates-image"
+          src="/assets/images/service-updates/20241210/staff-capacity.jpg"
+          alt="Staff Capacity. assigned resettlement worker, number of prisoners assigned to them, actions"
+      >
+
+      <p>Staff can use the ‘View assigned prisoners’ links to see a list of all the people in prison assigned to each resettlement worker.</p>
+
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">Assigning staff to the resettlement worker role</h2>
+      <p>To appear in the ‘Assign a case’ drop down list, staff need to be assigned to the ‘Resettlement worker’ role in the Manage user accounts service.</p>
+      <p>We have already assigned any staff that prisons have told us need to be assigned to the role.</p>
+      <p>If any staff are missing from the drop down list, or anyone new joins, your local admin will need to assign them to the role.</p>
+      <p>To do this:</p>
+      <ul class="govuk-list govuk-list--number">
+        <li>Sign into DPS as an admin.</li>
+        <li>Go to the ‘Manage user accounts’ service.</li>
+        <li>Search for the user you need to assign to the role.</li>
+        <li>Select ‘Add a role’.</li>
+        <li>Select ‘Prepare someone for release resettlement worker’.</li>
+        <li>Confirm.</li>
+      </ul>
+
+      <h2 class="govuk-heading-m govuk-!-padding-top-8">Give feedback on these updates</h2>
+      <p>We really want to hear what you think of these updates. You can let us know using our
+        <a href="{{ feedbackUrl }}">feedback form</a>.
+      </p>
+    </div>
+  </div>
+{% endblock %}

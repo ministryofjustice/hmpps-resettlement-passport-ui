@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { milliseconds } from 'date-fns'
 import config from '../config'
+import Banner from '../banner'
 
 const expiryTime = milliseconds({ years: 1 })
 
@@ -28,4 +29,6 @@ export function handleWhatsNewBanner(req: Request, res: Response) {
   const url = new URL(req.url, config.domain)
   url.searchParams.append('dismissWhatsNew', 'true')
   res.locals.whatsNewDismissUrl = url.href
+
+  res.locals.banner = Banner.getWhatsNewBannerVersion(version)
 }

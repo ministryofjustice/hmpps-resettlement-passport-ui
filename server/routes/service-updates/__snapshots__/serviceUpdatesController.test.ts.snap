@@ -144,11 +144,33 @@ exports[`ServiceUpdatesController getView should render the service updates page
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-summary-card">
           <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">21 Nov 2024</h2>
+            <h2 class="govuk-summary-card__title">10 Dec 2024</h2>
+          </div>
+          <div class="govuk-summary-card__content">
+            <p class="govuk-body">You can now:</p>
+            <ul class="govuk-list govuk-list--bullet">
+              
+              <li>assign people in prison to a resettlement worker</li>
+              <li>see how many people are assigned to each resettlement worker (staff capacity)</li>
+            </ul>
+            <p>
+              <a href="/service-updates/assign-a-case">Find out more about this update</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-summary-card">
+          <div class="govuk-summary-card__title-wrapper">
+            <h2 class="govuk-summary-card__title">20 Nov 2024</h2>
           </div>
           <div class="govuk-summary-card__content">
             <p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p>
             <ul class="govuk-list govuk-list--bullet">
+              
               <li>add context to most of the answers</li>
               <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
               <li>input answers about domestic abuse, sexual abuse, and sex work</li>
@@ -493,11 +515,12 @@ exports[`ServiceUpdatesController getView should render the service updates page
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-summary-card">
           <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">21 Nov 2024</h2>
+            <h2 class="govuk-summary-card__title">20 Nov 2024</h2>
           </div>
           <div class="govuk-summary-card__content">
             <p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p>
             <ul class="govuk-list govuk-list--bullet">
+              
               <li>add context to most of the answers</li>
               <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
               <li>input answers about domestic abuse, sexual abuse, and sex work</li>
