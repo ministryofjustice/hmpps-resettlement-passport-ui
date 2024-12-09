@@ -1529,7 +1529,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
     
       
   <p class="govuk-error-message">
-    <span class="govuk-visually-hidden">Error:</span> 
+    <span class="govuk-visually-hidden">Error:</span>
     
       This field is required
     
@@ -1558,7 +1558,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
     
       
   <p class="govuk-error-message">
-    <span class="govuk-visually-hidden">Error:</span> 
+    <span class="govuk-visually-hidden">Error:</span>
     
       This field must be 500 characters or less
     
@@ -1590,7 +1590,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
     
       
   <p class="govuk-error-message">
-    <span class="govuk-visually-hidden">Error:</span> 
+    <span class="govuk-visually-hidden">Error:</span>
     
       This field must be 3,000 characters or less
     
@@ -1622,7 +1622,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
     
       
   <p class="govuk-error-message">
-    <span class="govuk-visually-hidden">Error:</span> 
+    <span class="govuk-visually-hidden">Error:</span>
     
       Each field must be 500 characters or less
     
