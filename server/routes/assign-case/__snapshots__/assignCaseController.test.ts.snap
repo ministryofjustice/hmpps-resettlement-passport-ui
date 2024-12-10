@@ -202,214 +202,214 @@ exports[`Happy path with filter parameters 1`] = `
           </div>
         </form>
       </div>
-      <form id="assign-a-case-form" class="form" action="/assign-a-case" method="post">
-        <input type="hidden" name="_csrf" value="" />
-        
-          <table
-            id="cases-table"
-            class="govuk-table"
-            data-module="moj-multi-select"
-            data-multi-select-checkbox="#select-all"
-          >
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col" id="select-all"></th>
-                <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
-                  <a aria-sort="none" href="/assign-a-case/?sortField=name&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1">
-                    <button type="button">Name</button>
-                  </a>
-                </th>
-                <th scope="col" class="govuk-table__header" data-column="release" aria-sort="none">
-                  <a aria-sort="ascending" href="/assign-a-case/?sortField=releaseDate&sortDirection=DESC&searchInput=smith&releaseTime=84&workerId=1">
-                    <button type="button">Release date</button>
-                  </a>
-                </th>
-                <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
-                  <a aria-sort="none" href="/assign-a-case/?sortField=assignedWorkerLastname&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1">
-                    <button type="button">Assigned resettlement worker</button>
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              
-                <tr class="govuk-table__row govuk-table__row--selected">
-                  <td class="govuk-table__cell">
-                    <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                      <input
-                        type="checkbox"
-                        class="govuk-checkboxes__input"
-                        name="prisonerNumbers"
-                        id="assign-checkbox-G9808UX"
-                        value="G9808UX"
-                      />
-                      <label
-                        class="govuk-label govuk-checkboxes__label"
-                        for="assign-checkbox-G9808UX"
-                      >
-                        <span class="govuk-visually-hidden"
-                          >Select CASEY CHAVAN</span
-                        >
-                      </label>
-                    </div>
-                  </td>
-                  <td class="govuk-table__cell">
-                    <a href="/prisoner-overview?prisonerNumber=G9808UX"
-                      >Chavan, Casey</a
-                    >
-                    <br />
-                    <span class="govuk-hint" id="prisonerNumber"> G9808UX </span>
-                  </td>
-                  <td class="govuk-table__cell" id="releaseDate">
-                    <span class="no-wrap">30 Nov 2024</span> <br />
-                    
-                  </td>
-                  <td class="govuk-table__cell">
-                    
-                      – <span class="govuk-visually-hidden">No resettlement worker assigned</span>
-                    
-                  </td>
+      
+        <form id="assign-a-case-form" class="form" action="/assign-a-case" method="post">
+          <input type="hidden" name="_csrf" value="" />
+            <table
+              id="cases-table"
+              class="govuk-table"
+              data-module="moj-multi-select"
+              data-multi-select-checkbox="#select-all"
+            >
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="col" id="select-all"></th>
+                  <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
+                    <a aria-sort="none" href="/assign-a-case/?sortField=name&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1">
+                      <button type="button">Name</button>
+                    </a>
+                  </th>
+                  <th scope="col" class="govuk-table__header" data-column="release" aria-sort="none">
+                    <a aria-sort="ascending" href="/assign-a-case/?sortField=releaseDate&sortDirection=DESC&searchInput=smith&releaseTime=84&workerId=1">
+                      <button type="button">Release date</button>
+                    </a>
+                  </th>
+                  <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
+                    <a aria-sort="none" href="/assign-a-case/?sortField=assignedWorkerLastname&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1">
+                      <button type="button">Assigned resettlement worker</button>
+                    </a>
+                  </th>
                 </tr>
-              
-            </tbody>
-          </table>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              
-                <nav class="govuk-pagination" aria-label="Pagination">
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                  <ul class="govuk-pagination__list">
-                    
-                      
-                      
-                        <li class="govuk-pagination__item govuk-pagination__item--current">
-                          <a
-                            class="govuk-link govuk-pagination__link"
-                            href="/assign-a-case?currentPage=0&sortField=releaseDate&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1"
-                            aria-label="Page 1"
+              </thead>
+              <tbody class="govuk-table__body">
+                
+                  <tr class="govuk-table__row govuk-table__row--selected">
+                    <td class="govuk-table__cell">
+                      <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                        <input
+                          type="checkbox"
+                          class="govuk-checkboxes__input"
+                          name="prisonerNumbers"
+                          id="assign-checkbox-G9808UX"
+                          value="G9808UX"
+                        />
+                        <label
+                          class="govuk-label govuk-checkboxes__label"
+                          for="assign-checkbox-G9808UX"
+                        >
+                          <span class="govuk-visually-hidden"
+                            >Select CASEY CHAVAN</span
                           >
-                            1
-                          </a>
-                        </li>
+                        </label>
+                      </div>
+                    </td>
+                    <td class="govuk-table__cell">
+                      <a href="/prisoner-overview?prisonerNumber=G9808UX"
+                        >Chavan, Casey</a
+                      >
+                      <br />
+                      <span class="govuk-hint" id="prisonerNumber"> G9808UX </span>
+                    </td>
+                    <td class="govuk-table__cell" id="releaseDate">
+                      <span class="no-wrap">30 Nov 2024</span> <br />
+                      
+                    </td>
+                    <td class="govuk-table__cell">
+                      
+                        – <span class="govuk-visually-hidden">No resettlement worker assigned</span>
+                      
+                    </td>
+                  </tr>
+                
+              </tbody>
+            </table>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-two-thirds">
+                
+                  <nav class="govuk-pagination" aria-label="Pagination">
+                    
                       
                     
                       
+                    
                       
-                        <li class="govuk-pagination__item ">
+                    
+                      
+                    
+                      
+                    
+                    <ul class="govuk-pagination__list">
+                      
+                        
+                        
+                          <li class="govuk-pagination__item govuk-pagination__item--current">
+                            <a
+                              class="govuk-link govuk-pagination__link"
+                              href="/assign-a-case?currentPage=0&sortField=releaseDate&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1"
+                              aria-label="Page 1"
+                            >
+                              1
+                            </a>
+                          </li>
+                        
+                      
+                        
+                        
+                          <li class="govuk-pagination__item ">
+                            <a
+                              class="govuk-link govuk-pagination__link"
+                              href="/assign-a-case?currentPage=1&sortField=releaseDate&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1"
+                              aria-label="Page 2"
+                            >
+                              2
+                            </a>
+                          </li>
+                        
+                      
+                        
+                          <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                        
+                        
+                      
+                        
+                        
+                          <li class="govuk-pagination__item ">
+                            <a
+                              class="govuk-link govuk-pagination__link"
+                              href="/assign-a-case?currentPage=4&sortField=releaseDate&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1"
+                              aria-label="Page 5"
+                            >
+                              5
+                            </a>
+                          </li>
+                        
+                      
+                        
+                        
+                      
+                    </ul>
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                        <div class="govuk-pagination__next">
                           <a
                             class="govuk-link govuk-pagination__link"
                             href="/assign-a-case?currentPage=1&sortField=releaseDate&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1"
-                            aria-label="Page 2"
+                            rel="next"
                           >
-                            2
+                            <span class="govuk-pagination__link-title">
+                              Next<span class="govuk-visually-hidden"> page</span>
+                            </span>
+                            <svg
+                              class="govuk-pagination__icon govuk-pagination__icon--next"
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="13"
+                              width="15"
+                              aria-hidden="true"
+                              focusable="false"
+                              viewBox="0 0 15 13"
+                            >
+                              <path
+                                d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                              ></path>
+                            </svg>
                           </a>
-                        </li>
+                        </div>
                       
                     
-                      
-                        <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
-                      
-                      
-                    
-                      
-                      
-                        <li class="govuk-pagination__item ">
-                          <a
-                            class="govuk-link govuk-pagination__link"
-                            href="/assign-a-case?currentPage=4&sortField=releaseDate&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1"
-                            aria-label="Page 5"
-                          >
-                            5
-                          </a>
-                        </li>
-                      
-                    
-                      
-                      
-                    
-                  </ul>
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                    
-                      <div class="govuk-pagination__next">
-                        <a
-                          class="govuk-link govuk-pagination__link"
-                          href="/assign-a-case?currentPage=1&sortField=releaseDate&sortDirection=ASC&searchInput=smith&releaseTime=84&workerId=1"
-                          rel="next"
-                        >
-                          <span class="govuk-pagination__link-title">
-                            Next<span class="govuk-visually-hidden"> page</span>
-                          </span>
-                          <svg
-                            class="govuk-pagination__icon govuk-pagination__icon--next"
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="13"
-                            width="15"
-                            aria-hidden="true"
-                            focusable="false"
-                            viewBox="0 0 15 13"
-                          >
-                            <path
-                              d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    
-                  
-                </nav>
-              
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <p class="pagination-results">
-                Showing <b>1</b> to <b>20</b> of
-                <b>92</b> results
-              </p>
-            </div>
-          </div>
-        
-
-        <section id="assign-case-control">
-          <h3 class="govuk-heading-m">Assign a case</h3>
-          <p>Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them
-              to.</p>
-          <p>
-            Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
-            service for them to appear in this list.
-          </p>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="workerName">Resettlement worker</label>
-                <select class="govuk-select" id="workerName" name="staffId" required>
-                  <option value="">Choose a resettlement worker</option><option value="1">Staff1First Staff1Last</option>
-                  <option value="2">Staff2First Staff2Last</option>
-                  
-                  <option value="_unassign">Unassign</option>
-                </select>
+                  </nav>
+                
               </div>
-              <button class="govuk-button" data-prevent-double-click="true" type="submit">Assign</button>
+              <div class="govuk-grid-column-one-third">
+                <p class="pagination-results">
+                  Showing <b>1</b> to <b>20</b> of
+                  <b>92</b> results
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
-      </form>
+          
+          <section id="assign-case-control">
+            <h3 class="govuk-heading-m">Assign a case</h3>
+            <p>Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them
+                to.</p>
+            <p>
+              Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
+              service for them to appear in this list.
+            </p>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-third">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="workerName">Resettlement worker</label>
+                  <select class="govuk-select" id="workerName" name="staffId" required>
+                    <option value="">Choose a resettlement worker</option><option value="1">Staff1First Staff1Last</option>
+                    <option value="2">Staff2First Staff2Last</option>
+                    
+                    <option value="_unassign">Unassign</option>
+                  </select>
+                </div>
+                <button class="govuk-button" data-prevent-double-click="true" type="submit">Assign</button>
+              </div>
+            </div>
+          </section>
+        </form>
+      
     </div>
   </div>
 
@@ -638,214 +638,214 @@ exports[`getView Happy path with default query params 1`] = `
           </div>
         </form>
       </div>
-      <form id="assign-a-case-form" class="form" action="/assign-a-case" method="post">
-        <input type="hidden" name="_csrf" value="" />
-        
-          <table
-            id="cases-table"
-            class="govuk-table"
-            data-module="moj-multi-select"
-            data-multi-select-checkbox="#select-all"
-          >
-            <thead class="govuk-table__head">
-              <tr class="govuk-table__row">
-                <th class="govuk-table__header" scope="col" id="select-all"></th>
-                <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
-                  <a aria-sort="none" href="/assign-a-case/?sortField=name&sortDirection=ASC&searchInput=&releaseTime=0&workerId=">
-                    <button type="button">Name</button>
-                  </a>
-                </th>
-                <th scope="col" class="govuk-table__header" data-column="release" aria-sort="none">
-                  <a aria-sort="ascending" href="/assign-a-case/?sortField=releaseDate&sortDirection=DESC&searchInput=&releaseTime=0&workerId=">
-                    <button type="button">Release date</button>
-                  </a>
-                </th>
-                <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
-                  <a aria-sort="none" href="/assign-a-case/?sortField=assignedWorkerLastname&sortDirection=ASC&searchInput=&releaseTime=0&workerId=">
-                    <button type="button">Assigned resettlement worker</button>
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              
-                <tr class="govuk-table__row govuk-table__row--selected">
-                  <td class="govuk-table__cell">
-                    <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
-                      <input
-                        type="checkbox"
-                        class="govuk-checkboxes__input"
-                        name="prisonerNumbers"
-                        id="assign-checkbox-G9808UX"
-                        value="G9808UX"
-                      />
-                      <label
-                        class="govuk-label govuk-checkboxes__label"
-                        for="assign-checkbox-G9808UX"
-                      >
-                        <span class="govuk-visually-hidden"
-                          >Select CASEY CHAVAN</span
-                        >
-                      </label>
-                    </div>
-                  </td>
-                  <td class="govuk-table__cell">
-                    <a href="/prisoner-overview?prisonerNumber=G9808UX"
-                      >Chavan, Casey</a
-                    >
-                    <br />
-                    <span class="govuk-hint" id="prisonerNumber"> G9808UX </span>
-                  </td>
-                  <td class="govuk-table__cell" id="releaseDate">
-                    <span class="no-wrap">30 Nov 2024</span> <br />
-                    
-                  </td>
-                  <td class="govuk-table__cell">
-                    
-                      – <span class="govuk-visually-hidden">No resettlement worker assigned</span>
-                    
-                  </td>
+      
+        <form id="assign-a-case-form" class="form" action="/assign-a-case" method="post">
+          <input type="hidden" name="_csrf" value="" />
+            <table
+              id="cases-table"
+              class="govuk-table"
+              data-module="moj-multi-select"
+              data-multi-select-checkbox="#select-all"
+            >
+              <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                  <th class="govuk-table__header" scope="col" id="select-all"></th>
+                  <th scope="col" class="govuk-table__header" data-column="name" aria-sort="none">
+                    <a aria-sort="none" href="/assign-a-case/?sortField=name&sortDirection=ASC&searchInput=&releaseTime=0&workerId=">
+                      <button type="button">Name</button>
+                    </a>
+                  </th>
+                  <th scope="col" class="govuk-table__header" data-column="release" aria-sort="none">
+                    <a aria-sort="ascending" href="/assign-a-case/?sortField=releaseDate&sortDirection=DESC&searchInput=&releaseTime=0&workerId=">
+                      <button type="button">Release date</button>
+                    </a>
+                  </th>
+                  <th scope="col" class="govuk-table__header" data-column="status" aria-sort="none">
+                    <a aria-sort="none" href="/assign-a-case/?sortField=assignedWorkerLastname&sortDirection=ASC&searchInput=&releaseTime=0&workerId=">
+                      <button type="button">Assigned resettlement worker</button>
+                    </a>
+                  </th>
                 </tr>
-              
-            </tbody>
-          </table>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-two-thirds">
-              
-                <nav class="govuk-pagination" aria-label="Pagination">
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                  <ul class="govuk-pagination__list">
-                    
-                      
-                      
-                        <li class="govuk-pagination__item govuk-pagination__item--current">
-                          <a
-                            class="govuk-link govuk-pagination__link"
-                            href="/assign-a-case?currentPage=0&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&workerId="
-                            aria-label="Page 1"
+              </thead>
+              <tbody class="govuk-table__body">
+                
+                  <tr class="govuk-table__row govuk-table__row--selected">
+                    <td class="govuk-table__cell">
+                      <div class="govuk-checkboxes__item govuk-checkboxes--small moj-multi-select__checkbox">
+                        <input
+                          type="checkbox"
+                          class="govuk-checkboxes__input"
+                          name="prisonerNumbers"
+                          id="assign-checkbox-G9808UX"
+                          value="G9808UX"
+                        />
+                        <label
+                          class="govuk-label govuk-checkboxes__label"
+                          for="assign-checkbox-G9808UX"
+                        >
+                          <span class="govuk-visually-hidden"
+                            >Select CASEY CHAVAN</span
                           >
-                            1
-                          </a>
-                        </li>
+                        </label>
+                      </div>
+                    </td>
+                    <td class="govuk-table__cell">
+                      <a href="/prisoner-overview?prisonerNumber=G9808UX"
+                        >Chavan, Casey</a
+                      >
+                      <br />
+                      <span class="govuk-hint" id="prisonerNumber"> G9808UX </span>
+                    </td>
+                    <td class="govuk-table__cell" id="releaseDate">
+                      <span class="no-wrap">30 Nov 2024</span> <br />
+                      
+                    </td>
+                    <td class="govuk-table__cell">
+                      
+                        – <span class="govuk-visually-hidden">No resettlement worker assigned</span>
+                      
+                    </td>
+                  </tr>
+                
+              </tbody>
+            </table>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-two-thirds">
+                
+                  <nav class="govuk-pagination" aria-label="Pagination">
+                    
                       
                     
                       
+                    
                       
-                        <li class="govuk-pagination__item ">
+                    
+                      
+                    
+                      
+                    
+                    <ul class="govuk-pagination__list">
+                      
+                        
+                        
+                          <li class="govuk-pagination__item govuk-pagination__item--current">
+                            <a
+                              class="govuk-link govuk-pagination__link"
+                              href="/assign-a-case?currentPage=0&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&workerId="
+                              aria-label="Page 1"
+                            >
+                              1
+                            </a>
+                          </li>
+                        
+                      
+                        
+                        
+                          <li class="govuk-pagination__item ">
+                            <a
+                              class="govuk-link govuk-pagination__link"
+                              href="/assign-a-case?currentPage=1&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&workerId="
+                              aria-label="Page 2"
+                            >
+                              2
+                            </a>
+                          </li>
+                        
+                      
+                        
+                          <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                        
+                        
+                      
+                        
+                        
+                          <li class="govuk-pagination__item ">
+                            <a
+                              class="govuk-link govuk-pagination__link"
+                              href="/assign-a-case?currentPage=4&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&workerId="
+                              aria-label="Page 5"
+                            >
+                              5
+                            </a>
+                          </li>
+                        
+                      
+                        
+                        
+                      
+                    </ul>
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                        <div class="govuk-pagination__next">
                           <a
                             class="govuk-link govuk-pagination__link"
                             href="/assign-a-case?currentPage=1&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&workerId="
-                            aria-label="Page 2"
+                            rel="next"
                           >
-                            2
+                            <span class="govuk-pagination__link-title">
+                              Next<span class="govuk-visually-hidden"> page</span>
+                            </span>
+                            <svg
+                              class="govuk-pagination__icon govuk-pagination__icon--next"
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="13"
+                              width="15"
+                              aria-hidden="true"
+                              focusable="false"
+                              viewBox="0 0 15 13"
+                            >
+                              <path
+                                d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                              ></path>
+                            </svg>
                           </a>
-                        </li>
+                        </div>
                       
                     
-                      
-                        <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
-                      
-                      
-                    
-                      
-                      
-                        <li class="govuk-pagination__item ">
-                          <a
-                            class="govuk-link govuk-pagination__link"
-                            href="/assign-a-case?currentPage=4&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&workerId="
-                            aria-label="Page 5"
-                          >
-                            5
-                          </a>
-                        </li>
-                      
-                    
-                      
-                      
-                    
-                  </ul>
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                    
-                  
-                    
-                      <div class="govuk-pagination__next">
-                        <a
-                          class="govuk-link govuk-pagination__link"
-                          href="/assign-a-case?currentPage=1&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&workerId="
-                          rel="next"
-                        >
-                          <span class="govuk-pagination__link-title">
-                            Next<span class="govuk-visually-hidden"> page</span>
-                          </span>
-                          <svg
-                            class="govuk-pagination__icon govuk-pagination__icon--next"
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="13"
-                            width="15"
-                            aria-hidden="true"
-                            focusable="false"
-                            viewBox="0 0 15 13"
-                          >
-                            <path
-                              d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
-                            ></path>
-                          </svg>
-                        </a>
-                      </div>
-                    
-                  
-                </nav>
-              
-            </div>
-            <div class="govuk-grid-column-one-third">
-              <p class="pagination-results">
-                Showing <b>1</b> to <b>20</b> of
-                <b>92</b> results
-              </p>
-            </div>
-          </div>
-        
-
-        <section id="assign-case-control">
-          <h3 class="govuk-heading-m">Assign a case</h3>
-          <p>Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them
-              to.</p>
-          <p>
-            Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
-            service for them to appear in this list.
-          </p>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="workerName">Resettlement worker</label>
-                <select class="govuk-select" id="workerName" name="staffId" required>
-                  <option value="">Choose a resettlement worker</option><option value="1">Staff1First Staff1Last</option>
-                  <option value="2">Staff2First Staff2Last</option>
-                  
-                  <option value="_unassign">Unassign</option>
-                </select>
+                  </nav>
+                
               </div>
-              <button class="govuk-button" data-prevent-double-click="true" type="submit">Assign</button>
+              <div class="govuk-grid-column-one-third">
+                <p class="pagination-results">
+                  Showing <b>1</b> to <b>20</b> of
+                  <b>92</b> results
+                </p>
+              </div>
             </div>
-          </div>
-        </section>
-      </form>
+          
+          <section id="assign-case-control">
+            <h3 class="govuk-heading-m">Assign a case</h3>
+            <p>Select people in prison from the list and then choose a resettlement worker, like a PSO, to assign them
+                to.</p>
+            <p>
+              Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
+              service for them to appear in this list.
+            </p>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-third">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="workerName">Resettlement worker</label>
+                  <select class="govuk-select" id="workerName" name="staffId" required>
+                    <option value="">Choose a resettlement worker</option><option value="1">Staff1First Staff1Last</option>
+                    <option value="2">Staff2First Staff2Last</option>
+                    
+                    <option value="_unassign">Unassign</option>
+                  </select>
+                </div>
+                <button class="govuk-button" data-prevent-double-click="true" type="submit">Assign</button>
+              </div>
+            </div>
+          </section>
+        </form>
+      
     </div>
   </div>
 
@@ -874,25 +874,25 @@ exports[`getView Happy path with default query params 1`] = `
 
 exports[`getView Should show message that assignments cannot be made with no resettlement workers available 1`] = `
 "<section id="assign-case-control">
-          <h3 class="govuk-heading-m">Assign a case</h3>
-          <p>You cannot assign a case as no staff have been assigned to the resettlement worker role.</p>
-          <p>
-            Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
-            service for them to appear in this list.
-          </p>
-          <div class="govuk-grid-row">
-            <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="workerName">Resettlement worker</label>
-                <select class="govuk-select" id="workerName" name="staffId" required="">
-                  <option value="">Choose a resettlement worker</option>
-                  <option value="_unassign">Unassign</option>
-                </select>
+            <h3 class="govuk-heading-m">Assign a case</h3>
+            <p>You cannot assign a case as no staff have been assigned to the resettlement worker role.</p>
+            <p>
+              Your local admin will need to assign staff to the resettlement worker role in the Manage user accounts
+              service for them to appear in this list.
+            </p>
+            <div class="govuk-grid-row">
+              <div class="govuk-grid-column-one-third">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="workerName">Resettlement worker</label>
+                  <select class="govuk-select" id="workerName" name="staffId" required="">
+                    <option value="">Choose a resettlement worker</option>
+                    <option value="_unassign">Unassign</option>
+                  </select>
+                </div>
+                <button class="govuk-button" data-prevent-double-click="true" type="submit">Assign</button>
               </div>
-              <button class="govuk-button" data-prevent-double-click="true" type="submit">Assign</button>
             </div>
-          </div>
-        </section>"
+          </section>"
 `;
 
 exports[`getView shows error dialog for unassign 1`] = `
