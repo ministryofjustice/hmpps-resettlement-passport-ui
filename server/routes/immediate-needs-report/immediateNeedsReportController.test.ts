@@ -166,7 +166,7 @@ describe('getView', () => {
 
     const getWorkingAssessmentVersionSpy = jest
       .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
-      .mockResolvedValue(undefined)
+      .mockResolvedValue(1)
 
     const apiAssessmentPage = {
       id: 'MY_PAGE',
@@ -1464,7 +1464,7 @@ describe('saveAnswerAndGetNextPage', () => {
     }
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
-    expect(getAssessmentPageSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 1)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION', 'PAGE_1', 'BCST2', undefined)
     expect(answerSpy).toHaveBeenCalledWith(stateKey, workingAssessment.assessment, apiAssessmentPage)
     expect(getWorkingAssessmentSpy).toHaveBeenCalledWith(stateKey)
     expect(fetchNextPageSpy).toHaveBeenCalledWith(
@@ -1473,7 +1473,7 @@ describe('saveAnswerAndGetNextPage', () => {
       workingAssessment.assessment,
       'PAGE_1',
       'BCST2',
-      1,
+      null,
     )
   })
   it('Validation errors', async () => {

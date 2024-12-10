@@ -16,6 +16,7 @@ import {
   getPagesFromCheckYourAnswers,
 } from '../utils/utils'
 import { CHECK_ANSWERS_PAGE_ID } from '../utils/constants'
+import logger from '../../logger'
 
 export function createAssessmentStateService() {
   return new AssessmentStateService(new AssessmentStore(createRedisClient()))
@@ -223,7 +224,14 @@ export class AssessmentStateService {
   }
 
   async getWorkingAssessmentVersion(stateKey: StateKey) {
-    return (await this.store.getWorkingAssessment(stateKey)).assessment.version
+    try {
+      return (await this.store.getWorkingAssessment(stateKey)).assessment.version
+    } catch (err) {
+      logger.info(
+        `Unable to fetch version for User Id : ${stateKey.userId} and AssessmentType : ${stateKey.assessmentType}`,
+      )
+      return 1
+    }
   }
 
   async resetWorkingCacheToBackupCache(stateKey: StateKey) {
