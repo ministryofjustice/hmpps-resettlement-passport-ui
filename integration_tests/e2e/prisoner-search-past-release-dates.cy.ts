@@ -25,7 +25,59 @@ context('Prisoner search page', () => {
       'overwriteFlags',
       JSON.stringify([
         {
+          feature: 'addAppointments',
+          enabled: false,
+        },
+        {
+          feature: 'tasksView',
+          enabled: false,
+        },
+        {
+          feature: 'viewAppointmentsEndUser',
+          enabled: false,
+        },
+        {
+          feature: 'useNewDeliusCaseNoteFormat',
+          enabled: false,
+        },
+        {
+          feature: 'viewDocuments',
+          enabled: false,
+        },
+        {
+          feature: 'uploadDocuments',
+          enabled: false,
+        },
+        {
           feature: 'includePastReleaseDates',
+          enabled: false,
+        },
+        {
+          feature: 'knowledgeVerification',
+          enabled: false,
+        },
+        {
+          feature: 'profileReset',
+          enabled: false,
+        },
+        {
+          feature: 'todoList',
+          enabled: false,
+        },
+        {
+          feature: 'useNewDpsCaseNoteFormat',
+          enabled: false,
+        },
+        {
+          feature: 'whatsNewBanner',
+          enabled: false,
+        },
+        {
+          feature: 'assignCaseTab',
+          enabled: false,
+        },
+        {
+          feature: 'myCases',
           enabled: false,
         },
       ]),

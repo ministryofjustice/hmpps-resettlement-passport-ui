@@ -29,12 +29,60 @@ context('Generate PDF', () => {
   it('Plan your future PDF should have registration code and appointments when viewAppointmentsEndUser=true', () => {
     const flagsEnabled = [
       {
+        feature: 'addAppointments',
+        enabled: false,
+      },
+      {
         feature: 'tasksView',
         enabled: true,
       },
       {
         feature: 'viewAppointmentsEndUser',
         enabled: true,
+      },
+      {
+        feature: 'useNewDeliusCaseNoteFormat',
+        enabled: false,
+      },
+      {
+        feature: 'viewDocuments',
+        enabled: false,
+      },
+      {
+        feature: 'uploadDocuments',
+        enabled: false,
+      },
+      {
+        feature: 'includePastReleaseDates',
+        enabled: false,
+      },
+      {
+        feature: 'knowledgeVerification',
+        enabled: false,
+      },
+      {
+        feature: 'profileReset',
+        enabled: false,
+      },
+      {
+        feature: 'todoList',
+        enabled: false,
+      },
+      {
+        feature: 'useNewDpsCaseNoteFormat',
+        enabled: false,
+      },
+      {
+        feature: 'whatsNewBanner',
+        enabled: false,
+      },
+      {
+        feature: 'assignCaseTab',
+        enabled: false,
+      },
+      {
+        feature: 'myCases',
+        enabled: false,
       },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
@@ -57,11 +105,59 @@ context('Generate PDF', () => {
   it('Plan your future PDF should have registration code, not appointments when viewAppointmentsEndUser=false', () => {
     const flagsDisabled = [
       {
+        feature: 'addAppointments',
+        enabled: false,
+      },
+      {
         feature: 'tasksView',
         enabled: true,
       },
       {
         feature: 'viewAppointmentsEndUser',
+        enabled: false,
+      },
+      {
+        feature: 'useNewDeliusCaseNoteFormat',
+        enabled: false,
+      },
+      {
+        feature: 'viewDocuments',
+        enabled: false,
+      },
+      {
+        feature: 'uploadDocuments',
+        enabled: false,
+      },
+      {
+        feature: 'includePastReleaseDates',
+        enabled: false,
+      },
+      {
+        feature: 'knowledgeVerification',
+        enabled: false,
+      },
+      {
+        feature: 'profileReset',
+        enabled: false,
+      },
+      {
+        feature: 'todoList',
+        enabled: false,
+      },
+      {
+        feature: 'useNewDpsCaseNoteFormat',
+        enabled: false,
+      },
+      {
+        feature: 'whatsNewBanner',
+        enabled: false,
+      },
+      {
+        feature: 'assignCaseTab',
+        enabled: false,
+      },
+      {
+        feature: 'myCases',
         enabled: false,
       },
     ]

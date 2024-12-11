@@ -12,6 +12,8 @@ export default class FeatureFlags {
 
   private s3 = new S3({ region: config.s3.featureFlag.region, forcePathStyle: true })
 
+  private featureFlags: Map<string, boolean> = null
+
   public static getInstance(): FeatureFlags {
     if (!FeatureFlags.instance) {
       FeatureFlags.instance = new FeatureFlags()
@@ -26,34 +28,51 @@ export default class FeatureFlags {
         Bucket: config.s3.featureFlag.bucketName,
         Key: `${config.s3.featureFlag.path}/${config.s3.featureFlag.filename}`.toLowerCase(),
       })
-      return command.Body.transformToString().then(async res => {
-        return JSON.parse(res) as Promise<Feature[]>
-      })
+      const data = await command.Body.transformToString()
+      return JSON.parse(data) as Feature[]
     } catch (err) {
-      logger.error(err, 'Error getting feature flags from S3')
-      return null
+      throw new Error('Error loading feature flags from S3')
     }
   }
 
-  public async getFeatureFlags(): Promise<Feature[]> {
+  private async loadFeatureFlags(): Promise<Feature[]> {
     if (!config.s3.featureFlag.enabled) {
       if (config.local.featureFlag.enabled) {
         logger.warn('Using local feature flags')
-        return loadLocalFlags()
+        return this.loadLocalFlags()
       }
-      logger.warn('Feature flags are disabled! Returning null.')
-      return null
+      logger.warn('Feature flags are disabled! Returning an empty list.')
+      return []
     }
     return this.fetchFeatureFlagsFromS3()
   }
+
+  private async loadLocalFlags(): Promise<Feature[]> {
+    const localFlags = await readFile(config.local.featureFlag.filename, { encoding: 'utf-8' })
+    return JSON.parse(localFlags)
+  }
+
+  public async initialize(): Promise<void> {
+    const featureFlags = await this.loadFeatureFlags()
+    this.featureFlags = new Map(featureFlags.map(flag => [flag.feature, flag.enabled]))
+  }
+
+  public getFeatureFlag(flag: string): boolean {
+    if (!this.featureFlags) {
+      throw new Error('FeatureFlags not available')
+    }
+    if (!this.featureFlags.has(flag)) {
+      throw new Error(`Feature "${flag}" does not exist.`)
+    }
+    return this.featureFlags.get(flag)!
+  }
+
+  public IsInitialized(): boolean {
+    return this.featureFlags != null
+  }
 }
 
-interface Feature {
+export interface Feature {
   feature: string
   enabled: boolean
-}
-
-async function loadLocalFlags(): Promise<Array<Feature>> {
-  const localFlags = await readFile(config.local.featureFlag.filename, { encoding: 'utf-8' })
-  return JSON.parse(localFlags)
 }

@@ -1,7 +1,7 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
-import { pageHeading, parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
+import { pageHeading, parseHtmlDocument, stubFeatureFlagToTrue, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
@@ -20,7 +20,7 @@ beforeEach(() => {
   app = appWithAllRoutes({})
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
-  jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'whatsNewBanner', enabled: true }])
+  stubFeatureFlagToTrue(featureFlags, ['whatsNewBanner'])
 })
 
 afterEach(() => {

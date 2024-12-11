@@ -93,8 +93,6 @@ exports[`completeAssessment when api returns error from complete assessment 1`] 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1224,8 +1222,6 @@ exports[`getView should throw error  when existing assessment in cache has no ve
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1397,8 +1393,6 @@ exports[`saveAnswerAndGetNextPage Uses no default version and throw error when t
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>

@@ -1,4 +1,4 @@
-import type { Request, Response, NextFunction } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 import type { HTTPError } from 'superagent'
 import logger from '../logger'
 import config from './config'
@@ -32,7 +32,10 @@ export default function createErrorHandler(production: boolean) {
 
     res.status(error.status || 500)
 
-    return res.render('pages/error')
+    // Defaulting this to off for error screen
+    const whatsNewBannerEnabled = false
+
+    return res.render('pages/error', { whatsNewBannerEnabled })
   }
 }
 

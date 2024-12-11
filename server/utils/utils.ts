@@ -12,7 +12,6 @@ import {
 } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
-import logger from '../../logger'
 import { AppointmentLocation } from '../data/model/appointment'
 import {
   Answer,
@@ -239,17 +238,9 @@ export async function getFeatureFlag(flag: string, callback: Callback<string, bo
 }
 
 export async function getFeatureFlagBoolean(flag: string) {
-  const featureFlags = FeatureFlags.getInstance()
-  const res = await featureFlags.getFeatureFlags()
-  if (res) {
-    const featureEnabled = res.find(feature => feature.feature === flag)?.enabled
-    if (featureEnabled !== undefined) {
-      return featureEnabled
-    }
-    return false // If feature is missing from map send back false
-  }
-  logger.warn(`No feature flags available, returning false for feature [${flag}].`)
-  return false
+  const featureFlagFile = FeatureFlags.getInstance()
+  if (!featureFlagFile.IsInitialized()) await featureFlagFile.initialize()
+  return featureFlagFile.getFeatureFlag(flag)
 }
 
 export function formatAddress(location: AppointmentLocation): string {
