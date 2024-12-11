@@ -223,7 +223,13 @@ export class AssessmentStateService {
   }
 
   async getWorkingAssessmentVersion(stateKey: StateKey) {
-    return (await this.store.getWorkingAssessment(stateKey)).assessment.version
+    const { version } = (await this.store.getWorkingAssessment(stateKey)).assessment
+    if (version === undefined) {
+      throw new Error(
+        `Unable to fetch version for User Id : ${stateKey.userId} and AssessmentType : ${stateKey.assessmentType}`,
+      )
+    }
+    return version
   }
 
   async resetWorkingCacheToBackupCache(stateKey: StateKey) {
