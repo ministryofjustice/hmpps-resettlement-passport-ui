@@ -77,7 +77,7 @@ export default class ImmediateNeedsReportController {
           workingCachedAssessment.assessment,
           currentPageId,
           assessmentType,
-          workingCachedAssessment.assessment.version || 1,
+          workingCachedAssessment.assessment.version,
         )
 
         if (nextPage.error) {
@@ -119,7 +119,7 @@ export default class ImmediateNeedsReportController {
         pathway as string,
         currentPageId,
         assessmentType,
-        existingWorkingAssessmentVersion || 1,
+        existingWorkingAssessmentVersion,
       )
 
       const editQueryString = edit ? '&edit=true' : ''
@@ -148,7 +148,7 @@ export default class ImmediateNeedsReportController {
         dataToSubmit as CachedAssessment,
         currentPageId,
         assessmentType,
-        assessmentFromCache.assessment.version || 1,
+        assessmentFromCache.assessment.version,
       )
 
       if (!nextPage.error) {
@@ -221,7 +221,7 @@ export default class ImmediateNeedsReportController {
         pathway as string,
         currentPageId,
         assessmentType,
-        existingWorkingAssessmentVersion || 1,
+        existingWorkingAssessmentVersion,
       )
 
       if (apiAssessmentPage.error) {

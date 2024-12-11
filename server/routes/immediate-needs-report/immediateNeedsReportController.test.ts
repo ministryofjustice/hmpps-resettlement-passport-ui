@@ -156,7 +156,7 @@ describe('getFirstPage', () => {
 })
 
 describe('getView', () => {
-  it('should use version 1 when existing assessment in cache has no version', async () => {
+  it('should throw error  when existing assessment in cache has no version', async () => {
     const stateKey = {
       assessmentType: 'BCST2',
       prisonerNumber: 'A1234DY',
@@ -166,63 +166,20 @@ describe('getView', () => {
 
     const getWorkingAssessmentVersionSpy = jest
       .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
-      .mockResolvedValue(undefined)
-
-    const apiAssessmentPage = {
-      id: 'MY_PAGE',
-      title: 'My page',
-      questionsAndAnswers: [
-        {
-          question: {
-            id: 'QUESTION_1',
-            title: 'Question 1',
-            type: 'LONG_TEXT',
-          },
-          originalPageId: 'MY_PAGE',
-        },
-      ],
-    } as ApiAssessmentPage
-    const getAssessmentPageSpy = jest.spyOn(rpService, 'getAssessmentPage').mockResolvedValue(apiAssessmentPage)
-
-    const checkForConvergenceSpy = jest.spyOn(assessmentStateService, 'checkForConvergence').mockResolvedValue(false)
-
-    const updatePageLoadHistorySpy = jest.spyOn(assessmentStateService, 'updatePageLoadHistory').mockImplementation()
-
-    const mergedQuestionsAndAnswers = [
-      {
-        question: 'QUESTION_1',
-        questionTitle: 'Question 1',
-        pageId: 'PAGE_1',
-        questionType: 'LONG_TEXT',
-        answer: {
-          answer: 'Some long text here',
-          displayText: 'Some long text here',
-          '@class': 'StringAnswer',
-        },
-      },
-    ] as CachedQuestionAndAnswer[]
-    const getMergedQuestionsAndAnswersSpy = jest
-      .spyOn(assessmentStateService, 'getMergedQuestionsAndAnswers')
-      .mockResolvedValue(mergedQuestionsAndAnswers)
+      .mockRejectedValue(
+        new Error(
+          `Unable to fetch version for User Id : ${stateKey.userId} and AssessmentType: ${stateKey.assessmentType}`,
+        ),
+      )
 
     await request(app)
       .get(
         `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/THE_PAGE?prisonerNumber=${stateKey.prisonerNumber}&pathway=${stateKey.pathway}&type=BCST2`,
       )
-      .expect(200)
+      .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
-    expect(getAssessmentPageSpy).toHaveBeenCalledWith(stateKey.prisonerNumber, stateKey.pathway, 'THE_PAGE', 'BCST2', 1)
-    expect(checkForConvergenceSpy).toHaveBeenCalledWith(stateKey, {
-      pageId: 'MY_PAGE',
-      questions: ['QUESTION_1'],
-    })
-    expect(updatePageLoadHistorySpy).toHaveBeenCalledWith(stateKey, {
-      pageId: 'MY_PAGE',
-      questions: ['QUESTION_1'],
-    })
-    expect(getMergedQuestionsAndAnswersSpy).toHaveBeenCalledWith(stateKey, apiAssessmentPage.questionsAndAnswers)
   })
 
   it('get check your answers - v1 of report', async () => {
@@ -1392,7 +1349,7 @@ describe('startEdit', () => {
 })
 
 describe('saveAnswerAndGetNextPage', () => {
-  it('Uses default version 1 when there is no version in the cache', async () => {
+  it('Uses version 2 from the cache', async () => {
     const apiAssessmentPage: ApiAssessmentPage = {
       id: 'PAGE_1',
       title: 'Page 1 title',
@@ -1431,7 +1388,7 @@ describe('saveAnswerAndGetNextPage', () => {
 
     const getWorkingAssessmentVersionSpy = jest
       .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
-      .mockResolvedValue(undefined)
+      .mockResolvedValue(2)
     const getAssessmentPageSpy = jest.spyOn(rpService, 'getAssessmentPage').mockResolvedValue(apiAssessmentPage)
 
     const answerSpy = jest.spyOn(assessmentStateService, 'answer').mockImplementation()
@@ -1464,7 +1421,7 @@ describe('saveAnswerAndGetNextPage', () => {
     }
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
-    expect(getAssessmentPageSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 1)
+    expect(getAssessmentPageSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION', 'PAGE_1', 'BCST2', 2)
     expect(answerSpy).toHaveBeenCalledWith(stateKey, workingAssessment.assessment, apiAssessmentPage)
     expect(getWorkingAssessmentSpy).toHaveBeenCalledWith(stateKey)
     expect(fetchNextPageSpy).toHaveBeenCalledWith(
@@ -1473,8 +1430,38 @@ describe('saveAnswerAndGetNextPage', () => {
       workingAssessment.assessment,
       'PAGE_1',
       'BCST2',
-      1,
+      null,
     )
+  })
+
+  it('Uses no default version and throw error when there is no version in the cache', async () => {
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: 'A1234DY',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    const getWorkingAssessmentVersionSpy = jest
+      .spyOn(assessmentStateService, 'getWorkingAssessmentVersion')
+      .mockRejectedValue(
+        new Error(
+          `Unable to fetch version for User Id : ${stateKey.userId} and AssessmentType: ${stateKey.assessmentType}`,
+        ),
+      )
+
+    await request(app)
+      .post('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=A1234DY')
+      .send({
+        assessmentType: 'BCST2',
+        pathway: 'ACCOMMODATION',
+        currentPageId: 'PAGE_1',
+        QUESTION_1: 'Answer text',
+      })
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
   })
   it('Validation errors', async () => {
     const apiAssessmentPage: ApiAssessmentPage = {
