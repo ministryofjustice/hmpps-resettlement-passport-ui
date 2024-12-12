@@ -21,6 +21,10 @@ export default class FeatureFlags {
     return FeatureFlags.instance
   }
 
+  static resetInstance(): void {
+    FeatureFlags.instance = null
+  }
+
   @Cache(featureFlagCache, { ttl: 120 })
   private async fetchFeatureFlagsFromS3(): Promise<Feature[]> {
     try {
