@@ -34,7 +34,7 @@
             {% for worker in workerList.assignedList %}
               <tr class="govuk-table__row govuk-table__row--selected">
                 <td class="govuk-table__cell">
-                    <span class="no-wrap">{{ worker.firstName }} {{ worker.lastName }}</span>
+                    <span class="no-wrap">{{ worker.lastName }}, {{ worker.firstName }}</span>
                 </td>
                 <td class="govuk-table__cell">
                     <span class="no-wrap">{{ worker.casesAssigned }}</span>
