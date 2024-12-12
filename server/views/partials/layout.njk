@@ -9,7 +9,9 @@
 {% from "../macros/tasks-details.njk" import tasksDetails %}
 {% from "../macros/pathway-subnav.njk" import subNav %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{% set whatsNewBannerEnabled = features.WHATS_NEW_BANNER | getFeatureFlag %}
+{% if whatsNewBannerEnabled is undefined %}
+    {% set whatsNewBannerEnabled = features.WHATS_NEW_BANNER | getFeatureFlag %}
+{% endif %}
 
 {% if whatsNewBannerEnabled %}
 {% set feedbackText %}This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"

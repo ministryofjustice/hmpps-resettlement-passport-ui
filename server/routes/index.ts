@@ -28,10 +28,12 @@ import serviceUpdates from './service-updates'
 import assignCaseRouter from './assign-case'
 import staffCapacityRouter from './staff-capacity'
 import caseNoteRouter from './case-note'
+import featureFlagMiddleware from './featureFlagMiddleware'
 
 export default function routes(services: Services): Router {
   const router = Router()
   router.use(configMiddleware())
+  router.use(featureFlagMiddleware())
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
   attitudesThinkingBehaviourRouter(router, services)

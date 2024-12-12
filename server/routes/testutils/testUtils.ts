@@ -3,6 +3,7 @@ import supertest from 'supertest'
 import { PrisonerData } from '../../@types/express'
 import RpService from '../../services/rpService'
 import { PrisonersList } from '../../data/model/prisoners'
+import FeatureFlags from '../../featureFlag'
 
 export function stubPrisonerDetails(rpService: RpService, releaseDate: string = null, dateOfBirth: string = null) {
   jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
@@ -687,4 +688,14 @@ export function expectPrisonerNotFoundPage(res: supertest.Response) {
 
 export function redirectedToPath(res: supertest.Response): string {
   return res.headers.location
+}
+
+export function stubFeatureFlagToFalse(featureFlags: FeatureFlags) {
+  jest.spyOn(featureFlags, 'getFeatureFlag').mockImplementation(() => false)
+}
+
+export function stubFeatureFlagToTrue(featureFlags: FeatureFlags, flagsToMock: string[]) {
+  jest.spyOn(featureFlags, 'getFeatureFlag').mockImplementation((flag: string) => {
+    return flagsToMock.includes(flag)
+  })
 }

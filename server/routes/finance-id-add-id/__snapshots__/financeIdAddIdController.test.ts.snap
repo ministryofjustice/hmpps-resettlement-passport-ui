@@ -9977,8 +9977,6 @@ exports[`getAddAnIdView Error case - submit ID application without type or date 
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -10956,8 +10954,6 @@ exports[`getAddAnIdView Get add ID application invalid prisoner number with spec
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -13139,8 +13135,6 @@ exports[`getAddAnIdView error case - error from API 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>

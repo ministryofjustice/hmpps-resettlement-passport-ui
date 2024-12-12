@@ -5,8 +5,60 @@ context('ResetProfile', () => {
     cy.task('stubAuthUser')
     const flagsEnabled = [
       {
+        feature: 'addAppointments',
+        enabled: false,
+      },
+      {
+        feature: 'tasksView',
+        enabled: true,
+      },
+      {
+        feature: 'viewAppointmentsEndUser',
+        enabled: false,
+      },
+      {
+        feature: 'useNewDeliusCaseNoteFormat',
+        enabled: false,
+      },
+      {
+        feature: 'viewDocuments',
+        enabled: false,
+      },
+      {
+        feature: 'uploadDocuments',
+        enabled: false,
+      },
+      {
+        feature: 'includePastReleaseDates',
+        enabled: false,
+      },
+      {
+        feature: 'knowledgeVerification',
+        enabled: false,
+      },
+      {
         feature: 'profileReset',
         enabled: true,
+      },
+      {
+        feature: 'todoList',
+        enabled: false,
+      },
+      {
+        feature: 'useNewDpsCaseNoteFormat',
+        enabled: false,
+      },
+      {
+        feature: 'whatsNewBanner',
+        enabled: false,
+      },
+      {
+        feature: 'assignCaseTab',
+        enabled: false,
+      },
+      {
+        feature: 'myCases',
+        enabled: false,
       },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))

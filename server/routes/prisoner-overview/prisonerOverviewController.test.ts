@@ -5,7 +5,13 @@ import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import Config from '../../s3Config'
 import FeatureFlags from '../../featureFlag'
 import { configHelper, defaultTestConfig } from '../configHelperTest'
-import { expectPrisonerNotFoundPage, stubPrisonerDetails, stubPrisonerOverviewData } from '../testutils/testUtils'
+import {
+  expectPrisonerNotFoundPage,
+  stubFeatureFlagToFalse,
+  stubFeatureFlagToTrue,
+  stubPrisonerDetails,
+  stubPrisonerOverviewData,
+} from '../testutils/testUtils'
 import { PrisonerData } from '../../@types/express'
 import { Services } from '../../services'
 
@@ -112,7 +118,7 @@ describe('prisonerOverview', () => {
   })
 
   it('should display add to your cases when enabled', async () => {
-    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'myCases', enabled: true }])
+    stubFeatureFlagToTrue(featureFlags, ['myCases'])
     stubPrisonerOverviewData(rpService)
 
     await request(app)
@@ -122,7 +128,7 @@ describe('prisonerOverview', () => {
   })
 
   it('should not display add to your cases when disabled', async () => {
-    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'myCases', enabled: false }])
+    stubFeatureFlagToFalse(featureFlags)
     stubPrisonerOverviewData(rpService)
 
     await request(app)
@@ -132,7 +138,7 @@ describe('prisonerOverview', () => {
   })
 
   it('should display remove from your cases when enabled and in cases', async () => {
-    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([{ feature: 'myCases', enabled: true }])
+    stubFeatureFlagToTrue(featureFlags, ['myCases'])
     jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
       personalDetails: {
         prisonerNumber: 'A1234DY',

@@ -3,6 +3,7 @@ import { RPClient } from '../data'
 import RpService from './rpService'
 import { AssessmentSkipRequest } from '../data/model/assessmentInformation'
 import FeatureFlags from '../featureFlag'
+import { stubFeatureFlagToTrue } from '../routes/testutils/testUtils'
 
 jest.mock('../../logger')
 jest.mock('../data')
@@ -151,10 +152,7 @@ describe('RpService', () => {
 
   it('should call submit assessment with useNewDpsCaseNoteFormat set to false if feature flag is off', async () => {
     const spy = jest.spyOn(rpClient, 'post').mockResolvedValue({})
-    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([
-      { feature: 'useNewDeliusCaseNoteFormat', enabled: true },
-      { feature: 'useNewDpsCaseNoteFormat', enabled: false },
-    ])
+    stubFeatureFlagToTrue(featureFlags, ['useNewDeliusCaseNoteFormat'])
     const result = await service.submitAssessment('123', 'BCST2')
     expect(result).toEqual({})
     expect(spy).toHaveBeenCalledWith(
@@ -165,10 +163,7 @@ describe('RpService', () => {
 
   it('should call submit assessment with useNewDpsCaseNoteFormat set to true if feature flag is on', async () => {
     const spy = jest.spyOn(rpClient, 'post').mockResolvedValue({})
-    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([
-      { feature: 'useNewDeliusCaseNoteFormat', enabled: true },
-      { feature: 'useNewDpsCaseNoteFormat', enabled: true },
-    ])
+    stubFeatureFlagToTrue(featureFlags, ['useNewDeliusCaseNoteFormat', 'useNewDpsCaseNoteFormat'])
     const result = await service.submitAssessment('123', 'BCST2')
     expect(result).toEqual({})
     expect(spy).toHaveBeenCalledWith(
@@ -179,10 +174,7 @@ describe('RpService', () => {
 
   it('should call submit assessment and any exception sets the error flag', async () => {
     const spy = jest.spyOn(rpClient, 'post').mockRejectedValue(new Error('Something went wrong'))
-    jest.spyOn(featureFlags, 'getFeatureFlags').mockResolvedValue([
-      { feature: 'useNewDeliusCaseNoteFormat', enabled: true },
-      { feature: 'useNewDpsCaseNoteFormat', enabled: true },
-    ])
+    stubFeatureFlagToTrue(featureFlags, ['useNewDeliusCaseNoteFormat', 'useNewDpsCaseNoteFormat'])
     const result = await service.submitAssessment('123', 'BCST2')
     expect(result).toEqual({ error: true })
     expect(spy).toHaveBeenCalledWith(
