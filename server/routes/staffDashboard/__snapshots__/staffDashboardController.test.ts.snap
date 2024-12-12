@@ -3857,7 +3857,9 @@ exports[`getView Happy path with filter prisoner number 1`] = `
 "
 `;
 
-exports[`getView Happy path with filter prisoner number not exists 1`] = `
+exports[`getView Happy path with filter prisoner number not exists 1`] = `null`;
+
+exports[`getView Happy path with filter prisoner number not exists 2`] = `
 "<!DOCTYPE html>
 <html lang="en" class="govuk-template">
   <head>

@@ -6,6 +6,7 @@ import {
   stubFeatureFlagToTrue,
   stubPrisonerDetails,
   stubPrisonersList,
+  parseHtmlDocument,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
@@ -137,6 +138,10 @@ describe('getView', () => {
     await request(app)
       .get('/?releaseTime=84&pathwayView=&assessmentRequired=&searchInput=xxxx')
       .expect(200)
+      .expect(res => {
+        const document = parseHtmlDocument(res.text)
+        expect(document.getElementById('no-result-found')).toMatchSnapshot()
+      })
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith(
       'MDI',
