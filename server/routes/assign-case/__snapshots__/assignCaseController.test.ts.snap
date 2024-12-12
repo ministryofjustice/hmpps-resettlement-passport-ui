@@ -180,8 +180,8 @@ exports[`Happy path with filter parameters 1`] = `
                 <div class="govuk-form-group">
                   <label class="govuk-label" for="workerId">Assigned resettlement worker</label>
                   <select class="govuk-select filter-input" id="workerId" name="workerId">
-                    <option value="">All resettlement workers</option><option value="1" selected>Staff1First Staff1Last</option>
-                    <option value="2" >Staff2First Staff2Last</option>
+                    <option value="">All resettlement workers</option><option value="1" selected>Staff1Last, Staff1First</option>
+                    <option value="2" >Staff2Last, Staff2First</option>
                     
                     <option value="none" >Unassigned</option>
                    </select>
@@ -398,8 +398,8 @@ exports[`Happy path with filter parameters 1`] = `
                 <div class="govuk-form-group">
                   <label class="govuk-label" for="workerName">Resettlement worker</label>
                   <select class="govuk-select" id="workerName" name="staffId" required>
-                    <option value="">Choose a resettlement worker</option><option value="1">Staff1First Staff1Last</option>
-                    <option value="2">Staff2First Staff2Last</option>
+                    <option value="">Choose a resettlement worker</option><option value="1">Staff1Last, Staff1First</option>
+                    <option value="2">Staff2Last, Staff2First</option>
                     
                     <option value="_unassign">Unassign</option>
                   </select>
@@ -616,8 +616,8 @@ exports[`getView Happy path with default query params 1`] = `
                 <div class="govuk-form-group">
                   <label class="govuk-label" for="workerId">Assigned resettlement worker</label>
                   <select class="govuk-select filter-input" id="workerId" name="workerId">
-                    <option value="">All resettlement workers</option><option value="1" >Staff1First Staff1Last</option>
-                    <option value="2" >Staff2First Staff2Last</option>
+                    <option value="">All resettlement workers</option><option value="1" >Staff1Last, Staff1First</option>
+                    <option value="2" >Staff2Last, Staff2First</option>
                     
                     <option value="none" >Unassigned</option>
                    </select>
@@ -834,8 +834,8 @@ exports[`getView Happy path with default query params 1`] = `
                 <div class="govuk-form-group">
                   <label class="govuk-label" for="workerName">Resettlement worker</label>
                   <select class="govuk-select" id="workerName" name="staffId" required>
-                    <option value="">Choose a resettlement worker</option><option value="1">Staff1First Staff1Last</option>
-                    <option value="2">Staff2First Staff2Last</option>
+                    <option value="">Choose a resettlement worker</option><option value="1">Staff1Last, Staff1First</option>
+                    <option value="2">Staff2Last, Staff2First</option>
                     
                     <option value="_unassign">Unassign</option>
                   </select>
@@ -918,7 +918,7 @@ exports[`getView shows success dialog for assign 1`] = `
       </div>
       <div class="govuk-notification-banner__content">
         <h3 class="govuk-notification-banner__heading">You have successfully assigned the following people in prison to Joe Blogs:</h3>
-        <ul class="govuk-list govuk-list--bullet"><li>John Smith, A1234DY</li><li>Some Guy, G4161UF</li><li>A.n Other, G5384GE</li></ul><p>and 7 others</p></div>
+        <ul class="govuk-list govuk-list--bullet"><li>Smith, John, A1234DY</li><li>Guy, Some, G4161UF</li><li>Other, A.n, G5384GE</li></ul><p>and 7 others</p></div>
     </div>"
 `;
 
@@ -929,6 +929,6 @@ exports[`getView shows success dialog for unassign 1`] = `
       </div>
       <div class="govuk-notification-banner__content">
         <h3 class="govuk-notification-banner__heading">You have successfully unassigned the following people in prison:</h3>
-        <ul class="govuk-list govuk-list--bullet"><li>John Smith, A1234DY</li><li>Some Guy, G4161UF</li><li>A.n Other, G5384GE</li></ul><p>and 7 others</p></div>
+        <ul class="govuk-list govuk-list--bullet"><li>Smith, John, A1234DY</li><li>Some Guy, G4161UF</li><li>A.n Other, G5384GE</li></ul><p>and 7 others</p></div>
     </div>"
 `;

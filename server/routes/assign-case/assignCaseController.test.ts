@@ -146,7 +146,7 @@ describe('getView', () => {
       .expect(200)
       .query({
         allocationSuccess: true,
-        allocatedCases: ['John Smith, A1234DY', 'Some Guy, G4161UF', 'A.n Other, G5384GE'],
+        allocatedCases: ['Smith, John, A1234DY', 'Guy, Some, G4161UF', 'Other, A.n, G5384GE'],
         allocatedTo: 'Joe Blogs',
         allocatedOtherCount: 7,
       })
@@ -180,7 +180,7 @@ describe('getView', () => {
       .expect(200)
       .query({
         allocationSuccess: true,
-        allocatedCases: ['John Smith, A1234DY', 'Some Guy, G4161UF', 'A.n Other, G5384GE'],
+        allocatedCases: ['Smith, John, A1234DY', 'Some Guy, G4161UF', 'A.n Other, G5384GE'],
         allocatedTo: 'Joe Blogs',
         allocatedOtherCount: 7,
         isUnassign: true,
@@ -239,7 +239,7 @@ describe('post', () => {
 
     const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
-    expect(searchParams.getAll('allocatedCases')).toEqual(['John Smith, A1234DY'])
+    expect(searchParams.getAll('allocatedCases')).toEqual(['Smith, John, A1234DY'])
     expect(searchParams.get('allocationSuccess')).toEqual('true')
     expect(searchParams.get('allocatedTo')).toEqual('First Last')
 
@@ -272,9 +272,9 @@ describe('post', () => {
     const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(searchParams.getAll('allocatedCases')).toEqual([
-      'John Smith, A1234DY',
-      'Some Guy, G4161UF',
-      'A.n Other, G5384GE',
+      'Smith, John, A1234DY',
+      'Guy, Some, G4161UF',
+      'Other, A.n, G5384GE',
     ])
     expect(searchParams.get('allocationSuccess')).toEqual('true')
     expect(searchParams.get('allocatedTo')).toEqual('First Last')
@@ -310,7 +310,7 @@ describe('post', () => {
 
     const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
-    expect(searchParams.getAll('allocatedCases')).toEqual(['John Smith, A1234DY'])
+    expect(searchParams.getAll('allocatedCases')).toEqual(['Smith, John, A1234DY'])
     expect(searchParams.get('allocationSuccess')).toEqual('true')
     expect(searchParams.get('isUnassign')).toEqual('true')
 
@@ -336,9 +336,9 @@ describe('post', () => {
     const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(searchParams.getAll('allocatedCases')).toEqual([
-      'John Smith, A1234DY',
-      'Some Guy, G4161UF',
-      'A.n Other, G5384GE',
+      'Smith, John, A1234DY',
+      'Guy, Some, G4161UF',
+      'Other, A.n, G5384GE',
     ])
     expect(searchParams.get('allocationSuccess')).toEqual('true')
     expect(searchParams.get('isUnassign')).toEqual('true')

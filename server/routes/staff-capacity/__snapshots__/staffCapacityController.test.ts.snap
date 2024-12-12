@@ -518,7 +518,7 @@ exports[`getView Happy path 1`] = `
             
               <tr class="govuk-table__row govuk-table__row--selected">
                 <td class="govuk-table__cell">
-                    <span class="no-wrap">Joe Bloggs</span>
+                    <span class="no-wrap">Bloggs, Joe</span>
                 </td>
                 <td class="govuk-table__cell">
                     <span class="no-wrap">10</span>

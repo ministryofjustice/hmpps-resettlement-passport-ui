@@ -120,7 +120,7 @@ export default class AssignCaseController {
     const namesAndIds = prisonerDetails.map(({ personalDetails }) => {
       const first = toTitleCase(personalDetails.firstName)
       const last = toTitleCase(personalDetails.lastName)
-      return `${first} ${last}, ${personalDetails.prisonerNumber}`
+      return `${last}, ${first}, ${personalDetails.prisonerNumber}`
     })
     return {
       allocationSuccess: true,

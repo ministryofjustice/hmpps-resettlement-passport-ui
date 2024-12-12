@@ -85,7 +85,7 @@
                   <select class="govuk-select filter-input" id="workerId" name="workerId">
                     <option value="">All resettlement workers</option>
                     {%- for worker in resettlementWorkers -%}
-                        <option value="{{ worker.staffId }}" {% if worker.staffId == workerId %}selected{% endif %}>{{ worker.firstName }} {{ worker.lastName }}</option>
+                        <option value="{{ worker.staffId }}" {% if worker.staffId == workerId %}selected{% endif %}>{{ worker.lastName }}, {{ worker.firstName }}</option>
                     {% endfor %}
                     <option value="none" {% if "none" == workerId %}selected{% endif %}>Unassigned</option>
                    </select>
@@ -173,9 +173,7 @@
                     </td>
                     <td class="govuk-table__cell">
                       {% if prisoner.assignedWorkerFirstname and prisoner.assignedWorkerLastname %}
-                        <span class="no-wrap"
-                          >{{ prisoner.assignedWorkerFirstname }} {{ prisoner.assignedWorkerLastname }}</span
-                        >
+                        <span class="no-wrap">{{ prisoner.assignedWorkerLastname }}, {{ prisoner.assignedWorkerFirstname }}</span>
                         <br />
                       {% else %}
                         – <span class="govuk-visually-hidden">No resettlement worker assigned</span>
@@ -295,7 +293,7 @@
                   <select class="govuk-select" id="workerName" name="staffId" required>
                     <option value="">Choose a resettlement worker</option>
                     {%- for worker in resettlementWorkers -%}
-                      <option value="{{ worker.staffId }}">{{ worker.firstName }} {{ worker.lastName }}</option>
+                      <option value="{{ worker.staffId }}">{{ worker.lastName }}, {{ worker.firstName }}</option>
                     {% endfor %}
                     <option value="_unassign">Unassign</option>
                   </select>
