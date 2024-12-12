@@ -6,7 +6,7 @@ import {
   stubFeatureFlagToTrue,
   stubPrisonerDetails,
   stubPrisonersList,
-  parseHtmlDocument,
+  stubNoPrisonersList,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
@@ -138,10 +138,6 @@ describe('getView', () => {
     await request(app)
       .get('/?releaseTime=84&pathwayView=&assessmentRequired=&searchInput=xxxx')
       .expect(200)
-      .expect(res => {
-        const document = parseHtmlDocument(res.text)
-        expect(document.getElementById('no-result-found')).toMatchSnapshot()
-      })
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith(
       'MDI',
@@ -205,7 +201,7 @@ describe('getView', () => {
   })
 
   it('Happy path with default query params with tabs nav', async () => {
-    const getPrisonerListSpy = stubPrisonersList(rpService)
+    const getPrisonerListSpy = stubNoPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates', 'assignCaseTab'])
     await request(app)
       .get('/')
