@@ -96,7 +96,15 @@
       </div>
     </form>
   </div>
-  {% if prisonersList %}
+  {% if prisonersList and prisonersList.totalElements === 0 %}
+    <b class="govuk-heading-m">No results found</b>
+    <p class="govuk-body">Improve your results by: </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>checking the name you have entered is spelt correctly</li>
+      <li>checking the prison number has been entered correctly</li>
+      <li>removing some filters</li>
+    </ul>
+  {% elseif prisonersList and prisonersList.totalElements > 0 %}
     <table class="govuk-table" id="prisonersTable">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
