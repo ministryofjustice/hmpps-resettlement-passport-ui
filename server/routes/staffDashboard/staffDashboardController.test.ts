@@ -6,6 +6,7 @@ import {
   stubFeatureFlagToTrue,
   stubPrisonerDetails,
   stubPrisonersList,
+  stubNoPrisonersList,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
@@ -200,7 +201,7 @@ describe('getView', () => {
   })
 
   it('Happy path with default query params with tabs nav', async () => {
-    const getPrisonerListSpy = stubPrisonersList(rpService)
+    const getPrisonerListSpy = stubNoPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates', 'assignCaseTab'])
     await request(app)
       .get('/')

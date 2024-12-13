@@ -667,6 +667,17 @@ export function stubPrisonerOverviewData(rpService: RpService) {
   ])
 }
 
+export function stubNoPrisonersList(rpService: RpService) {
+  const prisonerList: PrisonersList = {
+    content: [],
+    pageSize: 10,
+    page: 0,
+    sortName: 'releaseDate,ASC',
+    totalElements: 0,
+    last: true,
+  }
+  return jest.spyOn(rpService, 'getListOfPrisoners').mockResolvedValue(prisonerList)
+}
 export function parseHtmlDocument(documentText: string): Document {
   const { document } = new JSDOM(documentText).window
   return document
