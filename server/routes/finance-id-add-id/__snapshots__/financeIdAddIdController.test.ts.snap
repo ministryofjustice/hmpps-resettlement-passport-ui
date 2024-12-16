@@ -1225,9 +1225,11 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
           </div>
           
             <div id="overseasId" class="govuk-form-group govuk-form-group--error">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               
                 <p class="govuk-error-message">Select an option</p>
               
@@ -2143,9 +2145,11 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
           </div>
           
             <div id="overseasId" class="govuk-form-group govuk-form-group--error">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               
                 <p class="govuk-error-message">Select an option</p>
               
@@ -3063,9 +3067,11 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
           </div>
           
             <div id="overseasId" class="govuk-form-group govuk-form-group--error">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               
                 <p class="govuk-error-message">Select an option</p>
               
@@ -3981,9 +3987,11 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
           </div>
           
             <div id="overseasId" class="govuk-form-group govuk-form-group--error">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               
                 <p class="govuk-error-message">Select an option</p>
               
@@ -4899,9 +4907,11 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
           </div>
           
             <div id="overseasId" class="govuk-form-group ">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
@@ -5815,9 +5825,11 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
           </div>
           
             <div id="overseasId" class="govuk-form-group ">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
@@ -8367,9 +8379,11 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
           </div>
           
             <div id="overseasId" class="govuk-form-group ">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
@@ -9283,9 +9297,11 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
           </div>
           
             <div id="overseasId" class="govuk-form-group ">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               
               <div class="govuk-radios" data-module="govuk-radios">
                 <div class="govuk-radios__item">
