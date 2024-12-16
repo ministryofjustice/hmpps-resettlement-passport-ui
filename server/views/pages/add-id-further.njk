@@ -35,9 +35,11 @@
           </div>
           {% if not(params.idType === "Adoption certificate") %}
             <div id="overseasId" class="govuk-form-group {{ "govuk-form-group--error" if errorMsg.isUkNationalBornOverseas }}">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
-              </legend>
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                  <span class="govuk-fieldset__heading">Was a UK national born overseas?</span>
+                </legend>
+              </fieldset>
               {% if errorMsg.isUkNationalBornOverseas %}
                 <p class="govuk-error-message">{{ errorMsg.isUkNationalBornOverseas }}</p>
               {% endif %}
