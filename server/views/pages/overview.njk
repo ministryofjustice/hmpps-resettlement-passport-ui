@@ -14,6 +14,44 @@
 {% set resetProfileEnabled = features.RESET_PROFILE | getFeatureFlag %}
 {% set myCasesEnabled = features.MY_CASES | getFeatureFlag %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
+{%  set navArray = [{
+    name: "Resettlement statuses",
+    id: "status"
+    },
+    {
+        name: "Staff contacts",
+        id: "staff-contacts"
+    },
+    {
+        name: "Case notes",
+        id: "case-notes"
+    },
+    {
+        name: "Appointments",
+        id: "appointments"
+    },
+    {
+        name: "Licence conditions",
+        id: "licence-summary"
+    }]
+%}
+   {% if uploadDocumentsEnabled %}
+    {% set navArray = (navArray.push(
+    {
+        name: "Uploaded Documents",
+        id: "documents"
+    }
+    ), navArray)
+    %}
+   {% endif %}
+    {% set navArray = (navArray.push(
+    {
+        name: "Risk assessments and predictors",
+        id: "risk-assessments"
+    }
+    ), navArray)
+    %}
+
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
   {{ titleAndIntro(pathway) }}
@@ -29,34 +67,8 @@
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
-
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-      {{ subNav([
-        {
-          name: "Resettlement statuses",
-          id: "status"
-        },
-        {
-          name: "Staff contacts",
-          id: "staff-contacts"
-        },
-        {
-          name: "Case notes",
-          id: "case-notes"
-        },
-        {
-          name: "Licence conditions",
-          id: "licence-summary"
-        },
-        {
-          name: "Appointments",
-          id: "appointments"
-        },
-        {
-          name: "Risk assessments and predictors",
-          id: "risk-assessments"
-        }
-      ]) }}
+      {{ subNav(navArray) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
       <section id="status" class="app-summary-card govuk-!-margin-bottom-8">

@@ -327,7 +327,6 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
-
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
   <ul class="app-subnav__section">
@@ -347,11 +346,15 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
           </li>
         
           <li class="app-subnav__section-item">
+            <a href="#appointments">Appointments</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
             <a href="#licence-summary">Licence conditions</a>
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#appointments">Appointments</a>
+            <a href="#documents">Uploaded Documents</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -1509,7 +1512,6 @@ exports[`prisonerOverview should display add to your cases when enabled 1`] = `
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
-
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
   <ul class="app-subnav__section">
@@ -1529,11 +1531,11 @@ exports[`prisonerOverview should display add to your cases when enabled 1`] = `
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#licence-summary">Licence conditions</a>
+            <a href="#appointments">Appointments</a>
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#appointments">Appointments</a>
+            <a href="#licence-summary">Licence conditions</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -2647,7 +2649,6 @@ exports[`prisonerOverview should display remove from your cases when enabled and
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
-
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
   <ul class="app-subnav__section">
@@ -2667,11 +2668,11 @@ exports[`prisonerOverview should display remove from your cases when enabled and
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#licence-summary">Licence conditions</a>
+            <a href="#appointments">Appointments</a>
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#appointments">Appointments</a>
+            <a href="#licence-summary">Licence conditions</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -3779,7 +3780,6 @@ exports[`prisonerOverview should not display add to your cases when disabled 1`]
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
-
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
   <ul class="app-subnav__section">
@@ -3799,11 +3799,11 @@ exports[`prisonerOverview should not display add to your cases when disabled 1`]
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#licence-summary">Licence conditions</a>
+            <a href="#appointments">Appointments</a>
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#appointments">Appointments</a>
+            <a href="#licence-summary">Licence conditions</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -4930,7 +4930,6 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
-
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
   <ul class="app-subnav__section">
@@ -4950,11 +4949,15 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
           </li>
         
           <li class="app-subnav__section-item">
+            <a href="#appointments">Appointments</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
             <a href="#licence-summary">Licence conditions</a>
           </li>
         
           <li class="app-subnav__section-item">
-            <a href="#appointments">Appointments</a>
+            <a href="#documents">Uploaded Documents</a>
           </li>
         
           <li class="app-subnav__section-item">
