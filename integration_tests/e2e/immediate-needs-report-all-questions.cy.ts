@@ -79,7 +79,7 @@ context('Immediate Needs Report All Questions', () => {
     cy.get('#ADDRESS_QUESTION-address-postcode').type('postcode')
     cy.get('#LONG_TEXT_QUESTION').type('Random text')
     cy.get('#NESTED_RADIO_QUESTION_TYPES-NO_ANSWER').click()
-    cy.get('#CHECKBOX_QUESTION_WITH_EXCLUSIVE_OPTIONS-UNIVERSAL_CREDIT').click()
+    cy.get('label[for="CHECKBOX_QUESTION_WITH_EXCLUSIVE_OPTIONS-UNIVERSAL_CREDIT"]').click()
     clickContinue()
 
     // Check navigated to next question page
