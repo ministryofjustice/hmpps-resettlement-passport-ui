@@ -159,17 +159,18 @@ export class AssessmentStateService {
         mergedQuestionsAndAnswers.push(toCachedQuestionAndAnswer(qAndA))
       }
       // Find any answered nested question and add to cache if it's not present
-      const nestedAnsweredQuestion = qAndA.question.options
+      const nestedAnsweredQuestions = qAndA.question.options
         ?.flatMap(it => it.nestedQuestions)
-        .find(it => it?.answer?.answer)
-      if (nestedAnsweredQuestion) {
+        .filter(it => it?.answer?.answer)
+
+      nestedAnsweredQuestions?.forEach(nestedAnsweredQuestion => {
         const nestedQuestionAndAnswerFromCache = assessmentFromCache.assessment.questionsAndAnswers?.find(
           it => it?.question === nestedAnsweredQuestion?.question.id,
         )
         if (!nestedQuestionAndAnswerFromCache) {
           mergedQuestionsAndAnswers.push(toCachedQuestionAndAnswer(nestedAnsweredQuestion))
         }
-      }
+      })
     })
 
     return mergedQuestionsAndAnswers

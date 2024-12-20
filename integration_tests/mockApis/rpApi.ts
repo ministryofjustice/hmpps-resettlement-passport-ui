@@ -44,6 +44,7 @@ import editHealthAssessmentConvergingOnLastQuestion from './scenarios/john-smith
 import { validateAssessment } from './common'
 import { johnSmithResetProfile } from './scenarios/john-smith/john-smith-reset-profile'
 import { johnSmithLicenceImage, johnSmithReportInfo } from './scenarios/john-smith/john-smith-overview'
+import { johnSmithImmediateNeedsReportAllQuestionTypesCompleted } from './scenarios/john-smith/john-smith-immediate-needs-report-Completed'
 
 const getTomorrowsDate = () => {
   const tomorrow = new Date()
@@ -441,9 +442,10 @@ const stubJohnSmithImmediateNeedsReportEdit = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportEdit()])
 const stubJohnSmithImmediateNeedsReportAccommodation = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation()])
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const stubJohnSmithImmediateNeedsReportAllQuestionTypes = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAllQuestionTypes()])
+const stubJohnSmithImmediateNeedsReportAllQuestionTypesCompleted = () =>
+  Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAllQuestionTypesCompleted()])
 const stubJohnSmithPostFinanceAndID = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithPostFinanceAndID()])
 const stubJohnSmithGetFinanceAndID = () =>
@@ -882,6 +884,7 @@ export default {
   stubJohnSmithImmediateNeedsReportHealth,
   stubJohnSmithImmediateNeedsReportHealthFreeText,
   stubJohnSmithImmediateNeedsReportAllQuestionTypes,
+  stubJohnSmithImmediateNeedsReportAllQuestionTypesCompleted,
   stubJohnSmithImmediateNeedsReportEdit,
   stubJohnSmithImmediateNeedsReportAccommodation,
   stubJohnSmithPostFinanceAndID,

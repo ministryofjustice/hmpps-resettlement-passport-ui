@@ -794,6 +794,34 @@ describe('assessmentStateService', () => {
       expect(mergedItems).toContainEqual({ q: '2', a: 'API 2' })
       expect(mergedItems).toContainEqual({ q: '3', a: 'Cache 3' })
     })
+    it('Should merge multiple nested questions and answers', async () => {
+      const apiQAndA: ApiQuestionsAndAnswer[] = [
+        aQuestionAndAnswer('1', 'API 1'),
+        aQuestionAndAnswerWithNestedQuestions('2', 'API 2'),
+      ]
+
+      const workingAssessment: WorkingCachedAssessment = {
+        assessment: {
+          questionsAndAnswers: [aSubmittedQAndA('1', 'Cache 1'), aSubmittedQAndA('3', 'Cache 3')],
+          version: 1,
+        },
+        pageLoadHistory: [],
+      }
+
+      store.getWorkingAssessment.mockResolvedValueOnce(workingAssessment)
+
+      const merged = await assessmentStateService.getMergedQuestionsAndAnswers(aStateKey('ACCOMMODATION'), apiQAndA)
+
+      expect(merged).toHaveLength(5)
+      const mergedItems = merged.map(i => {
+        return { q: i.question, a: i.answer.answer }
+      })
+      expect(mergedItems).toContainEqual({ q: '1', a: 'Cache 1' })
+      expect(mergedItems).toContainEqual({ q: '2', a: 'API 2' })
+      expect(mergedItems).toContainEqual({ q: '3', a: 'Cache 3' })
+      expect(mergedItems).toContainEqual({ q: 'One-1', a: 'answer1' })
+      expect(mergedItems).toContainEqual({ q: 'One-2', a: 'answer2' })
+    })
   })
 
   describe('initialiseCache', () => {
@@ -1046,4 +1074,37 @@ function aSubmittedQAndA(id: string, answer: string): CachedQuestionAndAnswer {
       answer,
     },
   } as CachedQuestionAndAnswer
+}
+
+function aQuestionAndAnswerWithNestedQuestions(id: string, answer: string): ApiQuestionsAndAnswer {
+  return {
+    question: {
+      id,
+      options: [
+        {
+          id: 'One',
+          displayText: 'DisplayText1',
+          nestedQuestions: [
+            {
+              question: {
+                id: 'One-1',
+              },
+              answer: { answer: 'answer1' },
+              originalPageId: id,
+            },
+            {
+              question: {
+                id: 'One-2',
+              },
+              answer: { answer: 'answer2' },
+              originalPageId: id,
+            },
+          ],
+        },
+      ],
+    },
+    answer: {
+      answer,
+    },
+  } as ApiQuestionsAndAnswer
 }
