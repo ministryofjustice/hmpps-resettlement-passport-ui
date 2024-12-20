@@ -1334,7 +1334,7 @@ const nextPageHelpToKeepHome = () =>
     },
   })
 
-const nextPageStartAllQuestionTypes = () =>
+export const nextPageStartAllQuestionTypes = () =>
   stubFor({
     name: 'JohnSmith immediate needs report Accommodation Assessment Next Page 1',
     request: {
@@ -1407,7 +1407,7 @@ const singleQuestionOnPage = () =>
       },
     },
   })
-const postSingleQuestionOnAPage = () =>
+export const postSingleQuestionOnAPage = () =>
   stubFor({
     name: 'Submitted first question',
     request: {
@@ -1707,7 +1707,7 @@ const multipleQuestionsOnPage = () =>
       },
     },
   })
-const postMultipleQuestionsOnAPage = () =>
+export const postMultipleQuestionsOnAPage = () =>
   stubFor({
     name: 'Submitted second question',
     request: {
@@ -1788,7 +1788,7 @@ const divergentFlowOptions = () =>
       },
     },
   })
-const postDivergentFlowOptionYes = () =>
+export const postDivergentFlowOptionYes = () =>
   stubFor({
     name: 'Divergent flow option Yes',
     request: {
@@ -1869,7 +1869,7 @@ const divergentOptionYes = () =>
       },
     },
   })
-const postDivergentAnswerYes = () =>
+export const postDivergentAnswerYes = () =>
   stubFor({
     name: 'Divergent answer Yes',
     request: {
@@ -2016,7 +2016,7 @@ const mandatoryAndOptionalQuestionsPage = () =>
       },
     },
   })
-const postMandatoryAndOptionalQuestionsPage = () =>
+export const postMandatoryAndOptionalQuestionsPage = () =>
   stubFor({
     name: 'Mandatory and Option Questions answer',
     request: {
