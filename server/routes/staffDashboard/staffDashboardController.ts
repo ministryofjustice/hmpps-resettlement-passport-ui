@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
 import RpService from '../../services/rpService'
-import { getFeatureFlagBoolean } from '../../utils/utils'
+import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 
@@ -13,11 +13,12 @@ export default class StaffDashboardController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
+      const pageSize = 20
       const { userActiveCaseLoad } = res.locals
       const {
         searchInput = '',
         releaseTime = '0',
-        page = '0',
+        currentPage = '0',
         pathwayView = '',
         pathwayStatus = '',
         assessmentRequired = '',
@@ -28,7 +29,7 @@ export default class StaffDashboardController {
       } = req.query as {
         searchInput: string
         releaseTime: string
-        page: string
+        currentPage: string
         pathwayView: string
         pathwayStatus: string
         assessmentRequired: string
@@ -54,8 +55,8 @@ export default class StaffDashboardController {
           const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
           prisonersList = await this.rpService.getListOfPrisoners(
             userActiveCaseLoad.caseLoadId,
-            parseInt(page, 10),
-            20,
+            parseInt(currentPage, 10),
+            pageSize,
             <string>sortField,
             <string>sortDirection,
             <string>searchInput,
@@ -67,12 +68,14 @@ export default class StaffDashboardController {
             includePastReleaseDates,
           )
         }
+        const { page, totalElements } = prisonersList
+        const pagination = getPaginationPages(page, pageSize, totalElements)
         const view = new StaffDashboardView(
           prisonersList,
           errors,
           searchInput,
           releaseTime,
-          page,
+          pagination,
           pathwayView,
           modifiedPathwayStatus,
           sortField,

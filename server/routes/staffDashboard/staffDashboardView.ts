@@ -1,5 +1,6 @@
 import View, { ErrorMessage } from '../view'
 import { PrisonersList } from '../../data/model/prisoners'
+import { Pagination } from '../../data/model/pagination'
 
 export default class StaffDashboardView implements View {
   constructor(
@@ -7,7 +8,7 @@ export default class StaffDashboardView implements View {
     private readonly errors: ErrorMessage[],
     private readonly searchInput: string,
     private readonly releaseTime: string,
-    private readonly page: string,
+    private readonly pagination: Pagination,
     private readonly pathwayView: string,
     private readonly pathwayStatus: string,
     private readonly sortField: string,
@@ -24,7 +25,7 @@ export default class StaffDashboardView implements View {
     errors: ErrorMessage[]
     searchInput: string
     releaseTime: string
-    page: string
+    pagination: Pagination
     pathwayView: string
     pathwayStatus: string
     sortField: string
@@ -38,7 +39,7 @@ export default class StaffDashboardView implements View {
       errors: this.errors.length !== 0 ? this.errors : null,
       searchInput: this.searchInput,
       releaseTime: this.releaseTime,
-      page: this.page,
+      pagination: this.pagination,
       pathwayView: this.pathwayView,
       pathwayStatus: this.pathwayStatus,
       sortField: this.sortField,
