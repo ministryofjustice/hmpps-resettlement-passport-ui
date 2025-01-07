@@ -643,7 +643,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
                       aria-label="Page 1"
                     >
                       1
@@ -656,7 +656,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
                       aria-label="Page 2"
                     >
                       2
@@ -674,7 +674,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
                       aria-label="Page 5"
                     >
                       5
@@ -699,7 +699,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -1491,7 +1491,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
                       aria-label="Page 1"
                     >
                       1
@@ -1504,7 +1504,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
                       aria-label="Page 2"
                     >
                       2
@@ -1522,7 +1522,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
                       aria-label="Page 5"
                     >
                       5
@@ -1547,7 +1547,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -2080,7 +2080,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
                       aria-label="Page 1"
                     >
                       1
@@ -2093,7 +2093,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
                       aria-label="Page 2"
                     >
                       2
@@ -2111,7 +2111,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
                       aria-label="Page 5"
                     >
                       5
@@ -2136,7 +2136,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -2669,7 +2669,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 1"
                     >
                       1
@@ -2682,7 +2682,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 2"
                     >
                       2
@@ -2700,7 +2700,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 5"
                     >
                       5
@@ -2725,7 +2725,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -3268,7 +3268,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 1"
                     >
                       1
@@ -3281,7 +3281,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 2"
                     >
                       2
@@ -3299,7 +3299,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 5"
                     >
                       5
@@ -3324,7 +3324,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -3857,7 +3857,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
                       aria-label="Page 1"
                     >
                       1
@@ -3870,7 +3870,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
                       aria-label="Page 2"
                     >
                       2
@@ -3888,7 +3888,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
                       aria-label="Page 5"
                     >
                       5
@@ -3913,7 +3913,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -4446,7 +4446,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
                       aria-label="Page 1"
                     >
                       1
@@ -4459,7 +4459,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
                       aria-label="Page 2"
                     >
                       2
@@ -4477,7 +4477,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
                       aria-label="Page 5"
                     >
                       5
@@ -4502,7 +4502,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -5035,7 +5035,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
                       aria-label="Page 1"
                     >
                       1
@@ -5048,7 +5048,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
                       aria-label="Page 2"
                     >
                       2
@@ -5066,7 +5066,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
                       aria-label="Page 5"
                     >
                       5
@@ -5091,7 +5091,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -5624,7 +5624,7 @@ exports[`getView Happy path with sorting by name 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 1"
                     >
                       1
@@ -5637,7 +5637,7 @@ exports[`getView Happy path with sorting by name 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 2"
                     >
                       2
@@ -5655,7 +5655,7 @@ exports[`getView Happy path with sorting by name 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?currentPage=4&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
                       aria-label="Page 5"
                     >
                       5
@@ -5680,7 +5680,7 @@ exports[`getView Happy path with sorting by name 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?currentPage=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">

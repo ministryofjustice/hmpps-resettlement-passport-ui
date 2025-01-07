@@ -18,7 +18,7 @@ export default class StaffDashboardController {
       const {
         searchInput = '',
         releaseTime = '0',
-        currentPage = '0',
+        page: currentPage = '0',
         pathwayView = '',
         pathwayStatus = '',
         assessmentRequired = '',
@@ -29,7 +29,7 @@ export default class StaffDashboardController {
       } = req.query as {
         searchInput: string
         releaseTime: string
-        currentPage: string
+        page: string
         pathwayView: string
         pathwayStatus: string
         assessmentRequired: string
@@ -51,6 +51,7 @@ export default class StaffDashboardController {
       try {
         handleWhatsNewBanner(req, res)
         // Only NOMIS users can access the list prisoners functionality at present
+        let pagination = null
         if (res.locals.user.authSource === 'nomis') {
           const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
           prisonersList = await this.rpService.getListOfPrisoners(
@@ -67,9 +68,9 @@ export default class StaffDashboardController {
             <string>watchList,
             includePastReleaseDates,
           )
+          const { page, totalElements } = prisonersList
+          pagination = getPaginationPages(page, pageSize, totalElements)
         }
-        const { page, totalElements } = prisonersList
-        const pagination = getPaginationPages(page, pageSize, totalElements)
         const view = new StaffDashboardView(
           prisonersList,
           errors,
