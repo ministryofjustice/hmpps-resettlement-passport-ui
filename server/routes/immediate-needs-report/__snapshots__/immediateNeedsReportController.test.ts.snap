@@ -92,7 +92,7 @@ exports[`completeAssessment when api returns error from complete assessment 1`] 
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -144,7 +144,7 @@ exports[`completeAssessment when api returns error from complete assessment 1`] 
           
   <h2></h2>
   <pre></pre>
-  <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
+  <p>Please try again. <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QQV2UP">Contact us</a> if the problem still occurs</p>
 
         </main>
       </div>
@@ -262,7 +262,7 @@ exports[`getView get check your answers - v1 of report 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -576,7 +576,7 @@ exports[`getView get check your answers - v2 of report 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -925,7 +925,7 @@ exports[`getView optional text appears 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -1221,7 +1221,7 @@ exports[`getView should throw error  when existing assessment in cache has no ve
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -1273,7 +1273,7 @@ exports[`getView should throw error  when existing assessment in cache has no ve
           
   <h2></h2>
   <pre></pre>
-  <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
+  <p>Please try again. <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QQV2UP">Contact us</a> if the problem still occurs</p>
 
         </main>
       </div>
@@ -1392,7 +1392,7 @@ exports[`saveAnswerAndGetNextPage Uses no default version and throw error when t
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -1444,7 +1444,7 @@ exports[`saveAnswerAndGetNextPage Uses no default version and throw error when t
           
   <h2></h2>
   <pre></pre>
-  <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
+  <p>Please try again. <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QQV2UP">Contact us</a> if the problem still occurs</p>
 
         </main>
       </div>
@@ -1562,7 +1562,7 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>

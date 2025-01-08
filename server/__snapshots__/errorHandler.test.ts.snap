@@ -92,7 +92,7 @@ exports[`GET 404 should render content with stack in dev mode 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -153,7 +153,7 @@ exports[`GET 404 should render content with stack in dev mode 1`] = `
     at /
     at /
     at /
-  <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
+  <p>Please try again. <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QQV2UP">Contact us</a> if the problem still occurs</p>
 
         </main>
       </div>
@@ -272,7 +272,7 @@ exports[`GET 404 should render content without stack in production mode 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -324,7 +324,7 @@ exports[`GET 404 should render content without stack in production mode 1`] = `
           
   <h2></h2>
   <pre></pre>
-  <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
+  <p>Please try again. <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QQV2UP">Contact us</a> if the problem still occurs</p>
 
         </main>
       </div>
@@ -434,7 +434,7 @@ exports[`GET 404 should render something went wrong page 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -486,7 +486,7 @@ exports[`GET 404 should render something went wrong page 1`] = `
           
   <h2></h2>
   <pre></pre>
-  <p>Please try again. <a class="govuk-link" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">Contact us</a> if the problem still occurs</p>
+  <p>Please try again. <a class="govuk-link" href="https://www.smartsurvey.co.uk/s/QQV2UP">Contact us</a> if the problem still occurs</p>
 
         </main>
       </div>

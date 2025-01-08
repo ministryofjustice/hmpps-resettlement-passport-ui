@@ -92,7 +92,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -1288,7 +1288,7 @@ exports[`prisonerOverview should display add to your cases when enabled 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -2427,7 +2427,7 @@ exports[`prisonerOverview should display remove from your cases when enabled and
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -3564,7 +3564,7 @@ exports[`prisonerOverview should not display add to your cases when disabled 1`]
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
     </span>
   </p>
 </div>
@@ -4695,7 +4695,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -5812,7 +5812,7 @@ exports[`prisonerOverview should render whats new banner when it is enabled 1`] 
 
     <p>
       Let us know what you think of these changes using our
-      <a class="govuk-link" target="_blank" rel="noopener noreferrer" href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback form</a>.
+      <a class="govuk-link" target="_blank" rel="noopener noreferrer" href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback form</a>.
     </p>
   </div>
       </div>
