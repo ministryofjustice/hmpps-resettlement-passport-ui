@@ -167,6 +167,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   WHATS_NEW_BANNER: 'whatsNewBanner',
   ASSIGN_CASE_TAB: 'assignCaseTab',
   MY_CASES: 'myCases',
+  SUPPORT_NEEDS: 'supportNeeds',
 }
 
 export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'

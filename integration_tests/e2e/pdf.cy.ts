@@ -84,6 +84,10 @@ context('Generate PDF', () => {
         feature: 'myCases',
         enabled: false,
       },
+      {
+        feature: 'supportNeeds',
+        enabled: true,
+      },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
 
@@ -159,6 +163,10 @@ context('Generate PDF', () => {
       {
         feature: 'myCases',
         enabled: false,
+      },
+      {
+        feature: 'supportNeeds',
+        enabled: true,
       },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsDisabled))

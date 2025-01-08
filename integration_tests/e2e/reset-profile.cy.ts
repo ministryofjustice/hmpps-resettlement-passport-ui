@@ -60,6 +60,10 @@ context('ResetProfile', () => {
         feature: 'myCases',
         enabled: false,
       },
+      {
+        feature: 'supportNeeds',
+        enabled: true,
+      },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
   })
