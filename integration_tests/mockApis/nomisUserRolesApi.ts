@@ -76,7 +76,7 @@ const getStaffDetails = (staffId = 485588) =>
     },
   })
 
-const stubUser = (name: string, nomis: boolean = false) =>
+const stubUser = (name: string, nomis: boolean = true) =>
   stubFor({
     request: {
       method: 'GET',

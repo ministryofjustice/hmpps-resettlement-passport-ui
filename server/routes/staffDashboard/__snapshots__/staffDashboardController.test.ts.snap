@@ -621,51 +621,117 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     
@@ -914,15 +980,15 @@ exports[`getView Happy path with default query params with tabs nav 1`] = `
     </form>
   </div>
   
-<div id="no-result-found">
-    <b class="govuk-heading-m">No results found</b>
-    <p class="govuk-body">Improve your results by: </p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>checking the name you have entered is spelt correctly</li>
-      <li>checking the prison number has been entered correctly</li>
-      <li>removing some filters</li>
-    </ul>
-</div>
+    <div id="no-result-found">
+      <b class="govuk-heading-m">No results found</b>
+      <p class="govuk-body">Improve your results by: </p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>checking the name you have entered is spelt correctly</li>
+        <li>checking the prison number has been entered correctly</li>
+        <li>removing some filters</li>
+      </ul>
+    </div>
   
 
         </div>
@@ -1403,51 +1469,117 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=&releaseTime=0&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     
@@ -1926,51 +2058,117 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=true">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired=true"
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     
@@ -2449,51 +2647,117 @@ exports[`getView Happy path with filter  watchList true 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     
@@ -2982,51 +3246,117 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     
@@ -3505,51 +3835,117 @@ exports[`getView Happy path with filter prisoner number 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=A1234DY&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     
@@ -4028,51 +4424,117 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=xxxx&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     
@@ -4551,51 +5013,117 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=2&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=3&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=&releaseTime=168&page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     
@@ -5074,51 +5602,117 @@ exports[`getView Happy path with sorting by name 1`] = `
   </tbody>
 
     </table>
-    
-      
-      
-      
-      
-      <nav class="moj-pagination" aria-label="Pagination navigation">
-        <ul class="moj-pagination__list">
-          
-          
-            
-              <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 5">1</li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 2 of 5">2</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=2&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 3 of 5">3</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=3&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 4 of 5">4</a>
-              </li>
-            
-            
-              <li class="moj-pagination__item">
-                <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=4&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=" aria-label="Page 5 of 5">5</a>
-              </li>
-            
-          
-            <li class="moj-pagination__item  moj-pagination__item--next">
-              <a class="moj-pagination__link" href="/?searchInput=&releaseTime=84&page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=">Next<span class="govuk-visually-hidden"> page</span></a>
-            </li>
-          
-        </ul>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
         
+          <nav class="govuk-pagination" aria-label="Pagination">
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+            
+            <ul class="govuk-pagination__list">
+              
+                
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--current">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 1"
+                    >
+                      1
+                    </a>
+                  </li>
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 2"
+                    >
+                      2
+                    </a>
+                  </li>
+                
+              
+                
+                  <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
+                
+                
+              
+                
+                
+                  <li class="govuk-pagination__item ">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      aria-label="Page 5"
+                    >
+                      5
+                    </a>
+                  </li>
+                
+              
+                
+                
+              
+            </ul>
+            
+              
+            
+              
+            
+              
+            
+              
+            
+              
+                <div class="govuk-pagination__next">
+                  <a
+                    class="govuk-link govuk-pagination__link"
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                    rel="next"
+                  >
+                    <span class="govuk-pagination__link-title">
+                      Next<span class="govuk-visually-hidden"> page</span>
+                    </span>
+                    <svg
+                      class="govuk-pagination__icon govuk-pagination__icon--next"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="13"
+                      width="15"
+                      aria-hidden="true"
+                      focusable="false"
+                      viewBox="0 0 15 13"
+                    >
+                      <path
+                        d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                      ></path>
+                    </svg>
+                  </a>
+                </div>
+              
+            
+          </nav>
         
-          
-        
-        <p class="moj-pagination__results">Showing <b>1</b> to <b>20</b> of <b>92</b> results</p>
-      </nav>
-    
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <p class="pagination-results">
+          Showing <b>1</b> to <b>20</b> of
+          <b>92</b> results
+        </p>
+      </div>
+    </div>
   
 
     

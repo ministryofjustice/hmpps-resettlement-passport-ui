@@ -1,5 +1,6 @@
 import { stubFor } from '../../wiremock'
 import { responseHeaders } from '../../headers'
+import { defaultPrisonersSearch } from '../prisonersSearch'
 
 export const johnSmithImage = () =>
   stubFor({
@@ -380,6 +381,7 @@ export const getResettlementAssessmentVersion = (pathway: string, assessmentType
 }
 
 export const johnSmithDefaults = () => [
+  defaultPrisonersSearch(),
   johnSmithImage(),
   johnSmithStaffContacts(),
   johnSmithCaseNotes(),
