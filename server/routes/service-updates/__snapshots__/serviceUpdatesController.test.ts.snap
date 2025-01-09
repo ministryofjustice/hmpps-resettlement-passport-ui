@@ -144,7 +144,7 @@ exports[`ServiceUpdatesController getView should render the service updates page
       <div class="govuk-grid-column-two-thirds">
         <div class="govuk-summary-card">
           <div class="govuk-summary-card__title-wrapper">
-            <h2 class="govuk-summary-card__title">10 Dec 2024</h2>
+            <h2 class="govuk-summary-card__title">14 Jan 2025</h2>
           </div>
           <div class="govuk-summary-card__content">
             <p class="govuk-body">You can now:</p>
