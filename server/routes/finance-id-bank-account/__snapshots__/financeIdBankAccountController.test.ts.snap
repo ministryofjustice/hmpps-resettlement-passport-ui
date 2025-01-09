@@ -92,7 +92,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -483,7 +483,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -874,7 +874,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -1234,7 +1234,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -1625,7 +1625,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -2016,7 +2016,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -2407,7 +2407,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -2749,7 +2749,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -3091,7 +3091,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -3433,7 +3433,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -3775,7 +3775,7 @@ exports[`postBankAccountUpdateView error - API rejects submission 1`] = `
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>

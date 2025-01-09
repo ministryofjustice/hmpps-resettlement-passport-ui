@@ -170,6 +170,6 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   SUPPORT_NEEDS: 'supportNeeds',
 }
 
-export const FEEDBACK_URL = 'https://eu.surveymonkey.com/r/prepare-someone-for-release-beta'
+export const FEEDBACK_URL = 'https://www.smartsurvey.co.uk/s/QQV2UP'
 
 export const CHECK_ANSWERS_PAGE_ID = 'CHECK_ANSWERS'

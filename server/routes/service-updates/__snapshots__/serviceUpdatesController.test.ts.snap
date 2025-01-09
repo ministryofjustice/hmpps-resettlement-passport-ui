@@ -92,7 +92,7 @@ exports[`ServiceUpdatesController getView should render the service updates page
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -299,7 +299,7 @@ exports[`ServiceUpdatesController getView should render the service updates page
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -463,7 +463,7 @@ exports[`ServiceUpdatesController getView should render the service updates page
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -649,7 +649,7 @@ exports[`ServiceUpdatesController getView should render the service updates subp
     </strong>
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback</a> will help us to improve it.
+                                                            href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
                                                             <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="/service-updates">View updates and changes.</a>
     </span>
@@ -738,7 +738,7 @@ exports[`ServiceUpdatesController getView should render the service updates subp
       <p>You can still add a case note when you update a pathway status.</p>
       <h2 class="govuk-heading-m govuk-!-padding-top-8">Give feedback on these updates</h2>
       <p>We really want to hear what you think of these updates. You can let us know using our
-        <a href="https://eu.surveymonkey.com/r/prepare-someone-for-release-beta">feedback form</a>.
+        <a href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback form</a>.
       </p>
     </div>
   </div>
