@@ -1,7 +1,7 @@
 import type { RedisClient } from './redisClient'
 import logger from '../../logger'
 import config from '../config'
-import { SupportNeeds } from './model/supportNeeds'
+import { SupportNeedsCache } from './model/supportNeeds'
 
 export interface StateKey {
   prisonerNumber: string
@@ -10,9 +10,10 @@ export interface StateKey {
 }
 
 const defaultTimeToLive = config.redis.defaultTtlSeconds
+const prefix = 'supportNeeds'
 
 function buildKey(stateKey: StateKey) {
-  return `${stateKey.userId}:${stateKey.prisonerNumber}:${stateKey.pathway}`
+  return `${prefix}:${stateKey.userId}:${stateKey.prisonerNumber}:${stateKey.pathway}`
 }
 
 export default class SupportNeedStore {
@@ -28,14 +29,18 @@ export default class SupportNeedStore {
     }
   }
 
-  public async setSupportNeeds(stateKey: StateKey, suportNeeds: SupportNeeds, ttl = defaultTimeToLive): Promise<void> {
+  public async setSupportNeeds(
+    stateKey: StateKey,
+    suportNeeds: SupportNeedsCache,
+    ttl = defaultTimeToLive,
+  ): Promise<void> {
     await this.ensureConnected()
     await this.client.set(buildKey(stateKey), JSON.stringify(suportNeeds, null, 2), {
       EX: ttl,
     })
   }
 
-  public async getSupportNeeds(stateKey: StateKey): Promise<SupportNeeds | null> {
+  public async getSupportNeeds(stateKey: StateKey): Promise<SupportNeedsCache | null> {
     await this.ensureConnected()
     const key = buildKey(stateKey)
     const value = await this.client.get(key)
@@ -44,5 +49,11 @@ export default class SupportNeedStore {
       return null
     }
     return JSON.parse(value)
+  }
+
+  public async deleteSupportNeeds(stateKey: StateKey): Promise<void> {
+    await this.ensureConnected()
+    const key = buildKey(stateKey)
+    await this.client.del(key)
   }
 }

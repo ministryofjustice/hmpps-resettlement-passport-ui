@@ -1,6 +1,6 @@
 import SupportNeedStore, { StateKey } from './supportNeedStore'
 import { createRedisClient } from './redisClient'
-import { SupportNeeds } from './model/supportNeeds'
+import { SupportNeedsCache } from './model/supportNeeds'
 import { SupportNeedStateService } from './supportNeedStateService'
 
 jest.mock('./supportNeedStore')
@@ -37,28 +37,31 @@ describe('SupportNeedStateService', () => {
   describe('setSupportNeeds', () => {
     it('should save support needs to the store', async () => {
       const key = aStateKey(testPathway)
-      const supportNeeds: SupportNeeds = {
+      const supportNeeds: SupportNeedsCache = {
         needs: [
           {
             id: 12,
-            title: 'Cancel a tenancy',
-            category: 'Cat A',
-            allowUserDesc: false,
-            addedToPrisoner: true,
+            otherSupportNeedText: 'Other custom support needs text',
+            status: 'MET',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: 'Text related to the update',
           },
           {
             id: 13,
-            title: 'Other support need',
-            category: 'Cat A',
-            allowUserDesc: true,
-            addedToPrisoner: false,
+            otherSupportNeedText: null,
+            status: 'REQUIRED',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: null,
           },
           {
             id: 14,
-            title: 'No support needs identified',
-            category: null,
-            allowUserDesc: false,
-            addedToPrisoner: false,
+            otherSupportNeedText: 'Other custom support needs text',
+            status: 'IN_PROGRESS',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: null,
           },
         ],
       }
@@ -71,28 +74,31 @@ describe('SupportNeedStateService', () => {
 
     it('should throw an error if store fails to save support needs', async () => {
       const key = aStateKey(testPathway)
-      const supportNeeds: SupportNeeds = {
+      const supportNeeds: SupportNeedsCache = {
         needs: [
           {
             id: 12,
-            title: 'Cancel a tenancy',
-            category: 'Cat A',
-            allowUserDesc: false,
-            addedToPrisoner: true,
+            otherSupportNeedText: 'Other custom support needs text',
+            status: 'MET',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: 'Text related to the update',
           },
           {
             id: 13,
-            title: 'Other support need',
-            category: 'Cat A',
-            allowUserDesc: true,
-            addedToPrisoner: false,
+            otherSupportNeedText: null,
+            status: 'REQUIRED',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: null,
           },
           {
             id: 14,
-            title: 'No support needs identified',
-            category: null,
-            allowUserDesc: false,
-            addedToPrisoner: false,
+            otherSupportNeedText: 'Other custom support needs text',
+            status: 'IN_PROGRESS',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: null,
           },
         ],
       }
@@ -109,28 +115,31 @@ describe('SupportNeedStateService', () => {
   describe('getSupportNeeds', () => {
     it('should return support needs from the store', async () => {
       const key = aStateKey(testPathway)
-      const supportNeeds: SupportNeeds = {
+      const supportNeeds: SupportNeedsCache = {
         needs: [
           {
             id: 12,
-            title: 'Cancel a tenancy',
-            category: 'Cat A',
-            allowUserDesc: false,
-            addedToPrisoner: true,
+            otherSupportNeedText: 'Other custom support needs text',
+            status: 'MET',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: 'Text related to the update',
           },
           {
             id: 13,
-            title: 'Other support need',
-            category: 'Cat A',
-            allowUserDesc: true,
-            addedToPrisoner: false,
+            otherSupportNeedText: null,
+            status: 'REQUIRED',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: null,
           },
           {
             id: 14,
-            title: 'No support needs identified',
-            category: null,
-            allowUserDesc: false,
-            addedToPrisoner: false,
+            otherSupportNeedText: 'Other custom support needs text',
+            status: 'IN_PROGRESS',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            updateText: null,
           },
         ],
       }
@@ -150,6 +159,22 @@ describe('SupportNeedStateService', () => {
 
       await expect(supportNeedStateService.getSupportNeeds(key)).rejects.toThrow(
         'Support needs not found for key: {"prisonerNumber":"A1234DY","userId":"user123","pathway":"TEST_PATHWAY"}',
+      )
+    })
+  })
+
+  describe('deleteSupportNeeds', () => {
+    it('should delete support needs from the store', async () => {
+      const key = aStateKey(testPathway)
+      jest.spyOn(store, 'deleteSupportNeeds').mockResolvedValueOnce()
+      await supportNeedStateService.deleteSupportNeeds(key)
+      expect(store.deleteSupportNeeds).toHaveBeenCalledWith(key)
+    })
+    it('should throw an error if store fails to delete support needs', async () => {
+      const key = aStateKey(testPathway)
+      jest.spyOn(store, 'deleteSupportNeeds').mockRejectedValueOnce(new Error('Redis delete failed'))
+      await expect(supportNeedStateService.deleteSupportNeeds(key)).rejects.toThrow(
+        'Failed to delete support needs for key: {"prisonerNumber":"A1234DY","userId":"user123","pathway":"TEST_PATHWAY"}. Error: Redis delete failed',
       )
     })
   })

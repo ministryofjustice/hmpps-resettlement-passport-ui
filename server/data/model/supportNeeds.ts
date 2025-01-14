@@ -1,11 +1,12 @@
-export type SupportNeed = {
+export type SupportNeedCache = {
   id: number
-  title: string
-  category: string | null
-  allowUserDesc: boolean
-  addedToPrisoner: boolean
+  otherSupportNeedText: string | null
+  status: string
+  isPrisonResponsible: boolean
+  isProbationResponsible: boolean
+  updateText: string | null
 }
 
-export type SupportNeeds = {
-  needs: SupportNeed[]
+export type SupportNeedsCache = {
+  needs: SupportNeedCache[]
 }
