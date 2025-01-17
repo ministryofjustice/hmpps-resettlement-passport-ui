@@ -132,11 +132,7 @@
             </a>
           </th>
           {% if supportNeedsEnabled %}
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="{% if sortField == 'lastReport' and sortDirection == 'ASC' %}ascending{% elif sortField == 'lastReport' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=lastReport&sortDirection={{ 'DESC' if (sortField == 'lastReport' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
-                <button>Last report</button>
-              </a>
-            </th>
+            <th scope="col" class="govuk-table__header">Last report</th>
           {% endif %}
           <th scope="col" class="govuk-table__header">
             {% if pathwayView %}

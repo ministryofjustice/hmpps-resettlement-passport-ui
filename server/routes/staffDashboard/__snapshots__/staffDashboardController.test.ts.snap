@@ -1252,11 +1252,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
             </a>
           </th>
           
-            <th scope="col" class="govuk-table__header">
-              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastReport&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>Last report</button>
-              </a>
-            </th>
+            <th scope="col" class="govuk-table__header">Last report</th>
           
           <th scope="col" class="govuk-table__header">
             
