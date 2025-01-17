@@ -6,7 +6,7 @@ $govuk-page-width: $moj-page-width;
 // warning comes from the moj library
 $govuk-suppressed-warnings: ["govuk-typography-scale-14"];
 
-@import 'govuk/all';
+@import 'govuk/index';
 @import 'moj/all';
 
 @import './components/footer';
