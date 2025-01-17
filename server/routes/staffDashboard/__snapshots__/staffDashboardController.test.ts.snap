@@ -401,6 +401,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
           <th scope="col" class="govuk-table__header">
             
               Resettlement statuses
@@ -440,6 +441,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
     
     
     
@@ -1249,6 +1251,13 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
+            <th scope="col" class="govuk-table__header">
+              <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastReport&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                <button>Last report</button>
+              </a>
+            </th>
+          
           <th scope="col" class="govuk-table__header">
             
               Resettlement statuses
@@ -1288,6 +1297,13 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
+      <td class="govuk-table__cell" id="lastReport">
+        
+          <strong class="govuk-tag govuk-tag--orange">Report required</strong>
+        
+      </td>
+    
     
     
     
@@ -1838,6 +1854,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
           <th scope="col" class="govuk-table__header">
             
               Resettlement statuses
@@ -1877,6 +1894,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
     
     
     
@@ -2427,6 +2445,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
           <th scope="col" class="govuk-table__header">
             
               Resettlement statuses
@@ -2466,6 +2485,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
     
     
     
@@ -3021,6 +3041,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
           <th scope="col" class="govuk-table__header">
             
               
@@ -3065,6 +3086,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
     
     
     
@@ -3615,6 +3637,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
           <th scope="col" class="govuk-table__header">
             
               Resettlement statuses
@@ -3654,6 +3677,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
     
     
     
@@ -4204,6 +4228,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
           <th scope="col" class="govuk-table__header">
             
               Resettlement statuses
@@ -4243,6 +4268,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
     
     
     
@@ -4793,6 +4819,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
           <th scope="col" class="govuk-table__header">
             
               Resettlement statuses
@@ -4832,6 +4859,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
     
     
     
@@ -5382,6 +5410,7 @@ exports[`getView Happy path with sorting by name 1`] = `
               <button>Release on temporary licence</button>
             </a>
           </th>
+          
           <th scope="col" class="govuk-table__header">
             
               Resettlement statuses
@@ -5421,6 +5450,7 @@ exports[`getView Happy path with sorting by name 1`] = `
     <td class="govuk-table__cell" id="releaseOnTemporaryLicenceDate">
       
     </td>
+    
     
     
     

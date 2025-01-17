@@ -1,3 +1,5 @@
+{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
+
 {% macro prisonersTable(prisoners, pathwayView) %}
   <tbody class="govuk-table__body">
   {% for prisoner in prisoners %}
@@ -14,13 +16,14 @@
       prisoner.releaseEligibilityDate,
       prisoner.releaseEligibilityType,
       prisoner.releaseOnTemporaryLicenceDate,
+      prisoner.lastReport,
       pathwayView,
       prisoner.lastUpdatedDate
     )}}
   {% endfor %}
   </tbody>
 {% endmacro %}
-{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseEligibilityDate, releaseEligibilityType, releaseOnTemporaryLicenceDate, pathwayView, lastUpdatedDate) %}
+{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseEligibilityDate, releaseEligibilityType, releaseOnTemporaryLicenceDate, lastReport, pathwayView, lastUpdatedDate) %}
   {% set lastUpdatedDates = [] %}
   <tr class="govuk-table__row" data-qa="prisoner-table-row">
     <td class="govuk-table__cell">
@@ -50,6 +53,16 @@
       </span>
       {% endif %}
     </td>
+    {% if supportNeedsEnabled %}
+      <td class="govuk-table__cell" id="lastReport">
+        {% if lastReport.type and lastReport.dateCompleted %}
+          <p>{{ lastReport.type }}</p>
+          <p class="govuk-body-s">{{ lastReport.dateCompleted | formatDate }}</p>
+          {% else %}
+          <strong class="govuk-tag govuk-tag--orange">Report required</strong>
+        {% endif %}
+      </td>
+    {% endif %}
     {% set notStarted = 0 %}
     {% set supportRequired = 0 %}
     {% set inProgress = 0 %}
