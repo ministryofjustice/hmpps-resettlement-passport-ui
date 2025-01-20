@@ -192,7 +192,7 @@ describe('getView', () => {
 
   it('Happy path with default query params without tabs nav', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
-    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates', 'supportNeeds'])
     await request(app)
       .get('/')
       .expect(200)
