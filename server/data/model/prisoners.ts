@@ -27,4 +27,8 @@ type Prisoners = {
   assessmentRequired: boolean
   assignedWorkerFirstname?: string
   assignedWorkerLastname?: string
+  lastReport?: {
+    type: string
+    dateCompleted: string
+  } | null
 }

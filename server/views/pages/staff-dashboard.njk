@@ -3,6 +3,7 @@
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 {% set assignCaseEnabled = features.ASSIGN_CASE_TAB | getFeatureFlag %}
 {% set myCasesEnabled = features.MY_CASES | getFeatureFlag %}
+{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
 
 {% set tabContent %}
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
@@ -130,6 +131,9 @@
               <button>Release on temporary licence</button>
             </a>
           </th>
+          {% if supportNeedsEnabled %}
+            <th scope="col" class="govuk-table__header">Last report</th>
+          {% endif %}
           <th scope="col" class="govuk-table__header">
             {% if pathwayView %}
               {% set pathwayValues = pathwayView | getEnumValue %}
