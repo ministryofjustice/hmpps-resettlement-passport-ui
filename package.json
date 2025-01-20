@@ -121,7 +121,7 @@
     "express-prom-bundle": "^6.6.0",
     "express-session": "^1.18.1",
     "formidable": "^3.5.2",
-    "govuk-frontend": "^5.7.1",
+    "govuk-frontend": "^5.8.0",
     "helmet": "^7.2.0",
     "http-errors": "^2.0.0",
     "jquery": "^3.7.1",
@@ -194,7 +194,7 @@
     "sass": "^1.81.0",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   },
   "overrides": {
     "semver": "^7.5.3",
