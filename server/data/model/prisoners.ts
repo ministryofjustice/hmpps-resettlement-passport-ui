@@ -31,4 +31,16 @@ type Prisoners = {
     type: string
     dateCompleted: string
   } | null
+  needs?: PrisonerNeeds[]
+  needsNotSet?: boolean
+}
+
+type PrisonerNeeds = {
+  pathway: string
+  reviewed: boolean
+  notStarted: number
+  inProgress: number
+  met: number
+  declined: number
+  lastUpdated: string
 }

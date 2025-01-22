@@ -27,6 +27,7 @@ import { AssessmentType } from '../data/model/assessmentInformation'
 import { toCachedQuestionAndAnswer } from './formatAssessmentResponse'
 import { badRequestError } from '../errorHandler'
 import { Pagination, PaginationPage } from '../data/model/pagination'
+import { PrisonersList } from '../data/model/prisoners'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -565,4 +566,14 @@ export function getPaginationPages(
   const endItem = Math.min(startItem + pageSize - 1, totalElements)
 
   return { pages, startItem, endItem, totalElements }
+}
+
+export function checkSupportNeedsSet(prisonersList: PrisonersList): PrisonersList {
+  return {
+    ...prisonersList,
+    content: prisonersList.content.map(prisoner => ({
+      ...prisoner,
+      needsNotSet: prisoner.needs ? prisoner.needs.every(pathway => !pathway.reviewed) : true,
+    })),
+  }
 }

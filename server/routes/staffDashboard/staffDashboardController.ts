@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
 import RpService from '../../services/rpService'
-import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
+import { checkSupportNeedsSet, getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 
@@ -71,8 +71,9 @@ export default class StaffDashboardController {
           const { page, totalElements } = prisonersList
           pagination = getPaginationPages(page, pageSize, totalElements)
         }
+        const updatedPrisonersList = checkSupportNeedsSet(prisonersList)
         const view = new StaffDashboardView(
-          prisonersList,
+          updatedPrisonersList,
           errors,
           searchInput,
           releaseTime,
