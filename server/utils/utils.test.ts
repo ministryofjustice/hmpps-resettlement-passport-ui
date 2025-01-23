@@ -27,6 +27,7 @@ import {
   isAdditionalDetails,
   getPaginationPages,
   checkSupportNeedsSet,
+  getReportTypeName,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -1497,5 +1498,18 @@ describe('checkSupportNeedsSet', () => {
     ],
   ])('%s', (_: string, input, expected) => {
     expect(checkSupportNeedsSet(input)).toEqual(expected)
+  })
+})
+
+describe('getReportTypeName', () => {
+  it.each([
+    ['Existing report type: BCST2', 'BCST2', 'Immediate needs'],
+    ['Existing report type: RESETTLEMENT_PLAN', 'RESETTLEMENT_PLAN', 'Pre-release'],
+    ['Non-existent report type: UNKNOWN_TYPE', 'UNKNOWN_TYPE', undefined],
+    ['Empty string', '', undefined],
+    ['Null value', null, undefined],
+    ['Undefined value', undefined, undefined],
+  ])('%s -> getReportTypeName(%s)', (_: string, reportTypeEnum: string, expected: string | undefined) => {
+    expect(getReportTypeName(reportTypeEnum)).toEqual(expected)
   })
 })

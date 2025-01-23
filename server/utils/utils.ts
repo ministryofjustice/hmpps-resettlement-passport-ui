@@ -7,6 +7,7 @@ import {
   ENUMS_DICTIONARY,
   EnumValue,
   PATHWAY_DICTIONARY,
+  REPORT_TYPE_ENUMS_DICTIONARY,
   RISK_ASSESSMENT_ENUMS_DICTIONARY,
   STATUS_DICTIONARY,
 } from './constants'
@@ -148,6 +149,11 @@ export function getUrlFromName(pathwayName: string) {
 export function getNameFromUrl(url: string) {
   const key = Object.keys(ENUMS_DICTIONARY).find(enumKey => ENUMS_DICTIONARY[enumKey].url === url)
   return key ? ENUMS_DICTIONARY[key].name : undefined
+}
+
+export function getReportTypeName(reportTypeEnum: string) {
+  const reportType = REPORT_TYPE_ENUMS_DICTIONARY[reportTypeEnum]
+  return reportType?.name || undefined
 }
 
 export async function getDescriptionFromName(name: string) {

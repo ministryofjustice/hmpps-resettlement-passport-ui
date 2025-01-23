@@ -77,7 +77,7 @@
     {% if supportNeedsEnabled %}
       <td class="govuk-table__cell" id="lastReport">
         {% if lastReport.type and lastReport.dateCompleted %}
-          <p>{{ lastReport.type }}</p>
+          <p>{{ lastReport.type | getReportTypeName }}</p>
           <p class="govuk-body-s">{{ lastReport.dateCompleted | formatDate }}</p>
           {% else %}
           <strong class="govuk-tag govuk-tag--orange">Report required</strong>
