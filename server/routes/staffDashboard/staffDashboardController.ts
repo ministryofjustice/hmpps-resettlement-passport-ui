@@ -47,7 +47,6 @@ export default class StaffDashboardController {
 
       const errors: ErrorMessage[] = []
       let prisonersList = null
-
       try {
         handleWhatsNewBanner(req, res)
         // Only NOMIS users can access the list prisoners functionality at present
@@ -72,8 +71,11 @@ export default class StaffDashboardController {
           pagination = getPaginationPages(page, pageSize, totalElements)
           prisonersList = checkSupportNeedsSet(prisonersList)
         }
+
+        const updatedPrisonersList = prisonersList ? checkSupportNeedsSet(prisonersList) : prisonersList
+
         const view = new StaffDashboardView(
-          prisonersList,
+          updatedPrisonersList,
           errors,
           searchInput,
           releaseTime,
