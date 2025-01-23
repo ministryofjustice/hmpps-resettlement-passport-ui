@@ -155,6 +155,15 @@ export const RISK_ASSESSMENT_ENUMS_DICTIONARY: { [key: string]: { name: string; 
   },
 }
 
+export const REPORT_TYPE_ENUMS_DICTIONARY: { [key: string]: { name: string } } = {
+  BCST2: {
+    name: 'Immediate needs',
+  },
+  RESETTLEMENT_PLAN: {
+    name: 'Pre-release',
+  },
+}
+
 export const FEATURE_FLAGS: { [key: string]: string } = {
   ADD_APPOINTMENTS: 'addAppointments',
   TASKS_VIEW: 'tasksView',

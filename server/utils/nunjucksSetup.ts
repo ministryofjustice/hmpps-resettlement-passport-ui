@@ -42,6 +42,7 @@ import {
   getOptionValidationError,
   getOptionalText,
   isAdditionalDetails,
+  getReportTypeName,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -131,4 +132,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('checkAnswersPageId', CHECK_ANSWERS_PAGE_ID)
   njkEnv.addGlobal('getOptionalText', getOptionalText)
   njkEnv.addGlobal('isAdditionalDetails', isAdditionalDetails)
+  njkEnv.addFilter('getReportTypeName', getReportTypeName)
 }
