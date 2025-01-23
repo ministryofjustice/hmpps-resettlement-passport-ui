@@ -14,43 +14,50 @@
 {% set resetProfileEnabled = features.RESET_PROFILE | getFeatureFlag %}
 {% set myCasesEnabled = features.MY_CASES | getFeatureFlag %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
-{%  set navArray = [{
-    name: "Resettlement statuses",
-    id: "status"
-    },
-    {
-        name: "Staff contacts",
-        id: "staff-contacts"
-    },
-    {
-        name: "Case notes",
-        id: "case-notes"
-    },
-    {
-        name: "Appointments",
-        id: "appointments"
-    },
-    {
-        name: "Licence conditions",
-        id: "licence-summary"
-    }]
+{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
+
+{% set statusType = {
+  name: "Support needs statuses" if supportNeedsEnabled else "Resettlement statuses",
+  id: "support-needs" if supportNeedsEnabled else "status"
+} %}
+
+{%  set navArray = [
+  statusType,
+  {
+    name: "Staff contacts",
+    id: "staff-contacts"
+  },
+  {
+    name: "Case notes",
+    id: "case-notes"
+  },
+  {
+    name: "Appointments",
+    id: "appointments"
+  },
+  {
+    name: "Licence conditions",
+    id: "licence-summary"
+  }]
 %}
-   {% if uploadDocumentsEnabled %}
-    {% set navArray = (navArray.push(
+
+{% if uploadDocumentsEnabled %}
+  {% set navArray = (navArray.push(
     {
-        name: "Uploaded Documents",
-        id: "documents"
+      name: "Uploaded Documents",
+      id: "documents"
     }
     ), navArray)
-    %}
-   {% endif %}
-    {% set navArray = (navArray.push(
-    {
-        name: "Risk assessments and predictors",
-        id: "risk-assessments"
-    }
-    ), navArray)
-    %}
+  %}
+{% endif %}
+
+{% set navArray = (navArray.push(
+  {
+    name: "Risk assessments and predictors",
+    id: "risk-assessments"
+  }
+  ), navArray)
+%}
 
 {% block content %}
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
@@ -71,51 +78,101 @@
       {{ subNav(navArray) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      <section id="status" class="app-summary-card govuk-!-margin-bottom-8">
-        <header class="app-summary-card__header">
-          <h3 class="app-summary-card__title">
-            Resettlement statuses
-            <span class="govuk-caption-m">These statuses reflect the completion of activities in each pathway to prepare someone for release</span>
-          </h3>
-        </header>
-        <div class="app-summary-card__body">
-          <table class="govuk-table govuk-!-margin-bottom-4">
-            <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th scope="col" class="govuk-table__header">Pathway</th>
-              <th scope="col" class="govuk-table__header">Status</th>
-            </tr>
-            </thead>
-            <tbody class="govuk-table__body">
-              {% for pathway in prisonerData.pathways %}
-                {% set currentPathway = pathway.pathway | getEnumValue %}
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header">
-                    <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerNumber }}">{{ currentPathway.name }}</a>
-                    <span class="govuk-caption-m">{{ currentPathway.description }}</span>
-                  </th>
-                  <td class="govuk-table__cell">
-                    {% set statusValue = pathway.status | getEnumValue %}
-                    <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
-                      {{ statusValue.name }}
-                    </strong>
-                    {% if pathway.lastDateChange %}
-                      <p class="govuk-body-s">
-                        Updated:<br />{{ pathway.lastDateChange | formatDate }}
-                      </p>
-                    {% endif %}
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          {% if prisonerData.resettlementReviewAvailable %}
-            <a class="govuk-button" href="/assessment-task-list/?prisonerNumber={{ prisonerNumber }}&type=RESETTLEMENT_PLAN">
-              Start pre-release report
-            </a>
-          {% endif %}
-        </div>
-      </section>
+      {% if supportNeedsEnabled %}
+        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">Support needs statuses</h3>
+          </header>
+          <div class="app-summary-card__body">
+            <table class="govuk-table govuk-!-margin-bottom-4">
+              <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Pathway</th>
+                <th scope="col" class="govuk-table__header">Responsible staff</th>
+                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Last updated</th>
+              </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                {% for pathwaySupportNeeds in supportNeeds.needs %}
+                  {% set pathwayDetails = pathwaySupportNeeds.pathway | getEnumValue %}
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
+                      <a href="/{{ pathwayDetails.url }}/?prisonerNumber={{ prisonerNumber }}#support-needs">{{ pathwayDetails.name }}</a>
+                    </th>
+                    <td class="govuk-table__cell">
+                      <strong class="govuk-tag govuk-tag--blue">TODO</strong>
+                    </td>
+                    <td class="govuk-table__cell">
+                      {% if pathwaySupportNeeds.reviewed %}
+                        <div class="govuk-tag govuk-tag--orange">Not started: {{ pathwaySupportNeeds.notStarted }}</div>
+                        <br />
+                        <div class="govuk-tag govuk-tag--yellow">In progress: {{ pathwaySupportNeeds.inProgress }}</div>
+                        <br />
+                        <div class="govuk-tag govuk-tag--green">Met: {{ pathwaySupportNeeds.met }}</div>
+                        <br />
+                        <div class="govuk-tag govuk-tag--purple">Declined: {{ pathwaySupportNeeds.declined }}</div>
+                        <br />
+                      {% else %}
+                        <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                      {% endif %}
+                    </td>
+                    <td class="govuk-table__cell">{{ pathwaySupportNeeds.lastUpdated | formatDate if pathwaySupportNeeds.lastUpdated else "-" }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      {% endif %}
+
+      {% if not supportNeedsEnabled %}
+        <section id="status" class="app-summary-card govuk-!-margin-bottom-8">
+          <header class="app-summary-card__header">
+            <h3 class="app-summary-card__title">
+              Resettlement statuses
+              <span class="govuk-caption-m">These statuses reflect the completion of activities in each pathway to prepare someone for release</span>
+            </h3>
+          </header>
+          <div class="app-summary-card__body">
+            <table class="govuk-table govuk-!-margin-bottom-4">
+              <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Pathway</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+              </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+                {% for pathway in prisonerData.pathways %}
+                  {% set currentPathway = pathway.pathway | getEnumValue %}
+                  <tr class="govuk-table__row">
+                    <th scope="row" class="govuk-table__header">
+                      <a href="/{{ currentPathway.url }}/?prisonerNumber={{ prisonerNumber }}">{{ currentPathway.name }}</a>
+                      <span class="govuk-caption-m">{{ currentPathway.description }}</span>
+                    </th>
+                    <td class="govuk-table__cell">
+                      {% set statusValue = pathway.status | getEnumValue %}
+                      <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">
+                        {{ statusValue.name }}
+                      </strong>
+                      {% if pathway.lastDateChange %}
+                        <p class="govuk-body-s">
+                          Updated:<br />{{ pathway.lastDateChange | formatDate }}
+                        </p>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if prisonerData.resettlementReviewAvailable %}
+              <a class="govuk-button" href="/assessment-task-list/?prisonerNumber={{ prisonerNumber }}&type=RESETTLEMENT_PLAN">
+                Start pre-release report
+              </a>
+            {% endif %}
+          </div>
+        </section>
+      {% endif %}
       {# Staff contacts #}
       <section id="staff-contacts" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">

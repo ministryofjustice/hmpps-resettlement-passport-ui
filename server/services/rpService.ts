@@ -29,6 +29,7 @@ import {
   CaseAllocationUnassignRequestBody,
 } from '../data/model/caseAllocation'
 import { WorkerList } from '../data/model/resettlementWorker'
+import { SupportNeedsSummary } from '../data/model/supportNeeds'
 
 export default class RpService {
   constructor() {
@@ -533,5 +534,11 @@ export default class RpService {
 
   async getAssignedWorkerList(prisonId: string) {
     return this.createClient().get<WorkerList>(`/resettlement-passport/workers/capacity?prisonId=${prisonId}`)
+  }
+
+  async getSupportNeedsSummary(prisonerNumber: string) {
+    return this.createClient().get<SupportNeedsSummary>(
+      `/resettlement-passport/prisoner/${prisonerNumber}/needs/summary`,
+    )
   }
 }
