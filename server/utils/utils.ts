@@ -151,7 +151,8 @@ export function getNameFromUrl(url: string) {
 }
 
 export function getReportTypeName(reportTypeEnum: string) {
-  return REPORT_TYPE_ENUMS_DICTIONARY[reportTypeEnum].name
+  const reportType = REPORT_TYPE_ENUMS_DICTIONARY[reportTypeEnum]
+  return reportType?.name || undefined
 }
 
 export async function getDescriptionFromName(name: string) {
