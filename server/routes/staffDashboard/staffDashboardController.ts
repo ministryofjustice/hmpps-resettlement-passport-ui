@@ -69,7 +69,6 @@ export default class StaffDashboardController {
           )
           const { page, totalElements } = prisonersList
           pagination = getPaginationPages(page, pageSize, totalElements)
-          prisonersList = checkSupportNeedsSet(prisonersList)
         }
 
         const updatedPrisonersList = prisonersList ? checkSupportNeedsSet(prisonersList) : prisonersList
