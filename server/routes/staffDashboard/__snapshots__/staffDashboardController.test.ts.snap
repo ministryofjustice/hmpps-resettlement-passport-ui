@@ -404,7 +404,9 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Resettlement statuses
+              
+                Resettlement statuses
+              
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -442,181 +444,191 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
       
     </td>
     
+
     
-    
-    
-    
+  
     
       
+      
+      
+      
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
         
       
       
-      
+        <td class="govuk-table__cell">
+          
+            <strong class="govuk-tag govuk-tag--red">
+              <b>7</b>
+              Not started
+            </strong>
+            &nbsp;
+          
+          
+          
+          
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
       
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+  
     
       <td class="govuk-table__cell">
-        
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
-        
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
+        <span id="lastUpdated">
+          
+            <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
               
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
+            </a>
+          
+          
+        </span>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
-            
-          </a>
-        
-        
-      </span>
-    </td>
   </tr>
 
   
@@ -1256,7 +1268,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Resettlement statuses
+              Support needs statuses
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -1300,181 +1312,28 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
         
       </td>
     
-    
-    
-    
-    
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+
     
       <td class="govuk-table__cell">
         
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
+          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
         
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
+  
+    
+    
+    
+      <td class="govuk-table__cell">
+        <span id="lastUpdated">
           <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
             
           </a>
-        
-        
-      </span>
-    </td>
+        </span>
+      </td>
+    
+  
+    
   </tr>
 
   
@@ -1853,7 +1712,9 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Resettlement statuses
+              
+                Resettlement statuses
+              
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -1891,181 +1752,191 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
       
     </td>
     
+
     
-    
-    
-    
+  
     
       
+      
+      
+      
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
         
       
       
-      
+        <td class="govuk-table__cell">
+          
+            <strong class="govuk-tag govuk-tag--red">
+              <b>7</b>
+              Not started
+            </strong>
+            &nbsp;
+          
+          
+          
+          
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
       
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+  
     
       <td class="govuk-table__cell">
-        
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
-        
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
+        <span id="lastUpdated">
+          
+            <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
               
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
+            </a>
+          
+          
+        </span>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
-            
-          </a>
-        
-        
-      </span>
-    </td>
   </tr>
 
   
@@ -2444,7 +2315,9 @@ exports[`getView Happy path with filter  watchList true 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Resettlement statuses
+              
+                Resettlement statuses
+              
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -2482,181 +2355,191 @@ exports[`getView Happy path with filter  watchList true 1`] = `
       
     </td>
     
+
     
-    
-    
-    
+  
     
       
+      
+      
+      
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
         
       
       
-      
+        <td class="govuk-table__cell">
+          
+            <strong class="govuk-tag govuk-tag--red">
+              <b>7</b>
+              Not started
+            </strong>
+            &nbsp;
+          
+          
+          
+          
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
       
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+  
     
       <td class="govuk-table__cell">
-        
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
-        
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
+        <span id="lastUpdated">
+          
+            <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
               
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
+            </a>
+          
+          
+        </span>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
-            
-          </a>
-        
-        
-      </span>
-    </td>
   </tr>
 
   
@@ -3041,11 +2924,13 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
           <th scope="col" class="govuk-table__header">
             
               
-              <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=pathwayStatus&sortDirection=ASC&assessmentRequired=#prisonersFilter">
-                <button>
-                  Accommodation status
-                </button>
-              </a>
+                
+                <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=pathwayStatus&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                  <button>
+                    Accommodation status
+                  </button>
+                </a>
+              
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -3083,181 +2968,191 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
       
     </td>
     
+
     
-    
-    
-    
+  
     
       
+      
+      
+      
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
         
       
       
-      
+        <td class="govuk-table__cell">
+          
+            <strong class="govuk-tag govuk-tag--red">
+              <b>7</b>
+              Not started
+            </strong>
+            &nbsp;
+          
+          
+          
+          
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
       
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+  
     
       <td class="govuk-table__cell">
-        
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
-        
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
+        <span id="lastUpdated">
+          
+            <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
               
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
+            </a>
+          
+          
+        </span>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
-            
-          </a>
-        
-        
-      </span>
-    </td>
   </tr>
 
   
@@ -3636,7 +3531,9 @@ exports[`getView Happy path with filter prisoner number 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Resettlement statuses
+              
+                Resettlement statuses
+              
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -3674,181 +3571,191 @@ exports[`getView Happy path with filter prisoner number 1`] = `
       
     </td>
     
+
     
-    
-    
-    
+  
     
       
+      
+      
+      
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
         
       
       
-      
+        <td class="govuk-table__cell">
+          
+            <strong class="govuk-tag govuk-tag--red">
+              <b>7</b>
+              Not started
+            </strong>
+            &nbsp;
+          
+          
+          
+          
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
       
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+  
     
       <td class="govuk-table__cell">
-        
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
-        
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
+        <span id="lastUpdated">
+          
+            <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
               
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
+            </a>
+          
+          
+        </span>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
-            
-          </a>
-        
-        
-      </span>
-    </td>
   </tr>
 
   
@@ -4227,7 +4134,9 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Resettlement statuses
+              
+                Resettlement statuses
+              
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -4265,181 +4174,191 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
       
     </td>
     
+
     
-    
-    
-    
+  
     
       
+      
+      
+      
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
         
       
       
-      
+        <td class="govuk-table__cell">
+          
+            <strong class="govuk-tag govuk-tag--red">
+              <b>7</b>
+              Not started
+            </strong>
+            &nbsp;
+          
+          
+          
+          
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
       
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+  
     
       <td class="govuk-table__cell">
-        
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
-        
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
+        <span id="lastUpdated">
+          
+            <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
               
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
+            </a>
+          
+          
+        </span>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
-            
-          </a>
-        
-        
-      </span>
-    </td>
   </tr>
 
   
@@ -4818,7 +4737,9 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Resettlement statuses
+              
+                Resettlement statuses
+              
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -4856,181 +4777,191 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
       
     </td>
     
+
     
-    
-    
-    
+  
     
       
+      
+      
+      
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
         
       
       
-      
+        <td class="govuk-table__cell">
+          
+            <strong class="govuk-tag govuk-tag--red">
+              <b>7</b>
+              Not started
+            </strong>
+            &nbsp;
+          
+          
+          
+          
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
       
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+  
     
       <td class="govuk-table__cell">
-        
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
-        
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
+        <span id="lastUpdated">
+          
+            <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
               
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
+            </a>
+          
+          
+        </span>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
-            
-          </a>
-        
-        
-      </span>
-    </td>
   </tr>
 
   
@@ -5409,7 +5340,9 @@ exports[`getView Happy path with sorting by name 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Resettlement statuses
+              
+                Resettlement statuses
+              
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -5447,181 +5380,191 @@ exports[`getView Happy path with sorting by name 1`] = `
       
     </td>
     
+
     
-    
-    
-    
+  
     
       
+      
+      
+      
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
+        
+      
+        
+          
+        
+        
+        
         
       
       
-      
+        <td class="govuk-table__cell">
+          
+            <strong class="govuk-tag govuk-tag--red">
+              <b>7</b>
+              Not started
+            </strong>
+            &nbsp;
+          
+          
+          
+          
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                  <tr>
+                    <td>
+                      
+                      
+                       
+                      <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--red">Not started</strong>
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
       
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
     
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
-      
-        
-      
-      
-      
-      
-    
+  
     
       <td class="govuk-table__cell">
-        
-          <strong class="govuk-tag govuk-tag--red">
-            <b>7</b>
-            Not started
-          </strong>
-          &nbsp;
-        
-        
-        
-        
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for CHAVAN, CASEY</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
+        <span id="lastUpdated">
+          
+            <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
               
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/accommodation/?prisonerNumber=G9808UX">Accommodation</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/attitudes-thinking-and-behaviour/?prisonerNumber=G9808UX">Attitudes, thinking and behaviour</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/children-families-and-communities/?prisonerNumber=G9808UX">Children, families and communities</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/drugs-and-alcohol/?prisonerNumber=G9808UX">Drugs and alcohol</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/education-skills-and-work/?prisonerNumber=G9808UX">Education, skills and work</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/finance-and-id/?prisonerNumber=G9808UX">Finance and ID</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-                <tr>
-                  <td>
-                    
-                    
-                     
-                    <a href="/health-status/?prisonerNumber=G9808UX">Health</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--red">Not started</strong>
-                  </td>
-                </tr>
-              
-              </tbody>
-            </table>
-          </div>
-        </details>
+            </a>
+          
+          
+        </span>
       </td>
     
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
-            
-          </a>
-        
-        
-      </span>
-    </td>
   </tr>
 
   

@@ -135,15 +135,19 @@
             <th scope="col" class="govuk-table__header">Last report</th>
           {% endif %}
           <th scope="col" class="govuk-table__header">
-            {% if pathwayView %}
-              {% set pathwayValues = pathwayView | getEnumValue %}
-              <a aria-sort="{% if sortField == 'pathwayStatus' and sortDirection == 'ASC' %}ascending{% elif sortField == 'pathwayStatus' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=pathwayStatus&sortDirection={{ 'DESC' if (sortField == 'pathwayStatus' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
-                <button>
-                  {{ pathwayValues.name }} status
-                </button>
-              </a>
+            {% if supportNeedsEnabled %}
+              Support needs statuses
             {% else %}
-              Resettlement statuses
+              {% if pathwayView %}
+                {% set pathwayValues = pathwayView | getEnumValue %}
+                <a aria-sort="{% if sortField == 'pathwayStatus' and sortDirection == 'ASC' %}ascending{% elif sortField == 'pathwayStatus' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=pathwayStatus&sortDirection={{ 'DESC' if (sortField == 'pathwayStatus' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+                  <button>
+                    {{ pathwayValues.name }} status
+                  </button>
+                </a>
+              {% else %}
+                Resettlement statuses
+              {% endif %}
             {% endif %}
           </th>
           <th scope="col" class="govuk-table__header">
