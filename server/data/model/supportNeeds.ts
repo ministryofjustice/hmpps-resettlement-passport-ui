@@ -10,3 +10,16 @@ export type SupportNeedCache = {
 export type SupportNeedsCache = {
   needs: SupportNeedCache[]
 }
+
+export type SupportNeedsSummary = {
+  needs: {
+    pathway: string
+    reviewed: boolean
+    notStarted: number
+    inProgress: number
+    met: number
+    declined: number
+    lastUpdated: string | null
+    needsNotSet?: boolean
+  }[]
+}

@@ -210,4 +210,12 @@ describe('RpService', () => {
 
     expect(rpClient.patch).toHaveBeenCalledWith('/resettlement-passport/workers/cases', body)
   })
+
+  it('should call getSupportNeedsSummary if feature flag for SUPPORT_NEEDS is enabled', async () => {
+    const spy = jest.spyOn(rpClient, 'get').mockResolvedValue({})
+    stubFeatureFlagToTrue(featureFlags, ['SUPPORT_NEEDS'])
+    const result = await service.getSupportNeedsSummary('123')
+    expect(result).toEqual({})
+    expect(spy).toHaveBeenCalledWith('/resettlement-passport/prisoner/123/needs/summary')
+  })
 })

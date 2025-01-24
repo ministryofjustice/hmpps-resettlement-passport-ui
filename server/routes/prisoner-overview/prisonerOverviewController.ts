@@ -1,12 +1,13 @@
 import { RequestHandler } from 'express'
 import logger from '../../../logger'
-import { ERROR_DICTIONARY } from '../../utils/constants'
+import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../../utils/constants'
 import DocumentService from '../../services/documentService'
 import RpService from '../../services/rpService'
 import { Appointment } from '../../data/model/appointment'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { DocumentMeta } from '../../data/model/documents'
+import { getFeatureFlagBoolean } from '../../utils/utils'
 
 export default class PrisonerOverviewController {
   constructor(
@@ -18,6 +19,8 @@ export default class PrisonerOverviewController {
   }
 
   getPrisoner: RequestHandler = async (req, res, next): Promise<void> => {
+    const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
+
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       handleWhatsNewBanner(req, res)
@@ -30,16 +33,7 @@ export default class PrisonerOverviewController {
       } = req.query
       const { prisonerNumber } = prisonerData.personalDetails
 
-      const [
-        licenceConditionsResult,
-        riskResult,
-        roshResult,
-        mappaResult,
-        caseNotesResult,
-        staffContactsResult,
-        appointmentsResult,
-        documentsResult,
-      ] = await Promise.allSettled([
+      const promises = [
         ...this.rpService.getPrisonerOverviewPageData(
           prisonerNumber,
           page as string,
@@ -49,7 +43,23 @@ export default class PrisonerOverviewController {
           selectedPathway as string,
         ),
         this.documentService.getDocumentMeta(prisonerNumber),
-      ])
+      ]
+
+      if (supportNeedsEnabled) {
+        promises.push(this.rpService.getSupportNeedsSummary(prisonerNumber))
+      }
+
+      const [
+        licenceConditionsResult,
+        riskResult,
+        roshResult,
+        mappaResult,
+        caseNotesResult,
+        staffContactsResult,
+        appointmentsResult,
+        documentsResult,
+        supportNeedsResult,
+      ] = await Promise.allSettled(promises)
 
       const licenceConditions = extractResultOrError(licenceConditionsResult, 'licence conditions', req, prisonerNumber)
       const riskScores = extractResultOrError(riskResult, 'risk scores', req, prisonerNumber)
@@ -70,6 +80,11 @@ export default class PrisonerOverviewController {
         prisonerNumber,
       )
 
+      let supportNeeds = {}
+      if (supportNeedsEnabled) {
+        supportNeeds = extractResultOrError(supportNeedsResult, 'support needs', req, prisonerNumber)
+      }
+
       return res.render('pages/overview', {
         licenceConditions,
         prisonerData,
@@ -85,6 +100,7 @@ export default class PrisonerOverviewController {
         staffContacts,
         appointments,
         documents,
+        supportNeeds,
       })
     } catch (err) {
       return next(err)
