@@ -18,12 +18,33 @@
       prisoner.releaseOnTemporaryLicenceDate,
       prisoner.lastReport,
       pathwayView,
-      prisoner.lastUpdatedDate
+      prisoner.lastUpdatedDate,
+      prisoner.needs,
+      prisoner.needsNotSet
     )}}
   {% endfor %}
   </tbody>
 {% endmacro %}
-{% macro prisonerRow(firstName, lastName, prisonerNumber, releaseDate, releaseType, statuses, pathwayStatus, paroleEligibilityDate, homeDetentionCurfewEligibilityDate, releaseEligibilityDate, releaseEligibilityType, releaseOnTemporaryLicenceDate, lastReport, pathwayView, lastUpdatedDate) %}
+
+{% macro prisonerRow(
+  firstName,
+  lastName,
+  prisonerNumber,
+  releaseDate,
+  releaseType,
+  statuses,
+  pathwayStatus,
+  paroleEligibilityDate,
+  homeDetentionCurfewEligibilityDate,
+  releaseEligibilityDate,
+  releaseEligibilityType,
+  releaseOnTemporaryLicenceDate,
+  lastReport,
+  pathwayView,
+  lastUpdatedDate,
+  supportNeeds,
+  needsNotSet
+) %}
   {% set lastUpdatedDates = [] %}
   <tr class="govuk-table__row" data-qa="prisoner-table-row">
     <td class="govuk-table__cell">
@@ -63,101 +84,151 @@
         {% endif %}
       </td>
     {% endif %}
-    {% set notStarted = 0 %}
-    {% set supportRequired = 0 %}
-    {% set inProgress = 0 %}
-    {% set done = 0 %}
-    {% for status in statuses %}
-      {% if status.status === 'NOT_STARTED' %}
-        {% set notStarted = notStarted + 1 %}
-      {% endif %}
-      {% if status.status === 'SUPPORT_REQUIRED' %}
-        {% set supportRequired = supportRequired + 1 %}
-      {% endif %}
-      {% if status.status === 'IN_PROGRESS' %}
-        {% set inProgress = inProgress + 1 %}
-      {% endif %}
-      {% if status.status === 'DONE'  or status.status === 'SUPPORT_NOT_REQUIRED' or status.status === 'SUPPORT_DECLINED' %}
-        {% set done = done + 1 %}
-      {% endif %}
-    {% endfor %}
-    {% if not pathwayStatus %}
+
+    {% if supportNeedsEnabled %}
       <td class="govuk-table__cell">
-        {% if notStarted > 0 %}
-          <strong class="govuk-tag govuk-tag--red">
-            <b>{{ notStarted }}</b>
-            Not started
-          </strong>
-          &nbsp;
+        {% if needsNotSet %}
+          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+        {% else %}
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show support needs statuses</span>
+            </summary>
+            <div class="govuk-details__text">
+              <table class="govuk-table">
+                <tbody class="govuk-table__body">
+                  {% for supportNeed in supportNeeds %}
+                    <tr class="govuk-table__row">
+                      <td colspan="4" class="govuk-table__cell govuk-table__cell--header">
+                        {% set pathwayDetails = supportNeed.pathway | getEnumValue %}
+                        <a href="/{{ pathwayDetails.url }}/?prisonerNumber={{ prisonerNumber }}#supportNeeds">{{ pathwayDetails.name }}</a>
+                      </td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <td class="govuk-table__cell"><span class="govuk-tag govuk-tag--orange">Not started: {{ supportNeed.notStarted }}</span></td>
+                      <td class="govuk-table__cell"><span class="govuk-tag govuk-tag--yellow">In progress: {{ supportNeed.inProgress }}</span></td>
+                      <td class="govuk-table__cell"><span class="govuk-tag govuk-tag--green">Met: {{ supportNeed.met }}</span></td>
+                      <td class="govuk-table__cell"><span class="govuk-tag govuk-tag--purple">Declined: {{ supportNeed.declined }}</span></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </details>
         {% endif %}
-        {% if supportRequired > 0 %}
-          <strong class="govuk-tag govuk-tag--orange">
-            <b>{{ supportRequired }}</b>
-            Support required
-          </strong>
-          &nbsp;
-        {% endif %}
-        {% if inProgress > 0 %}
-          <strong class="govuk-tag govuk-tag--blue">
-            <b>{{ inProgress }}</b>
-            In progress
-          </strong>
-          &nbsp;
-        {% endif %}
-        {% if done > 0 %}
-          <strong class="govuk-tag govuk-tag--green">
-            <b>{{ done }}</b>
-            Done
-          </strong>
-        {% endif %}
-        <br/>
-        <details class="govuk-details govuk-body-s" data-module="govuk-details">
-          <summary class="govuk-details__summary">
-            <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for {{ lastName }}, {{ firstName }}</span></span>
-          </summary>
-          <div class="govuk-details__text">
-            <table>
-              <tbody>
-              {% for pathway in (statuses | sort(attribute = 'pathway')) %}
-                <tr>
-                  <td>
-                    {% set enumValue = pathway.pathway | getEnumValue %}
-                    {% set statusValue = pathway.status | getEnumValue %}
-                    {% set lastUpdatedDates = (lastUpdatedDates.push(pathway.lastDateChange), lastUpdatedDates) %} {# ADD lastDateChange DATES TO ARRAY #}
-                    <a href="/{{ enumValue.url }}/?prisonerNumber={{ prisonerNumber }}">{{ enumValue.name }}</a>:
-                  </td>
-                  <td>
-                    <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">{{ statusValue.name }}</strong>
-                  </td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </details>
-      </td>
-    {% else %}
-      <td class="govuk-table__cell">
-        {% set statusValues = pathwayStatus | getEnumValue %}
-        <strong class="govuk-tag govuk-tag--{{ statusValues.color }}">
-          <b>{{ statusValues.name }}</b>
-        </strong>
       </td>
     {% endif %}
-    <td class="govuk-table__cell">
-      <span id="lastUpdated">
-        {% if statuses %}
+  
+    {% if not supportNeedsEnabled %}
+      {% set notStarted = 0 %}
+      {% set supportRequired = 0 %}
+      {% set inProgress = 0 %}
+      {% set done = 0 %}
+      {% for status in statuses %}
+        {% if status.status === 'NOT_STARTED' %}
+          {% set notStarted = notStarted + 1 %}
+        {% endif %}
+        {% if status.status === 'SUPPORT_REQUIRED' %}
+          {% set supportRequired = supportRequired + 1 %}
+        {% endif %}
+        {% if status.status === 'IN_PROGRESS' %}
+          {% set inProgress = inProgress + 1 %}
+        {% endif %}
+        {% if status.status === 'DONE'  or status.status === 'SUPPORT_NOT_REQUIRED' or status.status === 'SUPPORT_DECLINED' %}
+          {% set done = done + 1 %}
+        {% endif %}
+      {% endfor %}
+      {% if not pathwayStatus %}
+        <td class="govuk-table__cell">
+          {% if notStarted > 0 %}
+            <strong class="govuk-tag govuk-tag--red">
+              <b>{{ notStarted }}</b>
+              Not started
+            </strong>
+            &nbsp;
+          {% endif %}
+          {% if supportRequired > 0 %}
+            <strong class="govuk-tag govuk-tag--orange">
+              <b>{{ supportRequired }}</b>
+              Support required
+            </strong>
+            &nbsp;
+          {% endif %}
+          {% if inProgress > 0 %}
+            <strong class="govuk-tag govuk-tag--blue">
+              <b>{{ inProgress }}</b>
+              In progress
+            </strong>
+            &nbsp;
+          {% endif %}
+          {% if done > 0 %}
+            <strong class="govuk-tag govuk-tag--green">
+              <b>{{ done }}</b>
+              Done
+            </strong>
+          {% endif %}
+          <br/>
+          <details class="govuk-details govuk-body-s" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+              <span class="govuk-details__summary-text">Show resettlement statuses <span class="govuk-visually-hidden"> for {{ lastName }}, {{ firstName }}</span></span>
+            </summary>
+            <div class="govuk-details__text">
+              <table>
+                <tbody>
+                {% for pathway in (statuses | sort(attribute = 'pathway')) %}
+                  <tr>
+                    <td>
+                      {% set enumValue = pathway.pathway | getEnumValue %}
+                      {% set statusValue = pathway.status | getEnumValue %}
+                      {% set lastUpdatedDates = (lastUpdatedDates.push(pathway.lastDateChange), lastUpdatedDates) %} {# ADD lastDateChange DATES TO ARRAY #}
+                      <a href="/{{ enumValue.url }}/?prisonerNumber={{ prisonerNumber }}">{{ enumValue.name }}</a>:
+                    </td>
+                    <td>
+                      <strong class="govuk-tag govuk-tag--{{ statusValue.color }}">{{ statusValue.name }}</strong>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </td>
+      {% else %}
+        <td class="govuk-table__cell">
+          {% set statusValues = pathwayStatus | getEnumValue %}
+          <strong class="govuk-tag govuk-tag--{{ statusValues.color }}">
+            <b>{{ statusValues.name }}</b>
+          </strong>
+        </td>
+      {% endif %}
+    {% endif %}
+    
+    {% if supportNeedsEnabled %}
+      <td class="govuk-table__cell">
+        <span id="lastUpdated">
           <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}#status">
-            {{ lastUpdatedDates | getMostRecentDate | formatDate('short') }}
+            {{ lastUpdatedDate | formatDate }}
           </a>
-        {% endif %}
-        {% if pathwayStatus %}
-          {% set pathwayValues = pathwayView | getEnumValue %}
-          <a href="/{{ pathwayValues.url }}/?prisonerNumber={{ prisonerNumber }}">
-            {{ lastUpdatedDate | formatDate('short') }}
-          </a>
-        {% endif %}
-      </span>
-    </td>
+        </span>
+      </td>
+    {% endif %}
+  
+    {% if not supportNeedsEnabled %}
+      <td class="govuk-table__cell">
+        <span id="lastUpdated">
+          {% if statuses %}
+            <a href="/prisoner-overview/?prisonerNumber={{ prisonerNumber }}#status">
+              {{ lastUpdatedDates | getMostRecentDate | formatDate('short') }}
+            </a>
+          {% endif %}
+          {% if pathwayStatus %}
+            {% set pathwayValues = pathwayView | getEnumValue %}
+            <a href="/{{ pathwayValues.url }}/?prisonerNumber={{ prisonerNumber }}">
+              {{ lastUpdatedDate | formatDate('short') }}
+            </a>
+          {% endif %}
+        </span>
+      </td>
+    {% endif %}
   </tr>
 {% endmacro %}

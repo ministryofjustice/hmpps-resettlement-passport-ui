@@ -26,6 +26,7 @@ import {
   parseAssessmentType,
   isAdditionalDetails,
   getPaginationPages,
+  checkSupportNeedsSet,
   getReportTypeName,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
@@ -1330,6 +1331,174 @@ describe('getPaginationPages', () => {
       expect(getPaginationPages(currentPage, pageSize, totalElements, pagesAroundCurrent)).toEqual(expected)
     },
   )
+})
+
+describe('checkSupportNeedsSet', () => {
+  const prisonerData = {
+    prisonerNumber: 'G6933GF',
+    firstName: 'BUSTER',
+    middleNames: 'CHRISTABERT HECTUR',
+    lastName: 'CORALLO',
+    releaseDate: '2021-10-14',
+    releaseType: 'CRD',
+    paroleEligibilityDate: '2019-03-28',
+    releaseEligibilityDate: '2019-03-28',
+    releaseEligibilityType: 'PED',
+    assessmentRequired: true,
+    assignedWorkerFirstname: 'Lucie',
+    assignedWorkerLastname: 'Johnson',
+  }
+  const pageData = {
+    pageSize: 20,
+    page: 0,
+    sortName: 'releaseDate,ASC',
+    totalElements: 96,
+    last: false,
+  }
+  it.each([
+    [
+      'Single prisoner, all pathways not reviewed',
+      {
+        content: [
+          {
+            ...prisonerData,
+            needs: [
+              {
+                pathway: 'ACCOMMODATION',
+                reviewed: false,
+                notStarted: 5,
+                inProgress: 3,
+                met: 3,
+                declined: 4,
+                lastUpdated: '2024-02-21',
+              },
+              {
+                pathway: 'HEALTH',
+                reviewed: false,
+                notStarted: 2,
+                inProgress: 1,
+                met: 3,
+                declined: 0,
+                lastUpdated: '2024-02-21',
+              },
+            ],
+          },
+        ],
+        ...pageData,
+      },
+      {
+        content: [
+          {
+            ...prisonerData,
+            needs: [
+              {
+                pathway: 'ACCOMMODATION',
+                reviewed: false,
+                notStarted: 5,
+                inProgress: 3,
+                met: 3,
+                declined: 4,
+                lastUpdated: '2024-02-21',
+              },
+              {
+                pathway: 'HEALTH',
+                reviewed: false,
+                notStarted: 2,
+                inProgress: 1,
+                met: 3,
+                declined: 0,
+                lastUpdated: '2024-02-21',
+              },
+            ],
+            needsNotSet: true,
+          },
+        ],
+        ...pageData,
+      },
+    ],
+    [
+      'Single prisoner, some pathways reviewed',
+      {
+        content: [
+          {
+            ...prisonerData,
+            needs: [
+              {
+                pathway: 'ACCOMMODATION',
+                reviewed: false,
+                notStarted: 5,
+                inProgress: 3,
+                met: 3,
+                declined: 4,
+                lastUpdated: '2024-02-21',
+              },
+              {
+                pathway: 'HEALTH',
+                reviewed: true,
+                notStarted: 2,
+                inProgress: 1,
+                met: 3,
+                declined: 0,
+                lastUpdated: '2024-02-21',
+              },
+            ],
+          },
+        ],
+        ...pageData,
+      },
+      {
+        content: [
+          {
+            ...prisonerData,
+            needs: [
+              {
+                pathway: 'ACCOMMODATION',
+                reviewed: false,
+                notStarted: 5,
+                inProgress: 3,
+                met: 3,
+                declined: 4,
+                lastUpdated: '2024-02-21',
+              },
+              {
+                pathway: 'HEALTH',
+                reviewed: true,
+                notStarted: 2,
+                inProgress: 1,
+                met: 3,
+                declined: 0,
+                lastUpdated: '2024-02-21',
+              },
+            ],
+            needsNotSet: false,
+          },
+        ],
+        ...pageData,
+      },
+    ],
+    [
+      'Single prisoner, no needs array',
+      {
+        content: [
+          {
+            ...prisonerData,
+          },
+        ],
+        ...pageData,
+      },
+      {
+        content: [
+          {
+            ...prisonerData,
+            needsNotSet: true,
+          },
+        ],
+        ...pageData,
+      },
+    ],
+  ])('%s', (_: string, input, expected) => {
+    expect(checkSupportNeedsSet(input)).toEqual(expected)
+  })
 })
 
 describe('getReportTypeName', () => {
