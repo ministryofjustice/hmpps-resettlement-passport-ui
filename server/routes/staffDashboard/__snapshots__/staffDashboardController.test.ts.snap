@@ -334,21 +334,23 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
+          
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  selected  value="">All pathways</option>
+                  <option  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
+                </select>
+              </div>
             </div>
-          </div>
+            
           
           
             <div class="govuk-grid-column-one-third">
@@ -369,7 +371,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -950,21 +952,23 @@ exports[`getView Happy path with default query params with tabs nav 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
+          
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  selected  value="">All pathways</option>
+                  <option  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
+                </select>
+              </div>
             </div>
-          </div>
+            
           
           
             <div class="govuk-grid-column-one-third">
@@ -985,7 +989,7 @@ exports[`getView Happy path with default query params with tabs nav 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -1196,21 +1200,6 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
-            </div>
-          </div>
           
           
             <div class="govuk-grid-column-one-third">
@@ -1223,15 +1212,15 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
               </div>
             </div>
           
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
+          <div class="govuk-grid-column-full">
+            <div class="govuk-grid-column-one-third govuk-!-padding-left-0 govuk-!-margin-bottom-4">
               <label class="govuk-label " for="searchInput">Prisoner name or number</label>
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -1642,21 +1631,23 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
+          
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  selected  value="">All pathways</option>
+                  <option  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
+                </select>
+              </div>
             </div>
-          </div>
+            
           
           
             <div class="govuk-grid-column-one-third">
@@ -1677,7 +1668,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -2245,21 +2236,23 @@ exports[`getView Happy path with filter  watchList true 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
+          
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  selected  value="">All pathways</option>
+                  <option  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
+                </select>
+              </div>
             </div>
-          </div>
+            
           
           
             <div class="govuk-grid-column-one-third">
@@ -2280,7 +2273,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -2848,36 +2841,38 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  value="">All pathways</option>
-                <option  selected  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
-            </div>
-          </div>
           
             <div class="govuk-grid-column-one-third">
               <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayStatus">Pathway status</label>
-                <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" >
-                  <option  selected  value="">All statuses</option>
-                  <option  value="NOT_STARTED">Not started</option>
-                  <option  value="SUPPORT_REQUIRED">Support required</option>
-                  <option  value="IN_PROGRESS">In progress</option>
-                  <option  value="SUPPORT_NOT_REQUIRED">Support not required</option>
-                  <option  value="SUPPORT_DECLINED">Support declined</option>
-                  <option  value="DONE">Done</option>
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  value="">All pathways</option>
+                  <option  selected  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
                 </select>
               </div>
             </div>
+            
+              <div class="govuk-grid-column-one-third">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="pathwayStatus">Pathway status</label>
+                  <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" >
+                    <option  selected  value="">All statuses</option>
+                    <option  value="NOT_STARTED">Not started</option>
+                    <option  value="SUPPORT_REQUIRED">Support required</option>
+                    <option  value="IN_PROGRESS">In progress</option>
+                    <option  value="SUPPORT_NOT_REQUIRED">Support not required</option>
+                    <option  value="SUPPORT_DECLINED">Support declined</option>
+                    <option  value="DONE">Done</option>
+                  </select>
+                </div>
+              </div>
+            
           
           
           <div class="govuk-grid-column-one-third">
@@ -2888,7 +2883,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -3461,21 +3456,23 @@ exports[`getView Happy path with filter prisoner number 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
+          
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  selected  value="">All pathways</option>
+                  <option  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
+                </select>
+              </div>
             </div>
-          </div>
+            
           
           
             <div class="govuk-grid-column-one-third">
@@ -3496,7 +3493,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -4064,21 +4061,23 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
+          
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  selected  value="">All pathways</option>
+                  <option  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
+                </select>
+              </div>
             </div>
-          </div>
+            
           
           
             <div class="govuk-grid-column-one-third">
@@ -4099,7 +4098,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -4667,21 +4666,23 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
+          
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  selected  value="">All pathways</option>
+                  <option  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
+                </select>
+              </div>
             </div>
-          </div>
+            
           
           
             <div class="govuk-grid-column-one-third">
@@ -4702,7 +4703,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
@@ -5270,21 +5271,23 @@ exports[`getView Happy path with sorting by name 1`] = `
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option  selected  value="">All pathways</option>
-                <option  value="ACCOMMODATION">Accommodation</option>
-                <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option  value="FINANCE_AND_ID">Finance and ID</option>
-                <option  value="HEALTH">Health</option>
-              </select>
+          
+            <div class="govuk-grid-column-one-third">
+              <div class="govuk-form-group">
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option  selected  value="">All pathways</option>
+                  <option  value="ACCOMMODATION">Accommodation</option>
+                  <option  value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option  value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option  value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option  value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option  value="FINANCE_AND_ID">Finance and ID</option>
+                  <option  value="HEALTH">Health</option>
+                </select>
+              </div>
             </div>
-          </div>
+            
           
           
             <div class="govuk-grid-column-one-third">
@@ -5305,7 +5308,7 @@ exports[`getView Happy path with sorting by name 1`] = `
           </div>
           
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
