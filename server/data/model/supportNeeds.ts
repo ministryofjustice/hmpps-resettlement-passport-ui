@@ -21,5 +21,7 @@ export type SupportNeedsSummary = {
     declined: number
     lastUpdated: string | null
     needsNotSet?: boolean
+    isPrisonResponsible: boolean
+    isProbationResponsible: boolean
   }[]
 }

@@ -101,7 +101,14 @@
                       <a href="/{{ pathwayDetails.url }}/?prisonerNumber={{ prisonerNumber }}#support-needs">{{ pathwayDetails.name }}</a>
                     </th>
                     <td class="govuk-table__cell">
-                      <strong class="govuk-tag govuk-tag--blue">TODO</strong>
+                      {% if pathwaySupportNeeds.isPrisonResponsible %}
+                        <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                        <br />
+                      {% endif %}
+                      {% if pathwaySupportNeeds.isProbationResponsible %}
+                        <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                        <br />
+                      {% endif %}
                     </td>
                     <td class="govuk-table__cell">
                       {% if pathwaySupportNeeds.reviewed %}
