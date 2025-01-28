@@ -23,36 +23,38 @@
               </select>
             </div>
           </div>
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
-              <label class="govuk-label" for="pathwayView">Pathway view</label>
-              <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
-                <option {% if pathwayView == "" %} selected {% endif %} value="">All pathways</option>
-                <option {% if pathwayView == "ACCOMMODATION" %} selected {% endif %} value="ACCOMMODATION">Accommodation</option>
-                <option {% if pathwayView == "ATTITUDES_THINKING_AND_BEHAVIOUR" %} selected {% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
-                <option {% if pathwayView == "CHILDREN_FAMILIES_AND_COMMUNITY" %} selected {% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
-                <option {% if pathwayView == "DRUGS_AND_ALCOHOL" %} selected {% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
-                <option {% if pathwayView == "EDUCATION_SKILLS_AND_WORK" %} selected {% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
-                <option {% if pathwayView == "FINANCE_AND_ID" %} selected {% endif %} value="FINANCE_AND_ID">Finance and ID</option>
-                <option {% if pathwayView == "HEALTH" %} selected {% endif %} value="HEALTH">Health</option>
-              </select>
-            </div>
-          </div>
-          {% if pathwayView %}
+          {% if not supportNeedsEnabled %}
             <div class="govuk-grid-column-one-third">
               <div class="govuk-form-group">
-                <label class="govuk-label" for="pathwayStatus">Pathway status</label>
-                <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
-                  <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
-                  <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">{{ ("NOT_STARTED" | getEnumValue).name }}</option>
-                  <option {% if pathwayStatus == "SUPPORT_REQUIRED" %} selected {% endif %} value="SUPPORT_REQUIRED">{{ ("SUPPORT_REQUIRED" | getEnumValue).name }}</option>
-                  <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">{{ ("IN_PROGRESS" | getEnumValue).name }}</option>
-                  <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">{{ ("SUPPORT_NOT_REQUIRED" | getEnumValue).name }}</option>
-                  <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">{{ ("SUPPORT_DECLINED" | getEnumValue).name }}</option>
-                  <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">{{ ("DONE" | getEnumValue).name }}</option>
+                <label class="govuk-label" for="pathwayView">Pathway view</label>
+                <select class="govuk-select filter-input" id="pathwayView" name="pathwayView">
+                  <option {% if pathwayView == "" %} selected {% endif %} value="">All pathways</option>
+                  <option {% if pathwayView == "ACCOMMODATION" %} selected {% endif %} value="ACCOMMODATION">Accommodation</option>
+                  <option {% if pathwayView == "ATTITUDES_THINKING_AND_BEHAVIOUR" %} selected {% endif %} value="ATTITUDES_THINKING_AND_BEHAVIOUR">Attitudes, thinking and behaviour</option>
+                  <option {% if pathwayView == "CHILDREN_FAMILIES_AND_COMMUNITY" %} selected {% endif %} value="CHILDREN_FAMILIES_AND_COMMUNITY">Children, families and communities</option>
+                  <option {% if pathwayView == "DRUGS_AND_ALCOHOL" %} selected {% endif %} value="DRUGS_AND_ALCOHOL">Drugs and alcohol</option>
+                  <option {% if pathwayView == "EDUCATION_SKILLS_AND_WORK" %} selected {% endif %} value="EDUCATION_SKILLS_AND_WORK">Education, skills and work</option>
+                  <option {% if pathwayView == "FINANCE_AND_ID" %} selected {% endif %} value="FINANCE_AND_ID">Finance and ID</option>
+                  <option {% if pathwayView == "HEALTH" %} selected {% endif %} value="HEALTH">Health</option>
                 </select>
               </div>
             </div>
+            {% if pathwayView %}
+              <div class="govuk-grid-column-one-third">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="pathwayStatus">Pathway status</label>
+                  <select class="govuk-select filter-input" id="pathwayStatus" name="pathwayStatus" {% if pathwayView == "" %} disabled {% endif %}>
+                    <option {% if pathwayStatus == "" %} selected {% endif %} value="">All statuses</option>
+                    <option {% if pathwayStatus == "NOT_STARTED" %} selected {% endif %} value="NOT_STARTED">{{ ("NOT_STARTED" | getEnumValue).name }}</option>
+                    <option {% if pathwayStatus == "SUPPORT_REQUIRED" %} selected {% endif %} value="SUPPORT_REQUIRED">{{ ("SUPPORT_REQUIRED" | getEnumValue).name }}</option>
+                    <option {% if pathwayStatus == "IN_PROGRESS" %} selected {% endif %} value="IN_PROGRESS">{{ ("IN_PROGRESS" | getEnumValue).name }}</option>
+                    <option {% if pathwayStatus == "SUPPORT_NOT_REQUIRED" %} selected {% endif %} value="SUPPORT_NOT_REQUIRED">{{ ("SUPPORT_NOT_REQUIRED" | getEnumValue).name }}</option>
+                    <option {% if pathwayStatus == "SUPPORT_DECLINED" %} selected {% endif %} value="SUPPORT_DECLINED">{{ ("SUPPORT_DECLINED" | getEnumValue).name }}</option>
+                    <option {% if pathwayStatus == "DONE" %} selected {% endif %} value="DONE">{{ ("DONE" | getEnumValue).name }}</option>
+                  </select>
+                </div>
+              </div>
+            {% endif %}
           {% endif %}
           {% if not pathwayView %}
             <div class="govuk-grid-column-one-third">
@@ -65,8 +67,8 @@
               </div>
             </div>
           {% endif %}
-          <div class="govuk-grid-column-one-third">
-            <div class="govuk-form-group">
+          <div class="{{ "govuk-grid-column-full" if supportNeedsEnabled else "govuk-grid-column-one-third" }}">
+            <div class="{{ "govuk-grid-column-one-third govuk-!-padding-left-0 govuk-!-margin-bottom-4" if supportNeedsEnabled else "govuk-form-group" }}">
               <label class="govuk-label " for="searchInput">Prisoner name or number</label>
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="{{ searchInput }}">
             </div>
@@ -89,7 +91,7 @@
               </div>
           {% endif %}
           <div class="govuk-grid-column-full">
-            <div class="govuk-grid-column-one-quarter">
+            <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
             </div>
           </div>
