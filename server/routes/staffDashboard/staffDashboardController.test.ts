@@ -210,6 +210,16 @@ describe('getView', () => {
     expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
   })
 
+  it('Happy path with default query params with supportNeeds enabled, no filters', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates', 'supportNeeds'])
+    await request(app)
+      .get('/')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
+  })
+
   it('Error case - No feature flags in file', async () => {
     stubPrisonersList(rpService)
     jest.spyOn(featureFlags, 'getFeatureFlag').mockImplementation((flag: string) => {

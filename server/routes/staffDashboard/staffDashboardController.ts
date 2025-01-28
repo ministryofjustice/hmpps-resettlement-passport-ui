@@ -13,14 +13,13 @@ export default class StaffDashboardController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
       const pageSize = 20
       const { userActiveCaseLoad } = res.locals
       const {
         searchInput = '',
         releaseTime = '0',
         page: currentPage = '0',
-        pathwayView = '',
-        pathwayStatus = '',
         assessmentRequired = '',
         sortField = 'releaseDate',
         sortDirection = 'ASC',
@@ -30,13 +29,22 @@ export default class StaffDashboardController {
         searchInput: string
         releaseTime: string
         page: string
-        pathwayView: string
-        pathwayStatus: string
         assessmentRequired: string
         sortField: string
         sortDirection: string
         reportType: string
         watchList: string
+      }
+
+      let { pathwayView = '', pathwayStatus = '' } = req.query as {
+        pathwayView: string
+        pathwayStatus: string
+      }
+
+      // Ignore pathway status query params if supportNeeds enabled
+      if (supportNeedsEnabled) {
+        pathwayView = ''
+        pathwayStatus = ''
       }
 
       // Only submit pathway status if pathwayView is applied
