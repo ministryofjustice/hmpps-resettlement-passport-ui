@@ -5,6 +5,7 @@ import { Accommodation } from '../../data/model/accommodation'
 import { AssessmentsInformation } from '../../data/model/assessmentInformation'
 import { CaseNotesHistory } from '../../data/model/caseNotesHistory'
 import { CaseNotesCreators } from '../../data/model/caseNotesCreators'
+import { PathwaySupportNeedsSummary } from '../../data/model/supportNeeds'
 
 export default class AccommodationView implements View {
   constructor(
@@ -19,6 +20,7 @@ export default class AccommodationView implements View {
     private readonly page: string,
     private readonly sort: string,
     private readonly days: string,
+    private readonly pathwaySupportNeedsSummary: PathwaySupportNeedsSummary,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -36,6 +38,7 @@ export default class AccommodationView implements View {
     page: string
     sort: string
     days: string
+    pathwaySupportNeedsSummary: PathwaySupportNeedsSummary
     errors: ErrorMessage[]
   } {
     return {
@@ -50,6 +53,7 @@ export default class AccommodationView implements View {
       page: this.page,
       sort: this.sort,
       days: this.days,
+      pathwaySupportNeedsSummary: this.pathwaySupportNeedsSummary,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

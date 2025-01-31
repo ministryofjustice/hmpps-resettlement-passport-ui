@@ -3,6 +3,8 @@ import RpService from '../../services/rpService'
 import DrugsAlcoholView from './drugsAlcoholView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class DrugsAlcoholController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -12,6 +14,7 @@ export default class DrugsAlcoholController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       handleWhatsNewBanner(req, res)
 
@@ -48,6 +51,19 @@ export default class DrugsAlcoholController {
         'DRUGS_AND_ALCOHOL',
       )
 
+      let pathwaySupportNeedsSummary = null
+
+      if (supportNeedsEnabled) {
+        const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'DRUGS_AND_ALCOHOL',
+        )
+        pathwaySupportNeedsSummary = {
+          ...pathwaySupportNeedsResponse,
+          supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
+        }
+      }
+
       const view = new DrugsAlcoholView(
         prisonerData,
         crsReferrals,
@@ -59,6 +75,7 @@ export default class DrugsAlcoholController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/drugs-alcohol', { ...view.renderArgs })
     } catch (err) {

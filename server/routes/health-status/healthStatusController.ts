@@ -3,6 +3,8 @@ import RpService from '../../services/rpService'
 import HealthStatusView from './healthStatusView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class HealthStatusController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -13,6 +15,8 @@ export default class HealthStatusController {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       handleWhatsNewBanner(req, res)
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
+
       const {
         page = '0',
         pageSize = '10',
@@ -46,6 +50,19 @@ export default class HealthStatusController {
         'HEALTH',
       )
 
+      let pathwaySupportNeedsSummary = null
+
+      if (supportNeedsEnabled) {
+        const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'HEALTH',
+        )
+        pathwaySupportNeedsSummary = {
+          ...pathwaySupportNeedsResponse,
+          supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
+        }
+      }
+
       const view = new HealthStatusView(
         prisonerData,
         crsReferrals,
@@ -57,6 +74,7 @@ export default class HealthStatusController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       res.render('pages/health', { ...view.renderArgs })
     } catch (err) {

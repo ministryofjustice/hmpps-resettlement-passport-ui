@@ -9,6 +9,8 @@ import {
   stubCaseNotesHistory,
   stubCrsReferrals,
   stubEducationSkillsWork,
+  stubPathwaySupportNeedsSummary,
+  stubPathwaySupportNeedsSummaryNoData,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -38,6 +40,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
 
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY')
@@ -57,6 +60,7 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
     expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('A1234DY')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -65,6 +69,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubRpServiceNoData(rpService, 'getCaseNotesHistory')
     const getCaseNotesCreatorsSpy = stubRpServiceNoData(rpService, 'getCaseNotesCreators')
     const getEducationSkillsWorkSpy = stubRpServiceNoData(rpService, 'getEducationSkillsWork')
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummaryNoData(rpService)
 
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY')
@@ -84,6 +89,7 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
     expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('A1234DY')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -92,6 +98,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
 
     await request(app)
       .get(
@@ -113,6 +120,7 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
     expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('A1234DY')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
   })
 
   it('Error case - missing prisonerNumber', async () => {

@@ -3,6 +3,8 @@ import RpService from '../../services/rpService'
 import EducationSkillsWorkView from './educationSkillsWorkView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class EducationSkillsWorkController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -12,6 +14,7 @@ export default class EducationSkillsWorkController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       handleWhatsNewBanner(req, res)
 
@@ -52,6 +55,19 @@ export default class EducationSkillsWorkController {
         'EDUCATION_SKILLS_AND_WORK',
       )
 
+      let pathwaySupportNeedsSummary = null
+
+      if (supportNeedsEnabled) {
+        const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'EDUCATION_SKILLS_AND_WORK',
+        )
+        pathwaySupportNeedsSummary = {
+          ...pathwaySupportNeedsResponse,
+          supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
+        }
+      }
+
       const view = new EducationSkillsWorkView(
         prisonerData,
         crsReferrals,
@@ -64,6 +80,7 @@ export default class EducationSkillsWorkController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/education-skills-work', { ...view.renderArgs })
     } catch (err) {

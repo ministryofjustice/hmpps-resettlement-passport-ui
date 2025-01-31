@@ -8,6 +8,7 @@ import {
   EnumValue,
   PATHWAY_DICTIONARY,
   REPORT_TYPE_ENUMS_DICTIONARY,
+  SUPPORT_NEEDS_ENUMS_DICTIONARY,
   RISK_ASSESSMENT_ENUMS_DICTIONARY,
   STATUS_DICTIONARY,
 } from './constants'
@@ -154,6 +155,16 @@ export function getNameFromUrl(url: string) {
 export function getReportTypeName(reportTypeEnum: string) {
   const reportType = REPORT_TYPE_ENUMS_DICTIONARY[reportTypeEnum]
   return reportType?.name || undefined
+}
+
+export function getSupportNeedsStatus(supportNeedStatusEnum: string) {
+  const supportNeed = SUPPORT_NEEDS_ENUMS_DICTIONARY[supportNeedStatusEnum]
+  return supportNeed?.name || undefined
+}
+
+export function getSupportNeedsColour(supportNeedStatusEnum: string) {
+  const supportNeed = SUPPORT_NEEDS_ENUMS_DICTIONARY[supportNeedStatusEnum]
+  return supportNeed?.colour || undefined
 }
 
 export async function getDescriptionFromName(name: string) {

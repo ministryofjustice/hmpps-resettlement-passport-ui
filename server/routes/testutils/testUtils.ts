@@ -230,6 +230,57 @@ export function stubCrsReferrals(rpService: RpService, pathway: string) {
   })
 }
 
+export function stubPathwaySupportNeedsSummary(rpService: RpService) {
+  return jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue({
+    supportNeedsSet: true,
+    prisonerNeeds: [
+      {
+        id: '1456',
+        title: 'Cancel a tenancy',
+        isPrisonResponsible: true,
+        isProbationResponsible: false,
+        status: 'NOT_STARTED',
+        numberOfUpdates: 2,
+        lastUpdated: '2024-09-12',
+      },
+      {
+        id: '2894',
+        title: 'Another support need',
+        isPrisonResponsible: true,
+        isProbationResponsible: true,
+        status: 'IN_PROGRESS',
+        numberOfUpdates: 4,
+        lastUpdated: '2023-01-11',
+      },
+      {
+        id: '9876',
+        title: 'Declined support',
+        isPrisonResponsible: false,
+        isProbationResponsible: true,
+        status: 'DECLINED',
+        numberOfUpdates: 4,
+        lastUpdated: '2023-01-11',
+      },
+      {
+        id: '1234',
+        title: 'Final support need',
+        isPrisonResponsible: false,
+        isProbationResponsible: false,
+        status: 'MET',
+        numberOfUpdates: 4,
+        lastUpdated: '2023-01-11',
+      },
+    ],
+  })
+}
+
+export function stubPathwaySupportNeedsSummaryNoData(rpService: RpService) {
+  return jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue({
+    supportNeedsSet: false,
+    prisonerNeeds: [],
+  })
+}
+
 export function stubAssessmentInformation(rpService: RpService) {
   return jest.spyOn(rpService, 'getAssessmentInformation').mockResolvedValue({
     originalAssessment: {

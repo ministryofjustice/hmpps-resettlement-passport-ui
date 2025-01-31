@@ -328,7 +328,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
       <ul class="app-subnav__section app-subnav__section--nested">
         
           <li class="app-subnav__section-item">
-            <a href="#case-notes">Case notes and status history</a>
+            <a href="#support-needs">Support needs</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -353,6 +353,107 @@ exports[`getView Happy path with default query params and data from endpoints 1`
 
     </div>
     <div class="govuk-grid-column-three-quarters">
+      
+        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+   <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">Support needs</h3>
+  </header>
+  <div class="app-summary-card__body govuk-!-padding-top-4">
+    
+      <table class="govuk-table govuk-!-margin-bottom-4">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Support need</th>
+          <th scope="col" class="govuk-table__header">Responsible staff</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header">Number of updates</th>
+          <th scope="col" class="govuk-table__header">Last updated</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__header">
+                <a href="/" class="govuk-link govuk-link--no-visited-state">Cancel a tenancy</a>
+              </td>
+              <td class="govuk-table__cell">
+                
+                  <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                  <br />
+                
+                
+              </td>
+              <td class="govuk-table__cell">
+                
+                <span class="govuk-tag govuk-tag--orange">Support not started</span>
+              </td>
+              <td class="govuk-table__cell">2</td>
+              <td class="govuk-table__cell">12 Sept 2024</td>
+            </tr>
+          
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__header">
+                <a href="/" class="govuk-link govuk-link--no-visited-state">Another support need</a>
+              </td>
+              <td class="govuk-table__cell">
+                
+                  <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                  <br />
+                
+                
+                  <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                  <br />
+                
+              </td>
+              <td class="govuk-table__cell">
+                
+                <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+              </td>
+              <td class="govuk-table__cell">4</td>
+              <td class="govuk-table__cell">11 Jan 2023</td>
+            </tr>
+          
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__header">
+                <a href="/" class="govuk-link govuk-link--no-visited-state">Declined support</a>
+              </td>
+              <td class="govuk-table__cell">
+                
+                
+                  <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                  <br />
+                
+              </td>
+              <td class="govuk-table__cell">
+                
+                <span class="govuk-tag govuk-tag--purple">Support declined</span>
+              </td>
+              <td class="govuk-table__cell">4</td>
+              <td class="govuk-table__cell">11 Jan 2023</td>
+            </tr>
+          
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__header">
+                <a href="/" class="govuk-link govuk-link--no-visited-state">Final support need</a>
+              </td>
+              <td class="govuk-table__cell">
+                
+                
+              </td>
+              <td class="govuk-table__cell">
+                
+                <span class="govuk-tag govuk-tag--green">Support met</span>
+              </td>
+              <td class="govuk-table__cell">4</td>
+              <td class="govuk-table__cell">11 Jan 2023</td>
+            </tr>
+          
+        </tbody>
+      </table>
+    
+  </div>
+</section>
+      
       
 
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
@@ -1264,7 +1365,7 @@ exports[`getView Happy path with default query params and no data from endpoints
       <ul class="app-subnav__section app-subnav__section--nested">
         
           <li class="app-subnav__section-item">
-            <a href="#case-notes">Case notes and status history</a>
+            <a href="#support-needs">Support needs</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -1289,6 +1390,18 @@ exports[`getView Happy path with default query params and no data from endpoints
 
     </div>
     <div class="govuk-grid-column-three-quarters">
+      
+        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+   <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">Support needs</h3>
+  </header>
+  <div class="app-summary-card__body govuk-!-padding-top-4">
+    
+      <p><b>Support needs not set</b></p>
+    
+  </div>
+</section>
+      
       
 
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
@@ -1753,7 +1866,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
       <ul class="app-subnav__section app-subnav__section--nested">
         
           <li class="app-subnav__section-item">
-            <a href="#case-notes">Case notes and status history</a>
+            <a href="#support-needs">Support needs</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -1778,6 +1891,18 @@ exports[`getView Happy path with specified query params and data from endpoints 
 
     </div>
     <div class="govuk-grid-column-three-quarters">
+      
+        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+   <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">Support needs</h3>
+  </header>
+  <div class="app-summary-card__body govuk-!-padding-top-4">
+    
+      <p><b>Support needs not set</b></p>
+    
+  </div>
+</section>
+      
       
 
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">

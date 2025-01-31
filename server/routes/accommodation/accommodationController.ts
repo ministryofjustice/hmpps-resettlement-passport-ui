@@ -3,6 +3,8 @@ import AccommodationView from './accommodationView'
 import RpService from '../../services/rpService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class AccommodationController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -12,6 +14,7 @@ export default class AccommodationController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       handleWhatsNewBanner(req, res)
 
@@ -50,6 +53,19 @@ export default class AccommodationController {
         'ACCOMMODATION',
       )
 
+      let pathwaySupportNeedsSummary = null
+
+      if (supportNeedsEnabled) {
+        const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'ACCOMMODATION',
+        )
+        pathwaySupportNeedsSummary = {
+          ...pathwaySupportNeedsResponse,
+          supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
+        }
+      }
+
       const view = new AccommodationView(
         prisonerData,
         crsReferrals,
@@ -62,6 +78,7 @@ export default class AccommodationController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/accommodation', { ...view.renderArgs })
     } catch (err) {

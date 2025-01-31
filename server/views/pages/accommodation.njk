@@ -4,6 +4,7 @@
 {% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% from "../macros/assessmentInformation.njk" import assessmentInformation %}
+{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
 
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}
@@ -15,11 +16,12 @@
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
+      {% set statusItem = {
+        name: "Support needs" if supportNeedsEnabled else "Case notes and status history",
+        id: "support-needs" if supportNeedsEnabled else "case-notes"
+      } %}
       {% set subNavItems = [
-        {
-          name: "Case notes and status history",
-          id: "case-notes"
-        },
+        statusItem,
         {
           name: "Duty to refer",
           id: "duty-to-refer"
@@ -39,6 +41,9 @@
       {{ subNav(subNavItems) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
+      {% if supportNeedsEnabled %}
+        {% include "../partials/supportNeedsSummary.njk" %}
+      {% endif %}
       {% include "../partials/caseNotes.njk" %}
       <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">

@@ -164,6 +164,25 @@ export const REPORT_TYPE_ENUMS_DICTIONARY: { [key: string]: { name: string } } =
   },
 }
 
+export const SUPPORT_NEEDS_ENUMS_DICTIONARY: { [key: string]: { name: string; colour: string } } = {
+  NOT_STARTED: {
+    name: 'Support not started',
+    colour: 'orange',
+  },
+  IN_PROGRESS: {
+    name: 'Support in progress',
+    colour: 'yellow',
+  },
+  MET: {
+    name: 'Support met',
+    colour: 'green',
+  },
+  DECLINED: {
+    name: 'Support declined',
+    colour: 'purple',
+  },
+}
+
 export const FEATURE_FLAGS: { [key: string]: string } = {
   ADD_APPOINTMENTS: 'addAppointments',
   TASKS_VIEW: 'tasksView',

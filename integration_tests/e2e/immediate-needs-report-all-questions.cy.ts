@@ -3,6 +3,73 @@ context('Immediate Needs Report All Questions', () => {
     cy.task('reset')
     cy.task('stubSignIn')
     cy.task('stubAuthUser')
+    const flagsEnabled = [
+      {
+        feature: 'addAppointments',
+        enabled: true,
+      },
+      {
+        feature: 'tasksView',
+        enabled: true,
+      },
+      {
+        feature: 'viewAppointmentsEndUser',
+        enabled: true,
+      },
+      {
+        feature: 'useNewDeliusCaseNoteFormat',
+        enabled: true,
+      },
+      {
+        feature: 'viewDocuments',
+        enabled: true,
+      },
+      {
+        feature: 'uploadDocuments',
+        enabled: true,
+      },
+      {
+        feature: 'includePastReleaseDates',
+        enabled: true,
+      },
+      {
+        feature: 'knowledgeVerification',
+        enabled: true,
+      },
+      {
+        feature: 'profileReset',
+        enabled: true,
+      },
+      {
+        feature: 'todoList',
+        enabled: false,
+      },
+      {
+        feature: 'useNewDpsCaseNoteFormat',
+        enabled: false,
+      },
+      {
+        feature: 'whatsNewBanner',
+        enabled: false,
+      },
+      {
+        feature: 'assignCaseTab',
+        enabled: false,
+      },
+      {
+        feature: 'myCases',
+        enabled: false,
+      },
+      {
+        feature: 'supportNeeds',
+        enabled: false,
+      },
+    ]
+    cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
+  })
+
+  after(() => {
+    cy.task('restoreFlags')
   })
 
   function clickContinue() {

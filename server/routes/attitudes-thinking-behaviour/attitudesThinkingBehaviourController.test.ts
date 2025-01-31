@@ -8,6 +8,8 @@ import {
   stubCaseNotesCreators,
   stubCaseNotesHistory,
   stubCrsReferrals,
+  stubPathwaySupportNeedsSummary,
+  stubPathwaySupportNeedsSummaryNoData,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -36,6 +38,7 @@ describe('getView', () => {
     const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
 
     await request(app)
       .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')
@@ -54,6 +57,7 @@ describe('getView', () => {
       '0',
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -61,6 +65,7 @@ describe('getView', () => {
     const getAssessmentInformationSpy = stubRpServiceNoData(rpService, 'getAssessmentInformation')
     const getCaseNotesHistorySpy = stubRpServiceNoData(rpService, 'getCaseNotesHistory')
     const getCaseNotesCreatorsSpy = stubRpServiceNoData(rpService, 'getCaseNotesCreators')
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummaryNoData(rpService)
 
     await request(app)
       .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')
@@ -79,6 +84,7 @@ describe('getView', () => {
       '0',
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -86,6 +92,7 @@ describe('getView', () => {
     const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
 
     await request(app)
       .get(
@@ -106,6 +113,7 @@ describe('getView', () => {
       '30',
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
   })
 
   it('Error case - missing prisonerNumber', async () => {

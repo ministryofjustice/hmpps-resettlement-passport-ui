@@ -4,6 +4,7 @@
 {% set pageTitle = applicationName + " - " + pathway %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway( pathway | getEnumByName ) %}
+{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
 
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
@@ -16,8 +17,8 @@
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       {% set subNavItems = [
         {
-          name: "Case notes and status history",
-          id: "case-notes"
+          name: "Support needs" if supportNeedsEnabled else "Case notes and status history",
+          id: "support-needs" if supportNeedsEnabled else "case-notes"
         }
       ] %}
         {% set subNavItems = subNavItems.concat([
@@ -30,7 +31,10 @@
       {{ subNav(subNavItems) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
-      {% include "../partials/caseNotes.njk" %}
+        {% if supportNeedsEnabled %}
+          {% include "../partials/supportNeedsSummary.njk" %}
+        {% endif %}
+        {% include "../partials/caseNotes.njk" %}
       {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
       {% include "../partials/crsReferrals.njk" %}
     </div>
