@@ -100,7 +100,7 @@ describe('getView', () => {
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getFinanceSpy = stubFetchFinance(rpService)
     const getIdSpy = stubFetchId(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService, 'FINANCE_AND_ID')
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
 
     await request(app)
       .get(

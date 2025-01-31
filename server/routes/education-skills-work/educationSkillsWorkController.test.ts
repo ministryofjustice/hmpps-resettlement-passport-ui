@@ -39,7 +39,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
 
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY')

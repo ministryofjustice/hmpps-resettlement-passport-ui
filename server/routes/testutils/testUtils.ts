@@ -230,7 +230,7 @@ export function stubCrsReferrals(rpService: RpService, pathway: string) {
   })
 }
 
-export function stubPathwaySupportNeedsSummary(rpService: RpService, pathway: string) {
+export function stubPathwaySupportNeedsSummary(rpService: RpService) {
   return jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue({
     prisonerNeeds: [
       {
