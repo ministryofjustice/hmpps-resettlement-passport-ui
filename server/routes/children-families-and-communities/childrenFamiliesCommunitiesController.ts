@@ -3,6 +3,8 @@ import RpService from '../../services/rpService'
 import ChildrenFamiliesCommunitiesView from './childrenFamiliesCommunitiesView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class ChildrenFamiliesCommunitiesController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -13,6 +15,7 @@ export default class ChildrenFamiliesCommunitiesController {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       handleWhatsNewBanner(req, res)
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       const {
         page = '0',
@@ -47,10 +50,18 @@ export default class ChildrenFamiliesCommunitiesController {
         'CHILDREN_FAMILIES_AND_COMMUNITY',
       )
 
-      const pathwaySupportNeedsSummary = await this.rpService.getPathwaySupportNeedsSummary(
-        prisonerData.personalDetails.prisonerNumber as string,
-        'CHILDREN_FAMILIES_AND_COMMUNITY',
-      )
+      let pathwaySupportNeedsSummary = null
+
+      if (supportNeedsEnabled) {
+        const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'CHILDREN_FAMILIES_AND_COMMUNITY',
+        )
+        pathwaySupportNeedsSummary = {
+          ...pathwaySupportNeedsResponse,
+          supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
+        }
+      }
 
       const view = new ChildrenFamiliesCommunitiesView(
         prisonerData,

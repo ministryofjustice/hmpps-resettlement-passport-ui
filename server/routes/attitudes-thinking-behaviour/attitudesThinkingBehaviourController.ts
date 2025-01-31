@@ -3,6 +3,8 @@ import RpService from '../../services/rpService'
 import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { FEATURE_FLAGS } from '../../utils/constants'
+import { getFeatureFlagBoolean } from '../../utils/utils'
 
 export default class AttitudesThinkingBehaviourController {
   constructor(
@@ -15,6 +17,7 @@ export default class AttitudesThinkingBehaviourController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       handleWhatsNewBanner(req, res)
 
@@ -51,10 +54,18 @@ export default class AttitudesThinkingBehaviourController {
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )
 
-      const pathwaySupportNeedsSummary = await this.prisonService.getPathwaySupportNeedsSummary(
-        prisonerData.personalDetails.prisonerNumber as string,
-        'ATTITUDES_THINKING_AND_BEHAVIOUR',
-      )
+      let pathwaySupportNeedsSummary = null
+
+      if (supportNeedsEnabled) {
+        const pathwaySupportNeedsResponse = await this.prisonService.getPathwaySupportNeedsSummary(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'ATTITUDES_THINKING_AND_BEHAVIOUR',
+        )
+        pathwaySupportNeedsSummary = {
+          ...pathwaySupportNeedsResponse,
+          supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
+        }
+      }
 
       const view = new AttitudesThinkingBehaviour(
         prisonerData,

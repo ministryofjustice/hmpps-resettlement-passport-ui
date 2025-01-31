@@ -3,41 +3,45 @@
     <h3 class="app-summary-card__title">Support needs</h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
-    <table class="govuk-table govuk-!-margin-bottom-4">
-      <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Support need</th>
-        <th scope="col" class="govuk-table__header">Responsible staff</th>
-        <th scope="col" class="govuk-table__header">Status</th>
-        <th scope="col" class="govuk-table__header">Number of updates</th>
-        <th scope="col" class="govuk-table__header">Last updated</th>
-      </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        {% for supportNeed in pathwaySupportNeedsSummary.prisonerNeeds %}
-          <tr class="govuk-table__row">
-            <td scope="row" class="govuk-table__header">
-              <a href="/" class="govuk-link govuk-link--no-visited-state">{{ supportNeed.title }}</a>
-            </td>
-            <td class="govuk-table__cell">
-              {% if supportNeed.isPrisonResponsible %}
-                <strong class="govuk-tag govuk-tag--blue">Prison</strong>
-                <br />
-              {% endif %}
-              {% if supportNeed.isProbationResponsible %}
-                <strong class="govuk-tag govuk-tag--blue">Community</strong>
-                <br />
-              {% endif %}
-            </td>
-            <td class="govuk-table__cell">
-              {% set tagColour = "govuk-tag--" + (supportNeed.status | getSupportNeedsColour) %}
-              <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }}</span>
-            </td>
-            <td class="govuk-table__cell">{{ supportNeed.numberOfUpdates }}</td>
-            <td class="govuk-table__cell">{{ supportNeed.lastUpdated | formatDate }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    {% if pathwaySupportNeedsSummary.supportNeedsSet %}
+      <table class="govuk-table govuk-!-margin-bottom-4">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Support need</th>
+          <th scope="col" class="govuk-table__header">Responsible staff</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header">Number of updates</th>
+          <th scope="col" class="govuk-table__header">Last updated</th>
+        </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          {% for supportNeed in pathwaySupportNeedsSummary.prisonerNeeds %}
+            <tr class="govuk-table__row">
+              <td scope="row" class="govuk-table__header">
+                <a href="/" class="govuk-link govuk-link--no-visited-state">{{ supportNeed.title }}</a>
+              </td>
+              <td class="govuk-table__cell">
+                {% if supportNeed.isPrisonResponsible %}
+                  <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                  <br />
+                {% endif %}
+                {% if supportNeed.isProbationResponsible %}
+                  <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                  <br />
+                {% endif %}
+              </td>
+              <td class="govuk-table__cell">
+                {% set tagColour = "govuk-tag--" + (supportNeed.status | getSupportNeedsColour) %}
+                <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }}</span>
+              </td>
+              <td class="govuk-table__cell">{{ supportNeed.numberOfUpdates }}</td>
+              <td class="govuk-table__cell">{{ supportNeed.lastUpdated | formatDate }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p><b>Support needs not set</b></p>
+    {% endif %}
   </div>
 </section>

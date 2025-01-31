@@ -34,9 +34,7 @@
       {% if supportNeedsEnabled %}
         {% include "../partials/supportNeedsSummary.njk" %}
       {% endif %}
-      {% if not supportNeedsEnabled %}
-        {% include "../partials/caseNotes.njk" %}
-      {% endif %}
+      {% include "../partials/caseNotes.njk" %}
       {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
       {% include "../partials/crsReferrals.njk" %}
     </div>

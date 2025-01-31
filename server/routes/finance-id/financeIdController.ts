@@ -7,6 +7,8 @@ import { BankApplicationResponse, IdApplicationResponse } from '../../data/model
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { badRequestError } from '../../errorHandler'
+import { getFeatureFlagBoolean } from '../../utils/utils'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class FinanceIdController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -17,6 +19,7 @@ export default class FinanceIdController {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       handleWhatsNewBanner(req, res)
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       const {
         page = '0',
@@ -69,10 +72,18 @@ export default class FinanceIdController {
         'FINANCE_AND_ID',
       )
 
-      const pathwaySupportNeedsSummary = await this.rpService.getPathwaySupportNeedsSummary(
-        prisonerData.personalDetails.prisonerNumber as string,
-        'FINANCE_AND_ID',
-      )
+      let pathwaySupportNeedsSummary = null
+
+      if (supportNeedsEnabled) {
+        const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'FINANCE_AND_ID',
+        )
+        pathwaySupportNeedsSummary = {
+          ...pathwaySupportNeedsResponse,
+          supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
+        }
+      }
 
       const view = new FinanceIdView(
         prisonerData,

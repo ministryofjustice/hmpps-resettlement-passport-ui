@@ -45,9 +45,7 @@
       {% if supportNeedsEnabled %}
         {% include "../partials/supportNeedsSummary.njk" %}
       {% endif %}
-      {% if not supportNeedsEnabled %}
-        {% include "../partials/caseNotes.njk" %}
-      {% endif %}
+      {% include "../partials/caseNotes.njk" %}
       <section id="finance" class="app-summary-card govuk-!-margin-bottom-8">
         <header class="app-summary-card__header">
           <h3 class="app-summary-card__title">

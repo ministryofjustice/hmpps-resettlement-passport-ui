@@ -232,6 +232,7 @@ export function stubCrsReferrals(rpService: RpService, pathway: string) {
 
 export function stubPathwaySupportNeedsSummary(rpService: RpService) {
   return jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue({
+    supportNeedsSet: true,
     prisonerNeeds: [
       {
         id: '1456',
@@ -270,6 +271,13 @@ export function stubPathwaySupportNeedsSummary(rpService: RpService) {
         lastUpdated: '2023-01-11',
       },
     ],
+  })
+}
+
+export function stubPathwaySupportNeedsSummaryNoData(rpService: RpService) {
+  return jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue({
+    supportNeedsSet: false,
+    prisonerNeeds: [],
   })
 }
 

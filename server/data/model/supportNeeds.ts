@@ -27,6 +27,7 @@ export type SupportNeedsSummary = {
 }
 
 export type PathwaySupportNeedsSummary = {
+  supportNeedsSet: boolean
   prisonerNeeds: {
     id: string
     title: string

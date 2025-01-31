@@ -48,9 +48,7 @@
       {% if supportNeedsEnabled %}
         {% include "../partials/supportNeedsSummary.njk" %}
       {% endif %}
-      {% if not supportNeedsEnabled %}
-        {% include "../partials/caseNotes.njk" %}
-      {% endif %}
+      {% include "../partials/caseNotes.njk" %}
       {% if not educationSkillsWork.error %}
         <section id="work-status" class="app-summary-card govuk-!-margin-bottom-8">
           <header class="app-summary-card__header">
