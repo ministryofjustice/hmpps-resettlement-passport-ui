@@ -47,6 +47,11 @@ export default class ChildrenFamiliesCommunitiesController {
         'CHILDREN_FAMILIES_AND_COMMUNITY',
       )
 
+      const pathwaySupportNeedsSummary = await this.rpService.getPathwaySupportNeedsSummary(
+        prisonerData.personalDetails.prisonerNumber as string,
+        'CHILDREN_FAMILIES_AND_COMMUNITY',
+      )
+
       const view = new ChildrenFamiliesCommunitiesView(
         prisonerData,
         crsReferrals,
@@ -58,6 +63,7 @@ export default class ChildrenFamiliesCommunitiesController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/children-families-communities', { ...view.renderArgs })
     } catch (err) {

@@ -5,6 +5,7 @@ import { AssessmentsInformation } from '../../data/model/assessmentInformation'
 import { CaseNotesHistory } from '../../data/model/caseNotesHistory'
 import { CaseNotesCreators } from '../../data/model/caseNotesCreators'
 import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
+import { PathwaySupportNeedsSummary } from '../../data/model/supportNeeds'
 
 export default class FinanceIdView implements View {
   constructor(
@@ -20,6 +21,7 @@ export default class FinanceIdView implements View {
     private readonly days: string,
     private readonly finance: BankApplicationResponse,
     private readonly id: IdApplicationResponse,
+    private readonly pathwaySupportNeedsSummary: PathwaySupportNeedsSummary,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -38,6 +40,7 @@ export default class FinanceIdView implements View {
     days: string
     finance: BankApplicationResponse
     id: IdApplicationResponse
+    pathwaySupportNeedsSummary: PathwaySupportNeedsSummary
     errors: ErrorMessage[]
   } {
     return {
@@ -53,6 +56,7 @@ export default class FinanceIdView implements View {
       days: this.days,
       finance: this.finance,
       id: this.id,
+      pathwaySupportNeedsSummary: this.pathwaySupportNeedsSummary,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

@@ -25,3 +25,15 @@ export type SupportNeedsSummary = {
     isProbationResponsible: boolean
   }[]
 }
+
+export type PathwaySupportNeedsSummary = {
+  prisonerNeeds: {
+    id: string
+    title: string
+    isPrisonResponsible: boolean
+    isProbationResponsible: boolean
+    status: string
+    numberOfUpdates: number
+    lastUpdated: string
+  }[]
+}

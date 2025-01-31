@@ -8,6 +8,7 @@ import {
   stubCaseNotesCreators,
   stubCaseNotesHistory,
   stubCrsReferrals,
+  stubPathwaySupportNeedsSummary,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -86,6 +87,10 @@ describe('getView', () => {
     const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(
+      rpService,
+      'ATTITUDES_THINKING_AND_BEHAVIOUR',
+    )
 
     await request(app)
       .get(
@@ -106,6 +111,7 @@ describe('getView', () => {
       '30',
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
   })
 
   it('Error case - missing prisonerNumber', async () => {

@@ -69,6 +69,11 @@ export default class FinanceIdController {
         'FINANCE_AND_ID',
       )
 
+      const pathwaySupportNeedsSummary = await this.rpService.getPathwaySupportNeedsSummary(
+        prisonerData.personalDetails.prisonerNumber as string,
+        'FINANCE_AND_ID',
+      )
+
       const view = new FinanceIdView(
         prisonerData,
         crsReferrals,
@@ -82,6 +87,7 @@ export default class FinanceIdController {
         days as string,
         finance,
         id,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/finance-id', { ...view.renderArgs })
     } catch (err) {

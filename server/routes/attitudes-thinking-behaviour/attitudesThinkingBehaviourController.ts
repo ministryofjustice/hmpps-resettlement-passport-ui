@@ -3,6 +3,7 @@ import RpService from '../../services/rpService'
 import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { PathwaySupportNeedsSummary } from '../../data/model/supportNeeds'
 
 export default class AttitudesThinkingBehaviourController {
   constructor(
@@ -51,6 +52,11 @@ export default class AttitudesThinkingBehaviourController {
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )
 
+      const pathwaySupportNeedsSummary = await this.prisonService.getPathwaySupportNeedsSummary(
+        prisonerData.personalDetails.prisonerNumber as string,
+        'ATTITUDES_THINKING_AND_BEHAVIOUR',
+      )
+
       const view = new AttitudesThinkingBehaviour(
         prisonerData,
         crsReferrals,
@@ -62,6 +68,7 @@ export default class AttitudesThinkingBehaviourController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/attitudes-thinking-behaviour', { ...view.renderArgs })
     } catch (err) {

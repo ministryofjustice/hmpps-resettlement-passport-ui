@@ -10,6 +10,7 @@ import {
   stubCrsReferrals,
   stubFetchFinance,
   stubFetchId,
+  stubPathwaySupportNeedsSummary,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -99,6 +100,7 @@ describe('getView', () => {
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getFinanceSpy = stubFetchFinance(rpService)
     const getIdSpy = stubFetchId(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService, 'FINANCE_AND_ID')
 
     await request(app)
       .get(
@@ -121,6 +123,7 @@ describe('getView', () => {
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
     expect(getFinanceSpy).toHaveBeenCalledWith('A1234DY')
     expect(getIdSpy).toHaveBeenCalledWith('A1234DY')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
   })
 
   it('Error case - missing prisonerNumber', async () => {

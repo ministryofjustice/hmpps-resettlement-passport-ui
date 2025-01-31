@@ -52,6 +52,11 @@ export default class EducationSkillsWorkController {
         'EDUCATION_SKILLS_AND_WORK',
       )
 
+      const pathwaySupportNeedsSummary = await this.rpService.getPathwaySupportNeedsSummary(
+        prisonerData.personalDetails.prisonerNumber as string,
+        'EDUCATION_SKILLS_AND_WORK',
+      )
+
       const view = new EducationSkillsWorkView(
         prisonerData,
         crsReferrals,
@@ -64,6 +69,7 @@ export default class EducationSkillsWorkController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/education-skills-work', { ...view.renderArgs })
     } catch (err) {

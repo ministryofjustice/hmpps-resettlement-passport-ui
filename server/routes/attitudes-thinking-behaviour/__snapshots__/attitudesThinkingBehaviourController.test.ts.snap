@@ -325,7 +325,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
       <ul class="app-subnav__section app-subnav__section--nested">
         
           <li class="app-subnav__section-item">
-            <a href="#case-notes">Case notes and status history</a>
+            <a href="#support-needs">Support needs</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -343,95 +343,29 @@ exports[`getView Happy path with default query params and data from endpoints 1`
       </div>
       <div class="govuk-grid-column-three-quarters">
         
-
-<section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
-  
-  <header class="app-summary-card__header">
-    <h3 class="app-summary-card__title">Attitudes, thinking and behaviour case notes and status history</h3>
+          <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+   <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">Support needs</h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
-    <div class="govuk-grid-row">
-      
-      <form action="/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY#case-notes" method="GET" novalidate>
-        <div class="govuk-grid-column-full">
-          <label class="govuk-label" for="pathway-select">Created by</label>
-          <select name="createdByUserId" class="govuk-select" id="pathway-select">
-            <option value="0">Select an option</option>
-            
-              
-              <option  value="A_USER">A User</option>
-            
-          </select>
-          
-          <input type="hidden" name="prisonerNumber" value="A1234DY">
-        </div>
-        <div class="govuk-grid-column-full">
-          <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
-        </div>
-      </form>
-    </div>
-    
-      <div class="govuk-grid-row govuk-!-padding-top-8">
-        <div class="govuk-grid-column-full" id="case-notes-container">
-          <hr>
-          
-            
-            <div class="case-note">
-              <h3>Attitudes, thinking and behaviour</h3>
-              <strong></strong>
-              <p class="show-line-breaks">
-                This is a case note
-              </p>
-              <span class="govuk-caption-m">Happened: 7 September 2024</span>
-              <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
-              <br>
-            </div>
-            <hr>
-            
-            
-            <div class="case-note">
-              <h3>Attitudes, thinking and behaviour</h3>
-              <strong></strong>
-              <p class="show-line-breaks">
-                This is another case note
-              </p>
-              <span class="govuk-caption-m">Happened: 7 September 2024</span>
-              <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
-              <br>
-            </div>
-            <hr>
-            
-          
-          
-          
-          
-          
-          
-            
-  
-  
-
-  <nav class="moj-pagination" aria-label="Pagination navigation">
-    <ul class="moj-pagination__list">
-      
-      
-          <li class="moj-pagination__item moj-pagination__item--active" aria-current="page" aria-label="Page 1 of 1">1</li>
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Support need</th>
+        <th scope="col" class="govuk-table__header">Responsible staff</th>
+        <th scope="col" class="govuk-table__header">Status</th>
+        <th scope="col" class="govuk-table__header">Number of updates</th>
+        <th scope="col" class="govuk-table__header">Last updated</th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
         
-      
-    </ul>
-    
-    
-      
-    
-    <p class="moj-pagination__results">Showing <b>1</b> to <b>2</b> of <b>2</b> results</p>
-  </nav>
-
-          
-        </div>
-      </div>
-      
+      </tbody>
+    </table>
   </div>
 </section>
+        
+        
         
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
@@ -1039,7 +973,7 @@ exports[`getView Happy path with default query params and no data from endpoints
       <ul class="app-subnav__section app-subnav__section--nested">
         
           <li class="app-subnav__section-item">
-            <a href="#case-notes">Case notes and status history</a>
+            <a href="#support-needs">Support needs</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -1057,35 +991,29 @@ exports[`getView Happy path with default query params and no data from endpoints
       </div>
       <div class="govuk-grid-column-three-quarters">
         
-
-<section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
-  
-  <header class="app-summary-card__header">
-    <h3 class="app-summary-card__title">Attitudes, thinking and behaviour case notes and status history</h3>
+          <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+   <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">Support needs</h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
-    <div class="govuk-grid-row">
-      
-      <form action="/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY#case-notes" method="GET" novalidate>
-        <div class="govuk-grid-column-full">
-          <label class="govuk-label" for="pathway-select">Created by</label>
-          <select name="createdByUserId" class="govuk-select" id="pathway-select">
-            <option value="0">Select an option</option>
-            
-          </select>
-          
-          <input type="hidden" name="prisonerNumber" value="A1234DY">
-        </div>
-        <div class="govuk-grid-column-full">
-          <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
-        </div>
-      </form>
-    </div>
-    
-      <p></p>
-    
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Support need</th>
+        <th scope="col" class="govuk-table__header">Responsible staff</th>
+        <th scope="col" class="govuk-table__header">Status</th>
+        <th scope="col" class="govuk-table__header">Number of updates</th>
+        <th scope="col" class="govuk-table__header">Last updated</th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        
+      </tbody>
+    </table>
   </div>
 </section>
+        
+        
         
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
@@ -1469,7 +1397,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
       <ul class="app-subnav__section app-subnav__section--nested">
         
           <li class="app-subnav__section-item">
-            <a href="#case-notes">Case notes and status history</a>
+            <a href="#support-needs">Support needs</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -1487,101 +1415,105 @@ exports[`getView Happy path with specified query params and data from endpoints 
       </div>
       <div class="govuk-grid-column-three-quarters">
         
-
-<section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
-  
-  <header class="app-summary-card__header">
-    <h3 class="app-summary-card__title">Attitudes, thinking and behaviour case notes and status history</h3>
+          <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+   <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">Support needs</h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
-    <div class="govuk-grid-row">
-      
-      <form action="/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY#case-notes" method="GET" novalidate>
-        <div class="govuk-grid-column-full">
-          <label class="govuk-label" for="pathway-select">Created by</label>
-          <select name="createdByUserId" class="govuk-select" id="pathway-select">
-            <option value="0">Select an option</option>
-            
-              
-              <option  value="A_USER">A User</option>
-            
-          </select>
-          
-          <input type="hidden" name="prisonerNumber" value="A1234DY">
-        </div>
-        <div class="govuk-grid-column-full">
-          <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
-        </div>
-      </form>
-    </div>
-    
-      <div class="govuk-grid-row govuk-!-padding-top-8">
-        <div class="govuk-grid-column-full" id="case-notes-container">
-          <hr>
-          
-            
-            <div class="case-note">
-              <h3>Attitudes, thinking and behaviour</h3>
-              <strong></strong>
-              <p class="show-line-breaks">
-                This is a case note
-              </p>
-              <span class="govuk-caption-m">Happened: 7 September 2024</span>
-              <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
-              <br>
-            </div>
-            <hr>
-            
-            
-            <div class="case-note">
-              <h3>Attitudes, thinking and behaviour</h3>
-              <strong></strong>
-              <p class="show-line-breaks">
-                This is another case note
-              </p>
-              <span class="govuk-caption-m">Happened: 7 September 2024</span>
-              <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
-              <br>
-            </div>
-            <hr>
-            
-          
-          
-          
-          
-          
-          
-            
-  
-  
-
-  <nav class="moj-pagination" aria-label="Pagination navigation">
-    <ul class="moj-pagination__list">
-      
-        <li class="moj-pagination__item  moj-pagination__item--prev">
-          <a class="moj-pagination__link" href="/attitudes-thinking-and-behaviour?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ATTITUDES_THINKING_AND_BEHAVIOUR#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
-        </li>
-      
-      
-          <li class="moj-pagination__item">
-            <a class="moj-pagination__link" href="/attitudes-thinking-and-behaviour?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ATTITUDES_THINKING_AND_BEHAVIOUR#case-notes " aria-label="Page 1 of 1">1</a>
-          </li>
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Support need</th>
+        <th scope="col" class="govuk-table__header">Responsible staff</th>
+        <th scope="col" class="govuk-table__header">Status</th>
+        <th scope="col" class="govuk-table__header">Number of updates</th>
+        <th scope="col" class="govuk-table__header">Last updated</th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
         
-      
-    </ul>
-    
-    
-      
-    
-    <p class="moj-pagination__results">Showing <b>31</b> to <b>2</b> of <b>2</b> results</p>
-  </nav>
-
-          
-        </div>
-      </div>
-      
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">
+              <a href="/" class="govuk-link govuk-link--no-visited-state">Cancel a tenancy</a>
+            </td>
+            <td class="govuk-table__cell">
+              
+                <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                <br />
+              
+              
+            </td>
+            <td class="govuk-table__cell">
+              
+              <span class="govuk-tag govuk-tag--orange">Support not started</span>
+            </td>
+            <td class="govuk-table__cell">2</td>
+            <td class="govuk-table__cell">12 Sept 2024</td>
+          </tr>
+        
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">
+              <a href="/" class="govuk-link govuk-link--no-visited-state">Another support need</a>
+            </td>
+            <td class="govuk-table__cell">
+              
+                <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                <br />
+              
+              
+                <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                <br />
+              
+            </td>
+            <td class="govuk-table__cell">
+              
+              <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+            </td>
+            <td class="govuk-table__cell">4</td>
+            <td class="govuk-table__cell">11 Jan 2023</td>
+          </tr>
+        
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">
+              <a href="/" class="govuk-link govuk-link--no-visited-state">Declined support</a>
+            </td>
+            <td class="govuk-table__cell">
+              
+              
+                <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                <br />
+              
+            </td>
+            <td class="govuk-table__cell">
+              
+              <span class="govuk-tag govuk-tag--purple">Support declined</span>
+            </td>
+            <td class="govuk-table__cell">4</td>
+            <td class="govuk-table__cell">11 Jan 2023</td>
+          </tr>
+        
+          <tr class="govuk-table__row">
+            <td scope="row" class="govuk-table__header">
+              <a href="/" class="govuk-link govuk-link--no-visited-state">Final support need</a>
+            </td>
+            <td class="govuk-table__cell">
+              
+              
+            </td>
+            <td class="govuk-table__cell">
+              
+              <span class="govuk-tag govuk-tag--green">Support met</span>
+            </td>
+            <td class="govuk-table__cell">4</td>
+            <td class="govuk-table__cell">11 Jan 2023</td>
+          </tr>
+        
+      </tbody>
+    </table>
   </div>
 </section>
+        
+        
         
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">

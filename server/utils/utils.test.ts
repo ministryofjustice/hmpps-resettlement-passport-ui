@@ -28,6 +28,8 @@ import {
   getPaginationPages,
   checkSupportNeedsSet,
   getReportTypeName,
+  getSupportNeedsStatus,
+  getSupportNeedsColour,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -1511,5 +1513,35 @@ describe('getReportTypeName', () => {
     ['Undefined value', undefined, undefined],
   ])('%s -> getReportTypeName(%s)', (_: string, reportTypeEnum: string, expected: string | undefined) => {
     expect(getReportTypeName(reportTypeEnum)).toEqual(expected)
+  })
+})
+
+describe('getSupportNeedsStatus', () => {
+  it.each([
+    ['Existing status: NOT_STARTED', 'NOT_STARTED', 'Support not started'],
+    ['Existing status: IN_PROGRESS', 'IN_PROGRESS', 'Support in progress'],
+    ['Existing status: MET', 'MET', 'Support met'],
+    ['Existing status: DECLINED', 'DECLINED', 'Support declined'],
+    ['Non-existent status: UNKNOWN_STATUS', 'UNKNOWN_STATUS', undefined],
+    ['Empty string', '', undefined],
+    ['Null value', null, undefined],
+    ['Undefined value', undefined, undefined],
+  ])('%s -> getSupportNeedsStatus(%s)', (_: string, statusEnum: string, expected: string | undefined) => {
+    expect(getSupportNeedsStatus(statusEnum)).toEqual(expected)
+  })
+})
+
+describe('getSupportNeedsColour', () => {
+  it.each([
+    ['Existing status: NOT_STARTED', 'NOT_STARTED', 'orange'],
+    ['Existing status: IN_PROGRESS', 'IN_PROGRESS', 'yellow'],
+    ['Existing status: MET', 'MET', 'green'],
+    ['Existing status: DECLINED', 'DECLINED', 'purple'],
+    ['Non-existent status: UNKNOWN_STATUS', 'UNKNOWN_STATUS', undefined],
+    ['Empty string', '', undefined],
+    ['Null value', null, undefined],
+    ['Undefined value', undefined, undefined],
+  ])('%s -> getSupportNeedsColour(%s)', (_: string, statusEnum: string, expected: string | undefined) => {
+    expect(getSupportNeedsColour(statusEnum)).toEqual(expected)
   })
 })

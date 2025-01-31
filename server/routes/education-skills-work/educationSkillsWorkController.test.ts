@@ -9,6 +9,7 @@ import {
   stubCaseNotesHistory,
   stubCrsReferrals,
   stubEducationSkillsWork,
+  stubPathwaySupportNeedsSummary,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -38,6 +39,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService, 'EDUCATION_SKILLS_AND_WORK')
 
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY')
@@ -57,6 +59,7 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
     expect(getEducationSkillsWorkSpy).toHaveBeenLastCalledWith('A1234DY')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'EDUCATION_SKILLS_AND_WORK')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {

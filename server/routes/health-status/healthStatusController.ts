@@ -46,6 +46,11 @@ export default class HealthStatusController {
         'HEALTH',
       )
 
+      const pathwaySupportNeedsSummary = await this.rpService.getPathwaySupportNeedsSummary(
+        prisonerData.personalDetails.prisonerNumber as string,
+        'HEALTH',
+      )
+
       const view = new HealthStatusView(
         prisonerData,
         crsReferrals,
@@ -57,6 +62,7 @@ export default class HealthStatusController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       res.render('pages/health', { ...view.renderArgs })
     } catch (err) {

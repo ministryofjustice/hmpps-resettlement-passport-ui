@@ -50,6 +50,11 @@ export default class AccommodationController {
         'ACCOMMODATION',
       )
 
+      const pathwaySupportNeedsSummary = await this.rpService.getPathwaySupportNeedsSummary(
+        prisonerData.personalDetails.prisonerNumber as string,
+        'ACCOMMODATION',
+      )
+
       const view = new AccommodationView(
         prisonerData,
         crsReferrals,
@@ -62,6 +67,7 @@ export default class AccommodationController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/accommodation', { ...view.renderArgs })
     } catch (err) {

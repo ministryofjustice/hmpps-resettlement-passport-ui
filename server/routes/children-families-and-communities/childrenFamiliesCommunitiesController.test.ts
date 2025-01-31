@@ -7,6 +7,7 @@ import {
   stubCaseNotesCreators,
   stubCaseNotesHistory,
   stubCrsReferrals,
+  stubPathwaySupportNeedsSummary,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -85,6 +86,10 @@ describe('getView', () => {
     const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(
+      rpService,
+      'CHILDREN_FAMILIES_AND_COMMUNITY',
+    )
 
     await request(app)
       .get(
@@ -105,6 +110,7 @@ describe('getView', () => {
       '30',
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
   })
 
   it('Error case - missing prisonerNumber', async () => {

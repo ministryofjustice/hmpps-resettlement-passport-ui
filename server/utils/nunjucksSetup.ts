@@ -43,6 +43,8 @@ import {
   getOptionalText,
   isAdditionalDetails,
   getReportTypeName,
+  getSupportNeedsStatus,
+  getSupportNeedsColour,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -133,4 +135,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('getOptionalText', getOptionalText)
   njkEnv.addGlobal('isAdditionalDetails', isAdditionalDetails)
   njkEnv.addFilter('getReportTypeName', getReportTypeName)
+  njkEnv.addFilter('getSupportNeedsStatus', getSupportNeedsStatus)
+  njkEnv.addFilter('getSupportNeedsColour', getSupportNeedsColour)
 }

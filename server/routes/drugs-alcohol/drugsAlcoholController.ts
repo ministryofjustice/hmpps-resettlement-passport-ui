@@ -48,6 +48,11 @@ export default class DrugsAlcoholController {
         'DRUGS_AND_ALCOHOL',
       )
 
+      const pathwaySupportNeedsSummary = await this.rpService.getPathwaySupportNeedsSummary(
+        prisonerData.personalDetails.prisonerNumber as string,
+        'DRUGS_AND_ALCOHOL',
+      )
+
       const view = new DrugsAlcoholView(
         prisonerData,
         crsReferrals,
@@ -59,6 +64,7 @@ export default class DrugsAlcoholController {
         page as string,
         sort as string,
         days as string,
+        pathwaySupportNeedsSummary,
       )
       return res.render('pages/drugs-alcohol', { ...view.renderArgs })
     } catch (err) {

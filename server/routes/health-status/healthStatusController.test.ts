@@ -8,6 +8,7 @@ import {
   stubCaseNotesCreators,
   stubCaseNotesHistory,
   stubCrsReferrals,
+  stubPathwaySupportNeedsSummary,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -36,6 +37,7 @@ describe('getView', () => {
     const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'HEALTH')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService, 'HEALTH')
 
     await request(app)
       .get('/health-status?prisonerNumber=A1234DY')
@@ -54,6 +56,7 @@ describe('getView', () => {
       '0',
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
