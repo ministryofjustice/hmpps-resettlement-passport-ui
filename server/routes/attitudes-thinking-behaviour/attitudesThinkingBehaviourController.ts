@@ -3,7 +3,6 @@ import RpService from '../../services/rpService'
 import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
-import { PathwaySupportNeedsSummary } from '../../data/model/supportNeeds'
 
 export default class AttitudesThinkingBehaviourController {
   constructor(
