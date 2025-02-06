@@ -1,0 +1,43 @@
+<section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+  <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">
+      {{ pathway }} updates
+      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a href="#">Find out more about this update.</a></span>
+      <!-- TODO - update link to point to service update page. -->
+    </h3>
+  </header>
+  <div class="app-summary-card__body govuk-!-padding-top-4">
+    {% if supportNeedsUpdates.updates | length > 0 %}
+      <div class="govuk-grid-row govuk-!-padding-top-2">
+        <div class="govuk-grid-column-full" id="updates-container">
+          <hr>
+          {% for update in supportNeedsUpdates.updates %}
+            <div>
+              <h3>{{ update.title }}</h3>
+              <p>
+                <strong>Status set to: </strong>
+                {% set tagColour = "govuk-tag--" + (update.status | getSupportNeedsColour) %}
+                <span class="govuk-tag {{ tagColour }}">{{ update.status | getSupportNeedsStatus }}</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                {% if update.isPrisonResponsible %}
+                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                {% endif %}
+                {% if update.isProbationResponsible %}
+                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                {% endif %}
+              </p>
+              <p class="show-line-breaks">{{ update.text }}</p>
+              <span class="govuk-caption-m">Updated: {{ update.createdAt | formatDate('long') }} by {{ update.createdBy }}</span>
+              <br>
+            </div>
+            <hr>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <p><strong>There are currently no updates</strong></p>
+    {% endif %}
+  </div>
+</section>

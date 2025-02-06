@@ -5,6 +5,7 @@ import { handleWhatsNewBanner } from '../whatsNewBanner'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import { PathwaySupportNeedsUpdates } from '../../data/model/supportNeeds'
 
 export default class AccommodationController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -54,6 +55,7 @@ export default class AccommodationController {
       )
 
       let pathwaySupportNeedsSummary = null
+      let supportNeedUpdates = null
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -64,6 +66,14 @@ export default class AccommodationController {
           ...pathwaySupportNeedsResponse,
           supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
         }
+        supportNeedUpdates = await this.rpService.getPathwayNeedsUpdates(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'ACCOMMODATION',
+          0,
+          1000, // TODO - add pagination, for now just get the first 1000
+          'createdDate,DESC', // TODO - add dynamic sorting
+          '', // TODO - add ability to filter
+        )
       }
 
       const view = new AccommodationView(
@@ -79,6 +89,7 @@ export default class AccommodationController {
         sort as string,
         days as string,
         pathwaySupportNeedsSummary,
+        supportNeedUpdates,
       )
       return res.render('pages/accommodation', { ...view.renderArgs })
     } catch (err) {

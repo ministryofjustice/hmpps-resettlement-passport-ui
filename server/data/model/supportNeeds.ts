@@ -38,3 +38,25 @@ export type PathwaySupportNeedsSummary = {
     lastUpdated: string
   }[]
 }
+
+export type PathwaySupportNeedsUpdates = {
+  updates: {
+    id: number
+    title: string
+    status: string
+    isPrisonResponsible: boolean
+    isProbationResponsible: boolean
+    text: string
+    createdBy: string
+    createdAt: string
+  }[]
+  allPrisonerNeeds: {
+    id: number
+    title: string
+  }[]
+  size: number
+  page: number
+  sortName: string
+  totalElements: number
+  last: boolean
+}

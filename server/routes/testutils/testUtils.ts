@@ -274,10 +274,84 @@ export function stubPathwaySupportNeedsSummary(rpService: RpService) {
   })
 }
 
+export function stubPathwaySupportNeedsUpdates(rpService: RpService) {
+  return jest.spyOn(rpService, 'getPathwayNeedsUpdates').mockResolvedValue({
+    updates: [
+      {
+        id: 1,
+        title: 'Maintain a tenancy while in prison',
+        status: 'IN_PROGRESS',
+        isPrisonResponsible: true,
+        isProbationResponsible: false,
+        text: 'This is some text related to the support need\n\nIt has a line break in',
+        createdBy: 'A User',
+        createdAt: '2025-02-06T09:42:00',
+      },
+      {
+        id: 2,
+        title: 'End a tenancy',
+        status: 'MET',
+        isPrisonResponsible: true,
+        isProbationResponsible: true,
+        text: 'Some update text here',
+        createdBy: 'B User',
+        createdAt: '2025-02-04T09:42:00',
+      },
+      {
+        id: 3,
+        title: 'End a tenancy',
+        status: 'NOT_STARTED',
+        isPrisonResponsible: false,
+        isProbationResponsible: true,
+        text: 'Some more update text here',
+        createdBy: 'B User',
+        createdAt: '2025-02-01T09:42:00',
+      },
+      {
+        id: 4,
+        title: 'Maintain a tenancy while in prison',
+        status: 'DECLINED',
+        isPrisonResponsible: true,
+        isProbationResponsible: true,
+        text: 'This is the update text',
+        createdBy: 'C User',
+        createdAt: '2024-12-23T09:42:00',
+      },
+    ],
+    allPrisonerNeeds: [
+      {
+        id: 1,
+        title: 'Maintain a tenancy while in prison',
+      },
+      {
+        id: 2,
+        title: 'End a tenancy',
+      },
+    ],
+    page: 0,
+    size: 5,
+    sortName: 'createdDate,DESC',
+    totalElements: 3,
+    last: true,
+  })
+}
+
 export function stubPathwaySupportNeedsSummaryNoData(rpService: RpService) {
   return jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue({
     supportNeedsSet: false,
     prisonerNeeds: [],
+  })
+}
+
+export function stubPathwaySupportNeedsUpdatesNoData(rpService: RpService) {
+  return jest.spyOn(rpService, 'getPathwayNeedsUpdates').mockResolvedValue({
+    updates: [],
+    allPrisonerNeeds: [],
+    page: 0,
+    size: 5,
+    sortName: 'createdDate,DESC',
+    totalElements: 0,
+    last: true,
   })
 }
 
