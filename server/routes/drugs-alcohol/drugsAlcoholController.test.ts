@@ -9,6 +9,8 @@ import {
   stubCrsReferrals,
   stubPathwaySupportNeedsSummary,
   stubPathwaySupportNeedsSummaryNoData,
+  stubPathwaySupportNeedsUpdates,
+  stubPathwaySupportNeedsUpdatesNoData,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -38,6 +40,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'DRUGS_AND_ALCOHOL')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/drugs-and-alcohol?prisonerNumber=A1234DY')
@@ -57,6 +60,14 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'DRUGS_AND_ALCOHOL')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'DRUGS_AND_ALCOHOL')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'DRUGS_AND_ALCOHOL',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -65,6 +76,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubRpServiceNoData(rpService, 'getCaseNotesHistory')
     const getCaseNotesCreatorsSpy = stubRpServiceNoData(rpService, 'getCaseNotesCreators')
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummaryNoData(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdatesNoData(rpService)
 
     await request(app)
       .get('/drugs-and-alcohol?prisonerNumber=A1234DY')
@@ -84,6 +96,14 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'DRUGS_AND_ALCOHOL')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'DRUGS_AND_ALCOHOL')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'DRUGS_AND_ALCOHOL',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -92,6 +112,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'DRUGS_AND_ALCOHOL')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get(
@@ -113,6 +134,14 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'DRUGS_AND_ALCOHOL')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'DRUGS_AND_ALCOHOL')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'DRUGS_AND_ALCOHOL',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Error case - missing prisonerNumber', async () => {

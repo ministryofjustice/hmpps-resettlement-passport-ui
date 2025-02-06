@@ -14,24 +14,37 @@
     </div>
     <div class="govuk-grid-row govuk-!-padding-top-4">
       <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-        {% set subNavItems = [
-          {
-            name: "Support needs" if supportNeedsEnabled else "Case notes and status history",
-            id: "support-needs" if supportNeedsEnabled else "case-notes"
-          }
-        ] %}
-          {% set subNavItems = subNavItems.concat([
+        {% if supportNeedsEnabled %}
+          {% set supportNeedsItems = [
             {
-              name: "Report information",
-              id: "assessment-information"
+              name: "Support needs",
+              id: "support-needs"
+            },
+            {
+              name: "Updates",
+              id: "support-needs-updates"
             }
-          ]) %}
-        {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
+          ]
+          %}
+        {% else %}
+          {% set supportNeedsItems = [] %}
+        {% endif %}
+        {% set subNavItems = supportNeedsItems.concat([
+          {
+            name: "Case notes and status history",
+            id: "case-notes"
+          },
+          {
+            name: "Report information",
+            id: "assessment-information"
+          }
+        ]).concat(crsReferrals.results[0].referrals | createReferralsSubNav) %}
         {{ subNav(subNavItems) }}
       </div>
       <div class="govuk-grid-column-three-quarters">
         {% if supportNeedsEnabled %}
           {% include "../partials/supportNeedsSummary.njk" %}
+          {% include "../partials/supportNeedsUpdates.njk" %}
         {% endif %}
         {% include "../partials/caseNotes.njk" %}
         {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}

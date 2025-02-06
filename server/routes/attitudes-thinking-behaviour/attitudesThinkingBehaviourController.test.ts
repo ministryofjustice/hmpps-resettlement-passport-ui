@@ -10,6 +10,8 @@ import {
   stubCrsReferrals,
   stubPathwaySupportNeedsSummary,
   stubPathwaySupportNeedsSummaryNoData,
+  stubPathwaySupportNeedsUpdates,
+  stubPathwaySupportNeedsUpdatesNoData,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -39,6 +41,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')
@@ -58,6 +61,14 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'ATTITUDES_THINKING_AND_BEHAVIOUR',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -66,6 +77,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubRpServiceNoData(rpService, 'getCaseNotesHistory')
     const getCaseNotesCreatorsSpy = stubRpServiceNoData(rpService, 'getCaseNotesCreators')
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummaryNoData(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdatesNoData(rpService)
 
     await request(app)
       .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')
@@ -85,6 +97,14 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'ATTITUDES_THINKING_AND_BEHAVIOUR',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -93,6 +113,7 @@ describe('getView', () => {
     const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get(
@@ -114,6 +135,14 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'ATTITUDES_THINKING_AND_BEHAVIOUR',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Error case - missing prisonerNumber', async () => {

@@ -12,6 +12,8 @@ import {
   stubFetchId,
   stubPathwaySupportNeedsSummary,
   stubPathwaySupportNeedsSummaryNoData,
+  stubPathwaySupportNeedsUpdates,
+  stubPathwaySupportNeedsUpdatesNoData,
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
@@ -44,6 +46,7 @@ describe('getView', () => {
     const getFinanceSpy = stubFetchFinance(rpService)
     const getIdSpy = stubFetchId(rpService)
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/finance-and-id?prisonerNumber=A1234DY')
@@ -65,6 +68,14 @@ describe('getView', () => {
     expect(getFinanceSpy).toHaveBeenCalledWith('A1234DY')
     expect(getIdSpy).toHaveBeenCalledWith('A1234DY')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'FINANCE_AND_ID',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -75,6 +86,7 @@ describe('getView', () => {
     const getFinanceSpy = stubRpServiceNoData(rpService, 'fetchFinance')
     const getIdSpy = stubRpServiceNoData(rpService, 'fetchId')
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummaryNoData(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdatesNoData(rpService)
 
     await request(app)
       .get('/finance-and-id?prisonerNumber=A1234DY')
@@ -96,6 +108,14 @@ describe('getView', () => {
     expect(getFinanceSpy).toHaveBeenCalledWith('A1234DY')
     expect(getIdSpy).toHaveBeenCalledWith('A1234DY')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'FINANCE_AND_ID',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -106,6 +126,7 @@ describe('getView', () => {
     const getFinanceSpy = stubFetchFinance(rpService)
     const getIdSpy = stubFetchId(rpService)
     const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummaryNoData(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get(
@@ -129,6 +150,14 @@ describe('getView', () => {
     expect(getFinanceSpy).toHaveBeenCalledWith('A1234DY')
     expect(getIdSpy).toHaveBeenCalledWith('A1234DY')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'FINANCE_AND_ID',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 
   it('Error case - missing prisonerNumber', async () => {
