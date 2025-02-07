@@ -318,8 +318,8 @@ exports[`getView Happy path with default query params and data from endpoints 1`
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
-      
         
+      
       
       
   <ul class="app-subnav__section">
@@ -328,6 +328,14 @@ exports[`getView Happy path with default query params and data from endpoints 1`
         
           <li class="app-subnav__section-item">
             <a href="#support-needs">Support needs</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#support-needs-updates">Updates</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#case-notes">Case notes and status history</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -453,6 +461,111 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           
         </tbody>
       </table>
+    
+  </div>
+</section>
+        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+  <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">
+      Education, skills and work updates
+      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a href="#">Find out more about this update.</a></span>
+      <!-- TODO - update link to point to service update page. -->
+    </h3>
+  </header>
+  <div class="app-summary-card__body govuk-!-padding-top-4">
+    
+      <div class="govuk-grid-row govuk-!-padding-top-2">
+        <div class="govuk-grid-column-full" id="updates-container">
+          <hr>
+          
+            <div>
+              <h3>Maintain a tenancy while in prison</h3>
+              <p>
+                <strong>Status set to: </strong>
+                
+                <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                
+                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                
+                
+              </p>
+              <p class="show-line-breaks">This is some text related to the support need
+
+It has a line break in</p>
+              <span class="govuk-caption-m">Updated: 6 February 2025 by A User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>End a tenancy</h3>
+              <p>
+                <strong>Status set to: </strong>
+                
+                <span class="govuk-tag govuk-tag--green">Support met</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                
+                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                
+                
+                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                
+              </p>
+              <p class="show-line-breaks">Some update text here</p>
+              <span class="govuk-caption-m">Updated: 4 February 2025 by B User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>End a tenancy</h3>
+              <p>
+                <strong>Status set to: </strong>
+                
+                <span class="govuk-tag govuk-tag--orange">Support not started</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                
+                
+                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                
+              </p>
+              <p class="show-line-breaks">Some more update text here</p>
+              <span class="govuk-caption-m">Updated: 1 February 2025 by B User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>Maintain a tenancy while in prison</h3>
+              <p>
+                <strong>Status set to: </strong>
+                
+                <span class="govuk-tag govuk-tag--purple">Support declined</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                
+                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                
+                
+                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                
+              </p>
+              <p class="show-line-breaks">This is the update text</p>
+              <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
+              <br>
+            </div>
+            <hr>
+          
+        </div>
+      </div>
     
   </div>
 </section>
@@ -1200,8 +1313,8 @@ exports[`getView Happy path with default query params and no data from endpoints
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
-      
         
+      
       
       
   <ul class="app-subnav__section">
@@ -1210,6 +1323,14 @@ exports[`getView Happy path with default query params and no data from endpoints
         
           <li class="app-subnav__section-item">
             <a href="#support-needs">Support needs</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#support-needs-updates">Updates</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#case-notes">Case notes and status history</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -1246,6 +1367,20 @@ exports[`getView Happy path with default query params and no data from endpoints
   <div class="app-summary-card__body govuk-!-padding-top-4">
     
       <p><b>Support needs not set</b></p>
+    
+  </div>
+</section>
+        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+  <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">
+      Education, skills and work updates
+      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a href="#">Find out more about this update.</a></span>
+      <!-- TODO - update link to point to service update page. -->
+    </h3>
+  </header>
+  <div class="app-summary-card__body govuk-!-padding-top-4">
+    
+      <p><strong>There are currently no updates</strong></p>
     
   </div>
 </section>
@@ -1658,8 +1793,8 @@ exports[`getView Happy path with specified query params and data from endpoints 
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
-      
         
+      
       
       
   <ul class="app-subnav__section">
@@ -1668,6 +1803,14 @@ exports[`getView Happy path with specified query params and data from endpoints 
         
           <li class="app-subnav__section-item">
             <a href="#support-needs">Support needs</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#support-needs-updates">Updates</a>
+          </li>
+        
+          <li class="app-subnav__section-item">
+            <a href="#case-notes">Case notes and status history</a>
           </li>
         
           <li class="app-subnav__section-item">
@@ -1793,6 +1936,111 @@ exports[`getView Happy path with specified query params and data from endpoints 
           
         </tbody>
       </table>
+    
+  </div>
+</section>
+        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+  <header class="app-summary-card__header">
+    <h3 class="app-summary-card__title">
+      Education, skills and work updates
+      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a href="#">Find out more about this update.</a></span>
+      <!-- TODO - update link to point to service update page. -->
+    </h3>
+  </header>
+  <div class="app-summary-card__body govuk-!-padding-top-4">
+    
+      <div class="govuk-grid-row govuk-!-padding-top-2">
+        <div class="govuk-grid-column-full" id="updates-container">
+          <hr>
+          
+            <div>
+              <h3>Maintain a tenancy while in prison</h3>
+              <p>
+                <strong>Status set to: </strong>
+                
+                <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                
+                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                
+                
+              </p>
+              <p class="show-line-breaks">This is some text related to the support need
+
+It has a line break in</p>
+              <span class="govuk-caption-m">Updated: 6 February 2025 by A User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>End a tenancy</h3>
+              <p>
+                <strong>Status set to: </strong>
+                
+                <span class="govuk-tag govuk-tag--green">Support met</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                
+                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                
+                
+                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                
+              </p>
+              <p class="show-line-breaks">Some update text here</p>
+              <span class="govuk-caption-m">Updated: 4 February 2025 by B User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>End a tenancy</h3>
+              <p>
+                <strong>Status set to: </strong>
+                
+                <span class="govuk-tag govuk-tag--orange">Support not started</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                
+                
+                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                
+              </p>
+              <p class="show-line-breaks">Some more update text here</p>
+              <span class="govuk-caption-m">Updated: 1 February 2025 by B User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>Maintain a tenancy while in prison</h3>
+              <p>
+                <strong>Status set to: </strong>
+                
+                <span class="govuk-tag govuk-tag--purple">Support declined</span>
+              </p>
+              <p>
+                <strong>Responsible staff set to: </strong>
+                
+                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                
+                
+                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                
+              </p>
+              <p class="show-line-breaks">This is the update text</p>
+              <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
+              <br>
+            </div>
+            <hr>
+          
+        </div>
+      </div>
     
   </div>
 </section>

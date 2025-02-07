@@ -56,6 +56,7 @@ export default class EducationSkillsWorkController {
       )
 
       let pathwaySupportNeedsSummary = null
+      let supportNeedsUpdates = null
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -66,6 +67,14 @@ export default class EducationSkillsWorkController {
           ...pathwaySupportNeedsResponse,
           supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
         }
+        supportNeedsUpdates = await this.rpService.getPathwayNeedsUpdates(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'EDUCATION_SKILLS_AND_WORK',
+          0,
+          1000, // TODO - add pagination, for now just get the first 1000
+          'createdDate,DESC', // TODO - add dynamic sorting
+          '', // TODO - add ability to filter
+        )
       }
 
       const view = new EducationSkillsWorkView(
@@ -81,6 +90,7 @@ export default class EducationSkillsWorkController {
         sort as string,
         days as string,
         pathwaySupportNeedsSummary,
+        supportNeedsUpdates,
       )
       return res.render('pages/education-skills-work', { ...view.renderArgs })
     } catch (err) {

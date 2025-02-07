@@ -218,4 +218,13 @@ describe('RpService', () => {
     expect(result).toEqual({})
     expect(spy).toHaveBeenCalledWith('/resettlement-passport/prisoner/123/needs/summary')
   })
+
+  it('test getPathwayNeedsUpdates', async () => {
+    const spy = jest.spyOn(rpClient, 'get').mockResolvedValue({})
+    const result = await service.getPathwayNeedsUpdates('123', 'ACCOMMODATION', 0, 5, 'createdDate,DESC', '12')
+    expect(result).toEqual({})
+    expect(spy).toHaveBeenCalledWith(
+      '/resettlement-passport/prisoner/123/needs/ACCOMMODATION/updates?page=0&size=5&sort=createdDate,DESC&filterByPrisonerSupportNeedId=12',
+    )
+  })
 })

@@ -4,7 +4,7 @@ import { CrsReferralResponse } from '../../data/model/crsReferralResponse'
 import { AssessmentsInformation } from '../../data/model/assessmentInformation'
 import { CaseNotesHistory } from '../../data/model/caseNotesHistory'
 import { CaseNotesCreators } from '../../data/model/caseNotesCreators'
-import { PathwaySupportNeedsSummary } from '../../data/model/supportNeeds'
+import { PathwaySupportNeedsSummary, PathwaySupportNeedsUpdates } from '../../data/model/supportNeeds'
 
 export default class AttitudesThinkingBehaviourView implements View {
   constructor(
@@ -19,6 +19,7 @@ export default class AttitudesThinkingBehaviourView implements View {
     private readonly sort: string,
     private readonly days: string,
     private readonly pathwaySupportNeedsSummary: PathwaySupportNeedsSummary,
+    private readonly supportNeedsUpdates: PathwaySupportNeedsUpdates,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -36,6 +37,7 @@ export default class AttitudesThinkingBehaviourView implements View {
     sort: string
     days: string
     pathwaySupportNeedsSummary: PathwaySupportNeedsSummary
+    supportNeedsUpdates: PathwaySupportNeedsUpdates
     errors: ErrorMessage[]
   } {
     return {
@@ -50,6 +52,7 @@ export default class AttitudesThinkingBehaviourView implements View {
       sort: this.sort,
       days: this.days,
       pathwaySupportNeedsSummary: this.pathwaySupportNeedsSummary,
+      supportNeedsUpdates: this.supportNeedsUpdates,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

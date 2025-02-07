@@ -7,10 +7,7 @@ import { FEATURE_FLAGS } from '../../utils/constants'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 
 export default class AttitudesThinkingBehaviourController {
-  constructor(
-    private readonly prisonService: RpService,
-    private readonly prisonerDetailsService: PrisonerDetailsService,
-  ) {
+  constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
 
@@ -29,17 +26,17 @@ export default class AttitudesThinkingBehaviourController {
         createdByUserId = '0',
       } = req.query
 
-      const crsReferrals = await this.prisonService.getCrsReferrals(
+      const crsReferrals = await this.rpService.getCrsReferrals(
         prisonerData.personalDetails.prisonerNumber as string,
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )
 
-      const assessmentData = await this.prisonService.getAssessmentInformation(
+      const assessmentData = await this.rpService.getAssessmentInformation(
         prisonerData.personalDetails.prisonerNumber as string,
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )
 
-      const caseNotesData = await this.prisonService.getCaseNotesHistory(
+      const caseNotesData = await this.rpService.getCaseNotesHistory(
         prisonerData.personalDetails.prisonerNumber as string,
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
         createdByUserId as string,
@@ -49,15 +46,16 @@ export default class AttitudesThinkingBehaviourController {
         days as string,
       )
 
-      const caseNotesCreators = await this.prisonService.getCaseNotesCreators(
+      const caseNotesCreators = await this.rpService.getCaseNotesCreators(
         prisonerData.personalDetails.prisonerNumber as string,
         'ATTITUDES_THINKING_AND_BEHAVIOUR',
       )
 
       let pathwaySupportNeedsSummary = null
+      let supportNeedsUpdates = null
 
       if (supportNeedsEnabled) {
-        const pathwaySupportNeedsResponse = await this.prisonService.getPathwaySupportNeedsSummary(
+        const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
           prisonerData.personalDetails.prisonerNumber as string,
           'ATTITUDES_THINKING_AND_BEHAVIOUR',
         )
@@ -65,6 +63,14 @@ export default class AttitudesThinkingBehaviourController {
           ...pathwaySupportNeedsResponse,
           supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
         }
+        supportNeedsUpdates = await this.rpService.getPathwayNeedsUpdates(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'ATTITUDES_THINKING_AND_BEHAVIOUR',
+          0,
+          1000, // TODO - add pagination, for now just get the first 1000
+          'createdDate,DESC', // TODO - add dynamic sorting
+          '', // TODO - add ability to filter
+        )
       }
 
       const view = new AttitudesThinkingBehaviour(
@@ -79,6 +85,7 @@ export default class AttitudesThinkingBehaviourController {
         sort as string,
         days as string,
         pathwaySupportNeedsSummary,
+        supportNeedsUpdates,
       )
       return res.render('pages/attitudes-thinking-behaviour', { ...view.renderArgs })
     } catch (err) {

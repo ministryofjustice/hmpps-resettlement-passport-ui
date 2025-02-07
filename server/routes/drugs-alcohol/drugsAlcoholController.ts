@@ -52,6 +52,7 @@ export default class DrugsAlcoholController {
       )
 
       let pathwaySupportNeedsSummary = null
+      let supportNeedsUpdates = null
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -62,6 +63,14 @@ export default class DrugsAlcoholController {
           ...pathwaySupportNeedsResponse,
           supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
         }
+        supportNeedsUpdates = await this.rpService.getPathwayNeedsUpdates(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'DRUGS_AND_ALCOHOL',
+          0,
+          1000, // TODO - add pagination, for now just get the first 1000
+          'createdDate,DESC', // TODO - add dynamic sorting
+          '', // TODO - add ability to filter
+        )
       }
 
       const view = new DrugsAlcoholView(
@@ -76,6 +85,7 @@ export default class DrugsAlcoholController {
         sort as string,
         days as string,
         pathwaySupportNeedsSummary,
+        supportNeedsUpdates,
       )
       return res.render('pages/drugs-alcohol', { ...view.renderArgs })
     } catch (err) {

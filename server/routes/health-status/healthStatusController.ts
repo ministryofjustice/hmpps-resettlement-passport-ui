@@ -51,6 +51,7 @@ export default class HealthStatusController {
       )
 
       let pathwaySupportNeedsSummary = null
+      let supportNeedUpdates = null
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -61,6 +62,14 @@ export default class HealthStatusController {
           ...pathwaySupportNeedsResponse,
           supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
         }
+        supportNeedUpdates = await this.rpService.getPathwayNeedsUpdates(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'HEALTH',
+          0,
+          1000, // TODO - add pagination, for now just get the first 1000
+          'createdDate,DESC', // TODO - add dynamic sorting
+          '', // TODO - add ability to filter
+        )
       }
 
       const view = new HealthStatusView(
@@ -75,6 +84,7 @@ export default class HealthStatusController {
         sort as string,
         days as string,
         pathwaySupportNeedsSummary,
+        supportNeedUpdates,
       )
       res.render('pages/health', { ...view.renderArgs })
     } catch (err) {

@@ -51,6 +51,7 @@ export default class ChildrenFamiliesCommunitiesController {
       )
 
       let pathwaySupportNeedsSummary = null
+      let supportNeedsUpdates = null
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -61,6 +62,14 @@ export default class ChildrenFamiliesCommunitiesController {
           ...pathwaySupportNeedsResponse,
           supportNeedsSet: pathwaySupportNeedsResponse.prisonerNeeds.length > 0,
         }
+        supportNeedsUpdates = await this.rpService.getPathwayNeedsUpdates(
+          prisonerData.personalDetails.prisonerNumber as string,
+          'CHILDREN_FAMILIES_AND_COMMUNITY',
+          0,
+          1000, // TODO - add pagination, for now just get the first 1000
+          'createdDate,DESC', // TODO - add dynamic sorting
+          '', // TODO - add ability to filter
+        )
       }
 
       const view = new ChildrenFamiliesCommunitiesView(
@@ -75,6 +84,7 @@ export default class ChildrenFamiliesCommunitiesController {
         sort as string,
         days as string,
         pathwaySupportNeedsSummary,
+        supportNeedsUpdates,
       )
       return res.render('pages/children-families-communities', { ...view.renderArgs })
     } catch (err) {

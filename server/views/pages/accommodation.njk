@@ -16,12 +16,26 @@
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-      {% set statusItem = {
-        name: "Support needs" if supportNeedsEnabled else "Case notes and status history",
-        id: "support-needs" if supportNeedsEnabled else "case-notes"
-      } %}
-      {% set subNavItems = [
-        statusItem,
+      {% if supportNeedsEnabled %}
+        {% set supportNeedsItems = [
+          {
+            name: "Support needs",
+            id: "support-needs"
+          },
+          {
+            name: "Updates",
+            id: "support-needs-updates"
+          }
+        ]
+        %}
+      {% else %}
+        {% set supportNeedsItems = [] %}
+      {% endif %}
+      {% set subNavItems = supportNeedsItems.concat([
+        {
+          name: "Case notes and status history",
+          id: "case-notes"
+        },
         {
           name: "Duty to refer",
           id: "duty-to-refer"
@@ -29,20 +43,18 @@
         {
           name: "Main address",
           id: "main-address"
+        },
+        {
+          name: "Report information",
+          id: "assessment-information"
         }
-      ] %}
-        {% set subNavItems = subNavItems.concat([
-          {
-            name: "Report information",
-            id: "assessment-information"
-          }
-        ]) %}
-      {% set subNavItems = (subNavItems.concat(crsReferrals.results[0].referrals | createReferralsSubNav)) %}
+      ]).concat(crsReferrals.results[0].referrals | createReferralsSubNav) %}
       {{ subNav(subNavItems) }}
     </div>
     <div class="govuk-grid-column-three-quarters">
       {% if supportNeedsEnabled %}
         {% include "../partials/supportNeedsSummary.njk" %}
+        {% include "../partials/supportNeedsUpdates.njk" %}
       {% endif %}
       {% include "../partials/caseNotes.njk" %}
       <section id="duty-to-refer" class="app-summary-card govuk-!-margin-bottom-8">
