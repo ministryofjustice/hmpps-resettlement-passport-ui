@@ -15,6 +15,7 @@ import ComponentService from '../../services/componentService'
 import DocumentService from '../../services/documentService'
 import { AssessmentStateService } from '../../data/assessmentStateService'
 import { AppInsightsService } from '../../utils/analytics'
+import { SupportNeedStateService } from '../../data/supportNeedStateService'
 
 export const testAppInfo: ApplicationInfo = {
   applicationName: 'test',
@@ -83,6 +84,7 @@ jest.mock('../../services/userService')
 jest.mock('../../services/componentService')
 jest.mock('../../services/documentService')
 jest.mock('../../data/assessmentStateService')
+jest.mock('../../data/supportNeedStateService')
 const rpService = new RpService()
 
 export const mockedServices = {
@@ -94,4 +96,5 @@ export const mockedServices = {
   componentService: jest.mocked(new ComponentService(null)),
   documentService: jest.mocked(new DocumentService()),
   assessmentStateService: jest.mocked(new AssessmentStateService(null)),
+  supportNeedStateService: jest.mocked(new SupportNeedStateService(null)),
 }
