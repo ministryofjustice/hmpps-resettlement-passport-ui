@@ -54,25 +54,27 @@ export default class SupportNeedsController {
   submitSupportNeeds: RequestHandler = async (req, res, next): Promise<void> => {
     const errors: ErrorMessage[] = []
     const view = new SupportNeedsView(errors)
-    res.render('pages/support-needs', { ...view.renderArgs })
+    res.render('pages/support-needs-status', { ...view.renderArgs })
   }
 
   getSupportNeedsStatus: RequestHandler = async (req, res, next): Promise<void> => {
     const errors: ErrorMessage[] = []
     const view = new SupportNeedsView(errors)
-    res.render('pages/support-needs', { ...view.renderArgs })
+    res.render('pages/support-needs-status', { ...view.renderArgs })
   }
 
   submitSupportNeedsStatus: RequestHandler = async (req, res, next): Promise<void> => {
     const errors: ErrorMessage[] = []
     const view = new SupportNeedsView(errors)
-    res.render('pages/support-needs', { ...view.renderArgs })
+    res.render('pages/support-needs-check-answers', { ...view.renderArgs })
   }
 
   finaliseSupportNeeds: RequestHandler = async (req, res, next): Promise<void> => {
-    const errors: ErrorMessage[] = []
-    const view = new SupportNeedsView(errors)
-    res.render('pages/support-needs', { ...view.renderArgs })
+    const { pathway } = req.params
+    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+    const { prisonerNumber } = prisonerData.personalDetails
+
+    res.redirect(`/${pathway}/?prisonerNumber=${prisonerNumber}`)
   }
 }
 

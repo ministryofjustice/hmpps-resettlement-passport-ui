@@ -27,20 +27,77 @@ afterEach(() => {
   jest.resetAllMocks()
 })
 
-describe('resetSupportNeedsCache', () => {
-  it('should delete the support needs cache and redirect to support needs page', async () => {
-    jest.spyOn(supportNeedStateService, 'deleteSupportNeeds').mockImplementation()
-    await request(app)
-      .get('/support-needs/accommodation/reset/?prisonerNumber=A1234DY')
-      .expect(302)
-      .expect(res =>
-        expect(res.text).toEqual('Found. Redirecting to /support-needs/accommodation/?prisonerNumber=A1234DY'),
-      )
+describe('SupportNeedsController', () => {
+  describe('resetSupportNeedsCache', () => {
+    it('should delete the support needs cache and redirect', async () => {
+      jest.spyOn(supportNeedStateService, 'deleteSupportNeeds').mockImplementation()
 
-    expect(supportNeedStateService.deleteSupportNeeds).toHaveBeenCalledWith({
-      prisonerNumber: 'A1234DY',
-      userId: 'user1',
-      pathway: 'accommodation',
+      await request(app)
+        .get('/support-needs/accommodation/reset/?prisonerNumber=A1234DY')
+        .expect(302)
+        .expect('Location', '/support-needs/accommodation/?prisonerNumber=A1234DY')
+
+      expect(supportNeedStateService.deleteSupportNeeds).toHaveBeenCalledWith({
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+        pathway: 'accommodation',
+      })
+    })
+  })
+
+  describe('getSupportNeeds', () => {
+    it('should render the support needs page', async () => {
+      await request(app)
+        .get('/support-needs/accommodation')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
+  })
+
+  describe('submitSupportNeeds', () => {
+    it('should render the support needs status page on form submission', async () => {
+      await request(app)
+        .post('/support-needs/accommodation')
+        .send({}) // Adjust as needed for form data
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
+  })
+
+  describe('getSupportNeedsStatus', () => {
+    it('should render the support needs status page', async () => {
+      await request(app)
+        .get('/support-needs/accommodation/status')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
+  })
+
+  describe('submitSupportNeedsStatus', () => {
+    it('should render the check your answers page on form submission', async () => {
+      await request(app)
+        .post('/support-needs/accommodation/status')
+        .send({})
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
+  })
+
+  describe('finaliseSupportNeeds', () => {
+    it('should redirect to pathway page', async () => {
+      await request(app)
+        .post('/support-needs/accommodation/complete/?prisonerNumber=A1234DY')
+        .send({})
+        .expect(302)
+        .expect('Location', '/accommodation/?prisonerNumber=A1234DY')
     })
   })
 })
