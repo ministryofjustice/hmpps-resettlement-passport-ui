@@ -6,6 +6,7 @@ import { createAssessmentStateService } from '../data/assessmentStateService'
 import DocumentService from './documentService'
 import PrisonerDetailsService from './prisonerDetailsService'
 import { AppInsightsService } from '../utils/analytics'
+import { createSupportNeedStateService } from '../data/supportNeedStateService'
 
 export const services = () => {
   const { applicationInfo, componentClient, appInsightsClient } = dataAccess()
@@ -17,6 +18,7 @@ export const services = () => {
   const documentService = new DocumentService()
   const prisonerDetailsService = new PrisonerDetailsService(rpService)
   const appInsightsService = new AppInsightsService(appInsightsClient)
+  const supportNeedStateService = createSupportNeedStateService()
 
   return {
     applicationInfo,
@@ -27,6 +29,7 @@ export const services = () => {
     appInsightsService,
     documentService,
     prisonerDetailsService,
+    supportNeedStateService,
   }
 }
 

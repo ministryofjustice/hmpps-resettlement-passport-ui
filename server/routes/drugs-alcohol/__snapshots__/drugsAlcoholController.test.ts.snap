@@ -527,6 +527,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
    <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
+    <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/drugs-and-alcohol/reset/?prisonerNumber=A1234DY">Add a support need</a>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
     
@@ -1456,6 +1457,7 @@ exports[`getView Happy path with default query params and no data from endpoints
           <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
    <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
+    <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/drugs-and-alcohol/reset/?prisonerNumber=A1234DY">Add a support need</a>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
     
@@ -1921,6 +1923,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
           <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
    <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
+    <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/drugs-and-alcohol/reset/?prisonerNumber=A1234DY">Add a support need</a>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
     

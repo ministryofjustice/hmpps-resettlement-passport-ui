@@ -29,6 +29,7 @@ import assignCaseRouter from './assign-case'
 import staffCapacityRouter from './staff-capacity'
 import caseNoteRouter from './case-note'
 import featureFlagMiddleware from './featureFlagMiddleware'
+import supportNeedsRouter from './support-needs'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -61,5 +62,6 @@ export default function routes(services: Services): Router {
   assignCaseRouter(router, services)
   staffCapacityRouter(router, services)
   caseNoteRouter(router, services)
+  supportNeedsRouter(router, services)
   return router
 }
