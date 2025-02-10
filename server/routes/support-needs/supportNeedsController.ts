@@ -14,10 +14,10 @@ export default class SupportNeedsController {
     // no op
   }
 
-  resetSupportNeedsCache: RequestHandler = async (req, res, next): Promise<void> => {
+  startForm: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway } = req.params
-      validatePathwaySupportNeeds(pathway)
+      await validatePathwaySupportNeeds(pathway)
       try {
         const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
         const { prisonerNumber } = prisonerData.personalDetails
@@ -38,11 +38,10 @@ export default class SupportNeedsController {
 
   getSupportNeeds: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      validatePathwaySupportNeeds(req.params.pathway)
-      const errors: ErrorMessage[] = []
+      const { pathway } = req.params
+      await validatePathwaySupportNeeds(pathway)
       try {
-        const view = new SupportNeedsView(errors)
-        res.render('pages/support-needs', { ...view.renderArgs })
+        res.render('pages/support-needs', { pathway })
       } catch (err) {
         next(err)
       }

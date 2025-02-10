@@ -1,7 +1,7 @@
 <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
    <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
-    <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/{{ pathway | getUrlFromName }}/reset/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Add a support need</a>
+    <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/{{ pathway | getUrlFromName }}/start/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Add a support need</a>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
     {% if pathwaySupportNeedsSummary.supportNeedsSet %}

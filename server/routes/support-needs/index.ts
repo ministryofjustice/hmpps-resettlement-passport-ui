@@ -8,7 +8,7 @@ export default (router: Router, services: Services) => {
     services.prisonerDetailsService,
   )
 
-  router.get('/support-needs/:pathway/reset', [supportNeedsController.resetSupportNeedsCache])
+  router.get('/support-needs/:pathway/start', [supportNeedsController.startForm])
   router.get('/support-needs/:pathway', [supportNeedsController.getSupportNeeds])
   router.post('/support-needs/:pathway', [supportNeedsController.submitSupportNeeds])
   router.get('/support-needs/:pathway/status', [supportNeedsController.getSupportNeedsStatus])
