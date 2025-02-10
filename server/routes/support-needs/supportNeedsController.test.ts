@@ -6,6 +6,7 @@ import FeatureFlags from '../../featureFlag'
 import { stubFeatureFlagToTrue, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
+import { PATHWAY_DICTIONARY } from '../../utils/constants'
 
 let app: Express
 const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
@@ -29,6 +30,13 @@ afterEach(() => {
 
 describe('SupportNeedsController', () => {
   describe('resetSupportNeedsCache', () => {
+    it('should throw an error if pathway is invalid', async () => {
+      const invalidPathway = Object.values(PATHWAY_DICTIONARY).some(p => p.url === 'bad-pathway-name')
+      expect(invalidPathway).toBe(false)
+
+      await request(app).get('/support-needs/accommodation/reset/?prisonerNumber=A1234DY').expect(302)
+    })
+
     it('should delete the support needs cache and redirect', async () => {
       jest.spyOn(supportNeedStateService, 'deleteSupportNeeds').mockImplementation()
 
@@ -46,6 +54,13 @@ describe('SupportNeedsController', () => {
   })
 
   describe('getSupportNeeds', () => {
+    it('should throw an error if pathway is invalid', async () => {
+      const invalidPathway = Object.values(PATHWAY_DICTIONARY).some(p => p.url === 'bad-pathway-name')
+      expect(invalidPathway).toBe(false)
+
+      await request(app).get('/support-needs/accommodation/reset/?prisonerNumber=A1234DY').expect(302)
+    })
+
     it('should render the support needs page', async () => {
       await request(app)
         .get('/support-needs/accommodation')
@@ -57,6 +72,13 @@ describe('SupportNeedsController', () => {
   })
 
   describe('submitSupportNeeds', () => {
+    it('should throw an error if pathway is invalid', async () => {
+      const invalidPathway = Object.values(PATHWAY_DICTIONARY).some(p => p.url === 'bad-pathway-name')
+      expect(invalidPathway).toBe(false)
+
+      await request(app).get('/support-needs/accommodation/reset/?prisonerNumber=A1234DY').expect(302)
+    })
+
     it('should render the support needs status page on form submission', async () => {
       await request(app)
         .post('/support-needs/accommodation')
@@ -69,6 +91,13 @@ describe('SupportNeedsController', () => {
   })
 
   describe('getSupportNeedsStatus', () => {
+    it('should throw an error if pathway is invalid', async () => {
+      const invalidPathway = Object.values(PATHWAY_DICTIONARY).some(p => p.url === 'bad-pathway-name')
+      expect(invalidPathway).toBe(false)
+
+      await request(app).get('/support-needs/accommodation/reset/?prisonerNumber=A1234DY').expect(302)
+    })
+
     it('should render the support needs status page', async () => {
       await request(app)
         .get('/support-needs/accommodation/status')
@@ -80,6 +109,13 @@ describe('SupportNeedsController', () => {
   })
 
   describe('submitSupportNeedsStatus', () => {
+    it('should throw an error if pathway is invalid', async () => {
+      const invalidPathway = Object.values(PATHWAY_DICTIONARY).some(p => p.url === 'bad-pathway-name')
+      expect(invalidPathway).toBe(false)
+
+      await request(app).get('/support-needs/accommodation/reset/?prisonerNumber=A1234DY').expect(302)
+    })
+
     it('should render the check your answers page on form submission', async () => {
       await request(app)
         .post('/support-needs/accommodation/status')
@@ -92,6 +128,13 @@ describe('SupportNeedsController', () => {
   })
 
   describe('finaliseSupportNeeds', () => {
+    it('should throw an error if pathway is invalid', async () => {
+      const invalidPathway = Object.values(PATHWAY_DICTIONARY).some(p => p.url === 'bad-pathway-name')
+      expect(invalidPathway).toBe(false)
+
+      await request(app).get('/support-needs/accommodation/reset/?prisonerNumber=A1234DY').expect(302)
+    })
+
     it('should redirect to pathway page', async () => {
       await request(app)
         .post('/support-needs/accommodation/complete/?prisonerNumber=A1234DY')
