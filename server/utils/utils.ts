@@ -612,7 +612,7 @@ export async function validatePathwaySupportNeeds(pathway: string) {
 }
 
 export function validateStringIsAnInteger(input: string) {
-  if (!/\d+/.test(input)) {
+  if (!/^[1-9](\d+)?$/.test(input)) {
     throw new Error(`Input ${input} is not a valid integer`)
   }
 }

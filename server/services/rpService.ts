@@ -578,7 +578,7 @@ export default class RpService {
     prisonerNeedId: string,
     supportNeedsPatch: PrisonerSupportNeedsPatch,
   ) {
-    return this.createClient().patch(
+    await this.createClient().patch(
       `/resettlement-passport/prisoner/${prisonerNumber}/need/${prisonerNeedId}`,
       supportNeedsPatch,
     )

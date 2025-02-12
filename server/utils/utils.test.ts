@@ -30,6 +30,8 @@ import {
   getReportTypeName,
   getSupportNeedsStatus,
   getSupportNeedsColour,
+  validatePathwaySupportNeeds,
+  validateStringIsAnInteger,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -46,6 +48,7 @@ import {
 import { PersonalDetails, PrisonerData } from '../@types/express'
 import { AssessmentType } from '../data/model/assessmentInformation'
 import { Pagination } from '../data/model/pagination'
+import FeatureFlags from '../featureFlag'
 
 describe('convert to title case', () => {
   it.each([
@@ -1543,5 +1546,55 @@ describe('getSupportNeedsColour', () => {
     ['Undefined value', undefined, undefined],
   ])('%s -> getSupportNeedsColour(%s)', (_: string, statusEnum: string, expected: string | undefined) => {
     expect(getSupportNeedsColour(statusEnum)).toEqual(expected)
+  })
+})
+
+describe('validatePathwaySupportNeeds', () => {
+  it.each([
+    ['Happy path - flag on and valid pathway - accommodation', 'accommodation', true, null],
+    ['Happy path - flag on and valid pathway - atb', 'attitudes-thinking-and-behaviour', true, null],
+    ['Happy path - flag on and valid pathway - cfc', 'children-families-and-communities', true, null],
+    ['Happy path - flag on and valid pathway - drugs', 'drugs-and-alcohol', true, null],
+    ['Happy path - flag on and valid pathway - esk', 'education-skills-and-work', true, null],
+    ['Happy path - flag on and valid pathway - finance', 'finance-and-id', true, null],
+    ['Happy path - flag on and valid pathway - health', 'health-status', true, null],
+    ['Error case - flag off and valid pathway', 'accommodation', false, 'Page unavailable'],
+    ['Error case - flag off and invalid pathway', 'not-a-pathway', false, 'Pathway not found'],
+    ['Error case - flag on and invalid pathway', 'not-a-pathway', true, 'Pathway not found'],
+  ])('%s -> validatePathwaySupportNeeds(%s)', async (_: string, pathway: string, flag: boolean, error: string) => {
+    const mockedFeatureFlags = new FeatureFlags()
+    jest.spyOn(mockedFeatureFlags, 'IsInitialized').mockReturnValue(true)
+    jest.spyOn(mockedFeatureFlags, 'getFeatureFlag').mockReturnValue(flag)
+    jest.spyOn(FeatureFlags, 'getInstance').mockReturnValue(mockedFeatureFlags)
+
+    if (!error) {
+      await validatePathwaySupportNeeds(pathway)
+    } else {
+      await expect(validatePathwaySupportNeeds(pathway)).rejects.toThrow(error)
+    }
+  })
+})
+
+describe('validateStringIsAnInteger', () => {
+  it.each([
+    ['valid 1', '1', null],
+    ['valid 13', '13', null],
+    ['valid 1256', '1256', null],
+    ['not valid - number not whole', '12.5', 'Input 12.5 is not a valid integer'],
+    ['not valid - number has leading zeros', '00457', 'Input 00457 is not a valid integer'],
+    ['not valid - not a number', 'abcd', 'Input abcd is not a valid integer'],
+    ['not valid - mix of numbers and letters', '1234abcd', 'Input 1234abcd is not a valid integer'],
+    ['not valid - mix of letters and numbers', 'rydhj7865', 'Input rydhj7865 is not a valid integer'],
+    [
+      'not valid - special chars',
+      '!"£$%^&*()-_=+[]{};:@\'#~/?<>,.|',
+      'Input !"£$%^&*()-_=+[]{};:@\'#~/?<>,.| is not a valid integer',
+    ],
+  ])('%s -> validateStringIsAnInteger(%s)', (_: string, input: string, error: string) => {
+    if (!error) {
+      validateStringIsAnInteger(input)
+    } else {
+      expect(() => validateStringIsAnInteger(input)).toThrow(error)
+    }
   })
 })

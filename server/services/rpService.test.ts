@@ -4,6 +4,8 @@ import RpService from './rpService'
 import { AssessmentSkipRequest } from '../data/model/assessmentInformation'
 import FeatureFlags from '../featureFlag'
 import { stubFeatureFlagToTrue } from '../routes/testutils/testUtils'
+import { SupportNeedStatus } from '../data/model/supportNeedStatus'
+import { PrisonerSupportNeedsPatch } from '../data/model/supportNeeds'
 
 jest.mock('../../logger')
 jest.mock('../data')
@@ -226,5 +228,25 @@ describe('RpService', () => {
     expect(spy).toHaveBeenCalledWith(
       '/resettlement-passport/prisoner/123/needs/ACCOMMODATION/updates?page=0&size=5&sort=createdDate,DESC&filterByPrisonerSupportNeedId=12',
     )
+  })
+
+  it('test getPrisonerNeedById', async () => {
+    const spy = jest.spyOn(rpClient, 'get').mockResolvedValue({})
+    const result = await service.getPrisonerNeedById('123', '124')
+    expect(result).toEqual({})
+    expect(spy).toHaveBeenCalledWith('/resettlement-passport/prisoner/123/prisoner-need/124')
+  })
+
+  it('test patchSupportNeedById', async () => {
+    const supportNeedsPatch: PrisonerSupportNeedsPatch = {
+      text: 'This is some text',
+      status: SupportNeedStatus.IN_PROGRESS,
+      isPrisonResponsible: true,
+      isProbationResponsible: false,
+    }
+
+    const spy = jest.spyOn(rpClient, 'patch').mockImplementation()
+    await service.patchSupportNeedById('123', '124', supportNeedsPatch)
+    expect(spy).toHaveBeenCalledWith('/resettlement-passport/prisoner/123/need/124', supportNeedsPatch)
   })
 })
