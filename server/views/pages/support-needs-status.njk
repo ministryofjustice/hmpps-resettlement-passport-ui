@@ -1,10 +1,7 @@
 {% extends "../partials/layout.njk" %}
-{% set pathway = "Resettlement overview" %}
-{% set pageTitle = applicationName + " - " + pathway + " Support Needs" %}
+{% set pageTitle = applicationName + " - " + pathway + " Support needs status" %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
-{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
-
 {% block header %}
   {% if feComponents.header %}
     {{ feComponents.header | safe }}
@@ -12,22 +9,28 @@
     {% include "../partials/header.njk" %}
   {% endif %}
   <div class="govuk-width-container">
-    {{
-      govukPhaseBanner({
+    {{ govukPhaseBanner({
       tag: {
       text: phaseName
       },
       html: feedbackText
-      })
-    }}
+      }) }}
   </div>
 {% endblock %}
-
 {% block content %}
-  <div class="govuk-grid-row">
+  <div class="govuk-grid-row govuk-!-padding-top-8">
     <div class="govuk-grid-column-three-quarters">
-      <h1 class="govuk-heading-l">Support needs status</h1>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <span class="govuk-caption-l">{{ pathway | getNameFromUrl }} support need</span>
+          <h1 class="govuk-heading-l">{{ supportNeed.title }}</h1>
+        </div>
+      </div>
+      <form action="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}" class="govuk-form" method="POST">
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+        <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+        <button class="govuk-button" type="submit">Continue</button>
+      </form>
     </div>
   </div>
 {% endblock %}
-
