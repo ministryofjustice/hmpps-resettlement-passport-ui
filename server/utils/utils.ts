@@ -11,6 +11,7 @@ import {
   SUPPORT_NEEDS_ENUMS_DICTIONARY,
   RISK_ASSESSMENT_ENUMS_DICTIONARY,
   STATUS_DICTIONARY,
+  FEATURE_FLAGS,
 } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
@@ -30,6 +31,8 @@ import { toCachedQuestionAndAnswer } from './formatAssessmentResponse'
 import { badRequestError } from '../errorHandler'
 import { Pagination, PaginationPage } from '../data/model/pagination'
 import { PrisonersList } from '../data/model/prisoners'
+import { PrisonerSupportNeedsPatch } from '../data/model/supportNeeds'
+import { SupportNeedStatus } from '../data/model/supportNeedStatus'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -593,4 +596,53 @@ export function checkSupportNeedsSet(prisonersList: PrisonersList): PrisonersLis
       needsNotSet: prisoner.needs ? prisoner.needs.every(pathway => !pathway.reviewed) : true,
     })),
   }
+}
+
+export async function validatePathwaySupportNeeds(pathway: string) {
+  const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
+  const pathwayExists = isValidPathway(pathway)
+
+  if (!pathwayExists) {
+    throw new Error('Pathway not found')
+  }
+
+  if (!supportNeedsEnabled) {
+    throw new Error('Page unavailable')
+  }
+}
+
+export function validateStringIsAnInteger(input: string) {
+  if (!/\d+/.test(input)) {
+    throw new Error(`Input ${input} is not a valid integer`)
+  }
+}
+
+export function processSupportNeedsRequestBody(input: Record<string, string | string[]>): PrisonerSupportNeedsPatch {
+  const { additionalDetails, updateStatus, responsibleStaff } = input
+  if (!validSupportNeedsStatus(updateStatus as string)) {
+    throw new Error('Cannot extract updateStatus from form')
+  }
+
+  const isPrisonResponsible = responsibleStaff === 'PRISON' || responsibleStaff?.includes('PRISON') || false
+  const isProbationResponsible = responsibleStaff === 'PROBATION' || responsibleStaff?.includes('PROBATION') || false
+
+  return {
+    status: updateStatus as SupportNeedStatus,
+    isPrisonResponsible,
+    isProbationResponsible,
+    text: trimToNull(additionalDetails as string),
+  }
+}
+
+export function trimToNull(input: string) {
+  if (input !== undefined) {
+    const trimmedInput = input.trim()
+    return trimmedInput !== '' ? trimmedInput : null
+  }
+
+  return input
+}
+
+function validSupportNeedsStatus(updateStatus: string) {
+  return updateStatus in SupportNeedStatus
 }

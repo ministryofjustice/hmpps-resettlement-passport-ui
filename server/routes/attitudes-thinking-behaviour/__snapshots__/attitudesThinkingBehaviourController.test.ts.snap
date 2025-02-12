@@ -373,7 +373,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">Cancel a tenancy</a>
+                <a href="/support-needs/attitudes-thinking-and-behaviour/update/1456?prisonerNumber=A1234DY" class="govuk-link govuk-link--no-visited-state">Cancel a tenancy</a>
               </td>
               <td class="govuk-table__cell">
                 
@@ -392,7 +392,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">Another support need</a>
+                <a href="/support-needs/attitudes-thinking-and-behaviour/update/2894?prisonerNumber=A1234DY" class="govuk-link govuk-link--no-visited-state">Another support need</a>
               </td>
               <td class="govuk-table__cell">
                 
@@ -414,7 +414,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">Declined support</a>
+                <a href="/support-needs/attitudes-thinking-and-behaviour/update/9876?prisonerNumber=A1234DY" class="govuk-link govuk-link--no-visited-state">Declined support</a>
               </td>
               <td class="govuk-table__cell">
                 
@@ -433,7 +433,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">Final support need</a>
+                <a href="/support-needs/attitudes-thinking-and-behaviour/update/1234?prisonerNumber=A1234DY" class="govuk-link govuk-link--no-visited-state">Final support need</a>
               </td>
               <td class="govuk-table__cell">
                 
@@ -1769,7 +1769,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
           
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">Cancel a tenancy</a>
+                <a href="/support-needs/attitudes-thinking-and-behaviour/update/1456?prisonerNumber=A1234DY" class="govuk-link govuk-link--no-visited-state">Cancel a tenancy</a>
               </td>
               <td class="govuk-table__cell">
                 
@@ -1788,7 +1788,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
           
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">Another support need</a>
+                <a href="/support-needs/attitudes-thinking-and-behaviour/update/2894?prisonerNumber=A1234DY" class="govuk-link govuk-link--no-visited-state">Another support need</a>
               </td>
               <td class="govuk-table__cell">
                 
@@ -1810,7 +1810,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
           
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">Declined support</a>
+                <a href="/support-needs/attitudes-thinking-and-behaviour/update/9876?prisonerNumber=A1234DY" class="govuk-link govuk-link--no-visited-state">Declined support</a>
               </td>
               <td class="govuk-table__cell">
                 
@@ -1829,7 +1829,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
           
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">Final support need</a>
+                <a href="/support-needs/attitudes-thinking-and-behaviour/update/1234?prisonerNumber=A1234DY" class="govuk-link govuk-link--no-visited-state">Final support need</a>
               </td>
               <td class="govuk-table__cell">
                 

@@ -1,3 +1,5 @@
+import { SupportNeedStatus } from './supportNeedStatus'
+
 export type SupportNeedCache = {
   id: number
   otherSupportNeedText: string | null
@@ -59,4 +61,28 @@ export type PathwaySupportNeedsUpdates = {
   sortName: string
   totalElements: number
   last: boolean
+}
+
+export type PrisonerSupportNeedDetails = {
+  title: string
+  isPrisonResponsible: boolean
+  isProbationResponsible: boolean
+  status: string
+  previousUpdates: {
+    id: number
+    title: string
+    status: string
+    isPrisonResponsible: boolean
+    isProbationResponsible: boolean
+    text: string
+    createdBy: string
+    createdAt: string
+  }[]
+}
+
+export type PrisonerSupportNeedsPatch = {
+  text: string
+  status: SupportNeedStatus
+  isPrisonResponsible: boolean
+  isProbationResponsible: boolean
 }

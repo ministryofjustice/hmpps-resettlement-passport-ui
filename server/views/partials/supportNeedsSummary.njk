@@ -19,7 +19,7 @@
           {% for supportNeed in pathwaySupportNeedsSummary.prisonerNeeds %}
             <tr class="govuk-table__row">
               <td scope="row" class="govuk-table__header">
-                <a href="/" class="govuk-link govuk-link--no-visited-state">{{ supportNeed.title }}</a>
+                <a href="/support-needs/{{ pathway | getUrlFromName }}/update/{{ supportNeed.id }}?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}" class="govuk-link govuk-link--no-visited-state">{{ supportNeed.title }}</a>
               </td>
               <td class="govuk-table__cell">
                 {% if supportNeed.isPrisonResponsible %}
