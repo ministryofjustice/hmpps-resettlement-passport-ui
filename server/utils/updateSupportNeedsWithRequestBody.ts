@@ -7,7 +7,7 @@ export const updateSupportNeedsWithRequestBody = (
   const selectedSupportNeedIds: string[] = []
 
   for (const key in body) {
-    if (key !== '_csrf' && key !== 'prisonerNumber') {
+    if (key.startsWith('support-need-option-')) {
       const value = body[key]
 
       if (Array.isArray(value)) {

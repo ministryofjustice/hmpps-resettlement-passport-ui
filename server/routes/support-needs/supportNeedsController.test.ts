@@ -840,12 +840,12 @@ describe('SupportNeedsController', () => {
       await request(app)
         .post('/support-needs/accommodation')
         .send({
-          'Moving to new accommodation': 'uuid-of-supportNeed-not-updatable',
-          'Accommodation before custody': [
+          'support-need-option-Moving to new accommodation': 'uuid-of-supportNeed-not-updatable',
+          'support-need-option-Accommodation before custody': [
             'uuid-of-supportNeed-is-updatable',
             'second-uuid-of-supportNeed-is-updatable',
           ],
-          'Accommodation related debt and arrears': 'third-uuid-of-supportNeed-is-updatable',
+          'support-need-option-Accommodation related debt and arrears': 'third-uuid-of-supportNeed-is-updatable',
           _csrf: 'xjM2bce6',
           prisonerNumber: 'A8731DY',
         })

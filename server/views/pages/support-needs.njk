@@ -36,13 +36,13 @@
               <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 {% for supportNeed in item.supportNeeds %}
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="{{ supportNeed.uuid }}" name="{{ supportNeed.category }}" type="checkbox" value="{{ supportNeed.uuid }}" {% if supportNeed.isSelected %}checked{% endif %}>
+                    <input class="govuk-checkboxes__input" id="{{ supportNeed.uuid }}" name="support-need-option-{{ supportNeed.category }}" type="checkbox" value="{{ supportNeed.uuid }}" {% if supportNeed.isSelected %}checked{% endif %}>
                     <label class="govuk-label govuk-checkboxes__label">{{ supportNeed.title }}</label>
                   </div>
                 {% endfor %}
                 <div class="govuk-checkboxes__divider">or</div>
                 <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="{{ item.exclusiveOption.uuid }}" name="{{ item.exclusiveOption.category }}" type="checkbox" value="{{ item.exclusiveOption.uuid }}" data-behaviour="exclusive" {% if item.exclusiveOption.isSelected %}checked{% endif %}>
+                  <input class="govuk-checkboxes__input" id="{{ item.exclusiveOption.uuid }}" name="support-need-option-{{ item.exclusiveOption.category }}" type="checkbox" value="{{ item.exclusiveOption.uuid }}" data-behaviour="exclusive" {% if item.exclusiveOption.isSelected %}checked{% endif %}>
                   <label class="govuk-label govuk-checkboxes__label">{{ item.exclusiveOption.title }}</label>
                 </div>
               </div>

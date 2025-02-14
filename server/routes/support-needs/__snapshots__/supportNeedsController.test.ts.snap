@@ -255,38 +255,38 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
               <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="0a78acb7-0e7d-4ec0-8b73-29af627db9ec" name="Accommodation before custody" type="checkbox" value="0a78acb7-0e7d-4ec0-8b73-29af627db9ec" >
+                    <input class="govuk-checkboxes__input" id="0a78acb7-0e7d-4ec0-8b73-29af627db9ec" name="support-need-option-Accommodation before custody" type="checkbox" value="0a78acb7-0e7d-4ec0-8b73-29af627db9ec" >
                     <label class="govuk-label govuk-checkboxes__label">End a tenancy</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="e8b52c96-33e9-420b-ab1e-e1ace2e1f953" name="Accommodation before custody" type="checkbox" value="e8b52c96-33e9-420b-ab1e-e1ace2e1f953" >
+                    <input class="govuk-checkboxes__input" id="e8b52c96-33e9-420b-ab1e-e1ace2e1f953" name="support-need-option-Accommodation before custody" type="checkbox" value="e8b52c96-33e9-420b-ab1e-e1ace2e1f953" >
                     <label class="govuk-label govuk-checkboxes__label">Maintain a tenancy while in prison</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="8442e4b7-82b9-4127-b746-42a3f8d78cb8" name="Accommodation before custody" type="checkbox" value="8442e4b7-82b9-4127-b746-42a3f8d78cb8" >
+                    <input class="govuk-checkboxes__input" id="8442e4b7-82b9-4127-b746-42a3f8d78cb8" name="support-need-option-Accommodation before custody" type="checkbox" value="8442e4b7-82b9-4127-b746-42a3f8d78cb8" >
                     <label class="govuk-label govuk-checkboxes__label">Mortgage support while in prison</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="622b3deb-03ff-4cfb-8555-978f1b5b0793" name="Accommodation before custody" type="checkbox" value="622b3deb-03ff-4cfb-8555-978f1b5b0793" >
+                    <input class="govuk-checkboxes__input" id="622b3deb-03ff-4cfb-8555-978f1b5b0793" name="support-need-option-Accommodation before custody" type="checkbox" value="622b3deb-03ff-4cfb-8555-978f1b5b0793" >
                     <label class="govuk-label govuk-checkboxes__label">Home adaptations to stay in current accommodation (changes to make it safer and easier to move around and do everyday tasks)</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="8176f4fb-735c-45e6-bfc3-cf8833b08a83" name="Accommodation before custody" type="checkbox" value="8176f4fb-735c-45e6-bfc3-cf8833b08a83" >
+                    <input class="govuk-checkboxes__input" id="8176f4fb-735c-45e6-bfc3-cf8833b08a83" name="support-need-option-Accommodation before custody" type="checkbox" value="8176f4fb-735c-45e6-bfc3-cf8833b08a83" >
                     <label class="govuk-label govuk-checkboxes__label">Arrange storage for personal possessions while in prison</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="f3dc52b8-5b5e-4bad-8411-d8291e110169" name="Accommodation before custody" type="checkbox" value="f3dc52b8-5b5e-4bad-8411-d8291e110169" >
+                    <input class="govuk-checkboxes__input" id="f3dc52b8-5b5e-4bad-8411-d8291e110169" name="support-need-option-Accommodation before custody" type="checkbox" value="f3dc52b8-5b5e-4bad-8411-d8291e110169" >
                     <label class="govuk-label govuk-checkboxes__label">Other</label>
                   </div>
                 
                 <div class="govuk-checkboxes__divider">or</div>
                 <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="20172ff2-0c21-4485-9402-5acf2cb60809" name="Accommodation before custody" type="checkbox" value="20172ff2-0c21-4485-9402-5acf2cb60809" data-behaviour="exclusive" >
+                  <input class="govuk-checkboxes__input" id="20172ff2-0c21-4485-9402-5acf2cb60809" name="support-need-option-Accommodation before custody" type="checkbox" value="20172ff2-0c21-4485-9402-5acf2cb60809" data-behaviour="exclusive" >
                   <label class="govuk-label govuk-checkboxes__label">No accommodation before custody support needs identified</label>
                 </div>
               </div>
@@ -299,23 +299,23 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
               <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="33c32185-3ae1-40a5-a1fd-0872230c7343" name="Moving to new accommodation" type="checkbox" value="33c32185-3ae1-40a5-a1fd-0872230c7343" >
+                    <input class="govuk-checkboxes__input" id="33c32185-3ae1-40a5-a1fd-0872230c7343" name="support-need-option-Moving to new accommodation" type="checkbox" value="33c32185-3ae1-40a5-a1fd-0872230c7343" >
                     <label class="govuk-label govuk-checkboxes__label">Help to find accommodation</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="531b4b31-a5ed-48cc-87ff-ac933e65b7fa" name="Moving to new accommodation" type="checkbox" value="531b4b31-a5ed-48cc-87ff-ac933e65b7fa" >
+                    <input class="govuk-checkboxes__input" id="531b4b31-a5ed-48cc-87ff-ac933e65b7fa" name="support-need-option-Moving to new accommodation" type="checkbox" value="531b4b31-a5ed-48cc-87ff-ac933e65b7fa" >
                     <label class="govuk-label govuk-checkboxes__label">Home adaptations needed for new accommodation (changes to make it safer and easier to move around and do everyday tasks)</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="661f221e-defd-48e3-895a-2b09cf216108" name="Moving to new accommodation" type="checkbox" value="661f221e-defd-48e3-895a-2b09cf216108" >
+                    <input class="govuk-checkboxes__input" id="661f221e-defd-48e3-895a-2b09cf216108" name="support-need-option-Moving to new accommodation" type="checkbox" value="661f221e-defd-48e3-895a-2b09cf216108" >
                     <label class="govuk-label govuk-checkboxes__label">Other</label>
                   </div>
                 
                 <div class="govuk-checkboxes__divider">or</div>
                 <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33" name="Moving to new accommodation" type="checkbox" value="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33" data-behaviour="exclusive" >
+                  <input class="govuk-checkboxes__input" id="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33" name="support-need-option-Moving to new accommodation" type="checkbox" value="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33" data-behaviour="exclusive" >
                   <label class="govuk-label govuk-checkboxes__label">No new accommodation support needs identified</label>
                 </div>
               </div>
@@ -328,23 +328,23 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
               <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="af889df2-d8cd-475d-b25b-70fd9421ed11" name="Accommodation related debt and arrears" type="checkbox" value="af889df2-d8cd-475d-b25b-70fd9421ed11" >
+                    <input class="govuk-checkboxes__input" id="af889df2-d8cd-475d-b25b-70fd9421ed11" name="support-need-option-Accommodation related debt and arrears" type="checkbox" value="af889df2-d8cd-475d-b25b-70fd9421ed11" >
                     <label class="govuk-label govuk-checkboxes__label">Set up payment for rent arrears</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="329dbffb-de74-4cb5-8e36-4562218ecffe" name="Accommodation related debt and arrears" type="checkbox" value="329dbffb-de74-4cb5-8e36-4562218ecffe" >
+                    <input class="govuk-checkboxes__input" id="329dbffb-de74-4cb5-8e36-4562218ecffe" name="support-need-option-Accommodation related debt and arrears" type="checkbox" value="329dbffb-de74-4cb5-8e36-4562218ecffe" >
                     <label class="govuk-label govuk-checkboxes__label">Ensure accommodation related debt or arrears do not build up</label>
                   </div>
                 
                   <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="6ae72705-5a29-4f65-aa05-65ba00a9e5b1" name="Accommodation related debt and arrears" type="checkbox" value="6ae72705-5a29-4f65-aa05-65ba00a9e5b1" >
+                    <input class="govuk-checkboxes__input" id="6ae72705-5a29-4f65-aa05-65ba00a9e5b1" name="support-need-option-Accommodation related debt and arrears" type="checkbox" value="6ae72705-5a29-4f65-aa05-65ba00a9e5b1" >
                     <label class="govuk-label govuk-checkboxes__label">Other</label>
                   </div>
                 
                 <div class="govuk-checkboxes__divider">or</div>
                 <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="574fc882-0528-4754-aeeb-1b4a04a44912" name="Accommodation related debt and arrears" type="checkbox" value="574fc882-0528-4754-aeeb-1b4a04a44912" data-behaviour="exclusive" >
+                  <input class="govuk-checkboxes__input" id="574fc882-0528-4754-aeeb-1b4a04a44912" name="support-need-option-Accommodation related debt and arrears" type="checkbox" value="574fc882-0528-4754-aeeb-1b4a04a44912" data-behaviour="exclusive" >
                   <label class="govuk-label govuk-checkboxes__label">No accommodation related debt and arrears support needs identified</label>
                 </div>
               </div>

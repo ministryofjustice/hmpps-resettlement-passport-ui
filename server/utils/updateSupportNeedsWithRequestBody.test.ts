@@ -134,12 +134,12 @@ describe('updateSupportNeedsWithRequestBody', () => {
         ],
       },
       {
-        'Accommodation before custody': [
+        'support-need-option-Accommodation before custody': [
           'edd176fe-9b70-418c-8f1a-cf37c8e73c6d',
           'f1dfa2d1-35cd-418d-9c45-1ec409cdbcaa',
         ],
-        'Moving to new accommodation': '20f65cf4-bfd7-4074-bcf2-d1e9c295b642',
-        'Accommodation related debt and arrears': '172f6077-0f52-462c-b795-2159518fd178',
+        'support-need-option-Moving to new accommodation': '20f65cf4-bfd7-4074-bcf2-d1e9c295b642',
+        'support-need-option-Accommodation related debt and arrears': '172f6077-0f52-462c-b795-2159518fd178',
         _csrf: 'xjM2bce6-Fxszy6zsKw7Uv4osAIBvob_IYuI',
         prisonerNumber: 'A8731DY',
       },
