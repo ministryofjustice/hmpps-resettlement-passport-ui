@@ -1,10 +1,18 @@
 export type SupportNeedCache = {
-  id: number
-  otherSupportNeedText: string | null
+  uuid: string
+  supportNeedId: number
+  existingPrisonerSupportNeedId: number
+  title: string
+  otherSupportNeedText: string
   status: string
   isPrisonResponsible: boolean
   isProbationResponsible: boolean
-  updateText: string | null
+  updateText: string
+  category: string
+  allowUserDesc: boolean
+  isOther: boolean
+  isUpdatable: boolean
+  isSelected: boolean
 }
 
 export type SupportNeedsCache = {
@@ -29,7 +37,7 @@ export type SupportNeedsSummary = {
 export type PathwaySupportNeedsSummary = {
   supportNeedsSet: boolean
   prisonerNeeds: {
-    id: string
+    id: number
     title: string
     isPrisonResponsible: boolean
     isProbationResponsible: boolean
@@ -60,3 +68,23 @@ export type PathwaySupportNeedsUpdates = {
   totalElements: number
   last: boolean
 }
+
+export type PathwaySupportNeeds = {
+  supportNeeds: PathwaySupportNeed[]
+}
+
+export type PathwaySupportNeed = {
+  id: number
+  title: string
+  category: string
+  allowUserDesc: boolean
+  isOther: boolean
+  isUpdatable: boolean
+  existingPrisonerSupportNeedId: number
+}
+
+export type GroupedSupportNeeds = {
+  category: string
+  supportNeeds: SupportNeedCache[]
+  exclusiveOption: SupportNeedCache
+}[]

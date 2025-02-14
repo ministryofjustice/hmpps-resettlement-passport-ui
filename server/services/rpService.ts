@@ -29,7 +29,12 @@ import {
   CaseAllocationUnassignRequestBody,
 } from '../data/model/caseAllocation'
 import { WorkerList } from '../data/model/resettlementWorker'
-import { PathwaySupportNeedsSummary, PathwaySupportNeedsUpdates, SupportNeedsSummary } from '../data/model/supportNeeds'
+import {
+  PathwaySupportNeeds,
+  PathwaySupportNeedsSummary,
+  PathwaySupportNeedsUpdates,
+  SupportNeedsSummary,
+} from '../data/model/supportNeeds'
 
 export default class RpService {
   constructor() {
@@ -558,6 +563,12 @@ export default class RpService {
   ) {
     return this.createClient().get<PathwaySupportNeedsUpdates>(
       `/resettlement-passport/prisoner/${prisonerNumber}/needs/${pathway}/updates?page=${page}&size=${size}&sort=${sort}&filterByPrisonerSupportNeedId=${filterByPrisonerSupportNeedId}`,
+    )
+  }
+
+  async getPathwaySupportNeeds(prisonerNumber: string, pathway: string) {
+    return this.createClient().get<PathwaySupportNeeds>(
+      `/resettlement-passport/prisoner/${prisonerNumber}/needs/${pathway}`,
     )
   }
 }

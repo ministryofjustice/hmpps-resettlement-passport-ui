@@ -2,7 +2,6 @@
 {% set pageTitle = applicationName + " - " + pathway + " Support Needs" %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
-{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
 {% block header %}
   {% if feComponents.header %}
     {{ feComponents.header | safe }}
@@ -27,29 +26,32 @@
           <span class="govuk-hint">Select any support needs you have identified that could be met by the prison resettlement team, community probation staff or by referral to a third party provider.</span>
         </div>
       </div>
-      <form action="" class="govuk-form" method="POST">
-        <div class="govuk-form-group govuk-!-padding-top-6">
-          <fieldset class="govuk-fieldset">
-            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <h2 class="govuk-fieldset__heading">Current accommodation</h2>
-            </legend>
-            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-              <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input">
-                <label class="govuk-label govuk-checkboxes__label">Arrange storage for personal possessions</label>
+      <form action="/support-needs/{{ pathway }}" class="govuk-form" method="POST">
+        <div class="govuk-form-group">
+          {% for item in supportNeeds %}
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-top-8">
+                <h2 class="govuk-fieldset__heading">{{ item.category }}</h2>
+              </legend>
+              <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                {% for supportNeed in item.supportNeeds %}
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="{{ supportNeed.uuid }}" name="support-need-option-{{ supportNeed.category }}" type="checkbox" value="{{ supportNeed.uuid }}" {% if supportNeed.isSelected %}checked{% endif %}>
+                    <label class="govuk-label govuk-checkboxes__label">{{ supportNeed.title }}</label>
+                  </div>
+                {% endfor %}
+                <div class="govuk-checkboxes__divider">or</div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="{{ item.exclusiveOption.uuid }}" name="support-need-option-{{ item.exclusiveOption.category }}" type="checkbox" value="{{ item.exclusiveOption.uuid }}" data-behaviour="exclusive" {% if item.exclusiveOption.isSelected %}checked{% endif %}>
+                  <label class="govuk-label govuk-checkboxes__label">{{ item.exclusiveOption.title }}</label>
+                </div>
               </div>
-              <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input">
-                <label class="govuk-label govuk-checkboxes__label">Help to keep their home while in prison</label>
-              </div>
-              <div class="govuk-checkboxes__divider">or</div>
-              <div class="govuk-checkboxes__item">
-                <input class="govuk-checkboxes__input">
-                <label class="govuk-label govuk-checkboxes__label">No personal support needs identified</label>
-              </div>
-            </div>
-          </fieldset>
+            </fieldset>
+          {% endfor %}
         </div>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+        <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+        <button class="govuk-button" type="submit">Continue</button>
       </form>
     </div>
   </div>
