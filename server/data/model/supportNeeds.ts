@@ -1,3 +1,5 @@
+import { SupportNeedStatus } from './supportNeedStatus'
+
 export type SupportNeedCache = {
   uuid: string
   supportNeedId: number
@@ -88,3 +90,27 @@ export type GroupedSupportNeeds = {
   supportNeeds: SupportNeedCache[]
   exclusiveOption: SupportNeedCache
 }[]
+
+export type PrisonerSupportNeedDetails = {
+  title: string
+  isPrisonResponsible: boolean
+  isProbationResponsible: boolean
+  status: string
+  previousUpdates: {
+    id: number
+    title: string
+    status: string
+    isPrisonResponsible: boolean
+    isProbationResponsible: boolean
+    text: string
+    createdBy: string
+    createdAt: string
+  }[]
+}
+
+export type PrisonerSupportNeedsPatch = {
+  text: string
+  status: SupportNeedStatus
+  isPrisonResponsible: boolean
+  isProbationResponsible: boolean
+}

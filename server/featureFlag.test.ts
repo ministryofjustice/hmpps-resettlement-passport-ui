@@ -56,9 +56,9 @@ describe('FeatureFlag', () => {
         },
       }))
       // Needed here to override the config in FeatureFlags
-      // eslint-disable-next-line no-shadow,@typescript-eslint/no-var-requires,global-require
-      const FeatureFlags = require('./featureFlag').default
-      const ff = FeatureFlags.getInstance()
+      // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
+      const FeatureFlagsDefault = require('./featureFlag').default
+      const ff = FeatureFlagsDefault.getInstance()
       await ff.initialize()
       expect(ff.IsInitialized()).toEqual(true)
       const featureFlagsMap = Reflect.get(ff, 'featureFlags')

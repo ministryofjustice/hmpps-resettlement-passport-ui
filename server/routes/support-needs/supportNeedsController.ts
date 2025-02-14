@@ -1,7 +1,6 @@
 import { RequestHandler } from 'express'
+import { validatePathwaySupportNeeds, getEnumByURL } from '../../utils/utils'
 import { SupportNeedCache } from '../../data/model/supportNeeds'
-import { getEnumByURL, getFeatureFlagBoolean } from '../../utils/utils'
-import { FEATURE_FLAGS, PATHWAY_DICTIONARY } from '../../utils/constants'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import RpService from '../../services/rpService'
@@ -207,18 +206,5 @@ export default class SupportNeedsController {
     const { prisonerNumber } = prisonerData.personalDetails
 
     res.redirect(`/${pathway}/?prisonerNumber=${prisonerNumber}`)
-  }
-}
-
-async function validatePathwaySupportNeeds(pathway: string) {
-  const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
-  const pathwayExists = Object.values(PATHWAY_DICTIONARY).some(p => p.url === pathway)
-
-  if (!pathwayExists) {
-    throw new Error('Pathway not found')
-  }
-
-  if (!supportNeedsEnabled) {
-    throw new Error('Page unavailable')
   }
 }

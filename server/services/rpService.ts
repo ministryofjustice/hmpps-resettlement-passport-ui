@@ -33,6 +33,8 @@ import {
   PathwaySupportNeeds,
   PathwaySupportNeedsSummary,
   PathwaySupportNeedsUpdates,
+  PrisonerSupportNeedDetails,
+  PrisonerSupportNeedsPatch,
   SupportNeedsSummary,
 } from '../data/model/supportNeeds'
 
@@ -569,6 +571,23 @@ export default class RpService {
   async getPathwaySupportNeeds(prisonerNumber: string, pathway: string) {
     return this.createClient().get<PathwaySupportNeeds>(
       `/resettlement-passport/prisoner/${prisonerNumber}/needs/${pathway}`,
+    )
+  }
+
+  async getPrisonerNeedById(prisonerNumber: string, prisonerNeedId: string) {
+    return this.createClient().get<PrisonerSupportNeedDetails>(
+      `/resettlement-passport/prisoner/${prisonerNumber}/prisoner-need/${prisonerNeedId}`,
+    )
+  }
+
+  async patchSupportNeedById(
+    prisonerNumber: string,
+    prisonerNeedId: string,
+    supportNeedsPatch: PrisonerSupportNeedsPatch,
+  ) {
+    await this.createClient().patch(
+      `/resettlement-passport/prisoner/${prisonerNumber}/need/${prisonerNeedId}`,
+      supportNeedsPatch,
     )
   }
 }

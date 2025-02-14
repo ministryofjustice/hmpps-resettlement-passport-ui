@@ -1,0 +1,131 @@
+{% extends "../partials/layout.njk" %}
+{% from "../macros/breadCrumb.njk" import breadCrumb %}
+{% set pageTitle = applicationName + " - update support need"%}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block header %}
+  {% if feComponents.header %}
+    {{ feComponents.header | safe }}
+  {% else %}
+    {% include "../partials/header.njk" %}
+  {% endif %}
+
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: {
+        text: phaseName
+      },
+      html: feedbackText
+    }) }}
+    {% if isPrisonUser %}
+      {% set topLevelBreadcrumb = 'Digital Prison Services' %}
+    {% else %}
+      {% set topLevelBreadcrumb = 'HMPPS Digital Services' %}
+    {% endif %}
+    {% if prisonerData %}
+      {% set breadcrumbItems = [
+        {
+          text: topLevelBreadcrumb,
+          href: dpsUrl
+        },
+        {
+          text: "Prepare someone for release",
+          href: '/'
+        },
+        {
+          text: ' ' ~ prisonerData.personalDetails.lastName ~ ', ' ~ prisonerData.personalDetails.firstName ~ ' (' ~ prisonerData.personalDetails.prisonerNumber ~ ')',
+          href: '/prisoner-overview/?prisonerNumber=' ~ prisonerData.personalDetails.prisonerNumber
+        }
+      ] %}
+    {% else %}
+      {% set breadcrumbItems = [
+        {
+          text: topLevelBreadcrumb,
+          href: dpsUrl
+        }
+      ] %}
+    {% endif %}
+
+    {{ breadCrumb(breadcrumbItems) }}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-l">{{ pathway }} support needs</span>
+      <h1 class="govuk-heading-l">
+        {{ existingPrisonerNeed.title }}
+      </h1>
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      <form action="/support-needs/{{ pathway | getUrlFromName }}/update/{{ prisonerNeedId }}" method="post">
+        <div class="govuk-form-group">
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend">
+                <h2 class="govuk-fieldset__heading">Update status</h2>
+              </legend>
+              <div class="govuk-radios" data-module="govuk-radios" data-govuk-radios-init>
+                <div class="govuk-radios__item">
+                  <input type="radio" class="govuk-radios__input" id="updateStatusNotStarted" name="updateStatus" value="NOT_STARTED" {% if existingPrisonerNeed.status === 'NOT_STARTED' %}checked{% endif %} />
+                  <label class="govuk-label govuk-radios__label" for="updateStatusNotStarted">Support not started</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input type="radio" class="govuk-radios__input" id="updateStatusInProgress" name="updateStatus" value="IN_PROGRESS" {% if existingPrisonerNeed.status === 'IN_PROGRESS' %}checked{% endif %} />
+                  <label class="govuk-label govuk-radios__label" for="updateStatusInProgress">Support in progress</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input type="radio" class="govuk-radios__input" id="updateStatusMet" name="updateStatus" value="MET" {% if existingPrisonerNeed.status === 'MET' %}checked{% endif %} />
+                  <label class="govuk-label govuk-radios__label" for="updateStatusMet">Support need met</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input type="radio" class="govuk-radios__input" id="updateStatusDeclined" name="updateStatus" value="DECLINED" {% if existingPrisonerNeed.status === 'DECLINED' %}checked{% endif %} />
+                  <label class="govuk-label govuk-radios__label" for="updateStatusDeclined">Support declined</label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend">
+                <h2 class="govuk-fieldset__heading">Who is responsible for this support need?</h2>
+              </legend>
+              <div class="govuk-checkboxes" data-module="govuk-checkboxes" data-govuk-checkboxes-init>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="prisonResettlementTeam" name="responsibleStaff" type="checkbox" value="PRISON" {% if existingPrisonerNeed.isPrisonResponsible %}checked{% endif %} />
+                  <label class="govuk-label govuk-checkboxes__label" for="prisonResettlementTeam">
+                    Prison resettlement team
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="communityProbationStaff" name="responsibleStaff" type="checkbox" value="PROBATION" {% if existingPrisonerNeed.isProbationResponsible %}checked{% endif %} />
+                  <label class="govuk-label govuk-checkboxes__label" for="communityProbationStaff">
+                    Community probation staff
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="govuk-form-group govuk-!-padding-top-8">
+            <label class="govuk-label govuk-heading-m" for="additionalDetails">
+              Additional details (optional)
+            </label>
+            <textarea class="govuk-textarea" id="additionalDetails" name="additionalDetails" rows="5"></textarea>
+          </div>
+        </div>
+        <br>
+        <br>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
+        <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" />
+        <button class="govuk-button" type="submit">Update support need</button>
+      </form>
+      <p class="govuk-body-s govuk-!-padding-bottom-4 govuk-!-padding-top-8">
+        <a href="/{{ pathway | getUrlFromName }}?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back to {{ pathway }}</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
+{% block bodyEnd %}
+  {{ super() }}
+{% endblock %}
