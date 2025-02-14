@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { SupportNeedCache } from '../../data/model/supportNeeds'
 import { getEnumByURL, getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS, PATHWAY_DICTIONARY } from '../../utils/constants'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
@@ -6,7 +7,6 @@ import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import RpService from '../../services/rpService'
 import { groupSupportNeedsByCategory } from '../../utils/groupSupportNeedsByCategory'
 import { updateSupportNeedsWithRequestBody } from '../../utils/updateSupportNeedsWithRequestBody'
-import { SupportNeedCache } from '../../data/model/supportNeeds'
 
 export default class SupportNeedsController {
   constructor(
@@ -35,25 +35,27 @@ export default class SupportNeedsController {
       // INITIATE CACHE WITH SUPPORT NEEDS
       const supportNeedsResponse = await this.rpService.getPathwaySupportNeeds(prisonerNumber, pathwayEnum)
 
-      const initSupportNeedsCacheData: SupportNeedCache[] = supportNeedsResponse.supportNeeds.map(need => {
-        const { allowUserDesc, category, existingPrisonerSupportNeedId, id, isOther, title, isUpdatable } = need
-        return {
-          uuid: crypto.randomUUID(),
-          supportNeedId: id,
-          existingPrisonerSupportNeedId,
-          allowUserDesc,
-          category,
-          isOther,
-          title,
-          isUpdatable,
-          isPrisonResponsible: null,
-          isProbationResponsible: null,
-          otherSupportNeedText: null,
-          status: null,
-          updateText: null,
-          isSelected: null,
-        } as SupportNeedCache
-      })
+      const initSupportNeedsCacheData: SupportNeedCache[] = supportNeedsResponse.supportNeeds.map(
+        (need): SupportNeedCache => {
+          const { allowUserDesc, category, existingPrisonerSupportNeedId, id, isOther, title, isUpdatable } = need
+          return {
+            uuid: crypto.randomUUID(),
+            supportNeedId: id,
+            existingPrisonerSupportNeedId,
+            allowUserDesc,
+            category,
+            isOther,
+            title,
+            isUpdatable,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: null,
+          }
+        },
+      )
 
       const supportNeedsCache = { needs: initSupportNeedsCacheData }
 
