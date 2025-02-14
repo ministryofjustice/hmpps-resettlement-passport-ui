@@ -32,6 +32,9 @@ import {
   getSupportNeedsColour,
   validatePathwaySupportNeeds,
   validateStringIsAnInteger,
+  processSupportNeedsRequestBody,
+  trimToNull,
+  validSupportNeedsStatus,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -49,6 +52,8 @@ import { PersonalDetails, PrisonerData } from '../@types/express'
 import { AssessmentType } from '../data/model/assessmentInformation'
 import { Pagination } from '../data/model/pagination'
 import FeatureFlags from '../featureFlag'
+import { PrisonerSupportNeedsPatch } from '../data/model/supportNeeds'
+import { SupportNeedStatus } from '../data/model/supportNeedStatus'
 
 describe('convert to title case', () => {
   it.each([
@@ -1596,5 +1601,113 @@ describe('validateStringIsAnInteger', () => {
     } else {
       expect(() => validateStringIsAnInteger(input)).toThrow(error)
     }
+  })
+})
+
+describe('processSupportNeedsRequestBody', () => {
+  it.each([
+    [
+      'happy path 1',
+      {
+        additionalDetails: 'This are the additional details',
+        updateStatus: 'IN_PROGRESS',
+        responsibleStaff: ['PRISON'],
+      },
+      {
+        text: 'This are the additional details',
+        status: SupportNeedStatus.IN_PROGRESS,
+        isPrisonResponsible: true,
+        isProbationResponsible: false,
+      },
+      null,
+    ],
+    [
+      'happy path 2',
+      {
+        updateStatus: 'NOT_STARTED',
+        responsibleStaff: ['PRISON', 'PROBATION'],
+      },
+      {
+        status: SupportNeedStatus.NOT_STARTED,
+        isPrisonResponsible: true,
+        isProbationResponsible: true,
+        text: null,
+      },
+      null,
+    ],
+    [
+      'happy path 2',
+      {
+        additionalDetails: '',
+        updateStatus: 'MET',
+        responsibleStaff: 'PROBATION',
+      },
+      {
+        status: SupportNeedStatus.MET,
+        isPrisonResponsible: false,
+        isProbationResponsible: true,
+        text: null,
+      },
+      null,
+    ],
+    [
+      'happy path 3',
+      {
+        additionalDetails: '   Some text with whitespace     ',
+        updateStatus: 'DECLINED',
+      },
+      {
+        status: SupportNeedStatus.DECLINED,
+        isPrisonResponsible: false,
+        isProbationResponsible: false,
+        text: 'Some text with whitespace',
+      },
+      null,
+    ],
+    [
+      'status does not exist',
+      {
+        additionalDetails: 'An update',
+        updateStatus: 'DOES_NOT_EXIST',
+      },
+      null,
+      'Cannot extract updateStatus from form',
+    ],
+  ])(
+    '%s -> processSupportNeedsRequestBody(%s)',
+    (_: string, input: Record<string, string | string[]>, expected: PrisonerSupportNeedsPatch, error: string) => {
+      if (!error) {
+        expect(processSupportNeedsRequestBody(input)).toEqual(expected)
+      } else {
+        expect(() => processSupportNeedsRequestBody(input)).toThrow(error)
+      }
+    },
+  )
+})
+
+describe('trimToNull', () => {
+  it.each([
+    ['normal string', 'This is a normal string.', 'This is a normal string.'],
+    ['string with leading/trailing whitespace', '  this is a  sentence  ', 'this is a  sentence'],
+    ['blank', '', null],
+    ['whitespace', '    ', null],
+    ['null', null, null],
+    ['undefined', undefined, null],
+  ])('%s -> trimToNull(%s)', (_: string, input: string, output: string) => {
+    expect(trimToNull(input)).toEqual(output)
+  })
+})
+
+describe('validSupportNeedsStatus', () => {
+  it.each([
+    ['Not started', 'NOT_STARTED', true],
+    ['In progress', 'IN_PROGRESS', true],
+    ['Declined', 'DECLINED', true],
+    ['Met', 'MET', true],
+    ['invalid', 'INVALID', false],
+    ['null', null, false],
+    ['undefined', undefined, false],
+  ])('%s -> validSupportNeedsStatus(%s)', (_: string, input: string, output: boolean) => {
+    expect(validSupportNeedsStatus(input)).toEqual(output)
   })
 })

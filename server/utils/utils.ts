@@ -635,14 +635,14 @@ export function processSupportNeedsRequestBody(input: Record<string, string | st
 }
 
 export function trimToNull(input: string) {
-  if (input !== undefined) {
+  if (input !== undefined && input !== null) {
     const trimmedInput = input.trim()
     return trimmedInput !== '' ? trimmedInput : null
   }
 
-  return input
+  return null
 }
 
-function validSupportNeedsStatus(updateStatus: string) {
+export function validSupportNeedsStatus(updateStatus: string) {
   return updateStatus in SupportNeedStatus
 }
