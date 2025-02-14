@@ -15,12 +15,20 @@ describe('SupportNeedStore', () => {
   const supportNeeds: SupportNeedsCache = {
     needs: [
       {
-        id: 12,
+        supportNeedId: 12,
         otherSupportNeedText: 'Other custom support needs text',
         status: 'MET',
         isPrisonResponsible: true,
         isProbationResponsible: false,
         updateText: 'Text related to the update',
+        uuid: '',
+        existingPrisonerSupportNeedId: 0,
+        title: '',
+        category: '',
+        allowUserDesc: false,
+        isOther: false,
+        isUpdatable: false,
+        isSelected: false,
       },
     ],
   }
