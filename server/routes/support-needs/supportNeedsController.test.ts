@@ -1469,10 +1469,16 @@ describe('SupportNeedsController', () => {
     })
 
     it('should redirect to the next support needs status page', async () => {
+      const stateKey = {
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+        pathway: 'ACCOMMODATION',
+      }
+
       jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
         needs: [
           {
-            uuid: 'first-uuid-of-supportNeed-is-updatable',
+            uuid: 'first-uuid',
             supportNeedId: 1,
             existingPrisonerSupportNeedId: null,
             allowUserDesc: false,
@@ -1555,19 +1561,105 @@ describe('SupportNeedsController', () => {
       })
 
       await request(app)
-        .post('/support-needs/accommodation/status/first-uuid-of-supportNeed-is-updatable')
+        .post('/support-needs/accommodation/status/first-uuid')
         .send({
           _csrf: 'xjM2bce6',
           prisonerNumber: 'A8731DY',
           status: 'MET',
           responsibleStaff: ['PRISON', 'PROBATION'],
           updateText: 'Some text in the additional details textarea',
+          otherSupportNeedText: null,
         })
         .expect(302)
         .expect(
           'Location',
           '/support-needs/accommodation/status/second-uuid-of-supportNeed-is-updatable/?prisonerNumber=A1234DY',
         )
+
+      expect(supportNeedStateService.setSupportNeeds).toHaveBeenCalledWith(stateKey, {
+        needs: [
+          {
+            uuid: 'first-uuid',
+            supportNeedId: 1,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'End a tenancy',
+            isUpdatable: true,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'MET',
+            updateText: 'Some text in the additional details textarea',
+            isSelected: true,
+          },
+          {
+            uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
+            supportNeedId: 5,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Arrange storage for personal possessions while in prison',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: null,
+          },
+          {
+            uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
+            supportNeedId: 6,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: true,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Other',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: null,
+          },
+          {
+            uuid: '20172ff2-0c21-4485-9402-5acf2cb60809',
+            supportNeedId: 7,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'No accommodation before custody support needs identified',
+            isUpdatable: false,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: true,
+          },
+          {
+            uuid: 'second-uuid-of-supportNeed-is-updatable',
+            supportNeedId: 2,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Maintain a tenancy while in prison',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: true,
+          },
+        ],
+      })
     })
 
     it('should redirect to the check your answers page if no more updatable supportNeeds remaining', async () => {
