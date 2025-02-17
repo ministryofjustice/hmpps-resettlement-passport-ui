@@ -18,16 +18,68 @@
   </div>
 {% endblock %}
 {% block content %}
-  <div class="govuk-grid-row govuk-!-padding-top-8">
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-          <span class="govuk-caption-l">{{ pathway | getNameFromUrl }} support need</span>
-          <h1 class="govuk-heading-l">{{ supportNeed.title }}</h1>
-        </div>
-      </div>
+      <span class="govuk-caption-l">{{ pathway | getNameFromUrl }} support need</span>
+      <h1 class="govuk-heading-l">{{ supportNeed.title }}</h1>
+    </div>
+    <div class="govuk-grid-column-three-quarters">
       <form action="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}" class="govuk-form" method="POST">
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+        <div class="govuk-form-group">
+          <div class="govuk-form-group" id="status">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-top-6">
+                <h2 class="govuk-fieldset__heading">Update status</h2>
+              </legend>
+              <div class="govuk-radios" data-module="govuk-radios" data-govuk-radios-init>
+                <div class="govuk-radios__item">
+                  <input type="radio" class="govuk-radios__input" id="statusNotStarted" name="status" value="NOT_STARTED" {% if supportNeed.status === 'NOT_STARTED' %}checked{% endif %} />
+                  <label class="govuk-label govuk-radios__label" for="statusNotStarted">Support not started</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input type="radio" class="govuk-radios__input" id="statusInProgress" name="status" value="IN_PROGRESS" {% if supportNeed.status === 'IN_PROGRESS' %}checked{% endif %} />
+                  <label class="govuk-label govuk-radios__label" for="statusInProgress">Support in progress</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input type="radio" class="govuk-radios__input" id="statusMet" name="status" value="MET" {% if supportNeed.status === 'MET' %}checked{% endif %} />
+                  <label class="govuk-label govuk-radios__label" for="statusMet">Support need met</label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input type="radio" class="govuk-radios__input" id="statusDeclined" name="status" value="DECLINED" {% if supportNeed.status === 'DECLINED' %}checked{% endif %} />
+                  <label class="govuk-label govuk-radios__label" for="statusDeclined">Support declined</label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="govuk-form-group" id="responsibleStaff">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend">
+                <h2 class="govuk-fieldset__heading">Who is responsible for this support need?</h2>
+              </legend>
+              <div class="govuk-checkboxes" data-module="govuk-checkboxes" data-govuk-checkboxes-init>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="prisonResettlementTeam" name="responsibleStaff" type="checkbox" value="PRISON" {% if supportNeed.isPrisonResponsible %}checked{% endif %} />
+                  <label class="govuk-label govuk-checkboxes__label" for="prisonResettlementTeam">
+                    Prison resettlement team
+                  </label>
+                </div>
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="communityProbationStaff" name="responsibleStaff" type="checkbox" value="PROBATION" {% if supportNeed.isProbationResponsible %}checked{% endif %} />
+                  <label class="govuk-label govuk-checkboxes__label" for="communityProbationStaff">
+                    Community probation staff
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="govuk-form-group govuk-!-padding-top-8">
+            <label class="govuk-label govuk-heading-m" for="additionalDetails">
+              Additional details (optional)
+            </label>
+            <textarea class="govuk-textarea" id="additionalDetails" name="updateText" rows="5">{{ supportNeed.updateText }}</textarea>
+          </div>
+        </div>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
         <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
         <button class="govuk-button" type="submit">Continue</button>
       </form>

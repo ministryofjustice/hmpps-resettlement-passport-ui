@@ -161,18 +161,38 @@ export default class SupportNeedsController {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
       const { prisonerNumber } = prisonerData.personalDetails
 
-      // TODO: UPDATE CACHE WITH VALUES FROM REQ.BODY
-      // const { status, isPrisonResponsible, isProbationResponsible, updateText, otherSupportNeedText } = req.body
-
       const stateKey = {
         prisonerNumber,
         userId: req.user.username,
         pathway: pathwayEnum,
       }
       const currentCacheState = await this.supportNeedStateService.getSupportNeeds(stateKey)
+      const currentIndex = currentCacheState.needs.findIndex(need => need.uuid === uuid)
+
+      // Validate supportNeed exists in cache
+      if (currentIndex === -1) {
+        throw new Error('Support need not found')
+      }
+
+      // UPDATE CACHE WITH VALUES FROM REQ.BODY
+      const { status, updateText, otherSupportNeedText, responsibleStaff = [] } = req.body
+
+      const isPrisonResponsible = responsibleStaff.includes('PRISON')
+      const isProbationResponsible = responsibleStaff.includes('PROBATION')
+
+      currentCacheState.needs[currentIndex] = {
+        ...currentCacheState.needs[currentIndex],
+        status,
+        isPrisonResponsible,
+        isProbationResponsible,
+        updateText,
+        otherSupportNeedText,
+      }
+
+      // Save updated state back to cache
+      await this.supportNeedStateService.setSupportNeeds(stateKey, currentCacheState)
 
       // get the next supportNeed which is `isUpdatable` and `isSelected`
-      const currentIndex = currentCacheState.needs.findIndex(need => need.uuid === uuid)
       const nextUpdatableSupportNeed =
         currentCacheState.needs.slice(currentIndex + 1).find(need => need.isUpdatable && need.isSelected) || null
 
@@ -193,11 +213,28 @@ export default class SupportNeedsController {
   }
 
   getCheckAnswers: RequestHandler = async (req, res, next): Promise<void> => {
-    const { pathway } = req.params
-    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
-    const { prisonerNumber } = prisonerData.personalDetails
+    try {
+      const { pathway } = req.params
+      await validatePathwaySupportNeeds(pathway)
+      const pathwayEnum = getEnumByURL(pathway)
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+      const { prisonerNumber } = prisonerData.personalDetails
 
-    res.render('pages/support-needs-check-answers', { pathway, prisonerNumber })
+      const stateKey = {
+        prisonerNumber,
+        userId: req.user.username,
+        pathway: pathwayEnum,
+      }
+
+      const currentCacheState = await this.supportNeedStateService.getSupportNeeds(stateKey)
+      const supportNeeds = currentCacheState.needs.filter(
+        supportNeed => supportNeed.isSelected && supportNeed.isUpdatable,
+      )
+
+      res.render('pages/support-needs-check-answers', { pathway, prisonerNumber, supportNeeds })
+    } catch (err) {
+      next(err)
+    }
   }
 
   finaliseSupportNeeds: RequestHandler = async (req, res, next): Promise<void> => {
