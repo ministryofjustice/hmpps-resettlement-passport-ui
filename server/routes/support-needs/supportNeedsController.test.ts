@@ -1469,12 +1469,6 @@ describe('SupportNeedsController', () => {
     })
 
     it('should throw an error if support need index is not found in cache', async () => {
-      const req = {
-        params: { pathway: 'some-pathway', uuid: 'non-existent-uuid' },
-        user: { username: 'test-user' },
-        body: {},
-      }
-
       jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
         needs: [], // Empty array to ensure findIndex returns -1
       })
