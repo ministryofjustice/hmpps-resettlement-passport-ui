@@ -1,12 +1,4 @@
-version: '3.1'
 services:
-
-  redis:
-    image: 'redis:7.0'
-    networks:
-      - hmpps_int
-    ports:
-      - '6379:6379'
 
   wiremock:
     image: wiremock/wiremock
@@ -17,23 +9,6 @@ services:
     restart: always
     ports:
       - "9091:8080"
-  
-  gotenberg:
-    image: gotenberg/gotenberg:7.7.0
-    networks:
-      - hmpps_int
-    ports:
-      - "3009:3001"
-    command:
-      - "gotenberg"
-      - "--api-port=3001"
-      - "--chromium-ignore-certificate-errors"
-      - "--api-timeout=30s"
-      - "--pdfengines-engines=pdftk"
-      - "--uno-listener-restart-threshold=0" #disables uno listener
-    restart: on-failure
-    healthcheck:
-      test: [ 'CMD', 'curl', '-f', 'http://localhost:3001/health' ]
 
 networks:
   hmpps_int:
