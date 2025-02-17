@@ -1,9 +1,6 @@
 {% extends "../partials/layout.njk" %}
-{% set pathway = "Resettlement overview" %}
-{% set pageTitle = applicationName + " - " + pathway + " Support Needs" %}
+{% set pageTitle = applicationName + " - " + pathway + " Support Need status" %}
 {% set mainClasses = "app-container govuk-body" %}
-{% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
-{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -24,9 +21,58 @@
 {% endblock %}
 
 {% block content %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-      <h1 class="govuk-heading-l">Check your answers</h1>
+  <div class="govuk-width-container govuk-!-padding-top-8">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <h1 class="govuk-heading-l">Check your answers</h1>
+        {% if supportNeeds %}
+          {% for supportNeed in supportNeeds %}
+            <h2 class="govuk-heading-m">{{ supportNeed.title }}</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Status</dt>
+                <dd class="govuk-summary-list__value">
+                  {% set tagColour = "govuk-tag--" + (supportNeed.status | getSupportNeedsColour) %}
+                  <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }}</span>
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/?prisonerNumber={{ prisonerNumber }}#staff">
+                    Change<span class="govuk-visually-hidden"> status</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Responsible staff</dt>
+                <dd class="govuk-summary-list__value">
+                {% if supportNeed.isPrisonResponsible %}
+                  <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                {% endif %}
+                {% if supportNeed.isProbationResponsible %}
+                  <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                {% endif %}
+                </dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/?prisonerNumber={{ prisonerNumber }}#responsibleStaff">
+                    Change<span class="govuk-visually-hidden"> responsible staff</span>
+                  </a>
+                </dd>
+              </div>
+              <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">Additional details</dt>
+                <dd class="govuk-summary-list__value">{{ supportNeed.updateText }}</dd>
+                <dd class="govuk-summary-list__actions">
+                  <a class="govuk-link" href="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/?prisonerNumber={{ prisonerNumber }}#additionalDetails">
+                    Change<span class="govuk-visually-hidden"> additional details</span>
+                  </a>
+                </dd>
+              </div>
+            </dl>
+          {% endfor %}
+        {% endif %}
+        <form action="/support-needs/{{ pathway }}/complete" method="POST" novalidate>
+          <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}
