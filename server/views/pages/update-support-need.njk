@@ -63,7 +63,7 @@
         <div class="govuk-form-group">
           <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend">
+              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                 <h2 class="govuk-fieldset__heading">Update status</h2>
               </legend>
               <div class="govuk-radios" data-module="govuk-radios" data-govuk-radios-init>
@@ -114,8 +114,6 @@
             <textarea class="govuk-textarea" id="additionalDetails" name="additionalDetails" rows="5"></textarea>
           </div>
         </div>
-        <br>
-        <br>
         <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
         <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" />
         <button class="govuk-button" type="submit">Update support need</button>
