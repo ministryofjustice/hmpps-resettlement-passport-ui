@@ -1455,6 +1455,19 @@ describe('SupportNeedsController', () => {
   })
 
   describe('submitSupportNeedsStatus', () => {
+    it('should throw an error if pathway is invalid', async () => {
+      await request(app).get('/support-needs/invalid-pathway/status/need-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
+    it('should throw an error if supportNeeds feature is off', async () => {
+      stubFeatureFlagToFalse(featureFlags)
+      await request(app).get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
+    it('should throw an error if the uuid does not exist in cache', async () => {
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
     it('should redirect to the next support needs status page', async () => {
       jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
         needs: [
@@ -1658,6 +1671,19 @@ describe('SupportNeedsController', () => {
   })
 
   describe('getCheckAnswers', () => {
+    it('should throw an error if pathway is invalid', async () => {
+      await request(app).get('/support-needs/invalid-pathway/status/need-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
+    it('should throw an error if supportNeeds feature is off', async () => {
+      stubFeatureFlagToFalse(featureFlags)
+      await request(app).get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
+    it('should throw an error if the uuid does not exist in cache', async () => {
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
     it('should render the check your answers page', async () => {
       jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
         needs: [
