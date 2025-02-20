@@ -3,7 +3,7 @@ import { RPClient } from '../data'
 import RpService from './rpService'
 import { AssessmentSkipRequest } from '../data/model/assessmentInformation'
 import FeatureFlags from '../featureFlag'
-import { stubFeatureFlagToTrue } from '../routes/testutils/testUtils'
+import { stubFeatureFlagToFalse, stubFeatureFlagToTrue } from '../routes/testutils/testUtils'
 import { SupportNeedStatus } from '../data/model/supportNeedStatus'
 import { PrisonerSupportNeedsPatch } from '../data/model/supportNeeds'
 
@@ -181,6 +181,28 @@ describe('RpService', () => {
     expect(result).toEqual({ error: true })
     expect(spy).toHaveBeenCalledWith(
       '/resettlement-passport/prisoner/123/resettlement-assessment/submit?assessmentType=BCST2&useNewDeliusCaseNoteFormat=true&useNewDpsCaseNoteFormat=true',
+      null,
+    )
+  })
+
+  it('should call submit assessment with supportNeedsLegacyProfile=false if feature flag is on', async () => {
+    const spy = jest.spyOn(rpClient, 'post').mockResolvedValue({})
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds'])
+    const result = await service.submitAssessment('123', 'BCST2')
+    expect(result).toEqual({})
+    expect(spy).toHaveBeenCalledWith(
+      '/resettlement-passport/prisoner/123/resettlement-assessment/submit?assessmentType=BCST2&useNewDeliusCaseNoteFormat=false&useNewDpsCaseNoteFormat=false&supportNeedsLegacyProfile=false',
+      null,
+    )
+  })
+
+  it('should call submit assessment without supportNeedsLegacyProfile=false if feature flag is off', async () => {
+    const spy = jest.spyOn(rpClient, 'post').mockResolvedValue({})
+    stubFeatureFlagToFalse(featureFlags)
+    const result = await service.submitAssessment('123', 'BCST2')
+    expect(result).toEqual({})
+    expect(spy).toHaveBeenCalledWith(
+      '/resettlement-passport/prisoner/123/resettlement-assessment/submit?assessmentType=BCST2&useNewDeliusCaseNoteFormat=false&useNewDpsCaseNoteFormat=false',
       null,
     )
   })
