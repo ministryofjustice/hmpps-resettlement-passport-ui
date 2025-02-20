@@ -1969,11 +1969,11 @@ describe('SupportNeedsController', () => {
             isOther: false,
             title: 'Maintain a tenancy while in prison',
             isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
             otherSupportNeedText: null,
-            status: null,
-            updateText: null,
+            status: 'IN_PROGRESS',
+            updateText: 'Another textarea',
             isSelected: true,
           },
           {
@@ -1990,10 +1990,11 @@ describe('SupportNeedsController', () => {
             otherSupportNeedText: null,
             status: null,
             updateText: null,
-            isSelected: true,
+            isSelected: false,
           },
         ],
       })
+
       await request(app)
         .post('/support-needs/accommodation/complete/?prisonerNumber=A1234DY')
         .send({
@@ -2002,6 +2003,29 @@ describe('SupportNeedsController', () => {
         })
         .expect(302)
         .expect('Location', '/accommodation/?prisonerNumber=A1234DY#support-needs')
+
+      expect(rpService.postSupportNeeds).toHaveBeenCalledWith('A1234DY', {
+        needs: [
+          {
+            needId: 1,
+            prisonerSupportNeedId: 22,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherDesc: null,
+            status: 'MET',
+            text: 'some text from the additional details',
+          },
+          {
+            needId: 2,
+            prisonerSupportNeedId: null,
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            otherDesc: null,
+            status: 'IN_PROGRESS',
+            text: 'Another textarea',
+          },
+        ],
+      })
     })
   })
 })
