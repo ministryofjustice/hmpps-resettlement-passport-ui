@@ -70,6 +70,8 @@
           {% endfor %}
         {% endif %}
         <form action="/support-needs/{{ pathway }}/complete" method="POST" novalidate>
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+          <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
           <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </form>
       </div>

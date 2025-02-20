@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import { validatePathwaySupportNeeds, getEnumByURL } from '../../utils/utils'
-import { SupportNeedCache } from '../../data/model/supportNeeds'
+import { PrisonerSupportNeedsPost, SupportNeedCache } from '../../data/model/supportNeeds'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import RpService from '../../services/rpService'
@@ -238,10 +238,50 @@ export default class SupportNeedsController {
   }
 
   finaliseSupportNeeds: RequestHandler = async (req, res, next): Promise<void> => {
-    const { pathway } = req.params
-    const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
-    const { prisonerNumber } = prisonerData.personalDetails
+    try {
+      const { pathway } = req.params
+      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
+      const { prisonerNumber } = prisonerData.personalDetails
+      await validatePathwaySupportNeeds(pathway)
+      const pathwayEnum = getEnumByURL(pathway)
 
-    res.redirect(`/${pathway}/?prisonerNumber=${prisonerNumber}`)
+      const stateKey = {
+        prisonerNumber,
+        userId: req.user.username,
+        pathway: pathwayEnum,
+      }
+
+      const currentCacheState = await this.supportNeedStateService.getSupportNeeds(stateKey)
+
+      const supportNeedsToSubmit: PrisonerSupportNeedsPost = {
+        needs: currentCacheState.needs
+          .filter(need => need.isSelected)
+          .map(
+            ({
+              supportNeedId,
+              updateText,
+              status,
+              isPrisonResponsible,
+              isProbationResponsible,
+              existingPrisonerSupportNeedId,
+              otherSupportNeedText,
+            }: SupportNeedCache) => ({
+              needId: supportNeedId,
+              prisonerSupportNeedId: existingPrisonerSupportNeedId,
+              otherDesc: otherSupportNeedText,
+              text: updateText,
+              status,
+              isPrisonResponsible,
+              isProbationResponsible,
+            }),
+          ),
+      }
+
+      await this.rpService.postSupportNeeds(prisonerNumber, supportNeedsToSubmit)
+
+      res.redirect(`/${pathway}/?prisonerNumber=${prisonerNumber}#support-needs`)
+    } catch (err) {
+      next(err)
+    }
   }
 }

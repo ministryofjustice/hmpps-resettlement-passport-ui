@@ -114,3 +114,15 @@ export type PrisonerSupportNeedsPatch = {
   isPrisonResponsible: boolean
   isProbationResponsible: boolean
 }
+
+export type PrisonerSupportNeedsPost = {
+  needs: {
+    needId: number
+    prisonerSupportNeedId: number
+    otherDesc: string
+    status: string
+    isPrisonResponsible: boolean
+    isProbationResponsible: boolean
+    text: string
+  }[]
+}
