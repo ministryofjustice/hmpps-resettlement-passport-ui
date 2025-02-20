@@ -289,10 +289,13 @@ export default class RpService {
     let response: { error?: boolean }
     const useNewDeliusCaseNoteFormat = await getFeatureFlagBoolean(FEATURE_FLAGS.USE_NEW_DELIUS_CASE_NOTE_FORMAT)
     const useNewDpsCaseNoteFormat = await getFeatureFlagBoolean(FEATURE_FLAGS.USE_NEW_DPS_CASE_NOTE_FORMAT)
+    const supportNeedsLegacyProfileParam = (await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS))
+      ? '&supportNeedsLegacyProfile=false'
+      : ''
     const client = this.createClient()
     try {
       response = await client.post(
-        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=${assessmentType}&useNewDeliusCaseNoteFormat=${useNewDeliusCaseNoteFormat}&useNewDpsCaseNoteFormat=${useNewDpsCaseNoteFormat}`,
+        `/resettlement-passport/prisoner/${prisonerId}/resettlement-assessment/submit?assessmentType=${assessmentType}&useNewDeliusCaseNoteFormat=${useNewDeliusCaseNoteFormat}&useNewDpsCaseNoteFormat=${useNewDpsCaseNoteFormat}${supportNeedsLegacyProfileParam}`,
         null,
       )
     } catch (err) {
