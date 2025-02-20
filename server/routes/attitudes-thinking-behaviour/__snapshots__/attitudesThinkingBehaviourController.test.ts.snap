@@ -289,38 +289,15 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     
   </div>
 
-    <div class="govuk-grid-column-one-third">
+    
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
-  <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-      <h3 class="app-summary-card__title">
-        Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
-      </h3>
-    </header>
-    <div class="app-summary-card__header">
-      <div class="govuk-form-group govuk-!-margin-0">
-        <input type="hidden" id="updated" name="updated" value="today" />
-        <input type="hidden" id="pathway" name="pathway" value="attitudes" />
-        <a
-          class="govuk-button"
-          href="/status-update?selectedPathway=attitudes-thinking-and-behaviour&prisonerNumber=A1234DY"
-          data-qa="update-pathway-status-button"
-        >
-          Update status
-        </a>
-      </div>
-    </div>
-  </section>
-
-    </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-      <div class="govuk-grid-column-one-quarter sticky-anchor-links">
         
-          
-        
-        
-        
+      
+      
+      
   <ul class="app-subnav__section">
     <li class="app-subnav__section-item app-subnav__section-item--current">
       <ul class="app-subnav__section app-subnav__section--nested">
@@ -349,10 +326,10 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     </li>
   </ul>
 
-      </div>
-      <div class="govuk-grid-column-three-quarters">
-        
-          <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      
+        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
    <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
     <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/attitudes-thinking-and-behaviour/start/?prisonerNumber=A1234DY">Add a support need</a>
@@ -452,7 +429,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     
   </div>
 </section>
-          <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Attitudes, thinking and behaviour updates
@@ -557,8 +534,8 @@ It has a line break in</p>
     
   </div>
 </section>
-        
-        
+      
+      
 
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
   
@@ -648,7 +625,7 @@ It has a line break in</p>
       
   </div>
 </section>
-        
+      
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">Report information</h3>
@@ -716,7 +693,7 @@ Answer3</td>
   </div>
   </section>
 
-        
+      
   
     <section id="referral-contract-type" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
@@ -903,7 +880,6 @@ Answer3</td>
     </section>
   
 
-      </div>
     </div>
   </div>
 
@@ -1219,38 +1195,15 @@ exports[`getView Happy path with default query params and no data from endpoints
     
   </div>
 
-    <div class="govuk-grid-column-one-third">
+    
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
-  <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-      <h3 class="app-summary-card__title">
-        Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
-      </h3>
-    </header>
-    <div class="app-summary-card__header">
-      <div class="govuk-form-group govuk-!-margin-0">
-        <input type="hidden" id="updated" name="updated" value="today" />
-        <input type="hidden" id="pathway" name="pathway" value="attitudes" />
-        <a
-          class="govuk-button"
-          href="/status-update?selectedPathway=attitudes-thinking-and-behaviour&prisonerNumber=A1234DY"
-          data-qa="update-pathway-status-button"
-        >
-          Update status
-        </a>
-      </div>
-    </div>
-  </section>
-
-    </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-      <div class="govuk-grid-column-one-quarter sticky-anchor-links">
         
-          
-        
-        
-        
+      
+      
+      
   <ul class="app-subnav__section">
     <li class="app-subnav__section-item app-subnav__section-item--current">
       <ul class="app-subnav__section app-subnav__section--nested">
@@ -1279,10 +1232,10 @@ exports[`getView Happy path with default query params and no data from endpoints
     </li>
   </ul>
 
-      </div>
-      <div class="govuk-grid-column-three-quarters">
-        
-          <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      
+        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
    <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
     <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/attitudes-thinking-and-behaviour/start/?prisonerNumber=A1234DY">Add a support need</a>
@@ -1293,7 +1246,7 @@ exports[`getView Happy path with default query params and no data from endpoints
     
   </div>
 </section>
-          <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Attitudes, thinking and behaviour updates
@@ -1307,8 +1260,8 @@ exports[`getView Happy path with default query params and no data from endpoints
     
   </div>
 </section>
-        
-        
+      
+      
 
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
   
@@ -1338,7 +1291,7 @@ exports[`getView Happy path with default query params and no data from endpoints
     
   </div>
 </section>
-        
+      
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">Report information</h3>
@@ -1356,7 +1309,7 @@ exports[`getView Happy path with default query params and no data from endpoints
   </div>
   </section>
 
-        
+      
   <section id="referral" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">
@@ -1369,7 +1322,6 @@ exports[`getView Happy path with default query params and no data from endpoints
     </div>
   </section>
 
-      </div>
     </div>
   </div>
 
@@ -1685,38 +1637,15 @@ exports[`getView Happy path with specified query params and data from endpoints 
     
   </div>
 
-    <div class="govuk-grid-column-one-third">
+    
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
       
-  <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-      <h3 class="app-summary-card__title">
-        Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
-      </h3>
-    </header>
-    <div class="app-summary-card__header">
-      <div class="govuk-form-group govuk-!-margin-0">
-        <input type="hidden" id="updated" name="updated" value="today" />
-        <input type="hidden" id="pathway" name="pathway" value="attitudes" />
-        <a
-          class="govuk-button"
-          href="/status-update?selectedPathway=attitudes-thinking-and-behaviour&prisonerNumber=A1234DY"
-          data-qa="update-pathway-status-button"
-        >
-          Update status
-        </a>
-      </div>
-    </div>
-  </section>
-
-    </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-      <div class="govuk-grid-column-one-quarter sticky-anchor-links">
         
-          
-        
-        
-        
+      
+      
+      
   <ul class="app-subnav__section">
     <li class="app-subnav__section-item app-subnav__section-item--current">
       <ul class="app-subnav__section app-subnav__section--nested">
@@ -1745,10 +1674,10 @@ exports[`getView Happy path with specified query params and data from endpoints 
     </li>
   </ul>
 
-      </div>
-      <div class="govuk-grid-column-three-quarters">
-        
-          <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      
+        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
    <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
     <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/attitudes-thinking-and-behaviour/start/?prisonerNumber=A1234DY">Add a support need</a>
@@ -1848,7 +1777,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
     
   </div>
 </section>
-          <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Attitudes, thinking and behaviour updates
@@ -1953,8 +1882,8 @@ It has a line break in</p>
     
   </div>
 </section>
-        
-        
+      
+      
 
 <section id="case-notes" class="app-summary-card govuk-!-margin-bottom-8">
   
@@ -2050,7 +1979,7 @@ It has a line break in</p>
       
   </div>
 </section>
-        
+      
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">Report information</h3>
@@ -2118,7 +2047,7 @@ Answer3</td>
   </div>
   </section>
 
-        
+      
   
     <section id="referral-contract-type" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
@@ -2305,7 +2234,6 @@ Answer3</td>
     </section>
   
 
-      </div>
     </div>
   </div>
 

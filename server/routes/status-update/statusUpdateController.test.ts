@@ -3,19 +3,29 @@ import request from 'supertest'
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
-import { expectPrisonerNotFoundPage, expectSomethingWentWrongPage, stubPrisonerDetails } from '../testutils/testUtils'
+import {
+  expectPrisonerNotFoundPage,
+  expectSomethingWentWrongPage,
+  stubFeatureFlagToFalse,
+  stubFeatureFlagToTrue,
+  stubPrisonerDetails,
+} from '../testutils/testUtils'
 import { Services } from '../../services'
+import FeatureFlags from '../../featureFlag'
 
 let app: Express
 const { rpService, appInsightsService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
+const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
   jest.mock('applicationinsights', () => jest.fn())
   configHelper(config)
 
   app = appWithAllRoutes({})
-
+  FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
+  stubFeatureFlagToFalse(featureFlags)
+  stubFeatureFlagToTrue(featureFlags, ['whatsNewBanner'])
   stubPrisonerDetails(rpService)
 })
 
@@ -50,6 +60,15 @@ describe('getStatusUpdate', () => {
       .get('/status-update?prisonerNumber=A1234DY&selectedPathway=NOT_A_PATHWAY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('support needs flag is set to true - redirects to pathway page', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds'])
+
+    await request(app)
+      .get('/status-update?prisonerNumber=A1234DY&selectedPathway=accommodation')
+      .expect(302)
+      .expect('Location', '/accommodation/?prisonerNumber=A1234DY')
   })
 })
 
