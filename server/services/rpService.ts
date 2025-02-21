@@ -499,14 +499,6 @@ export default class RpService {
     )
   }
 
-  async postWatchlist(prisonerNumber: string): Promise<void> {
-    await this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/watch`, null)
-  }
-
-  async deleteWatchlist(prisonerNumber: string): Promise<void> {
-    await this.createClient().delete(`/resettlement-passport/prisoner/${prisonerNumber}/watch`)
-  }
-
   getPrisonerOverviewPageData(
     prisonerNumber: string,
     page: string,

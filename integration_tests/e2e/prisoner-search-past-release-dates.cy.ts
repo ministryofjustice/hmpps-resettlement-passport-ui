@@ -77,10 +77,6 @@ context('Prisoner search page', () => {
           enabled: false,
         },
         {
-          feature: 'myCases',
-          enabled: false,
-        },
-        {
           feature: 'supportNeeds',
           enabled: true,
         },

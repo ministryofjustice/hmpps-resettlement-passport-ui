@@ -5,8 +5,6 @@ export class Overview {
     this.enterUserNameField = page.locator('//*[@id="username"]')
     this.enterPasswordField = page.locator('//*[@id="password"]')
     this.submit = page.locator('//*[@id="submit"]')
-    this.addToCases = page.locator('//*[@id="add-to-your-cases-btn"]')
-    this.removeFromCases = page.locator('//*[@id="add-to-your-cases-btn"]')
     this.generateFirstTimeID = page.locator('//*[@id="generate-otp-task-btn"]')
     this.otpCode = page.locator('//*[@id="main-content"]/div/div/div/h1')
 

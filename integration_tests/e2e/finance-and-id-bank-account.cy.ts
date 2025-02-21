@@ -57,10 +57,6 @@ context('Finance and ID - bank account', () => {
         enabled: false,
       },
       {
-        feature: 'myCases',
-        enabled: false,
-      },
-      {
         feature: 'supportNeeds',
         enabled: false,
       },

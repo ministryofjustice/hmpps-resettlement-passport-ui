@@ -57,10 +57,6 @@ context('Status Update and add case note', () => {
         enabled: false,
       },
       {
-        feature: 'myCases',
-        enabled: false,
-      },
-      {
         feature: 'supportNeeds',
         enabled: false,
       },

@@ -57,10 +57,6 @@ context('Report Information', () => {
         enabled: false,
       },
       {
-        feature: 'myCases',
-        enabled: false,
-      },
-      {
         feature: 'supportNeeds',
         enabled: false,
       },

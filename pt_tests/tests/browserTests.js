@@ -211,22 +211,6 @@ export async function mainDevBrowserTest() {
 
     await Promise.all([page.waitForNavigation(), navigationBar.overview.click()])
 
-    await Promise.all([page.waitForNavigation(), overviewPage.addToCases.click()])
-
-    testVal = await overviewPage.addToCases.innerText()
-    describe('addRemoveCases', () => {
-      expect(testVal).to.equal('Remove from your cases')
-      console.log('update cases')
-    })
-
-    await Promise.all([page.waitForNavigation(), overviewPage.removeFromCases.click()])
-
-    testVal = await overviewPage.removeFromCases.innerText()
-    describe('addRemoveCases', () => {
-      expect(testVal).to.equal('Add to your cases')
-      console.log('update cases')
-    })
-
     await Promise.all([page.waitForNavigation(), overviewPage.generateFirstTimeID.click()])
     testVal = await overviewPage.otpCode.innerText()
     describe('verifyOtpCode', () => {

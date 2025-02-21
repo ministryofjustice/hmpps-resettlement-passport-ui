@@ -57,10 +57,6 @@ context('ResetProfile', () => {
         enabled: false,
       },
       {
-        feature: 'myCases',
-        enabled: false,
-      },
-      {
         feature: 'supportNeeds',
         enabled: true,
       },

@@ -57,10 +57,6 @@ context('Immediate Needs Report All Questions', () => {
         enabled: false,
       },
       {
-        feature: 'myCases',
-        enabled: false,
-      },
-      {
         feature: 'supportNeeds',
         enabled: false,
       },
