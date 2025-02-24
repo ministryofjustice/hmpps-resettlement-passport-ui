@@ -1,11 +1,12 @@
 import { RequestHandler } from 'express'
-import { getEnumByURL, getEnumValue, isValidPathway, isValidStatus } from '../../utils/utils'
+import { getEnumByURL, getEnumValue, isValidPathway, isValidStatus, getFeatureFlagBoolean } from '../../utils/utils'
 import logger from '../../../logger'
 import { AppInsightsService, PsfrEvent } from '../../utils/analytics'
 import RpService from '../../services/rpService'
 import StatusUpdateView from './statusUpdateView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { badRequestError } from '../../errorHandler'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 export default class StatusUpdateController {
   constructor(
@@ -21,6 +22,11 @@ export default class StatusUpdateController {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       const selectedPathway = req.query.selectedPathway as string
       const validationError = req.flash('validationError')?.[0]
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
+
+      if (supportNeedsEnabled) {
+        return res.redirect(`/${selectedPathway}/?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}`)
+      }
 
       if (!selectedPathway || !isValidPathway(selectedPathway)) {
         return next(new Error('No valid pathway specified in request'))
@@ -36,6 +42,12 @@ export default class StatusUpdateController {
 
   postStatusUpdate: RequestHandler = async (req, res, next) => {
     try {
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
+
+      if (supportNeedsEnabled) {
+        throw new Error('Status update feature unavailable - supportNeed flag enabled')
+      }
+
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
       const { prisonerNumber } = prisonerData.personalDetails
 

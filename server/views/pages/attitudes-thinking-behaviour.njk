@@ -9,47 +9,49 @@
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
-    <div class="govuk-grid-column-one-third">
-      {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
-    </div>
-    <div class="govuk-grid-row govuk-!-padding-top-4">
-      <div class="govuk-grid-column-one-quarter sticky-anchor-links">
-        {% if supportNeedsEnabled %}
-          {% set supportNeedsItems = [
-            {
-              name: "Support needs",
-              id: "support-needs"
-            },
-            {
-              name: "Updates",
-              id: "support-needs-updates"
-            }
-          ]
-          %}
-        {% else %}
-          {% set supportNeedsItems = [] %}
-        {% endif %}
-        {% set subNavItems = supportNeedsItems.concat([
+    {% if not supportNeedsEnabled %}
+      <div class="govuk-grid-column-one-third">
+        {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
+      </div>
+    {% endif %}
+  </div>
+  <div class="govuk-grid-row govuk-!-padding-top-4">
+    <div class="govuk-grid-column-one-quarter sticky-anchor-links">
+      {% if supportNeedsEnabled %}
+        {% set supportNeedsItems = [
           {
-            name: "Case notes and status history",
-            id: "case-notes"
+            name: "Support needs",
+            id: "support-needs"
           },
           {
-            name: "Report information",
-            id: "assessment-information"
+            name: "Updates",
+            id: "support-needs-updates"
           }
-        ]).concat(crsReferrals.results[0].referrals | createReferralsSubNav) %}
-        {{ subNav(subNavItems) }}
-      </div>
-      <div class="govuk-grid-column-three-quarters">
-        {% if supportNeedsEnabled %}
-          {% include "../partials/supportNeedsSummary.njk" %}
-          {% include "../partials/supportNeedsUpdates.njk" %}
-        {% endif %}
-        {% include "../partials/caseNotes.njk" %}
-        {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
-        {% include "../partials/crsReferrals.njk" %}
-      </div>
+        ]
+        %}
+      {% else %}
+        {% set supportNeedsItems = [] %}
+      {% endif %}
+      {% set subNavItems = supportNeedsItems.concat([
+        {
+          name: "Case notes and status history",
+          id: "case-notes"
+        },
+        {
+          name: "Report information",
+          id: "assessment-information"
+        }
+      ]).concat(crsReferrals.results[0].referrals | createReferralsSubNav) %}
+      {{ subNav(subNavItems) }}
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      {% if supportNeedsEnabled %}
+        {% include "../partials/supportNeedsSummary.njk" %}
+        {% include "../partials/supportNeedsUpdates.njk" %}
+      {% endif %}
+      {% include "../partials/caseNotes.njk" %}
+      {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+      {% include "../partials/crsReferrals.njk" %}
     </div>
   </div>
 {% endblock %}

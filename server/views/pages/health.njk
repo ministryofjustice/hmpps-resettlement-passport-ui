@@ -9,9 +9,11 @@
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     {{ titleAndIntro(pathway) }}
-    <div class="govuk-grid-column-one-third">
-      {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
-    </div>
+    {% if not supportNeedsEnabled %}
+      <div class="govuk-grid-column-one-third">
+        {{ statusDetails(pathwayStatus, prisonerData.personalDetails.prisonerNumber, pathway) }}
+      </div>
+    {% endif %}
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
