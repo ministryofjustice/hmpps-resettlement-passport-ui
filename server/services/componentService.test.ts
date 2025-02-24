@@ -3,19 +3,10 @@ import ComponentClient, { AvailableComponent } from '../data/componentClient'
 import ComponentService from './componentService'
 
 describe('Component Service', () => {
-  let componentClient: ComponentClient
-  let service: ComponentService
+  const componentClient: ComponentClient = new ComponentClient() as jest.Mocked<ComponentClient>
+  const service = new ComponentService(componentClient)
 
-  beforeAll(() => {
-    componentClient = new ComponentClient() as jest.Mocked<ComponentClient>
-    service = new ComponentService(componentClient)
-  })
-
-  afterAll(() => {
-    jest.restoreAllMocks()
-  })
-
-  it('Should get page component', async () => {
+  it('Should get components', async () => {
     const comp: Record<AvailableComponent, Component> = {
       header: {
         html: '<h2>Header</h2>',
