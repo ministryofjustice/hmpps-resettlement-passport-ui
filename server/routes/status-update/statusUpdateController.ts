@@ -42,6 +42,12 @@ export default class StatusUpdateController {
 
   postStatusUpdate: RequestHandler = async (req, res, next) => {
     try {
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
+
+      if (supportNeedsEnabled) {
+        throw new Error('Status update feature unavailable - supportNeed flag enabled')
+      }
+
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res)
       const { prisonerNumber } = prisonerData.personalDetails
 

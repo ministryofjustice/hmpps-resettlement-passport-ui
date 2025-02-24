@@ -189,4 +189,19 @@ describe('postStatusUpdate', () => {
       caseNoteText: 'Resettlement status set to: Done. This is my case note text',
     })
   })
+
+  it('error thrown if support needs flag is set to true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds'])
+
+    await request(app)
+      .post('/status-update')
+      .send({
+        prisonerNumber: 'A1234DY',
+        selectedStatus: 'DONE',
+        selectedPathway: 'accommodation',
+        caseNoteInput_DONE: 'This is my case note text',
+      })
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
 })
