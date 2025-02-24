@@ -6,6 +6,8 @@ import FeatureFlags from '../featureFlag'
 import { stubFeatureFlagToFalse, stubFeatureFlagToTrue } from '../routes/testutils/testUtils'
 import { SupportNeedStatus } from '../data/model/supportNeedStatus'
 import { PrisonerSupportNeedsPatch } from '../data/model/supportNeeds'
+import { CaseNote } from '../data/model/caseNotesHistory'
+import { ERROR_DICTIONARY } from '../utils/constants'
 
 jest.mock('../../logger')
 jest.mock('../data')
@@ -270,5 +272,50 @@ describe('RpService', () => {
     const spy = jest.spyOn(rpClient, 'patch').mockImplementation()
     await service.patchSupportNeedById('123', '124', supportNeedsPatch)
     expect(spy).toHaveBeenCalledWith('/resettlement-passport/prisoner/123/need/124', supportNeedsPatch)
+  })
+
+  it('test getCaseNotesHistory returns case notes', async () => {
+    const caseNotes: CaseNote = {
+      content: [],
+      pageSize: 1,
+      page: 1,
+      sortName: 'sort',
+      totalElements: 0,
+      last: true,
+    }
+
+    const prisonerId = 'prisonerId'
+    const pathway = 'pathway'
+    const createdByUserId = 'userId'
+    const size = 'size'
+    const page = 'page'
+    const sort = 'sort'
+    const days = 'days'
+
+    const spy = jest.spyOn(rpClient, 'get').mockResolvedValueOnce(caseNotes)
+    const url = `/resettlement-passport/case-notes/${prisonerId}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${pathway}&createdByUserId=${createdByUserId}`
+
+    const result = await service.getCaseNotesHistory(prisonerId, pathway, createdByUserId, size, page, sort, days)
+
+    expect(spy).toHaveBeenCalledWith(url)
+    expect(result).toEqual({ results: caseNotes })
+  })
+
+  it('test getCaseNotesHistory handles errors', async () => {
+    const prisonerId = 'prisonerId'
+    const pathway = 'pathway'
+    const createdByUserId = 'userId'
+    const size = 'size'
+    const page = 'page'
+    const sort = 'sort'
+    const days = 'days'
+
+    const spy = jest.spyOn(rpClient, 'get').mockRejectedValueOnce(Error('something went wrong'))
+    const url = `/resettlement-passport/case-notes/${prisonerId}?page=${page}&size=${size}&sort=${sort}&days=${days}&pathwayType=${pathway}&createdByUserId=${createdByUserId}`
+
+    const result = await service.getCaseNotesHistory(prisonerId, pathway, createdByUserId, size, page, sort, days)
+
+    expect(spy).toHaveBeenCalledWith(url)
+    expect(result).toEqual({ error: ERROR_DICTIONARY.DATA_UNAVAILABLE })
   })
 })
