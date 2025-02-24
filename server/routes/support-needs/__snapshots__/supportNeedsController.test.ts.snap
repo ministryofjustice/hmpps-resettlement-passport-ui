@@ -190,6 +190,8 @@ exports[`SupportNeedsController getCheckAnswers should render the check your ans
           
         
         <form action="/support-needs/accommodation/complete" method="POST" novalidate>
+          <input type="hidden" name="_csrf" value=""/>
+          <input type="hidden" name="prisonerNumber" value="A1234DY"/>
           <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
         </form>
       </div>
