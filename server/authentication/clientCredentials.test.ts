@@ -1,7 +1,11 @@
 import generateOauthClientToken from './clientCredentials'
 
 describe('generateOauthClientToken', () => {
-  it('Token can be generated', () => {
+  it('Token can be generated using default client id and secret', () => {
+    expect(generateOauthClientToken()).toMatch(/^Basic [-A-Za-z0-9+/]*={0,3}/)
+  })
+
+  it('Token can be generated when given explicit client id and secret', () => {
     expect(generateOauthClientToken('bob', 'password1')).toBe('Basic Ym9iOnBhc3N3b3JkMQ==')
   })
 
