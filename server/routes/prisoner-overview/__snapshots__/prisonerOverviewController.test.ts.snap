@@ -429,10 +429,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
           <h3 class="app-summary-card__title">
             Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
           </h3>
-          <span class="right">
-                <a href="/add-case-note?prisonerNumber=A1234DY"
-                   class="govuk-button">Add a case note</a>
-              </span>
+          
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
@@ -1614,10 +1611,11 @@ exports[`prisonerOverview should display add to your cases when enabled 1`] = `
           <h3 class="app-summary-card__title">
             Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
           </h3>
-          <span class="right">
-                <a href="/add-case-note?prisonerNumber=A1234DY"
-                   class="govuk-button">Add a case note</a>
-              </span>
+          
+            <span class="right">
+              <a href="/add-case-note?prisonerNumber=A1234DY" class="govuk-button">Add a case note</a>
+            </span>
+          
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
@@ -2755,10 +2753,11 @@ exports[`prisonerOverview should display remove from your cases when enabled and
           <h3 class="app-summary-card__title">
             Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
           </h3>
-          <span class="right">
-                <a href="/add-case-note?prisonerNumber=A1234DY"
-                   class="govuk-button">Add a case note</a>
-              </span>
+          
+            <span class="right">
+              <a href="/add-case-note?prisonerNumber=A1234DY" class="govuk-button">Add a case note</a>
+            </span>
+          
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
@@ -3935,10 +3934,7 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
           <h3 class="app-summary-card__title">
             Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
           </h3>
-          <span class="right">
-                <a href="/add-case-note?prisonerNumber=A1234DY"
-                   class="govuk-button">Add a case note</a>
-              </span>
+          
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
@@ -5070,10 +5066,11 @@ exports[`prisonerOverview should not display add to your cases when disabled 1`]
           <h3 class="app-summary-card__title">
             Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
           </h3>
-          <span class="right">
-                <a href="/add-case-note?prisonerNumber=A1234DY"
-                   class="govuk-button">Add a case note</a>
-              </span>
+          
+            <span class="right">
+              <a href="/add-case-note?prisonerNumber=A1234DY" class="govuk-button">Add a case note</a>
+            </span>
+          
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
@@ -6121,10 +6118,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
           <h3 class="app-summary-card__title">
             Case notes<span class="govuk-caption-m">Filtered to Resettlement</span>
           </h3>
-          <span class="right">
-                <a href="/add-case-note?prisonerNumber=A1234DY"
-                   class="govuk-button">Add a case note</a>
-              </span>
+          
         </header>
         <div class="app-summary-card__body govuk-!-padding-top-4">
           <div class="govuk-grid-row">
