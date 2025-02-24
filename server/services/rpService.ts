@@ -35,6 +35,7 @@ import {
   PathwaySupportNeedsUpdates,
   PrisonerSupportNeedDetails,
   PrisonerSupportNeedsPatch,
+  PrisonerSupportNeedsPost,
   SupportNeedsSummary,
 } from '../data/model/supportNeeds'
 
@@ -584,5 +585,9 @@ export default class RpService {
       `/resettlement-passport/prisoner/${prisonerNumber}/need/${prisonerNeedId}`,
       supportNeedsPatch,
     )
+  }
+
+  async postSupportNeeds(prisonerNumber: string, supportNeeds: PrisonerSupportNeedsPost) {
+    await this.createClient().post(`/resettlement-passport/prisoner/${prisonerNumber}/needs`, supportNeeds)
   }
 }

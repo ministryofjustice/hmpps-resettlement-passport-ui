@@ -1888,12 +1888,144 @@ describe('SupportNeedsController', () => {
   })
 
   describe('finaliseSupportNeeds', () => {
-    it('should redirect to pathway page', async () => {
+    it('should throw an error if pathway is invalid', async () => {
+      await request(app)
+        .post('/support-needs/invalid-pathway/complete/?prisonerNumber=A1234DY')
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+        })
+        .expect(500)
+    })
+
+    it('should throw an error if supportNeeds feature is off', async () => {
+      stubFeatureFlagToFalse(featureFlags)
       await request(app)
         .post('/support-needs/accommodation/complete/?prisonerNumber=A1234DY')
-        .send({})
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+        })
+        .expect(500)
+    })
+
+    it('should submit supportNeeds and redirect to pathway page', async () => {
+      jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
+        needs: [
+          {
+            uuid: 'first-uuid-of-supportNeed-is-updatable',
+            supportNeedId: 1,
+            existingPrisonerSupportNeedId: 22,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'End a tenancy',
+            isUpdatable: true,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'MET',
+            updateText: 'some text from the additional details',
+            isSelected: true,
+          },
+          {
+            uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
+            supportNeedId: 5,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Arrange storage for personal possessions while in prison',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: null,
+          },
+          {
+            uuid: 'not-selected',
+            supportNeedId: 6,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: true,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Other',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: null,
+          },
+          {
+            uuid: 'second-uuid-of-supportNeed-is-updatable',
+            supportNeedId: 2,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Maintain a tenancy while in prison',
+            isUpdatable: true,
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'IN_PROGRESS',
+            updateText: 'Another textarea',
+            isSelected: true,
+          },
+          {
+            uuid: 'selected-but-not-updatable-2',
+            supportNeedId: 7,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'No accommodation before custody support needs identified',
+            isUpdatable: false,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: false,
+          },
+        ],
+      })
+
+      await request(app)
+        .post('/support-needs/accommodation/complete/?prisonerNumber=A1234DY')
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+        })
         .expect(302)
-        .expect('Location', '/accommodation/?prisonerNumber=A1234DY')
+        .expect('Location', '/accommodation/?prisonerNumber=A1234DY#support-needs')
+
+      expect(rpService.postSupportNeeds).toHaveBeenCalledWith('A1234DY', {
+        needs: [
+          {
+            needId: 1,
+            prisonerSupportNeedId: 22,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherDesc: null,
+            status: 'MET',
+            text: 'some text from the additional details',
+          },
+          {
+            needId: 2,
+            prisonerSupportNeedId: null,
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            otherDesc: null,
+            status: 'IN_PROGRESS',
+            text: 'Another textarea',
+          },
+        ],
+      })
     })
   })
 })

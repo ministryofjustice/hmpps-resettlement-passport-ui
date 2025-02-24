@@ -1,19 +1,31 @@
 import type { Express } from 'express'
 import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
-import { expectPrisonerNotFoundPage, stubPrisonerDetails, stubRpServiceThrowError } from '../testutils/testUtils'
+import {
+  expectPrisonerNotFoundPage,
+  stubFeatureFlagToFalse,
+  stubFeatureFlagToTrue,
+  stubPrisonerDetails,
+  stubRpServiceThrowError,
+} from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
+import FeatureFlags from '../../featureFlag'
 
 let app: Express
 const { rpService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
+const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
   stubPrisonerDetails(rpService)
   configHelper(config)
 
   app = appWithAllRoutes({})
+
+  FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
+  stubFeatureFlagToFalse(featureFlags)
+  stubFeatureFlagToTrue(featureFlags, ['whatsNewBanner'])
 })
 
 afterEach(() => {
@@ -42,5 +54,14 @@ describe('getView', () => {
       .get('/add-case-note?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('support needs flag is set to true - redirects to overview page', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds'])
+
+    await request(app)
+      .get('/add-case-note?prisonerNumber=A1234DY')
+      .expect(302)
+      .expect('Location', 'prisoner-overview/?prisonerNumber=A1234DY#case-notes')
   })
 })

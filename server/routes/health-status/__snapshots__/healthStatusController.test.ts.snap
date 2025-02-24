@@ -289,31 +289,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     
   </div>
 
-    <div class="govuk-grid-column-one-third">
-      
-  <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-      <h3 class="app-summary-card__title">
-        Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
-      </h3>
-    </header>
-    <div class="app-summary-card__header">
-      <div class="govuk-form-group govuk-!-margin-0">
-        <input type="hidden" id="updated" name="updated" value="today" />
-        <input type="hidden" id="pathway" name="pathway" value="attitudes" />
-        <a
-          class="govuk-button"
-          href="/status-update?selectedPathway=health-status&prisonerNumber=A1234DY"
-          data-qa="update-pathway-status-button"
-        >
-          Update status
-        </a>
-      </div>
-    </div>
-  </section>
-
-    </div>
+    
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
@@ -1219,31 +1195,7 @@ exports[`getView Happy path with default query params and no data from endpoints
     
   </div>
 
-    <div class="govuk-grid-column-one-third">
-      
-  <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-      <h3 class="app-summary-card__title">
-        Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
-      </h3>
-    </header>
-    <div class="app-summary-card__header">
-      <div class="govuk-form-group govuk-!-margin-0">
-        <input type="hidden" id="updated" name="updated" value="today" />
-        <input type="hidden" id="pathway" name="pathway" value="attitudes" />
-        <a
-          class="govuk-button"
-          href="/status-update?selectedPathway=health-status&prisonerNumber=A1234DY"
-          data-qa="update-pathway-status-button"
-        >
-          Update status
-        </a>
-      </div>
-    </div>
-  </section>
-
-    </div>
+    
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
@@ -1685,31 +1637,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
     
   </div>
 
-    <div class="govuk-grid-column-one-third">
-      
-  <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
-    <header class="app-summary-card__header">
-      <h3 class="app-summary-card__title">
-        Resettlement status: 
-        <strong class="govuk-tag govuk-tag--blue"> In progress </strong>
-      </h3>
-    </header>
-    <div class="app-summary-card__header">
-      <div class="govuk-form-group govuk-!-margin-0">
-        <input type="hidden" id="updated" name="updated" value="today" />
-        <input type="hidden" id="pathway" name="pathway" value="attitudes" />
-        <a
-          class="govuk-button"
-          href="/status-update?selectedPathway=health-status&prisonerNumber=A1234DY"
-          data-qa="update-pathway-status-button"
-        >
-          Update status
-        </a>
-      </div>
-    </div>
-  </section>
-
-    </div>
+    
   </div>
   <div class="govuk-grid-row govuk-!-padding-top-4">
     <div class="govuk-grid-column-one-quarter sticky-anchor-links">
