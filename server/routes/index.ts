@@ -16,7 +16,6 @@ import assessmentSkipRouter from './assessment-skip'
 import immediateNeedsReportRouter from './immediate-needs-report'
 import assessmentCompleteRouter from './assessment-complete'
 import printRouter from './print'
-import watchlistRouter from './watchlist'
 import analyticsRouter from './analytics'
 import configMiddleware from './configMiddleware'
 import documentRouter from './documents/documentRouter'
@@ -51,7 +50,6 @@ export default function routes(services: Services): Router {
   assessmentCompleteRouter(router, services)
   assessmentSkipRouter(router, services)
   printRouter(router, services)
-  watchlistRouter(router, services)
   statusUpdateRouter(router, services)
   analyticsRouter(router, services)
   documentRouter(router, services)

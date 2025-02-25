@@ -320,7 +320,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -369,7 +369,6 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -925,7 +924,7 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -957,7 +956,6 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -1369,7 +1367,7 @@ exports[`getView Happy path with default query params with tabs nav 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -1418,7 +1416,6 @@ exports[`getView Happy path with default query params with tabs nav 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -1617,7 +1614,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -1649,7 +1646,6 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -2048,7 +2044,7 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -2097,7 +2093,6 @@ exports[`getView Happy path with filter  assessmentRequired true 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -2653,7 +2648,7 @@ exports[`getView Happy path with filter  watchList true 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -2702,7 +2697,6 @@ exports[`getView Happy path with filter  watchList true 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -3258,7 +3252,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -3312,7 +3306,6 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -3873,7 +3866,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -3922,7 +3915,6 @@ exports[`getView Happy path with filter prisoner number 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="A1234DY">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -4478,7 +4470,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -4527,7 +4519,6 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="xxxx">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -5083,7 +5074,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -5132,7 +5123,6 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>
@@ -5688,7 +5678,7 @@ exports[`getView Happy path with sorting by name 1`] = `
   <div class="filters govuk-!-margin-bottom-4" id="prisonersFilter">
     <form action="/#prisonersFilter" method="GET" novalidate>
       <div class="govuk-grid-row">
-        <div  class="govuk-grid-column-full" >
+        <div class="govuk-grid-column-full">
           <div class="govuk-grid-column-full">
             <h3 class="govuk-heading-m">Filter by</h3>
           </div>
@@ -5737,7 +5727,6 @@ exports[`getView Happy path with sorting by name 1`] = `
               <input class="govuk-input filter-input" id="searchInput" name="searchInput" placeholder="" type="text" value="">
             </div>
           </div>
-          
           <div class="govuk-grid-column-full">
             <div class="govuk-grid-column-one-quarter govuk-!-padding-left-0">
               <button class="govuk-button" type="submit" id="submit-filter-btn">Apply filters</button>

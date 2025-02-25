@@ -7,12 +7,10 @@ import FeatureFlags from '../../featureFlag'
 import { configHelper, defaultTestConfig } from '../configHelperTest'
 import {
   expectPrisonerNotFoundPage,
-  stubFeatureFlagToFalse,
   stubFeatureFlagToTrue,
   stubPrisonerDetails,
   stubPrisonerOverviewData,
 } from '../testutils/testUtils'
-import { PrisonerData } from '../../@types/express'
 import { Services } from '../../services'
 import { SupportNeedsSummary } from '../../data/model/supportNeeds'
 
@@ -116,77 +114,6 @@ describe('prisonerOverview', () => {
     const banner = document.getElementById('whats-new-banner')
     expect(banner).toBeTruthy()
     expect(banner.outerHTML).toMatchSnapshot()
-  })
-
-  it('should display add to your cases when enabled', async () => {
-    stubFeatureFlagToTrue(featureFlags, ['myCases'])
-    stubPrisonerOverviewData(rpService)
-
-    await request(app)
-      .get('/prisoner-overview?prisonerNumber=A1234DY')
-      .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
-
-  it('should not display add to your cases when disabled', async () => {
-    stubFeatureFlagToFalse(featureFlags)
-    stubPrisonerOverviewData(rpService)
-
-    await request(app)
-      .get('/prisoner-overview?prisonerNumber=A1234DY')
-      .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot())
-  })
-
-  it('should display remove from your cases when enabled and in cases', async () => {
-    stubFeatureFlagToTrue(featureFlags, ['myCases'])
-    jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
-      personalDetails: {
-        prisonerNumber: 'A1234DY',
-        prisonId: 'MDI',
-        facialImageId: '456',
-        firstName: 'John',
-        lastName: 'Smith',
-      },
-      pathways: [
-        {
-          pathway: 'ACCOMMODATION',
-          status: 'IN_PROGRESS',
-        },
-        {
-          pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR',
-          status: 'IN_PROGRESS',
-        },
-        {
-          pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY',
-          status: 'IN_PROGRESS',
-        },
-        {
-          pathway: 'DRUGS_AND_ALCOHOL',
-          status: 'IN_PROGRESS',
-        },
-        {
-          pathway: 'EDUCATION_SKILLS_AND_WORK',
-          status: 'IN_PROGRESS',
-        },
-        {
-          pathway: 'FINANCE_AND_ID',
-          status: 'IN_PROGRESS',
-        },
-        {
-          pathway: 'HEALTH',
-          status: 'IN_PROGRESS',
-        },
-      ],
-      isInWatchlist: true,
-    } as PrisonerData)
-
-    stubPrisonerOverviewData(rpService)
-
-    await request(app)
-      .get('/prisoner-overview?prisonerNumber=A1234DY')
-      .expect(200)
-      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('should display responsible staff data when supportNeeds is enabled', async () => {

@@ -52,10 +52,6 @@
     "enabled": true
   },
   {
-    "feature": "myCases",
-    "enabled": false
-  },
-  {
     "feature": "supportNeeds",
     "enabled": true
   }

@@ -57,10 +57,6 @@ context('Immediate Needs Report Edit', () => {
         enabled: false,
       },
       {
-        feature: 'myCases',
-        enabled: false,
-      },
-      {
         feature: 'supportNeeds',
         enabled: false,
       },

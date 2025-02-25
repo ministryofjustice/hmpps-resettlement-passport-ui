@@ -81,10 +81,6 @@ context('Generate PDF', () => {
         enabled: false,
       },
       {
-        feature: 'myCases',
-        enabled: false,
-      },
-      {
         feature: 'supportNeeds',
         enabled: true,
       },
@@ -158,10 +154,6 @@ context('Generate PDF', () => {
       },
       {
         feature: 'assignCaseTab',
-        enabled: false,
-      },
-      {
-        feature: 'myCases',
         enabled: false,
       },
       {

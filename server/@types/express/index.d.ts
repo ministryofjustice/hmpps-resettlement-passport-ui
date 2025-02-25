@@ -58,7 +58,6 @@ export type PrisonerData = {
   prisonerImage?: string
   assessmentRequired: boolean
   resettlementReviewAvailable: boolean
-  isInWatchlist: boolean
   immediateNeedsSubmitted: boolean
   preReleaseSubmitted: boolean
 }

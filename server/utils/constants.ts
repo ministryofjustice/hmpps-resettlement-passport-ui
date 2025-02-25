@@ -194,7 +194,6 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   USE_NEW_DPS_CASE_NOTE_FORMAT: 'useNewDpsCaseNoteFormat',
   WHATS_NEW_BANNER: 'whatsNewBanner',
   ASSIGN_CASE_TAB: 'assignCaseTab',
-  MY_CASES: 'myCases',
   SUPPORT_NEEDS: 'supportNeeds',
 }
 
