@@ -4,6 +4,8 @@
 {% set pathway = "" %}
 {% set pageTitle = applicationName + " - Reset profile" %}
 {% set mainClasses = "app-container govuk-body" %}
+{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
+
 {% block header %}
   {% if feComponents.header %}
     {{ feComponents.header | safe }}
@@ -39,17 +41,21 @@
       {% else %}
         <div class="govuk-grid-row ">
           <div class="govuk-grid-column-three-quarters">
-            <h1 class="govuk-heading-l govuk-!-padding-top-4">Reset reports and statuses
+            <h1 class="govuk-heading-l govuk-!-padding-top-4">Reset reports and {{ "support needs" if supportNeedsEnabled else "statuses" }}
               <br>
               <span class="govuk-caption-l">{{ prisonerData.personalDetails.lastName | toTitleCase }}, {{ prisonerData.personalDetails.firstName | toTitleCase }} ({{ prisonerData.personalDetails.prisonerNumber }})</span>
             </h1>
             <p>Resetting will:</p>
             <ul class="govuk-list govuk-list--bullet">
               <li>let you complete new versions of the immediate needs and pre-release reports</li>
-              <li>set all pathway resettlement statuses back to 'Not started'</li>
-              <li>send a case note to DPS to explain that the reports and statuses have been reset</li>
+              {% if supportNeedsEnabled %}
+                <li>Remove all current support needs</li>
+              {% else %}
+                <li>set all pathway resettlement statuses back to 'Not started'</li>
+              {% endif %}
+              <li>send a case note to DPS to explain that the reports and {{ "support needs" if supportNeedsEnabled else "statuses" }} have been reset</li>
             </ul>
-            <p>All previous case notes will still be visible.</p>
+            <p>All previous {{ "support need updates" if supportNeedsEnabled else "case notes" }} will still be visible.</p>
             <h2 class="govuk-heading-m">Previous reports will not be deleted</h2>
             <p>Previous versions of the reports will be saved in our archive, but will no longer be visible in PSfR.</p>
             <p>If you think you might need to see the previous report information in the future, copy and paste it into a document before you do the reset.</p>

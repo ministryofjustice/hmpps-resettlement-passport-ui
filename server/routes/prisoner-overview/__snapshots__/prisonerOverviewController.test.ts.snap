@@ -302,7 +302,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
       <div class="app-summary-card__body">
         
           <a href="/resetProfile?prisonerNumber=A1234DY" class="govuk-button" id="reset-profile-btn" track-event-name="ResetReportsAndStatusesLinkClicked" track-event-prisoner-id="A1234DY">
-            Reset reports and statuses
+            Reset reports and support needs
           </a>
         
         
@@ -2567,7 +2567,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
       <div class="app-summary-card__body">
         
           <a href="/resetProfile?prisonerNumber=A1234DY" class="govuk-button" id="reset-profile-btn" track-event-name="ResetReportsAndStatusesLinkClicked" track-event-prisoner-id="A1234DY">
-            Reset reports and statuses
+            Reset reports and support needs
           </a>
         
         

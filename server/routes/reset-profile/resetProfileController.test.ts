@@ -57,6 +57,16 @@ describe('resetProfile', () => {
   })
 })
 
+describe('resetProfile', () => {
+  it('should render different content if supportNeeds flag is enabled', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['profileReset', 'supportNeeds'])
+    await request(app)
+      .get('/resetProfile?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+})
+
 describe('resetProfileReason', () => {
   it('should render page if feature is enabled and no validation errors', async () => {
     stubFeatureFlagToTrue(featureFlags, ['profileReset'])
@@ -79,6 +89,16 @@ describe('resetProfileReason', () => {
     await request(app)
       .get('/resetProfile/reason?prisonerNumber=123')
       .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+})
+
+describe('resetProfileReason', () => {
+  it('should render resetProfileReason page with different content if supportNeeds flags enabled', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['profileReset', 'supportNeeds'])
+    await request(app)
+      .get('/resetProfile/reason?prisonerNumber=A1234DY')
+      .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 })
