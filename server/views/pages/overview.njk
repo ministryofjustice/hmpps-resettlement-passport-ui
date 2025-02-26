@@ -69,7 +69,7 @@
   {% elif prisonerData.resettlementReviewAvailable === false %}
     {{preReleaseComplete(pathway, prisonerData)}}
   {% endif %}
-  {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, resetProfileEnabled) }}
+  {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, resetProfileEnabled, supportNeedsEnabled) }}
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
