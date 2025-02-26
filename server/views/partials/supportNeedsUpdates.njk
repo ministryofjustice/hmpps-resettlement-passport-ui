@@ -14,20 +14,24 @@
           {% for update in supportNeedsUpdates.updates %}
             <div>
               <h3>{{ update.title }}</h3>
-              <p>
-                <strong>Status set to: </strong>
-                {% set tagColour = "govuk-tag--" + (update.status | getSupportNeedsColour) %}
-                <span class="govuk-tag {{ tagColour }}">{{ update.status | getSupportNeedsStatus }}</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                {% if update.isPrisonResponsible %}
-                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
-                {% endif %}
-                {% if update.isProbationResponsible %}
-                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
-                {% endif %}
-              </p>
+              {% if update.status %}
+                <p>
+                  <strong>Status set to: </strong>
+                  {% set tagColour = "govuk-tag--" + (update.status | getSupportNeedsColour) %}
+                  <span class="govuk-tag {{ tagColour }}">{{ update.status | getSupportNeedsStatus }}</span>
+                </p>
+              {% endif %}
+              {% if update.isPrisonResponsible or update.isProbationResponsible %}
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  {% if update.isPrisonResponsible %}
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  {% endif %}
+                  {% if update.isProbationResponsible %}
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  {% endif %}
+                </p>
+              {% endif %}
               <p class="show-line-breaks">{{ update.text }}</p>
               <span class="govuk-caption-m">Updated: {{ update.createdAt | formatDate('long') }} by {{ update.createdBy }}</span>
               <br>
