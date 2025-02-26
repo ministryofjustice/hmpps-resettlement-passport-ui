@@ -461,6 +461,16 @@ export function stubPathwaySupportNeedsUpdates(rpService: RpService) {
         createdBy: 'C User',
         createdAt: '2024-12-23T09:42:00',
       },
+      {
+        id: 5,
+        title: 'Support need update after reset',
+        status: null,
+        isPrisonResponsible: null,
+        isProbationResponsible: null,
+        text: 'This is the update text of a support need update that was created after a reset profile, therefore there is no status and responsible staff',
+        createdBy: 'C User',
+        createdAt: '2024-12-23T09:42:00',
+      },
     ],
     allPrisonerNeeds: [
       {

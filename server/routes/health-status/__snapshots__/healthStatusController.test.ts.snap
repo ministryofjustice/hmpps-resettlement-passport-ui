@@ -445,18 +445,22 @@ exports[`getView Happy path with default query params and data from endpoints 1`
           
             <div>
               <h3>Maintain a tenancy while in prison</h3>
-              <p>
-                <strong>Status set to: </strong>
-                
-                <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                
-                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
-                
-                
-              </p>
+              
+                <p>
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                </p>
+              
+              
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  
+                  
+                </p>
+              
               <p class="show-line-breaks">This is some text related to the support need
 
 It has a line break in</p>
@@ -467,20 +471,24 @@ It has a line break in</p>
           
             <div>
               <h3>End a tenancy</h3>
-              <p>
-                <strong>Status set to: </strong>
-                
-                <span class="govuk-tag govuk-tag--green">Support met</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                
-                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
-                
-                
-                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
-                
-              </p>
+              
+                <p>
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                </p>
+              
+              
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  
+                </p>
+              
               <p class="show-line-breaks">Some update text here</p>
               <span class="govuk-caption-m">Updated: 4 February 2025 by B User</span>
               <br>
@@ -489,18 +497,22 @@ It has a line break in</p>
           
             <div>
               <h3>End a tenancy</h3>
-              <p>
-                <strong>Status set to: </strong>
-                
-                <span class="govuk-tag govuk-tag--orange">Support not started</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                
-                
-                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
-                
-              </p>
+              
+                <p>
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                </p>
+              
+              
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  
+                </p>
+              
               <p class="show-line-breaks">Some more update text here</p>
               <span class="govuk-caption-m">Updated: 1 February 2025 by B User</span>
               <br>
@@ -509,21 +521,35 @@ It has a line break in</p>
           
             <div>
               <h3>Maintain a tenancy while in prison</h3>
-              <p>
-                <strong>Status set to: </strong>
-                
-                <span class="govuk-tag govuk-tag--purple">Support declined</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                
-                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
-                
-                
-                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
-                
-              </p>
+              
+                <p>
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                </p>
+              
+              
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  
+                </p>
+              
               <p class="show-line-breaks">This is the update text</p>
+              <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>Support need update after reset</h3>
+              
+              
+              <p class="show-line-breaks">This is the update text of a support need update that was created after a reset profile, therefore there is no status and responsible staff</p>
               <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
               <br>
             </div>
@@ -1793,18 +1819,22 @@ exports[`getView Happy path with specified query params and data from endpoints 
           
             <div>
               <h3>Maintain a tenancy while in prison</h3>
-              <p>
-                <strong>Status set to: </strong>
-                
-                <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                
-                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
-                
-                
-              </p>
+              
+                <p>
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                </p>
+              
+              
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  
+                  
+                </p>
+              
               <p class="show-line-breaks">This is some text related to the support need
 
 It has a line break in</p>
@@ -1815,20 +1845,24 @@ It has a line break in</p>
           
             <div>
               <h3>End a tenancy</h3>
-              <p>
-                <strong>Status set to: </strong>
-                
-                <span class="govuk-tag govuk-tag--green">Support met</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                
-                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
-                
-                
-                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
-                
-              </p>
+              
+                <p>
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                </p>
+              
+              
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  
+                </p>
+              
               <p class="show-line-breaks">Some update text here</p>
               <span class="govuk-caption-m">Updated: 4 February 2025 by B User</span>
               <br>
@@ -1837,18 +1871,22 @@ It has a line break in</p>
           
             <div>
               <h3>End a tenancy</h3>
-              <p>
-                <strong>Status set to: </strong>
-                
-                <span class="govuk-tag govuk-tag--orange">Support not started</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                
-                
-                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
-                
-              </p>
+              
+                <p>
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                </p>
+              
+              
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  
+                </p>
+              
               <p class="show-line-breaks">Some more update text here</p>
               <span class="govuk-caption-m">Updated: 1 February 2025 by B User</span>
               <br>
@@ -1857,21 +1895,35 @@ It has a line break in</p>
           
             <div>
               <h3>Maintain a tenancy while in prison</h3>
-              <p>
-                <strong>Status set to: </strong>
-                
-                <span class="govuk-tag govuk-tag--purple">Support declined</span>
-              </p>
-              <p>
-                <strong>Responsible staff set to: </strong>
-                
-                  <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
-                
-                
-                  <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
-                
-              </p>
+              
+                <p>
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                </p>
+              
+              
+                <p>
+                  <strong>Responsible staff set to: </strong>
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  
+                </p>
+              
               <p class="show-line-breaks">This is the update text</p>
+              <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>Support need update after reset</h3>
+              
+              
+              <p class="show-line-breaks">This is the update text of a support need update that was created after a reset profile, therefore there is no status and responsible staff</p>
               <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
               <br>
             </div>
