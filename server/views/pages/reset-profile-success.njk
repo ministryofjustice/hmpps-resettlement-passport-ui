@@ -4,6 +4,8 @@
 {% set pathway = "" %}
 {% set pageTitle = applicationName + " - Reset profile success" %}
 {% set mainClasses = "app-container govuk-body" %}
+{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
+
 {% block header %}
   {% if feComponents.header %}
     {{ feComponents.header | safe }}
@@ -25,7 +27,7 @@
       <div class="govuk-grid-row ">
         <div class="govuk-grid-column-three-quarters">
           <div class="govuk-panel govuk-panel--confirmation">
-            <h1 class="govuk-panel__title">Reports and statuses reset</h1>
+            <h1 class="govuk-panel__title">Reports and {{ "support needs" if supportNeedsEnabled else "statuses" }} reset</h1>
             <div class="govuk-panel__body">
               <p class="text-white">Contact the service desk if you think there's a problem.</p>
             </div>
