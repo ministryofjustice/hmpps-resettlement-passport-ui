@@ -4,6 +4,7 @@
 {% set pathway = "" %}
 {% set pageTitle = applicationName + " - Reset profile reason" %}
 {% set mainClasses = "app-container govuk-body" %}
+{% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -47,7 +48,7 @@
             }) }}
           {% endif %}
           <h1 class="govuk-heading-l {{ "govuk-!-padding-top-4" if not validationError }}">
-            Why are you resetting the reports and statuses?
+            Why are you resetting the reports and {{ "support needs" if supportNeedsEnabled else "statuses" }}?
             <br>
             <span class="govuk-caption-l">
               {{ prisonerData.personalDetails.lastName | toTitleCase }},

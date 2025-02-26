@@ -93,6 +93,16 @@ describe('resetProfileReason', () => {
   })
 })
 
+describe('resetProfileReason', () => {
+  it('should render resetProfileReason page with different content if supportNeeds flags enabled', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['profileReset', 'supportNeeds'])
+    await request(app)
+      .get('/resetProfile/reason?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+})
+
 describe('submitResetProfileReason', () => {
   it('should redirect to success page if feature is enabled and no validation errors - recall', async () => {
     stubFeatureFlagToTrue(featureFlags, ['profileReset'])
