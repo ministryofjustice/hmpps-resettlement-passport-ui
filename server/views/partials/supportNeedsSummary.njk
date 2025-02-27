@@ -30,10 +30,18 @@
                   <strong class="govuk-tag govuk-tag--blue">Community</strong>
                   <br />
                 {% endif %}
+                {% if not supportNeed.isPrisonResponsible and not supportNeed.isProbationResponsible and supportNeed.numberOfUpdates === 0 %}
+                  <strong class="govuk-tag govuk-tag--grey">Not set</strong>
+                  <br />
+                {% endif %}
               </td>
               <td class="govuk-table__cell">
-                {% set tagColour = "govuk-tag--" + (supportNeed.status | getSupportNeedsColour) %}
-                <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }}</span>
+                {% if not supportNeed.status and supportNeed.numberOfUpdates === 0 %}
+                  <span class="govuk-tag govuk-tag--grey">Not set</span>
+                {% else %}
+                  {% set tagColour = "govuk-tag--" + (supportNeed.status | getSupportNeedsColour) %}
+                  <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }}</span>
+                {% endif %}
               </td>
               <td class="govuk-table__cell">{{ supportNeed.numberOfUpdates }}</td>
               <td class="govuk-table__cell">{{ supportNeed.lastUpdated | formatDate }}</td>
