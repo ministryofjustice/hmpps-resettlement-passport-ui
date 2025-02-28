@@ -42,7 +42,10 @@ import { defaultPrisonersSearch, defaultPrisonersSearchNoPastReleaseDates } from
 import { johnSmithCheckbox, johnSmithCheckboxReportVersion } from './scenarios/john-smith/john-smith-checkbox'
 import editHealthAssessmentConvergingOnLastQuestion from './scenarios/john-smith/edit-health-assessment-converging-on-last-question'
 import { validateAssessment } from './common'
-import { johnSmithResetProfile } from './scenarios/john-smith/john-smith-reset-profile'
+import {
+  johnSmithResetProfile,
+  johnSmithResetProfileLegacyCaseNotes,
+} from './scenarios/john-smith/john-smith-reset-profile'
 import { johnSmithLicenceImage, johnSmithReportInfo } from './scenarios/john-smith/john-smith-overview'
 import { johnSmithImmediateNeedsReportAllQuestionTypesCompleted } from './scenarios/john-smith/john-smith-immediate-needs-report-Completed'
 
@@ -517,6 +520,13 @@ const stubEditHealthAssessmentConvergingOnLastQuestion = () =>
 const stubJohnSmithProfileReset = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithImmediateNeedsReportAccommodation(), johnSmithResetProfile()])
 
+const stubJohnSmithProfileResetLegacyCaseNotes = () =>
+  Promise.all([
+    ...johnSmithDefaults(),
+    ...johnSmithImmediateNeedsReportAccommodation(),
+    johnSmithResetProfileLegacyCaseNotes(),
+  ])
+
 const stubJohnSmithPostNoReportInfo = () =>
   Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithReportInfo()])
 
@@ -912,6 +922,7 @@ export default {
   stubDefaultSearchResultsNoPastReleaseDates,
   stubEditHealthAssessmentConvergingOnLastQuestion,
   stubJohnSmithProfileReset,
+  stubJohnSmithProfileResetLegacyCaseNotes,
   stubJohnSmithPostNoReportInfo,
   stubJohnSmithGetLicenceImage,
   johnSmithLicenseConditions,

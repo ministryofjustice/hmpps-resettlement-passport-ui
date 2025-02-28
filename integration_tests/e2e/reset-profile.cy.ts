@@ -234,7 +234,7 @@ context('ResetProfile', () => {
     ]
     cy.task('overwriteFlags', JSON.stringify(supportNeedFlagDisabled))
 
-    cy.task('stubJohnSmithProfileReset')
+    cy.task('stubJohnSmithProfileResetLegacyCaseNotes')
     cy.signIn()
 
     cy.visit('/resetProfile/reason?prisonerNumber=A8731DY')
