@@ -358,10 +358,13 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                   <br />
                 
                 
+                
               </td>
               <td class="govuk-table__cell">
                 
-                <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  
+                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                
               </td>
               <td class="govuk-table__cell">2</td>
               <td class="govuk-table__cell">12 Sept 2024</td>
@@ -380,10 +383,13 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                   <strong class="govuk-tag govuk-tag--blue">Community</strong>
                   <br />
                 
+                
               </td>
               <td class="govuk-table__cell">
                 
-                <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                
               </td>
               <td class="govuk-table__cell">4</td>
               <td class="govuk-table__cell">11 Jan 2023</td>
@@ -399,10 +405,13 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                   <strong class="govuk-tag govuk-tag--blue">Community</strong>
                   <br />
                 
+                
               </td>
               <td class="govuk-table__cell">
                 
-                <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  
+                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                
               </td>
               <td class="govuk-table__cell">4</td>
               <td class="govuk-table__cell">11 Jan 2023</td>
@@ -415,10 +424,13 @@ exports[`getView Happy path with default query params and data from endpoints 1`
               <td class="govuk-table__cell">
                 
                 
+                
               </td>
               <td class="govuk-table__cell">
                 
-                <span class="govuk-tag govuk-tag--green">Support met</span>
+                  
+                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                
               </td>
               <td class="govuk-table__cell">4</td>
               <td class="govuk-table__cell">11 Jan 2023</td>
@@ -1732,10 +1744,13 @@ exports[`getView Happy path with specified query params and data from endpoints 
                   <br />
                 
                 
+                
               </td>
               <td class="govuk-table__cell">
                 
-                <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  
+                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                
               </td>
               <td class="govuk-table__cell">2</td>
               <td class="govuk-table__cell">12 Sept 2024</td>
@@ -1754,10 +1769,13 @@ exports[`getView Happy path with specified query params and data from endpoints 
                   <strong class="govuk-tag govuk-tag--blue">Community</strong>
                   <br />
                 
+                
               </td>
               <td class="govuk-table__cell">
                 
-                <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                
               </td>
               <td class="govuk-table__cell">4</td>
               <td class="govuk-table__cell">11 Jan 2023</td>
@@ -1773,10 +1791,13 @@ exports[`getView Happy path with specified query params and data from endpoints 
                   <strong class="govuk-tag govuk-tag--blue">Community</strong>
                   <br />
                 
+                
               </td>
               <td class="govuk-table__cell">
                 
-                <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  
+                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                
               </td>
               <td class="govuk-table__cell">4</td>
               <td class="govuk-table__cell">11 Jan 2023</td>
@@ -1789,10 +1810,13 @@ exports[`getView Happy path with specified query params and data from endpoints 
               <td class="govuk-table__cell">
                 
                 
+                
               </td>
               <td class="govuk-table__cell">
                 
-                <span class="govuk-tag govuk-tag--green">Support met</span>
+                  
+                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                
               </td>
               <td class="govuk-table__cell">4</td>
               <td class="govuk-table__cell">11 Jan 2023</td>

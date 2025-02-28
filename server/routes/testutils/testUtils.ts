@@ -274,6 +274,23 @@ export function stubPathwaySupportNeedsSummary(rpService: RpService) {
   })
 }
 
+export function stubPathwaySupportNeedsSummaryLegacyProfile(rpService: RpService) {
+  return jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue({
+    supportNeedsSet: true,
+    prisonerNeeds: [
+      {
+        id: 3563,
+        title: 'Accommodation',
+        isPrisonResponsible: null,
+        isProbationResponsible: null,
+        status: null,
+        numberOfUpdates: 0,
+        lastUpdated: '2024-09-12',
+      },
+    ],
+  })
+}
+
 export function stubPathwaySupportNeeds(rpService: RpService) {
   return jest.spyOn(rpService, 'getPathwaySupportNeeds').mockResolvedValue({
     supportNeeds: [
