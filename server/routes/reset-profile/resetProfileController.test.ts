@@ -119,10 +119,14 @@ describe('submitResetProfileReason', () => {
       .expect(res => {
         expect(res.text).toContain('Found. Redirecting to /resetProfile/success?prisonerNumber=A1234DY')
       })
-    expect(resetProfileSpy).toHaveBeenCalledWith('A1234DY', {
-      resetReason: 'RECALL_TO_PRISON',
-      additionalDetails: null,
-    })
+    expect(resetProfileSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      {
+        resetReason: 'RECALL_TO_PRISON',
+        additionalDetails: null,
+      },
+      false,
+    )
     expect(trackEventSpy).toHaveBeenCalledWith('PSFR_ProfileReset', {
       prisonerId: 'A1234DY',
       sessionId: 'sessionId',
@@ -144,14 +148,18 @@ describe('submitResetProfileReason', () => {
       .expect(res => {
         expect(res.text).toContain('Found. Redirecting to /resetProfile/success?prisonerNumber=A1234DY')
       })
-    expect(resetProfileSpy).toHaveBeenCalledWith('A1234DY', {
-      resetReason: 'RETURN_ON_NEW_SENTENCE',
-      additionalDetails: null,
-    })
+    expect(resetProfileSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      {
+        resetReason: 'RETURN_ON_NEW_SENTENCE',
+        additionalDetails: null,
+      },
+      false,
+    )
   })
 
   it('should redirect to success page if feature is enabled and no validation errors - other', async () => {
-    stubFeatureFlagToTrue(featureFlags, ['profileReset'])
+    stubFeatureFlagToTrue(featureFlags, ['profileReset', 'supportNeeds'])
     const resetProfileSpy = jest.spyOn(rpService, 'resetProfile').mockResolvedValue({ error: null })
     await request(app)
       .post('/resetProfile/reason')
@@ -164,10 +172,14 @@ describe('submitResetProfileReason', () => {
       .expect(res => {
         expect(res.text).toContain('Found. Redirecting to /resetProfile/success?prisonerNumber=A1234DY')
       })
-    expect(resetProfileSpy).toHaveBeenCalledWith('A1234DY', {
-      resetReason: 'OTHER',
-      additionalDetails: 'Some other details',
-    })
+    expect(resetProfileSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      {
+        resetReason: 'OTHER',
+        additionalDetails: 'Some other details',
+      },
+      true,
+    )
   })
 
   it('should error if feature is disabled', async () => {

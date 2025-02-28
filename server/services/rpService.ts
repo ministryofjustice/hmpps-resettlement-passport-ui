@@ -482,11 +482,14 @@ export default class RpService {
     ).version
   }
 
-  async resetProfile(prisonerNumber: string, resetReason: ResetReason) {
+  async resetProfile(prisonerNumber: string, resetReason: ResetReason, supportNeedsEnabled: boolean) {
     let response: { error: string }
     const client = this.createClient()
     try {
-      await client.post(`/resettlement-passport/prisoner/${prisonerNumber}/reset-profile`, resetReason)
+      await client.post(
+        `/resettlement-passport/prisoner/${prisonerNumber}/reset-profile?supportNeedsEnabled=${supportNeedsEnabled}`,
+        resetReason,
+      )
     } catch (err) {
       logger.warn(`Session: ${client.sessionId} Cannot reset profile for ${prisonerNumber} ${err.status} ${err}`)
       if (err.status !== 200) {

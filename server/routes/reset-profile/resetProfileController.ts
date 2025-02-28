@@ -59,6 +59,7 @@ export default class ResetProfileController {
   submitResetProfileReason: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const resetProfileEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.RESET_PROFILE)
+      const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       if (!resetProfileEnabled) {
         return next(new Error('Reset profile is disabled'))
@@ -89,6 +90,7 @@ export default class ResetProfileController {
       const resetProfileResponse = await this.rpService.resetProfile(
         prisonerData.personalDetails.prisonerNumber,
         resetReasonPostBody,
+        supportNeedsEnabled,
       )
 
       // Check if profile reset successfully
