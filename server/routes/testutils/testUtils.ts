@@ -5,7 +5,12 @@ import RpService from '../../services/rpService'
 import { PrisonersList } from '../../data/model/prisoners'
 import FeatureFlags from '../../featureFlag'
 
-export function stubPrisonerDetails(rpService: RpService, releaseDate: string = null, dateOfBirth: string = null) {
+export function stubPrisonerDetails(
+  rpService: RpService,
+  releaseDate: string = null,
+  dateOfBirth: string = null,
+  supportNeedsLegacyProfile: boolean = false,
+) {
   jest.spyOn(rpService, 'getPrisonerDetails').mockResolvedValue({
     personalDetails: {
       prisonerNumber: 'A1234DY',
@@ -16,6 +21,7 @@ export function stubPrisonerDetails(rpService: RpService, releaseDate: string = 
       releaseDate,
       dateOfBirth,
     },
+    supportNeedsLegacyProfile,
     pathways: [
       {
         pathway: 'ACCOMMODATION',

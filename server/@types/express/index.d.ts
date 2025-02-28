@@ -60,6 +60,7 @@ export type PrisonerData = {
   resettlementReviewAvailable: boolean
   immediateNeedsSubmitted: boolean
   preReleaseSubmitted: boolean
+  supportNeedsLegacyProfile?: boolean
 }
 
 export type PathwayStatus = {

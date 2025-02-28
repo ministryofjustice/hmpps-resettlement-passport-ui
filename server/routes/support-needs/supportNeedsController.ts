@@ -16,12 +16,24 @@ export default class SupportNeedsController {
     // no op
   }
 
+  checkLegacyProfile: RequestHandler = async (req, res, next): Promise<void> => {
+    req.prisonerData = req.body.prisonerNumber
+      ? await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
+      : await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+
+    if (req.prisonerData.supportNeedsLegacyProfile) {
+      next(new Error('Unable to access support needs for a legacy profile'))
+    } else {
+      next()
+    }
+  }
+
   startForm: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway } = req.params
       await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+      const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
       const stateKey = {
         prisonerNumber,
@@ -70,7 +82,7 @@ export default class SupportNeedsController {
     try {
       const { pathway } = req.params
       await validatePathwaySupportNeeds(pathway)
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+      const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
       const pathwayEnum = getEnumByURL(pathway)
 
@@ -95,7 +107,7 @@ export default class SupportNeedsController {
       const { pathway } = req.params
       await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
+      const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
 
       const stateKey = {
@@ -130,7 +142,7 @@ export default class SupportNeedsController {
       const { pathway, uuid } = req.params
       await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+      const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
 
       const stateKey = {
@@ -158,7 +170,7 @@ export default class SupportNeedsController {
       const { pathway, uuid } = req.params
       await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
+      const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
 
       const stateKey = {
@@ -217,7 +229,7 @@ export default class SupportNeedsController {
       const { pathway } = req.params
       await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+      const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
 
       const stateKey = {
@@ -240,7 +252,7 @@ export default class SupportNeedsController {
   finaliseSupportNeeds: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway } = req.params
-      const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
+      const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
       await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
