@@ -8,6 +8,7 @@ import { SupportNeedStatus } from '../data/model/supportNeedStatus'
 import { CaseNote } from '../data/model/caseNotesHistory'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { PrisonerSupportNeedsPatch, PrisonerSupportNeedsPost } from '../data/model/supportNeeds'
+import { ResetReason } from '../data/model/resetProfile'
 
 jest.mock('../../logger')
 jest.mock('../data')
@@ -346,5 +347,18 @@ describe('RpService', () => {
     const spy = jest.spyOn(rpClient, 'post').mockImplementation()
     await service.postSupportNeeds('123', supportNeedsPost)
     expect(spy).toHaveBeenCalledWith('/resettlement-passport/prisoner/123/needs', supportNeedsPost)
+  })
+
+  it('should call rpClient correctly when resetting profile', async () => {
+    rpClient.get.mockResolvedValue({})
+    const postSpy = jest.spyOn(rpClient, 'post')
+    const prisonerNumber = '6'
+    const resetReason: ResetReason = { resetReason: 'RECALL_TO_PRISON', additionalDetails: '' }
+    await service.resetProfile(prisonerNumber, resetReason, true)
+
+    expect(postSpy).toHaveBeenCalledWith(
+      `/resettlement-passport/prisoner/${prisonerNumber}/reset-profile?supportNeedsEnabled=true`,
+      resetReason,
+    )
   })
 })
