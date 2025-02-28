@@ -20,7 +20,7 @@ const { supportNeedStateService, rpService } = mockedServices as Services
 beforeEach(() => {
   configHelper(config)
 
-  app = appWithAllRoutes({})
+  app = appWithAllRoutes({ production: false })
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
   stubFeatureFlagToTrue(featureFlags, ['supportNeeds'])
@@ -34,6 +34,89 @@ afterEach(() => {
 })
 
 describe('SupportNeedsController', () => {
+  describe('checkLegacyProfile', () => {
+    describe('when a profile is a legacy profile', () => {
+      beforeEach(() => {
+        stubPrisonerDetails(rpService, null, null, true)
+      })
+
+      const legacyErrorText = 'Unable to access support needs for a legacy profile'
+
+      it('should throw an error for the start route', async () => {
+        await request(app)
+          .get('/support-needs/accommodation/start/?prisonerNumber=A1234DY')
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain(legacyErrorText)
+          })
+      })
+
+      it('should throw an error for the get support needs route', async () => {
+        await request(app)
+          .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain(legacyErrorText)
+          })
+      })
+
+      it('should throw an error for the submit support needs route', async () => {
+        await request(app)
+          .post('/support-needs/accommodation')
+          .send({
+            prisonerNumber: 'A1234DY',
+          })
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain(legacyErrorText)
+          })
+      })
+
+      it('should throw an error for the get support needs status route', async () => {
+        await request(app)
+          .get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY')
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain(legacyErrorText)
+          })
+      })
+
+      it('should throw an error for the submit support needs status route', async () => {
+        await request(app)
+          .post('/support-needs/accommodation/status/need-uuid')
+          .send({
+            prisonerNumber: 'A1234DY',
+          })
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain(legacyErrorText)
+          })
+      })
+
+      it('should throw an error for the check answers route', async () => {
+        await request(app)
+          .get('/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY')
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain(legacyErrorText)
+          })
+      })
+
+      it('should throw an error for finalise support needs route', async () => {
+        await request(app)
+          .post('/support-needs/accommodation/complete')
+          .send({
+            _csrf: 'xjM2bce6',
+            prisonerNumber: 'A8731DY',
+          })
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain(legacyErrorText)
+          })
+      })
+    })
+  })
+
   describe('resetSupportNeedsCache', () => {
     it('should throw an error if pathway is invalid', async () => {
       await request(app).get('/support-needs/invalid-pathway/start/?prisonerNumber=A1234DY').expect(500)
