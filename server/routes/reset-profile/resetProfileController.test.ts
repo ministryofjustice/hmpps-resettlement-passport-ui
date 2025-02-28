@@ -159,7 +159,7 @@ describe('submitResetProfileReason', () => {
   })
 
   it('should redirect to success page if feature is enabled and no validation errors - other', async () => {
-    stubFeatureFlagToTrue(featureFlags, ['profileReset', 'supportNeeds'])
+    stubFeatureFlagToTrue(featureFlags, ['profileReset'])
     const resetProfileSpy = jest.spyOn(rpService, 'resetProfile').mockResolvedValue({ error: null })
     await request(app)
       .post('/resetProfile/reason')
@@ -177,6 +177,30 @@ describe('submitResetProfileReason', () => {
       {
         resetReason: 'OTHER',
         additionalDetails: 'Some other details',
+      },
+      false,
+    )
+  })
+
+  it('should redirect to success page if feature is enabled and supportNeeds enabled and no validation errors', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['profileReset', 'supportNeeds'])
+    const resetProfileSpy = jest.spyOn(rpService, 'resetProfile').mockResolvedValue({ error: null })
+    await request(app)
+      .post('/resetProfile/reason')
+      .send({
+        resetReason: 'RETURN_ON_NEW_SENTENCE',
+        additionalDetails: '',
+        prisonerNumber: 'A1234DY',
+      })
+      .expect(302)
+      .expect(res => {
+        expect(res.text).toContain('Found. Redirecting to /resetProfile/success?prisonerNumber=A1234DY')
+      })
+    expect(resetProfileSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      {
+        resetReason: 'RETURN_ON_NEW_SENTENCE',
+        additionalDetails: null,
       },
       true,
     )
