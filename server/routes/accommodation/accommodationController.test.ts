@@ -10,6 +10,7 @@ import {
   stubCaseNotesHistory,
   stubCrsReferrals,
   stubPathwaySupportNeedsSummary,
+  stubPathwaySupportNeedsSummaryLegacyProfile,
   stubPathwaySupportNeedsSummaryNoData,
   stubPathwaySupportNeedsUpdates,
   stubPathwaySupportNeedsUpdatesNoData,
@@ -165,5 +166,43 @@ describe('getView', () => {
       .get('/accommodation?prisonerNumber=A1234DY')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Happy path - ensure support need for legacy profile renders correctly', async () => {
+    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'ACCOMMODATION')
+    const getAccommodationSpy = stubAccommodation(rpService)
+    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
+    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'ACCOMMODATION')
+    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummaryLegacyProfile(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdatesNoData(rpService)
+
+    await request(app)
+      .get('/accommodation?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+
+    expect(getCrsReferralsSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+    expect(getAccommodationSpy).toHaveBeenCalledWith('A1234DY')
+    expect(getAssessmentInformationSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+    expect(getCaseNotesHistorySpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'ACCOMMODATION',
+      '0',
+      '10',
+      '0',
+      'occurenceDateTime%2CDESC',
+      '0',
+    )
+    expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+    expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'ACCOMMODATION',
+      0,
+      1000,
+      'createdDate,DESC',
+      '',
+    )
   })
 })
