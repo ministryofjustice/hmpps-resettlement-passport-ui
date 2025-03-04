@@ -83,6 +83,22 @@
         <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
         <button class="govuk-button" type="submit">Continue</button>
       </form>
+      <button class="ghost-button remove-support-need-button">Remove support need</button>
+      <div class="confirm-remove-support-need" hidden>
+        <div class="govuk-button-group">
+          <form action="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/delete" method="post" novalidate>
+            <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm remove support need</button>
+            <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+            <input type="hidden" name="edit" value="{{ edit }}">
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+          </form>
+          <button class="ghost-button cancel-remove-support-need-button" hidden>Cancel remove support need</button>
+        </div>
+      </div>
     </div>
   </div>
+{% endblock %}
+{% block bodyEnd %}
+  {{ super() }}
+  <script src="/assets/js/support-needs.js"></script>
 {% endblock %}
