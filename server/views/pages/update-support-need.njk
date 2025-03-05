@@ -70,7 +70,7 @@
             <strong class="govuk-warning-text__text govuk-!-font-weight-regular">
               <span class="govuk-visually-hidden">Warning</span>
               Some updates may not be linked to this support need as they were created before support needs were added to PSfR.
-              Check the {{ pathway }} tab for updates from before 18 March 2025.
+              Check the {{ pathway }} tab for updates from before {{ releaseDate | formatDate('long') }}.
             </strong>
           </div>
           {% for update in existingPrisonerNeed.previousUpdates %}

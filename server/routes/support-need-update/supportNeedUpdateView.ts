@@ -8,6 +8,7 @@ export default class SupportNeedUpdateView implements View {
     private readonly existingPrisonerNeed: PrisonerSupportNeedDetails,
     private readonly pathway: string,
     private readonly prisonerNeedId: string,
+    private readonly releaseDate: string,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -18,6 +19,7 @@ export default class SupportNeedUpdateView implements View {
     existingPrisonerNeed: PrisonerSupportNeedDetails
     pathway: string
     prisonerNeedId: string
+    releaseDate: string
     errors: ErrorMessage[]
   } {
     return {
@@ -25,6 +27,7 @@ export default class SupportNeedUpdateView implements View {
       existingPrisonerNeed: this.existingPrisonerNeed,
       pathway: this.pathway,
       prisonerNeedId: this.prisonerNeedId,
+      releaseDate: this.releaseDate,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

@@ -32,6 +32,7 @@ export default class SupportNeedUpdateController {
         existingPrisonerNeed,
         pathwayName,
         prisonerNeedId,
+        req.config.supportNeeds.releaseDate,
       )
 
       res.render('pages/update-support-need', { ...supportNeedUpdateView.renderArgs })
