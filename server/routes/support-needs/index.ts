@@ -37,4 +37,8 @@ export default (router: Router, services: Services) => {
     supportNeedsController.checkLegacyProfile,
     supportNeedsController.finaliseSupportNeeds,
   ])
+  router.post('/support-needs/:pathway/status/:uuid/delete', [
+    supportNeedsController.checkLegacyProfile,
+    supportNeedsController.deleteSupportNeed,
+  ])
 }

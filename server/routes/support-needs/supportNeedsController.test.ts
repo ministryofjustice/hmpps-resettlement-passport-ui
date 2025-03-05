@@ -1535,6 +1535,15 @@ describe('SupportNeedsController', () => {
           expect(res.text).toMatchSnapshot()
         })
     })
+
+    it('should render the support needs status page - edit', async () => {
+      await request(app)
+        .get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY&edit=true')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
   })
 
   describe('submitSupportNeedsStatus', () => {
@@ -2109,6 +2118,575 @@ describe('SupportNeedsController', () => {
           },
         ],
       })
+    })
+  })
+
+  describe('deleteSupportNeed', () => {
+    it('should delete support need and redirect to next - not an edit', async () => {
+      const getSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
+        needs: [
+          {
+            uuid: 'e348e24d-3318-4f87-8ae4-e3b6bb345725',
+            supportNeedId: 1,
+            existingPrisonerSupportNeedId: 22,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'End a tenancy',
+            isUpdatable: true,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'MET',
+            updateText: 'some text from the additional details',
+            isSelected: true,
+          },
+          {
+            uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+            supportNeedId: 2,
+            existingPrisonerSupportNeedId: 23,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Maintain a tenancy while in prison',
+            isUpdatable: true,
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'IN_PROGRESS',
+            updateText: 'some other text from the additional details',
+            isSelected: true,
+          },
+          {
+            uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+            supportNeedId: 8,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Moving to new accommodation',
+            isOther: false,
+            title: 'Help to find accommodation',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: false,
+          },
+        ],
+      })
+
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
+
+      await request(app)
+        .post('/support-needs/accommodation/status/e348e24d-3318-4f87-8ae4-e3b6bb345725/delete')
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+          edit: 'false',
+        })
+        .expect(302)
+        .expect(
+          'Location',
+          '/support-needs/accommodation/status/c0b3c819-ba84-41ac-85d2-cc9467db9c06/?prisonerNumber=A1234DY',
+        )
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledWith(
+        {
+          pathway: 'ACCOMMODATION',
+          prisonerNumber: 'A1234DY',
+          userId: 'user1',
+        },
+        {
+          needs: [
+            {
+              uuid: 'e348e24d-3318-4f87-8ae4-e3b6bb345725',
+              supportNeedId: 1,
+              existingPrisonerSupportNeedId: 22,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'End a tenancy',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+            {
+              uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+              supportNeedId: 2,
+              existingPrisonerSupportNeedId: 23,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'Maintain a tenancy while in prison',
+              isUpdatable: true,
+              isPrisonResponsible: false,
+              isProbationResponsible: true,
+              otherSupportNeedText: null,
+              status: 'IN_PROGRESS',
+              updateText: 'some other text from the additional details',
+              isSelected: true,
+            },
+            {
+              uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+              supportNeedId: 8,
+              existingPrisonerSupportNeedId: null,
+              allowUserDesc: false,
+              category: 'Moving to new accommodation',
+              isOther: false,
+              title: 'Help to find accommodation',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+          ],
+        },
+      )
+    })
+
+    it('should delete support need and redirect to check answers - edit', async () => {
+      const getSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
+        needs: [
+          {
+            uuid: 'e348e24d-3318-4f87-8ae4-e3b6bb345725',
+            supportNeedId: 1,
+            existingPrisonerSupportNeedId: 22,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'End a tenancy',
+            isUpdatable: true,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'MET',
+            updateText: 'some text from the additional details',
+            isSelected: true,
+          },
+          {
+            uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+            supportNeedId: 2,
+            existingPrisonerSupportNeedId: 23,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Maintain a tenancy while in prison',
+            isUpdatable: true,
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'IN_PROGRESS',
+            updateText: 'some other text from the additional details',
+            isSelected: true,
+          },
+          {
+            uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+            supportNeedId: 8,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Moving to new accommodation',
+            isOther: false,
+            title: 'Help to find accommodation',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: false,
+          },
+        ],
+      })
+
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
+
+      await request(app)
+        .post('/support-needs/accommodation/status/e348e24d-3318-4f87-8ae4-e3b6bb345725/delete')
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+          edit: 'true',
+        })
+        .expect(302)
+        .expect('Location', '/support-needs/accommodation/check-answers?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledWith(
+        {
+          pathway: 'ACCOMMODATION',
+          prisonerNumber: 'A1234DY',
+          userId: 'user1',
+        },
+        {
+          needs: [
+            {
+              uuid: 'e348e24d-3318-4f87-8ae4-e3b6bb345725',
+              supportNeedId: 1,
+              existingPrisonerSupportNeedId: 22,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'End a tenancy',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+            {
+              uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+              supportNeedId: 2,
+              existingPrisonerSupportNeedId: 23,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'Maintain a tenancy while in prison',
+              isUpdatable: true,
+              isPrisonResponsible: false,
+              isProbationResponsible: true,
+              otherSupportNeedText: null,
+              status: 'IN_PROGRESS',
+              updateText: 'some other text from the additional details',
+              isSelected: true,
+            },
+            {
+              uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+              supportNeedId: 8,
+              existingPrisonerSupportNeedId: null,
+              allowUserDesc: false,
+              category: 'Moving to new accommodation',
+              isOther: false,
+              title: 'Help to find accommodation',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+          ],
+        },
+      )
+    })
+
+    it('should delete support need and redirect to check answers - no more selected support needs', async () => {
+      const getSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
+        needs: [
+          {
+            uuid: 'e348e24d-3318-4f87-8ae4-e3b6bb345725',
+            supportNeedId: 1,
+            existingPrisonerSupportNeedId: 22,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'End a tenancy',
+            isUpdatable: true,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'MET',
+            updateText: 'some text from the additional details',
+            isSelected: true,
+          },
+          {
+            uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+            supportNeedId: 2,
+            existingPrisonerSupportNeedId: 23,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Maintain a tenancy while in prison',
+            isUpdatable: true,
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'IN_PROGRESS',
+            updateText: 'some other text from the additional details',
+            isSelected: true,
+          },
+          {
+            uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+            supportNeedId: 8,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Moving to new accommodation',
+            isOther: false,
+            title: 'Help to find accommodation',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: false,
+          },
+        ],
+      })
+
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
+
+      await request(app)
+        .post('/support-needs/accommodation/status/c0b3c819-ba84-41ac-85d2-cc9467db9c06/delete')
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+          edit: 'false',
+        })
+        .expect(302)
+        .expect('Location', '/support-needs/accommodation/check-answers?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledWith(
+        {
+          pathway: 'ACCOMMODATION',
+          prisonerNumber: 'A1234DY',
+          userId: 'user1',
+        },
+        {
+          needs: [
+            {
+              uuid: 'e348e24d-3318-4f87-8ae4-e3b6bb345725',
+              supportNeedId: 1,
+              existingPrisonerSupportNeedId: 22,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'End a tenancy',
+              isUpdatable: true,
+              isPrisonResponsible: true,
+              isProbationResponsible: true,
+              otherSupportNeedText: null,
+              status: 'MET',
+              updateText: 'some text from the additional details',
+              isSelected: true,
+            },
+            {
+              uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+              supportNeedId: 2,
+              existingPrisonerSupportNeedId: 23,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'Maintain a tenancy while in prison',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+            {
+              uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+              supportNeedId: 8,
+              existingPrisonerSupportNeedId: null,
+              allowUserDesc: false,
+              category: 'Moving to new accommodation',
+              isOther: false,
+              title: 'Help to find accommodation',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+          ],
+        },
+      )
+    })
+
+    it('should delete support need and redirect to check answers - no more selected support needs - with auto-selection of "No more support needs required"', async () => {
+      const getSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
+        needs: [
+          {
+            uuid: 'e348e24d-3318-4f87-8ae4-e3b6bb345725',
+            supportNeedId: 1,
+            existingPrisonerSupportNeedId: 22,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'End a tenancy',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: false,
+          },
+          {
+            uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+            supportNeedId: 2,
+            existingPrisonerSupportNeedId: 23,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'Maintain a tenancy while in prison',
+            isUpdatable: true,
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            otherSupportNeedText: null,
+            status: 'IN_PROGRESS',
+            updateText: 'some other text from the additional details',
+            isSelected: true,
+          },
+          {
+            uuid: '216a9eef-0fa9-4ef2-914b-dfd2a4f61e1a',
+            supportNeedId: 7,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: false,
+            title: 'No accommodation before custody support needs identified',
+            isUpdatable: false,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: false,
+          },
+          {
+            uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+            supportNeedId: 8,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Moving to new accommodation',
+            isOther: false,
+            title: 'Help to find accommodation',
+            isUpdatable: true,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: false,
+          },
+        ],
+      })
+
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
+
+      await request(app)
+        .post('/support-needs/accommodation/status/c0b3c819-ba84-41ac-85d2-cc9467db9c06/delete')
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+          edit: 'false',
+        })
+        .expect(302)
+        .expect('Location', '/support-needs/accommodation/check-answers?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledWith(
+        {
+          pathway: 'ACCOMMODATION',
+          prisonerNumber: 'A1234DY',
+          userId: 'user1',
+        },
+        {
+          needs: [
+            {
+              uuid: 'e348e24d-3318-4f87-8ae4-e3b6bb345725',
+              supportNeedId: 1,
+              existingPrisonerSupportNeedId: 22,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'End a tenancy',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+            {
+              uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+              supportNeedId: 2,
+              existingPrisonerSupportNeedId: 23,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'Maintain a tenancy while in prison',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+            {
+              uuid: '216a9eef-0fa9-4ef2-914b-dfd2a4f61e1a',
+              supportNeedId: 7,
+              existingPrisonerSupportNeedId: null,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'No accommodation before custody support needs identified',
+              isUpdatable: false,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: true,
+            },
+            {
+              uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
+              supportNeedId: 8,
+              existingPrisonerSupportNeedId: null,
+              allowUserDesc: false,
+              category: 'Moving to new accommodation',
+              isOther: false,
+              title: 'Help to find accommodation',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: false,
+            },
+          ],
+        },
+      )
     })
   })
 })
