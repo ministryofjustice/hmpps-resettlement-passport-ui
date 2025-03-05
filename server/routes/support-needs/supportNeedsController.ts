@@ -140,6 +140,7 @@ export default class SupportNeedsController {
   getSupportNeedsStatus: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway, uuid } = req.params
+      const edit = req.query.edit === 'true'
       await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
       const { prisonerData } = req
@@ -159,7 +160,7 @@ export default class SupportNeedsController {
         throw new Error('Support need not found')
       }
 
-      res.render('pages/support-needs-status', { pathway, prisonerData, supportNeed })
+      res.render('pages/support-needs-status', { pathway, prisonerData, supportNeed, edit })
     } catch (err) {
       next(err)
     }
@@ -294,6 +295,67 @@ export default class SupportNeedsController {
       res.redirect(`/${pathway}/?prisonerNumber=${prisonerNumber}#support-needs`)
     } catch (err) {
       next(err)
+    }
+  }
+
+  deleteSupportNeed: RequestHandler = async (req, res, next): Promise<void> => {
+    try {
+      const { pathway, uuid } = req.params
+      const edit = req.body.edit === 'true'
+      const { prisonerData } = req
+      const { prisonerNumber } = prisonerData.personalDetails
+      await validatePathwaySupportNeeds(pathway)
+      const pathwayEnum = getEnumByURL(pathway)
+
+      const stateKey = {
+        prisonerNumber,
+        userId: req.user.username,
+        pathway: pathwayEnum,
+      }
+
+      const needsInCache = await this.supportNeedStateService.getSupportNeeds(stateKey)
+
+      // Get the support need from the cache and set isSelected=false and user input fields to null
+      const needToDelete = needsInCache.needs.find(it => {
+        return it.uuid === uuid
+      })
+      const currentIndex = needsInCache.needs.indexOf(needToDelete)
+
+      needToDelete.isSelected = false
+      needToDelete.status = null
+      needToDelete.isPrisonResponsible = null
+      needToDelete.isProbationResponsible = null
+      needToDelete.updateText = null
+      needToDelete.otherSupportNeedText = null
+
+      // Ensure that if we've deleted the last support need in a section, we add in the "No support needs identified" option (if available)
+      const supportNeedsInSection = needsInCache.needs.filter(
+        need => need.category === needToDelete.category && need.isSelected,
+      )
+      if (supportNeedsInSection.length === 0) {
+        const noSupportNeedsIdentified = needsInCache.needs.find(
+          need => need.category === needToDelete.category && !need.isUpdatable,
+        )
+        if (noSupportNeedsIdentified) {
+          noSupportNeedsIdentified.isSelected = true
+        }
+      }
+
+      // Save the support needs back to the cache
+      await this.supportNeedStateService.setSupportNeeds(stateKey, needsInCache)
+
+      // Depending on the contents of the cache we'll need to redirect the user to the right place
+      const nextUpdatableSupportNeed =
+        needsInCache.needs.slice(currentIndex + 1).find(need => need.isUpdatable && need.isSelected) || null
+      if (nextUpdatableSupportNeed != null && !edit) {
+        // If there is a "next" support need and it's not an edit, redirect user to this otherwise go to check your answers
+        return res.redirect(
+          `/support-needs/${pathway}/status/${nextUpdatableSupportNeed.uuid}/?prisonerNumber=${prisonerNumber}`,
+        )
+      }
+      return res.redirect(`/support-needs/${pathway}/check-answers?prisonerNumber=${prisonerNumber}`)
+    } catch (err) {
+      return next(err)
     }
   }
 }
