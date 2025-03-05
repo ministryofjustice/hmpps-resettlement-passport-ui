@@ -149,8 +149,97 @@ exports[`SupportNeedUpdateController getSupportNeedUpdateForm happy path 1`] = `
       <h1 class="govuk-heading-l">
         Support need title
       </h1>
-    </div>
-    <div class="govuk-grid-column-three-quarters">
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            See previous updates
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text govuk-!-font-weight-regular">
+              <span class="govuk-visually-hidden">Warning</span>
+              Some updates may not be linked to this support need as they were created before support needs were added to PSfR.
+              Check the Accommodation tab for updates from before 18 March 2025.
+            </strong>
+          </div>
+          
+            <h3>12 December 2024</h3>
+            <div>
+              
+                <p class="govuk-body">
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                </p>
+              
+              
+                <p class="govuk-body">
+                  <strong>Responsible staff set to: </strong>
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  
+                  
+                </p>
+              
+              <p class="govuk-body show-line-breaks">This is some update text 3</p>
+              <p class="govuk-caption-m">Updated by A user</p>
+              <hr class="govuk-section-break govuk-section-break--visible">
+            </div>
+          
+            <h3>11 December 2024</h3>
+            <div>
+              
+                <p class="govuk-body">
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                </p>
+              
+              
+                <p class="govuk-body">
+                  <strong>Responsible staff set to: </strong>
+                  
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  
+                </p>
+              
+              <p class="govuk-body show-line-breaks">This is some update text 2</p>
+              <p class="govuk-caption-m">Updated by B user</p>
+              <hr class="govuk-section-break govuk-section-break--visible">
+            </div>
+          
+            <h3>11 December 2024</h3>
+            <div>
+              
+                <p class="govuk-body">
+                  <strong>Status set to: </strong>
+                  
+                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                </p>
+              
+              
+                <p class="govuk-body">
+                  <strong>Responsible staff set to: </strong>
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  
+                  
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  
+                </p>
+              
+              <p class="govuk-body show-line-breaks">This is some update text 1</p>
+              <p class="govuk-caption-m">Updated by A user</p>
+              <hr class="govuk-section-break govuk-section-break--visible">
+            </div>
+          
+        </div>
+      </details>
+
       <form action="/support-needs/accommodation/update/23" method="post">
         <div class="govuk-form-group">
           <div class="govuk-form-group">
@@ -182,6 +271,7 @@ exports[`SupportNeedUpdateController getSupportNeedUpdateForm happy path 1`] = `
             <fieldset class="govuk-fieldset">
               <legend class="govuk-fieldset__legend">
                 <h2 class="govuk-fieldset__heading">Who is responsible for this support need?</h2>
+                <p class="govuk-caption-m">Select all that apply</p>
               </legend>
               <div class="govuk-checkboxes" data-module="govuk-checkboxes" data-govuk-checkboxes-init>
                 <div class="govuk-checkboxes__item">
