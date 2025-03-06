@@ -7,6 +7,7 @@ import {
   stubFeatureFlagToFalse,
   stubFeatureFlagToTrue,
   stubPathwaySupportNeeds,
+  stubPathwaySupportNeedsSummary,
   stubPrisonerDetails,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
@@ -27,6 +28,7 @@ beforeEach(() => {
 
   stubPrisonerDetails(rpService)
   stubPathwaySupportNeeds(rpService)
+  stubPathwaySupportNeedsSummary(rpService)
 })
 
 afterEach(() => {

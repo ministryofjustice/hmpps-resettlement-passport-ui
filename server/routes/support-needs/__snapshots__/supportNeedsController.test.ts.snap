@@ -327,12 +327,128 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
           
   <div class="govuk-grid-row govuk-!-padding-top-8">
     <div class="govuk-grid-column-three-quarters">
+
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <h1 class="govuk-heading-l">Add accommodation support needs</h1>
           <span class="govuk-hint">Select any support needs you have identified that could be met by the prison resettlement team, community probation staff or by referral to a third party provider.</span>
         </div>
       </div>
+
+      <details class="govuk-details govuk-!-margin-top-5">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            Support needs already selected for this pathway
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          
+            <table class="govuk-table govuk-!-margin-bottom-4">
+              <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Support need</th>
+                <th scope="col" class="govuk-table__header">Responsible staff</th>
+                <th scope="col" class="govuk-table__header">Status</th>
+                <th scope="col" class="govuk-table__header">Number of updates</th>
+                <th scope="col" class="govuk-table__header">Last updated</th>
+              </tr>
+              </thead>
+              <tbody class="govuk-table__body">
+              
+                <tr class="govuk-table__row">
+                  <td scope="row" class="govuk-table__header">
+                    Cancel a tenancy
+                  </td>
+                  <td class="govuk-table__cell">
+                    
+                      <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                      <br />
+                    
+                    
+                    
+                  </td>
+                  <td class="govuk-table__cell">
+                    
+                      
+                      <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                    
+                  </td>
+                  <td class="govuk-table__cell">2</td>
+                  <td class="govuk-table__cell">12 Sept 2024</td>
+                </tr>
+              
+                <tr class="govuk-table__row">
+                  <td scope="row" class="govuk-table__header">
+                    Another support need
+                  </td>
+                  <td class="govuk-table__cell">
+                    
+                      <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                      <br />
+                    
+                    
+                      <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                      <br />
+                    
+                    
+                  </td>
+                  <td class="govuk-table__cell">
+                    
+                      
+                      <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                    
+                  </td>
+                  <td class="govuk-table__cell">4</td>
+                  <td class="govuk-table__cell">11 Jan 2023</td>
+                </tr>
+              
+                <tr class="govuk-table__row">
+                  <td scope="row" class="govuk-table__header">
+                    Declined support
+                  </td>
+                  <td class="govuk-table__cell">
+                    
+                    
+                      <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                      <br />
+                    
+                    
+                  </td>
+                  <td class="govuk-table__cell">
+                    
+                      
+                      <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                    
+                  </td>
+                  <td class="govuk-table__cell">4</td>
+                  <td class="govuk-table__cell">11 Jan 2023</td>
+                </tr>
+              
+                <tr class="govuk-table__row">
+                  <td scope="row" class="govuk-table__header">
+                    Final support need
+                  </td>
+                  <td class="govuk-table__cell">
+                    
+                    
+                    
+                  </td>
+                  <td class="govuk-table__cell">
+                    
+                      
+                      <span class="govuk-tag govuk-tag--green">Support met</span>
+                    
+                  </td>
+                  <td class="govuk-table__cell">4</td>
+                  <td class="govuk-table__cell">11 Jan 2023</td>
+                </tr>
+              
+              </tbody>
+            </table>
+          
+        </div>
+      </details>
+
       <form action="/support-needs/accommodation" class="govuk-form" method="POST">
         <div class="govuk-form-group">
           
