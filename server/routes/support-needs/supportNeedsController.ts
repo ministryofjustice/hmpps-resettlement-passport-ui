@@ -188,7 +188,7 @@ export default class SupportNeedsController {
       }
 
       // UPDATE CACHE WITH VALUES FROM REQ.BODY
-      const { status, updateText, otherSupportNeedText, responsibleStaff = [] } = req.body
+      const { status, updateText, responsibleStaff = [] } = req.body
 
       const isPrisonResponsible = responsibleStaff.includes('PRISON')
       const isProbationResponsible = responsibleStaff.includes('PROBATION')
@@ -199,7 +199,6 @@ export default class SupportNeedsController {
         isPrisonResponsible,
         isProbationResponsible,
         updateText,
-        otherSupportNeedText,
       }
 
       // Save updated state back to cache
