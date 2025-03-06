@@ -26,6 +26,9 @@ export const defaultTestConfig: ConfigFile = {
     enabled: false,
     version: '1',
   },
+  supportNeeds: {
+    releaseDate: '2025-03-18',
+  },
 }
 
 export function configHelper(config: jest.Mocked<Config>, getConfigReturnValue: ConfigFile = defaultTestConfig) {

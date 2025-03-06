@@ -22,5 +22,8 @@
   "whatsNew": {
     "enabled": true,
     "version": "20250114"
+  },
+  "supportNeeds": {
+    "releaseDate": "2025-03-18"
   }
 }

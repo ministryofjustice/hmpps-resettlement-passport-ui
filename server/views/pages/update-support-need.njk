@@ -57,8 +57,51 @@
       <h1 class="govuk-heading-l">
         {{ existingPrisonerNeed.title }}
       </h1>
-    </div>
-    <div class="govuk-grid-column-three-quarters">
+
+      <details class="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            See previous updates
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text govuk-!-font-weight-regular">
+              <span class="govuk-visually-hidden">Warning</span>
+              Some updates may not be linked to this support need as they were created before support needs were added to PSfR.
+              Check the {{ pathway }} tab for updates from before {{ releaseDate | formatDate('long') }}.
+            </strong>
+          </div>
+          {% for update in existingPrisonerNeed.previousUpdates %}
+            <h3>{{ update.createdAt | formatDate('long') }}</h3>
+            <div>
+              {% if update.status %}
+                <p class="govuk-body">
+                  <strong>Status set to: </strong>
+                  {% set tagColour = "govuk-tag--" + (update.status | getSupportNeedsColour) %}
+                  <span class="govuk-tag {{ tagColour }}">{{ update.status | getSupportNeedsStatus }}</span>
+                </p>
+              {% endif %}
+              {% if update.isPrisonResponsible or update.isProbationResponsible %}
+                <p class="govuk-body">
+                  <strong>Responsible staff set to: </strong>
+                  {% if update.isPrisonResponsible %}
+                    <strong class="govuk-tag govuk-tag--blue">Prison resettlement team</strong>
+                  {% endif %}
+                  {% if update.isProbationResponsible %}
+                    <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
+                  {% endif %}
+                </p>
+              {% endif %}
+              <p class="govuk-body show-line-breaks">{{ update.text }}</p>
+              <p class="govuk-caption-m">Updated by {{ update.createdBy }}</p>
+              <hr class="govuk-section-break govuk-section-break--visible">
+            </div>
+          {% endfor %}
+        </div>
+      </details>
+
       <form action="/support-needs/{{ pathway | getUrlFromName }}/update/{{ prisonerNeedId }}" method="post">
         <div class="govuk-form-group">
           <div class="govuk-form-group">
@@ -90,6 +133,7 @@
             <fieldset class="govuk-fieldset">
               <legend class="govuk-fieldset__legend">
                 <h2 class="govuk-fieldset__heading">Who is responsible for this support need?</h2>
+                <p class="govuk-caption-m">Select all that apply</p>
               </legend>
               <div class="govuk-checkboxes" data-module="govuk-checkboxes" data-govuk-checkboxes-init>
                 <div class="govuk-checkboxes__item">
