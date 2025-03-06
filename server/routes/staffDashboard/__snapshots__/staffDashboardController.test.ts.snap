@@ -1052,7 +1052,7 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
     
       <td class="govuk-table__cell">
         <span id="lastUpdated">
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
+          <a href="/prisoner-overview/?prisonerNumber=G9808UX#support-needs">
             
           </a>
         </span>
@@ -1742,7 +1742,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
     
       <td class="govuk-table__cell">
         <span id="lastUpdated">
-          <a href="/prisoner-overview/?prisonerNumber=G9808UX#status">
+          <a href="/prisoner-overview/?prisonerNumber=G9808UX#support-needs">
             
           </a>
         </span>
