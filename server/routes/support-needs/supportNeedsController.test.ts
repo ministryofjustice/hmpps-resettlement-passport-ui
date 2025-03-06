@@ -486,12 +486,12 @@ describe('SupportNeedsController', () => {
             existingPrisonerSupportNeedId: null,
             allowUserDesc: true,
             category: 'Accommodation before custody',
-            isOther: false,
+            isOther: true,
             title: 'Other',
             isUpdatable: true,
             isPrisonResponsible: null,
             isProbationResponsible: null,
-            otherSupportNeedText: null,
+            otherSupportNeedText: 'Some custom support need',
             status: null,
             updateText: null,
             isSelected: null,
@@ -1528,6 +1528,62 @@ describe('SupportNeedsController', () => {
             otherSupportNeedText: null,
             status: 'DECLINED',
             updateText: 'Additional details text body',
+            isSelected: true,
+          },
+        ],
+      })
+    })
+
+    it('should throw an error if pathway is invalid', async () => {
+      await request(app).get('/support-needs/invalid-pathway/status/need-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
+    it('should throw an error if supportNeeds feature is off', async () => {
+      stubFeatureFlagToFalse(featureFlags)
+      await request(app).get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
+    it('should throw an error if the uuid does not exist in cache', async () => {
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+    })
+
+    it('should render the support needs status page', async () => {
+      await request(app)
+        .get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
+
+    it('should render the support needs status page - edit', async () => {
+      await request(app)
+        .get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY&edit=true')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
+  })
+
+  describe('getSupportNeedsStatus with cached other support need answer', () => {
+    beforeEach(() => {
+      jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
+        needs: [
+          {
+            uuid: 'need-uuid',
+            supportNeedId: 1,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Accommodation before custody',
+            isOther: true,
+            title: 'Other',
+            isUpdatable: true,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherSupportNeedText: 'Custom support need title',
+            status: 'IN_PROGRESS',
+            updateText: 'Some text input',
             isSelected: true,
           },
         ],
