@@ -21,7 +21,11 @@
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
       <span class="govuk-caption-l">{{ pathway | getNameFromUrl }} support need</span>
-      <h1 class="govuk-heading-l">{{ supportNeed.title }}</h1>
+      {% if supportNeed.otherSupportNeedText %}
+        <h1 class="govuk-heading-l">{{ supportNeed.otherSupportNeedText }}</h1>
+      {% else %}
+        <h1 class="govuk-heading-l">{{ supportNeed.title }}</h1>
+      {% endif %}
     </div>
     <div class="govuk-grid-column-three-quarters">
       <form action="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}" class="govuk-form" method="POST">

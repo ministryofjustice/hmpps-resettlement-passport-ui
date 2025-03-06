@@ -35,10 +35,34 @@
               </legend>
               <div class="govuk-checkboxes" data-module="govuk-checkboxes">
                 {% for supportNeed in item.supportNeeds %}
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="{{ supportNeed.uuid }}" name="support-need-option-{{ supportNeed.category }}" type="checkbox" value="{{ supportNeed.uuid }}" {% if supportNeed.isSelected %}checked{% endif %}>
-                    <label class="govuk-label govuk-checkboxes__label">{{ supportNeed.title }}</label>
-                  </div>
+                  {% if supportNeed.title === "Other" %}
+                    <div class="govuk-checkboxes__item">
+                      <input
+                        class="govuk-checkboxes__input" 
+                        id="other-checkbox-{{ supportNeed.uuid }}" 
+                        name="support-need-option-{{ supportNeed.category }}" 
+                        type="checkbox" 
+                        value="{{ supportNeed.uuid }}" 
+                        {% if supportNeed.isSelected %}checked{% endif %}
+                        data-aria-controls="conditional-other-{{ supportNeed.uuid }}"
+                      >
+                      <label class="govuk-label govuk-checkboxes__label" for="other-checkbox-{{ supportNeed.uuid }}" >{{ supportNeed.title }}</label>
+                    </div>
+                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-{{ supportNeed.uuid }}">
+                      <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="100">
+                        <label class="govuk-label" for="custom-other-{{ supportNeed.uuid }}">Other support need</label>
+                        <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="{{ supportNeed.uuid }}" name="custom-other-{{ supportNeed.uuid }}" type="text" value="{{ supportNeed.otherSupportNeedText }}">
+                        <div id="{{ supportNeed.uuid }}-info" class="govuk-hint govuk-character-count__message">
+                          You can enter up to 100 characters
+                        </div>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="govuk-checkboxes__item">
+                      <input class="govuk-checkboxes__input" id="{{ supportNeed.uuid }}" name="support-need-option-{{ supportNeed.category }}" type="checkbox" value="{{ supportNeed.uuid }}" {% if supportNeed.isSelected %}checked{% endif %}>
+                      <label class="govuk-label govuk-checkboxes__label" for="{{ supportNeed.uuid }}">{{ supportNeed.title }}</label>
+                    </div>
+                  {% endif %}
                 {% endfor %}
                 <div class="govuk-checkboxes__divider">or</div>
                 <div class="govuk-checkboxes__item">
