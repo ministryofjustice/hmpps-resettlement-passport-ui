@@ -7,6 +7,7 @@ import {
   stubFeatureFlagToFalse,
   stubFeatureFlagToTrue,
   stubPathwaySupportNeeds,
+  stubPathwaySupportNeedsSummary,
   stubPrisonerDetails,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
@@ -683,7 +684,15 @@ describe('SupportNeedsController', () => {
       await request(app).get('/support-needs/accommodation/?prisonerNumber=A1234DY').expect(500)
     })
 
-    it('should render the support needs page', async () => {
+    it('should throw an error if getPathwaySupportNeedsSummary API call fails', async () => {
+      jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockRejectedValue(new Error('something went wrong'))
+
+      await request(app).get('/support-needs/invalid-pathway/?prisonerNumber=A1234DY').expect(500)
+    })
+
+    it('should render the support needs page with previous support needs', async () => {
+      stubPathwaySupportNeedsSummary(rpService)
+
       await request(app)
         .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
         .expect(200)
@@ -698,6 +707,17 @@ describe('SupportNeedsController', () => {
       }
 
       expect(supportNeedStateService.getSupportNeeds).toHaveBeenCalledWith(stateKey)
+    })
+
+    it('should render the support needs page without previous support needs', async () => {
+      jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue(null)
+
+      await request(app)
+        .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
     })
   })
 
