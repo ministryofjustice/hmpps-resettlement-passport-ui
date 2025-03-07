@@ -29,6 +29,7 @@ describe('SupportNeedStore', () => {
         isOther: false,
         isUpdatable: false,
         isSelected: false,
+        isPreSelected: false,
       },
     ],
   }

@@ -163,6 +163,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -179,6 +180,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -195,6 +197,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -212,6 +215,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -228,6 +232,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -244,6 +249,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -260,6 +266,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -276,6 +283,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -293,6 +301,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -309,6 +318,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -325,6 +335,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -341,6 +352,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -357,6 +369,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -373,6 +386,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: mockUUID,
@@ -389,6 +403,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: true,
           },
         ],
       })
@@ -414,6 +429,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'e8b52c96-33e9-420b-ab1e-e1ace2e1f953',
@@ -430,6 +446,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
@@ -446,6 +463,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '622b3deb-03ff-4cfb-8555-978f1b5b0793',
@@ -463,6 +481,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -479,6 +498,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
@@ -495,6 +515,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '20172ff2-0c21-4485-9402-5acf2cb60809',
@@ -511,6 +532,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '33c32185-3ae1-40a5-a1fd-0872230c7343',
@@ -527,6 +549,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '531b4b31-a5ed-48cc-87ff-ac933e65b7fa',
@@ -544,6 +567,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '661f221e-defd-48e3-895a-2b09cf216108',
@@ -560,6 +584,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '7175a5b9-c1b5-434a-b47b-d1c7ea39fa33',
@@ -576,6 +601,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'af889df2-d8cd-475d-b25b-70fd9421ed11',
@@ -592,6 +618,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '329dbffb-de74-4cb5-8e36-4562218ecffe',
@@ -608,6 +635,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '6ae72705-5a29-4f65-aa05-65ba00a9e5b1',
@@ -624,6 +652,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '574fc882-0528-4754-aeeb-1b4a04a44912',
@@ -640,6 +669,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: true,
           },
         ],
       })
@@ -710,6 +740,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -726,6 +757,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
@@ -742,6 +774,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '622b3deb-03ff-4cfb-8555-978f1b5b0793',
@@ -759,6 +792,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -775,6 +809,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
@@ -791,6 +826,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '20172ff2-0c21-4485-9402-5acf2cb60809',
@@ -807,6 +843,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '33c32185-3ae1-40a5-a1fd-0872230c7343',
@@ -823,6 +860,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '531b4b31-a5ed-48cc-87ff-ac933e65b7fa',
@@ -840,6 +878,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '661f221e-defd-48e3-895a-2b09cf216108',
@@ -856,6 +895,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'uuid-of-supportNeed-not-updatable',
@@ -872,6 +912,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'third-uuid-of-supportNeed-is-updatable',
@@ -888,6 +929,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '329dbffb-de74-4cb5-8e36-4562218ecffe',
@@ -904,6 +946,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '6ae72705-5a29-4f65-aa05-65ba00a9e5b1',
@@ -920,6 +963,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '574fc882-0528-4754-aeeb-1b4a04a44912',
@@ -936,6 +980,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
         ],
       })
@@ -977,6 +1022,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -993,6 +1039,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
@@ -1009,6 +1056,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '622b3deb-03ff-4cfb-8555-978f1b5b0793',
@@ -1026,6 +1074,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -1042,6 +1091,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
@@ -1058,6 +1108,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'selected-no-need-identified-1',
@@ -1074,6 +1125,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '33c32185-3ae1-40a5-a1fd-0872230c7343',
@@ -1090,6 +1142,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '531b4b31-a5ed-48cc-87ff-ac933e65b7fa',
@@ -1107,6 +1160,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '661f221e-defd-48e3-895a-2b09cf216108',
@@ -1123,6 +1177,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'selected-no-need-identified-2',
@@ -1139,6 +1194,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'third-uuid-of-supportNeed-is-updatable',
@@ -1155,6 +1211,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '329dbffb-de74-4cb5-8e36-4562218ecffe',
@@ -1171,6 +1228,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '6ae72705-5a29-4f65-aa05-65ba00a9e5b1',
@@ -1187,6 +1245,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'selected-no-need-identified-3',
@@ -1203,6 +1262,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
         ],
       })
@@ -1240,6 +1300,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -1256,6 +1317,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
@@ -1272,6 +1334,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '622b3deb-03ff-4cfb-8555-978f1b5b0793',
@@ -1289,6 +1352,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -1305,6 +1369,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
@@ -1321,6 +1386,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '20172ff2-0c21-4485-9402-5acf2cb60809',
@@ -1337,6 +1403,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '33c32185-3ae1-40a5-a1fd-0872230c7343',
@@ -1353,6 +1420,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '531b4b31-a5ed-48cc-87ff-ac933e65b7fa',
@@ -1370,6 +1438,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '661f221e-defd-48e3-895a-2b09cf216108',
@@ -1386,6 +1455,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'uuid-of-supportNeed-not-updatable',
@@ -1402,6 +1472,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'third-uuid-of-supportNeed-is-updatable',
@@ -1418,6 +1489,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '329dbffb-de74-4cb5-8e36-4562218ecffe',
@@ -1434,6 +1506,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '6ae72705-5a29-4f65-aa05-65ba00a9e5b1',
@@ -1450,6 +1523,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: '574fc882-0528-4754-aeeb-1b4a04a44912',
@@ -1466,6 +1540,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
         ],
       })
@@ -1513,6 +1588,7 @@ describe('SupportNeedsController', () => {
             status: 'IN_PROGRESS',
             updateText: 'Some text input',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -1529,6 +1605,7 @@ describe('SupportNeedsController', () => {
             status: 'DECLINED',
             updateText: 'Additional details text body',
             isSelected: true,
+            isPreSelected: false,
           },
         ],
       })
@@ -1585,6 +1662,7 @@ describe('SupportNeedsController', () => {
             status: 'IN_PROGRESS',
             updateText: 'Some text input',
             isSelected: true,
+            isPreSelected: false,
           },
         ],
       })
@@ -1678,6 +1756,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: true,
+          isPreSelected: false,
         },
         {
           uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -1694,6 +1773,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: null,
+          isPreSelected: false,
         },
         {
           uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
@@ -1710,6 +1790,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: null,
+          isPreSelected: false,
         },
         {
           uuid: '20172ff2-0c21-4485-9402-5acf2cb60809',
@@ -1726,6 +1807,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: true,
+          isPreSelected: false,
         },
         {
           uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -1742,6 +1824,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: true,
+          isPreSelected: false,
         },
       ],
     })
@@ -1779,6 +1862,7 @@ describe('SupportNeedsController', () => {
           status: 'MET',
           updateText: 'Some text in the additional details textarea',
           isSelected: true,
+          isPreSelected: false,
         },
         {
           uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -1795,6 +1879,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: null,
+          isPreSelected: false,
         },
         {
           uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
@@ -1811,6 +1896,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: null,
+          isPreSelected: false,
         },
         {
           uuid: '20172ff2-0c21-4485-9402-5acf2cb60809',
@@ -1827,6 +1913,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: true,
+          isPreSelected: false,
         },
         {
           uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -1843,6 +1930,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: true,
+          isPreSelected: false,
         },
       ],
     })
@@ -1866,6 +1954,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: true,
+          isPreSelected: false,
         },
         {
           uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -1882,6 +1971,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: null,
+          isPreSelected: false,
         },
         {
           uuid: 'not-selected',
@@ -1898,6 +1988,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: null,
+          isPreSelected: false,
         },
         {
           uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -1914,6 +2005,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: true,
+          isPreSelected: false,
         },
         {
           uuid: 'selected-but-not-updatable-2',
@@ -1930,6 +2022,7 @@ describe('SupportNeedsController', () => {
           status: null,
           updateText: null,
           isSelected: true,
+          isPreSelected: false,
         },
       ],
     })
@@ -1979,6 +2072,7 @@ describe('SupportNeedsController', () => {
             status: 'MET',
             updateText: 'some text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -1995,6 +2089,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'not-selected',
@@ -2011,6 +2106,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -2027,6 +2123,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'selected-but-not-updatable-2',
@@ -2043,6 +2140,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: true,
+            isPreSelected: false,
           },
         ],
       })
@@ -2095,6 +2193,7 @@ describe('SupportNeedsController', () => {
             status: 'MET',
             updateText: 'some text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
@@ -2111,6 +2210,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'not-selected',
@@ -2127,6 +2227,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected: false,
           },
           {
             uuid: 'second-uuid-of-supportNeed-is-updatable',
@@ -2143,6 +2244,7 @@ describe('SupportNeedsController', () => {
             status: 'IN_PROGRESS',
             updateText: 'Another textarea',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'selected-but-not-updatable-2',
@@ -2159,6 +2261,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: false,
+            isPreSelected: false,
           },
         ],
       })
@@ -2216,6 +2319,7 @@ describe('SupportNeedsController', () => {
             status: 'MET',
             updateText: 'some text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2232,6 +2336,7 @@ describe('SupportNeedsController', () => {
             status: 'IN_PROGRESS',
             updateText: 'some other text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2248,6 +2353,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: false,
+            isPreSelected: false,
           },
         ],
       })
@@ -2296,6 +2402,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
             {
               uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2312,6 +2419,7 @@ describe('SupportNeedsController', () => {
               status: 'IN_PROGRESS',
               updateText: 'some other text from the additional details',
               isSelected: true,
+              isPreSelected: false,
             },
             {
               uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2328,6 +2436,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
           ],
         },
@@ -2352,6 +2461,7 @@ describe('SupportNeedsController', () => {
             status: 'MET',
             updateText: 'some text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2368,6 +2478,7 @@ describe('SupportNeedsController', () => {
             status: 'IN_PROGRESS',
             updateText: 'some other text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2384,6 +2495,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: false,
+            isPreSelected: false,
           },
         ],
       })
@@ -2429,6 +2541,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
             {
               uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2445,6 +2558,7 @@ describe('SupportNeedsController', () => {
               status: 'IN_PROGRESS',
               updateText: 'some other text from the additional details',
               isSelected: true,
+              isPreSelected: false,
             },
             {
               uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2461,6 +2575,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
           ],
         },
@@ -2485,6 +2600,7 @@ describe('SupportNeedsController', () => {
             status: 'MET',
             updateText: 'some text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2501,6 +2617,7 @@ describe('SupportNeedsController', () => {
             status: 'IN_PROGRESS',
             updateText: 'some other text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2517,6 +2634,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: false,
+            isPreSelected: false,
           },
         ],
       })
@@ -2562,6 +2680,7 @@ describe('SupportNeedsController', () => {
               status: 'MET',
               updateText: 'some text from the additional details',
               isSelected: true,
+              isPreSelected: false,
             },
             {
               uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2578,6 +2697,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
             {
               uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2594,6 +2714,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
           ],
         },
@@ -2618,6 +2739,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: false,
+            isPreSelected: false,
           },
           {
             uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2634,6 +2756,7 @@ describe('SupportNeedsController', () => {
             status: 'IN_PROGRESS',
             updateText: 'some other text from the additional details',
             isSelected: true,
+            isPreSelected: false,
           },
           {
             uuid: '216a9eef-0fa9-4ef2-914b-dfd2a4f61e1a',
@@ -2650,6 +2773,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: false,
+            isPreSelected: false,
           },
           {
             uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2666,6 +2790,7 @@ describe('SupportNeedsController', () => {
             status: null,
             updateText: null,
             isSelected: false,
+            isPreSelected: false,
           },
         ],
       })
@@ -2711,6 +2836,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
             {
               uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2727,6 +2853,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
             {
               uuid: '216a9eef-0fa9-4ef2-914b-dfd2a4f61e1a',
@@ -2743,6 +2870,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: true,
+              isPreSelected: false,
             },
             {
               uuid: 'c0b3c819-ba84-41ac-85d2-cc9467db9c06',
@@ -2759,6 +2887,7 @@ describe('SupportNeedsController', () => {
               status: null,
               updateText: null,
               isSelected: false,
+              isPreSelected: false,
             },
           ],
         },

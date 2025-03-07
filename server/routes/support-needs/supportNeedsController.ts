@@ -48,14 +48,14 @@ export default class SupportNeedsController {
 
       const initSupportNeedsCacheData: SupportNeedCache[] = supportNeedsResponse.supportNeeds.map(
         (need): SupportNeedCache => {
-          const { allowUserDesc, category, existingPrisonerSupportNeedId, id, isOther, title, isUpdatable } = need
+          const { allowUserDesc, category, existingPrisonerSupportNeedId, id, title, isPreSelected, isUpdatable } = need
           return {
             uuid: crypto.randomUUID(),
             supportNeedId: id,
             existingPrisonerSupportNeedId,
             allowUserDesc,
             category,
-            isOther,
+            isOther: false,
             title,
             isUpdatable,
             isPrisonResponsible: null,
@@ -64,6 +64,7 @@ export default class SupportNeedsController {
             status: null,
             updateText: null,
             isSelected: null,
+            isPreSelected,
           }
         },
       )

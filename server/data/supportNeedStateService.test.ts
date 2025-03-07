@@ -54,6 +54,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
           {
             supportNeedId: 13,
@@ -70,6 +71,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
           {
             supportNeedId: 14,
@@ -86,6 +88,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
         ],
       }
@@ -115,6 +118,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
           {
             supportNeedId: 13,
@@ -131,6 +135,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
           {
             supportNeedId: 14,
@@ -147,6 +152,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
         ],
       }
@@ -180,6 +186,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
           {
             supportNeedId: 13,
@@ -196,6 +203,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
           {
             supportNeedId: 14,
@@ -212,6 +220,7 @@ describe('SupportNeedStateService', () => {
             isOther: false,
             isUpdatable: false,
             isSelected: false,
+            isPreSelected: false,
           },
         ],
       }

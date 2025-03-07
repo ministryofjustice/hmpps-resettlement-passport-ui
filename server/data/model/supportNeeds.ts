@@ -15,6 +15,7 @@ export type SupportNeedCache = {
   isOther: boolean
   isUpdatable: boolean
   isSelected: boolean
+  isPreSelected: boolean
 }
 
 export type SupportNeedsCache = {
@@ -80,8 +81,8 @@ export type PathwaySupportNeed = {
   title: string
   category: string
   allowUserDesc: boolean
-  isOther: boolean
   isUpdatable: boolean
+  isPreSelected: boolean
   existingPrisonerSupportNeedId: number
 }
 
