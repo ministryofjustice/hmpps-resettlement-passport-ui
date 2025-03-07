@@ -64,11 +64,13 @@
                     </div>
                   {% endif %}
                 {% endfor %}
-                <div class="govuk-checkboxes__divider">or</div>
-                <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="{{ item.exclusiveOption.uuid }}" name="support-need-option-{{ item.exclusiveOption.category }}" type="checkbox" value="{{ item.exclusiveOption.uuid }}" data-behaviour="exclusive" {% if item.exclusiveOption.isSelected %}checked{% endif %}>
-                  <label class="govuk-label govuk-checkboxes__label">{{ item.exclusiveOption.title }}</label>
-                </div>
+                {% if item.exclusiveOption %}
+                  <div class="govuk-checkboxes__divider">or</div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="{{ item.exclusiveOption.uuid }}" name="support-need-option-{{ item.exclusiveOption.category }}" type="checkbox" value="{{ item.exclusiveOption.uuid }}" data-behaviour="exclusive" {% if item.exclusiveOption.isSelected or (item.exclusiveOption.isSelected is null and item.exclusiveOption.isPreSelected)  %}checked{% endif %}>
+                    <label class="govuk-label govuk-checkboxes__label" for="{{ item.exclusiveOption.uuid }}">{{ item.exclusiveOption.title }}</label>
+                  </div>
+                {% endif %}
               </div>
             </fieldset>
           {% endfor %}

@@ -401,11 +401,13 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                     </div>
                   
                 
-                <div class="govuk-checkboxes__divider">or</div>
-                <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="20172ff2-0c21-4485-9402-5acf2cb60809" name="support-need-option-Accommodation before custody" type="checkbox" value="20172ff2-0c21-4485-9402-5acf2cb60809" data-behaviour="exclusive" >
-                  <label class="govuk-label govuk-checkboxes__label">No accommodation before custody support needs identified</label>
-                </div>
+                
+                  <div class="govuk-checkboxes__divider">or</div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="20172ff2-0c21-4485-9402-5acf2cb60809" name="support-need-option-Accommodation before custody" type="checkbox" value="20172ff2-0c21-4485-9402-5acf2cb60809" data-behaviour="exclusive" >
+                    <label class="govuk-label govuk-checkboxes__label" for="20172ff2-0c21-4485-9402-5acf2cb60809">No accommodation before custody support needs identified</label>
+                  </div>
+                
               </div>
             </fieldset>
           
@@ -453,11 +455,13 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                     </div>
                   
                 
-                <div class="govuk-checkboxes__divider">or</div>
-                <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33" name="support-need-option-Moving to new accommodation" type="checkbox" value="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33" data-behaviour="exclusive" >
-                  <label class="govuk-label govuk-checkboxes__label">No new accommodation support needs identified</label>
-                </div>
+                
+                  <div class="govuk-checkboxes__divider">or</div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33" name="support-need-option-Moving to new accommodation" type="checkbox" value="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33" data-behaviour="exclusive" >
+                    <label class="govuk-label govuk-checkboxes__label" for="7175a5b9-c1b5-434a-b47b-d1c7ea39fa33">No new accommodation support needs identified</label>
+                  </div>
+                
               </div>
             </fieldset>
           
@@ -505,11 +509,13 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                     </div>
                   
                 
-                <div class="govuk-checkboxes__divider">or</div>
-                <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="574fc882-0528-4754-aeeb-1b4a04a44912" name="support-need-option-Accommodation related debt and arrears" type="checkbox" value="574fc882-0528-4754-aeeb-1b4a04a44912" data-behaviour="exclusive" >
-                  <label class="govuk-label govuk-checkboxes__label">No accommodation related debt and arrears support needs identified</label>
-                </div>
+                
+                  <div class="govuk-checkboxes__divider">or</div>
+                  <div class="govuk-checkboxes__item">
+                    <input class="govuk-checkboxes__input" id="574fc882-0528-4754-aeeb-1b4a04a44912" name="support-need-option-Accommodation related debt and arrears" type="checkbox" value="574fc882-0528-4754-aeeb-1b4a04a44912" data-behaviour="exclusive" checked>
+                    <label class="govuk-label govuk-checkboxes__label" for="574fc882-0528-4754-aeeb-1b4a04a44912">No accommodation related debt and arrears support needs identified</label>
+                  </div>
+                
               </div>
             </fieldset>
           
