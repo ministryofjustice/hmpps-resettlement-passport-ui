@@ -1,5 +1,6 @@
 import { Callback } from 'nunjucks'
 import { addMinutes, format } from 'date-fns'
+import { ValidationError } from 'express-validator'
 import { PathwayStatus, PrisonerData } from '../@types/express'
 import {
   ASSESSMENT_ENUMS_DICTIONARY,
@@ -33,6 +34,7 @@ import { Pagination, PaginationPage } from '../data/model/pagination'
 import { PrisonersList } from '../data/model/prisoners'
 import { PrisonerSupportNeedsPatch } from '../data/model/supportNeeds'
 import { SupportNeedStatus } from '../data/model/supportNeedStatus'
+import { ErrorMessage } from '../routes/view'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -645,4 +647,11 @@ export function trimToNull(input: string) {
 
 export function validSupportNeedsStatus(updateStatus: string) {
   return updateStatus in SupportNeedStatus
+}
+
+export function errorSummaryList(errors: ValidationError[] = []): ErrorMessage[] {
+  return errors.map(error => {
+    const path = error.type === 'field' ? error.path : ''
+    return { text: error.msg, href: `#${path}` }
+  })
 }

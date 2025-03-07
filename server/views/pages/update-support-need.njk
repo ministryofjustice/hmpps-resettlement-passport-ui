@@ -53,6 +53,8 @@
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
+      {% include "partials/errorSummary.njk" %}
+
       <span class="govuk-caption-l">{{ pathway }} support needs</span>
       <h1 class="govuk-heading-l">
         {{ existingPrisonerNeed.title }}

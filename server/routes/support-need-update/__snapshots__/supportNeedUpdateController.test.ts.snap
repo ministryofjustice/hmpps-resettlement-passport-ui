@@ -145,6 +145,10 @@ exports[`SupportNeedUpdateController getSupportNeedUpdateForm happy path 1`] = `
           
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
+      
+
+
+
       <span class="govuk-caption-l">Accommodation support needs</span>
       <h1 class="govuk-heading-l">
         Support need title
