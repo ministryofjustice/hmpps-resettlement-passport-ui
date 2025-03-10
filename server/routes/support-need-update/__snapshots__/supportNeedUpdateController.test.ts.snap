@@ -246,59 +246,191 @@ exports[`SupportNeedUpdateController getSupportNeedUpdateForm happy path 1`] = `
 
       <form action="/support-needs/accommodation/update/23" method="post">
         <div class="govuk-form-group">
-          <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <h2 class="govuk-fieldset__heading">Update status</h2>
-              </legend>
-              <div class="govuk-radios" data-module="govuk-radios" data-govuk-radios-init>
-                <div class="govuk-radios__item">
-                  <input type="radio" class="govuk-radios__input" id="updateStatusNotStarted" name="updateStatus" value="NOT_STARTED"  />
-                  <label class="govuk-label govuk-radios__label" for="updateStatusNotStarted">Support not started</label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input type="radio" class="govuk-radios__input" id="updateStatusInProgress" name="updateStatus" value="IN_PROGRESS"  />
-                  <label class="govuk-label govuk-radios__label" for="updateStatusInProgress">Support in progress</label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input type="radio" class="govuk-radios__input" id="updateStatusMet" name="updateStatus" value="MET" checked />
-                  <label class="govuk-label govuk-radios__label" for="updateStatusMet">Support need met</label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input type="radio" class="govuk-radios__input" id="updateStatusDeclined" name="updateStatus" value="DECLINED"  />
-                  <label class="govuk-label govuk-radios__label" for="updateStatusDeclined">Support declined</label>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-          <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend">
-                <h2 class="govuk-fieldset__heading">Who is responsible for this support need?</h2>
-                <p class="govuk-caption-m">Select all that apply</p>
-              </legend>
-              <div class="govuk-checkboxes" data-module="govuk-checkboxes" data-govuk-checkboxes-init>
-                <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="prisonResettlementTeam" name="responsibleStaff" type="checkbox" value="PRISON" checked />
-                  <label class="govuk-label govuk-checkboxes__label" for="prisonResettlementTeam">
-                    Prison resettlement team
-                  </label>
-                </div>
-                <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="communityProbationStaff" name="responsibleStaff" type="checkbox" value="PROBATION"  />
-                  <label class="govuk-label govuk-checkboxes__label" for="communityProbationStaff">
-                    Community probation staff
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-          <div class="govuk-form-group govuk-!-padding-top-8">
-            <label class="govuk-label govuk-heading-m" for="additionalDetails">
-              Additional details (optional)
-            </label>
-            <textarea class="govuk-textarea" id="additionalDetails" name="additionalDetails" rows="5"></textarea>
-          </div>
+
+          
+
+
+
+<div class="govuk-form-group">
+
+  <fieldset class="govuk-fieldset">
+    
+    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+    
+      Update status
+    
+    </legend>
+    
+  
+    <div class="govuk-radios" data-module="govuk-radios">
+      
+      
+        
+    
+      
+      
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="updateStatus" name="updateStatus" type="radio" value="NOT_STARTED">
+        <label class="govuk-label govuk-radios__label" for="updateStatus">
+          Support not started
+        </label>
+        
+      </div>
+      
+    
+      
+        
+    
+      
+      
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="updateStatus-2" name="updateStatus" type="radio" value="IN_PROGRESS">
+        <label class="govuk-label govuk-radios__label" for="updateStatus-2">
+          Support in progress
+        </label>
+        
+      </div>
+      
+    
+      
+        
+    
+      
+      
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="updateStatus-3" name="updateStatus" type="radio" value="MET" checked>
+        <label class="govuk-label govuk-radios__label" for="updateStatus-3">
+          Support need met
+        </label>
+        
+      </div>
+      
+    
+      
+        
+    
+      
+      
+      
+      <div class="govuk-radios__item">
+        <input class="govuk-radios__input" id="updateStatus-4" name="updateStatus" type="radio" value="DECLINED">
+        <label class="govuk-label govuk-radios__label" for="updateStatus-4">
+          Support declined
+        </label>
+        
+      </div>
+      
+    
+      
+      
+    </div>
+  
+  </fieldset>
+
+</div>
+
+
+          
+
+
+
+
+<div class="govuk-form-group">
+
+  <fieldset class="govuk-fieldset" aria-describedby="responsibleStaff-hint">
+    
+    <legend class="govuk-fieldset__legend">
+    
+      Who is responsible for this support need?
+    
+    </legend>
+    
+  
+    <div id="responsibleStaff-hint" class="govuk-hint">
+      Select all that apply
+    </div>
+  
+  
+    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+      
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="responsibleStaff" name="responsibleStaff" type="checkbox" value="PRISON" checked>
+        <label class="govuk-label govuk-checkboxes__label" for="responsibleStaff">
+          Prison resettlement team
+        </label>
+        
+      </div>
+      
+    
+  
+      
+        
+    
+    
+      
+      
+      
+      
+      
+      <div class="govuk-checkboxes__item">
+        <input class="govuk-checkboxes__input" id="responsibleStaff-2" name="responsibleStaff" type="checkbox" value="PROBATION">
+        <label class="govuk-label govuk-checkboxes__label" for="responsibleStaff-2">
+          Community probation staff
+        </label>
+        
+      </div>
+      
+    
+  
+      
+      
+    </div>
+  
+  </fieldset>
+
+</div>
+
+
+          
+
+
+<div class="govuk-form-group govuk-character-count"
+    
+        
+      
+    
+        
+      
+    
+    
+    
+   data-module="govuk-character-count" data-maxlength="3000">
+  <label class="govuk-label govuk-heading-m">
+    Additional details (optional)
+  </label>
+
+
+
+  <textarea class="govuk-textarea govuk-js-character-count" id="" name="additionalDetails" rows="5" aria-describedby="undefined-info"></textarea>
+
+  <div id="undefined-info" class="govuk-hint govuk-character-count__message">
+    You can enter up to 3000 characters
+  </div>
+
+</div>
+
         </div>
         <input type="hidden" name="_csrf" value="" />
         <input type="hidden" name="prisonerNumber" value="A1234DY" />

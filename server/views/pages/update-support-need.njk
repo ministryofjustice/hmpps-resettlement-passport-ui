@@ -1,5 +1,8 @@
 {% extends "../partials/layout.njk" %}
 {% from "../macros/breadCrumb.njk" import breadCrumb %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% set pageTitle = applicationName + " - update support need"%}
 {% set mainClasses = "app-container govuk-body" %}
 
@@ -106,59 +109,73 @@
 
       <form action="/support-needs/{{ pathway | getUrlFromName }}/update/{{ prisonerNeedId }}" method="post">
         <div class="govuk-form-group">
-          <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
-                <h2 class="govuk-fieldset__heading">Update status</h2>
-              </legend>
-              <div class="govuk-radios" data-module="govuk-radios" data-govuk-radios-init>
-                <div class="govuk-radios__item">
-                  <input type="radio" class="govuk-radios__input" id="updateStatusNotStarted" name="updateStatus" value="NOT_STARTED" {% if existingPrisonerNeed.status === 'NOT_STARTED' %}checked{% endif %} />
-                  <label class="govuk-label govuk-radios__label" for="updateStatusNotStarted">Support not started</label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input type="radio" class="govuk-radios__input" id="updateStatusInProgress" name="updateStatus" value="IN_PROGRESS" {% if existingPrisonerNeed.status === 'IN_PROGRESS' %}checked{% endif %} />
-                  <label class="govuk-label govuk-radios__label" for="updateStatusInProgress">Support in progress</label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input type="radio" class="govuk-radios__input" id="updateStatusMet" name="updateStatus" value="MET" {% if existingPrisonerNeed.status === 'MET' %}checked{% endif %} />
-                  <label class="govuk-label govuk-radios__label" for="updateStatusMet">Support need met</label>
-                </div>
-                <div class="govuk-radios__item">
-                  <input type="radio" class="govuk-radios__input" id="updateStatusDeclined" name="updateStatus" value="DECLINED" {% if existingPrisonerNeed.status === 'DECLINED' %}checked{% endif %} />
-                  <label class="govuk-label govuk-radios__label" for="updateStatusDeclined">Support declined</label>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-          <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend">
-                <h2 class="govuk-fieldset__heading">Who is responsible for this support need?</h2>
-                <p class="govuk-caption-m">Select all that apply</p>
-              </legend>
-              <div class="govuk-checkboxes" data-module="govuk-checkboxes" data-govuk-checkboxes-init>
-                <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="prisonResettlementTeam" name="responsibleStaff" type="checkbox" value="PRISON" {% if existingPrisonerNeed.isPrisonResponsible %}checked{% endif %} />
-                  <label class="govuk-label govuk-checkboxes__label" for="prisonResettlementTeam">
-                    Prison resettlement team
-                  </label>
-                </div>
-                <div class="govuk-checkboxes__item">
-                  <input class="govuk-checkboxes__input" id="communityProbationStaff" name="responsibleStaff" type="checkbox" value="PROBATION" {% if existingPrisonerNeed.isProbationResponsible %}checked{% endif %} />
-                  <label class="govuk-label govuk-checkboxes__label" for="communityProbationStaff">
-                    Community probation staff
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-          <div class="govuk-form-group govuk-!-padding-top-8">
-            <label class="govuk-label govuk-heading-m" for="additionalDetails">
-              Additional details (optional)
-            </label>
-            <textarea class="govuk-textarea" id="additionalDetails" name="additionalDetails" rows="5"></textarea>
-          </div>
+
+          {{ govukRadios({
+            name: "updateStatus",
+            fieldset: {
+              legend: {
+                text: "Update status",
+                isPageHeading: false,
+                classes: "govuk-fieldset__legend--m"
+              }
+            },
+            items: [
+              {
+                value: "NOT_STARTED",
+                text: "Support not started"
+              },
+              {
+                value: "IN_PROGRESS",
+                text: "Support in progress"
+              },
+              {
+                value: "MET",
+                text: "Support need met"
+              },
+              {
+                value: "DECLINED",
+                text: "Support declined"
+              }
+            ],
+            value: updateStatus,
+            errorMessage: errors | findError('updateStatus')
+          }) }}
+
+          {{ govukCheckboxes({
+            name: "responsibleStaff",
+            fieldset: {
+              legend: {
+                text: "Who is responsible for this support need?"
+              }
+            },
+            hint: {
+              text: "Select all that apply"
+            },
+            items: [
+              {
+                value: "PRISON",
+                text: "Prison resettlement team"
+              },
+              {
+                value: "PROBATION",
+                text: "Community probation staff"
+              }
+            ],
+            values: responsibleStaff,
+            errorMessage: errors | findError('responsibleStaff')
+          }) }}
+
+          {{ govukCharacterCount({
+            name: "additionalDetails",
+            maxlength: 3000,
+            label: {
+              text: "Additional details (optional)",
+              classes: "govuk-heading-m",
+              isPageHeading: false
+            },
+            value: additionalDetails,
+            errorMessage: errors | findError('additionalDetails')
+          }) }}
         </div>
         <input type="hidden" name="_csrf" value="{{ csrfToken }}" />
         <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" />

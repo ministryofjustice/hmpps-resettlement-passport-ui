@@ -1,6 +1,6 @@
 import { Callback } from 'nunjucks'
 import { addMinutes, format } from 'date-fns'
-import { ValidationError } from 'express-validator'
+import { FieldValidationError, ValidationError } from 'express-validator'
 import { PathwayStatus, PrisonerData } from '../@types/express'
 import {
   ASSESSMENT_ENUMS_DICTIONARY,
@@ -654,4 +654,16 @@ export function errorSummaryList(errors: ValidationError[] = []): ErrorMessage[]
     const path = error.type === 'field' ? error.path : ''
     return { text: error.msg, href: `#${path}` }
   })
+}
+
+export function findError(errors: FieldValidationError[], formFieldId: string) {
+  if (!errors || !formFieldId) return null
+
+  const errorForMessage = errors.find(error => error.path === formFieldId)
+
+  if (errorForMessage === undefined) return null
+
+  return {
+    text: errorForMessage?.msg,
+  }
 }

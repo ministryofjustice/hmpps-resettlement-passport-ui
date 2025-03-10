@@ -36,7 +36,21 @@ export default class SupportNeedUpdateController {
         req.config.supportNeeds.releaseDate,
       )
 
-      res.render('pages/update-support-need', { ...supportNeedUpdateView.renderArgs, errors: req.flash('errors') })
+      const errors = req.flash('errors')
+      const formValues = req.flash('formValues')?.[0] || {}
+      const updateStatus = existingPrisonerNeed.status
+      const responsibleStaff = [
+        existingPrisonerNeed.isPrisonResponsible ? 'PRISON' : null,
+        existingPrisonerNeed.isProbationResponsible ? 'PROBATION' : null,
+      ].filter(x => x !== null)
+
+      res.render('pages/update-support-need', {
+        ...supportNeedUpdateView.renderArgs,
+        updateStatus,
+        responsibleStaff,
+        ...formValues,
+        errors,
+      })
     } catch (err) {
       next(err)
     }
@@ -55,6 +69,7 @@ export default class SupportNeedUpdateController {
 
       if (!errors.isEmpty()) {
         req.flash('errors', errors.array())
+        req.flash('formValues', req.body)
         res.redirect(`/support-needs/${pathway}/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
       } else {
         const supportNeedsPatch = processSupportNeedsRequestBody(req.body)
