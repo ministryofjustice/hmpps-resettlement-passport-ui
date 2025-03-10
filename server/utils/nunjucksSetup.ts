@@ -45,6 +45,8 @@ import {
   getReportTypeName,
   getSupportNeedsStatus,
   getSupportNeedsColour,
+  errorSummaryList,
+  findError,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
@@ -137,4 +139,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('getReportTypeName', getReportTypeName)
   njkEnv.addFilter('getSupportNeedsStatus', getSupportNeedsStatus)
   njkEnv.addFilter('getSupportNeedsColour', getSupportNeedsColour)
+  njkEnv.addFilter('errorSummaryList', errorSummaryList)
+  njkEnv.addFilter('findError', findError)
 }

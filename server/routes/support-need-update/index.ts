@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { body } from 'express-validator'
 import { Services } from '../../services'
 import SupportNeedUpdateController from './supportNeedUpdateController'
 
@@ -9,5 +10,14 @@ export default (router: Router, services: Services) => {
   )
 
   router.get('/support-needs/:pathway/update/:prisonerNeedId', [supportNeedUpdateController.getSupportNeedUpdateForm])
-  router.post('/support-needs/:pathway/update/:prisonerNeedId', [supportNeedUpdateController.postSupportNeedUpdateForm])
+
+  router.post(
+    '/support-needs/:pathway/update/:prisonerNeedId',
+    [
+      body('updateStatus', 'Select a update status').notEmpty(),
+      body('responsibleStaff', 'Select who is responsible for this support need').notEmpty(),
+      body('additionalDetails', 'Additional details must be 3,000 characters or less').isLength({ min: 0, max: 3000 }),
+    ],
+    supportNeedUpdateController.postSupportNeedUpdateForm,
+  )
 }
