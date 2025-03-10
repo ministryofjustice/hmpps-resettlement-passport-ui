@@ -13,7 +13,11 @@ export default (router: Router, services: Services) => {
 
   router.post(
     '/support-needs/:pathway/update/:prisonerNeedId',
-    [body('additionalDetails', 'This field must be 3,000 characters or less').isLength({ min: 0, max: 3000 })],
+    [
+      body('updateStatus', 'Select a update status').notEmpty(),
+      body('responsibleStaff', 'Select who is responsible for this support need').notEmpty(),
+      body('additionalDetails', 'Additional details must be 3,000 characters or less').isLength({ min: 0, max: 3000 }),
+    ],
     supportNeedUpdateController.postSupportNeedUpdateForm,
   )
 }
