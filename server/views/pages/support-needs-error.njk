@@ -1,0 +1,31 @@
+{% extends "../partials/layout.njk" %}
+{% set pageTitle = applicationName + " - " + pathway | getNameFromUrl + " support needs status" %}
+{% set mainClasses = "app-container govuk-body" %}
+{% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
+{% block header %}
+  {% if feComponents.header %}
+    {{ feComponents.header | safe }}
+  {% else %}
+    {% include "../partials/header.njk" %}
+  {% endif %}
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: {
+      text: phaseName
+      },
+      html: feedbackText
+      }) }}
+  </div>
+{% endblock %}
+{% block content %}
+  <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
+    <div class="govuk-grid-column-three-quarters">
+      <span class="govuk-caption-l">{{ prisonerData.personalDetails.lastName }}, {{ prisonerData.personalDetails.firstName }} ({{ prisonerData.personalDetails.prisonerNumber }})</span>
+      <h1 class="govuk-heading-l">Support need deleted</h1>
+    </div>
+    <div class="govuk-grid-column-three-quarters">
+      <p>This support need is no longer set for this person in prison.</p>
+      <p><a class="govuk-link" href="/support-needs/{{ pathway }}?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Add {{ pathway | getNameFromUrl }} support needs for this person.</a></p>
+    </div>
+  </div>
+{% endblock %}
