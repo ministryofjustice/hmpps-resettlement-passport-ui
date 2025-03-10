@@ -108,92 +108,102 @@ exports[`SupportNeedsController getCheckAnswers should render the check your ans
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
         <h1 class="govuk-heading-l">Check your answers</h1>
+        <h2 class="govuk-heading-m">Accommodation support needs</h2>
         
           
-            <h2 class="govuk-heading-m">End a tenancy</h2>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Status</dt>
-                <dd class="govuk-summary-list__value">
-                  
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/accommodation/status/first-uuid-of-supportNeed-is-updatable/?prisonerNumber=A1234DY#staff">
-                    Change<span class="govuk-visually-hidden"> status</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Responsible staff</dt>
-                <dd class="govuk-summary-list__value">
+            <div class="govuk-!-padding-top-6">
+              <h2 class="govuk-heading-m">First category</h2>
+              
                 
-                  <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                  <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Support need</dt>
+                      <dd class="govuk-summary-list__value">End a tenancy</dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="/support-needs/accommodation/status/123/?prisonerNumber=A1234DY">
+                          Change<span class="govuk-visually-hidden"> status</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Status</dt>
+                      <dd class="govuk-summary-list__value">
+                        
+                        <span class="govuk-tag govuk-tag--green">Support met</span>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Responsible staff</dt>
+                      <dd class="govuk-summary-list__value">
+                      
+                        <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                      
+                      
+                        <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                      
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Additional details</dt>
+                      <dd class="govuk-summary-list__value">some text from the additional details</dd>
+                    </div>
+                  </dl>
+                  <hr class="check-answers-divider" />
                 
+                  <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Support need</dt>
+                      <dd class="govuk-summary-list__value">Other support need text</dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="/support-needs/accommodation/status/445566/?prisonerNumber=A1234DY">
+                          Change<span class="govuk-visually-hidden"> status</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Status</dt>
+                      <dd class="govuk-summary-list__value">
+                        
+                        <span class="govuk-tag govuk-tag--green">Support met</span>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Responsible staff</dt>
+                      <dd class="govuk-summary-list__value">
+                      
+                        <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                      
+                      
+                        <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                      
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Additional details</dt>
+                      <dd class="govuk-summary-list__value"></dd>
+                    </div>
+                  </dl>
+                  <hr class="check-answers-divider" />
                 
-                  <strong class="govuk-tag govuk-tag--blue">Community</strong>
-                
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/accommodation/status/first-uuid-of-supportNeed-is-updatable/?prisonerNumber=A1234DY#responsibleStaff">
-                    Change<span class="govuk-visually-hidden"> responsible staff</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Additional details</dt>
-                <dd class="govuk-summary-list__value">some text from the additional details</dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/accommodation/status/first-uuid-of-supportNeed-is-updatable/?prisonerNumber=A1234DY#additionalDetails">
-                    Change<span class="govuk-visually-hidden"> additional details</span>
-                  </a>
-                </dd>
-              </div>
-            </dl>
+              
+            </div>
           
-            <h2 class="govuk-heading-m">Maintain a tenancy while in prison</h2>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Status</dt>
-                <dd class="govuk-summary-list__value">
-                  
-                  <span class="govuk-tag govuk-tag--undefined"></span>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/accommodation/status/second-uuid-of-supportNeed-is-updatable/?prisonerNumber=A1234DY#staff">
-                    Change<span class="govuk-visually-hidden"> status</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Responsible staff</dt>
-                <dd class="govuk-summary-list__value">
-                
-                
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/accommodation/status/second-uuid-of-supportNeed-is-updatable/?prisonerNumber=A1234DY#responsibleStaff">
-                    Change<span class="govuk-visually-hidden"> responsible staff</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Additional details</dt>
-                <dd class="govuk-summary-list__value"></dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/accommodation/status/second-uuid-of-supportNeed-is-updatable/?prisonerNumber=A1234DY#additionalDetails">
-                    Change<span class="govuk-visually-hidden"> additional details</span>
-                  </a>
-                </dd>
-              </div>
-            </dl>
+            <div class="govuk-!-padding-top-6">
+              <h2 class="govuk-heading-m">Second category</h2>
+              
+                <p class="govuk-body">There are no second category support needs identified</p>
+              
+            </div>
           
         
-        <form action="/support-needs/accommodation/complete" method="POST" novalidate>
-          <input type="hidden" name="_csrf" value=""/>
-          <input type="hidden" name="prisonerNumber" value="A1234DY"/>
-          <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
-        </form>
+        <div class="govuk-!-padding-top-6">
+          <form action="/support-needs/accommodation/complete" method="POST" novalidate>
+            <input type="hidden" name="_csrf" value=""/>
+            <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            <a href="/support-needs/accommodation/?prisonerNumber=A1234DY" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Add support needs</a>
+          </form>
+        </div>
       </div>
     </div>
   </div>

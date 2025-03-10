@@ -541,3 +541,11 @@ a.tab-links {
   vertical-align: middle;
   padding-right: 20px;
 }
+
+.no-border {
+  border: none;
+}
+
+.check-answers-divider:last-child {
+  display: none;
+}
