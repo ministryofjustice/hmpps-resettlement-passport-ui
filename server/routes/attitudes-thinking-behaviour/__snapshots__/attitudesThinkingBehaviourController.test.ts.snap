@@ -609,29 +609,43 @@ It has a line break in</p>
           <hr>
           
             
-            <div class="case-note">
-              <h3>Attitudes, thinking and behaviour</h3>
-              <strong></strong>
-              <p class="show-line-breaks">
-                This is a case note
-              </p>
-              <span class="govuk-caption-m">Happened: 7 September 2024</span>
-              <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
-              <br>
-            </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+  
+      <p class="show-line-breaks">
+          This is a case note
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 7 September 2024</span>
+  <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
+</div>
             <hr>
             
             
-            <div class="case-note">
-              <h3>Attitudes, thinking and behaviour</h3>
-              <strong></strong>
-              <p class="show-line-breaks">
-                This is another case note
-              </p>
-              <span class="govuk-caption-m">Happened: 7 September 2024</span>
-              <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
-              <br>
-            </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+  
+      <p class="show-line-breaks">
+          This is another case note
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 7 September 2024</span>
+  <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
+</div>
             <hr>
             
           
@@ -1999,29 +2013,43 @@ It has a line break in</p>
           <hr>
           
             
-            <div class="case-note">
-              <h3>Attitudes, thinking and behaviour</h3>
-              <strong></strong>
-              <p class="show-line-breaks">
-                This is a case note
-              </p>
-              <span class="govuk-caption-m">Happened: 7 September 2024</span>
-              <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
-              <br>
-            </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+  
+      <p class="show-line-breaks">
+          This is a case note
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 7 September 2024</span>
+  <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
+</div>
             <hr>
             
             
-            <div class="case-note">
-              <h3>Attitudes, thinking and behaviour</h3>
-              <strong></strong>
-              <p class="show-line-breaks">
-                This is another case note
-              </p>
-              <span class="govuk-caption-m">Happened: 7 September 2024</span>
-              <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
-              <br>
-            </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+  
+      <p class="show-line-breaks">
+          This is another case note
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 7 September 2024</span>
+  <span class="govuk-caption-m">Created: 7 September 2024 by A User</span>
+</div>
             <hr>
             
           

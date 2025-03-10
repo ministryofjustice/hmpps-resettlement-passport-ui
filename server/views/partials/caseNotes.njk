@@ -32,18 +32,8 @@
       <div class="govuk-grid-row govuk-!-padding-top-8">
         <div class="govuk-grid-column-full" id="case-notes-container">
           <hr>
-          {% for caseNote in caseNotesData.results.content %}
-            {% set caseNotePathway = caseNote.pathway | getEnumValue %}
-            <div class="case-note">
-              <h3>{{ caseNotePathway.name }}</h3>
-              <strong>{{ caseNote.text | getCaseNotesIntro }}</strong>
-              <p class="show-line-breaks">
-                {{ caseNote.text | getCaseNotesText }}
-              </p>
-              <span class="govuk-caption-m">Happened: {{ caseNote.occurenceDateTime | formatDate('long') }}</span>
-              <span class="govuk-caption-m">Created: {{ caseNote.creationDateTime | formatDate('long')  }} by {{caseNote.createdBy}}</span>
-              <br>
-            </div>
+          {% for notes in caseNotesData.results.content %}
+            {% include "./caseNote.njk" %}
             <hr>
             {% else %}
               <p>No case notes found</p>
