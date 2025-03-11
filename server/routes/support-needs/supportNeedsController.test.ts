@@ -115,6 +115,16 @@ describe('SupportNeedsController', () => {
             expect(res.text).toContain(legacyErrorText)
           })
       })
+
+      it('should gracefully handle unexpected errors', async () => {
+        jest.spyOn(rpService, 'getPrisonerDetails').mockRejectedValue(new Error('Something went wrong'))
+        await request(app)
+          .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain('Something went wrong')
+          })
+      })
     })
   })
 
@@ -1320,7 +1330,7 @@ describe('SupportNeedsController', () => {
             isPreSelected: false,
           },
           {
-            uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
+            uuid: 'need-uuid-is-selected',
             supportNeedId: 3,
             existingPrisonerSupportNeedId: null,
             allowUserDesc: false,
@@ -1333,7 +1343,7 @@ describe('SupportNeedsController', () => {
             otherSupportNeedText: null,
             status: null,
             updateText: null,
-            isSelected: null,
+            isSelected: true,
             isPreSelected: false,
           },
           {
@@ -1556,12 +1566,16 @@ describe('SupportNeedsController', () => {
     })
 
     it('should throw an error if the uuid does not exist in cache', async () => {
-      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(404)
+    })
+
+    it("should throw an error if the uuid exists in cache but isn't selected", async () => {
+      await request(app).get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY').expect(404)
     })
 
     it('should render the support needs status page', async () => {
       await request(app)
-        .get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY')
+        .get('/support-needs/accommodation/status/need-uuid-is-selected/?prisonerNumber=A1234DY')
         .expect(200)
         .expect(res => {
           expect(res.text).toMatchSnapshot()
@@ -1621,7 +1635,7 @@ describe('SupportNeedsController', () => {
     })
 
     it('should throw an error if the uuid does not exist in cache', async () => {
-      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(404)
     })
 
     it('should render the support needs status page', async () => {
@@ -1678,7 +1692,7 @@ describe('SupportNeedsController', () => {
     })
 
     it('should throw an error if the uuid does not exist in cache', async () => {
-      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(404)
     })
 
     it('should render the support needs status page', async () => {

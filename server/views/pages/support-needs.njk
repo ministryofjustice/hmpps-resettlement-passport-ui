@@ -1,5 +1,5 @@
 {% extends "../partials/layout.njk" %}
-{% set pageTitle = applicationName + " - " + pathway + " Support Needs" %}
+{% set pageTitle = applicationName + " - " + pathway | getNameFromUrl + " support needs" %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
 {% block header %}

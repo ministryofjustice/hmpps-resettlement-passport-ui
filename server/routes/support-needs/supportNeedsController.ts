@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import createError from 'http-errors'
 import { validatePathwaySupportNeeds, getEnumByURL } from '../../utils/utils'
 import { PrisonerSupportNeedsPost, SupportNeedCache, SupportNeedsCategoryGroup } from '../../data/model/supportNeeds'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
@@ -17,14 +18,18 @@ export default class SupportNeedsController {
   }
 
   checkLegacyProfile: RequestHandler = async (req, res, next): Promise<void> => {
-    req.prisonerData = req.body.prisonerNumber
-      ? await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
-      : await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+    try {
+      req.prisonerData = req.body.prisonerNumber
+        ? await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
+        : await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
 
-    if (req.prisonerData.supportNeedsLegacyProfile) {
-      next(new Error('Unable to access support needs for a legacy profile'))
-    } else {
-      next()
+      if (req.prisonerData.supportNeedsLegacyProfile) {
+        next(new Error('Unable to access support needs for a legacy profile'))
+      } else {
+        next()
+      }
+    } catch (err) {
+      next(err)
     }
   }
 
@@ -157,15 +162,19 @@ export default class SupportNeedsController {
 
       const currentCacheState = await this.supportNeedStateService.getSupportNeeds(stateKey)
 
-      // Validate supportNeed exists in cache
+      // Validate supportNeed exists in cache and is selected
       const supportNeed = currentCacheState.needs.find(need => need.uuid === uuid)
       if (!supportNeed) {
-        throw new Error('Support need not found')
+        return next(createError(404, `Need with UUID ${uuid} not found in cache`))
+      }
+      if (!supportNeed.isSelected) {
+        res.status(404)
+        return res.render('pages/support-needs-error', { pathway, prisonerData })
       }
 
-      res.render('pages/support-needs-status', { pathway, prisonerData, supportNeed, edit })
+      return res.render('pages/support-needs-status', { pathway, prisonerData, supportNeed, edit })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 
