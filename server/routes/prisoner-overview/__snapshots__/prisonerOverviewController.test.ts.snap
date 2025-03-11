@@ -489,179 +489,179 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
               
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support declined.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        test
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 22 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 22 April 2024 by Test user 3</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: Support declined.</strong>
+  
+  
+      <p class="show-line-breaks">
+          test
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 22 April 2024</span>
+  <span class="govuk-caption-m">Created: 22 April 2024 by Test user 3</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Accommodation</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support required.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        Updating the status to support required.
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 22 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 22 April 2024 by Secondname, Firstname</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Accommodation</h3>
+  
+  
+    <strong>Resettlement status set to: Support required.</strong>
+  
+  
+      <p class="show-line-breaks">
+          Updating the status to support required.
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 22 April 2024</span>
+  <span class="govuk-caption-m">Created: 22 April 2024 by Secondname, Firstname</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Health</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support not required.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        redirecting test
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Health</h3>
+  
+  
+    <strong>Resettlement status set to: Support not required.</strong>
+  
+  
+      <p class="show-line-breaks">
+          redirecting test
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        redirected to pathway page
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          redirected to pathway page
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Education, skills and work</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        testing redirect to individual pathway...
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Education, skills and work</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          testing redirect to individual pathway...
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Done.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        testing redirect form to pathway...
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: Done.</strong>
+  
+  
+      <p class="show-line-breaks">
+          testing redirect form to pathway...
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Attitudes, thinking and behaviour</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        test update redirect
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          test update redirect
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Attitudes, thinking and behaviour</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Done.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        form submit redirect to pathway
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+    <strong>Resettlement status set to: Done.</strong>
+  
+  
+      <p class="show-line-breaks">
+          form submit redirect to pathway
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                 
@@ -1707,179 +1707,179 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
               
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support declined.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        test
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 22 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 22 April 2024 by Test user 3</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: Support declined.</strong>
+  
+  
+      <p class="show-line-breaks">
+          test
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 22 April 2024</span>
+  <span class="govuk-caption-m">Created: 22 April 2024 by Test user 3</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Accommodation</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support required.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        Updating the status to support required.
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 22 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 22 April 2024 by Secondname, Firstname</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Accommodation</h3>
+  
+  
+    <strong>Resettlement status set to: Support required.</strong>
+  
+  
+      <p class="show-line-breaks">
+          Updating the status to support required.
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 22 April 2024</span>
+  <span class="govuk-caption-m">Created: 22 April 2024 by Secondname, Firstname</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Health</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support not required.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        redirecting test
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Health</h3>
+  
+  
+    <strong>Resettlement status set to: Support not required.</strong>
+  
+  
+      <p class="show-line-breaks">
+          redirecting test
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        redirected to pathway page
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          redirected to pathway page
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Education, skills and work</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        testing redirect to individual pathway...
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Education, skills and work</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          testing redirect to individual pathway...
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Done.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        testing redirect form to pathway...
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: Done.</strong>
+  
+  
+      <p class="show-line-breaks">
+          testing redirect form to pathway...
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Attitudes, thinking and behaviour</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        test update redirect
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          test update redirect
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Attitudes, thinking and behaviour</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Done.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        form submit redirect to pathway
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+    <strong>Resettlement status set to: Done.</strong>
+  
+  
+      <p class="show-line-breaks">
+          form submit redirect to pathway
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                 
@@ -2754,179 +2754,179 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
               
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support declined.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        test
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 22 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 22 April 2024 by Test user 3</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: Support declined.</strong>
+  
+  
+      <p class="show-line-breaks">
+          test
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 22 April 2024</span>
+  <span class="govuk-caption-m">Created: 22 April 2024 by Test user 3</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Accommodation</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support required.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        Updating the status to support required.
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 22 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 22 April 2024 by Secondname, Firstname</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Accommodation</h3>
+  
+  
+    <strong>Resettlement status set to: Support required.</strong>
+  
+  
+      <p class="show-line-breaks">
+          Updating the status to support required.
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 22 April 2024</span>
+  <span class="govuk-caption-m">Created: 22 April 2024 by Secondname, Firstname</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Health</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Support not required.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        redirecting test
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Health</h3>
+  
+  
+    <strong>Resettlement status set to: Support not required.</strong>
+  
+  
+      <p class="show-line-breaks">
+          redirecting test
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        redirected to pathway page
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          redirected to pathway page
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Education, skills and work</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        testing redirect to individual pathway...
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Education, skills and work</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          testing redirect to individual pathway...
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Finance and ID</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Done.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        testing redirect form to pathway...
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Finance and ID</h3>
+  
+  
+    <strong>Resettlement status set to: Done.</strong>
+  
+  
+      <p class="show-line-breaks">
+          testing redirect form to pathway...
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Attitudes, thinking and behaviour</h3>
-                    
-                    
-                      <strong>Resettlement status set to: In progress.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        test update redirect
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+    <strong>Resettlement status set to: In progress.</strong>
+  
+  
+      <p class="show-line-breaks">
+          test update redirect
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                   
-                  <div class="case-note">
-                    
-                    
-                    
-                    
-                      <h3>Attitudes, thinking and behaviour</h3>
-                    
-                    
-                      <strong>Resettlement status set to: Done.</strong>
-                    
-                    <p class="show-line-breaks">
-                      
-                        form submit redirect to pathway
-                      
-                    </p>
-                    <span class="govuk-caption-m">Happened: 19 April 2024</span>
-                    <span
-                        class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
-                  </div>
+
+
+
+
+<div class="case-note">
+  
+    <h3>Attitudes, thinking and behaviour</h3>
+  
+  
+    <strong>Resettlement status set to: Done.</strong>
+  
+  
+      <p class="show-line-breaks">
+          form submit redirect to pathway
+      </p>
+  
+  <span class="govuk-caption-m">Happened: 19 April 2024</span>
+  <span class="govuk-caption-m">Created: 19 April 2024 by Test user</span>
+</div>
                   <hr>
                 
                 
