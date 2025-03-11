@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express'
 import createError from 'http-errors'
 import { validatePathwaySupportNeeds, getEnumByURL } from '../../utils/utils'
-import { PrisonerSupportNeedsPost, SupportNeedCache } from '../../data/model/supportNeeds'
+import { PrisonerSupportNeedsPost, SupportNeedCache, SupportNeedsCategoryGroup } from '../../data/model/supportNeeds'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import RpService from '../../services/rpService'
@@ -200,7 +200,7 @@ export default class SupportNeedsController {
       }
 
       // UPDATE CACHE WITH VALUES FROM REQ.BODY
-      const { status, updateText, responsibleStaff = [] } = req.body
+      const { status, updateText, responsibleStaff = [], edit } = req.body
 
       const isPrisonResponsible = responsibleStaff.includes('PRISON')
       const isProbationResponsible = responsibleStaff.includes('PROBATION')
@@ -221,7 +221,7 @@ export default class SupportNeedsController {
         currentCacheState.needs.slice(currentIndex + 1).find(need => need.isUpdatable && need.isSelected) || null
 
       // If no more updatable supportNeeds, go to check answers page
-      if (!nextUpdatableSupportNeed) {
+      if (!nextUpdatableSupportNeed || edit === 'true') {
         return res.redirect(`/support-needs/${pathway}/check-answers/?prisonerNumber=${prisonerNumber}`)
       }
 
@@ -251,11 +251,30 @@ export default class SupportNeedsController {
       }
 
       const currentCacheState = await this.supportNeedStateService.getSupportNeeds(stateKey)
-      const supportNeeds = currentCacheState.needs.filter(
-        supportNeed => supportNeed.isSelected && supportNeed.isUpdatable,
-      )
 
-      res.render('pages/support-needs-check-answers', { pathway, prisonerNumber, supportNeeds })
+      const supportNeedsCategories: SupportNeedsCategoryGroup[] = []
+
+      currentCacheState.needs.forEach(need => {
+        if (!need.isSelected) return
+
+        let categoryGroup = supportNeedsCategories.find(group => group.categoryName === need.category)
+
+        if (!categoryGroup) {
+          categoryGroup = { categoryName: need.category, supportNeeds: [] }
+          supportNeedsCategories.push(categoryGroup)
+        }
+
+        // Check if there's any non-updatable support need in the category
+        if (need.isUpdatable === false) {
+          categoryGroup.supportNeeds = null
+          categoryGroup.noNeeds = true
+        } else if (categoryGroup.supportNeeds !== null) {
+          // Only add the need if supportNeeds array is not null (i.e., no non-updatable needs found)
+          categoryGroup.supportNeeds.push(need)
+        }
+      })
+
+      res.render('pages/support-needs-check-answers', { pathway, prisonerNumber, supportNeedsCategories })
     } catch (err) {
       next(err)
     }

@@ -25,55 +25,62 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
         <h1 class="govuk-heading-l">Check your answers</h1>
-        {% if supportNeeds %}
-          {% for supportNeed in supportNeeds %}
-            <h2 class="govuk-heading-m">{{ supportNeed.title }}</h2>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Status</dt>
-                <dd class="govuk-summary-list__value">
-                  {% set tagColour = "govuk-tag--" + (supportNeed.status | getSupportNeedsColour) %}
-                  <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }}</span>
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/?prisonerNumber={{ prisonerNumber }}#staff">
-                    Change<span class="govuk-visually-hidden"> status</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Responsible staff</dt>
-                <dd class="govuk-summary-list__value">
-                {% if supportNeed.isPrisonResponsible %}
-                  <strong class="govuk-tag govuk-tag--blue">Prison</strong>
-                {% endif %}
-                {% if supportNeed.isProbationResponsible %}
-                  <strong class="govuk-tag govuk-tag--blue">Community</strong>
-                {% endif %}
-                </dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/?prisonerNumber={{ prisonerNumber }}#responsibleStaff">
-                    Change<span class="govuk-visually-hidden"> responsible staff</span>
-                  </a>
-                </dd>
-              </div>
-              <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">Additional details</dt>
-                <dd class="govuk-summary-list__value">{{ supportNeed.updateText }}</dd>
-                <dd class="govuk-summary-list__actions">
-                  <a class="govuk-link" href="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/?prisonerNumber={{ prisonerNumber }}#additionalDetails">
-                    Change<span class="govuk-visually-hidden"> additional details</span>
-                  </a>
-                </dd>
-              </div>
-            </dl>
+        <h2 class="govuk-heading-m">{{ pathway | getNameFromUrl }} support needs</h2>
+        {% if supportNeedsCategories %}
+          {% for category in supportNeedsCategories %}
+            <div class="govuk-!-padding-top-6">
+              <h2 class="govuk-heading-m">{{ category.categoryName }}</h2>
+              {% if category.noNeeds %}
+                <p class="govuk-body">There are no {{ category.categoryName | lower }} support needs identified</p>
+              {% elif category.supportNeeds %}
+                {% for supportNeed in category.supportNeeds %}
+                  <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Support need</dt>
+                      <dd class="govuk-summary-list__value">{{ supportNeed.otherSupportNeedText if supportNeed.isOther else supportNeed.title }}</dd>
+                      <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" href="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/?prisonerNumber={{ prisonerNumber }}&edit=true">
+                          Change<span class="govuk-visually-hidden"> status</span>
+                        </a>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Status</dt>
+                      <dd class="govuk-summary-list__value">
+                        {% set tagColour = "govuk-tag--" + (supportNeed.status | getSupportNeedsColour) %}
+                        <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }}</span>
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Responsible staff</dt>
+                      <dd class="govuk-summary-list__value">
+                      {% if supportNeed.isPrisonResponsible %}
+                        <strong class="govuk-tag govuk-tag--blue">Prison</strong>
+                      {% endif %}
+                      {% if supportNeed.isProbationResponsible %}
+                        <strong class="govuk-tag govuk-tag--blue">Community</strong>
+                      {% endif %}
+                      </dd>
+                    </div>
+                    <div class="govuk-summary-list__row no-border">
+                      <dt class="govuk-summary-list__key">Additional details</dt>
+                      <dd class="govuk-summary-list__value">{{ supportNeed.updateText }}</dd>
+                    </div>
+                  </dl>
+                  <hr class="check-answers-divider" />
+                {% endfor %}
+              {% endif %}
+            </div>
           {% endfor %}
         {% endif %}
-        <form action="/support-needs/{{ pathway }}/complete" method="POST" novalidate>
-          <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-          <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
-          <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
-        </form>
+        <div class="govuk-!-padding-top-6">
+          <form action="/support-needs/{{ pathway }}/complete" method="POST" novalidate>
+            <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+            <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+            <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            <a href="/support-needs/{{ pathway }}/?prisonerNumber={{  prisonerNumber }}" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Add support needs</a>
+          </form>
+        </div>
       </div>
     </div>
   </div>

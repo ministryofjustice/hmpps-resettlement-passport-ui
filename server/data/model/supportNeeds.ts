@@ -127,3 +127,9 @@ export type PrisonerSupportNeedsPost = {
     text: string
   }[]
 }
+
+export type SupportNeedsCategoryGroup = {
+  categoryName: string
+  supportNeeds: SupportNeedCache[]
+  noNeeds?: boolean
+}
