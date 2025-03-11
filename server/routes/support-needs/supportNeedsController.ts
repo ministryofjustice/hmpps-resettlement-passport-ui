@@ -191,7 +191,7 @@ export default class SupportNeedsController {
       }
 
       // UPDATE CACHE WITH VALUES FROM REQ.BODY
-      const { status, updateText, responsibleStaff = [] } = req.body
+      const { status, updateText, responsibleStaff = [], edit } = req.body
 
       const isPrisonResponsible = responsibleStaff.includes('PRISON')
       const isProbationResponsible = responsibleStaff.includes('PROBATION')
@@ -212,7 +212,7 @@ export default class SupportNeedsController {
         currentCacheState.needs.slice(currentIndex + 1).find(need => need.isUpdatable && need.isSelected) || null
 
       // If no more updatable supportNeeds, go to check answers page
-      if (!nextUpdatableSupportNeed) {
+      if (!nextUpdatableSupportNeed || edit === 'true') {
         return res.redirect(`/support-needs/${pathway}/check-answers/?prisonerNumber=${prisonerNumber}`)
       }
 

@@ -120,7 +120,7 @@ exports[`SupportNeedsController getCheckAnswers should render the check your ans
                       <dt class="govuk-summary-list__key">Support need</dt>
                       <dd class="govuk-summary-list__value">End a tenancy</dd>
                       <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="/support-needs/accommodation/status/123/?prisonerNumber=A1234DY">
+                        <a class="govuk-link" href="/support-needs/accommodation/status/123/?prisonerNumber=A1234DY&edit=true">
                           Change<span class="govuk-visually-hidden"> status</span>
                         </a>
                       </dd>
@@ -155,7 +155,7 @@ exports[`SupportNeedsController getCheckAnswers should render the check your ans
                       <dt class="govuk-summary-list__key">Support need</dt>
                       <dd class="govuk-summary-list__value">Other support need text</dd>
                       <dd class="govuk-summary-list__actions">
-                        <a class="govuk-link" href="/support-needs/accommodation/status/445566/?prisonerNumber=A1234DY">
+                        <a class="govuk-link" href="/support-needs/accommodation/status/445566/?prisonerNumber=A1234DY&edit=true">
                           Change<span class="govuk-visually-hidden"> status</span>
                         </a>
                       </dd>
@@ -1189,6 +1189,7 @@ exports[`SupportNeedsController getSupportNeedsStatus with cached answers should
         </div>
         <input type="hidden" name="_csrf" value="" />
         <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+        <input type="hidden" name="edit" value="true">
         <button class="govuk-button" type="submit">Continue</button>
       </form>
       <button class="ghost-button remove-support-need-button">Remove support need</button>
@@ -1401,6 +1402,7 @@ exports[`SupportNeedsController getSupportNeedsStatus with cached answers should
         </div>
         <input type="hidden" name="_csrf" value="" />
         <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+        <input type="hidden" name="edit" value="false">
         <button class="govuk-button" type="submit">Continue</button>
       </form>
       <button class="ghost-button remove-support-need-button">Remove support need</button>
@@ -1613,6 +1615,7 @@ exports[`SupportNeedsController getSupportNeedsStatus with cached other support 
         </div>
         <input type="hidden" name="_csrf" value="" />
         <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+        <input type="hidden" name="edit" value="true">
         <button class="govuk-button" type="submit">Continue</button>
       </form>
       <button class="ghost-button remove-support-need-button">Remove support need</button>
@@ -1825,6 +1828,7 @@ exports[`SupportNeedsController getSupportNeedsStatus with cached other support 
         </div>
         <input type="hidden" name="_csrf" value="" />
         <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+        <input type="hidden" name="edit" value="false">
         <button class="govuk-button" type="submit">Continue</button>
       </form>
       <button class="ghost-button remove-support-need-button">Remove support need</button>
@@ -2037,6 +2041,7 @@ exports[`SupportNeedsController getSupportNeedsStatus without any cached answers
         </div>
         <input type="hidden" name="_csrf" value="" />
         <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+        <input type="hidden" name="edit" value="false">
         <button class="govuk-button" type="submit">Continue</button>
       </form>
       <button class="ghost-button remove-support-need-button">Remove support need</button>
