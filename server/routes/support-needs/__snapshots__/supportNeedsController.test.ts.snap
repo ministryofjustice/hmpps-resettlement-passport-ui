@@ -226,7 +226,7 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
 <html lang="en" class="govuk-template">
   <head>
     <meta charset="utf-8">
-    <title>Prepare someone for release - Accommodation support Needs
+    <title>Prepare someone for release - Accommodation support needs
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
@@ -671,7 +671,7 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
 <html lang="en" class="govuk-template">
   <head>
     <meta charset="utf-8">
-    <title>Prepare someone for release - Accommodation support Needs
+    <title>Prepare someone for release - Accommodation support needs
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c">
