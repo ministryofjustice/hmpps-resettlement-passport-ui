@@ -31,7 +31,7 @@ import { toCachedQuestionAndAnswer } from './formatAssessmentResponse'
 import { badRequestError } from '../errorHandler'
 import { Pagination, PaginationPage } from '../data/model/pagination'
 import { PrisonersList } from '../data/model/prisoners'
-import { PrisonerSupportNeedsPatch } from '../data/model/supportNeeds'
+import { PrisonerSupportNeedsPatch, SupportNeedCache, SupportNeedsCache } from '../data/model/supportNeeds'
 import { SupportNeedStatus } from '../data/model/supportNeedStatus'
 
 const properCase = (word: string): string =>
@@ -645,4 +645,22 @@ export function trimToNull(input: string) {
 
 export function validSupportNeedsStatus(updateStatus: string) {
   return updateStatus in SupportNeedStatus
+}
+
+export const findPreviousSelectedSupportNeed = (
+  currentCacheState: SupportNeedsCache,
+  uuid: string,
+): SupportNeedCache => {
+  const { needs } = currentCacheState
+  const currentIndex = needs.findIndex(need => need.uuid === uuid)
+
+  if (currentIndex <= 0) return null // If not found or first element, return null
+
+  for (let i = currentIndex - 1; i >= 0; i -= 1) {
+    if (needs[i].isSelected) {
+      return needs[i] // Return the first previous selected need
+    }
+  }
+
+  return null // No previous selected need found
 }
