@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { validationResult } from 'express-validator'
+import { ValidationError, validationResult } from 'express-validator'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import {
   getNameFromUrl,
@@ -9,6 +9,7 @@ import {
 } from '../../utils/utils'
 import RpService from '../../services/rpService'
 import SupportNeedUpdateView from './supportNeedUpdateView'
+import SupportNeedUpdateForm from './supportNeedUpdateForm'
 
 export default class SupportNeedUpdateController {
   constructor(private readonly prisonerDetailsService: PrisonerDetailsService, private readonly rpService: RpService) {
@@ -36,20 +37,13 @@ export default class SupportNeedUpdateController {
         req.config.supportNeeds.releaseDate,
       )
 
-      const errors = req.flash('errors')
+      const errors = req.flash('errors') as unknown as ValidationError[]
       const formValues = req.flash('formValues')?.[0] || {}
-      const updateStatus = existingPrisonerNeed.status
-      const responsibleStaff = [
-        existingPrisonerNeed.isPrisonResponsible ? 'PRISON' : null,
-        existingPrisonerNeed.isProbationResponsible ? 'PROBATION' : null,
-      ].filter(x => x !== null)
+      const supportNeedUpdateForm = new SupportNeedUpdateForm(existingPrisonerNeed, formValues, errors)
 
       res.render('pages/update-support-need', {
         ...supportNeedUpdateView.renderArgs,
-        updateStatus,
-        responsibleStaff,
-        ...formValues,
-        errors,
+        ...supportNeedUpdateForm.renderArgs,
       })
     } catch (err) {
       next(err)

@@ -417,15 +417,15 @@ exports[`SupportNeedUpdateController getSupportNeedUpdateForm happy path 1`] = `
     
     
    data-module="govuk-character-count" data-maxlength="3000">
-  <label class="govuk-label govuk-heading-m">
+  <label class="govuk-label govuk-heading-m" for="additionalDetails">
     Additional details (optional)
   </label>
 
 
 
-  <textarea class="govuk-textarea govuk-js-character-count" id="" name="additionalDetails" rows="5" aria-describedby="undefined-info"></textarea>
+  <textarea class="govuk-textarea govuk-js-character-count" id="additionalDetails" name="additionalDetails" rows="5" aria-describedby="additionalDetails-info"></textarea>
 
-  <div id="undefined-info" class="govuk-hint govuk-character-count__message">
+  <div id="additionalDetails-info" class="govuk-hint govuk-character-count__message">
     You can enter up to 3000 characters
   </div>
 
