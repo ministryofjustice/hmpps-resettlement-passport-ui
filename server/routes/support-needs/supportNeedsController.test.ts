@@ -115,6 +115,16 @@ describe('SupportNeedsController', () => {
             expect(res.text).toContain(legacyErrorText)
           })
       })
+
+      it('should gracefully handle unexpected errors', async () => {
+        jest.spyOn(rpService, 'getPrisonerDetails').mockRejectedValue(new Error('Something went wrong'))
+        await request(app)
+          .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
+          .expect(500)
+          .then(res => {
+            expect(res.text).toContain('Something went wrong')
+          })
+      })
     })
   })
 
@@ -1320,7 +1330,7 @@ describe('SupportNeedsController', () => {
             isPreSelected: false,
           },
           {
-            uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
+            uuid: 'need-uuid-is-selected',
             supportNeedId: 3,
             existingPrisonerSupportNeedId: null,
             allowUserDesc: false,
@@ -1333,7 +1343,7 @@ describe('SupportNeedsController', () => {
             otherSupportNeedText: null,
             status: null,
             updateText: null,
-            isSelected: null,
+            isSelected: true,
             isPreSelected: false,
           },
           {
@@ -1556,12 +1566,16 @@ describe('SupportNeedsController', () => {
     })
 
     it('should throw an error if the uuid does not exist in cache', async () => {
-      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(404)
+    })
+
+    it("should throw an error if the uuid exists in cache but isn't selected", async () => {
+      await request(app).get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY').expect(404)
     })
 
     it('should render the support needs status page', async () => {
       await request(app)
-        .get('/support-needs/accommodation/status/need-uuid/?prisonerNumber=A1234DY')
+        .get('/support-needs/accommodation/status/need-uuid-is-selected/?prisonerNumber=A1234DY')
         .expect(200)
         .expect(res => {
           expect(res.text).toMatchSnapshot()
@@ -1621,7 +1635,7 @@ describe('SupportNeedsController', () => {
     })
 
     it('should throw an error if the uuid does not exist in cache', async () => {
-      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(404)
     })
 
     it('should render the support needs status page', async () => {
@@ -1678,7 +1692,7 @@ describe('SupportNeedsController', () => {
     })
 
     it('should throw an error if the uuid does not exist in cache', async () => {
-      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(500)
+      await request(app).get('/support-needs/accommodation/status/invalid-uuid/?prisonerNumber=A1234DY').expect(404)
     })
 
     it('should render the support needs status page', async () => {
@@ -2040,6 +2054,111 @@ describe('SupportNeedsController', () => {
       .expect('Location', '/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY')
   })
 
+  it('should redirect to the check your answers page if its an edit', async () => {
+    jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
+      needs: [
+        {
+          uuid: 'first-uuid-of-supportNeed-is-updatable',
+          supportNeedId: 1,
+          existingPrisonerSupportNeedId: null,
+          allowUserDesc: false,
+          category: 'Accommodation before custody',
+          isOther: false,
+          title: 'End a tenancy',
+          isUpdatable: true,
+          isPrisonResponsible: null,
+          isProbationResponsible: null,
+          otherSupportNeedText: null,
+          status: null,
+          updateText: null,
+          isSelected: true,
+          isPreSelected: false,
+        },
+        {
+          uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
+          supportNeedId: 5,
+          existingPrisonerSupportNeedId: null,
+          allowUserDesc: false,
+          category: 'Accommodation before custody',
+          isOther: false,
+          title: 'Arrange storage for personal possessions while in prison',
+          isUpdatable: true,
+          isPrisonResponsible: null,
+          isProbationResponsible: null,
+          otherSupportNeedText: null,
+          status: null,
+          updateText: null,
+          isSelected: null,
+          isPreSelected: false,
+        },
+        {
+          uuid: 'not-selected',
+          supportNeedId: 6,
+          existingPrisonerSupportNeedId: null,
+          allowUserDesc: true,
+          category: 'Accommodation before custody',
+          isOther: false,
+          title: 'Other',
+          isUpdatable: true,
+          isPrisonResponsible: null,
+          isProbationResponsible: null,
+          otherSupportNeedText: null,
+          status: null,
+          updateText: null,
+          isSelected: null,
+          isPreSelected: false,
+        },
+        {
+          uuid: 'second-uuid-of-supportNeed-is-updatable',
+          supportNeedId: 2,
+          existingPrisonerSupportNeedId: null,
+          allowUserDesc: false,
+          category: 'Accommodation before custody',
+          isOther: false,
+          title: 'Maintain a tenancy while in prison',
+          isUpdatable: true,
+          isPrisonResponsible: null,
+          isProbationResponsible: null,
+          otherSupportNeedText: null,
+          status: null,
+          updateText: null,
+          isSelected: true,
+          isPreSelected: false,
+        },
+        {
+          uuid: 'selected-but-not-updatable-2',
+          supportNeedId: 7,
+          existingPrisonerSupportNeedId: null,
+          allowUserDesc: false,
+          category: 'Accommodation before custody',
+          isOther: false,
+          title: 'No accommodation before custody support needs identified',
+          isUpdatable: false,
+          isPrisonResponsible: null,
+          isProbationResponsible: null,
+          otherSupportNeedText: null,
+          status: null,
+          updateText: null,
+          isSelected: true,
+          isPreSelected: false,
+        },
+      ],
+    })
+
+    await request(app)
+      .post('/support-needs/accommodation/status/first-uuid-of-supportNeed-is-updatable')
+      .send({
+        _csrf: 'xjM2bce6',
+        prisonerNumber: 'A8731DY',
+        status: 'MET',
+        responsibleStaff: ['PRISON'],
+        updateText: '',
+        edit: 'true',
+      })
+      .expect(302)
+      .expect('Location', '/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY')
+  })
+
   describe('getCheckAnswers', () => {
     it('should throw an error if pathway is invalid', async () => {
       await request(app).get('/support-needs/invalid-pathway/status/need-uuid/?prisonerNumber=A1234DY').expect(500)
@@ -2058,11 +2177,11 @@ describe('SupportNeedsController', () => {
       jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
         needs: [
           {
-            uuid: 'first-uuid-of-supportNeed-is-updatable',
+            uuid: '123',
             supportNeedId: 1,
             existingPrisonerSupportNeedId: null,
             allowUserDesc: false,
-            category: 'Accommodation before custody',
+            category: 'First category',
             isOther: false,
             title: 'End a tenancy',
             isUpdatable: true,
@@ -2075,11 +2194,11 @@ describe('SupportNeedsController', () => {
             isPreSelected: false,
           },
           {
-            uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
-            supportNeedId: 5,
+            uuid: '789',
+            supportNeedId: 3,
             existingPrisonerSupportNeedId: null,
             allowUserDesc: false,
-            category: 'Accommodation before custody',
+            category: 'First category',
             isOther: false,
             title: 'Arrange storage for personal possessions while in prison',
             isUpdatable: true,
@@ -2092,11 +2211,11 @@ describe('SupportNeedsController', () => {
             isPreSelected: false,
           },
           {
-            uuid: 'not-selected',
-            supportNeedId: 6,
+            uuid: '112233',
+            supportNeedId: 4,
             existingPrisonerSupportNeedId: null,
             allowUserDesc: true,
-            category: 'Accommodation before custody',
+            category: 'First category',
             isOther: false,
             title: 'Other',
             isUpdatable: true,
@@ -2109,30 +2228,47 @@ describe('SupportNeedsController', () => {
             isPreSelected: false,
           },
           {
-            uuid: 'second-uuid-of-supportNeed-is-updatable',
-            supportNeedId: 2,
+            uuid: '445566',
+            supportNeedId: 5,
             existingPrisonerSupportNeedId: null,
             allowUserDesc: false,
-            category: 'Accommodation before custody',
-            isOther: false,
-            title: 'Maintain a tenancy while in prison',
+            category: 'First category',
+            isOther: true,
+            title: 'Other',
             isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            otherSupportNeedText: 'Other support need text',
+            status: 'MET',
             updateText: null,
             isSelected: true,
             isPreSelected: false,
           },
           {
-            uuid: 'selected-but-not-updatable-2',
-            supportNeedId: 7,
+            uuid: '778899',
+            supportNeedId: 6,
             existingPrisonerSupportNeedId: null,
             allowUserDesc: false,
-            category: 'Accommodation before custody',
+            category: 'First category',
             isOther: false,
-            title: 'No accommodation before custody support needs identified',
+            title: 'No support needs identified',
+            isUpdatable: false,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            otherSupportNeedText: null,
+            status: null,
+            updateText: null,
+            isSelected: false,
+            isPreSelected: false,
+          },
+          {
+            uuid: '456',
+            supportNeedId: 2,
+            existingPrisonerSupportNeedId: null,
+            allowUserDesc: false,
+            category: 'Second category',
+            isOther: false,
+            title: 'No support need identified',
             isUpdatable: false,
             isPrisonResponsible: null,
             isProbationResponsible: null,

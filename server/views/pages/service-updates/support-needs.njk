@@ -1,0 +1,86 @@
+{% extends "../../partials/serviceUpdatesLayout.njk" %}
+{% set pageName = "Setting and updating support needs" %}
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body-s">18 Mar 2025</p>
+      <p>Support needs are a new way to track resettlement activity in PSfR.</p>
+
+      <h2 class="govuk-heading-m">Setting support needs</h2>
+
+      <h3 class="govuk-heading-s">If someone had a completed pre-release report in PSfR</h3>
+      <p>If someone had a completed pre-release report when we released this feature, you will not have to spend time setting up anything new.</p>
+      <p>We have transferred all the updates from each pathway to a single support need, for example, ‘Accommodation’.</p>
+      <img
+        class="service-updates-image"
+        src="/assets/images/service-updates/20250318/support-needs-1.png"
+        alt="A screenshot showing a support needs block on an accommodation pathway page. There is a single support need called accommodation."
+      >
+      <p class="govuk-!-padding-top-2">You will not be able to add any new support needs in these cases. You will need to update the single pathway-level support need.</p>
+
+      <h3 class="govuk-heading-s">If someone did not have a completed pre-release report in PSfR</h3>
+      <p>If someone did not have a completed pre-release report, you will need to set their support needs before you can add updates to PSfR.</p>
+      <p>You can do this at any time, but you may wish to set the support needs when you are prompted to do the immediate needs report or the pre-release report. The report information should inform the setting of support needs.</p>
+
+      <h3 class="govuk-heading-s">Adding support needs to a pathway</h3>
+      <p>The <strong>Support needs</strong> block on each pathway will be empty at first. Select <strong>Add support need</strong> to set the support needs.</p>
+      <img
+          class="service-updates-image"
+          src="/assets/images/service-updates/20250318/support-needs-2.png"
+          alt="A screenshot showing an empty support needs block on a children, families and communities pathway page. There is an add a support need link."
+      >
+      <p class="govuk-!-padding-top-2">You will see a list of support needs that are relevant to that pathway. These are grouped into categories. Select any support needs that are relevant.</p>
+      <p>You can also choose to add an <strong>Other</strong> support need for each category, or can select <strong>No support needs identified</strong> if they do not need any support in that area.</p>
+      <img
+          class="service-updates-image"
+          src="/assets/images/service-updates/20250318/support-needs-3.png"
+          alt="Screenshot of the add children, families and communities support needs page."
+      >
+      <p class="govuk-!-padding-top-2">You will then see a page for each support need you have selected.</p>
+      <p>You will need to select:</p>
+      <ul>
+        <li>a status for the support need</li>
+        <li>which staff are responsible for meeting the support need (prison resettlement team, community probation staff, or both)</li>
+      </ul>
+      <p>There is also an optional text field for you to add any additional information about the support needed.</p>
+      <img
+          class="service-updates-image"
+          src="/assets/images/service-updates/20250318/support-needs-4.png"
+          alt="Screenshot of a social inclusion support need screen for the children, families and communities pathway."
+      >
+
+      <h3 class="govuk-heading-s govuk-!-padding-top-4">Pathway-level case notes</h3>
+      <p>Pathway-level case notes will still be visible on the pathway pages. They will be in the <strong>Updates</strong> block and have ‘(case note)’ after the title. </p>
+      <img
+          class="service-updates-image"
+          src="/assets/images/service-updates/20250318/support-needs-5.png"
+          alt="An accommodation updates block with a pathway-level case note."
+      >
+
+      <h2 class="govuk-heading-m govuk-!-padding-top-4">Updating support needs</h2>
+      <p>To update a support need, select the support need link in the <strong>Support needs</strong> block on the pathway page.</p>
+      <img
+          class="service-updates-image"
+          src="/assets/images/service-updates/20250318/support-needs-6.png"
+          alt="A support needs block on an accommodation pathway page."
+      >
+      <p class="govuk-!-padding-top-2">This will open the page for that support need. You will be able to see any previous updates by expanding the link at the top of the page.</p>
+      <img
+          class="service-updates-image"
+          src="/assets/images/service-updates/20250318/support-needs-7.png"
+          alt="A support needs detail page with the 'See previous updates' section expanded."
+      >
+      <p class="govuk-!-padding-top-2">You can update the status and responsible staff, and should add a note in the <strong>Additional details</strong> text box to explain the update.</p>
+      <p>Updates will also appear on the <strong>Updates</strong> block on the pathway page.</p>
+
+      <h3 class="govuk-heading-s govuk-!-padding-top-4">Setting the status to ‘Support need met’</h3>
+      <p>A status should only be set to ‘Support need met’ when the person in prison has received all the support they need to achieve a successful outcome.</p>
+      <p>For example, the support need ‘Help to find accommodation’ should only be set to ‘Support need met’ when accommodation has been secured for that person.</p>
+      <p>If staff have tried to secure accommodation, but have not been successful, the status should stay as ‘Support in progress’.</p>
+
+      <h2 class="govuk-heading-m govuk-!-padding-top-4">Any questions or feedback?</h2>
+      <p>Please contact <a href="mailto:resettlementpassportshq@justice.gov.uk">resettlementpassportshq@justice.gov.uk</a> with any questions about the service.</p>
+      <p>When you have used the new support needs feature, let us know what you think of these changes using our <a href="{{ feedbackUrl }}">feedback form</a>.</p>
+    </div>
+  </div>
+{% endblock %}
