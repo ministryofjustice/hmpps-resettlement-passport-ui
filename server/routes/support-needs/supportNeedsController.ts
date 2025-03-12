@@ -97,7 +97,9 @@ export default class SupportNeedsController {
 
       const supportNeeds = groupSupportNeedsByCategory(currentCacheState)
 
-      res.render('pages/support-needs', { pathway, supportNeeds, prisonerData })
+      const pathwaySupportNeeds = await this.rpService.getPathwaySupportNeedsSummary(prisonerNumber, pathwayEnum)
+
+      res.render('pages/support-needs', { pathway, supportNeeds, prisonerData, pathwaySupportNeeds })
     } catch (err) {
       next(err)
     }

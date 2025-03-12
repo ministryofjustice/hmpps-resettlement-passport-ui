@@ -187,5 +187,18 @@ describe('SupportNeedUpdateController', () => {
         })
         .expect(500)
     })
+
+    it('error case - invalid form data', async () => {
+      const prisonerNumber = 'A1234DY'
+      const prisonerNeedId = '23'
+
+      await request(app)
+        .post(`/support-needs/accommodation/update/${prisonerNeedId}`)
+        .send({
+          prisonerNumber,
+        })
+        .expect(302)
+        .expect('Location', `/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
+    })
   })
 })
