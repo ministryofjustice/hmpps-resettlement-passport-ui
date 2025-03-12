@@ -80,10 +80,30 @@ describe('ServiceUpdatesController', () => {
         })
     })
 
-    it('should render the service updates subpage when a page parameter is provided', async () => {
+    it('should render the service update for inputting report answers', async () => {
       configHelper(config)
       await request(app)
         .get('/service-updates/inputting-report-answers')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
+
+    it('should render the service update for assign a case', async () => {
+      configHelper(config)
+      await request(app)
+        .get('/service-updates/assign-a-case')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+    })
+
+    it('should render the service update for support needs', async () => {
+      configHelper(config)
+      await request(app)
+        .get('/service-updates/support-needs')
         .expect(200)
         .expect(res => {
           expect(res.text).toMatchSnapshot()
