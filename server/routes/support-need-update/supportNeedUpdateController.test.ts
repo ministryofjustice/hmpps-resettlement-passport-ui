@@ -188,7 +188,7 @@ describe('SupportNeedUpdateController', () => {
         .expect(500)
     })
 
-    it('error case - invalid form data', async () => {
+    it('error case - additional details has too many characters', async () => {
       const prisonerNumber = 'A1234DY'
       const prisonerNeedId = '23'
 
@@ -196,6 +196,39 @@ describe('SupportNeedUpdateController', () => {
         .post(`/support-needs/accommodation/update/${prisonerNeedId}`)
         .send({
           prisonerNumber,
+          additionalDetails: 'x'.repeat(3001),
+          updateStatus: 'DECLINED',
+          responsibleStaff: ['PRISON', 'PROBATION'],
+        })
+        .expect(302)
+        .expect('Location', `/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
+    })
+
+    it('error case - status missing', async () => {
+      const prisonerNumber = 'A1234DY'
+      const prisonerNeedId = '23'
+
+      await request(app)
+        .post(`/support-needs/accommodation/update/${prisonerNeedId}`)
+        .send({
+          prisonerNumber,
+          additionalDetails: 'x'.repeat(3000),
+          responsibleStaff: ['PRISON', 'PROBATION'],
+        })
+        .expect(302)
+        .expect('Location', `/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
+    })
+
+    it('error case - responsibleStaff missing', async () => {
+      const prisonerNumber = 'A1234DY'
+      const prisonerNeedId = '23'
+
+      await request(app)
+        .post(`/support-needs/accommodation/update/${prisonerNeedId}`)
+        .send({
+          prisonerNumber,
+          updateStatus: 'DECLINED',
+          responsibleStaff: [],
         })
         .expect(302)
         .expect('Location', `/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
