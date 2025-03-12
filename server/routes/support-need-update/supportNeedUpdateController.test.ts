@@ -219,7 +219,7 @@ describe('SupportNeedUpdateController', () => {
         .expect('Location', `/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
     })
 
-    it('error case - responsibleStaff missing', async () => {
+    it('error case - responsibleStaff empty', async () => {
       const prisonerNumber = 'A1234DY'
       const prisonerNeedId = '23'
 
@@ -229,6 +229,20 @@ describe('SupportNeedUpdateController', () => {
           prisonerNumber,
           updateStatus: 'DECLINED',
           responsibleStaff: [],
+        })
+        .expect(302)
+        .expect('Location', `/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
+    })
+
+    it('error case - responsibleStaff missing', async () => {
+      const prisonerNumber = 'A1234DY'
+      const prisonerNeedId = '23'
+
+      await request(app)
+        .post(`/support-needs/accommodation/update/${prisonerNeedId}`)
+        .send({
+          prisonerNumber,
+          updateStatus: 'DECLINED',
         })
         .expect(302)
         .expect('Location', `/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
