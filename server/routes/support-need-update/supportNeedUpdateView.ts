@@ -28,7 +28,7 @@ export default class SupportNeedUpdateView implements View {
       pathway: this.pathway,
       prisonerNeedId: this.prisonerNeedId,
       releaseDate: this.releaseDate,
-      errors: this.errors.length !== 0 ? this.errors : null,
+      errors: this.errors,
     }
   }
 }

@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { ValidationError, validationResult } from 'express-validator'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import {
   getNameFromUrl,
@@ -8,6 +9,7 @@ import {
 } from '../../utils/utils'
 import RpService from '../../services/rpService'
 import SupportNeedUpdateView from './supportNeedUpdateView'
+import SupportNeedUpdateForm from './supportNeedUpdateForm'
 
 export default class SupportNeedUpdateController {
   constructor(private readonly prisonerDetailsService: PrisonerDetailsService, private readonly rpService: RpService) {
@@ -35,7 +37,14 @@ export default class SupportNeedUpdateController {
         req.config.supportNeeds.releaseDate,
       )
 
-      res.render('pages/update-support-need', { ...supportNeedUpdateView.renderArgs })
+      const errors = req.flash('errors') as unknown as ValidationError[]
+      const formValues = req.flash('formValues')?.[0] || {}
+      const supportNeedUpdateForm = new SupportNeedUpdateForm(existingPrisonerNeed, formValues, errors)
+
+      res.render('pages/update-support-need', {
+        ...supportNeedUpdateView.renderArgs,
+        ...supportNeedUpdateForm.renderArgs,
+      })
     } catch (err) {
       next(err)
     }
@@ -47,14 +56,21 @@ export default class SupportNeedUpdateController {
 
       await validatePathwaySupportNeeds(pathway)
       validateStringIsAnInteger(prisonerNeedId)
+      const errors = validationResult(req)
 
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
       const { prisonerNumber } = prisonerData.personalDetails
 
-      const supportNeedsPatch = processSupportNeedsRequestBody(req.body)
-      await this.rpService.patchSupportNeedById(prisonerNumber, prisonerNeedId, supportNeedsPatch)
+      if (!errors.isEmpty()) {
+        req.flash('errors', errors.array())
+        req.flash('formValues', req.body)
+        res.redirect(`/support-needs/${pathway}/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
+      } else {
+        const supportNeedsPatch = processSupportNeedsRequestBody(req.body)
+        await this.rpService.patchSupportNeedById(prisonerNumber, prisonerNeedId, supportNeedsPatch)
 
-      res.redirect(`/${pathway}?prisonerNumber=${prisonerNumber}#support-needs-updates`)
+        res.redirect(`/${pathway}?prisonerNumber=${prisonerNumber}#support-needs-updates`)
+      }
     } catch (err) {
       next(err)
     }
