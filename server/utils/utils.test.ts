@@ -1,3 +1,4 @@
+import { FieldValidationError } from 'express-validator'
 import {
   convertToTitleCase,
   initialiseName,
@@ -35,6 +36,8 @@ import {
   processSupportNeedsRequestBody,
   trimToNull,
   validSupportNeedsStatus,
+  errorSummaryList,
+  findError,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -1709,5 +1712,59 @@ describe('validSupportNeedsStatus', () => {
     ['undefined', undefined, false],
   ])('%s -> validSupportNeedsStatus(%s)', (_: string, input: string, output: boolean) => {
     expect(validSupportNeedsStatus(input)).toEqual(output)
+  })
+})
+
+describe('errorSummaryList', () => {
+  it('should map errors to text and href', () => {
+    const errors = <FieldValidationError[]>[
+      { msg: 'Field 1 message', path: 'field1' },
+      { msg: 'Field 2 message', path: 'field2' },
+    ]
+    const expectedResult = [
+      { text: 'Field 1 message', href: '#field1' },
+      { text: 'Field 2 message', href: '#field2' },
+    ]
+
+    const result = errorSummaryList(errors)
+    expect(result).toEqual(expectedResult)
+  })
+
+  it('should map error with no path to text with no href', () => {
+    const errors = <FieldValidationError[]>[{ msg: 'Field 1 message with no path' }]
+    const expectedResult = [{ text: 'Field 1 message with no path', href: '#' }]
+
+    const result = errorSummaryList(errors)
+    expect(result).toEqual(expectedResult)
+  })
+
+  it('should handle empty errors object', () => {
+    const result = errorSummaryList(undefined)
+    expect(result).toEqual([])
+  })
+})
+
+describe('findError', () => {
+  const errors = <FieldValidationError[]>[
+    { msg: 'Field 1 message', path: 'field1' },
+    { msg: 'Field 2 message', path: 'field2' },
+  ]
+
+  it('should find specified error and return errorMessage for GDS components', () => {
+    const result = findError(errors, 'field2')
+
+    expect(result).toEqual({ text: 'Field 2 message' })
+  })
+
+  it('should handle empty errors object', () => {
+    const result = findError(undefined, 'field2')
+
+    expect(result).toEqual(null)
+  })
+
+  it('should handle missing form field', () => {
+    const result = findError(undefined, undefined)
+
+    expect(result).toEqual(null)
   })
 })

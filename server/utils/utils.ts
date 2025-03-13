@@ -649,10 +649,9 @@ export function validSupportNeedsStatus(updateStatus: string) {
   return updateStatus in SupportNeedStatus
 }
 
-export function errorSummaryList(errors: ValidationError[] = []): ErrorMessage[] {
+export function errorSummaryList(errors: FieldValidationError[] = []): ErrorMessage[] {
   return errors.map(error => {
-    const path = error.type === 'field' ? error.path : ''
-    return { text: error.msg, href: `#${path}` }
+    return { text: error.msg, href: `#${error.path || ''}` }
   })
 }
 
