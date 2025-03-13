@@ -1,6 +1,6 @@
 import { Callback } from 'nunjucks'
 import { addMinutes, format } from 'date-fns'
-import { FieldValidationError, ValidationError } from 'express-validator'
+import { FieldValidationError } from 'express-validator'
 import { PathwayStatus, PrisonerData } from '../@types/express'
 import {
   ASSESSMENT_ENUMS_DICTIONARY,
