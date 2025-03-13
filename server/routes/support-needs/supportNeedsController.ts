@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import createError from 'http-errors'
-import { validatePathwaySupportNeeds, getEnumByURL } from '../../utils/utils'
+import { validatePathwaySupportNeeds, getEnumByURL, findPreviousSelectedSupportNeed } from '../../utils/utils'
 import { PrisonerSupportNeedsPost, SupportNeedCache, SupportNeedsCategoryGroup } from '../../data/model/supportNeeds'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
@@ -91,6 +91,7 @@ export default class SupportNeedsController {
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
       const pathwayEnum = getEnumByURL(pathway)
+      const edit = req.query.edit === 'true'
 
       const stateKey = {
         prisonerNumber,
@@ -104,7 +105,11 @@ export default class SupportNeedsController {
 
       const pathwaySupportNeeds = await this.rpService.getPathwaySupportNeedsSummary(prisonerNumber, pathwayEnum)
 
-      res.render('pages/support-needs', { pathway, supportNeeds, prisonerData, pathwaySupportNeeds })
+      const backLink = edit
+        ? `/support-needs/${pathway}/check-answers/?prisonerNumber=${prisonerNumber}`
+        : `/${pathway}/?prisonerNumber=${prisonerNumber}#support-needs`
+
+      res.render('pages/support-needs', { pathway, supportNeeds, prisonerData, pathwaySupportNeeds, backLink })
     } catch (err) {
       next(err)
     }
@@ -172,7 +177,21 @@ export default class SupportNeedsController {
         return res.render('pages/support-needs-error', { pathway, prisonerData })
       }
 
-      return res.render('pages/support-needs-status', { pathway, prisonerData, supportNeed, edit })
+      const previousSupportNeed = findPreviousSelectedSupportNeed(currentCacheState, uuid)
+
+      const getBackLink = () => {
+        if (edit) {
+          return `/support-needs/${pathway}/check-answers/?prisonerNumber=${prisonerNumber}`
+        }
+        if (previousSupportNeed) {
+          return `/support-needs/${pathway}/status/${previousSupportNeed.uuid}/?prisonerNumber=${prisonerNumber}`
+        }
+        return `/support-needs/${pathway}/?prisonerNumber=${prisonerNumber}`
+      }
+
+      const backLink = getBackLink()
+
+      return res.render('pages/support-needs-status', { pathway, prisonerData, supportNeed, edit, backLink })
     } catch (err) {
       return next(err)
     }
@@ -274,9 +293,17 @@ export default class SupportNeedsController {
         }
       })
 
-      res.render('pages/support-needs-check-answers', { pathway, prisonerNumber, supportNeedsCategories })
+      const lastSelectedSupportNeedId = currentCacheState.needs.findLast(need => need.isSelected)?.uuid
+      const backLink = `/support-needs/${pathway}/status/${lastSelectedSupportNeedId}/?prisonerNumber=${prisonerNumber}`
+
+      return res.render('pages/support-needs-check-answers', {
+        pathway,
+        prisonerNumber,
+        supportNeedsCategories,
+        backLink,
+      })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 

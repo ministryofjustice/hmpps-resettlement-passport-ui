@@ -38,6 +38,7 @@ import {
   validSupportNeedsStatus,
   errorSummaryList,
   findError,
+  findPreviousSelectedSupportNeed,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -55,7 +56,7 @@ import { PersonalDetails, PrisonerData } from '../@types/express'
 import { AssessmentType } from '../data/model/assessmentInformation'
 import { Pagination } from '../data/model/pagination'
 import FeatureFlags from '../featureFlag'
-import { PrisonerSupportNeedsPatch } from '../data/model/supportNeeds'
+import { PrisonerSupportNeedsPatch, SupportNeedCache } from '../data/model/supportNeeds'
 import { SupportNeedStatus } from '../data/model/supportNeedStatus'
 
 describe('convert to title case', () => {
@@ -1767,4 +1768,79 @@ describe('findError', () => {
 
     expect(result).toEqual(null)
   })
+})
+
+describe('findPreviousSelectedSupportNeed', () => {
+  it.each([
+    [
+      'Finds the previous selected support need',
+      {
+        needs: [
+          { uuid: '1', isSelected: false } as SupportNeedCache,
+          { uuid: '2', isSelected: true } as SupportNeedCache,
+          { uuid: '3', isSelected: false } as SupportNeedCache,
+          { uuid: '4', isSelected: true } as SupportNeedCache,
+          { uuid: '5', isSelected: false } as SupportNeedCache,
+        ],
+      },
+      '4',
+      { uuid: '2', isSelected: true } as SupportNeedCache,
+    ],
+    [
+      'Returns null if no previous selected need exists',
+      {
+        needs: [
+          { uuid: '1', isSelected: false } as SupportNeedCache,
+          { uuid: '2', isSelected: false } as SupportNeedCache,
+          { uuid: '3', isSelected: false } as SupportNeedCache,
+          { uuid: '4', isSelected: true } as SupportNeedCache,
+        ],
+      },
+      '4',
+      null,
+    ],
+    [
+      'Returns null if the given uuid is the first item',
+      {
+        needs: [
+          { uuid: '1', isSelected: true } as SupportNeedCache,
+          { uuid: '2', isSelected: false } as SupportNeedCache,
+          { uuid: '3', isSelected: true } as SupportNeedCache,
+        ],
+      },
+      '1',
+      null,
+    ],
+    [
+      'Finds the most recent previous selected need',
+      {
+        needs: [
+          { uuid: '1', isSelected: true } as SupportNeedCache,
+          { uuid: '2', isSelected: false } as SupportNeedCache,
+          { uuid: '3', isSelected: true } as SupportNeedCache,
+          { uuid: '4', isSelected: false } as SupportNeedCache,
+          { uuid: '5', isSelected: true } as SupportNeedCache,
+        ],
+      },
+      '5',
+      { uuid: '3', isSelected: true } as SupportNeedCache,
+    ],
+    [
+      'Returns null if the uuid does not exist',
+      {
+        needs: [
+          { uuid: '1', isSelected: true } as SupportNeedCache,
+          { uuid: '2', isSelected: false } as SupportNeedCache,
+          { uuid: '3', isSelected: true } as SupportNeedCache,
+        ],
+      },
+      '10',
+      null,
+    ],
+  ])(
+    '%s',
+    (_description, cacheState: { needs: SupportNeedCache[] }, uuid: string, expected: SupportNeedCache | null) => {
+      expect(findPreviousSelectedSupportNeed(cacheState, uuid)).toEqual(expected)
+    },
+  )
 })

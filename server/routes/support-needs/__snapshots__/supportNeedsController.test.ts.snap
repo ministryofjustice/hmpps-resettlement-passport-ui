@@ -107,6 +107,7 @@ exports[`SupportNeedsController getCheckAnswers should render the check your ans
   <div class="govuk-width-container govuk-!-padding-top-8">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
+        <a href="/support-needs/accommodation/status/456/?prisonerNumber=A1234DY" class="govuk-back-link">Back</a>
         <h1 class="govuk-heading-l">Check your answers</h1>
         <h2 class="govuk-heading-m">Accommodation support needs</h2>
         
@@ -201,7 +202,7 @@ exports[`SupportNeedsController getCheckAnswers should render the check your ans
             <input type="hidden" name="_csrf" value=""/>
             <input type="hidden" name="prisonerNumber" value="A1234DY"/>
             <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
-            <a href="/support-needs/accommodation/?prisonerNumber=A1234DY" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Add support needs</a>
+            <a href="/support-needs/accommodation/?prisonerNumber=A1234DY&edit=true" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Add support needs</a>
           </form>
         </div>
       </div>
@@ -340,6 +341,7 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+          <a href="/accommodation/?prisonerNumber=A1234DY#support-needs" class="govuk-back-link">Back</a>
           <h1 class="govuk-heading-l">Add accommodation support needs</h1>
           <span class="govuk-hint">Select any support needs you have identified that could be met by the prison resettlement team, community probation staff or by referral to a third party provider.</span>
         </div>
@@ -785,6 +787,7 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
 
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
+          <a href="/accommodation/?prisonerNumber=A1234DY#support-needs" class="govuk-back-link">Back</a>
           <h1 class="govuk-heading-l">Add accommodation support needs</h1>
           <span class="govuk-hint">Select any support needs you have identified that could be met by the prison resettlement team, community probation staff or by referral to a third party provider.</span>
         </div>
@@ -1126,6 +1129,7 @@ exports[`SupportNeedsController getSupportNeedsStatus with cached answers should
           
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
+      <a href="/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY" class="govuk-back-link">Back</a>
       <span class="govuk-caption-l">Accommodation support need</span>
       
         <h1 class="govuk-heading-l">End a tenancy</h1>
@@ -1339,6 +1343,7 @@ exports[`SupportNeedsController getSupportNeedsStatus with cached answers should
           
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
+      <a href="/support-needs/accommodation/?prisonerNumber=A1234DY" class="govuk-back-link">Back</a>
       <span class="govuk-caption-l">Accommodation support need</span>
       
         <h1 class="govuk-heading-l">End a tenancy</h1>
@@ -1552,6 +1557,7 @@ exports[`SupportNeedsController getSupportNeedsStatus with cached other support 
           
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
+      <a href="/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY" class="govuk-back-link">Back</a>
       <span class="govuk-caption-l">Accommodation support need</span>
       
         <h1 class="govuk-heading-l">Custom support need title</h1>
@@ -1765,6 +1771,7 @@ exports[`SupportNeedsController getSupportNeedsStatus with cached other support 
           
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
+      <a href="/support-needs/accommodation/?prisonerNumber=A1234DY" class="govuk-back-link">Back</a>
       <span class="govuk-caption-l">Accommodation support need</span>
       
         <h1 class="govuk-heading-l">Custom support need title</h1>
@@ -1978,6 +1985,7 @@ exports[`SupportNeedsController getSupportNeedsStatus without any cached answers
           
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-three-quarters">
+      <a href="/support-needs/accommodation/?prisonerNumber=A1234DY" class="govuk-back-link">Back</a>
       <span class="govuk-caption-l">Accommodation support need</span>
       
         <h1 class="govuk-heading-l">Mortgage support while in prison</h1>

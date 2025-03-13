@@ -24,6 +24,7 @@
   <div class="govuk-width-container govuk-!-padding-top-8">
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
+        <a href="{{ backLink }}" class="govuk-back-link">Back</a>
         <h1 class="govuk-heading-l">Check your answers</h1>
         <h2 class="govuk-heading-m">{{ pathway | getNameFromUrl }} support needs</h2>
         {% if supportNeedsCategories %}
@@ -78,7 +79,7 @@
             <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
             <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
             <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
-            <a href="/support-needs/{{ pathway }}/?prisonerNumber={{  prisonerNumber }}" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Add support needs</a>
+            <a href="/support-needs/{{ pathway }}/?prisonerNumber={{  prisonerNumber }}&edit=true" class="govuk-button govuk-button--secondary govuk-!-margin-left-3">Add support needs</a>
           </form>
         </div>
       </div>
