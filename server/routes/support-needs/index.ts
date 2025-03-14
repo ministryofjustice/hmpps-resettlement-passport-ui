@@ -1,6 +1,8 @@
 import { Router } from 'express'
+import { body, oneOf } from 'express-validator'
 import { Services } from '../../services'
 import SupportNeedsController from './supportNeedsController'
+import { SupportNeedStatus } from '../../data/model/supportNeedStatus'
 
 export default (router: Router, services: Services) => {
   const supportNeedsController = new SupportNeedsController(
@@ -25,10 +27,21 @@ export default (router: Router, services: Services) => {
     supportNeedsController.checkLegacyProfile,
     supportNeedsController.getSupportNeedsStatus,
   ])
-  router.post('/support-needs/:pathway/status/:uuid', [
-    supportNeedsController.checkLegacyProfile,
-    supportNeedsController.submitSupportNeedsStatus,
-  ])
+  router.post(
+    '/support-needs/:pathway/status/:uuid',
+    [
+      body('status', 'Select a update status').isIn([
+        SupportNeedStatus.NOT_STARTED,
+        SupportNeedStatus.IN_PROGRESS,
+        SupportNeedStatus.MET,
+        SupportNeedStatus.DECLINED,
+      ]),
+      body('responsibleStaff', 'Select who is responsible for this support need').isIn(['PRISON', 'PROBATION']),
+      body('updateText', 'Additional details must be 3,000 characters or less').isLength({ max: 3000 }),
+    ],
+    [supportNeedsController.checkLegacyProfile, supportNeedsController.submitSupportNeedsStatus],
+  )
+
   router.get('/support-needs/:pathway/check-answers', [
     supportNeedsController.checkLegacyProfile,
     supportNeedsController.getCheckAnswers,
