@@ -684,3 +684,7 @@ export const findPreviousSelectedSupportNeed = (
 
   return null // No previous selected need found
 }
+
+export function convertStringToId(input: string) {
+  return input?.replaceAll(/\s+/g, '-')?.toLowerCase()?.trim()
+}

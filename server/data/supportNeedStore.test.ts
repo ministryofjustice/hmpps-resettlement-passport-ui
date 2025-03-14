@@ -26,7 +26,6 @@ describe('SupportNeedStore', () => {
         title: '',
         category: '',
         allowUserDesc: false,
-        isOther: false,
         isUpdatable: false,
         isSelected: false,
         isPreSelected: false,

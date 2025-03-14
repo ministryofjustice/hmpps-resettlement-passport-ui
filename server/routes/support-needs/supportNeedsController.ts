@@ -1,12 +1,14 @@
 import { RequestHandler } from 'express'
 import createError from 'http-errors'
-import { validatePathwaySupportNeeds, getEnumByURL, findPreviousSelectedSupportNeed } from '../../utils/utils'
+import { getEnumByURL, findPreviousSelectedSupportNeed, convertStringToId } from '../../utils/utils'
 import { PrisonerSupportNeedsPost, SupportNeedCache, SupportNeedsCategoryGroup } from '../../data/model/supportNeeds'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import RpService from '../../services/rpService'
 import { groupSupportNeedsByCategory } from '../../utils/groupSupportNeedsByCategory'
 import { updateSupportNeedsWithRequestBody } from '../../utils/updateSupportNeedsWithRequestBody'
+import { ValidationError } from '../../@types/express'
+import { CUSTOM_OTHER_PREFIX, SUPPORT_NEED_OPTION_PREFIX } from './supportNeedsContants'
 
 export default class SupportNeedsController {
   constructor(
@@ -17,26 +19,9 @@ export default class SupportNeedsController {
     // no op
   }
 
-  checkLegacyProfile: RequestHandler = async (req, res, next): Promise<void> => {
-    try {
-      req.prisonerData = req.body.prisonerNumber
-        ? await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
-        : await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
-
-      if (req.prisonerData.supportNeedsLegacyProfile) {
-        next(new Error('Unable to access support needs for a legacy profile'))
-      } else {
-        next()
-      }
-    } catch (err) {
-      next(err)
-    }
-  }
-
   startForm: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway } = req.params
-      await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
@@ -60,7 +45,6 @@ export default class SupportNeedsController {
             existingPrisonerSupportNeedId,
             allowUserDesc,
             category,
-            isOther: false,
             title,
             isUpdatable,
             isPrisonResponsible: null,
@@ -87,11 +71,13 @@ export default class SupportNeedsController {
   getSupportNeeds: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway } = req.params
-      await validatePathwaySupportNeeds(pathway)
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
       const pathwayEnum = getEnumByURL(pathway)
       const edit = req.query.edit === 'true'
+
+      const errors = req.flash('errors') as unknown as ValidationError[]
+      const formValuesOnError = req.flash('formValues')?.[0] as unknown as Record<string, string | string[]>
 
       const stateKey = {
         prisonerNumber,
@@ -101,7 +87,7 @@ export default class SupportNeedsController {
 
       const currentCacheState = await this.supportNeedStateService.getSupportNeeds(stateKey)
 
-      const supportNeeds = groupSupportNeedsByCategory(currentCacheState)
+      const supportNeeds = groupSupportNeedsByCategory(currentCacheState, errors, formValuesOnError)
 
       const pathwaySupportNeeds = await this.rpService.getPathwaySupportNeedsSummary(prisonerNumber, pathwayEnum)
 
@@ -109,7 +95,16 @@ export default class SupportNeedsController {
         ? `/support-needs/${pathway}/check-answers/?prisonerNumber=${prisonerNumber}`
         : `/${pathway}/?prisonerNumber=${prisonerNumber}#support-needs`
 
-      res.render('pages/support-needs', { pathway, supportNeeds, prisonerData, pathwaySupportNeeds, backLink })
+      res.render('pages/support-needs', {
+        pathway,
+        supportNeeds,
+        prisonerData,
+        pathwaySupportNeeds,
+        backLink,
+        SUPPORT_NEED_OPTION_PREFIX,
+        CUSTOM_OTHER_PREFIX,
+        errors,
+      })
     } catch (err) {
       next(err)
     }
@@ -118,10 +113,15 @@ export default class SupportNeedsController {
   submitSupportNeeds: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway } = req.params
-      await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
+
+      if (req.validationErrors?.length > 0) {
+        req.flash('errors', req.validationErrors)
+        req.flash('formValues', req.body)
+        return res.redirect(`/support-needs/${pathway}?prisonerNumber=${prisonerNumber}`)
+      }
 
       const stateKey = {
         prisonerNumber,
@@ -154,7 +154,6 @@ export default class SupportNeedsController {
     try {
       const { pathway, uuid } = req.params
       const edit = req.query.edit === 'true'
-      await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
@@ -200,7 +199,6 @@ export default class SupportNeedsController {
   submitSupportNeedsStatus: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway, uuid } = req.params
-      await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
@@ -258,7 +256,6 @@ export default class SupportNeedsController {
   getCheckAnswers: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const { pathway } = req.params
-      await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
@@ -312,7 +309,6 @@ export default class SupportNeedsController {
       const { pathway } = req.params
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
-      await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
 
       const stateKey = {
@@ -361,7 +357,6 @@ export default class SupportNeedsController {
       const edit = req.body.edit === 'true'
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
-      await validatePathwaySupportNeeds(pathway)
       const pathwayEnum = getEnumByURL(pathway)
 
       const stateKey = {
@@ -411,6 +406,107 @@ export default class SupportNeedsController {
         )
       }
       return res.redirect(`/support-needs/${pathway}/check-answers?prisonerNumber=${prisonerNumber}`)
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  setPrisonerData: RequestHandler = async (req, res, next): Promise<void> => {
+    try {
+      req.prisonerData = req.body.prisonerNumber
+        ? await this.prisonerDetailsService.loadPrisonerDetailsFromBody(req, res, false)
+        : await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, false)
+
+      if (req.prisonerData.supportNeedsLegacyProfile) {
+        return next(Error('Unable to access support needs for a legacy profile'))
+      }
+      return next()
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  validateSupportNeeds: RequestHandler = async (req, _res, next): Promise<void> => {
+    try {
+      const { prisonerData } = req
+      const { pathway } = req.params
+      const pathwayEnum = getEnumByURL(pathway)
+
+      const { prisonerNumber } = prisonerData.personalDetails
+
+      const stateKey = {
+        prisonerNumber,
+        userId: req.user.username,
+        pathway: pathwayEnum,
+      }
+      const currentCacheState = await this.supportNeedStateService.getSupportNeeds(stateKey)
+
+      const supportNeedsCategories: SupportNeedsCategoryGroup[] = []
+
+      currentCacheState.needs.forEach(need => {
+        let categoryGroup = supportNeedsCategories.find(group => group.categoryName === need.category)
+        if (!categoryGroup) {
+          categoryGroup = { categoryName: need.category, supportNeeds: [] }
+          supportNeedsCategories.push(categoryGroup)
+        }
+        categoryGroup.supportNeeds.push(need)
+      })
+
+      const categoriesToValidate = supportNeedsCategories.filter(category =>
+        category.supportNeeds.find(sn => !sn.isUpdatable),
+      )
+
+      const reqBody = req.body as Record<string, string | string[]>
+      const selectedCategories = Object.keys(reqBody)
+        .filter(it => it.startsWith(SUPPORT_NEED_OPTION_PREFIX))
+        .map(it => it.replace(SUPPORT_NEED_OPTION_PREFIX, ''))
+
+      const validationErrors: ValidationError[] = []
+
+      // User must make a selection
+      if (selectedCategories.length === 0) {
+        validationErrors.push({
+          type: 'SUPPORT_NEEDS_NO_SELECTION',
+          id: null,
+          text: 'At least one support need must be selected', // TODO - check content
+          href: '#support-needs-form',
+        })
+      } else {
+        // For each section, if the "No support needs identified" option is available we need to check that something is selected
+        categoriesToValidate.forEach(category => {
+          if (!selectedCategories.includes(category.categoryName)) {
+            validationErrors.push({
+              type: 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY',
+              id: category.categoryName,
+              text: `Select support needs, or select '${category.supportNeeds.find(it => !it.isUpdatable).title}'`,
+              href: `#${convertStringToId(category.categoryName)}`,
+            })
+          }
+        })
+
+        // If any OTHER checkbox has been checked, the other field must be provided
+        const selectedNeeds = Object.entries(reqBody)
+          .filter(it => it[0].startsWith(SUPPORT_NEED_OPTION_PREFIX))
+          .flatMap(it => it[1])
+
+        const requiredOtherFields = Object.keys(reqBody)
+          .filter(it => it.startsWith(CUSTOM_OTHER_PREFIX))
+          .filter(it => selectedNeeds.includes(it.replace(CUSTOM_OTHER_PREFIX, '')))
+
+        requiredOtherFields.forEach(it => {
+          if (!reqBody[it]) {
+            validationErrors.push({
+              type: 'SUPPORT_NEEDS_MISSING_OTHER_TEXT',
+              id: it,
+              text: 'Other field must be specified', // TODO - check content
+              href: `#other-${it.replace(CUSTOM_OTHER_PREFIX, '')}`,
+            })
+          }
+        })
+      }
+
+      req.validationErrors = validationErrors
+      return next()
     } catch (err) {
       return next(err)
     }
