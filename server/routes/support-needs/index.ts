@@ -36,7 +36,10 @@ export default (router: Router, services: Services) => {
         SupportNeedStatus.MET,
         SupportNeedStatus.DECLINED,
       ]),
-      body('responsibleStaff', 'Select who is responsible for this support need').isIn(['PRISON', 'PROBATION']),
+      body('responsibleStaff', 'Select who is responsible for this support need')
+        .toArray()
+        .isArray({ min: 1 })
+        .isIn(['PRISON', 'PROBATION']),
       body('updateText', 'Additional details must be 3,000 characters or less').isLength({ max: 3000 }),
     ],
     [supportNeedsController.checkLegacyProfile, supportNeedsController.submitSupportNeedsStatus],

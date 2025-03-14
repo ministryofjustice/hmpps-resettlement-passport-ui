@@ -1807,6 +1807,15 @@ describe('SupportNeedsController', () => {
         expect(supportNeedStateService.setSupportNeeds).not.toHaveBeenCalled()
       })
 
+      it('should not allow submission if responsible staff is an empty array', async () => {
+        const responsibleStaff: string[] = []
+        const submission = { ...validSubmission, responsibleStaff }
+
+        await request(app).post(postUrl).send(submission).expect(302).expect('Location', getUrl)
+
+        expect(supportNeedStateService.setSupportNeeds).not.toHaveBeenCalled()
+      })
+
       it('should not allow submission if responsible staff is invalid', async () => {
         const submission = { ...validSubmission, responsibleStaff: ['PRISON', 'X'] }
 
