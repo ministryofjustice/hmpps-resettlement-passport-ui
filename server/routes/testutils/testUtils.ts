@@ -4,7 +4,7 @@ import { PrisonerData } from '../../@types/express'
 import RpService from '../../services/rpService'
 import { PrisonersList } from '../../data/model/prisoners'
 import FeatureFlags from '../../featureFlag'
-import { PathwaySupportNeeds, SupportNeedsCache } from '../../data/model/supportNeeds'
+import { SupportNeedsCache } from '../../data/model/supportNeeds'
 
 export function stubPrisonerDetails(
   rpService: RpService,
