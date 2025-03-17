@@ -110,7 +110,9 @@ function convertFromSupportNeedCacheToSupportNeedCheckbox(
     isSelected: selectedUUIDs === null ? supportNeed.isSelected : selectedUUIDs.includes(supportNeed.uuid),
     isPreSelected: supportNeed.isPreSelected,
     error: errors?.find(
-      it => it.type === 'SUPPORT_NEEDS_MISSING_OTHER_TEXT' && it.id === `${CUSTOM_OTHER_PREFIX}${supportNeed.uuid}`,
+      it =>
+        (it.type === 'SUPPORT_NEEDS_MISSING_OTHER_TEXT' || it.type === 'SUPPORT_NEEDS_OTHER_TOO_LONG') &&
+        it.id === `${CUSTOM_OTHER_PREFIX}${supportNeed.uuid}`,
     )?.text,
   }
 }

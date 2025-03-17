@@ -464,11 +464,11 @@ export default class SupportNeedsController {
       const validationErrors: ValidationError[] = []
 
       // User must make a selection
-      if (selectedCategories.length === 0) {
+      if (categoriesToValidate.length === 0 && selectedCategories.length === 0) {
         validationErrors.push({
           type: 'SUPPORT_NEEDS_NO_SELECTION',
           id: null,
-          text: 'At least one support need must be selected', // TODO - check content
+          text: 'Select one or more support needs', // TODO - check content
           href: '#support-needs-form',
         })
       } else {
@@ -484,7 +484,7 @@ export default class SupportNeedsController {
           }
         })
 
-        // If any OTHER checkbox has been checked, the other field must be provided
+        // If any OTHER checkbox has been checked, the other field must be provided and not exceed the character count
         const selectedNeeds = Object.entries(reqBody)
           .filter(it => it[0].startsWith(SUPPORT_NEED_OPTION_PREFIX))
           .flatMap(it => it[1])
@@ -498,7 +498,14 @@ export default class SupportNeedsController {
             validationErrors.push({
               type: 'SUPPORT_NEEDS_MISSING_OTHER_TEXT',
               id: it,
-              text: 'Other field must be specified', // TODO - check content
+              text: 'Enter other support need',
+              href: `#other-${it.replace(CUSTOM_OTHER_PREFIX, '')}`,
+            })
+          } else if (reqBody[it].length > 100) {
+            validationErrors.push({
+              type: 'SUPPORT_NEEDS_OTHER_TOO_LONG',
+              id: it,
+              text: 'Other support need must be 100 characters or less',
               href: `#other-${it.replace(CUSTOM_OTHER_PREFIX, '')}`,
             })
           }
