@@ -1,7 +1,12 @@
 import { RequestHandler } from 'express'
 import { ValidationError, validationResult } from 'express-validator'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
-import { getNameFromUrl, processSupportNeedsRequestBody, validateStringIsAnInteger } from '../../utils/utils'
+import {
+  getNameFromUrl,
+  processSupportNeedsRequestBody,
+  validatePathwaySupportNeeds,
+  validateStringIsAnInteger,
+} from '../../utils/utils'
 import RpService from '../../services/rpService'
 import SupportNeedUpdateView from './supportNeedUpdateView'
 import SupportNeedUpdateForm from './supportNeedUpdateForm'
@@ -15,6 +20,7 @@ export default class SupportNeedUpdateController {
     try {
       const { pathway, prisonerNeedId } = req.params
 
+      await validatePathwaySupportNeeds(pathway)
       const pathwayName = getNameFromUrl(pathway)
       validateStringIsAnInteger(prisonerNeedId)
 
@@ -48,6 +54,7 @@ export default class SupportNeedUpdateController {
     try {
       const { pathway, prisonerNeedId } = req.params
 
+      await validatePathwaySupportNeeds(pathway)
       validateStringIsAnInteger(prisonerNeedId)
       const errors = validationResult(req)
 

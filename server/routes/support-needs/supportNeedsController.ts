@@ -1,6 +1,11 @@
 import { RequestHandler } from 'express'
 import createError from 'http-errors'
-import { getEnumByURL, findPreviousSelectedSupportNeed, convertStringToId } from '../../utils/utils'
+import {
+  getEnumByURL,
+  findPreviousSelectedSupportNeed,
+  convertStringToId,
+  validatePathwaySupportNeeds,
+} from '../../utils/utils'
 import { PrisonerSupportNeedsPost, SupportNeedCache, SupportNeedsCategoryGroup } from '../../data/model/supportNeeds'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
@@ -420,6 +425,17 @@ export default class SupportNeedsController {
       if (req.prisonerData.supportNeedsLegacyProfile) {
         return next(Error('Unable to access support needs for a legacy profile'))
       }
+      return next()
+    } catch (err) {
+      return next(err)
+    }
+  }
+
+  validatePathwayAndFeatureFlag: RequestHandler = async (req, _res, next): Promise<void> => {
+    try {
+      const { pathway } = req.params
+      await validatePathwaySupportNeeds(pathway)
+
       return next()
     } catch (err) {
       return next(err)

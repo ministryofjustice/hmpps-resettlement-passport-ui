@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { Services } from '../../services'
 import SupportNeedsController from './supportNeedsController'
-import { validatePathwayAndFeatureFlag } from '../supportNeedsCommonMiddleware'
 
 export default (router: Router, services: Services) => {
   const supportNeedsController = new SupportNeedsController(
@@ -12,43 +11,43 @@ export default (router: Router, services: Services) => {
 
   router.get('/support-needs/:pathway/start', [
     supportNeedsController.setPrisonerData,
-    validatePathwayAndFeatureFlag,
+    supportNeedsController.validatePathwayAndFeatureFlag,
     supportNeedsController.startForm,
   ])
   router.get('/support-needs/:pathway', [
     supportNeedsController.setPrisonerData,
-    validatePathwayAndFeatureFlag,
+    supportNeedsController.validatePathwayAndFeatureFlag,
     supportNeedsController.getSupportNeeds,
   ])
   router.post('/support-needs/:pathway', [
     supportNeedsController.setPrisonerData,
-    validatePathwayAndFeatureFlag,
+    supportNeedsController.validatePathwayAndFeatureFlag,
     supportNeedsController.validateSupportNeeds,
     supportNeedsController.submitSupportNeeds,
   ])
   router.get('/support-needs/:pathway/status/:uuid', [
     supportNeedsController.setPrisonerData,
-    validatePathwayAndFeatureFlag,
+    supportNeedsController.validatePathwayAndFeatureFlag,
     supportNeedsController.getSupportNeedsStatus,
   ])
   router.post('/support-needs/:pathway/status/:uuid', [
     supportNeedsController.setPrisonerData,
-    validatePathwayAndFeatureFlag,
+    supportNeedsController.validatePathwayAndFeatureFlag,
     supportNeedsController.submitSupportNeedsStatus,
   ])
   router.get('/support-needs/:pathway/check-answers', [
     supportNeedsController.setPrisonerData,
-    validatePathwayAndFeatureFlag,
+    supportNeedsController.validatePathwayAndFeatureFlag,
     supportNeedsController.getCheckAnswers,
   ])
   router.post('/support-needs/:pathway/complete', [
     supportNeedsController.setPrisonerData,
-    validatePathwayAndFeatureFlag,
+    supportNeedsController.validatePathwayAndFeatureFlag,
     supportNeedsController.finaliseSupportNeeds,
   ])
   router.post('/support-needs/:pathway/status/:uuid/delete', [
     supportNeedsController.setPrisonerData,
-    validatePathwayAndFeatureFlag,
+    supportNeedsController.validatePathwayAndFeatureFlag,
     supportNeedsController.deleteSupportNeed,
   ])
 }
