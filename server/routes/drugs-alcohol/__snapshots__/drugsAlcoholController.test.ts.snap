@@ -619,7 +619,6 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     <h3 class="app-summary-card__title">
       Drugs and alcohol updates
       <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out more about this update</a>.</span>
-      <!-- TODO - update link to point to service update page. -->
     </h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
@@ -1478,7 +1477,6 @@ exports[`getView Happy path with default query params and no data from endpoints
     <h3 class="app-summary-card__title">
       Drugs and alcohol updates
       <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out more about this update</a>.</span>
-      <!-- TODO - update link to point to service update page. -->
     </h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
@@ -2023,7 +2021,6 @@ exports[`getView Happy path with specified query params and data from endpoints 
     <h3 class="app-summary-card__title">
       Drugs and alcohol updates
       <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out more about this update</a>.</span>
-      <!-- TODO - update link to point to service update page. -->
     </h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
