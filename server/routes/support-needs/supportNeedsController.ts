@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express'
 import createError from 'http-errors'
+import { ValidationError, validationResult } from 'express-validator'
 import {
   getEnumByURL,
   findPreviousSelectedSupportNeed,
@@ -12,7 +13,8 @@ import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import RpService from '../../services/rpService'
 import { groupSupportNeedsByCategory } from '../../utils/groupSupportNeedsByCategory'
 import { updateSupportNeedsWithRequestBody } from '../../utils/updateSupportNeedsWithRequestBody'
-import { ValidationError } from '../../@types/express'
+import SupportNeedForm from './supportNeedsForm'
+import { CustomValidationError } from '../../@types/express'
 import { CUSTOM_OTHER_PREFIX, SUPPORT_NEED_OPTION_PREFIX } from './supportNeedsContants'
 
 export default class SupportNeedsController {
@@ -81,7 +83,7 @@ export default class SupportNeedsController {
       const pathwayEnum = getEnumByURL(pathway)
       const edit = req.query.edit === 'true'
 
-      const errors = req.flash('errors') as unknown as ValidationError[]
+      const errors = req.flash('errors') as unknown as CustomValidationError[]
       const formValuesOnError = req.flash('formValues')?.[0] as unknown as Record<string, string | string[]>
 
       const stateKey = {
@@ -195,7 +197,18 @@ export default class SupportNeedsController {
 
       const backLink = getBackLink()
 
-      return res.render('pages/support-needs-status', { pathway, prisonerData, supportNeed, edit, backLink })
+      const errors = req.flash('errors') as unknown as ValidationError[]
+      const formValues = req.flash('formValues')?.[0] || {}
+      const form = new SupportNeedForm(supportNeed, formValues, errors)
+
+      return res.render('pages/support-needs-status', {
+        pathway,
+        prisonerData,
+        supportNeed,
+        edit,
+        backLink,
+        ...form.renderArgs,
+      })
     } catch (err) {
       return next(err)
     }
@@ -207,6 +220,14 @@ export default class SupportNeedsController {
       const pathwayEnum = getEnumByURL(pathway)
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
+
+      const errors = validationResult(req)
+
+      if (!errors.isEmpty()) {
+        req.flash('errors', errors.array())
+        req.flash('formValues', req.body)
+        return res.redirect(`/support-needs/${pathway}/status/${uuid}/?prisonerNumber=${prisonerNumber}`)
+      }
 
       const stateKey = {
         prisonerNumber,
@@ -477,7 +498,7 @@ export default class SupportNeedsController {
         .filter(it => it.startsWith(SUPPORT_NEED_OPTION_PREFIX))
         .map(it => it.replace(SUPPORT_NEED_OPTION_PREFIX, ''))
 
-      const validationErrors: ValidationError[] = []
+      const validationErrors: CustomValidationError[] = []
 
       // User must make a selection
       if (categoriesToValidate.length === 0 && selectedCategories.length === 0) {

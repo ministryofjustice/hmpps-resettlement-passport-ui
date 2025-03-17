@@ -4,13 +4,13 @@ import {
   SupportNeedCheckbox,
   SupportNeedsCache,
 } from '../data/model/supportNeeds'
-import { ValidationError } from '../@types/express'
+import { CustomValidationError } from '../@types/express'
 import { CUSTOM_OTHER_PREFIX, SUPPORT_NEED_OPTION_PREFIX } from '../routes/support-needs/supportNeedsContants'
 import { convertStringToId } from './utils'
 
 export function groupSupportNeedsByCategory(
   supportNeedsCache: SupportNeedsCache,
-  errors: ValidationError[],
+  errors: CustomValidationError[],
   formValuesOnError: Record<string, string | string[]>,
 ): GroupedSupportNeeds {
   const groupedSupportNeeds: GroupedSupportNeeds = []
@@ -95,7 +95,7 @@ export function groupSupportNeedsByCategory(
 
 function convertFromSupportNeedCacheToSupportNeedCheckbox(
   supportNeed: SupportNeedCache,
-  errors: ValidationError[],
+  errors: CustomValidationError[],
   selectedUUIDs: string[],
   otherMapping: { uuid: string; otherText: string }[],
 ): SupportNeedCheckbox {

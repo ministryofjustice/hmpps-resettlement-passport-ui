@@ -25,7 +25,7 @@ export declare global {
       prisonerData: PrisonerData
       config: ConfigFile
       flash(type: string, message: unknown): number
-      validationErrors: ValidationError[]
+      validationErrors: CustomValidationError[]
     }
 
     interface Response {
@@ -106,14 +106,14 @@ type BannerDetails = {
   detailsLink: string
 }
 
-export type ValidationError = {
+export type CustomValidationError = {
   id: string
-  type: ValidationErrorType
+  type: CustomValidationErrorType
   text: string
   href: string
 }
 
-export type ValidationErrorType =
+export type CustomValidationErrorType =
   | 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY'
   | 'SUPPORT_NEEDS_MISSING_OTHER_TEXT'
   | 'SUPPORT_NEEDS_NO_SELECTION'
