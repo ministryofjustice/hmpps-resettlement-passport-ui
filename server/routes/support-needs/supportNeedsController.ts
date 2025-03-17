@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express'
 import createError from 'http-errors'
+import { ValidationError, validationResult } from 'express-validator'
 import { validatePathwaySupportNeeds, getEnumByURL, findPreviousSelectedSupportNeed } from '../../utils/utils'
 import { PrisonerSupportNeedsPost, SupportNeedCache, SupportNeedsCategoryGroup } from '../../data/model/supportNeeds'
 import { SupportNeedStateService } from '../../data/supportNeedStateService'
@@ -7,6 +8,7 @@ import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import RpService from '../../services/rpService'
 import { groupSupportNeedsByCategory } from '../../utils/groupSupportNeedsByCategory'
 import { updateSupportNeedsWithRequestBody } from '../../utils/updateSupportNeedsWithRequestBody'
+import SupportNeedForm from './supportNeedsForm'
 
 export default class SupportNeedsController {
   constructor(
@@ -191,7 +193,18 @@ export default class SupportNeedsController {
 
       const backLink = getBackLink()
 
-      return res.render('pages/support-needs-status', { pathway, prisonerData, supportNeed, edit, backLink })
+      const errors = req.flash('errors') as unknown as ValidationError[]
+      const formValues = req.flash('formValues')?.[0] || {}
+      const form = new SupportNeedForm(supportNeed, formValues, errors)
+
+      return res.render('pages/support-needs-status', {
+        pathway,
+        prisonerData,
+        supportNeed,
+        edit,
+        backLink,
+        ...form.renderArgs,
+      })
     } catch (err) {
       return next(err)
     }
@@ -204,6 +217,14 @@ export default class SupportNeedsController {
       const pathwayEnum = getEnumByURL(pathway)
       const { prisonerData } = req
       const { prisonerNumber } = prisonerData.personalDetails
+
+      const errors = validationResult(req)
+
+      if (!errors.isEmpty()) {
+        req.flash('errors', errors.array())
+        req.flash('formValues', req.body)
+        return res.redirect(`/support-needs/${pathway}/status/${uuid}/?prisonerNumber=${prisonerNumber}`)
+      }
 
       const stateKey = {
         prisonerNumber,
