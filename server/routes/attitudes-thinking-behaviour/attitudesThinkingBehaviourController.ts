@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
@@ -15,16 +16,18 @@ export default class AttitudesThinkingBehaviourController {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
-
       handleWhatsNewBanner(req, res)
 
-      const {
-        page = '0',
-        pageSize = '10',
-        sort = 'occurenceDateTime%2CDESC',
-        days = '0',
-        createdByUserId = '0',
-      } = req.query
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        // Validation failed, throw 500 error
+        throw new Error('Invalid query parameters')
+      }
+
+      const pageSize = '10'
+      const sort = 'occurenceDateTime%2CDESC'
+      const days = '0'
+      const { page = '0', createdByUserId = '0' } = req.query
 
       const crsReferrals = await this.rpService.getCrsReferrals(
         prisonerData.personalDetails.prisonerNumber as string,

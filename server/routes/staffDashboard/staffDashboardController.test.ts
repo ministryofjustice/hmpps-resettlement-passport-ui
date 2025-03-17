@@ -55,6 +55,28 @@ describe('getView', () => {
       true,
     )
   })
+  it('Happy path with filter prisoner name', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get('/?releaseTime=84&searchInput=john')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      'john',
+      '84',
+      '',
+      '',
+      '',
+      '',
+      true,
+    )
+  })
   it('Happy path with filter time to release 24W', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
@@ -132,6 +154,29 @@ describe('getView', () => {
     )
   })
 
+  it('Happy path with filter  assessmentRequired false', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get('/?releaseTime=84&pathwayView=&assessmentRequired=false&searchInput=')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '84',
+      '',
+      '',
+      'false',
+      '',
+      true,
+    )
+  })
+
   it('Happy path with filter prisoner number not exists', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
@@ -155,7 +200,7 @@ describe('getView', () => {
     )
   })
 
-  it('Happy path with sorting by name', async () => {
+  it('Happy path with sorting by name and direction DESC', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
@@ -165,6 +210,93 @@ describe('getView', () => {
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'name', 'DESC', '', '84', '', '', '', '', true)
+  })
+
+  it('Happy path with sorting by releaseDate and direction ASC', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get(
+        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '84', '', '', '', '', true)
+  })
+
+  it('Happy path with sorting by releaseDate and direction ASC', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get(
+        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseEligibilityDate',
+      'ASC',
+      '',
+      '84',
+      '',
+      '',
+      '',
+      '',
+      true,
+    )
+  })
+
+  it('Happy path with sorting by releaseOnTemporaryLicenceDate and direction DESC', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get(
+        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&assessmentRequired=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseOnTemporaryLicenceDate',
+      'DESC',
+      '',
+      '84',
+      '',
+      '',
+      '',
+      '',
+      true,
+    )
+  })
+
+  it('Happy path with sorting by lastUpdatedDate and direction DESC', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get(
+        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&assessmentRequired=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'lastUpdatedDate',
+      'DESC',
+      '',
+      '84',
+      '',
+      '',
+      '',
+      '',
+      true,
+    )
   })
 
   it('Happy path filter releaseTime missing', async () => {
@@ -229,6 +361,48 @@ describe('getView', () => {
 
     await request(app)
       .get('/')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid page parameter', async () => {
+    await request(app)
+      .get('/?page=InvalidValue')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid releaseTime parameter', async () => {
+    await request(app)
+      .get('/?releaseTime=%2C9')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid sortField parameter', async () => {
+    await request(app)
+      .get('/?sortField=invalidValue')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid sortDirection parameter', async () => {
+    await request(app)
+      .get('/?sortDirection=4')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid assessmentRequired parameter', async () => {
+    await request(app)
+      .get('/?assessmentRequired=4')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid searchInput parameter', async () => {
+    await request(app)
+      .get('/?searchInput=john%^')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
   })

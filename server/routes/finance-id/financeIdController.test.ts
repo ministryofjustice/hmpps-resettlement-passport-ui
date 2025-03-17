@@ -129,9 +129,7 @@ describe('getView', () => {
     const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
-      .get(
-        '/finance-and-id?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
-      )
+      .get('/finance-and-id?prisonerNumber=A1234DY&page=1&createdByUserId=2')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
@@ -141,10 +139,10 @@ describe('getView', () => {
       'A1234DY',
       'FINANCE_AND_ID',
       '2',
-      '20',
+      '10',
       '1',
-      'occurenceDateTime,ASC',
-      '30',
+      'occurenceDateTime%2CDESC',
+      '0',
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'FINANCE_AND_ID')
     expect(getFinanceSpy).toHaveBeenCalledWith('A1234DY')
@@ -158,6 +156,20 @@ describe('getView', () => {
       'createdDate,DESC',
       '',
     )
+  })
+
+  it('Error case - invalid page parameter', async () => {
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY&page=InvalidValue')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid createdByUserId parameter', async () => {
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY&page=1&createdByUserId=%2C9')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - missing prisonerNumber', async () => {
