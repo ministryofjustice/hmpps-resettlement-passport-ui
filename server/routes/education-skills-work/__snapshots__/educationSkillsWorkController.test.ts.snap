@@ -459,8 +459,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Education, skills and work updates
-      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a href="#">Find out more about this update.</a></span>
-      <!-- TODO - update link to point to service update page. -->
+      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out more about this update</a>.</span>
     </h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
@@ -1384,8 +1383,7 @@ exports[`getView Happy path with default query params and no data from endpoints
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Education, skills and work updates
-      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a href="#">Find out more about this update.</a></span>
-      <!-- TODO - update link to point to service update page. -->
+      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out more about this update</a>.</span>
     </h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
@@ -1944,8 +1942,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Education, skills and work updates
-      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a href="#">Find out more about this update.</a></span>
-      <!-- TODO - update link to point to service update page. -->
+      <span class="govuk-caption-m">Some updates may not be linked to a support need as they were created before support needs were added to PSfR. <a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out more about this update</a>.</span>
     </h3>
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
