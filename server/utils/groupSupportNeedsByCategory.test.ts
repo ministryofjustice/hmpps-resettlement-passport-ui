@@ -1,11 +1,12 @@
 import { groupSupportNeedsByCategory } from './groupSupportNeedsByCategory'
 import { SupportNeedsCache, GroupedSupportNeeds } from '../data/model/supportNeeds'
+import { CustomValidationError } from '../@types/express'
 
 describe('groupSupportNeedsByCategory', () => {
   it.each([
-    ['Empty data', { needs: [] }, []],
+    ['Empty data', { needs: [] }, undefined, undefined, []],
     [
-      'Single category, single support need',
+      'Single category, single support need - no errors',
       {
         needs: [
           {
@@ -25,6 +26,8 @@ describe('groupSupportNeedsByCategory', () => {
           },
         ],
       },
+      undefined,
+      undefined,
       [
         {
           category: 'Health',
@@ -45,7 +48,7 @@ describe('groupSupportNeedsByCategory', () => {
       ],
     ],
     [
-      'Exclusive option handling',
+      'Exclusive option handling - no errors',
       {
         needs: [
           {
@@ -80,6 +83,8 @@ describe('groupSupportNeedsByCategory', () => {
           },
         ],
       },
+      undefined,
+      undefined,
       [
         {
           category: 'Employment',
@@ -107,7 +112,235 @@ describe('groupSupportNeedsByCategory', () => {
         },
       ],
     ],
-  ])('%s', (_: string, input: SupportNeedsCache, expected: GroupedSupportNeeds) => {
-    expect(groupSupportNeedsByCategory(input, undefined, undefined)).toEqual(expected)
-  })
+    [
+      'Multiple category, multiple support need - with errors',
+      {
+        needs: [
+          {
+            uuid: '1',
+            supportNeedId: 1,
+            existingPrisonerSupportNeedId: null,
+            title: 'Health Need 1',
+            otherSupportNeedText: null,
+            status: 'NOT_STARTED',
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            updateText: 'Some update text',
+            category: 'Health 1',
+            allowUserDesc: false,
+            isUpdatable: true,
+            isSelected: true,
+          },
+          {
+            uuid: '2',
+            supportNeedId: 2,
+            existingPrisonerSupportNeedId: null,
+            title: 'Health Need 2',
+            otherSupportNeedText: null,
+            status: 'MET',
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            updateText: null,
+            category: 'Health 1',
+            allowUserDesc: false,
+            isUpdatable: true,
+            isSelected: true,
+          },
+          {
+            uuid: '3',
+            supportNeedId: 3,
+            existingPrisonerSupportNeedId: null,
+            title: 'Other',
+            otherSupportNeedText: null,
+            status: 'MET',
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            updateText: null,
+            category: 'Health 1',
+            allowUserDesc: true,
+            isUpdatable: true,
+            isSelected: false,
+          },
+          {
+            uuid: '4',
+            supportNeedId: 4,
+            existingPrisonerSupportNeedId: null,
+            title: 'Health Need 4',
+            otherSupportNeedText: null,
+            status: 'NOT_STARTED',
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            updateText: null,
+            category: 'Health 2',
+            allowUserDesc: false,
+            isUpdatable: true,
+            isSelected: false,
+          },
+          {
+            uuid: '5',
+            supportNeedId: 5,
+            existingPrisonerSupportNeedId: null,
+            title: 'Health Need 5',
+            otherSupportNeedText: null,
+            status: 'MET',
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            updateText: null,
+            category: 'Health 2',
+            allowUserDesc: false,
+            isUpdatable: true,
+            isSelected: true,
+          },
+          {
+            uuid: '6',
+            supportNeedId: 6,
+            existingPrisonerSupportNeedId: null,
+            title: 'Other',
+            otherSupportNeedText: null,
+            status: null,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            updateText: null,
+            category: 'Health 2',
+            allowUserDesc: true,
+            isUpdatable: true,
+            isSelected: false,
+          },
+          {
+            uuid: '7',
+            supportNeedId: 7,
+            existingPrisonerSupportNeedId: null,
+            title: 'No health support needs identified',
+            otherSupportNeedText: null,
+            status: null,
+            isPrisonResponsible: null,
+            isProbationResponsible: null,
+            updateText: null,
+            category: 'Health 2',
+            allowUserDesc: false,
+            isUpdatable: false,
+            isSelected: false,
+          },
+        ],
+      },
+      [
+        {
+          id: 'Health 2',
+          type: 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY',
+          text: 'This is an error message for support needs missing',
+          href: '#',
+        },
+        {
+          id: 'custom-other-3',
+          type: 'SUPPORT_NEEDS_OTHER_TOO_LONG',
+          text: 'This is an error message for other too long',
+          href: '#',
+        },
+        {
+          id: 'custom-other-6',
+          type: 'SUPPORT_NEEDS_MISSING_OTHER_TEXT',
+          text: 'This is an error message for other missing',
+          href: '#',
+        },
+      ],
+      {
+        'support-need-option-Health 1': ['1', '3'],
+        'support-need-option-Health 2': '6',
+        'custom-other-3': 'This is an other support need - too long',
+        'custom-other-6': '',
+      },
+      [
+        {
+          category: 'Health 1',
+          exclusiveOption: null,
+          id: 'health-1',
+          supportNeeds: [
+            {
+              allowUserDesc: false,
+              category: 'Health 1',
+              isSelected: true,
+              otherSupportNeedText: null,
+              supportNeedId: 1,
+              title: 'Health Need 1',
+              uuid: '1',
+            },
+            {
+              allowUserDesc: false,
+              category: 'Health 1',
+              isSelected: false,
+              otherSupportNeedText: null,
+              supportNeedId: 2,
+              title: 'Health Need 2',
+              uuid: '2',
+            },
+            {
+              allowUserDesc: true,
+              category: 'Health 1',
+              error: 'This is an error message for other too long',
+              isSelected: true,
+              otherSupportNeedText: 'This is an other support need - too long',
+              supportNeedId: 3,
+              title: 'Other',
+              uuid: '3',
+            },
+          ],
+        },
+        {
+          category: 'Health 2',
+          error: 'This is an error message for support needs missing',
+          exclusiveOption: {
+            allowUserDesc: false,
+            category: 'Health 2',
+            isSelected: false,
+            otherSupportNeedText: null,
+            supportNeedId: 7,
+            title: 'No health support needs identified',
+            uuid: '7',
+          },
+          id: 'health-2',
+          supportNeeds: [
+            {
+              allowUserDesc: false,
+              category: 'Health 2',
+              isSelected: false,
+              otherSupportNeedText: null,
+              supportNeedId: 4,
+              title: 'Health Need 4',
+              uuid: '4',
+            },
+            {
+              allowUserDesc: false,
+              category: 'Health 2',
+              isSelected: false,
+              otherSupportNeedText: null,
+              supportNeedId: 5,
+              title: 'Health Need 5',
+              uuid: '5',
+            },
+            {
+              allowUserDesc: true,
+              category: 'Health 2',
+              error: 'This is an error message for other missing',
+              isSelected: true,
+              otherSupportNeedText: '',
+              supportNeedId: 6,
+              title: 'Other',
+              uuid: '6',
+            },
+          ],
+        },
+      ],
+    ],
+  ])(
+    '%s',
+    (
+      _: string,
+      input: SupportNeedsCache,
+      errors: CustomValidationError[],
+      formValuesOnError: Record<string, string | string[]>,
+      expected: GroupedSupportNeeds,
+    ) => {
+      expect(groupSupportNeedsByCategory(input, errors, formValuesOnError)).toEqual(expected)
+    },
+  )
 })

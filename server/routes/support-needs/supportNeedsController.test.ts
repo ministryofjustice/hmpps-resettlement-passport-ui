@@ -1,9 +1,10 @@
 import { Express } from 'express'
 import request from 'supertest'
-import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
+import { appWithAllRoutes, flashProvider, mockedServices } from '../testutils/appSetup'
 import { Services } from '../../services'
 import FeatureFlags from '../../featureFlag'
 import {
+  getSupportNeedsData,
   stubFeatureFlagToFalse,
   stubFeatureFlagToTrue,
   stubPathwaySupportNeeds,
@@ -406,255 +407,6 @@ describe('SupportNeedsController', () => {
   })
 
   describe('getSupportNeeds', () => {
-    beforeEach(() => {
-      jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
-        needs: [
-          {
-            uuid: '0a78acb7-0e7d-4ec0-8b73-29af627db9ec',
-            supportNeedId: 1,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'End a tenancy',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'e8b52c96-33e9-420b-ab1e-e1ace2e1f953',
-            supportNeedId: 2,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Maintain a tenancy while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
-            supportNeedId: 3,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Mortgage support while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '622b3deb-03ff-4cfb-8555-978f1b5b0793',
-            supportNeedId: 4,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title:
-              'Home adaptations to stay in current accommodation (changes to make it safer and easier to move around and do everyday tasks)',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
-            supportNeedId: 5,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Arrange storage for personal possessions while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
-            supportNeedId: 6,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Accommodation before custody',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: 'Some custom support need',
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '20172ff2-0c21-4485-9402-5acf2cb60809',
-            supportNeedId: 7,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'No accommodation before custody support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '33c32185-3ae1-40a5-a1fd-0872230c7343',
-            supportNeedId: 8,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title: 'Help to find accommodation',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '531b4b31-a5ed-48cc-87ff-ac933e65b7fa',
-            supportNeedId: 9,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title:
-              'Home adaptations needed for new accommodation (changes to make it safer and easier to move around and do everyday tasks)',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '661f221e-defd-48e3-895a-2b09cf216108',
-            supportNeedId: 10,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Moving to new accommodation',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '7175a5b9-c1b5-434a-b47b-d1c7ea39fa33',
-            supportNeedId: 11,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title: 'No new accommodation support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'af889df2-d8cd-475d-b25b-70fd9421ed11',
-            supportNeedId: 12,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'Set up payment for rent arrears',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '329dbffb-de74-4cb5-8e36-4562218ecffe',
-            supportNeedId: 13,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'Ensure accommodation related debt or arrears do not build up',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '6ae72705-5a29-4f65-aa05-65ba00a9e5b1',
-            supportNeedId: 14,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Accommodation related debt and arrears',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '574fc882-0528-4754-aeeb-1b4a04a44912',
-            supportNeedId: 15,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'No accommodation related debt and arrears support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: true,
-          },
-        ],
-      })
-    })
-
     it('should throw an error if pathway is invalid', async () => {
       await request(app).get('/support-needs/invalid-pathway/?prisonerNumber=A1234DY').expect(500)
     })
@@ -671,7 +423,14 @@ describe('SupportNeedsController', () => {
     })
 
     it('should render the support needs page with previous support needs', async () => {
-      stubPathwaySupportNeedsSummary(rpService)
+      const getSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue(
+        getSupportNeedsData({
+          filterToUUIDs: ['uuid-2', 'uuid-3', 'uuid-6', 'uuid-7', 'uuid-10', 'uuid-14', 'uuid-15'],
+          UUIDsSelected: ['uuid-3', 'uuid-14', 'uuid-15'],
+          otherMapping: [{ uuid: 'uuid-14', otherText: 'This is some other text' }],
+        }),
+      )
+      const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
 
       await request(app)
         .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
@@ -680,17 +439,22 @@ describe('SupportNeedsController', () => {
           expect(res.text).toMatchSnapshot()
         })
 
-      const stateKey = {
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
         prisonerNumber: 'A1234DY',
         userId: 'user1',
         pathway: 'ACCOMMODATION',
-      }
+      })
 
-      expect(supportNeedStateService.getSupportNeeds).toHaveBeenCalledWith(stateKey)
+      expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
     })
 
     it('should render the support needs page without previous support needs', async () => {
-      jest.spyOn(rpService, 'getPathwaySupportNeedsSummary').mockResolvedValue(null)
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+      const getPathwaySupportNeedsSummarySpy = jest
+        .spyOn(rpService, 'getPathwaySupportNeedsSummary')
+        .mockResolvedValue(null)
 
       await request(app)
         .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
@@ -698,536 +462,443 @@ describe('SupportNeedsController', () => {
         .expect(res => {
           expect(res.text).toMatchSnapshot()
         })
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+        pathway: 'ACCOMMODATION',
+      })
+
+      expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+    })
+
+    it('should render the support needs page without previous support needs - render with SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY errors', async () => {
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+      const getPathwaySupportNeedsSummarySpy = jest
+        .spyOn(rpService, 'getPathwaySupportNeedsSummary')
+        .mockResolvedValue(null)
+      const errorsFlashSpy = flashProvider.mockReturnValueOnce([
+        {
+          href: '#accommodation-before-custody',
+          id: 'Accommodation before custody',
+          text: "Select support needs, or select 'No accommodation before custody support needs identified'",
+          type: 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY',
+        },
+        {
+          href: '#moving-to-new-accommodation',
+          id: 'Moving to new accommodation',
+          text: "Select support needs, or select 'No new accommodation support needs identified'",
+          type: 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY',
+        },
+        {
+          href: '#accommodation-related-debt-and-arrears',
+          id: 'Accommodation related debt and arrears',
+          text: "Select support needs, or select 'No accommodation related debt and arrears support needs identified'",
+          type: 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY',
+        },
+      ])
+      const formValuesOnErrorFlashSpy = flashProvider.mockReturnValueOnce({
+        _csrf: 'xjM2bce6',
+        prisonerNumber: 'A8731DY',
+      })
+
+      await request(app)
+        .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+        pathway: 'ACCOMMODATION',
+      })
+
+      expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+
+      expect(errorsFlashSpy).toHaveBeenCalledWith('errors')
+      expect(formValuesOnErrorFlashSpy).toHaveBeenCalledWith('formValues')
+    })
+
+    it('should render the support needs page without previous support needs - render with SUPPORT_NEEDS_NO_SELECTION error', async () => {
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+      const getPathwaySupportNeedsSummarySpy = jest
+        .spyOn(rpService, 'getPathwaySupportNeedsSummary')
+        .mockResolvedValue(null)
+      const errorsFlashSpy = flashProvider.mockReturnValueOnce([
+        {
+          href: '#support-needs-form',
+          id: null,
+          text: 'Select one or more support needs',
+          type: 'SUPPORT_NEEDS_NO_SELECTION',
+        },
+      ])
+      const formValuesOnErrorFlashSpy = flashProvider.mockReturnValueOnce({
+        _csrf: 'xjM2bce6',
+        prisonerNumber: 'A8731DY',
+      })
+
+      await request(app)
+        .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+        pathway: 'ACCOMMODATION',
+      })
+
+      expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+
+      expect(errorsFlashSpy).toHaveBeenCalledWith('errors')
+      expect(formValuesOnErrorFlashSpy).toHaveBeenCalledWith('formValues')
+    })
+
+    it('should render the support needs page without previous support needs - render with SUPPORT_NEEDS_MISSING_OTHER_TEXT error', async () => {
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+      const getPathwaySupportNeedsSummarySpy = jest
+        .spyOn(rpService, 'getPathwaySupportNeedsSummary')
+        .mockResolvedValue(null)
+      const errorsFlashSpy = flashProvider.mockReturnValueOnce([
+        {
+          href: '#other-uuid-10',
+          id: 'custom-other-uuid-10',
+          text: 'Enter other support need',
+          type: 'SUPPORT_NEEDS_MISSING_OTHER_TEXT',
+        },
+      ])
+      const formValuesOnErrorFlashSpy = flashProvider.mockReturnValueOnce({
+        _csrf: 'xjM2bce6',
+        'custom-other-uuid-10': '',
+        prisonerNumber: 'A8731DY',
+        'support-need-option-Accommodation before custody': 'uuid-7',
+        'support-need-option-Accommodation related debt and arrears': 'uuid-13',
+        'support-need-option-Moving to new accommodation': ['uuid-8', 'uuid-9', 'uuid-10'],
+      })
+
+      await request(app)
+        .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+        pathway: 'ACCOMMODATION',
+      })
+
+      expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+
+      expect(errorsFlashSpy).toHaveBeenCalledWith('errors')
+      expect(formValuesOnErrorFlashSpy).toHaveBeenCalledWith('formValues')
+    })
+
+    it('should render the support needs page without previous support needs - render with SUPPORT_NEEDS_OTHER_TOO_LONG error', async () => {
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+      const getPathwaySupportNeedsSummarySpy = jest
+        .spyOn(rpService, 'getPathwaySupportNeedsSummary')
+        .mockResolvedValue(null)
+      const errorsFlashSpy = flashProvider.mockReturnValueOnce([
+        {
+          href: '#other-uuid-10',
+          id: 'custom-other-uuid-10',
+          text: 'Other support need must be 100 characters or less',
+          type: 'SUPPORT_NEEDS_OTHER_TOO_LONG',
+        },
+      ])
+      const formValuesOnErrorFlashSpy = flashProvider.mockReturnValueOnce({
+        _csrf: 'xjM2bce6',
+        'custom-other-uuid-10':
+          'This is too long, this is too long, this is too long, this is too long, this is too long, this is too long.',
+        prisonerNumber: 'A8731DY',
+        'support-need-option-Accommodation before custody': 'uuid-7',
+        'support-need-option-Accommodation related debt and arrears': 'uuid-13',
+        'support-need-option-Moving to new accommodation': ['uuid-8', 'uuid-9', 'uuid-10'],
+      })
+
+      await request(app)
+        .get('/support-needs/accommodation/?prisonerNumber=A1234DY')
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+        pathway: 'ACCOMMODATION',
+      })
+
+      expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'ACCOMMODATION')
+
+      expect(errorsFlashSpy).toHaveBeenCalledWith('errors')
+      expect(formValuesOnErrorFlashSpy).toHaveBeenCalledWith('formValues')
     })
   })
 
   describe('submitSupportNeeds', () => {
     it('should redirect to the support needs page of the first selected supportNeed which isUpdatable', async () => {
-      jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
-        needs: [
-          {
-            uuid: 'uuid-of-supportNeed-is-updatable',
-            supportNeedId: 1,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'End a tenancy',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'second-uuid-of-supportNeed-is-updatable',
-            supportNeedId: 2,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Maintain a tenancy while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
-            supportNeedId: 3,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Mortgage support while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '622b3deb-03ff-4cfb-8555-978f1b5b0793',
-            supportNeedId: 4,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title:
-              'Home adaptations to stay in current accommodation (changes to make it safer and easier to move around and do everyday tasks)',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
-            supportNeedId: 5,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Arrange storage for personal possessions while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
-            supportNeedId: 6,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Accommodation before custody',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '20172ff2-0c21-4485-9402-5acf2cb60809',
-            supportNeedId: 7,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'No accommodation before custody support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '33c32185-3ae1-40a5-a1fd-0872230c7343',
-            supportNeedId: 8,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title: 'Help to find accommodation',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '531b4b31-a5ed-48cc-87ff-ac933e65b7fa',
-            supportNeedId: 9,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title:
-              'Home adaptations needed for new accommodation (changes to make it safer and easier to move around and do everyday tasks)',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '661f221e-defd-48e3-895a-2b09cf216108',
-            supportNeedId: 10,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Moving to new accommodation',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'uuid-of-supportNeed-not-updatable',
-            supportNeedId: 11,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title: 'No new accommodation support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'third-uuid-of-supportNeed-is-updatable',
-            supportNeedId: 12,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'Set up payment for rent arrears',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '329dbffb-de74-4cb5-8e36-4562218ecffe',
-            supportNeedId: 13,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'Ensure accommodation related debt or arrears do not build up',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '6ae72705-5a29-4f65-aa05-65ba00a9e5b1',
-            supportNeedId: 14,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Accommodation related debt and arrears',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '574fc882-0528-4754-aeeb-1b4a04a44912',
-            supportNeedId: 15,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'No accommodation related debt and arrears support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-        ],
-      })
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
 
       await request(app)
         .post('/support-needs/accommodation')
         .send({
-          'support-need-option-Moving to new accommodation': 'uuid-of-supportNeed-not-updatable',
-          'support-need-option-Accommodation before custody': [
-            'uuid-of-supportNeed-is-updatable',
-            'second-uuid-of-supportNeed-is-updatable',
-          ],
-          'support-need-option-Accommodation related debt and arrears': 'third-uuid-of-supportNeed-is-updatable',
+          'support-need-option-Accommodation before custody': 'uuid-7',
+          'support-need-option-Moving to new accommodation': ['uuid-8', 'uuid-9', 'uuid-10'],
+          'custom-other-uuid-10': 'This is an other',
+          'support-need-option-Accommodation related debt and arrears': 'uuid-13',
           _csrf: 'xjM2bce6',
           prisonerNumber: 'A8731DY',
         })
         .expect(302)
-        .expect(
-          'Location',
-          '/support-needs/accommodation/status/uuid-of-supportNeed-is-updatable/?prisonerNumber=A1234DY',
-        )
+        .expect('Location', '/support-needs/accommodation/status/uuid-8/?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledWith(
+        { pathway: 'ACCOMMODATION', prisonerNumber: 'A1234DY', userId: 'user1' },
+        getSupportNeedsData({
+          filterToUUIDs: [],
+          UUIDsSelected: ['uuid-7', 'uuid-8', 'uuid-9', 'uuid-10', 'uuid-13'],
+          otherMapping: [{ uuid: 'uuid-10', otherText: 'This is an other' }],
+        }),
+      )
     })
 
     it('should redirect to the check answers page if no supportNeed isUpdatable', async () => {
-      jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
-        needs: [
-          {
-            uuid: 'uuid-of-supportNeed-is-updatable',
-            supportNeedId: 1,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'End a tenancy',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'second-uuid-of-supportNeed-is-updatable',
-            supportNeedId: 2,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Maintain a tenancy while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '8442e4b7-82b9-4127-b746-42a3f8d78cb8',
-            supportNeedId: 3,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Mortgage support while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '622b3deb-03ff-4cfb-8555-978f1b5b0793',
-            supportNeedId: 4,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title:
-              'Home adaptations to stay in current accommodation (changes to make it safer and easier to move around and do everyday tasks)',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '8176f4fb-735c-45e6-bfc3-cf8833b08a83',
-            supportNeedId: 5,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'Arrange storage for personal possessions while in prison',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'f3dc52b8-5b5e-4bad-8411-d8291e110169',
-            supportNeedId: 6,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Accommodation before custody',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'selected-no-need-identified-1',
-            supportNeedId: 7,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation before custody',
-            title: 'No accommodation before custody support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '33c32185-3ae1-40a5-a1fd-0872230c7343',
-            supportNeedId: 8,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title: 'Help to find accommodation',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '531b4b31-a5ed-48cc-87ff-ac933e65b7fa',
-            supportNeedId: 9,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title:
-              'Home adaptations needed for new accommodation (changes to make it safer and easier to move around and do everyday tasks)',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '661f221e-defd-48e3-895a-2b09cf216108',
-            supportNeedId: 10,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Moving to new accommodation',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'selected-no-need-identified-2',
-            supportNeedId: 11,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Moving to new accommodation',
-            title: 'No new accommodation support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'third-uuid-of-supportNeed-is-updatable',
-            supportNeedId: 12,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'Set up payment for rent arrears',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '329dbffb-de74-4cb5-8e36-4562218ecffe',
-            supportNeedId: 13,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'Ensure accommodation related debt or arrears do not build up',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: '6ae72705-5a29-4f65-aa05-65ba00a9e5b1',
-            supportNeedId: 14,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: true,
-            category: 'Accommodation related debt and arrears',
-            title: 'Other',
-            isUpdatable: true,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-          {
-            uuid: 'selected-no-need-identified-3',
-            supportNeedId: 15,
-            existingPrisonerSupportNeedId: null,
-            allowUserDesc: false,
-            category: 'Accommodation related debt and arrears',
-            title: 'No accommodation related debt and arrears support needs identified',
-            isUpdatable: false,
-            isPrisonResponsible: null,
-            isProbationResponsible: null,
-            otherSupportNeedText: null,
-            status: null,
-            updateText: null,
-            isSelected: null,
-            isPreSelected: false,
-          },
-        ],
-      })
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
 
       await request(app)
         .post('/support-needs/accommodation')
         .send({
-          'support-need-option-Moving to new accommodation': 'selected-no-need-identified-1',
-          'support-need-option-Accommodation before custody': 'selected-no-need-identified-2',
-          'support-need-option-Accommodation related debt and arrears': 'selected-no-need-identified-3',
+          'support-need-option-Accommodation before custody': 'uuid-7',
+          'support-need-option-Moving to new accommodation': 'uuid-11',
+          'support-need-option-Accommodation related debt and arrears': 'uuid-15',
           _csrf: 'xjM2bce6',
           prisonerNumber: 'A8731DY',
         })
         .expect(302)
         .expect('Location', '/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledWith(
+        { pathway: 'ACCOMMODATION', prisonerNumber: 'A1234DY', userId: 'user1' },
+        getSupportNeedsData({
+          filterToUUIDs: [],
+          UUIDsSelected: ['uuid-7', 'uuid-11', 'uuid-15'],
+          otherMapping: [],
+        }),
+      )
+    })
+
+    it('should fail validation if no selection of support needs on first run', async () => {
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
+
+      await request(app)
+        .post('/support-needs/accommodation')
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+        })
+        .expect(302)
+        .expect('Location', '/support-needs/accommodation?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledTimes(0)
+
+      expect(flashProvider).toHaveBeenCalledWith('errors', [
+        {
+          href: '#accommodation-before-custody',
+          id: 'Accommodation before custody',
+          text: "Select support needs, or select 'No accommodation before custody support needs identified'",
+          type: 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY',
+        },
+        {
+          href: '#moving-to-new-accommodation',
+          id: 'Moving to new accommodation',
+          text: "Select support needs, or select 'No new accommodation support needs identified'",
+          type: 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY',
+        },
+        {
+          href: '#accommodation-related-debt-and-arrears',
+          id: 'Accommodation related debt and arrears',
+          text: "Select support needs, or select 'No accommodation related debt and arrears support needs identified'",
+          type: 'SUPPORT_NEEDS_MISSING_SELECTION_IN_CATEGORY',
+        },
+      ])
+
+      expect(flashProvider).toHaveBeenCalledWith('formValues', { _csrf: 'xjM2bce6', prisonerNumber: 'A8731DY' })
+    })
+
+    it('should fail validation if no selection of support needs on subsequent runs with all "no support needs identified" unavailable', async () => {
+      const getSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue(
+        getSupportNeedsData({
+          filterToUUIDs: ['uuid-1', 'uuid-2', 'uuid-6', 'uuid-10', 'uuid-14'],
+          UUIDsSelected: [],
+          otherMapping: [],
+        }),
+      )
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
+
+      await request(app)
+        .post('/support-needs/accommodation')
+        .send({
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+        })
+        .expect(302)
+        .expect('Location', '/support-needs/accommodation?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledTimes(0)
+
+      expect(flashProvider).toHaveBeenCalledWith('errors', [
+        {
+          href: '#support-needs-form',
+          id: null,
+          text: 'Select one or more support needs',
+          type: 'SUPPORT_NEEDS_NO_SELECTION',
+        },
+      ])
+
+      expect(flashProvider).toHaveBeenCalledWith('formValues', { _csrf: 'xjM2bce6', prisonerNumber: 'A8731DY' })
+    })
+
+    it('should fail validation if other is not provided', async () => {
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
+
+      await request(app)
+        .post('/support-needs/accommodation')
+        .send({
+          'support-need-option-Accommodation before custody': 'uuid-7',
+          'support-need-option-Moving to new accommodation': ['uuid-8', 'uuid-9', 'uuid-10'],
+          'custom-other-uuid-10': '',
+          'support-need-option-Accommodation related debt and arrears': 'uuid-13',
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+        })
+        .expect(302)
+        .expect('Location', '/support-needs/accommodation?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledTimes(0)
+
+      expect(flashProvider).toHaveBeenCalledWith('errors', [
+        {
+          href: '#other-uuid-10',
+          id: 'custom-other-uuid-10',
+          text: 'Enter other support need',
+          type: 'SUPPORT_NEEDS_MISSING_OTHER_TEXT',
+        },
+      ])
+      expect(flashProvider).toHaveBeenCalledWith('formValues', {
+        _csrf: 'xjM2bce6',
+        'custom-other-uuid-10': '',
+        prisonerNumber: 'A8731DY',
+        'support-need-option-Accommodation before custody': 'uuid-7',
+        'support-need-option-Accommodation related debt and arrears': 'uuid-13',
+        'support-need-option-Moving to new accommodation': ['uuid-8', 'uuid-9', 'uuid-10'],
+      })
+    })
+
+    it('should fail validation if other is longer than 100 characters', async () => {
+      const getSupportNeedsSpy = jest
+        .spyOn(supportNeedStateService, 'getSupportNeeds')
+        .mockResolvedValue(getSupportNeedsData())
+
+      const setSupportNeedsSpy = jest.spyOn(supportNeedStateService, 'setSupportNeeds').mockImplementation()
+
+      await request(app)
+        .post('/support-needs/accommodation')
+        .send({
+          'support-need-option-Accommodation before custody': 'uuid-7',
+          'support-need-option-Moving to new accommodation': ['uuid-8', 'uuid-9', 'uuid-10'],
+          'custom-other-uuid-10':
+            'This is too long, this is too long, this is too long, this is too long, this is too long, this is too long.',
+          'support-need-option-Accommodation related debt and arrears': 'uuid-13',
+          _csrf: 'xjM2bce6',
+          prisonerNumber: 'A8731DY',
+        })
+        .expect(302)
+        .expect('Location', '/support-needs/accommodation?prisonerNumber=A1234DY')
+
+      expect(getSupportNeedsSpy).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
+
+      expect(setSupportNeedsSpy).toHaveBeenCalledTimes(0)
+
+      expect(flashProvider).toHaveBeenCalledWith('errors', [
+        {
+          href: '#other-uuid-10',
+          id: 'custom-other-uuid-10',
+          text: 'Other support need must be 100 characters or less',
+          type: 'SUPPORT_NEEDS_OTHER_TOO_LONG',
+        },
+      ])
+      expect(flashProvider).toHaveBeenCalledWith('formValues', {
+        _csrf: 'xjM2bce6',
+        'custom-other-uuid-10':
+          'This is too long, this is too long, this is too long, this is too long, this is too long, this is too long.',
+        prisonerNumber: 'A8731DY',
+        'support-need-option-Accommodation before custody': 'uuid-7',
+        'support-need-option-Accommodation related debt and arrears': 'uuid-13',
+        'support-need-option-Moving to new accommodation': ['uuid-8', 'uuid-9', 'uuid-10'],
+      })
     })
   })
 

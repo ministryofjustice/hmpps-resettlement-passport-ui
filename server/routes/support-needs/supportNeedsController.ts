@@ -505,7 +505,7 @@ export default class SupportNeedsController {
         validationErrors.push({
           type: 'SUPPORT_NEEDS_NO_SELECTION',
           id: null,
-          text: 'Select one or more support needs', // TODO - check content
+          text: 'Select one or more support needs',
           href: '#support-needs-form',
         })
       } else {
