@@ -169,6 +169,8 @@ describe('getView', () => {
   })
 
   it('Happy path - ensure support need for legacy profile renders correctly', async () => {
+    stubPrisonerDetails(rpService, null, null, true)
+
     const getCrsReferralsSpy = stubCrsReferrals(rpService, 'ACCOMMODATION')
     const getAccommodationSpy = stubAccommodation(rpService)
     const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
