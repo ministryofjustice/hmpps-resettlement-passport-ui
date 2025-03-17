@@ -341,7 +341,11 @@ exports[`getView Happy path - ensure support need for legacy profile renders cor
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
        
-           <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/accommodation/start/?prisonerNumber=A1234DY">Add a support need</a>
+           <div class="govuk-summary-card__actions">
+               <p class="govuk-body-m govuk-!-margin-bottom-0">
+                   New support needs cannot be added for this person.&nbsp;<a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out why</a>.
+               </p>
+           </div>
        
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">
