@@ -1744,6 +1744,131 @@ describe('SupportNeedsController', () => {
         })
         .expect(500)
     })
+
+    describe('form validation', () => {
+      beforeEach(() => {
+        jest.spyOn(supportNeedStateService, 'getSupportNeeds').mockResolvedValue({
+          needs: [
+            {
+              uuid: 'first-uuid',
+              supportNeedId: 1,
+              existingPrisonerSupportNeedId: null,
+              allowUserDesc: false,
+              category: 'Accommodation before custody',
+              isOther: false,
+              title: 'End a tenancy',
+              isUpdatable: true,
+              isPrisonResponsible: null,
+              isProbationResponsible: null,
+              otherSupportNeedText: null,
+              status: null,
+              updateText: null,
+              isSelected: true,
+              isPreSelected: false,
+            },
+          ],
+        })
+      })
+
+      const postUrl = '/support-needs/accommodation/status/first-uuid'
+      const getUrl = '/support-needs/accommodation/status/first-uuid/?prisonerNumber=A1234DY'
+      const validSubmission = {
+        _csrf: 'xjM2bce6',
+        prisonerNumber: 'A8731DY',
+        status: 'MET',
+        responsibleStaff: ['PRISON', 'PROBATION'],
+        updateText: 'Some text in the additional details textarea',
+        otherSupportNeedText: '',
+      }
+
+      it('should not allow submission if status is missing', async () => {
+        const submission = { ...validSubmission }
+        delete submission.status
+
+        await request(app).post(postUrl).send(submission).expect(302).expect('Location', getUrl)
+
+        expect(supportNeedStateService.setSupportNeeds).not.toHaveBeenCalled()
+      })
+
+      it('should not allow submission if status is invalid', async () => {
+        const submission = { ...validSubmission, status: 'X' }
+
+        await request(app).post(postUrl).send(submission).expect(302).expect('Location', getUrl)
+
+        expect(supportNeedStateService.setSupportNeeds).not.toHaveBeenCalled()
+      })
+
+      it('should not allow submission if responsible staff is missing', async () => {
+        const submission = { ...validSubmission }
+        delete submission.responsibleStaff
+
+        await request(app).post(postUrl).send(submission).expect(302).expect('Location', getUrl)
+
+        expect(supportNeedStateService.setSupportNeeds).not.toHaveBeenCalled()
+      })
+
+      it('should not allow submission if responsible staff is an empty array', async () => {
+        const responsibleStaff: string[] = []
+        const submission = { ...validSubmission, responsibleStaff }
+
+        await request(app).post(postUrl).send(submission).expect(302).expect('Location', getUrl)
+
+        expect(supportNeedStateService.setSupportNeeds).not.toHaveBeenCalled()
+      })
+
+      it('should not allow submission if responsible staff is invalid', async () => {
+        const submission = { ...validSubmission, responsibleStaff: ['PRISON', 'X'] }
+
+        await request(app).post(postUrl).send(submission).expect(302).expect('Location', getUrl)
+
+        expect(supportNeedStateService.setSupportNeeds).not.toHaveBeenCalled()
+      })
+
+      it('should allow submission if responsible staff is a valid string', async () => {
+        const submission = { ...validSubmission, responsibleStaff: 'PRISON' }
+
+        await request(app)
+          .post(postUrl)
+          .send(submission)
+          .expect(302)
+          .expect('Location', '/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY')
+
+        expect(supportNeedStateService.setSupportNeeds).toHaveBeenCalled()
+      })
+
+      it('should allow submission if both responsible staff is a valid array', async () => {
+        const submission = { ...validSubmission, responsibleStaff: ['PRISON'] }
+
+        await request(app)
+          .post(postUrl)
+          .send(submission)
+          .expect(302)
+          .expect('Location', '/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY')
+
+        expect(supportNeedStateService.setSupportNeeds).toHaveBeenCalled()
+      })
+
+      it('should allow submission if update text is missing', async () => {
+        const submission = { ...validSubmission }
+        delete submission.updateText
+
+        await request(app)
+          .post(postUrl)
+          .send(submission)
+          .expect(302)
+          .expect('Location', '/support-needs/accommodation/check-answers/?prisonerNumber=A1234DY')
+
+        expect(supportNeedStateService.setSupportNeeds).toHaveBeenCalled()
+      })
+
+      it('should not allow submission if update text is over 3000 characters', async () => {
+        const submission = { ...validSubmission, updateText: 'X'.repeat(3001) }
+
+        await request(app).post(postUrl).send(submission).expect(302).expect('Location', getUrl)
+
+        expect(supportNeedStateService.setSupportNeeds).not.toHaveBeenCalled()
+      })
+    })
   })
 
   it('should redirect to the next support needs status page', async () => {
