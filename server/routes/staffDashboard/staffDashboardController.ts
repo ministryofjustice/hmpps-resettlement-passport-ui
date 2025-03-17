@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { validationResult } from 'express-validator'
 import StaffDashboardView from './staffDashboardView'
 import { ErrorMessage } from '../view'
 import RpService from '../../services/rpService'
@@ -16,6 +17,13 @@ export default class StaffDashboardController {
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
       const pageSize = 20
       const { userActiveCaseLoad } = res.locals
+
+      const validationErrors = validationResult(req)
+      if (!validationErrors.isEmpty()) {
+        // Validation failed, throw 500 error
+        throw new Error('Invalid query parameters')
+      }
+
       const {
         searchInput = '',
         releaseTime = '0',

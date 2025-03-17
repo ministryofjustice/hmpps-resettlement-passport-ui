@@ -31,23 +31,21 @@ export default class FinanceIdController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      // Perform validation checks for query parameters
-      const errors = validationResult(req)
-      if (!errors.isEmpty()) {
-        throw new Error(`Validation failed: ${JSON.stringify(errors.array())}`)
-      }
-
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       handleWhatsNewBanner(req, res)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
-      const {
-        page = '0',
-        pageSize = '10',
-        sort = 'occurenceDateTime%2CDESC',
-        days = '0',
-        createdByUserId = '0',
-      } = req.query
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        // Validation failed, throw 500 error
+        throw new Error('Invalid query parameters')
+      }
+
+      const pageSize = '10'
+      const sort = 'occurenceDateTime%2CDESC'
+      const days = '0'
+      const { page = '0', createdByUserId = '0' } = req.query
+
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
 
       let finance: BankApplicationResponse = {}

@@ -56,11 +56,34 @@ describe('getView', () => {
       '',
     )
   })
+  it('Happy path with filter prisoner name', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get('/?releaseTime=84&searchInput=john')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      'john',
+      '84',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
+  })
   it('Happy path with filter time to release 24W', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
-      .get('/?releaseTime=168&pathwayView=&assessmentRequired=&searchInput=')
+      .get('/?releaseTime=168&pathwayView=&lastReportCompleted=&searchInput=')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith(
@@ -83,7 +106,7 @@ describe('getView', () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
-      .get('/?releaseTime=84&pathwayView=ACCOMMODATION&assessmentRequired=&searchInput=')
+      .get('/?releaseTime=84&pathwayView=ACCOMMODATION&lastReportCompleted=&searchInput=')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith(
@@ -126,7 +149,7 @@ describe('getView', () => {
     )
   })
 
-  it('Happy path with filter lastReportCompleted', async () => {
+  it('Happy path with filter lastReportCompleted=BCST2', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
@@ -150,11 +173,59 @@ describe('getView', () => {
     )
   })
 
+  it('Happy path with filter lastReportCompleted=RESETTLEMENT_PLAN', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get('/?releaseTime=84&lastReportCompleted=RESETTLEMENT_PLAN')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '84',
+      '',
+      '',
+      '',
+      true,
+      '',
+      'RESETTLEMENT_PLAN',
+    )
+  })
+
+  it('Happy path with filter lastReportCompleted=NONE', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get('/?releaseTime=84&lastReportCompleted=NONE')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '84',
+      '',
+      '',
+      '',
+      true,
+      '',
+      'NONE',
+    )
+  })
+
   it('Happy path with filter prisoner number not exists', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
-      .get('/?releaseTime=84&pathwayView=&assessmentRequired=&searchInput=xxxx')
+      .get('/?releaseTime=84&pathwayView=&lastReportCompleted=&searchInput=xxxx')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith(
@@ -174,23 +245,101 @@ describe('getView', () => {
     )
   })
 
-  it('Happy path with sorting by name', async () => {
+  it('Happy path with sorting by name and direction DESC', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
       .get(
-        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&assessmentRequired=',
+        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&lastReportCompleted=',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'name', 'DESC', '', '84', '', '', '', true, '', '')
   })
 
+  it('Happy path with sorting by releaseDate and direction ASC', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get(
+        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&lastReportCompleted=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '84',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
+  })
+
+  it('Happy path with sorting by releaseOnTemporaryLicenceDate and direction DESC', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get(
+        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&lastReportCompleted=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseOnTemporaryLicenceDate',
+      'DESC',
+      '',
+      '84',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
+  })
+
+  it('Happy path with sorting by lastUpdatedDate and direction DESC', async () => {
+    const getPrisonerListSpy = stubPrisonersList(rpService)
+    stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
+    await request(app)
+      .get(
+        '/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&lastReportCompleted=',
+      )
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'lastUpdatedDate',
+      'DESC',
+      '',
+      '84',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
+  })
+
   it('Happy path filter releaseTime missing', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
-      .get('/?pathwayView=&assessmentRequired=&searchInput=')
+      .get('/?pathwayView=&lastReportCompleted=&searchInput=')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith(
@@ -216,7 +365,7 @@ describe('getView', () => {
       .mockRejectedValue(new Error('Something went wrong'))
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
-      .get('/?pathwayView=&assessmentRequired=&searchInput=')
+      .get('/?pathwayView=&lastReportCompleted=&searchInput=')
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
 
@@ -318,6 +467,48 @@ describe('getView', () => {
 
     await request(app)
       .get('/')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid page parameter', async () => {
+    await request(app)
+      .get('/?page=InvalidValue')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid releaseTime parameter', async () => {
+    await request(app)
+      .get('/?releaseTime=%2C9')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid sortField parameter', async () => {
+    await request(app)
+      .get('/?sortField=invalidValue')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid sortDirection parameter', async () => {
+    await request(app)
+      .get('/?sortDirection=4')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid lastReportCompleted parameter', async () => {
+    await request(app)
+      .get('/?lastReportCompleted=invalidValue')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid searchInput parameter', async () => {
+    await request(app)
+      .get('/?searchInput=john%^')
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
   })
