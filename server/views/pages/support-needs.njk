@@ -123,13 +123,13 @@
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-{{ supportNeed.uuid }}">
                         <div class="govuk-form-group govuk-character-count {% if supportNeed.error %}govuk-form-group--error{% endif %}" id="other-{{ supportNeed.uuid }}" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="{{ CUSTOM_OTHER_PREFIX }}{{ supportNeed.uuid }}">Other support need</label>
+                          <label class="govuk-label" for="{{ CUSTOM_OTHER_PREFIX }}{{ supportNeed.uuid }}">Enter support need</label>
                           {% if supportNeed.error %}
                             <p id="{{ supportNeed.uuid }}-error" class="govuk-error-message">
                               <span class="govuk-visually-hidden">Error:</span> {{ supportNeed.error }}
                             </p>
                           {% endif %}
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="{{ supportNeed.uuid }}" name="{{ CUSTOM_OTHER_PREFIX }}{{ supportNeed.uuid }}" type="text" value="{{ supportNeed.otherSupportNeedText }}">
+                          <input class="govuk-input govuk-js-character-count" id="{{ supportNeed.uuid }}" name="{{ CUSTOM_OTHER_PREFIX }}{{ supportNeed.uuid }}" type="text" value="{{ supportNeed.otherSupportNeedText }}">
                           <div id="{{ supportNeed.uuid }}-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>

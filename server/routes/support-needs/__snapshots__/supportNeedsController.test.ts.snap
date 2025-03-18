@@ -500,9 +500,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-6">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-6" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-6">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-6">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
                           <div id="uuid-6-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -544,9 +544,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-10">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-10" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-10">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-10">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
                           <div id="uuid-10-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -582,9 +582,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-14">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-14" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-14">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-14">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="This is some other text">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="This is some other text">
                           <div id="uuid-14-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -845,9 +845,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-6">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-6" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-6">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-6">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
                           <div id="uuid-6-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -903,13 +903,13 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-10">
                         <div class="govuk-form-group govuk-character-count govuk-form-group--error" id="other-uuid-10" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-10">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-10">Enter support need</label>
                           
                             <p id="uuid-10-error" class="govuk-error-message">
                               <span class="govuk-visually-hidden">Error:</span> Enter other support need
                             </p>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
                           <div id="uuid-10-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -965,9 +965,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-14">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-14" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-14">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-14">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
                           <div id="uuid-14-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -1244,9 +1244,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-6">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-6" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-6">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-6">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
                           <div id="uuid-6-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -1306,9 +1306,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-10">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-10" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-10">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-10">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
                           <div id="uuid-10-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -1368,9 +1368,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-14">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-14" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-14">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-14">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
                           <div id="uuid-14-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -1631,9 +1631,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-6">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-6" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-6">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-6">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
                           <div id="uuid-6-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -1689,9 +1689,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-10">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-10" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-10">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-10">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
                           <div id="uuid-10-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -1747,9 +1747,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-14">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-14" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-14">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-14">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
                           <div id="uuid-14-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -2010,9 +2010,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-6">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-6" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-6">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-6">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
                           <div id="uuid-6-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -2068,13 +2068,13 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-10">
                         <div class="govuk-form-group govuk-character-count govuk-form-group--error" id="other-uuid-10" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-10">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-10">Enter support need</label>
                           
                             <p id="uuid-10-error" class="govuk-error-message">
                               <span class="govuk-visually-hidden">Error:</span> Other support need must be 100 characters or less
                             </p>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
                           <div id="uuid-10-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -2130,9 +2130,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-14">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-14" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-14">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-14">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
                           <div id="uuid-14-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -2370,9 +2370,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-6">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-6" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-6">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-6">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-6" name="custom-other-uuid-6" type="text" value="">
                           <div id="uuid-6-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -2428,9 +2428,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-10">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-10" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-10">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-10">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-10" name="custom-other-uuid-10" type="text" value="">
                           <div id="uuid-10-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>
@@ -2486,9 +2486,9 @@ exports[`SupportNeedsController getSupportNeeds should render the support needs 
                       </div>
                       <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-uuid-14">
                         <div class="govuk-form-group govuk-character-count " id="other-uuid-14" data-module="govuk-character-count" data-maxlength="100">
-                          <label class="govuk-label" for="custom-other-uuid-14">Other support need</label>
+                          <label class="govuk-label" for="custom-other-uuid-14">Enter support need</label>
                           
-                          <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
+                          <input class="govuk-input govuk-js-character-count" id="uuid-14" name="custom-other-uuid-14" type="text" value="">
                           <div id="uuid-14-info" class="govuk-hint govuk-character-count__message">
                             You can enter up to 100 characters
                           </div>

@@ -2119,6 +2119,12 @@ describe('SupportNeedsController', () => {
           },
         ],
       })
+
+      expect(supportNeedStateService.deleteSupportNeeds).toHaveBeenCalledWith({
+        pathway: 'ACCOMMODATION',
+        prisonerNumber: 'A1234DY',
+        userId: 'user1',
+      })
     })
   })
 

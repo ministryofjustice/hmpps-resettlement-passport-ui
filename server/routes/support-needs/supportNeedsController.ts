@@ -370,6 +370,7 @@ export default class SupportNeedsController {
       }
 
       await this.rpService.postSupportNeeds(prisonerNumber, supportNeedsToSubmit)
+      await this.supportNeedStateService.deleteSupportNeeds(stateKey)
 
       res.redirect(`/${pathway}/?prisonerNumber=${prisonerNumber}#support-needs`)
     } catch (err) {
