@@ -39,6 +39,7 @@ import {
   errorSummaryList,
   findError,
   findPreviousSelectedSupportNeed,
+  convertStringToId,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -1843,4 +1844,17 @@ describe('findPreviousSelectedSupportNeed', () => {
       expect(findPreviousSelectedSupportNeed(cacheState, uuid)).toEqual(expected)
     },
   )
+})
+
+describe('convertStringToId', () => {
+  it.each([
+    ['undefined', undefined, undefined],
+    ['null', null, undefined],
+    ['blank string', '', ''],
+    ['whitespace', '   ', ''],
+    ['string 1', 'something', 'something'],
+    ['string 2', ' THIS IS AN  ID', 'this-is-an-id'],
+  ])('%s -> convertStringToId(%s)', (_: string, input: string, output: string) => {
+    expect(convertStringToId(input)).toEqual(output)
+  })
 })

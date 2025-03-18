@@ -1,4 +1,5 @@
 import { SupportNeedsCache } from '../data/model/supportNeeds'
+import { CUSTOM_OTHER_PREFIX, SUPPORT_NEED_OPTION_PREFIX } from '../routes/support-needs/supportNeedsContants'
 
 export const updateSupportNeedsWithRequestBody = (
   currentCacheStatus: SupportNeedsCache,
@@ -6,10 +7,9 @@ export const updateSupportNeedsWithRequestBody = (
 ): SupportNeedsCache => {
   const selectedSupportNeedIds: string[] = []
   const selectedOthers: { supportNeedId: string; supportNeedText: string }[] = []
-  const OTHER_SUPPORT_NEED_PREFIX = 'custom-other-'
 
   for (const key in body) {
-    if (key.startsWith('support-need-option-')) {
+    if (key.startsWith(SUPPORT_NEED_OPTION_PREFIX)) {
       const value = body[key]
 
       if (Array.isArray(value)) {
@@ -17,11 +17,11 @@ export const updateSupportNeedsWithRequestBody = (
       } else {
         selectedSupportNeedIds.push(value)
       }
-    } else if (key.startsWith(OTHER_SUPPORT_NEED_PREFIX)) {
+    } else if (key.startsWith(CUSTOM_OTHER_PREFIX)) {
       const otherText = body[key]
       if (otherText.length > 0) {
         // get "other" support need option's id from key
-        const otherOptionId = key.replace(OTHER_SUPPORT_NEED_PREFIX, '')
+        const otherOptionId = key.replace(CUSTOM_OTHER_PREFIX, '')
         const cachedOtherOption = currentCacheStatus.needs.find(need => need.uuid === otherOptionId)
 
         if (cachedOtherOption) {
@@ -40,7 +40,6 @@ export const updateSupportNeedsWithRequestBody = (
       return {
         ...need,
         isSelected: selectedSupportNeedIds.includes(need.uuid),
-        isOther: Boolean(selectedOther),
         otherSupportNeedText: selectedOther?.supportNeedText || null,
       }
     }),

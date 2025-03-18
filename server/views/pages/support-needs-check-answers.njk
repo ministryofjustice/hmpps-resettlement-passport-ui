@@ -38,7 +38,7 @@
                   <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row no-border">
                       <dt class="govuk-summary-list__key">Support need</dt>
-                      <dd class="govuk-summary-list__value">{{ supportNeed.otherSupportNeedText if supportNeed.isOther else supportNeed.title }}</dd>
+                      <dd class="govuk-summary-list__value">{{ supportNeed.otherSupportNeedText if supportNeed.allowUserDesc else supportNeed.title }}</dd>
                       <dd class="govuk-summary-list__actions">
                         <a class="govuk-link" href="/support-needs/{{ pathway }}/status/{{ supportNeed.uuid }}/?prisonerNumber={{ prisonerNumber }}&edit=true">
                           Change<span class="govuk-visually-hidden"> status</span>
