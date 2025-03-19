@@ -31,7 +31,11 @@
                   {% endif %}
                 </p>
               {% endif %}
-              <p class="show-line-breaks">{{ update.text }}</p>
+              {% set caseNoteIntro = update.text | getCaseNotesIntro %}
+              {% if caseNoteIntro %}
+                <p><strong>{{ caseNoteIntro }}</strong></p>
+              {% endif %}
+              <p class="show-line-breaks">{{ update.text | getCaseNotesText }}</p>
               <span class="govuk-caption-m">Updated: {{ update.createdAt | formatDate('long') }} by {{ update.createdBy }}</span>
               <br>
             </div>

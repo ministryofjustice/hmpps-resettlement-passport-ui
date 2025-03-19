@@ -111,6 +111,11 @@ describe('get case notes introductory line', () => {
     ['Does not contain introductory sentence', 'This is the main text of the case notes body.', null],
     ['Empty string', '', null],
     ['Null input', null, null],
+    [
+      'Starts with support needs reset text',
+      'Support need removed because of profile reset\n\nThis is the rest of the text',
+      'Support need removed because of profile reset',
+    ],
   ])('getCaseNotesIntro(%s)', (_: string, a: string, expected: string) => {
     expect(getCaseNotesIntro(a)).toEqual(expected)
   })
@@ -130,6 +135,11 @@ describe('get case notes body text', () => {
     ],
     ['Empty string', '', ''],
     ['Null input', null, ''],
+    [
+      'Starts with support needs reset text',
+      'Support need removed because of profile reset\n\nThis is the rest of the text\nLine 1\n\nLine 2',
+      'This is the rest of the text\nLine 1\n\nLine 2',
+    ],
   ])('getCaseNotesText(%s)', (_: string, a: string, expected: string) => {
     expect(getCaseNotesText(a)).toEqual(expected)
   })
