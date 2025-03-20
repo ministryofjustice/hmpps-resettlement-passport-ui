@@ -7,6 +7,7 @@ import FeatureFlags from '../../featureFlag'
 import { configHelper, defaultTestConfig } from '../configHelperTest'
 import {
   expectPrisonerNotFoundPage,
+  expectSomethingWentWrongPage,
   stubFeatureFlagToTrue,
   stubPrisonerDetails,
   stubPrisonerOverviewData,
@@ -71,12 +72,36 @@ describe('prisonerOverview', () => {
     expect(getDocumentMetaSpy).toHaveBeenCalledWith('A1234DY')
   })
 
-  it('should render the prisoner overview page with correct query params', async () => {
+  it('should render the prisoner overview page without retrieving documents', async () => {
     const queryParams = {
       prisonerNumber: 'A1234DY',
       page: '1',
-      size: '5',
-      sort: 'occurenceDateTime%2CDESC',
+      sort: 'occurenceDateTime,DESC',
+      days: '7',
+      selectedPathway: 'Education',
+    }
+    const getPrisonerOverviewPageDataSpy = stubPrisonerOverviewData(rpService)
+    documentService.getDocumentMeta = jest.fn().mockRejectedValue([])
+    await request(app)
+      .get('/prisoner-overview')
+      .query(queryParams)
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerOverviewPageDataSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      '1',
+      '10',
+      'occurenceDateTime,DESC',
+      '7',
+      'Education',
+    )
+  })
+
+  it('should render the prisoner overview page with correct query params, sort=occurenceDateTime,DESC', async () => {
+    const queryParams = {
+      prisonerNumber: 'A1234DY',
+      page: '1',
+      sort: 'occurenceDateTime,DESC',
       days: '7',
       selectedPathway: 'Education',
     }
@@ -90,11 +115,29 @@ describe('prisonerOverview', () => {
     expect(getPrisonerOverviewPageDataSpy).toHaveBeenCalledWith(
       'A1234DY',
       '1',
-      '5',
-      'occurenceDateTime%2CDESC',
+      '10',
+      'occurenceDateTime,DESC',
       '7',
       'Education',
     )
+  })
+
+  it('should render the prisoner overview page with correct query params, sort=pathway,ASC', async () => {
+    const queryParams = {
+      prisonerNumber: 'A1234DY',
+      page: '1',
+      sort: 'pathway,ASC',
+      days: '7',
+      selectedPathway: 'Education',
+    }
+    const getPrisonerOverviewPageDataSpy = stubPrisonerOverviewData(rpService)
+    documentService.getDocumentMeta = jest.fn().mockResolvedValue([])
+    await request(app)
+      .get('/prisoner-overview')
+      .query(queryParams)
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerOverviewPageDataSpy).toHaveBeenCalledWith('A1234DY', '1', '10', 'pathway,ASC', '7', 'Education')
   })
 
   it('should render whats new banner when it is enabled', async () => {
@@ -200,5 +243,38 @@ describe('prisonerOverview', () => {
       .get('/prisoner-overview?prisonerNumber=A1234DY')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('should display error when supportNeeds is enabled and support needs data is not retrieved', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds'])
+    jest.spyOn(rpService, 'getSupportNeedsSummary').mockRejectedValue([])
+
+    stubPrisonerOverviewData(rpService)
+
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('Error case - invalid page parameter', async () => {
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY&page=InvalidValue')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid days parameter', async () => {
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY&page=1&days=%2C9')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid sort parameter', async () => {
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY&sort=pathway%2CDESC')
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 })

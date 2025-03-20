@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express'
 import { isAlphanumeric, isNumeric } from 'validator'
+import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import logger from '../../../logger'
 import FinanceIdView from './financeIdView'
@@ -21,13 +22,17 @@ export default class FinanceIdController {
       handleWhatsNewBanner(req, res)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
-      const {
-        page = '0',
-        pageSize = '10',
-        sort = 'occurenceDateTime%2CDESC',
-        days = '0',
-        createdByUserId = '0',
-      } = req.query
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        // Validation failed, throw 500 error
+        throw new Error('Invalid query parameters')
+      }
+
+      const pageSize = '10'
+      const sort = 'occurenceDateTime%2CDESC'
+      const days = '0'
+      const { page = '0', createdByUserId = '0' } = req.query
+
       const prisonerNumber = prisonerData.personalDetails.prisonerNumber as string
 
       let finance: BankApplicationResponse = {}

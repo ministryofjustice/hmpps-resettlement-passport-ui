@@ -309,6 +309,21 @@ describe('getAddAnIdView', () => {
       statusUpdateDate: null,
     })
   })
+
+  it('Error case - error updating ID application', async () => {
+    jest.spyOn(rpService, 'patchIdApplication').mockRejectedValue([])
+    await request(app)
+      .post('/finance-and-id/id-update')
+      .send({
+        updatedStatus: 'Rejected',
+        refundAmount: '10',
+        prisonerNumber: 'A1234DY',
+        applicationId: '1',
+        idType: 'Birth certificate',
+      })
+      .expect(500)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
   it('Error case - post ID submit without parameters', async () => {
     const res = await request(app).post('/finance-and-id/id-submit').expect(404)
 

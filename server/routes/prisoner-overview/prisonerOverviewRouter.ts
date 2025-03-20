@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { query } from 'express-validator'
 import { Services } from '../../services'
 import PrisonerOverviewController from './prisonerOverviewController'
 
@@ -10,5 +11,13 @@ export default (router: Router, services: Services) => {
     services.prisonerDetailsService,
   )
 
-  router.get('/prisoner-overview', [controller.getPrisoner])
+  router.get(
+    '/prisoner-overview',
+    [
+      query('page').isInt({ min: 0 }).optional(),
+      query('sort').isIn(['pathway,ASC', 'occurenceDateTime,DESC']).optional(),
+      query('days').isInt({ min: 0 }).optional(),
+    ],
+    [controller.getPrisoner],
+  )
 }
