@@ -72,6 +72,31 @@ describe('prisonerOverview', () => {
     expect(getDocumentMetaSpy).toHaveBeenCalledWith('A1234DY')
   })
 
+  it('should render the prisoner overview page without retrieving documents', async () => {
+    const queryParams = {
+      prisonerNumber: 'A1234DY',
+      page: '1',
+      sort: 'occurenceDateTime,DESC',
+      days: '7',
+      selectedPathway: 'Education',
+    }
+    const getPrisonerOverviewPageDataSpy = stubPrisonerOverviewData(rpService)
+    documentService.getDocumentMeta = jest.fn().mockRejectedValue([])
+    await request(app)
+      .get('/prisoner-overview')
+      .query(queryParams)
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+    expect(getPrisonerOverviewPageDataSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      '1',
+      '10',
+      'occurenceDateTime,DESC',
+      '7',
+      'Education',
+    )
+  })
+
   it('should render the prisoner overview page with correct query params, sort=occurenceDateTime,DESC', async () => {
     const queryParams = {
       prisonerNumber: 'A1234DY',
@@ -211,6 +236,18 @@ describe('prisonerOverview', () => {
         },
       ],
     } as SupportNeedsSummary)
+
+    stubPrisonerOverviewData(rpService)
+
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('should display error when supportNeeds is enabled and support needs data is not retrieved', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds'])
+    jest.spyOn(rpService, 'getSupportNeedsSummary').mockRejectedValue([])
 
     stubPrisonerOverviewData(rpService)
 
