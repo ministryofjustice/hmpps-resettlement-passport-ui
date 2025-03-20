@@ -12,7 +12,7 @@
         {{ validationErrorMessage(validationError) }}
       {% endif %}
       <div class="govuk-form-group">
-        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-line-1">Address line 1</label>
+        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-line-1">Address line 1 (optional)</label>
         <input class="govuk-input govuk-!-width-two-thirds" id="{{ currentQuestionAndAnswer.question.id }}-address-line-1"
                name="{{ currentQuestionAndAnswer.question.id }}-addressLine1" type="text" autocomplete="address-line1"
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressLine1') }}"> {# FIXME #}
@@ -24,7 +24,7 @@
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressLine2') }}">
       </div>
       <div class="govuk-form-group">
-        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-town">Town or city</label>
+        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-town">Town or city (optional)</label>
         <input class="govuk-input govuk-!-width-one-half" id="{{ currentQuestionAndAnswer.question.id }}-address-town"
                name="{{ currentQuestionAndAnswer.question.id }}-addressTown" type="text" autocomplete="address-level2"
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressTown') }}">
@@ -36,7 +36,7 @@
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressCounty') }}">
       </div>
       <div class="govuk-form-group">
-        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-postcode">Postcode</label>
+        <label class="govuk-label" for="{{ currentQuestionAndAnswer.question.id }}-address-postcode">Postcode (optional)</label>
         <input class="govuk-input govuk-input--width-10" id="{{ currentQuestionAndAnswer.question.id }}-address-postcode"
                name="{{ currentQuestionAndAnswer.question.id }}-addressPostcode" type="text" autocomplete="postal-code"
                value="{{ existingAnswer | getAnswerValueFromArrayOfMaps('addressPostcode') }}">
