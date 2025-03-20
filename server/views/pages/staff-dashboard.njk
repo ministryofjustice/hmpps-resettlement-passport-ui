@@ -1,6 +1,7 @@
 {% extends "../partials/layout.njk" %}
 {% set pageHeading = "All pathways overview" %}
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
 {% set assignCaseEnabled = features.ASSIGN_CASE_TAB | getFeatureFlag %}
 {% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
 
@@ -57,13 +58,33 @@
           {% endif %}
           {% if not pathwayView %}
             <div class="govuk-grid-column-one-third">
-              <div class="govuk-form-group">
-                <label class="govuk-label" for="assessmentRequired">Immediate needs report</label>
-                <select class="govuk-select filter-input" id="assessmentRequired" name="assessmentRequired">
-                  <option {% if assessmentRequired == "" %} selected {% endif %} value="">All statuses</option>
-                  <option {% if assessmentRequired == "true" %} selected {% endif %} value="true">Report required</option>
-                </select>
-              </div>
+              {{ govukSelect({
+                id: "lastReportCompleted",
+                name: "lastReportCompleted",
+                label: {
+                  text: "Last report completed"
+                },
+                classes: "filter-input",
+                value: lastReportCompleted,
+                items: [
+                  {
+                    value: "",
+                    text: "View all"
+                  },
+                  {
+                    value: "BCST2",
+                    text: "Immediate needs report"
+                  },
+                  {
+                    value: "RESETTLEMENT_PLAN",
+                    text: "Pre-release report"
+                  },
+                  {
+                    value: "NONE",
+                    text: "No reports completed"
+                  }
+                ]
+              }) }}
             </div>
           {% endif %}
           <div class="{{ "govuk-grid-column-full" if supportNeedsEnabled else "govuk-grid-column-one-third" }}">

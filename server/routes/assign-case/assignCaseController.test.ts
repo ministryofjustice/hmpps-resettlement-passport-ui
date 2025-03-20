@@ -66,7 +66,6 @@ describe('getView', () => {
       '',
       '',
       '',
-      '',
       true,
       '',
     )
@@ -91,7 +90,6 @@ describe('getView', () => {
       '',
       '',
       '',
-      '',
       true,
       '',
     )
@@ -107,21 +105,7 @@ describe('getView', () => {
       .get('/assign-a-case')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith(
-      'MDI',
-      0,
-      20,
-      'releaseDate',
-      'ASC',
-      '',
-      '0',
-      '',
-      '',
-      '',
-      '',
-      true,
-      '',
-    )
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', true, '')
   })
 
   test('Should show message that assignments cannot be made with no resettlement workers available', async () => {
@@ -154,21 +138,7 @@ describe('getView', () => {
         const doc = parseHtmlDocument(res.text)
         expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
       })
-    expect(getPrisonerListSpy).toHaveBeenCalledWith(
-      'MDI',
-      0,
-      20,
-      'releaseDate',
-      'ASC',
-      '',
-      '0',
-      '',
-      '',
-      '',
-      '',
-      true,
-      '',
-    )
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', true, '')
   })
 
   test('shows success dialog for unassign', async () => {
@@ -189,21 +159,7 @@ describe('getView', () => {
         const doc = parseHtmlDocument(res.text)
         expect(doc.getElementById('success-alert').outerHTML).toMatchSnapshot()
       })
-    expect(getPrisonerListSpy).toHaveBeenCalledWith(
-      'MDI',
-      0,
-      20,
-      'releaseDate',
-      'ASC',
-      '',
-      '0',
-      '',
-      '',
-      '',
-      '',
-      true,
-      '',
-    )
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', true, '')
   })
 
   test('shows error dialog for unassign', async () => {
@@ -403,7 +359,6 @@ it('Happy path with filter parameters', async () => {
     'ASC',
     'smith',
     '84',
-    '',
     '',
     '',
     '',

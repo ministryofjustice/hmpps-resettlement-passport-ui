@@ -44,7 +44,6 @@ export default class AssignCaseController {
       '',
       '',
       '',
-      '',
       includePastReleaseDates,
       workerId,
     )

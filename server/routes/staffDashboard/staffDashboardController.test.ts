@@ -51,8 +51,9 @@ describe('getView', () => {
       '',
       '',
       '',
-      '',
       true,
+      '',
+      '',
     )
   })
   it('Happy path with filter time to release 24W', async () => {
@@ -62,7 +63,21 @@ describe('getView', () => {
       .get('/?releaseTime=168&pathwayView=&assessmentRequired=&searchInput=')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '168', '', '', '', '', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '168',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
   })
   it('Happy path with filter pathway view ACCOMODATION', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
@@ -82,11 +97,12 @@ describe('getView', () => {
       'ACCOMMODATION',
       '',
       '',
-      '',
       true,
+      '',
+      '',
     )
   })
-  it('Happy path with filter  watchList true', async () => {
+  it('Happy path with filter watchList true', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
@@ -103,17 +119,18 @@ describe('getView', () => {
       '84',
       '',
       '',
-      '',
       'true',
       true,
+      '',
+      '',
     )
   })
 
-  it('Happy path with filter  assessmentRequired true', async () => {
+  it('Happy path with filter lastReportCompleted', async () => {
     const getPrisonerListSpy = stubPrisonersList(rpService)
     stubFeatureFlagToTrue(featureFlags, ['includePastReleaseDates'])
     await request(app)
-      .get('/?releaseTime=84&pathwayView=&assessmentRequired=true&searchInput=')
+      .get('/?releaseTime=84&lastReportCompleted=BCST2')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
     expect(getPrisonerListSpy).toHaveBeenCalledWith(
@@ -126,9 +143,10 @@ describe('getView', () => {
       '84',
       '',
       '',
-      'true',
       '',
       true,
+      '',
+      'BCST2',
     )
   })
 
@@ -150,8 +168,9 @@ describe('getView', () => {
       '',
       '',
       '',
-      '',
       true,
+      '',
+      '',
     )
   })
 
@@ -164,7 +183,7 @@ describe('getView', () => {
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'name', 'DESC', '', '84', '', '', '', '', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'name', 'DESC', '', '84', '', '', '', true, '', '')
   })
 
   it('Happy path filter releaseTime missing', async () => {
@@ -174,7 +193,21 @@ describe('getView', () => {
       .get('/?pathwayView=&assessmentRequired=&searchInput=')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
   })
 
   it('Error case - rpService throws error', async () => {
@@ -187,7 +220,21 @@ describe('getView', () => {
       .expect(500)
       .expect(res => expect(res.text).toMatchSnapshot())
 
-    expect(getPrisonersListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
+    expect(getPrisonersListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
   })
 
   it('Happy path with default query params without tabs nav', async () => {
@@ -197,7 +244,21 @@ describe('getView', () => {
       .get('/')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
   })
 
   it('Happy path with default query params with tabs nav', async () => {
@@ -207,7 +268,21 @@ describe('getView', () => {
       .get('/')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
   })
 
   it('Happy path with default query params with supportNeeds enabled, no filters', async () => {
@@ -217,7 +292,21 @@ describe('getView', () => {
       .get('/')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
-    expect(getPrisonerListSpy).toHaveBeenCalledWith('MDI', 0, 20, 'releaseDate', 'ASC', '', '0', '', '', '', '', true)
+    expect(getPrisonerListSpy).toHaveBeenCalledWith(
+      'MDI',
+      0,
+      20,
+      'releaseDate',
+      'ASC',
+      '',
+      '0',
+      '',
+      '',
+      '',
+      true,
+      '',
+      '',
+    )
   })
 
   it('Error case - No feature flags in file', async () => {

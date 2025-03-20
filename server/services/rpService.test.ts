@@ -361,4 +361,43 @@ describe('RpService', () => {
       resetReason,
     )
   })
+
+  it('should call rpClient correctly when searching prisoners', async () => {
+    rpClient.get.mockResolvedValue({})
+    const getSpy = jest.spyOn(rpClient, 'get')
+
+    const prisonSelected = 'MDI'
+    const page = 1
+    const pageSize = 10
+    const sortField = 'releaseDate'
+    const sortDirection = 'ASC'
+    const searchInput = ''
+    const releaseTime = ''
+    const pathwayView = ''
+    const pathwayStatus = ''
+    const watchList = ''
+    const includePastReleaseDates = true
+    const workerId = ''
+    const lastReportCompleted = ''
+
+    await service.getListOfPrisoners(
+      prisonSelected,
+      page,
+      pageSize,
+      sortField,
+      sortDirection,
+      searchInput,
+      releaseTime,
+      pathwayView,
+      pathwayStatus,
+      watchList,
+      includePastReleaseDates,
+      workerId,
+      lastReportCompleted,
+    )
+
+    expect(getSpy).toHaveBeenCalledWith(
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&watchList=${watchList}&includePastReleaseDates=${includePastReleaseDates}&workerId=${workerId}&lastReportCompleted=${lastReportCompleted}`,
+    )
+  })
 })
