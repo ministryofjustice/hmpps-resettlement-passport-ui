@@ -406,7 +406,20 @@ describe('post', () => {
       .post('/assign-a-case')
       .send({
         prisonerNumbers: ['A8731DY', 'G4161UF', 'G5384GE'],
-        staffId: 123,
+        staffId: '123',
+      })
+      .expect(500)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  test('Shows error page when API returns empty response when assigning', async () => {
+    rpService.postCaseAllocations.mockResolvedValue([])
+
+    await request(app)
+      .post('/assign-a-case')
+      .send({
+        prisonerNumbers: ['A8731DY', 'G4161UF', 'G5384GE'],
+        staffId: '123',
       })
       .expect(500)
       .expect(res => expectSomethingWentWrongPage(res))
