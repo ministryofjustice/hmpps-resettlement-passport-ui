@@ -1,3 +1,5 @@
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
 {% extends "../partials/layout.njk" %}
 {% set pageTitle = applicationName + " - " + pathway | getNameFromUrl + " support needs" %}
 {% set mainClasses = "app-container govuk-body" %}
@@ -20,7 +22,12 @@
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-8">
     <div class="govuk-grid-column-three-quarters">
-
+      {% if errors | length %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errors
+        }) }}
+      {% endif %}
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
           <a href="{{ backLink }}" class="govuk-back-link">Back</a>
@@ -86,60 +93,71 @@
           {% endif %}
         </div>
       </details>
-
-      <form action="/support-needs/{{ pathway }}" class="govuk-form" method="POST">
-        <div class="govuk-form-group">
+      <div id="support-needs-form">
+        <form action="/support-needs/{{ pathway }}" class="govuk-form" method="POST">
           {% for item in supportNeeds %}
-            <fieldset class="govuk-fieldset">
-              <legend class="govuk-fieldset__legend govuk-fieldset__legend--m govuk-!-padding-top-8">
-                <h2 class="govuk-fieldset__heading">{{ item.category }}</h2>
-              </legend>
-              <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                {% for supportNeed in item.supportNeeds %}
-                  {% if supportNeed.title === "Other" %}
-                    <div class="govuk-checkboxes__item">
-                      <input
-                        class="govuk-checkboxes__input" 
-                        id="other-checkbox-{{ supportNeed.uuid }}" 
-                        name="support-need-option-{{ supportNeed.category }}" 
-                        type="checkbox" 
-                        value="{{ supportNeed.uuid }}" 
-                        {% if supportNeed.isSelected %}checked{% endif %}
-                        data-aria-controls="conditional-other-{{ supportNeed.uuid }}"
-                      >
-                      <label class="govuk-label govuk-checkboxes__label" for="other-checkbox-{{ supportNeed.uuid }}" >{{ supportNeed.title }}</label>
-                    </div>
-                    <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-{{ supportNeed.uuid }}">
-                      <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="100">
-                        <label class="govuk-label" for="custom-other-{{ supportNeed.uuid }}">Other support need</label>
-                        <input class="govuk-input govuk-!-width-one-third govuk-js-character-count" id="{{ supportNeed.uuid }}" name="custom-other-{{ supportNeed.uuid }}" type="text" value="{{ supportNeed.otherSupportNeedText }}">
-                        <div id="{{ supportNeed.uuid }}-info" class="govuk-hint govuk-character-count__message">
-                          You can enter up to 100 characters
+            <div class="govuk-form-group {% if item.error %}govuk-form-group--error{% endif %}" id="{{ item.id }}">
+              <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                  <h2 class="govuk-fieldset__heading">{{ item.category }}</h2>
+                </legend>
+                {% if item.error %}
+                  <p id="{{ item.id }}-error" class="govuk-error-message">
+                    <span class="govuk-visually-hidden">Error:</span> {{ item.error }}
+                  </p>
+                {% endif %}
+                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                  {% for supportNeed in item.supportNeeds %}
+                    {% if supportNeed.allowUserDesc %}
+                      <div class="govuk-checkboxes__item">
+                        <input
+                          class="govuk-checkboxes__input"
+                          id="other-checkbox-{{ supportNeed.uuid }}"
+                          name="{{ SUPPORT_NEED_OPTION_PREFIX }}{{ supportNeed.category }}"
+                          type="checkbox"
+                          value="{{ supportNeed.uuid }}"
+                          {% if supportNeed.isSelected %}checked{% endif %}
+                          data-aria-controls="conditional-other-{{ supportNeed.uuid }}"
+                        >
+                        <label class="govuk-label govuk-checkboxes__label" for="other-checkbox-{{ supportNeed.uuid }}" >{{ supportNeed.title }}</label>
+                      </div>
+                      <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden" id="conditional-other-{{ supportNeed.uuid }}">
+                        <div class="govuk-form-group govuk-character-count {% if supportNeed.error %}govuk-form-group--error{% endif %}" id="other-{{ supportNeed.uuid }}" data-module="govuk-character-count" data-maxlength="100">
+                          <label class="govuk-label" for="{{ CUSTOM_OTHER_PREFIX }}{{ supportNeed.uuid }}">Enter support need</label>
+                          {% if supportNeed.error %}
+                            <p id="{{ supportNeed.uuid }}-error" class="govuk-error-message">
+                              <span class="govuk-visually-hidden">Error:</span> {{ supportNeed.error }}
+                            </p>
+                          {% endif %}
+                          <input class="govuk-input govuk-js-character-count" id="{{ supportNeed.uuid }}" name="{{ CUSTOM_OTHER_PREFIX }}{{ supportNeed.uuid }}" type="text" value="{{ supportNeed.otherSupportNeedText }}">
+                          <div id="{{ supportNeed.uuid }}-info" class="govuk-hint govuk-character-count__message">
+                            You can enter up to 100 characters
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  {% else %}
+                    {% else %}
+                      <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="{{ supportNeed.uuid }}" name="{{ SUPPORT_NEED_OPTION_PREFIX }}{{ supportNeed.category }}" type="checkbox" value="{{ supportNeed.uuid }}" {% if supportNeed.isSelected %}checked{% endif %}>
+                        <label class="govuk-label govuk-checkboxes__label" for="{{ supportNeed.uuid }}">{{ supportNeed.title }}</label>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                  {% if item.exclusiveOption %}
+                    <div class="govuk-checkboxes__divider">or</div>
                     <div class="govuk-checkboxes__item">
-                      <input class="govuk-checkboxes__input" id="{{ supportNeed.uuid }}" name="support-need-option-{{ supportNeed.category }}" type="checkbox" value="{{ supportNeed.uuid }}" {% if supportNeed.isSelected %}checked{% endif %}>
-                      <label class="govuk-label govuk-checkboxes__label" for="{{ supportNeed.uuid }}">{{ supportNeed.title }}</label>
+                      <input class="govuk-checkboxes__input" id="{{ item.exclusiveOption.uuid }}" name="{{ SUPPORT_NEED_OPTION_PREFIX }}{{ item.exclusiveOption.category }}" type="checkbox" value="{{ item.exclusiveOption.uuid }}" data-behaviour="exclusive" {% if item.exclusiveOption.isSelected or (item.exclusiveOption.isSelected is null and item.exclusiveOption.isPreSelected)  %}checked{% endif %}>
+                      <label class="govuk-label govuk-checkboxes__label" for="{{ item.exclusiveOption.uuid }}">{{ item.exclusiveOption.title }}</label>
                     </div>
                   {% endif %}
-                {% endfor %}
-                {% if item.exclusiveOption %}
-                  <div class="govuk-checkboxes__divider">or</div>
-                  <div class="govuk-checkboxes__item">
-                    <input class="govuk-checkboxes__input" id="{{ item.exclusiveOption.uuid }}" name="support-need-option-{{ item.exclusiveOption.category }}" type="checkbox" value="{{ item.exclusiveOption.uuid }}" data-behaviour="exclusive" {% if item.exclusiveOption.isSelected or (item.exclusiveOption.isSelected is null and item.exclusiveOption.isPreSelected)  %}checked{% endif %}>
-                    <label class="govuk-label govuk-checkboxes__label" for="{{ item.exclusiveOption.uuid }}">{{ item.exclusiveOption.title }}</label>
-                  </div>
-                {% endif %}
-              </div>
-            </fieldset>
+                </div>
+              </fieldset>
+            </div>
           {% endfor %}
-        </div>
-        <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-        <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
-        <button class="govuk-button" type="submit">Continue</button>
-      </form>
+          <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+          <input type="hidden" name="prisonerNumber" value="{{ prisonerNumber }}"/>
+          <button class="govuk-button" type="submit">Continue</button>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}

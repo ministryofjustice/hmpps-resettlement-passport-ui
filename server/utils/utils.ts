@@ -7,12 +7,12 @@ import {
   CHECK_ANSWERS_PAGE_ID,
   ENUMS_DICTIONARY,
   EnumValue,
+  FEATURE_FLAGS,
   PATHWAY_DICTIONARY,
   REPORT_TYPE_ENUMS_DICTIONARY,
-  SUPPORT_NEEDS_ENUMS_DICTIONARY,
   RISK_ASSESSMENT_ENUMS_DICTIONARY,
   STATUS_DICTIONARY,
-  FEATURE_FLAGS,
+  SUPPORT_NEEDS_ENUMS_DICTIONARY,
 } from './constants'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import FeatureFlags from '../featureFlag'
@@ -35,6 +35,7 @@ import { PrisonersList } from '../data/model/prisoners'
 import { PrisonerSupportNeedsPatch, SupportNeedCache, SupportNeedsCache } from '../data/model/supportNeeds'
 import { SupportNeedStatus } from '../data/model/supportNeedStatus'
 import { ErrorMessage } from '../routes/view'
+import { SUPPORT_NEED_RESET_TEXT } from '../routes/support-needs/supportNeedsContants'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -360,9 +361,10 @@ export function getCaseNotesIntro(caseNoteText: string): string | null {
     // Split the first sentence into two parts: before and after the period
     const parts = caseNoteText.split('.')
     if (parts.length > 1) {
-      const beforePeriod = `${parts[0]}.`.trim()
-      return beforePeriod
+      return `${parts[0]}.`.trim()
     }
+  } else if (caseNoteText?.startsWith(SUPPORT_NEED_RESET_TEXT)) {
+    return SUPPORT_NEED_RESET_TEXT
   }
   return null
 }
@@ -372,8 +374,12 @@ export function getCaseNotesText(caseNoteText: string): string | null {
     // Split the first sentence into two parts: before and after the period
     const parts = caseNoteText.split('.')
     if (parts.length > 1) {
-      const afterPeriod = parts.slice(1).join('.').trim()
-      return afterPeriod
+      return parts.slice(1).join('.').trim()
+    }
+  } else if (caseNoteText?.startsWith(SUPPORT_NEED_RESET_TEXT)) {
+    const parts = caseNoteText.split('\n')
+    if (parts.length > 1) {
+      return parts.slice(1).join('\n').trim()
     }
   }
   return caseNoteText || ''
@@ -683,4 +689,8 @@ export const findPreviousSelectedSupportNeed = (
   }
 
   return null // No previous selected need found
+}
+
+export function convertStringToId(input: string) {
+  return input?.trim()?.replaceAll(/\s+/g, '-')?.toLowerCase()
 }

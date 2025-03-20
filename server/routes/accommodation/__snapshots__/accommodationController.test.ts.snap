@@ -1336,6 +1336,8 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                   
                 </p>
               
+              
+              
               <p class="show-line-breaks">This is some text related to the support need
 
 It has a line break in</p>
@@ -1364,6 +1366,8 @@ It has a line break in</p>
                   
                 </p>
               
+              
+              
               <p class="show-line-breaks">Some update text here</p>
               <span class="govuk-caption-m">Updated: 4 February 2025 by B User</span>
               <br>
@@ -1387,6 +1391,8 @@ It has a line break in</p>
                     <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
                   
                 </p>
+              
+              
               
               <p class="show-line-breaks">Some more update text here</p>
               <span class="govuk-caption-m">Updated: 1 February 2025 by B User</span>
@@ -1414,6 +1420,8 @@ It has a line break in</p>
                   
                 </p>
               
+              
+              
               <p class="show-line-breaks">This is the update text</p>
               <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
               <br>
@@ -1421,11 +1429,44 @@ It has a line break in</p>
             <hr>
           
             <div>
-              <h3>Support need update after reset</h3>
+              <h3>Pathway (case note)</h3>
               
               
-              <p class="show-line-breaks">This is the update text of a support need update that was created after a reset profile, therefore there is no status and responsible staff</p>
+              
+              
+              <p class="show-line-breaks">This is a case note, therefore there is no status and responsible staff</p>
               <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>Pathway (case note)</h3>
+              
+              
+              
+              
+                <p><strong>Resettlement status set to: Support required.</strong></p>
+              
+              <p class="show-line-breaks">This is an old case note related to the pathway
+This is a new line
+
+This is another new line</p>
+              <span class="govuk-caption-m">Updated: 22 December 2024 by D User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>Maintain a tenancy while in prison</h3>
+              
+              
+              
+              
+                <p><strong>Support need removed because of profile reset</strong></p>
+              
+              <p class="show-line-breaks">Reason for reset: The person has been recalled to prison</p>
+              <span class="govuk-caption-m">Updated: 21 December 2024 by E User</span>
               <br>
             </div>
             <hr>
@@ -2849,6 +2890,8 @@ exports[`getView Happy path with specified query params and data from endpoints 
                   
                 </p>
               
+              
+              
               <p class="show-line-breaks">This is some text related to the support need
 
 It has a line break in</p>
@@ -2877,6 +2920,8 @@ It has a line break in</p>
                   
                 </p>
               
+              
+              
               <p class="show-line-breaks">Some update text here</p>
               <span class="govuk-caption-m">Updated: 4 February 2025 by B User</span>
               <br>
@@ -2900,6 +2945,8 @@ It has a line break in</p>
                     <strong class="govuk-tag govuk-tag--blue">Community probation staff</strong>
                   
                 </p>
+              
+              
               
               <p class="show-line-breaks">Some more update text here</p>
               <span class="govuk-caption-m">Updated: 1 February 2025 by B User</span>
@@ -2927,6 +2974,8 @@ It has a line break in</p>
                   
                 </p>
               
+              
+              
               <p class="show-line-breaks">This is the update text</p>
               <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
               <br>
@@ -2934,11 +2983,44 @@ It has a line break in</p>
             <hr>
           
             <div>
-              <h3>Support need update after reset</h3>
+              <h3>Pathway (case note)</h3>
               
               
-              <p class="show-line-breaks">This is the update text of a support need update that was created after a reset profile, therefore there is no status and responsible staff</p>
+              
+              
+              <p class="show-line-breaks">This is a case note, therefore there is no status and responsible staff</p>
               <span class="govuk-caption-m">Updated: 23 December 2024 by C User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>Pathway (case note)</h3>
+              
+              
+              
+              
+                <p><strong>Resettlement status set to: Support required.</strong></p>
+              
+              <p class="show-line-breaks">This is an old case note related to the pathway
+This is a new line
+
+This is another new line</p>
+              <span class="govuk-caption-m">Updated: 22 December 2024 by D User</span>
+              <br>
+            </div>
+            <hr>
+          
+            <div>
+              <h3>Maintain a tenancy while in prison</h3>
+              
+              
+              
+              
+                <p><strong>Support need removed because of profile reset</strong></p>
+              
+              <p class="show-line-breaks">Reason for reset: The person has been recalled to prison</p>
+              <span class="govuk-caption-m">Updated: 21 December 2024 by E User</span>
               <br>
             </div>
             <hr>

@@ -12,10 +12,21 @@ export type SupportNeedCache = {
   updateText: string
   category: string
   allowUserDesc: boolean
-  isOther: boolean
   isUpdatable: boolean
   isSelected: boolean
   isPreSelected: boolean
+}
+
+export type SupportNeedCheckbox = {
+  uuid: string
+  supportNeedId: number
+  title: string
+  otherSupportNeedText: string
+  category: string
+  allowUserDesc: boolean
+  isSelected: boolean
+  isPreSelected: boolean
+  error?: string
 }
 
 export type SupportNeedsCache = {
@@ -88,8 +99,10 @@ export type PathwaySupportNeed = {
 
 export type GroupedSupportNeeds = {
   category: string
-  supportNeeds: SupportNeedCache[]
-  exclusiveOption: SupportNeedCache
+  id: string
+  supportNeeds: SupportNeedCheckbox[]
+  exclusiveOption: SupportNeedCheckbox
+  error?: string
 }[]
 
 export type PrisonerSupportNeedDetails = {

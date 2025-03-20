@@ -39,6 +39,7 @@ import {
   errorSummaryList,
   findError,
   findPreviousSelectedSupportNeed,
+  convertStringToId,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -110,6 +111,11 @@ describe('get case notes introductory line', () => {
     ['Does not contain introductory sentence', 'This is the main text of the case notes body.', null],
     ['Empty string', '', null],
     ['Null input', null, null],
+    [
+      'Starts with support needs reset text',
+      'Support need removed because of profile reset\n\nThis is the rest of the text',
+      'Support need removed because of profile reset',
+    ],
   ])('getCaseNotesIntro(%s)', (_: string, a: string, expected: string) => {
     expect(getCaseNotesIntro(a)).toEqual(expected)
   })
@@ -129,6 +135,11 @@ describe('get case notes body text', () => {
     ],
     ['Empty string', '', ''],
     ['Null input', null, ''],
+    [
+      'Starts with support needs reset text',
+      'Support need removed because of profile reset\n\nThis is the rest of the text\nLine 1\n\nLine 2',
+      'This is the rest of the text\nLine 1\n\nLine 2',
+    ],
   ])('getCaseNotesText(%s)', (_: string, a: string, expected: string) => {
     expect(getCaseNotesText(a)).toEqual(expected)
   })
@@ -1843,4 +1854,17 @@ describe('findPreviousSelectedSupportNeed', () => {
       expect(findPreviousSelectedSupportNeed(cacheState, uuid)).toEqual(expected)
     },
   )
+})
+
+describe('convertStringToId', () => {
+  it.each([
+    ['undefined', undefined, undefined],
+    ['null', null, undefined],
+    ['blank string', '', ''],
+    ['whitespace', '   ', ''],
+    ['string 1', 'something', 'something'],
+    ['string 2', ' THIS IS AN  ID', 'this-is-an-id'],
+  ])('%s -> convertStringToId(%s)', (_: string, input: string, output: string) => {
+    expect(convertStringToId(input)).toEqual(output)
+  })
 })
