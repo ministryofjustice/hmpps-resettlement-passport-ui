@@ -1,6 +1,4 @@
 import { Request, RequestHandler } from 'express'
-import * as querystring from 'node:querystring'
-import { ParsedUrlQueryInput } from 'node:querystring'
 import { isNumeric } from 'validator'
 import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'

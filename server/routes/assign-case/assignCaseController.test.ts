@@ -348,7 +348,7 @@ describe('post', () => {
       })
       .expect(302)
 
-    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    const { pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
 
     expect(flashProvider).toHaveBeenCalledWith('allocatedCases', ['Smith, John, A1234DY'])
@@ -381,7 +381,7 @@ describe('post', () => {
       })
       .expect(302)
 
-    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    const { pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
 
     expect(flashProvider).toHaveBeenCalledWith('allocatedCases', [
@@ -421,7 +421,7 @@ describe('post', () => {
       })
       .expect(302)
 
-    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    const { pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
 
     expect(flashProvider).toHaveBeenCalledWith('allocatedCases', ['Smith, John, A1234DY'])
@@ -447,7 +447,7 @@ describe('post', () => {
       })
       .expect(302)
 
-    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    const { pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
 
     expect(flashProvider).toHaveBeenCalledWith('allocatedCases', [
@@ -465,7 +465,7 @@ describe('post', () => {
 
   test('validation failure, missing prisoner number and staff id', async () => {
     const res = await request(app).post('/assign-a-case').send({}).expect(302)
-    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    const { pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(flashProvider).not.toHaveBeenCalledWith('allocationSuccess', true)
     expect(flashProvider).toHaveBeenCalledWith('allocationErrors', ['noPrisonersSelected', 'noStaffSelected'])
@@ -476,7 +476,7 @@ describe('post', () => {
 
   test('validation failure, missing prisoner number', async () => {
     const res = await request(app).post('/assign-a-case').send({ staffId: '_unassign' }).expect(302)
-    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    const { pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(flashProvider).not.toHaveBeenCalledWith('allocationSuccess', true)
     expect(flashProvider).toHaveBeenCalledWith('allocationErrors', ['noPrisonersSelected'])
@@ -487,7 +487,7 @@ describe('post', () => {
 
   test('validation failure, missing worker', async () => {
     const res = await request(app).post('/assign-a-case').send({ prisonerNumbers: '123' }).expect(302)
-    const { searchParams, pathname } = new URL(redirectedToPath(res), 'https://host.com')
+    const { pathname } = new URL(redirectedToPath(res), 'https://host.com')
     expect(pathname).toEqual('/assign-a-case')
     expect(flashProvider).not.toHaveBeenCalledWith('allocationSuccess', true)
     expect(flashProvider).toHaveBeenCalledWith('allocationErrors', ['noStaffSelected'])
