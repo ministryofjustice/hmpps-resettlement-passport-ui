@@ -311,7 +311,7 @@ describe('getAddAnIdView', () => {
   })
 
   it('Error case - error updating ID application', async () => {
-    const updateIdSpy = jest.spyOn(rpService, 'patchIdApplication').mockRejectedValue([])
+    jest.spyOn(rpService, 'patchIdApplication').mockRejectedValue([])
     await request(app)
       .post('/finance-and-id/id-update')
       .send({
