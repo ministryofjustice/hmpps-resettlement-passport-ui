@@ -20,7 +20,7 @@ export default class StaffDashboardController {
         searchInput = '',
         releaseTime = '0',
         page: currentPage = '0',
-        assessmentRequired = '',
+        lastReportCompleted = '',
         sortField = 'releaseDate',
         sortDirection = 'ASC',
         reportType = 'pathway-summary',
@@ -29,7 +29,7 @@ export default class StaffDashboardController {
         searchInput: string
         releaseTime: string
         page: string
-        assessmentRequired: string
+        lastReportCompleted: string
         sortField: string
         sortDirection: string
         reportType: string
@@ -71,9 +71,10 @@ export default class StaffDashboardController {
             <string>releaseTime,
             <string>pathwayView,
             <string>modifiedPathwayStatus,
-            <string>assessmentRequired,
             <string>watchList,
             includePastReleaseDates,
+            '',
+            lastReportCompleted,
           )
           const { page, totalElements } = prisonersList
           pagination = getPaginationPages(page, pageSize, totalElements)
@@ -92,8 +93,8 @@ export default class StaffDashboardController {
           sortField,
           sortDirection,
           reportType,
-          assessmentRequired,
           watchList,
+          lastReportCompleted,
         )
         res.render('pages/staff-dashboard', { ...view.renderArgs })
       } catch (err) {

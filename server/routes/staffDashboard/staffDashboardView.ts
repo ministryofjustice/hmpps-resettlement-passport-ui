@@ -14,8 +14,8 @@ export default class StaffDashboardView implements View {
     private readonly sortField: string,
     private readonly sortDirection: string,
     private readonly reportType: string,
-    private readonly assessmentRequired: string,
     private readonly watchList: string,
+    private readonly lastReportCompleted: string,
   ) {
     // no op
   }
@@ -31,8 +31,8 @@ export default class StaffDashboardView implements View {
     sortField: string
     sortDirection: string
     reportType: string
-    assessmentRequired: string
     watchList: string
+    lastReportCompleted: string
   } {
     return {
       prisonersList: this.prisonersList,
@@ -45,8 +45,8 @@ export default class StaffDashboardView implements View {
       sortField: this.sortField,
       sortDirection: this.sortDirection,
       reportType: this.reportType,
-      assessmentRequired: this.assessmentRequired,
       watchList: this.watchList,
+      lastReportCompleted: this.lastReportCompleted,
     }
   }
 }
