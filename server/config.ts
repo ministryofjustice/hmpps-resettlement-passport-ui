@@ -34,7 +34,9 @@ export interface ApiConfig {
 
 export default {
   buildNumber: get('BUILD_NUMBER', '1_0_0', requiredInProduction),
+  productId: get('PRODUCT_ID', 'UNASSIGNED', requiredInProduction),
   gitRef: get('GIT_REF', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
+  branchName: get('GIT_BRANCH', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
   production,
   https: production,
   staticResourceCacheDuration: '1h',
@@ -52,6 +54,7 @@ export default {
   apis: {
     hmppsAuth: {
       url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),
+      healthPath: '/health/ping',
       externalUrl: get('HMPPS_AUTH_EXTERNAL_URL', get('HMPPS_AUTH_URL', 'http://localhost:9090/auth')),
       timeout: {
         response: Number(get('HMPPS_AUTH_TIMEOUT_RESPONSE', 20000)),
@@ -63,6 +66,7 @@ export default {
     },
     tokenVerification: {
       url: get('TOKEN_VERIFICATION_API_URL', 'http://localhost:8100', requiredInProduction),
+      healthPath: '/health/ping',
       timeout: {
         response: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 20000)),
         deadline: Number(get('TOKEN_VERIFICATION_API_TIMEOUT_DEADLINE', 20000)),
@@ -72,6 +76,7 @@ export default {
     },
     rpClient: {
       url: get('RESETTLEMENT_PASSPORT_API_URL', 'http://localhost:8080'),
+      healthPath: '/health/ping',
       timeout: {
         response: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_RESPONSE', 20000)),
         deadline: Number(get('RESETTLEMENT_PASSPORT_API_TIMEOUT_DEADLINE', 20000)),
@@ -81,6 +86,7 @@ export default {
     },
     nomisUserRolesClient: {
       url: get('NOMIS_USER_ROLES_API_URL', ''),
+      healthPath: '/health/ping',
       timeout: {
         response: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_RESPONSE', 20000)),
         deadline: Number(get('NOMIS_USER_ROLES_API_TIMEOUT_DEADLINE', 20000)),
@@ -89,6 +95,7 @@ export default {
     },
     manageUsersClient: {
       url: get('MANAGE_USERS_API_URL', ''),
+      healthPath: '/health/ping',
       timeout: {
         response: Number(get('MANAGE_USERS_API_TIMEOUT_RESPONSE', 20000)),
         deadline: Number(get('MANAGE_USERS_API_TIMEOUT_DEADLINE', 20000)),
@@ -97,6 +104,7 @@ export default {
     },
     frontendComponents: {
       url: get('COMPONENT_API_URL', 'http://localhost:8082', requiredInProduction),
+      healthPath: '/health',
       timeout: {
         response: Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 20000)),
         deadline: Number(get('COMPONENT_API_TIMEOUT_DEADLINE', 20000)),
@@ -104,7 +112,8 @@ export default {
       agent: new AgentConfig(Number(get('COMPONENT_API_TIMEOUT_RESPONSE', 20000))),
     },
     gotenberg: {
-      apiUrl: get('GOTENBERG_API_URL', 'http://localhost:3009', requiredInProduction),
+      url: get('GOTENBERG_API_URL', 'http://localhost:3009', requiredInProduction),
+      healthPath: '/health',
     },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),

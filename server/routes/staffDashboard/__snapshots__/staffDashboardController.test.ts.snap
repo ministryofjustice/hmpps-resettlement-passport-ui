@@ -357,7 +357,6 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
               
 
 
-
 <div class="govuk-form-group">
   <label class="govuk-label" for="lastReportCompleted">
     Last report completed
@@ -970,7 +969,6 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
               
 
 
-
 <div class="govuk-form-group">
   <label class="govuk-label" for="lastReportCompleted">
     Last report completed
@@ -1456,7 +1454,6 @@ exports[`getView Happy path with default query params with tabs nav 1`] = `
               
 
 
-
 <div class="govuk-form-group">
   <label class="govuk-label" for="lastReportCompleted">
     Last report completed
@@ -1710,7 +1707,6 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
           
             <div class="govuk-grid-column-one-third">
               
-
 
 
 <div class="govuk-form-group">
@@ -2183,7 +2179,6 @@ exports[`getView Happy path with filter lastReportCompleted 1`] = `
           
             <div class="govuk-grid-column-one-third">
               
-
 
 
 <div class="govuk-form-group">
@@ -3429,7 +3424,6 @@ exports[`getView Happy path with filter prisoner number 1`] = `
               
 
 
-
 <div class="govuk-form-group">
   <label class="govuk-label" for="lastReportCompleted">
     Last report completed
@@ -4057,7 +4051,6 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
           
             <div class="govuk-grid-column-one-third">
               
-
 
 
 <div class="govuk-form-group">
@@ -4689,7 +4682,6 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
               
 
 
-
 <div class="govuk-form-group">
   <label class="govuk-label" for="lastReportCompleted">
     Last report completed
@@ -5319,7 +5311,6 @@ exports[`getView Happy path with filter watchList true 1`] = `
               
 
 
-
 <div class="govuk-form-group">
   <label class="govuk-label" for="lastReportCompleted">
     Last report completed
@@ -5947,7 +5938,6 @@ exports[`getView Happy path with sorting by name 1`] = `
           
             <div class="govuk-grid-column-one-third">
               
-
 
 
 <div class="govuk-form-group">
