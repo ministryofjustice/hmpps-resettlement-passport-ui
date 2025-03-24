@@ -1,5 +1,3 @@
-import { stubManageUserRolesPing } from '../mockApis/manageUserRoles'
-
 context('Healthcheck', () => {
   context('All healthy', () => {
     beforeEach(() => {
