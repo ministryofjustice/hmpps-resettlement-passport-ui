@@ -5,5 +5,5 @@ import DrugsAlcoholController from './drugsAlcoholController'
 export default (router: Router, services: Services) => {
   const drugsAlcoholController = new DrugsAlcoholController(services.rpService, services.prisonerDetailsService)
 
-  router.get('/drugs-and-alcohol', [drugsAlcoholController.getView])
+  router.get('/drugs-and-alcohol', drugsAlcoholController.validateQuery, [drugsAlcoholController.getView])
 }

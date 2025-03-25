@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { query, validationResult } from 'express-validator'
 import { isAlphanumeric, isNumeric } from 'validator'
 import RpService from '../../services/rpService'
 import logger from '../../../logger'
@@ -15,8 +16,27 @@ export default class FinanceIdController {
     // no op
   }
 
+  // Validation for query parameters
+  validateQuery = [
+    query('supportNeedUpdateFilter')
+      .optional()
+      .custom(value => value === '' || /^[0-9]+$/.test(value)) // Check if it's either an empty string or a string with a number
+      .withMessage('supportNeedUpdateFilter must be a number or empty'),
+
+    query('supportNeedUpdateSort')
+      .optional()
+      .isIn(['createdDate,DESC', 'createdDate,ASC'])
+      .withMessage('supportNeedUpdateSort must be createdDate,DESC or createdDate,ASC'),
+  ]
+
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
+      // Perform validation checks for query parameters
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        throw new Error(`Validation failed: ${JSON.stringify(errors.array())}`)
+      }
+
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       handleWhatsNewBanner(req, res)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
@@ -74,6 +94,7 @@ export default class FinanceIdController {
 
       let pathwaySupportNeedsSummary = null
       let supportNeedsUpdates = null
+      const { supportNeedUpdateFilter = '', supportNeedUpdateSort = 'createdDate,DESC' } = req.query
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -89,8 +110,8 @@ export default class FinanceIdController {
           'FINANCE_AND_ID',
           0,
           1000, // TODO - add pagination, for now just get the first 1000
-          'createdDate,DESC', // TODO - add dynamic sorting
-          '', // TODO - add ability to filter
+          supportNeedUpdateSort as string,
+          supportNeedUpdateFilter as string,
         )
       }
 
@@ -109,6 +130,8 @@ export default class FinanceIdController {
         id,
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
+        supportNeedUpdateSort as string,
+        supportNeedUpdateFilter as string,
       )
       return res.render('pages/finance-id', { ...view.renderArgs })
     } catch (err) {

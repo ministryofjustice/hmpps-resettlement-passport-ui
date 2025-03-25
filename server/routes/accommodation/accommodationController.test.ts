@@ -124,7 +124,7 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/accommodation?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
+        '/accommodation?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2&supportNeedUpdateFilter=1456&supportNeedUpdateSort=createdDate,ASC',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -148,8 +148,8 @@ describe('getView', () => {
       'ACCOMMODATION',
       0,
       1000,
-      'createdDate,DESC',
-      '',
+      'createdDate,ASC',
+      '1456',
     )
   })
 

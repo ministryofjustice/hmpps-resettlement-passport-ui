@@ -8,5 +8,7 @@ export default (router: Router, services: Services) => {
     services.prisonerDetailsService,
   )
 
-  router.get('/children-families-and-communities', [childrenFamiliesCommunitiesController.getView])
+  router.get('/children-families-and-communities', childrenFamiliesCommunitiesController.validateQuery, [
+    childrenFamiliesCommunitiesController.getView,
+  ])
 }

@@ -103,7 +103,7 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/health-status?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
+        '/health-status?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2&supportNeedUpdateFilter=1456&supportNeedUpdateSort=createdDate,ASC',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -121,7 +121,14 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
-    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 0, 1000, 'createdDate,DESC', '')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
+      'A1234DY',
+      'HEALTH',
+      0,
+      1000,
+      'createdDate,ASC',
+      '1456',
+    )
   })
 
   it('Error case - missing prisonerNumber', async () => {

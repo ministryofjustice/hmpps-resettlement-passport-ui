@@ -453,6 +453,46 @@ exports[`getView Happy path with default query params and data from endpoints 1`
   <div class="app-summary-card__body govuk-!-padding-top-4">
     
       <div class="govuk-grid-row govuk-!-padding-top-2">
+        <form method="GET" action="/health-status/#support-needs-updates" novalidate>
+          <div class="govuk-form-group">
+            <div class="govuk-grid-column-one-half">
+              <label class="govuk-label" for="supportNeedUpdateFilter">Filter by support need</label>
+              <select class="govuk-select" id="supportNeedUpdateFilter" name="supportNeedUpdateFilter">
+                <option value="" selected>
+                  View all Health support needs
+                </option>
+                
+                  <option value="1456" >
+                    Cancel a tenancy
+                  </option>
+                
+                  <option value="2894" >
+                    Another support need
+                  </option>
+                
+                  <option value="9876" >
+                    Declined support
+                  </option>
+                
+                  <option value="1234" >
+                    Final support need
+                  </option>
+                
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <label class="govuk-label" for="supportNeedUpdateSort">Sort by</label>
+              <select class="govuk-select" id="supportNeedUpdateSort" name="supportNeedUpdateSort">
+                <option value="createdDate,DESC" selected>Created (newest)</option>
+                <option value="createdDate,ASC" >Created (oldest)</option>
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-third govuk-!-padding-top-4">
+              <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button">Apply filters</button>
+            </div>
+          </div>
+        </form>
         <div class="govuk-grid-column-full" id="updates-container">
           <hr>
           
@@ -1896,6 +1936,46 @@ exports[`getView Happy path with specified query params and data from endpoints 
   <div class="app-summary-card__body govuk-!-padding-top-4">
     
       <div class="govuk-grid-row govuk-!-padding-top-2">
+        <form method="GET" action="/health-status/#support-needs-updates" novalidate>
+          <div class="govuk-form-group">
+            <div class="govuk-grid-column-one-half">
+              <label class="govuk-label" for="supportNeedUpdateFilter">Filter by support need</label>
+              <select class="govuk-select" id="supportNeedUpdateFilter" name="supportNeedUpdateFilter">
+                <option value="" >
+                  View all Health support needs
+                </option>
+                
+                  <option value="1456" selected>
+                    Cancel a tenancy
+                  </option>
+                
+                  <option value="2894" >
+                    Another support need
+                  </option>
+                
+                  <option value="9876" >
+                    Declined support
+                  </option>
+                
+                  <option value="1234" >
+                    Final support need
+                  </option>
+                
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <label class="govuk-label" for="supportNeedUpdateSort">Sort by</label>
+              <select class="govuk-select" id="supportNeedUpdateSort" name="supportNeedUpdateSort">
+                <option value="createdDate,DESC" >Created (newest)</option>
+                <option value="createdDate,ASC" selected>Created (oldest)</option>
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-third govuk-!-padding-top-4">
+              <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button">Apply filters</button>
+            </div>
+          </div>
+        </form>
         <div class="govuk-grid-column-full" id="updates-container">
           <hr>
           
