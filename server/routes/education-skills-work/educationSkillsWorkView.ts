@@ -22,6 +22,8 @@ export default class EducationSkillsWorkView implements View {
     private readonly days: string,
     private readonly pathwaySupportNeedsSummary: PathwaySupportNeedsSummary,
     private readonly supportNeedsUpdates: PathwaySupportNeedsUpdates,
+    private readonly supportNeedUpdateSort: string,
+    private readonly supportNeedUpdateFilter: string,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -41,6 +43,8 @@ export default class EducationSkillsWorkView implements View {
     days: string
     pathwaySupportNeedsSummary: PathwaySupportNeedsSummary
     supportNeedsUpdates: PathwaySupportNeedsUpdates
+    supportNeedUpdateSort: string
+    supportNeedUpdateFilter: string
     errors: ErrorMessage[]
   } {
     return {
@@ -57,6 +61,8 @@ export default class EducationSkillsWorkView implements View {
       days: this.days,
       pathwaySupportNeedsSummary: this.pathwaySupportNeedsSummary,
       supportNeedsUpdates: this.supportNeedsUpdates,
+      supportNeedUpdateSort: this.supportNeedUpdateSort,
+      supportNeedUpdateFilter: this.supportNeedUpdateFilter,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

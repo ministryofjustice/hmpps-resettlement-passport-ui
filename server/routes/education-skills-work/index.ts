@@ -7,5 +7,7 @@ export default (router: Router, services: Services) => {
     services.rpService,
     services.prisonerDetailsService,
   )
-  router.get('/education-skills-and-work', [educationSkillsWorkController.getView])
+  router.get('/education-skills-and-work', educationSkillsWorkController.validateQuery, [
+    educationSkillsWorkController.getView,
+  ])
 }
