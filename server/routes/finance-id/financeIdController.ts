@@ -37,8 +37,8 @@ export default class FinanceIdController {
 
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        // Validation failed, throw 500 error
-        throw new Error('Invalid query parameters')
+        // Validation failed
+        return next(badRequestError('Invalid query parameters'))
       }
 
       const pageSize = '10'

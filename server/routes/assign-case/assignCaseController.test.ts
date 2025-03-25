@@ -248,42 +248,42 @@ describe('getView', () => {
   it('Error case - invalid currentPage parameter', async () => {
     await request(app)
       .get('/assign-a-case?currentPage=InvalidValue')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid releaseTime parameter', async () => {
     await request(app)
       .get('/assign-a-case?releaseTime=%2C9')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid sortField parameter', async () => {
     await request(app)
       .get('/assign-a-case?sortField=invalidValue')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid sortDirection parameter', async () => {
     await request(app)
       .get('/assign-a-case?sortDirection=4')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid workerId parameter', async () => {
     await request(app)
       .get('/assign-a-case?workerId=-100')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid searchInput parameter', async () => {
     await request(app)
       .get('/?searchInput=123_456')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 })

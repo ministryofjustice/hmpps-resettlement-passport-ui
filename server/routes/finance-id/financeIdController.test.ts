@@ -163,14 +163,14 @@ describe('getView', () => {
   it('Error case - invalid page parameter', async () => {
     await request(app)
       .get('/finance-and-id?prisonerNumber=A1234DY&page=InvalidValue')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid createdByUserId parameter', async () => {
     await request(app)
       .get('/finance-and-id?prisonerNumber=A1234DY&page=1&createdByUserId=%2C9')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 

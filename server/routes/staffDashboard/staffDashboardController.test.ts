@@ -474,42 +474,42 @@ describe('getView', () => {
   it('Error case - invalid page parameter', async () => {
     await request(app)
       .get('/?page=InvalidValue')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid releaseTime parameter', async () => {
     await request(app)
       .get('/?releaseTime=%2C9')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid sortField parameter', async () => {
     await request(app)
       .get('/?sortField=invalidValue')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid sortDirection parameter', async () => {
     await request(app)
       .get('/?sortDirection=4')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid lastReportCompleted parameter', async () => {
     await request(app)
       .get('/?lastReportCompleted=invalidValue')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid searchInput parameter', async () => {
     await request(app)
       .get('/?searchInput=john%^')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 })

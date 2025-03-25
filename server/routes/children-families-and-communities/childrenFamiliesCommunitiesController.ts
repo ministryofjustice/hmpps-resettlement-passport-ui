@@ -6,6 +6,7 @@ import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import { badRequestError } from '../../errorHandler'
 
 export default class ChildrenFamiliesCommunitiesController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -33,8 +34,8 @@ export default class ChildrenFamiliesCommunitiesController {
 
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        // Validation failed, throw 500 error
-        throw new Error('Invalid query parameters')
+        // Validation failed
+        return next(badRequestError('Invalid query parameters'))
       }
 
       const pageSize = '10'

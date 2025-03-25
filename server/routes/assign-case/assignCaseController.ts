@@ -6,21 +6,22 @@ import { ErrorMessage } from '../view'
 import { getFeatureFlagBoolean, getPaginationPages, toTitleCase } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { CaseAllocationResponseItem } from '../../data/model/caseAllocation'
+import { badRequestError } from '../../errorHandler'
 
 export default class AssignCaseController {
   constructor(private readonly rpService: RpService) {
     // no op
   }
 
-  getView: RequestHandler = async (req, res): Promise<void> => {
+  getView: RequestHandler = async (req, res, next): Promise<void> => {
     const pageSize = 20
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []
 
     const validationErrors = validationResult(req)
     if (!validationErrors.isEmpty()) {
-      // Validation failed, throw 500 error
-      throw new Error('Invalid query parameters')
+      // Validation failed
+      return next(badRequestError('Invalid query parameters'))
     }
 
     const {

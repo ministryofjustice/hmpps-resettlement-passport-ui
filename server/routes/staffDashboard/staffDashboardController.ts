@@ -6,6 +6,7 @@ import RpService from '../../services/rpService'
 import { checkSupportNeedsSet, getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
+import { badRequestError } from '../../errorHandler'
 
 export default class StaffDashboardController {
   constructor(private readonly rpService: RpService) {
@@ -20,8 +21,8 @@ export default class StaffDashboardController {
 
       const validationErrors = validationResult(req)
       if (!validationErrors.isEmpty()) {
-        // Validation failed, throw 500 error
-        throw new Error('Invalid query parameters')
+        // Validation failed
+        return next(badRequestError('Invalid query parameters'))
       }
 
       const {
@@ -104,12 +105,12 @@ export default class StaffDashboardController {
           watchList,
           lastReportCompleted,
         )
-        res.render('pages/staff-dashboard', { ...view.renderArgs })
+        return res.render('pages/staff-dashboard', { ...view.renderArgs })
       } catch (err) {
-        next(err)
+        return next(err)
       }
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }

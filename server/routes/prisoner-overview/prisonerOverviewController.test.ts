@@ -260,21 +260,21 @@ describe('prisonerOverview', () => {
   it('Error case - invalid page parameter', async () => {
     await request(app)
       .get('/prisoner-overview?prisonerNumber=A1234DY&page=InvalidValue')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid days parameter', async () => {
     await request(app)
       .get('/prisoner-overview?prisonerNumber=A1234DY&page=1&days=%2C9')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid sort parameter', async () => {
     await request(app)
       .get('/prisoner-overview?prisonerNumber=A1234DY&sort=pathway%2CDESC')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 })

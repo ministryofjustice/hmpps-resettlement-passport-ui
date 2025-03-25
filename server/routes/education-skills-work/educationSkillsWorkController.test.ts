@@ -147,22 +147,22 @@ describe('getView', () => {
       'EDUCATION_SKILLS_AND_WORK',
       0,
       1000,
-      'createdDate,DESC',
-      '',
+      'createdDate,ASC',
+      '1456',
     )
   })
 
   it('Error case - invalid page parameter', async () => {
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY&page=InvalidValue')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - invalid createdByUserId parameter', async () => {
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY&page=1&createdByUserId=%2C9')
-      .expect(500)
+      .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
 

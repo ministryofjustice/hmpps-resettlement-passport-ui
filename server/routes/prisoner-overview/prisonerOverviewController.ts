@@ -9,6 +9,7 @@ import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { DocumentMeta } from '../../data/model/documents'
 import { getFeatureFlagBoolean } from '../../utils/utils'
+import { badRequestError } from '../../errorHandler'
 
 export default class PrisonerOverviewController {
   constructor(
@@ -28,8 +29,8 @@ export default class PrisonerOverviewController {
 
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        // Validation failed, throw 500 error
-        throw new Error('Invalid query parameters')
+        // Validation failed
+        return next(badRequestError('Invalid query parameters'))
       }
 
       const size = '10'
