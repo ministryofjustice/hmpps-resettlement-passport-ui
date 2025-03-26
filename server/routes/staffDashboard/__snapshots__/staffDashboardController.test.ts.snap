@@ -409,22 +409,22 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -437,7 +437,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -684,7 +684,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -697,7 +697,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -715,7 +715,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -740,7 +740,7 @@ exports[`getView Happy path filter releaseTime missing 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -1022,22 +1022,22 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -1050,7 +1050,7 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -1140,7 +1140,7 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -1153,7 +1153,7 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -1171,7 +1171,7 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -1196,7 +1196,7 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -1764,22 +1764,22 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -1792,7 +1792,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -1882,7 +1882,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -1895,7 +1895,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -1913,7 +1913,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -1938,7 +1938,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=0&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -2237,22 +2237,22 @@ exports[`getView Happy path with filter lastReportCompleted=BCST2 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=BCST2#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=BCST2#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=BCST2#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=BCST2#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -2265,7 +2265,7 @@ exports[`getView Happy path with filter lastReportCompleted=BCST2 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=BCST2#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -2512,7 +2512,7 @@ exports[`getView Happy path with filter lastReportCompleted=BCST2 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=BCST2"
                       aria-label="Page 1"
                     >
                       1
@@ -2525,7 +2525,7 @@ exports[`getView Happy path with filter lastReportCompleted=BCST2 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=BCST2"
                       aria-label="Page 2"
                     >
                       2
@@ -2543,7 +2543,7 @@ exports[`getView Happy path with filter lastReportCompleted=BCST2 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=BCST2"
                       aria-label="Page 5"
                     >
                       5
@@ -2568,7 +2568,7 @@ exports[`getView Happy path with filter lastReportCompleted=BCST2 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=BCST2"
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -2867,22 +2867,22 @@ exports[`getView Happy path with filter lastReportCompleted=NONE 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=NONE#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=NONE#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=NONE#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=NONE#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -2895,7 +2895,7 @@ exports[`getView Happy path with filter lastReportCompleted=NONE 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=NONE#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -3142,7 +3142,7 @@ exports[`getView Happy path with filter lastReportCompleted=NONE 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=NONE"
                       aria-label="Page 1"
                     >
                       1
@@ -3155,7 +3155,7 @@ exports[`getView Happy path with filter lastReportCompleted=NONE 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=NONE"
                       aria-label="Page 2"
                     >
                       2
@@ -3173,7 +3173,7 @@ exports[`getView Happy path with filter lastReportCompleted=NONE 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=NONE"
                       aria-label="Page 5"
                     >
                       5
@@ -3198,7 +3198,7 @@ exports[`getView Happy path with filter lastReportCompleted=NONE 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=NONE"
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -3497,22 +3497,22 @@ exports[`getView Happy path with filter lastReportCompleted=RESETTLEMENT_PLAN 1`
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=RESETTLEMENT_PLAN#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=RESETTLEMENT_PLAN#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=RESETTLEMENT_PLAN#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=RESETTLEMENT_PLAN#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -3525,7 +3525,7 @@ exports[`getView Happy path with filter lastReportCompleted=RESETTLEMENT_PLAN 1`
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=RESETTLEMENT_PLAN#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -3772,7 +3772,7 @@ exports[`getView Happy path with filter lastReportCompleted=RESETTLEMENT_PLAN 1`
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=RESETTLEMENT_PLAN"
                       aria-label="Page 1"
                     >
                       1
@@ -3785,7 +3785,7 @@ exports[`getView Happy path with filter lastReportCompleted=RESETTLEMENT_PLAN 1`
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=RESETTLEMENT_PLAN"
                       aria-label="Page 2"
                     >
                       2
@@ -3803,7 +3803,7 @@ exports[`getView Happy path with filter lastReportCompleted=RESETTLEMENT_PLAN 1`
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=RESETTLEMENT_PLAN"
                       aria-label="Page 5"
                     >
                       5
@@ -3828,7 +3828,7 @@ exports[`getView Happy path with filter lastReportCompleted=RESETTLEMENT_PLAN 1`
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted=RESETTLEMENT_PLAN"
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -4106,22 +4106,22 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -4130,7 +4130,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
             
               
                 
-                <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=pathwayStatus&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+                <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=pathwayStatus&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
                   <button>
                     Accommodation status
                   </button>
@@ -4139,7 +4139,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -4386,7 +4386,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -4399,7 +4399,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -4417,7 +4417,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -4442,7 +4442,7 @@ exports[`getView Happy path with filter pathway view ACCOMODATION 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=ACCOMMODATION&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -4741,22 +4741,22 @@ exports[`getView Happy path with filter prisoner name 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -4769,7 +4769,7 @@ exports[`getView Happy path with filter prisoner name 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=john&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -5016,7 +5016,7 @@ exports[`getView Happy path with filter prisoner name 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=john&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=john&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -5029,7 +5029,7 @@ exports[`getView Happy path with filter prisoner name 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=john&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=john&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -5047,7 +5047,7 @@ exports[`getView Happy path with filter prisoner name 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=john&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=john&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -5072,7 +5072,7 @@ exports[`getView Happy path with filter prisoner name 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=john&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=john&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -5371,22 +5371,22 @@ exports[`getView Happy path with filter prisoner number 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -5399,7 +5399,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=A1234DY&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -5646,7 +5646,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -5659,7 +5659,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -5677,7 +5677,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -5702,7 +5702,7 @@ exports[`getView Happy path with filter prisoner number 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=A1234DY&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -6001,22 +6001,22 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -6029,7 +6029,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=xxxx&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -6276,7 +6276,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -6289,7 +6289,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -6307,7 +6307,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -6332,7 +6332,7 @@ exports[`getView Happy path with filter prisoner number not exists 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=xxxx&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -6631,22 +6631,22 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -6659,7 +6659,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=168&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -6906,7 +6906,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -6919,7 +6919,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -6937,7 +6937,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -6962,7 +6962,7 @@ exports[`getView Happy path with filter time to release 24W 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=168&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -7261,22 +7261,22 @@ exports[`getView Happy path with filter watchList true 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -7289,7 +7289,7 @@ exports[`getView Happy path with filter watchList true 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -7536,7 +7536,7 @@ exports[`getView Happy path with filter watchList true 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -7549,7 +7549,7 @@ exports[`getView Happy path with filter watchList true 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -7567,7 +7567,7 @@ exports[`getView Happy path with filter watchList true 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -7592,7 +7592,7 @@ exports[`getView Happy path with filter watchList true 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -7891,22 +7891,22 @@ exports[`getView Happy path with sorting by lastUpdatedDate and direction DESC 1
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -7919,7 +7919,7 @@ exports[`getView Happy path with sorting by lastUpdatedDate and direction DESC 1
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="descending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="descending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -8166,7 +8166,7 @@ exports[`getView Happy path with sorting by lastUpdatedDate and direction DESC 1
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -8179,7 +8179,7 @@ exports[`getView Happy path with sorting by lastUpdatedDate and direction DESC 1
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -8197,7 +8197,7 @@ exports[`getView Happy path with sorting by lastUpdatedDate and direction DESC 1
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -8222,7 +8222,7 @@ exports[`getView Happy path with sorting by lastUpdatedDate and direction DESC 1
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -8521,22 +8521,22 @@ exports[`getView Happy path with sorting by name and direction DESC 1`] = `
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="descending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="descending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -8549,7 +8549,7 @@ exports[`getView Happy path with sorting by name and direction DESC 1`] = `
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -8796,7 +8796,7 @@ exports[`getView Happy path with sorting by name and direction DESC 1`] = `
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -8809,7 +8809,7 @@ exports[`getView Happy path with sorting by name and direction DESC 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -8827,7 +8827,7 @@ exports[`getView Happy path with sorting by name and direction DESC 1`] = `
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -8852,7 +8852,7 @@ exports[`getView Happy path with sorting by name and direction DESC 1`] = `
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=name&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -9151,22 +9151,22 @@ exports[`getView Happy path with sorting by releaseDate and direction ASC 1`] = 
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="ascending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=DESC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -9179,7 +9179,7 @@ exports[`getView Happy path with sorting by releaseDate and direction ASC 1`] = 
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -9426,7 +9426,7 @@ exports[`getView Happy path with sorting by releaseDate and direction ASC 1`] = 
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -9439,7 +9439,7 @@ exports[`getView Happy path with sorting by releaseDate and direction ASC 1`] = 
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -9457,7 +9457,7 @@ exports[`getView Happy path with sorting by releaseDate and direction ASC 1`] = 
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -9482,7 +9482,7 @@ exports[`getView Happy path with sorting by releaseDate and direction ASC 1`] = 
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&searchInput=&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
@@ -9781,22 +9781,22 @@ exports[`getView Happy path with sorting by releaseOnTemporaryLicenceDate and di
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=name&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseEligibilityDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="descending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="descending" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -9809,7 +9809,7 @@ exports[`getView Happy path with sorting by releaseOnTemporaryLicenceDate and di
             
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&assessmentRequired=#prisonersFilter">
+            <a aria-sort="none" href="/?searchInput=&releaseTime=84&pathwayView=&pathwayStatus=&sortField=lastUpdatedDate&sortDirection=ASC&lastReportCompleted=#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -10056,7 +10056,7 @@ exports[`getView Happy path with sorting by releaseOnTemporaryLicenceDate and di
                   <li class="govuk-pagination__item govuk-pagination__item--current">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=0&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 1"
                     >
                       1
@@ -10069,7 +10069,7 @@ exports[`getView Happy path with sorting by releaseOnTemporaryLicenceDate and di
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 2"
                     >
                       2
@@ -10087,7 +10087,7 @@ exports[`getView Happy path with sorting by releaseOnTemporaryLicenceDate and di
                   <li class="govuk-pagination__item ">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                      href="/?page=4&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                       aria-label="Page 5"
                     >
                       5
@@ -10112,7 +10112,7 @@ exports[`getView Happy path with sorting by releaseOnTemporaryLicenceDate and di
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&searchInput=&releaseTime=84&assessmentRequired="
+                    href="/?page=1&pathwayView=&pathwayStatus=&sortField=releaseOnTemporaryLicenceDate&sortDirection=DESC&searchInput=&releaseTime=84&lastReportCompleted="
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
