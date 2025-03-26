@@ -3,6 +3,7 @@ import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import {
   expectPrisonerNotFoundPage,
+  expectSomethingWentWrongPage,
   stubAssessmentInformation,
   stubCaseNotesCreators,
   stubCaseNotesHistory,
@@ -116,7 +117,7 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/children-families-and-communities?prisonerNumber=A1234DY&page=1&pageSize=20&sort=occurenceDateTime%2CASC&days=30&createdByUserId=2',
+        '/children-families-and-communities?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateFilter=1456&supportNeedUpdateSort=createdDate,ASC',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -127,10 +128,10 @@ describe('getView', () => {
       'A1234DY',
       'CHILDREN_FAMILIES_AND_COMMUNITY',
       '2',
-      '20',
+      '10',
       '1',
-      'occurenceDateTime,ASC',
-      '30',
+      'occurenceDateTime%2CDESC',
+      '0',
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'CHILDREN_FAMILIES_AND_COMMUNITY')
@@ -139,9 +140,23 @@ describe('getView', () => {
       'CHILDREN_FAMILIES_AND_COMMUNITY',
       0,
       1000,
-      'createdDate,DESC',
-      '',
+      'createdDate,ASC',
+      '1456',
     )
+  })
+
+  it('Error case - invalid page parameter', async () => {
+    await request(app)
+      .get('/children-families-and-communities?prisonerNumber=A1234DY&page=InvalidValue')
+      .expect(400)
+      .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  it('Error case - invalid createdByUserId parameter', async () => {
+    await request(app)
+      .get('/children-families-and-communities?prisonerNumber=A1234DY&page=1&createdByUserId=%2C9')
+      .expect(400)
+      .expect(res => expectSomethingWentWrongPage(res))
   })
 
   it('Error case - missing prisonerNumber', async () => {

@@ -453,6 +453,46 @@ exports[`getView Happy path with default query params and data from endpoints 1`
   <div class="app-summary-card__body govuk-!-padding-top-4">
     
       <div class="govuk-grid-row govuk-!-padding-top-2">
+        <form method="GET" action="/health-status/#support-needs-updates" novalidate>
+          <div class="govuk-form-group">
+            <div class="govuk-grid-column-one-half">
+              <label class="govuk-label" for="supportNeedUpdateFilter">Filter by support need</label>
+              <select class="govuk-select" id="supportNeedUpdateFilter" name="supportNeedUpdateFilter">
+                <option value="" selected>
+                  View all Health support needs
+                </option>
+                
+                  <option value="1456" >
+                    Cancel a tenancy
+                  </option>
+                
+                  <option value="2894" >
+                    Another support need
+                  </option>
+                
+                  <option value="9876" >
+                    Declined support
+                  </option>
+                
+                  <option value="1234" >
+                    Final support need
+                  </option>
+                
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <label class="govuk-label" for="supportNeedUpdateSort">Sort by</label>
+              <select class="govuk-select" id="supportNeedUpdateSort" name="supportNeedUpdateSort">
+                <option value="createdDate,DESC" selected>Created (newest)</option>
+                <option value="createdDate,ASC" >Created (oldest)</option>
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-third govuk-!-padding-top-4">
+              <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button">Apply filters</button>
+            </div>
+          </div>
+        </form>
         <div class="govuk-grid-column-full" id="updates-container">
           <hr>
           
@@ -1896,6 +1936,46 @@ exports[`getView Happy path with specified query params and data from endpoints 
   <div class="app-summary-card__body govuk-!-padding-top-4">
     
       <div class="govuk-grid-row govuk-!-padding-top-2">
+        <form method="GET" action="/health-status/#support-needs-updates" novalidate>
+          <div class="govuk-form-group">
+            <div class="govuk-grid-column-one-half">
+              <label class="govuk-label" for="supportNeedUpdateFilter">Filter by support need</label>
+              <select class="govuk-select" id="supportNeedUpdateFilter" name="supportNeedUpdateFilter">
+                <option value="" >
+                  View all Health support needs
+                </option>
+                
+                  <option value="1456" selected>
+                    Cancel a tenancy
+                  </option>
+                
+                  <option value="2894" >
+                    Another support need
+                  </option>
+                
+                  <option value="9876" >
+                    Declined support
+                  </option>
+                
+                  <option value="1234" >
+                    Final support need
+                  </option>
+                
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-half">
+              <label class="govuk-label" for="supportNeedUpdateSort">Sort by</label>
+              <select class="govuk-select" id="supportNeedUpdateSort" name="supportNeedUpdateSort">
+                <option value="createdDate,DESC" >Created (newest)</option>
+                <option value="createdDate,ASC" selected>Created (oldest)</option>
+              </select>
+            </div>
+            <div class="govuk-grid-column-one-third govuk-!-padding-top-4">
+              <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button">Apply filters</button>
+            </div>
+          </div>
+        </form>
         <div class="govuk-grid-column-full" id="updates-container">
           <hr>
           
@@ -2145,12 +2225,12 @@ This is another new line</p>
     <ul class="moj-pagination__list">
       
         <li class="moj-pagination__item  moj-pagination__item--prev">
-          <a class="moj-pagination__link" href="/health-status?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=HEALTH#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
+          <a class="moj-pagination__link" href="/health-status?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=10&sort=occurenceDateTime%2CDESC&days=0&selectedPathway=HEALTH#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
         </li>
       
       
           <li class="moj-pagination__item">
-            <a class="moj-pagination__link" href="/health-status?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=HEALTH#case-notes " aria-label="Page 1 of 1">1</a>
+            <a class="moj-pagination__link" href="/health-status?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=10&sort=occurenceDateTime%2CDESC&days=0&selectedPathway=HEALTH#case-notes " aria-label="Page 1 of 1">1</a>
           </li>
         
       
@@ -2159,7 +2239,7 @@ This is another new line</p>
     
       
     
-    <p class="moj-pagination__results">Showing <b>31</b> to <b>2</b> of <b>2</b> results</p>
+    <p class="moj-pagination__results">Showing <b>11</b> to <b>2</b> of <b>2</b> results</p>
   </nav>
 
           

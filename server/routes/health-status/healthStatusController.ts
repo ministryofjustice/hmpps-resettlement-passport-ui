@@ -1,15 +1,30 @@
 import { RequestHandler } from 'express'
+import { query, validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import HealthStatusView from './healthStatusView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import { badRequestError } from '../../errorHandler'
 
 export default class HealthStatusController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
+
+  // Validation for query parameters
+  validateQuery = [
+    query('supportNeedUpdateFilter')
+      .optional()
+      .custom(value => value === '' || /^[0-9]+$/.test(value)) // Check if it's either an empty string or a string with a number
+      .withMessage('supportNeedUpdateFilter must be a number or empty'),
+
+    query('supportNeedUpdateSort')
+      .optional()
+      .isIn(['createdDate,DESC', 'createdDate,ASC'])
+      .withMessage('supportNeedUpdateSort must be createdDate,DESC or createdDate,ASC'),
+  ]
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
@@ -17,13 +32,16 @@ export default class HealthStatusController {
       handleWhatsNewBanner(req, res)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
-      const {
-        page = '0',
-        pageSize = '10',
-        sort = 'occurenceDateTime%2CDESC',
-        days = '0',
-        createdByUserId = '0',
-      } = req.query
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        // Validation failed
+        return next(badRequestError('Invalid query parameters'))
+      }
+
+      const pageSize = '10'
+      const sort = 'occurenceDateTime%2CDESC'
+      const days = '0'
+      const { page = '0', createdByUserId = '0' } = req.query
 
       const crsReferrals = await this.rpService.getCrsReferrals(
         prisonerData.personalDetails.prisonerNumber as string,
@@ -52,6 +70,7 @@ export default class HealthStatusController {
 
       let pathwaySupportNeedsSummary = null
       let supportNeedUpdates = null
+      const { supportNeedUpdateFilter = '', supportNeedUpdateSort = 'createdDate,DESC' } = req.query
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -67,8 +86,8 @@ export default class HealthStatusController {
           'HEALTH',
           0,
           1000, // TODO - add pagination, for now just get the first 1000
-          'createdDate,DESC', // TODO - add dynamic sorting
-          '', // TODO - add ability to filter
+          supportNeedUpdateSort as string,
+          supportNeedUpdateFilter as string,
         )
       }
 
@@ -85,10 +104,12 @@ export default class HealthStatusController {
         days as string,
         pathwaySupportNeedsSummary,
         supportNeedUpdates,
+        supportNeedUpdateSort as string,
+        supportNeedUpdateFilter as string,
       )
-      res.render('pages/health', { ...view.renderArgs })
+      return res.render('pages/health', { ...view.renderArgs })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }
