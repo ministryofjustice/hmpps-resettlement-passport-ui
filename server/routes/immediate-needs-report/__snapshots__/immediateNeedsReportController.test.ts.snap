@@ -386,13 +386,15 @@ exports[`getView get check your answers - v1 of report 1`] = `
                       
                         
                           
-                            A1234DY Main Street<br />
+                            
+                              A1234DY Main Street<br />
+                            
                           
                         
-                      
-                        
                           
-                            AB1 2BC<br />
+                            
+                              AB1 2BC<br />
+                            
                           
                         
                       
@@ -713,13 +715,15 @@ exports[`getView get check your answers - v2 of report 1`] = `
                       
                         
                           
-                            A1234DY Main Street<br />
+                            
+                              A1234DY Main Street<br />
+                            
                           
                         
-                      
-                        
                           
-                            AB1 2BC<br />
+                            
+                              AB1 2BC<br />
+                            
                           
                         
                       
