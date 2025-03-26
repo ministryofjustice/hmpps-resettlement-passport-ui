@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express'
+import { validationResult } from 'express-validator'
 import logger from '../../../logger'
 import { ERROR_DICTIONARY, FEATURE_FLAGS } from '../../utils/constants'
 import DocumentService from '../../services/documentService'
@@ -8,6 +9,7 @@ import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { DocumentMeta } from '../../data/model/documents'
 import { getFeatureFlagBoolean } from '../../utils/utils'
+import { badRequestError } from '../../errorHandler'
 
 export default class PrisonerOverviewController {
   constructor(
@@ -24,13 +26,15 @@ export default class PrisonerOverviewController {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
       handleWhatsNewBanner(req, res)
-      const {
-        page = '0',
-        size = '10',
-        sort = 'occurenceDateTime%2CDESC',
-        days = '0',
-        selectedPathway = 'All',
-      } = req.query
+
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        // Validation failed
+        return next(badRequestError('Invalid query parameters'))
+      }
+
+      const size = '10'
+      const { page = '0', sort = 'occurenceDateTime%2CDESC', days = '0', selectedPathway = 'All' } = req.query
       const { prisonerNumber } = prisonerData.personalDetails
 
       const promises = [

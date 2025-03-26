@@ -2225,12 +2225,12 @@ This is another new line</p>
     <ul class="moj-pagination__list">
       
         <li class="moj-pagination__item  moj-pagination__item--prev">
-          <a class="moj-pagination__link" href="/attitudes-thinking-and-behaviour?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ATTITUDES_THINKING_AND_BEHAVIOUR#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
+          <a class="moj-pagination__link" href="/attitudes-thinking-and-behaviour?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=10&sort=occurenceDateTime%2CDESC&days=0&selectedPathway=ATTITUDES_THINKING_AND_BEHAVIOUR#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
         </li>
       
       
           <li class="moj-pagination__item">
-            <a class="moj-pagination__link" href="/attitudes-thinking-and-behaviour?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=20&sort=occurenceDateTime,ASC&days=30&selectedPathway=ATTITUDES_THINKING_AND_BEHAVIOUR#case-notes " aria-label="Page 1 of 1">1</a>
+            <a class="moj-pagination__link" href="/attitudes-thinking-and-behaviour?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=10&sort=occurenceDateTime%2CDESC&days=0&selectedPathway=ATTITUDES_THINKING_AND_BEHAVIOUR#case-notes " aria-label="Page 1 of 1">1</a>
           </li>
         
       
@@ -2239,7 +2239,7 @@ This is another new line</p>
     
       
     
-    <p class="moj-pagination__results">Showing <b>31</b> to <b>2</b> of <b>2</b> results</p>
+    <p class="moj-pagination__results">Showing <b>11</b> to <b>2</b> of <b>2</b> results</p>
   </nav>
 
           

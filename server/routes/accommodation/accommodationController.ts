@@ -6,6 +6,7 @@ import { handleWhatsNewBanner } from '../whatsNewBanner'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import { badRequestError } from '../../errorHandler'
 
 export default class AccommodationController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -27,25 +28,22 @@ export default class AccommodationController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      // Perform validation checks for query parameters
-      const errors = validationResult(req)
-      if (!errors.isEmpty()) {
-        throw new Error(`Validation failed: ${JSON.stringify(errors.array())}`)
-      }
-
       // Load prisoner data
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       handleWhatsNewBanner(req, res)
 
-      const {
-        page = '0',
-        pageSize = '10',
-        sort = 'occurenceDateTime%2CDESC',
-        days = '0',
-        createdByUserId = '0',
-      } = req.query
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        // Validation failed
+        return next(badRequestError('Invalid query parameters'))
+      }
+
+      const pageSize = '10'
+      const sort = 'occurenceDateTime%2CDESC'
+      const days = '0'
+      const { page = '0', createdByUserId = '0' } = req.query
 
       // Fetch data from services
       const crsReferrals = await this.rpService.getCrsReferrals(

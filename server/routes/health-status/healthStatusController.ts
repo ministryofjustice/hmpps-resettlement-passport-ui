@@ -6,6 +6,7 @@ import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import { badRequestError } from '../../errorHandler'
 
 export default class HealthStatusController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
@@ -27,23 +28,20 @@ export default class HealthStatusController {
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-      // Perform validation checks for query parameters
-      const errors = validationResult(req)
-      if (!errors.isEmpty()) {
-        throw new Error(`Validation failed: ${JSON.stringify(errors.array())}`)
-      }
-
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       handleWhatsNewBanner(req, res)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
-      const {
-        page = '0',
-        pageSize = '10',
-        sort = 'occurenceDateTime%2CDESC',
-        days = '0',
-        createdByUserId = '0',
-      } = req.query
+      const errors = validationResult(req)
+      if (!errors.isEmpty()) {
+        // Validation failed
+        return next(badRequestError('Invalid query parameters'))
+      }
+
+      const pageSize = '10'
+      const sort = 'occurenceDateTime%2CDESC'
+      const days = '0'
+      const { page = '0', createdByUserId = '0' } = req.query
 
       const crsReferrals = await this.rpService.getCrsReferrals(
         prisonerData.personalDetails.prisonerNumber as string,
@@ -109,9 +107,9 @@ export default class HealthStatusController {
         supportNeedUpdateSort as string,
         supportNeedUpdateFilter as string,
       )
-      res.render('pages/health', { ...view.renderArgs })
+      return res.render('pages/health', { ...view.renderArgs })
     } catch (err) {
-      next(err)
+      return next(err)
     }
   }
 }

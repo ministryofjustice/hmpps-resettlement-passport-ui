@@ -1,36 +1,44 @@
 import { Request, RequestHandler } from 'express'
-import * as querystring from 'node:querystring'
-import { ParsedUrlQueryInput } from 'node:querystring'
 import { isNumeric } from 'validator'
+import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import { ErrorMessage } from '../view'
 import { getFeatureFlagBoolean, getPaginationPages, toTitleCase } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { CaseAllocationResponseItem } from '../../data/model/caseAllocation'
+import { badRequestError } from '../../errorHandler'
 
 export default class AssignCaseController {
   constructor(private readonly rpService: RpService) {
     // no op
   }
 
-  getView: RequestHandler = async (req, res): Promise<void> => {
+  getView: RequestHandler = async (req, res, next): Promise<void> => {
     const pageSize = 20
     const { userActiveCaseLoad } = res.locals
     const errors: ErrorMessage[] = []
+
+    const validationErrors = validationResult(req)
+    if (!validationErrors.isEmpty()) {
+      // Validation failed
+      return next(badRequestError('Invalid query parameters'))
+    }
+
     const {
       currentPage,
       sortField = 'releaseDate',
       sortDirection = 'ASC',
-      allocationSuccess,
-      allocatedCases,
-      allocatedOtherCount,
-      allocatedTo,
-      isUnassign,
-      allocationErrors,
       searchInput = '',
       releaseTime = '0',
       workerId = '',
     } = req.query as AssignPageQuery
+
+    const allocationSuccess = req.flash('allocationSuccess')?.[0]
+    const allocatedCases = req.flash('allocatedCases')
+    const allocatedOtherCount = req.flash('allocatedOtherCount')?.[0]
+    const allocatedTo = req.flash('allocatedTo')?.[0]
+    const isUnassign = req.flash('isUnassign')?.[0]
+    const allocationErrors = req.flash('allocationErrors')
 
     const includePastReleaseDates = await getFeatureFlagBoolean(FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES)
     const listOfPrisonerCasesPromise = this.rpService.getListOfPrisoners(
@@ -67,7 +75,7 @@ export default class AssignCaseController {
       pagination,
       sortField,
       sortDirection,
-      allocationErrors: queryParamToArray(allocationErrors),
+      allocationErrors,
       searchInput,
       releaseTime,
       workerId,
@@ -75,23 +83,19 @@ export default class AssignCaseController {
   }
 
   assignCases: RequestHandler = async (req, res): Promise<void> => {
-    const errorParams = validateAssignSubmission(req)
-    if (errorParams) {
-      return res.redirect(`/assign-a-case?${errorParams}`)
+    const errors = validateAssignSubmission(req)
+    if (errors) {
+      req.flash('allocationErrors', errors)
+      return res.redirect(`/assign-a-case?`)
     }
-    const { currentPage, prisonerNumbers, staffId } = req.body as AllocationRequestBody
+    const { prisonerNumbers, staffId } = req.body as AllocationRequestBody
     const prisonersToAllocate = queryParamToArray(prisonerNumbers)
 
-    let params: ParsedUrlQueryInput
     if (staffId === '_unassign') {
       await this.rpService.unassignCaseAllocations({
         nomsIds: prisonersToAllocate,
       })
-      params = {
-        ...(await this.buildAllocatedCasesParams(prisonersToAllocate)),
-        isUnassign: true,
-        currentPage,
-      }
+      req.flash('isUnassign', true)
     } else {
       const response: CaseAllocationResponseItem[] = await this.rpService.postCaseAllocations({
         nomsIds: prisonersToAllocate,
@@ -102,15 +106,15 @@ export default class AssignCaseController {
         throw new Error('Unexpected response with 0 allocations')
       }
       const { staffFirstname, staffLastname } = response[0]
-
-      params = {
-        ...(await this.buildAllocatedCasesParams(prisonersToAllocate)),
-        allocatedTo: `${staffFirstname} ${staffLastname}`,
-        currentPage,
-      }
+      req.flash('allocatedTo', `${staffFirstname} ${staffLastname}`)
     }
 
-    return res.redirect(`/assign-a-case?${querystring.stringify(params)}`)
+    const allocatedCasesParams = await this.buildAllocatedCasesParams(prisonersToAllocate)
+    req.flash('allocationSuccess', allocatedCasesParams.allocationSuccess)
+    req.flash('allocatedCases', allocatedCasesParams.allocatedCases)
+    req.flash('allocatedOtherCount', allocatedCasesParams.allocatedOtherCount)
+
+    return res.redirect(`/assign-a-case?`)
   }
 
   private async buildAllocatedCasesParams(allocatedPrisoners: string[]) {
@@ -133,8 +137,8 @@ function validStaffId(staffId: string) {
   return staffId === '_unassign' || isNumeric(staffId, { no_symbols: true })
 }
 
-function validateAssignSubmission(req: Request): string | null {
-  const { currentPage, prisonerNumbers, staffId } = req.body as AllocationRequestBody
+function validateAssignSubmission(req: Request): string[] | null {
+  const { prisonerNumbers, staffId } = req.body as AllocationRequestBody
   const errors: string[] = []
   if (!prisonerNumbers) {
     errors.push('noPrisonersSelected')
@@ -143,7 +147,7 @@ function validateAssignSubmission(req: Request): string | null {
     errors.push('noStaffSelected')
   }
   if (errors.length > 0) {
-    return querystring.stringify({ allocationErrors: errors, currentPage })
+    return errors
   }
   return null
 }
@@ -152,15 +156,6 @@ type AssignPageQuery = {
   currentPage: string
   sortField: string
   sortDirection: string
-
-  allocationSuccess?: string
-  allocatedCases?: string[] | string
-  allocatedOtherCount?: string
-  allocatedTo?: string
-  isUnassign?: string
-
-  allocationErrors?: string[]
-
   searchInput: string
   releaseTime: string
   workerId: string
@@ -169,7 +164,6 @@ type AssignPageQuery = {
 type AllocationRequestBody = {
   staffId: string
   prisonerNumbers: string[] | string
-  currentPage?: string
 }
 
 function queryParamToArray(paramValue: string | string[]): string[] {
