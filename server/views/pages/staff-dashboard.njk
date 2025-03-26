@@ -117,22 +117,22 @@
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="{% if sortField == 'name' and sortDirection == 'ASC' %}ascending{% elif sortField == 'name' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=name&sortDirection={{ 'DESC' if (sortField == 'name' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+            <a aria-sort="{% if sortField == 'name' and sortDirection == 'ASC' %}ascending{% elif sortField == 'name' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=name&sortDirection={{ 'DESC' if (sortField == 'name' and sortDirection == 'ASC') else 'ASC' }}&lastReportCompleted={{ lastReportCompleted }}#prisonersFilter">
               <button>Name</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="{% if sortField == 'releaseDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseDate&sortDirection={{ 'DESC' if (sortField == 'releaseDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+            <a aria-sort="{% if sortField == 'releaseDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseDate&sortDirection={{ 'DESC' if (sortField == 'releaseDate' and sortDirection == 'ASC') else 'ASC' }}&lastReportCompleted={{ lastReportCompleted }}#prisonersFilter">
               <button>Release date</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="{% if sortField == 'releaseEligibilityDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseEligibilityDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseEligibilityDate&sortDirection={{ 'DESC' if (sortField == 'releaseEligibilityDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+            <a aria-sort="{% if sortField == 'releaseEligibilityDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseEligibilityDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseEligibilityDate&sortDirection={{ 'DESC' if (sortField == 'releaseEligibilityDate' and sortDirection == 'ASC') else 'ASC' }}&lastReportCompleted={{ lastReportCompleted }}#prisonersFilter">
               <button>Release eligibility</button>
             </a>
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="{% if sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseOnTemporaryLicenceDate&sortDirection={{ 'DESC' if (sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+            <a aria-sort="{% if sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=releaseOnTemporaryLicenceDate&sortDirection={{ 'DESC' if (sortField == 'releaseOnTemporaryLicenceDate' and sortDirection == 'ASC') else 'ASC' }}&lastReportCompleted={{ lastReportCompleted }}#prisonersFilter">
               <button>Release on temporary licence</button>
             </a>
           </th>
@@ -145,7 +145,7 @@
             {% else %}
               {% if pathwayView %}
                 {% set pathwayValues = pathwayView | getEnumValue %}
-                <a aria-sort="{% if sortField == 'pathwayStatus' and sortDirection == 'ASC' %}ascending{% elif sortField == 'pathwayStatus' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=pathwayStatus&sortDirection={{ 'DESC' if (sortField == 'pathwayStatus' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+                <a aria-sort="{% if sortField == 'pathwayStatus' and sortDirection == 'ASC' %}ascending{% elif sortField == 'pathwayStatus' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=pathwayStatus&sortDirection={{ 'DESC' if (sortField == 'pathwayStatus' and sortDirection == 'ASC') else 'ASC' }}&lastReportCompleted={{ lastReportCompleted }}#prisonersFilter">
                   <button>
                     {{ pathwayValues.name }} status
                   </button>
@@ -156,7 +156,7 @@
             {% endif %}
           </th>
           <th scope="col" class="govuk-table__header">
-            <a aria-sort="{% if sortField == 'lastUpdatedDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'lastUpdatedDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=lastUpdatedDate&sortDirection={{ 'DESC' if (sortField == 'lastUpdatedDate' and sortDirection == 'ASC') else 'ASC' }}&assessmentRequired={{ assessmentRequired }}#prisonersFilter">
+            <a aria-sort="{% if sortField == 'lastUpdatedDate' and sortDirection == 'ASC' %}ascending{% elif sortField == 'lastUpdatedDate' and sortDirection == 'DESC' %}descending{% else %}none{% endif %}" href="/?searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField=lastUpdatedDate&sortDirection={{ 'DESC' if (sortField == 'lastUpdatedDate' and sortDirection == 'ASC') else 'ASC' }}&lastReportCompleted={{ lastReportCompleted }}#prisonersFilter">
               <button>Last updated</button>
             </a>
           </th>
@@ -173,7 +173,7 @@
                 <div class="govuk-pagination__prev">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page={{ page.pageNumber }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&assessmentRequired={{ assessmentRequired }}"
+                    href="/?page={{ page.pageNumber }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&lastReportCompleted={{ lastReportCompleted }}"
                     rel="prev"
                   >
                     <svg
@@ -205,7 +205,7 @@
                   <li class="govuk-pagination__item {{ "govuk-pagination__item--current" if page.isCurrent }}">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/?page={{ page.pageNumber }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&assessmentRequired={{ assessmentRequired }}"
+                      href="/?page={{ page.pageNumber }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&lastReportCompleted={{ lastReportCompleted }}"
                       aria-label="Page {{ page.pageNumber + 1 }}"
                     >
                       {{ page.pageNumber + 1 }}
@@ -219,7 +219,7 @@
                 <div class="govuk-pagination__next">
                   <a
                     class="govuk-link govuk-pagination__link"
-                    href="/?page={{ page.pageNumber }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&assessmentRequired={{ assessmentRequired }}"
+                    href="/?page={{ page.pageNumber }}&pathwayView={{ pathwayView }}&pathwayStatus={{ pathwayStatus }}&sortField={{ sortField }}&sortDirection={{ sortDirection }}&searchInput={{ searchInput }}&releaseTime={{ releaseTime }}&lastReportCompleted={{ lastReportCompleted }}"
                     rel="next"
                   >
                     <span class="govuk-pagination__link-title">
