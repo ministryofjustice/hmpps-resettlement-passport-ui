@@ -684,7 +684,7 @@ export function isAddressEmpty(addressAnswer: Answer): boolean {
   let allAddressPartsEmpty = true
   const address = addressAnswer as { [key: string]: string }[]
   address.forEach(part => {
-    const [key, value] = Object.entries(part)[0]
+    const [, value] = Object.entries(part)[0]
     if (value && value.trim() !== '') {
       allAddressPartsEmpty = false
     }
