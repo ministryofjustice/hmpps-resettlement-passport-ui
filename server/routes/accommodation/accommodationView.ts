@@ -23,7 +23,6 @@ export default class AccommodationView implements View {
     private readonly pathwaySupportNeedsSummary: PathwaySupportNeedsSummary,
     private readonly supportNeedsUpdates: PathwaySupportNeedsUpdates,
     private readonly supportNeedUpdateSort: string,
-    private readonly supportNeedUpdateFilter: string,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -44,7 +43,6 @@ export default class AccommodationView implements View {
     pathwaySupportNeedsSummary: PathwaySupportNeedsSummary
     supportNeedsUpdates: PathwaySupportNeedsUpdates
     supportNeedUpdateSort: string
-    supportNeedUpdateFilter: string
     errors: ErrorMessage[]
   } {
     return {
@@ -62,7 +60,6 @@ export default class AccommodationView implements View {
       pathwaySupportNeedsSummary: this.pathwaySupportNeedsSummary,
       supportNeedsUpdates: this.supportNeedsUpdates,
       supportNeedUpdateSort: this.supportNeedUpdateSort,
-      supportNeedUpdateFilter: this.supportNeedUpdateFilter,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

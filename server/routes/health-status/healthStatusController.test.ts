@@ -102,9 +102,7 @@ describe('getView', () => {
     const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
-      .get(
-        '/health-status?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateFilter=1456&supportNeedUpdateSort=createdDate,ASC',
-      )
+      .get('/health-status?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC')
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
@@ -121,14 +119,7 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
-    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
-      'A1234DY',
-      'HEALTH',
-      0,
-      1000,
-      'createdDate,ASC',
-      '1456',
-    )
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 0, 1000, 'createdDate,ASC', '')
   })
 
   it('Error case - invalid page parameter', async () => {

@@ -15,11 +15,6 @@ export default class HealthStatusController {
 
   // Validation for query parameters
   validateQuery = [
-    query('supportNeedUpdateFilter')
-      .optional()
-      .custom(value => value === '' || /^[0-9]+$/.test(value)) // Check if it's either an empty string or a string with a number
-      .withMessage('supportNeedUpdateFilter must be a number or empty'),
-
     query('supportNeedUpdateSort')
       .optional()
       .isIn(['createdDate,DESC', 'createdDate,ASC'])
@@ -70,7 +65,7 @@ export default class HealthStatusController {
 
       let pathwaySupportNeedsSummary = null
       let supportNeedUpdates = null
-      const { supportNeedUpdateFilter = '', supportNeedUpdateSort = 'createdDate,DESC' } = req.query
+      const { supportNeedUpdateSort = 'createdDate,DESC' } = req.query
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -87,7 +82,7 @@ export default class HealthStatusController {
           0,
           1000, // TODO - add pagination, for now just get the first 1000
           supportNeedUpdateSort as string,
-          supportNeedUpdateFilter as string,
+          '',
         )
       }
 
@@ -105,7 +100,6 @@ export default class HealthStatusController {
         pathwaySupportNeedsSummary,
         supportNeedUpdates,
         supportNeedUpdateSort as string,
-        supportNeedUpdateFilter as string,
       )
       return res.render('pages/health', { ...view.renderArgs })
     } catch (err) {
