@@ -22,6 +22,8 @@ export const testAppInfo: ApplicationInfo = {
   buildNumber: '1',
   gitRef: 'long ref',
   gitShortHash: 'short ref',
+  productId: 'DPS042',
+  branchName: 'test',
 }
 
 export const user = {

@@ -1,3 +1,4 @@
+import { SuperAgentRequest } from 'superagent'
 import { stubFor } from './wiremock'
 import {
   johnSmithAccommodationNextPage1,
@@ -882,6 +883,19 @@ export const johnSmithAppointments = () =>
     },
   })
 
+export const stubRpClientPing = (): SuperAgentRequest =>
+  stubFor({
+    request: {
+      method: 'GET',
+      urlPattern: '/rpApi/health/ping',
+    },
+    response: {
+      status: 200,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+      jsonBody: { status: 'UP' },
+    },
+  })
+
 export default {
   stubGetPrisoners,
   stubGetAppointments,
@@ -933,4 +947,5 @@ export default {
   johnSmithStaffContacts,
   johnSmithAppointments,
   stubJohnSmithWithSomeErrors,
+  stubRpClientPing,
 }

@@ -55,14 +55,14 @@ export default class RestClient {
     return this.config.timeout
   }
 
-  async get<T>({
+  async get<Response = unknown>({
     path = null,
     query = '',
     headers = {},
     responseType = '',
     raw = false,
     retry = false,
-  }: GetRequest): Promise<T> {
+  }: GetRequest): Promise<Response> {
     try {
       if (this.userId) {
         logger.trace(`User: ${this.userId} Session: ${this.sessionId} making GET request to ${path}`)
@@ -89,7 +89,7 @@ export default class RestClient {
 
       this.logRequestAndResponse('GET', path, null, raw, result)
 
-      return raw ? result : result.body
+      return raw ? (result as Response) : result.body
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError, query }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)
@@ -97,14 +97,14 @@ export default class RestClient {
     }
   }
 
-  async post<T = unknown>({
+  async post<Response = unknown>({
     path = null,
     headers = {},
     responseType = '',
     data = {},
     raw = false,
     retry = false,
-  }: PostRequest = {}): Promise<T> {
+  }: PostRequest = {}): Promise<Response> {
     try {
       if (this.userId) {
         logger.info(`User: ${this.userId} Session: ${this.sessionId} making POST request to ${path}`)
@@ -130,7 +130,7 @@ export default class RestClient {
 
       this.logRequestAndResponse('POST', path, data, raw, result)
 
-      return raw ? result : result.body
+      return raw ? (result as Response) : result.body
     } catch (error) {
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'POST'`)
