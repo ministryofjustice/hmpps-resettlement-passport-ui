@@ -117,7 +117,7 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateFilter=1456&supportNeedUpdateSort=createdDate,ASC',
+        '/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -141,7 +141,7 @@ describe('getView', () => {
       0,
       1000,
       'createdDate,ASC',
-      '1456',
+      '',
     )
   })
 

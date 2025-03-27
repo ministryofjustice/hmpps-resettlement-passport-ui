@@ -75,7 +75,7 @@ export default class AccommodationController {
 
       let pathwaySupportNeedsSummary = null
       let supportNeedsUpdates = null
-      const { supportNeedUpdateFilter = '', supportNeedUpdateSort = 'createdDate,DESC' } = req.query
+      const { supportNeedUpdateSort = 'createdDate,DESC' } = req.query
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -93,7 +93,7 @@ export default class AccommodationController {
           0,
           1000, // TODO - add pagination, for now just get the first 1000
           supportNeedUpdateSort as string,
-          supportNeedUpdateFilter as string,
+          '',
         )
       }
 
@@ -112,7 +112,6 @@ export default class AccommodationController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
-        supportNeedUpdateFilter as string,
       )
       return res.render('pages/accommodation', { ...view.renderArgs })
     } catch (err) {
