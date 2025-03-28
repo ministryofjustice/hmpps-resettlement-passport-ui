@@ -10,6 +10,8 @@ import tokenVerification from './integration_tests/mockApis/tokenVerification'
 import nomisUserRolesApi from './integration_tests/mockApis/nomisUserRolesApi'
 import rpApi from './integration_tests/mockApis/rpApi'
 import { initRedisCacheForNullExistingAssessment, resetRedisCache } from './integration_tests/mockApis/redis'
+import frontendComponents from './integration_tests/mockApis/frontendComponents'
+import manageUserRoles from './integration_tests/mockApis/manageUserRoles'
 
 const flagFilePath = './localstack/flags.json'
 const flagRestoreFilePath = './integration_tests/flags.restore.json'
@@ -54,7 +56,6 @@ export default defineConfig({
   reporterOptions: {
     configFile: 'reporter-config.json',
   },
-  videoUploadOnPasses: false,
   taskTimeout: 60000,
   e2e: {
     // We've imported your old cypress plugins here.
@@ -66,6 +67,8 @@ export default defineConfig({
         ...auth,
         ...nomisUserRolesApi,
         ...rpApi,
+        ...frontendComponents,
+        ...manageUserRoles,
         stubSignIn: () => auth.stubSignIn(['ROLE_RESETTLEMENT_PASSPORT_EDIT']),
         ...tokenVerification,
         downloadFile,

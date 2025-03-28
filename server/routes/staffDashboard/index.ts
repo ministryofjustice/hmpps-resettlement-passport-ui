@@ -18,8 +18,6 @@ export default (router: Router, services: Services) => {
       query('lastReportCompleted').isIn(['BCST2', 'RESETTLEMENT_PLAN', '', 'NONE']).optional(),
     ],
     oneOf([query('assessmentRequired').isBoolean().optional(), query('assessmentRequired').isEmpty().optional()]),
-    // Requires searchInput to be alphanumeric. NOMIS doesn't support accented characters, so we don't need to allow for them here.
-    oneOf([query('searchInput').isAlphanumeric().optional(), query('searchInput').isEmpty().optional()]),
     [staffDashboardController.getView],
   )
 }

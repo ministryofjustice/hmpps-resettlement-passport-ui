@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import csurf from 'csurf'
+import { csrfSync } from 'csrf-sync'
 
 const testMode = process.env.NODE_ENV === 'test'
 
@@ -8,7 +8,18 @@ export default function setUpCsrf(): Router {
 
   // CSRF protection
   if (!testMode) {
-    router.use(csurf())
+    const {
+      csrfSynchronisedProtection, // This is the default CSRF protection middleware.
+    } = csrfSync({
+      // By default, csrf-sync uses x-csrf-token header, but we also use the token in forms and send it in the request body or as a query parameter,
+      // so change getTokenFromRequest so it grabs from there
+      getTokenFromRequest: req => {
+        // eslint-disable-next-line no-underscore-dangle
+        return req.body._csrf || req.query._csrf || req.headers['x-csrf-token']
+      },
+    })
+
+    router.use(csrfSynchronisedProtection)
   }
 
   router.use((req, res, next) => {

@@ -20,7 +20,6 @@ export default (router: Router, services: Services) => {
       query('workerId').isEmpty().optional(), // all workers
     ]),
     oneOf([query('currentPage').isInt({ min: 0 }).optional(), query('currentPage').isEmpty().optional()]),
-    oneOf([query('searchInput').isAlphanumeric().optional(), query('searchInput').isEmpty().optional()]),
     [asyncWrapper(assignCase.getView)],
   )
   router.post('/assign-a-case', [asyncWrapper(assignCase.assignCases)])

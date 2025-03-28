@@ -11,28 +11,13 @@
         <form method="GET" action="/{{ pathway | getUrlFromName }}/#support-needs-updates" novalidate>
           <div class="govuk-form-group">
             <div class="govuk-grid-column-one-half">
-              <label class="govuk-label" for="supportNeedUpdateFilter">Filter by support need</label>
-              <select class="govuk-select" id="supportNeedUpdateFilter" name="supportNeedUpdateFilter">
-                <option value="" {% if supportNeedUpdateFilter == "" %}selected{% endif %}>
-                  View all {{ pathway }} support needs
-                </option>
-                {% for supportNeed in pathwaySupportNeedsSummary.prisonerNeeds %}
-                  <option value="{{ supportNeed.id }}" {% if supportNeedUpdateFilter == supportNeed.id %}selected{% endif %}>
-                    {{ supportNeed.title }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="govuk-grid-column-one-half">
               <label class="govuk-label" for="supportNeedUpdateSort">Sort by</label>
               <select class="govuk-select" id="supportNeedUpdateSort" name="supportNeedUpdateSort">
                 <option value="createdDate,DESC" {% if supportNeedUpdateSort == "createdDate,DESC" %}selected{% endif %}>Created (newest)</option>
                 <option value="createdDate,ASC" {% if supportNeedUpdateSort == "createdDate,ASC" %}selected{% endif %}>Created (oldest)</option>
               </select>
-            </div>
-            <div class="govuk-grid-column-one-third govuk-!-padding-top-4">
               <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
-              <button type="submit" class="govuk-button govuk-!-margin-bottom-0" data-module="govuk-button">Apply filters</button>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Apply</button>
             </div>
           </div>
         </form>
