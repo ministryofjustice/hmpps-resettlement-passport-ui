@@ -681,16 +681,12 @@ export function isAddressEmpty(addressAnswer: Answer): boolean {
   if (!addressAnswer) {
     return true
   }
-  let allAddressPartsEmpty = true
   const address = addressAnswer as { [key: string]: string }[]
-  address.forEach(part => {
+  for (const part of address) {
     const [, value] = Object.entries(part)[0]
-    if (value && value.trim() !== '') {
-      allAddressPartsEmpty = false
-    }
-  })
-
-  return allAddressPartsEmpty
+    if (value && value.trim() !== '') return false
+  }
+  return true
 }
 
 export const findPreviousSelectedSupportNeed = (
