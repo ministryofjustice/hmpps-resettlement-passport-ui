@@ -677,6 +677,18 @@ export function findError(errors: FieldValidationError[], formFieldId: string) {
   }
 }
 
+export function isAddressEmpty(addressAnswer: Answer): boolean {
+  if (!addressAnswer) {
+    return true
+  }
+  const address = addressAnswer as { [key: string]: string }[]
+  for (const part of address) {
+    const [, value] = Object.entries(part)[0]
+    if (value && value.trim() !== '') return false
+  }
+  return true
+}
+
 export const findPreviousSelectedSupportNeed = (
   currentCacheState: SupportNeedsCache,
   uuid: string,

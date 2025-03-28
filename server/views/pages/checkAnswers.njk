@@ -59,13 +59,17 @@
                   <dt class="govuk-summary-list__key">{{ questionAnswer.questionTitle }}</dt>
                   <dd class="govuk-summary-list__value">
                     {% if questionAnswer.questionType === 'ADDRESS' %}
-                      {% for item in questionAnswer.answer.answer %}
-                        {% for key, value in item %}
-                          {% if value %}
-                            {{ value }}<br />
-                          {% endif %}
+                      {% if(isAddressEmpty(questionAnswer.answer.answer)) %}
+                        Not provided
+                      {% else %}
+                        {% for item in questionAnswer.answer.answer %}
+                          {% for key, value in item %}
+                            {% if value %}
+                              {{ value }}<br />
+                            {% endif %}
+                          {% endfor %}
                         {% endfor %}
-                      {% endfor %}
+                      {% endif %}
                     {% elif questionAnswer.questionType === 'CHECKBOX' %}
                       {% set freeTextAnswer = "" %}
                       {% for answer in questionAnswer.answer.answer %}
