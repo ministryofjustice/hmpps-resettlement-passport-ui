@@ -40,6 +40,7 @@ import {
   findError,
   findPreviousSelectedSupportNeed,
   convertStringToId,
+  isAddressEmpty,
 } from './utils'
 import { CrsReferral } from '../data/model/crsReferralResponse'
 import { AppointmentLocation } from '../data/model/appointment'
@@ -1866,5 +1867,44 @@ describe('convertStringToId', () => {
     ['string 2', ' THIS IS AN  ID', 'this-is-an-id'],
   ])('%s -> convertStringToId(%s)', (_: string, input: string, output: string) => {
     expect(convertStringToId(input)).toEqual(output)
+  })
+})
+
+describe('isAddressEmpty', () => {
+  it('should return true if addressAnswer is null', () => {
+    expect(isAddressEmpty(null as never)).toBe(true)
+  })
+
+  it('should return true if all address fields are empty strings', () => {
+    const address = [
+      { addressLine1: '' },
+      { addressLine2: '   ' },
+      { addressTown: '   ' },
+      { addressCounty: '' },
+      { addressPostcode: '' },
+    ]
+    expect(isAddressEmpty(address as Answer)).toBe(true)
+  })
+
+  it('should return false if at least one field has a non-empty value', () => {
+    const address = [
+      { addressLine1: '' },
+      { addressLine2: 'Flat 5B' },
+      { addressTown: '   ' },
+      { addressCounty: '' },
+      { addressPostcode: '' },
+    ]
+    expect(isAddressEmpty(address as Answer)).toBe(false)
+  })
+
+  it('should return false if multiple fields have non-empty values', () => {
+    const address = [
+      { addressLine1: '123 Main Street' },
+      { addressLine2: 'Unit 3' },
+      { addressTown: 'some town' },
+      { addressCounty: 'some county' },
+      { addressPostcode: 'AB12 3CD' },
+    ]
+    expect(isAddressEmpty(address as Answer)).toBe(false)
   })
 })
