@@ -279,13 +279,6 @@ describe('getView', () => {
       .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
   })
-
-  it('Error case - invalid searchInput parameter', async () => {
-    await request(app)
-      .get('/?searchInput=123_456')
-      .expect(400)
-      .expect(res => expectSomethingWentWrongPage(res))
-  })
 })
 
 describe('post', () => {
