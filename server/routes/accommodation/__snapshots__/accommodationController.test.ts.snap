@@ -1324,7 +1324,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                 <option value="createdDate,ASC" >Created (oldest)</option>
               </select>
               <input type="hidden" name="prisonerNumber" value="A1234DY"/>
-              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Apply</button>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Sort</button>
             </div>
           </div>
         </form>
@@ -2891,7 +2891,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
                 <option value="createdDate,ASC" selected>Created (oldest)</option>
               </select>
               <input type="hidden" name="prisonerNumber" value="A1234DY"/>
-              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Apply</button>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Sort</button>
             </div>
           </div>
         </form>
