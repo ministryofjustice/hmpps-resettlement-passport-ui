@@ -65,7 +65,7 @@ describe('getView', () => {
       'A1234DY',
       'DRUGS_AND_ALCOHOL',
       0,
-      1000,
+      10,
       'createdDate,DESC',
       '',
     )
@@ -101,7 +101,7 @@ describe('getView', () => {
       'A1234DY',
       'DRUGS_AND_ALCOHOL',
       0,
-      1000,
+      10,
       'createdDate,DESC',
       '',
     )
@@ -116,7 +116,9 @@ describe('getView', () => {
     const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
-      .get('/drugs-and-alcohol?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC')
+      .get(
+        '/drugs-and-alcohol?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC&supportNeedsUpdatesPage=1',
+      )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
@@ -136,8 +138,8 @@ describe('getView', () => {
     expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
       'A1234DY',
       'DRUGS_AND_ALCOHOL',
-      0,
-      1000,
+      1,
+      10,
       'createdDate,ASC',
       '',
     )

@@ -4,7 +4,7 @@ import RpService from '../../services/rpService'
 import EducationSkillsWorkView from './educationSkillsWorkView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
-import { getFeatureFlagBoolean } from '../../utils/utils'
+import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { badRequestError } from '../../errorHandler'
 
@@ -70,7 +70,12 @@ export default class EducationSkillsWorkController {
 
       let pathwaySupportNeedsSummary = null
       let supportNeedsUpdates = null
-      const { supportNeedUpdateSort = 'createdDate,DESC' } = req.query
+      let pagination = null
+
+      const { supportNeedUpdateSort = 'createdDate,DESC', supportNeedsUpdatesPage = '0' } = req.query as {
+        supportNeedUpdateSort: string
+        supportNeedsUpdatesPage: string
+      }
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -84,11 +89,14 @@ export default class EducationSkillsWorkController {
         supportNeedsUpdates = await this.rpService.getPathwayNeedsUpdates(
           prisonerData.personalDetails.prisonerNumber as string,
           'EDUCATION_SKILLS_AND_WORK',
-          0,
-          1000, // TODO - add pagination, for now just get the first 1000
+          parseInt(supportNeedsUpdatesPage, 10),
+          10,
           supportNeedUpdateSort as string,
           '',
         )
+
+        const { page: updatesPage, totalElements } = supportNeedsUpdates
+        pagination = getPaginationPages(updatesPage, 10, totalElements)
       }
 
       const view = new EducationSkillsWorkView(
@@ -106,6 +114,7 @@ export default class EducationSkillsWorkController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        pagination,
       )
       return res.render('pages/education-skills-work', { ...view.renderArgs })
     } catch (err) {

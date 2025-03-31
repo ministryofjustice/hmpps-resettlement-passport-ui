@@ -1324,7 +1324,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                 <option value="createdDate,ASC" >Created (oldest)</option>
               </select>
               <input type="hidden" name="prisonerNumber" value="A1234DY"/>
-              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Apply</button>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Sort</button>
             </div>
           </div>
         </form>
@@ -1484,6 +1484,91 @@ This is another new line</p>
             </div>
             <hr>
           
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          
+            <nav class="govuk-pagination" aria-label="Pagination">
+              
+                
+                  <div class="govuk-pagination__prev">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/accommodation/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0#support-needs-updates"
+                      rel="prev"
+                    >
+                      <svg
+                        class="govuk-pagination__icon govuk-pagination__icon--prev"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="13"
+                        width="15"
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 15 13"
+                      >
+                        <path
+                          d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"
+                        ></path>
+                      </svg>
+                      <span class="govuk-pagination__link-title">
+                        Previous<span class="govuk-visually-hidden"> page</span>
+                      </span>
+                    </a>
+                  </div>
+                
+              
+                
+              
+                
+              
+              <ul class="govuk-pagination__list">
+                
+                  
+                  
+                
+                  
+                  
+                    <li class="govuk-pagination__item ">
+                      <a
+                        class="govuk-link govuk-pagination__link"
+                        href="/accommodation/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0#support-needs-updates"
+                        aria-label="Page 1"
+                      >
+                        1
+                      </a>
+                    </li>
+                  
+                
+                  
+                  
+                    <li class="govuk-pagination__item govuk-pagination__item--current">
+                      <a
+                        class="govuk-link govuk-pagination__link"
+                        href="/accommodation/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=1#support-needs-updates"
+                        aria-label="Page 2"
+                      >
+                        2
+                      </a>
+                    </li>
+                  
+                
+              </ul>
+              
+                
+              
+                
+              
+                
+              
+            </nav>
+          
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <p class="pagination-results">
+            Showing <b>11</b> to <b>12</b> of
+            <b>12</b> results
+          </p>
         </div>
       </div>
     
@@ -2891,7 +2976,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
                 <option value="createdDate,ASC" selected>Created (oldest)</option>
               </select>
               <input type="hidden" name="prisonerNumber" value="A1234DY"/>
-              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Apply</button>
+              <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Sort</button>
             </div>
           </div>
         </form>
@@ -3051,6 +3136,91 @@ This is another new line</p>
             </div>
             <hr>
           
+        </div>
+      </div>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          
+            <nav class="govuk-pagination" aria-label="Pagination">
+              
+                
+                  <div class="govuk-pagination__prev">
+                    <a
+                      class="govuk-link govuk-pagination__link"
+                      href="/accommodation/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0#support-needs-updates"
+                      rel="prev"
+                    >
+                      <svg
+                        class="govuk-pagination__icon govuk-pagination__icon--prev"
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="13"
+                        width="15"
+                        aria-hidden="true"
+                        focusable="false"
+                        viewBox="0 0 15 13"
+                      >
+                        <path
+                          d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"
+                        ></path>
+                      </svg>
+                      <span class="govuk-pagination__link-title">
+                        Previous<span class="govuk-visually-hidden"> page</span>
+                      </span>
+                    </a>
+                  </div>
+                
+              
+                
+              
+                
+              
+              <ul class="govuk-pagination__list">
+                
+                  
+                  
+                
+                  
+                  
+                    <li class="govuk-pagination__item ">
+                      <a
+                        class="govuk-link govuk-pagination__link"
+                        href="/accommodation/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0#support-needs-updates"
+                        aria-label="Page 1"
+                      >
+                        1
+                      </a>
+                    </li>
+                  
+                
+                  
+                  
+                    <li class="govuk-pagination__item govuk-pagination__item--current">
+                      <a
+                        class="govuk-link govuk-pagination__link"
+                        href="/accommodation/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=1#support-needs-updates"
+                        aria-label="Page 2"
+                      >
+                        2
+                      </a>
+                    </li>
+                  
+                
+              </ul>
+              
+                
+              
+                
+              
+                
+              
+            </nav>
+          
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <p class="pagination-results">
+            Showing <b>11</b> to <b>12</b> of
+            <b>12</b> results
+          </p>
         </div>
       </div>
     

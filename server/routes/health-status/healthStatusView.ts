@@ -5,6 +5,7 @@ import { AssessmentsInformation } from '../../data/model/assessmentInformation'
 import { CaseNotesHistory } from '../../data/model/caseNotesHistory'
 import { CaseNotesCreators } from '../../data/model/caseNotesCreators'
 import { PathwaySupportNeedsSummary, PathwaySupportNeedsUpdates } from '../../data/model/supportNeeds'
+import { Pagination } from '../../data/model/pagination'
 
 export default class HealthStatusView implements View {
   constructor(
@@ -21,6 +22,7 @@ export default class HealthStatusView implements View {
     private readonly pathwaySupportNeedsSummary: PathwaySupportNeedsSummary,
     private readonly supportNeedsUpdates: PathwaySupportNeedsUpdates,
     private readonly supportNeedUpdateSort: string,
+    private readonly pagination: Pagination,
     private readonly errors: ErrorMessage[] = [],
   ) {
     // no op
@@ -40,6 +42,7 @@ export default class HealthStatusView implements View {
     pathwaySupportNeedsSummary: PathwaySupportNeedsSummary
     supportNeedsUpdates: PathwaySupportNeedsUpdates
     supportNeedUpdateSort: string
+    pagination: Pagination
     errors: ErrorMessage[]
   } {
     return {
@@ -56,6 +59,7 @@ export default class HealthStatusView implements View {
       pathwaySupportNeedsSummary: this.pathwaySupportNeedsSummary,
       supportNeedsUpdates: this.supportNeedsUpdates,
       supportNeedUpdateSort: this.supportNeedUpdateSort,
+      pagination: this.pagination,
       errors: this.errors.length !== 0 ? this.errors : null,
     }
   }

@@ -5,7 +5,7 @@ import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { FEATURE_FLAGS } from '../../utils/constants'
-import { getFeatureFlagBoolean } from '../../utils/utils'
+import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { badRequestError } from '../../errorHandler'
 
 export default class AttitudesThinkingBehaviourController {
@@ -66,7 +66,12 @@ export default class AttitudesThinkingBehaviourController {
 
       let pathwaySupportNeedsSummary = null
       let supportNeedsUpdates = null
-      const { supportNeedUpdateSort = 'createdDate,DESC' } = req.query
+      let pagination = null
+
+      const { supportNeedUpdateSort = 'createdDate,DESC', supportNeedsUpdatesPage = '0' } = req.query as {
+        supportNeedUpdateSort: string
+        supportNeedsUpdatesPage: string
+      }
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -80,11 +85,14 @@ export default class AttitudesThinkingBehaviourController {
         supportNeedsUpdates = await this.rpService.getPathwayNeedsUpdates(
           prisonerData.personalDetails.prisonerNumber as string,
           'ATTITUDES_THINKING_AND_BEHAVIOUR',
-          0,
-          1000, // TODO - add pagination, for now just get the first 1000
+          parseInt(supportNeedsUpdatesPage, 10),
+          10,
           supportNeedUpdateSort as string,
           '',
         )
+
+        const { page: updatesPage, totalElements } = supportNeedsUpdates
+        pagination = getPaginationPages(updatesPage, 10, totalElements)
       }
 
       const view = new AttitudesThinkingBehaviour(
@@ -101,6 +109,7 @@ export default class AttitudesThinkingBehaviourController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        pagination,
       )
       return res.render('pages/attitudes-thinking-behaviour', { ...view.renderArgs })
     } catch (err) {
