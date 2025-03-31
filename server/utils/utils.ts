@@ -626,7 +626,11 @@ export function validateStringIsAnInteger(input: string) {
 }
 
 export function getValidationForPathwayQuery(): ValidationChain[] {
-  return [query('page').isInt({ min: 0 }).optional(), query('createdByUserId').isInt({ min: 0 }).optional()]
+  return [
+    query('page').isInt({ min: 0 }).optional(),
+    query('createdByUserId').isInt({ min: 0 }).optional(),
+    query('supportNeedsUpdatesPage').isInt({ min: 0 }).optional(),
+  ]
 }
 
 export function processSupportNeedsRequestBody(input: Record<string, string | string[]>): PrisonerSupportNeedsPatch {
