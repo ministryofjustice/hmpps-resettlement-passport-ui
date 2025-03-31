@@ -65,7 +65,7 @@ describe('getView', () => {
       'A1234DY',
       'ATTITUDES_THINKING_AND_BEHAVIOUR',
       0,
-      1000,
+      10,
       'createdDate,DESC',
       '',
     )
@@ -101,7 +101,7 @@ describe('getView', () => {
       'A1234DY',
       'ATTITUDES_THINKING_AND_BEHAVIOUR',
       0,
-      1000,
+      10,
       'createdDate,DESC',
       '',
     )
@@ -117,7 +117,7 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC',
+        '/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC&supportNeedsUpdatesPage=1',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -138,8 +138,8 @@ describe('getView', () => {
     expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
       'A1234DY',
       'ATTITUDES_THINKING_AND_BEHAVIOUR',
-      0,
-      1000,
+      1,
+      10,
       'createdDate,ASC',
       '',
     )

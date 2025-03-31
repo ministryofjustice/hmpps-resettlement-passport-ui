@@ -526,10 +526,10 @@ export function stubPathwaySupportNeedsUpdates(rpService: RpService) {
         title: 'End a tenancy',
       },
     ],
-    page: 0,
-    size: 5,
+    page: 1,
+    size: 10,
     sortName: 'createdDate,DESC',
-    totalElements: 3,
+    totalElements: 12,
     last: true,
   })
 }

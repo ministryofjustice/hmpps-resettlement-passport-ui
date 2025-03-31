@@ -68,7 +68,7 @@ describe('getView', () => {
       'A1234DY',
       'EDUCATION_SKILLS_AND_WORK',
       0,
-      1000,
+      10,
       'createdDate,DESC',
       '',
     )
@@ -106,7 +106,7 @@ describe('getView', () => {
       'A1234DY',
       'EDUCATION_SKILLS_AND_WORK',
       0,
-      1000,
+      10,
       'createdDate,DESC',
       '',
     )
@@ -123,7 +123,7 @@ describe('getView', () => {
 
     await request(app)
       .get(
-        '/education-skills-and-work?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC',
+        '/education-skills-and-work?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC&supportNeedsUpdatesPage=1',
       )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
@@ -145,8 +145,8 @@ describe('getView', () => {
     expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith(
       'A1234DY',
       'EDUCATION_SKILLS_AND_WORK',
-      0,
-      1000,
+      1,
+      10,
       'createdDate,ASC',
       '',
     )

@@ -61,7 +61,7 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
-    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 0, 1000, 'createdDate,DESC', '')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 0, 10, 'createdDate,DESC', '')
   })
 
   it('Happy path with default query params and no data from endpoints', async () => {
@@ -90,7 +90,7 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
-    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 0, 1000, 'createdDate,DESC', '')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 0, 10, 'createdDate,DESC', '')
   })
 
   it('Happy path with specified query params and data from endpoints', async () => {
@@ -102,7 +102,9 @@ describe('getView', () => {
     const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
-      .get('/health-status?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC')
+      .get(
+        '/health-status?prisonerNumber=A1234DY&page=1&createdByUserId=2&supportNeedUpdateSort=createdDate,ASC&supportNeedsUpdatesPage=1',
+      )
       .expect(200)
       .expect(res => expect(res.text).toMatchSnapshot())
 
@@ -119,7 +121,7 @@ describe('getView', () => {
     )
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
-    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 0, 1000, 'createdDate,ASC', '')
+    expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 1, 10, 'createdDate,ASC', '')
   })
 
   it('Error case - invalid page parameter', async () => {

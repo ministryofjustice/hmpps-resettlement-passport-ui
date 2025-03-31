@@ -4,7 +4,7 @@ import AccommodationView from './accommodationView'
 import RpService from '../../services/rpService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
-import { getFeatureFlagBoolean } from '../../utils/utils'
+import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { badRequestError } from '../../errorHandler'
 
@@ -75,7 +75,12 @@ export default class AccommodationController {
 
       let pathwaySupportNeedsSummary = null
       let supportNeedsUpdates = null
-      const { supportNeedUpdateSort = 'createdDate,DESC' } = req.query
+      let pagination = null
+
+      const { supportNeedUpdateSort = 'createdDate,DESC', supportNeedsUpdatesPage = '0' } = req.query as {
+        supportNeedUpdateSort: string
+        supportNeedsUpdatesPage: string
+      }
 
       if (supportNeedsEnabled) {
         const pathwaySupportNeedsResponse = await this.rpService.getPathwaySupportNeedsSummary(
@@ -90,11 +95,14 @@ export default class AccommodationController {
         supportNeedsUpdates = await this.rpService.getPathwayNeedsUpdates(
           prisonerData.personalDetails.prisonerNumber as string,
           'ACCOMMODATION',
-          0,
-          1000, // TODO - add pagination, for now just get the first 1000
+          parseInt(supportNeedsUpdatesPage, 10),
+          10,
           supportNeedUpdateSort as string,
           '',
         )
+
+        const { page: updatesPage, totalElements } = supportNeedsUpdates
+        pagination = getPaginationPages(updatesPage, 10, totalElements)
       }
 
       const view = new AccommodationView(
@@ -112,6 +120,7 @@ export default class AccommodationController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        pagination,
       )
       return res.render('pages/accommodation', { ...view.renderArgs })
     } catch (err) {
