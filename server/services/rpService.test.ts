@@ -400,4 +400,16 @@ describe('RpService', () => {
       `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&watchList=${watchList}&includePastReleaseDates=${includePastReleaseDates}&workerId=${workerId}&lastReportCompleted=${lastReportCompleted}`,
     )
   })
+
+  it('should call rpClient with url encoded searchInput', async () => {
+    rpClient.get.mockResolvedValue({})
+    const getSpy = jest.spyOn(rpClient, 'get')
+
+    const searchInput = 'John Smith'
+    await service.getListOfPrisoners('MDI', 1, 10, 'releaseDate', 'ASC', searchInput, '', '', '', '', true, '', '')
+
+    expect(getSpy).toHaveBeenCalledWith(
+      `/resettlement-passport/prison/MDI/prisoners?page=1&size=10&sort=releaseDate,ASC&term=John%20Smith&days=&pathwayView=&pathwayStatus=&watchList=&includePastReleaseDates=true&workerId=&lastReportCompleted=`,
+    )
+  })
 })

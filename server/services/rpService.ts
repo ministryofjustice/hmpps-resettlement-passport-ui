@@ -59,8 +59,9 @@ export default class RpService {
     workerId: string = '',
     lastReportCompleted: string = '',
   ) {
+    const encodedSearchInput = encodeURIComponent(searchInput)
     return this.createClient().get<PrisonersList>(
-      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${searchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&watchList=${watchList}&includePastReleaseDates=${includePastReleaseDates}&workerId=${workerId}&lastReportCompleted=${lastReportCompleted}`,
+      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&sort=${sortField},${sortDirection}&term=${encodedSearchInput}&days=${releaseTime}&pathwayView=${pathwayView}&pathwayStatus=${pathwayStatus}&watchList=${watchList}&includePastReleaseDates=${includePastReleaseDates}&workerId=${workerId}&lastReportCompleted=${lastReportCompleted}`,
     )
   }
 
