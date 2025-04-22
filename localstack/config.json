@@ -25,5 +25,6 @@
   },
   "supportNeeds": {
     "releaseDate": "2025-03-18"
-  }
+  },
+  "activePrisons": ["NWI", "EYI", "SLI", "SWI", "EHI", "STH", "PBI", "PFI", "LEI", "WEI", "NHI", "AGI", "MDI"]
 }
