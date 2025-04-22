@@ -74,6 +74,7 @@ export type ConfigFile = {
   reports: Reports
   whatsNew?: WhatsNewConfig
   supportNeeds?: SupportNeedsConfig
+  activePrisons?: string[]
 }
 
 export type Reports = {
