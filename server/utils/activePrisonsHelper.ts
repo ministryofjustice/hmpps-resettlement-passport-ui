@@ -11,13 +11,13 @@ export function addActivePrisons(originalApplicationInfo: ApplicationInfo) {
     .getConfig()
     .then(c => {
       applicationInfo.additionalFields = {
-        activeAgencies: c.activePrisons ?? ['***'],
+        activeAgencies: c.activePrisons ?? [],
       }
     })
     .catch(error => {
       logger.warn('Error occurred while retrieving Config', error)
       applicationInfo.additionalFields = {
-        activeAgencies: ['***'],
+        activeAgencies: [],
       }
     })
 

@@ -19,7 +19,6 @@ describe('addActivePrisons', () => {
   })
 
   it('should add activePrisons from config', async () => {
-    // Mock getConfig to resolve to an object with activePrisons
     mockConfig.getConfig.mockResolvedValue({
       reports: undefined,
       supportNeeds: undefined,
@@ -66,7 +65,7 @@ describe('addActivePrisons', () => {
     await new Promise(process.nextTick)
 
     expect(result.additionalFields).toEqual({
-      activeAgencies: ['***'],
+      activeAgencies: [],
     })
   })
 })
