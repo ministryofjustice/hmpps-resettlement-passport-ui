@@ -4,11 +4,14 @@ import { monitoringMiddleware, endpointHealthComponent } from '@ministryofjustic
 import type { ApplicationInfo } from '../applicationInfo'
 import logger from '../../logger'
 import config from '../config'
+import { addActivePrisons } from '../utils/activePrisonsHelper'
 
-export default function setUpHealthChecks(applicationInfo: ApplicationInfo): Router {
+export default function setUpHealthChecks(originalApplicationInfo: ApplicationInfo): Router {
   const router = express.Router()
 
   const apiConfig = Object.entries(config.apis)
+
+  const applicationInfo = addActivePrisons(originalApplicationInfo)
 
   const middleware = monitoringMiddleware({
     applicationInfo,
@@ -18,6 +21,5 @@ export default function setUpHealthChecks(applicationInfo: ApplicationInfo): Rou
   router.get('/health', middleware.health)
   router.get('/info', middleware.info)
   router.get('/ping', middleware.ping)
-
   return router
 }

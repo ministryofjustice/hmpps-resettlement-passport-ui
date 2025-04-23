@@ -9,6 +9,7 @@ export type ApplicationInfo = {
   gitShortHash: string
   productId: string
   branchName: string
+  additionalFields?: Record<string, unknown>
 }
 
 export default (): ApplicationInfo => {

@@ -29,10 +29,10 @@ export const defaultTestConfig: ConfigFile = {
   supportNeeds: {
     releaseDate: '2025-03-18',
   },
+  activePrisons: ['NWI', 'EYI', 'SLI', 'SWI', 'EHI', 'STH', 'PBI', 'PFI', 'LEI', 'WEI', 'NHI', 'AGI', 'MDI'],
 }
 
 export function configHelper(config: jest.Mocked<Config>, getConfigReturnValue: ConfigFile = defaultTestConfig) {
-  const mockStaticConfig = jest.fn().mockReturnValue(config)
-  Config.getInstance = mockStaticConfig
+  Config.getInstance = jest.fn().mockReturnValue(config)
   jest.spyOn(config, 'getConfig').mockResolvedValue(getConfigReturnValue)
 }

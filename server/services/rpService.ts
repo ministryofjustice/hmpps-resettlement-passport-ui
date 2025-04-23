@@ -65,19 +65,6 @@ export default class RpService {
     )
   }
 
-  async getListOfPrisonerCases(
-    prisonSelected: string,
-    includePastReleaseDates: boolean,
-    page: number,
-    pageSize: number,
-    sortField: string,
-    sortDirection: string,
-  ) {
-    return this.createClient().get<PrisonersList>(
-      `/resettlement-passport/prison/${prisonSelected}/prisoners?page=${page}&size=${pageSize}&includePastReleaseDates=${includePastReleaseDates}&sort=${sortField},${sortDirection}`,
-    )
-  }
-
   async getAvailableResettlementWorkers(prisonId: string): Promise<ResettlementWorker[]> {
     return this.createClient().get<ResettlementWorker[]>(`/resettlement-passport/workers?prisonId=${prisonId}`)
   }
