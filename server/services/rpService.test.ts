@@ -9,6 +9,9 @@ import { CaseNote } from '../data/model/caseNotesHistory'
 import { ERROR_DICTIONARY } from '../utils/constants'
 import { PrisonerSupportNeedsPatch, PrisonerSupportNeedsPost } from '../data/model/supportNeeds'
 import { ResetReason } from '../data/model/resetProfile'
+import { Appointments } from '../data/model/appointment'
+import { AssessmentStatus } from '../data/model/assessmentStatus'
+import { CachedAssessment } from '../data/model/immediateNeedsReport'
 
 jest.mock('../../logger')
 jest.mock('../data')
@@ -19,6 +22,22 @@ describe('RpService', () => {
   const loggerSpy = jest.spyOn(logger, 'warn')
   const featureFlags = new FeatureFlags() as jest.Mocked<FeatureFlags>
   let service: RpService
+  const cachedAssessment: CachedAssessment = {
+    questionsAndAnswers: [
+      {
+        question: 'QUESTION_1',
+        questionTitle: 'Question 1',
+        pageId: 'PAGE_1',
+        questionType: 'LONG_TEXT',
+        answer: {
+          answer: 'This is the answer to question 1',
+          displayText: 'This is the answer to question 1',
+          '@class': 'StringAnswer',
+        },
+      },
+    ],
+    version: 1,
+  }
 
   beforeEach(() => {
     rpClient = jest.mocked(new RPClient('token', 'sessionId', 'userId'))
@@ -411,5 +430,105 @@ describe('RpService', () => {
     expect(getSpy).toHaveBeenCalledWith(
       `/resettlement-passport/prison/MDI/prisoners?page=1&size=10&sort=releaseDate,ASC&term=John%20Smith&days=&pathwayView=&pathwayStatus=&watchList=&includePastReleaseDates=true&workerId=&lastReportCompleted=`,
     )
+  })
+
+  it('should return appointments on success', async () => {
+    const mockAppointments: Appointments = {
+      results: [{ title: 'Mr.', contact: 'Smith' }],
+    }
+    const getSpy = jest.spyOn(rpClient, 'get')
+    rpClient.get.mockResolvedValue(mockAppointments)
+
+    const result = await service.getAppointments('A1234BC')
+
+    expect(getSpy).toHaveBeenCalledWith('/resettlement-passport/prisoner/A1234BC/appointments?futureOnly=true')
+    expect(result).toEqual(mockAppointments)
+  })
+
+  it('should return DATA_NOT_FOUND error for 404', async () => {
+    const error = { status: 404 }
+    rpClient.get.mockRejectedValue(error)
+
+    const result = await service.getAppointments('A1234BC')
+
+    expect(result).toEqual({
+      error: ERROR_DICTIONARY.DATA_NOT_FOUND,
+      results: [],
+    })
+  })
+
+  it('should return DATA_UNAVAILABLE error for non-404', async () => {
+    const error = { status: 500, message: 'Server error' }
+    rpClient.get.mockRejectedValue(error)
+
+    const result = await service.getAppointments('A1234BC')
+
+    expect(result).toEqual({
+      error: ERROR_DICTIONARY.DATA_UNAVAILABLE,
+      results: [],
+    })
+  })
+
+  it('should return assessments summary when successful', async () => {
+    const mockResponse: AssessmentStatus[] = [
+      {
+        pathway: 'Education',
+        assessmentStatus: 'COMPLETE',
+      },
+      {
+        pathway: 'Accommodation',
+        assessmentStatus: 'IN_PROGRESS',
+      },
+    ]
+    const getSpy = jest.spyOn(rpClient, 'get')
+    rpClient.get.mockResolvedValue(mockResponse)
+
+    const result = await service.getAssessmentSummary('A1234BC', 'RESETTLEMENT_PLAN')
+
+    expect(getSpy).toHaveBeenCalledWith(
+      '/resettlement-passport/prisoner/A1234BC/resettlement-assessment/summary?assessmentType=RESETTLEMENT_PLAN',
+    )
+    expect(result).toEqual({ results: mockResponse })
+  })
+
+  it('should return error summary and log when API fails', async () => {
+    const error = { status: 500, message: 'Internal Server Error' }
+    rpClient.get.mockRejectedValue(error)
+
+    const result = await service.getAssessmentSummary('A1234BC', 'RESETTLEMENT_PLAN')
+
+    expect(result).toEqual({
+      error: ERROR_DICTIONARY.DATA_UNAVAILABLE,
+    })
+  })
+
+  it('should return valid: true when validation succeeds', async () => {
+    rpClient.post.mockResolvedValue(undefined) // no error = success
+
+    const result = await service.validateAssessment('A1234BC', 'Accomodation', cachedAssessment, 'RESETTLEMENT_PLAN')
+
+    expect(rpClient.post).toHaveBeenCalledWith(
+      `/resettlement-passport/prisoner/A1234BC/resettlement-assessment/Accomodation/validate?assessmentType=RESETTLEMENT_PLAN`,
+      cachedAssessment,
+    )
+    expect(result).toEqual({ valid: true })
+  })
+
+  it('should return valid: false when API returns 400', async () => {
+    const error = { status: 400 }
+    rpClient.post.mockRejectedValue(error)
+
+    const result = await service.validateAssessment('A1234BC', 'Accomodation', cachedAssessment, 'RESETTLEMENT_PLAN')
+
+    expect(result).toEqual({ valid: false })
+  })
+
+  it('should return error when API fails with non-400', async () => {
+    const error = { status: 500 }
+    rpClient.post.mockRejectedValue(error)
+
+    const result = await service.validateAssessment('A1234BC', 'Accomodation', cachedAssessment, 'RESETTLEMENT_PLAN')
+
+    expect(result).toEqual({ error: ERROR_DICTIONARY.DATA_UNAVAILABLE })
   })
 })
