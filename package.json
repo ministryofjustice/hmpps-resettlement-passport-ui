@@ -24,7 +24,7 @@
     "prettier:fix": "npm run prettier -- --write",
     "format": "npm run prettier:fix && npm run lint:fix",
     "typecheck": "tsc && tsc -p integration_tests",
-    "test": "FEATURE_FLAG_ENABLED=false jest",
+    "test": "FEATURE_FLAG_ENABLED=false jest --coverage",
     "test:ci": "FEATURE_FLAG_ENABLED=false jest --runInBand --coverage",
     "security_audit": "npx audit-ci --config audit-ci.json",
     "int-test": "cypress run --config video=false",
@@ -76,7 +76,15 @@
       "json",
       "node",
       "ts"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 65,
+        "functions": 75.5,
+        "lines": 78.6,
+        "statements": 78.5
+      }
+    }
   },
   "nodemonConfig": {
     "ignore": [

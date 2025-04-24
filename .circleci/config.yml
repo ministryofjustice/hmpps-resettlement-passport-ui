@@ -93,23 +93,6 @@ jobs:
             - .cache/Cypress
             - .cache/playwright
 
-  compare_coverage:
-    executor:
-      name: hmpps/node
-      tag: << pipeline.parameters.node-version >>
-    environment:
-      TZ: Europe/London
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - run:
-          name: compare coverage
-          command: |
-              if [ <<pipeline.parameters.skip-code-coverage>> = false ] ; then
-                python3 coverage_checker/coverage_checker.py
-              fi
-
   unit_test:
     executor:
       name: hmpps/node
@@ -124,42 +107,15 @@ jobs:
           at: /tmp/workspace
       - run:
           name: unit tests
-          command: npm run test:ci 
+          command: npm run test:ci
       - store_test_results:
           path: test_results
       - store_artifacts:
           path: test_results/unit-test-reports.html
       - persist_to_workspace:
           root: coverage
-          paths: 
+          paths:
             - clover.xml
-
-  get_main_coverage:
-    executor:
-      name: hmpps/node
-      tag: << pipeline.parameters.node-version >>
-    environment:
-      TZ: Europe/London
-    steps:
-      - run:
-          name: Update npm
-          command: 'sudo npm install -g npm@9.8.1'
-      - run: mkdir ~/.ssh/
-      - run: touch ~/.ssh/known_hosts
-      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
-      - run: git clone -b main "$CIRCLE_REPOSITORY_URL"  
-      - run: cd hmpps-resettlement-passport-ui/ && git log --format=oneline -n 1 $CIRCLE_SHA1 
-      - run:
-          name: Install Dependencies
-          command: cd hmpps-resettlement-passport-ui/ && npm ci --no-audit
-      - run:
-          name: unit tests
-          command: cd hmpps-resettlement-passport-ui/ && npm run test:ci 
-      - run: mv hmpps-resettlement-passport-ui/coverage/clover.xml hmpps-resettlement-passport-ui/coverage/main_clover.xml
-      - persist_to_workspace:
-          root: hmpps-resettlement-passport-ui
-          paths: 
-            - coverage/main_clover.xml
 
   integration_test:
     executor: integration-tests-executor
@@ -214,7 +170,7 @@ jobs:
           command: npx playwright install --with-deps
       - run:
           name: Run cucumber tests
-          command: | 
+          command: |
             export BASEURL=${DEV_BASEURL}
             export USERNAME=${E2E_DEV_USERNAME}
             export PASSWORD=${E2E_DEV_PASSWORD}
@@ -270,20 +226,6 @@ workflows:
       - integration_test:
           requires:
             - build
-      - compare_coverage:
-          filters:
-            branches:
-              ignore:
-                - main
-          requires:
-            - unit_test 
-            - get_main_coverage 
-      - get_main_coverage:
-          name: get_main_coverage
-          filters:
-            branches:
-              ignore:
-                - main
       - hmpps/helm_lint:
           name: helm_lint
       - hmpps/build_docker:
