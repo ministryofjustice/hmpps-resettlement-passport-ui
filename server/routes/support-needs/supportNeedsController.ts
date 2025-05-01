@@ -16,6 +16,7 @@ import { updateSupportNeedsWithRequestBody } from '../../utils/updateSupportNeed
 import SupportNeedForm from './supportNeedsForm'
 import { CustomValidationError } from '../../@types/express'
 import { CUSTOM_OTHER_PREFIX, SUPPORT_NEED_OPTION_PREFIX } from './supportNeedsContants'
+import { handleSupportNeedsNotFoundRedirect } from './supportNeedsControllerErrorHandler'
 
 export default class SupportNeedsController {
   constructor(
@@ -113,7 +114,7 @@ export default class SupportNeedsController {
         errors,
       })
     } catch (err) {
-      next(err)
+      handleSupportNeedsNotFoundRedirect(err, req, res, next)
     }
   }
 
@@ -153,7 +154,7 @@ export default class SupportNeedsController {
 
       return res.redirect(`/support-needs/${pathway}/status/${firstUpdatablePageId}/?prisonerNumber=${prisonerNumber}`)
     } catch (err) {
-      return next(err)
+      return handleSupportNeedsNotFoundRedirect(err, req, res, next)
     }
   }
 
@@ -210,7 +211,7 @@ export default class SupportNeedsController {
         ...form.renderArgs,
       })
     } catch (err) {
-      return next(err)
+      return handleSupportNeedsNotFoundRedirect(err, req, res, next)
     }
   }
 
@@ -275,7 +276,7 @@ export default class SupportNeedsController {
         `/support-needs/${pathway}/status/${nextUpdatableSupportNeedPageId}/?prisonerNumber=${prisonerNumber}`,
       )
     } catch (err) {
-      return next(err)
+      return handleSupportNeedsNotFoundRedirect(err, req, res, next)
     }
   }
 
@@ -326,7 +327,7 @@ export default class SupportNeedsController {
         backLink,
       })
     } catch (err) {
-      return next(err)
+      return handleSupportNeedsNotFoundRedirect(err, req, res, next)
     }
   }
 
@@ -374,7 +375,7 @@ export default class SupportNeedsController {
 
       res.redirect(`/${pathway}/?prisonerNumber=${prisonerNumber}#support-needs`)
     } catch (err) {
-      next(err)
+      handleSupportNeedsNotFoundRedirect(err, req, res, next)
     }
   }
 
@@ -434,7 +435,7 @@ export default class SupportNeedsController {
       }
       return res.redirect(`/support-needs/${pathway}/check-answers?prisonerNumber=${prisonerNumber}`)
     } catch (err) {
-      return next(err)
+      return handleSupportNeedsNotFoundRedirect(err, req, res, next)
     }
   }
 
@@ -553,7 +554,7 @@ export default class SupportNeedsController {
       req.validationErrors = validationErrors
       return next()
     } catch (err) {
-      return next(err)
+      return handleSupportNeedsNotFoundRedirect(err, req, _res, next)
     }
   }
 }
