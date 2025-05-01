@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-import { handleSupportNeedsNotFoundRedirect } from './supportNeedsErrorHandler' // adjust path
-import { SupportNeedsNotFoundInCacheError } from '../data/supportNeedStateService'
-import { PersonalDetails, PrisonerData } from '../@types/express' // adjust path
+import { handleSupportNeedsNotFoundRedirect } from './supportNeedsControllerErrorHandler' // adjust path
+import { SupportNeedsNotFoundInCacheError } from '../../data/supportNeedStateService'
+import { PersonalDetails, PrisonerData } from '../../@types/express' // adjust path
 
 describe('handleSupportNeedsNotFoundRedirect', () => {
   const prisonerNumber = 'A1234BC'

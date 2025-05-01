@@ -16,7 +16,7 @@ import { updateSupportNeedsWithRequestBody } from '../../utils/updateSupportNeed
 import SupportNeedForm from './supportNeedsForm'
 import { CustomValidationError } from '../../@types/express'
 import { CUSTOM_OTHER_PREFIX, SUPPORT_NEED_OPTION_PREFIX } from './supportNeedsContants'
-import { handleSupportNeedsNotFoundRedirect } from '../../utils/supportNeedsErrorHandler'
+import { handleSupportNeedsNotFoundRedirect } from './supportNeedsControllerErrorHandler'
 
 export default class SupportNeedsController {
   constructor(
