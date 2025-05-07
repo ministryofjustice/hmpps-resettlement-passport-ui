@@ -32,6 +32,13 @@ import {
   stubJohnSmithSkipInsidePreReleaseWindow,
   stubJohnSmithSkipOutsidePreReleaseWindow,
 } from './scenarios/john-smith/john-smith-assessment-skip'
+import { johnSmithGetAccommodation } from './scenarios/john-smith/john-smith-get-accommodation'
+import {
+  johnSmithGetAccommodationSupportNeedsNoSupportNeeds,
+  johnSmithGetAccommodationSupportNeedsWithSupportNeeds,
+} from './scenarios/john-smith/john-smith-get-support-needs'
+import { johnSmithPostAccommodationSupportNeeds } from './scenarios/john-smith/john-smith-post-support-needs'
+import { johnSmithPatchAccommodationSupportNeeds } from './scenarios/john-smith/john-smith-patch-support-needs'
 import { PathwayAssessmentStatus } from '../../server/data/model/assessmentStatus'
 import { responseHeaders } from './headers'
 import { AssessmentType } from '../../server/data/model/assessmentInformation'
@@ -498,6 +505,24 @@ const stubJohnSmithUpdateID = () =>
     ...johnSmithGetFinanceAndID(),
     ...johnSmithPatchID(),
   ])
+const stubJohnSmithGetAccommodation = () => {
+  return Promise.all([...johnSmithDefaults(), ...johnSmithGetPrisonerDetails(), ...johnSmithGetAccommodation()])
+}
+
+const stubJohnSmithGetAccommodationNoSupportNeeds = () => {
+  return Promise.all([
+    ...johnSmithGetAccommodationSupportNeedsNoSupportNeeds(),
+    ...johnSmithPostAccommodationSupportNeeds(),
+  ])
+}
+
+const stubJohnSmithGetAccommodationWithSupportNeeds = () => {
+  return Promise.all([
+    ...johnSmithGetAccommodationSupportNeedsWithSupportNeeds(),
+    ...johnSmithPatchAccommodationSupportNeeds(),
+  ])
+}
+
 const stubDefaultSearchResults = () => Promise.all([...johnSmithDefaults(), defaultPrisonersSearch()])
 const stubDefaultSearchResultsNoPastReleaseDates = () =>
   Promise.all([...johnSmithDefaults(), defaultPrisonersSearchNoPastReleaseDates()])
@@ -948,4 +973,7 @@ export default {
   johnSmithAppointments,
   stubJohnSmithWithSomeErrors,
   stubRpClientPing,
+  stubJohnSmithGetAccommodation,
+  stubJohnSmithGetAccommodationNoSupportNeeds,
+  stubJohnSmithGetAccommodationWithSupportNeeds,
 }
