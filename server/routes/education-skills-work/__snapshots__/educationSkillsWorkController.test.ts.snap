@@ -474,6 +474,8 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                 <option value="createdDate,ASC" >Created (oldest)</option>
               </select>
               <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+              <input type="hidden" name="createdByUserId" value="0" />
+              <input type="hidden" name="page" value="0" />
               <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Sort</button>
             </div>
           </div>
@@ -645,7 +647,7 @@ This is another new line</p>
                   <div class="govuk-pagination__prev">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0#support-needs-updates"
+                      href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0&page=0&createdByUserId=0#support-needs-updates"
                       rel="prev"
                     >
                       <svg
@@ -662,7 +664,7 @@ This is another new line</p>
                         ></path>
                       </svg>
                       <span class="govuk-pagination__link-title">
-                        Previous<span class="govuk-visually-hidden"> page</span>
+                        Previous<span class="govuk-visually-hidden"> supportNeedUpdatePage</span>
                       </span>
                     </a>
                   </div>
@@ -682,7 +684,7 @@ This is another new line</p>
                     <li class="govuk-pagination__item ">
                       <a
                         class="govuk-link govuk-pagination__link"
-                        href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0#support-needs-updates"
+                        href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0&page=0&createdByUserId=0#support-needs-updates"
                         aria-label="Page 1"
                       >
                         1
@@ -695,7 +697,7 @@ This is another new line</p>
                     <li class="govuk-pagination__item govuk-pagination__item--current">
                       <a
                         class="govuk-link govuk-pagination__link"
-                        href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=1#support-needs-updates"
+                        href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,DESC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=1&page=0&createdByUserId=0#support-needs-updates"
                         aria-label="Page 2"
                       >
                         2
@@ -747,6 +749,8 @@ This is another new line</p>
           </select>
           
           <input type="hidden" name="prisonerNumber" value="A1234DY">
+          <input type="hidden" name="supportNeedUpdateSort" value="createdDate,DESC">
+          <input type="hidden" name="supportNeedsUpdatesPage" value="0">
         </div>
         <div class="govuk-grid-column-full">
           <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
@@ -1551,6 +1555,8 @@ exports[`getView Happy path with default query params and no data from endpoints
           </select>
           
           <input type="hidden" name="prisonerNumber" value="A1234DY">
+          <input type="hidden" name="supportNeedUpdateSort" value="createdDate,DESC">
+          <input type="hidden" name="supportNeedsUpdatesPage" value="0">
         </div>
         <div class="govuk-grid-column-full">
           <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
@@ -2096,6 +2102,8 @@ exports[`getView Happy path with specified query params and data from endpoints 
                 <option value="createdDate,ASC" selected>Created (oldest)</option>
               </select>
               <input type="hidden" name="prisonerNumber" value="A1234DY"/>
+              <input type="hidden" name="createdByUserId" value="2" />
+              <input type="hidden" name="page" value="1" />
               <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Sort</button>
             </div>
           </div>
@@ -2267,7 +2275,7 @@ This is another new line</p>
                   <div class="govuk-pagination__prev">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0#support-needs-updates"
+                      href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0&page=1&createdByUserId=2#support-needs-updates"
                       rel="prev"
                     >
                       <svg
@@ -2284,7 +2292,7 @@ This is another new line</p>
                         ></path>
                       </svg>
                       <span class="govuk-pagination__link-title">
-                        Previous<span class="govuk-visually-hidden"> page</span>
+                        Previous<span class="govuk-visually-hidden"> supportNeedUpdatePage</span>
                       </span>
                     </a>
                   </div>
@@ -2304,7 +2312,7 @@ This is another new line</p>
                     <li class="govuk-pagination__item ">
                       <a
                         class="govuk-link govuk-pagination__link"
-                        href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0#support-needs-updates"
+                        href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=0&page=1&createdByUserId=2#support-needs-updates"
                         aria-label="Page 1"
                       >
                         1
@@ -2317,7 +2325,7 @@ This is another new line</p>
                     <li class="govuk-pagination__item govuk-pagination__item--current">
                       <a
                         class="govuk-link govuk-pagination__link"
-                        href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=1#support-needs-updates"
+                        href="/education-skills-and-work/?supportNeedUpdateSort=createdDate,ASC&prisonerNumber=A1234DY&supportNeedsUpdatesPage=1&page=1&createdByUserId=2#support-needs-updates"
                         aria-label="Page 2"
                       >
                         2
@@ -2369,6 +2377,8 @@ This is another new line</p>
           </select>
           
           <input type="hidden" name="prisonerNumber" value="A1234DY">
+          <input type="hidden" name="supportNeedUpdateSort" value="createdDate,ASC">
+          <input type="hidden" name="supportNeedsUpdatesPage" value="1">
         </div>
         <div class="govuk-grid-column-full">
           <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
@@ -2434,12 +2444,12 @@ This is another new line</p>
     <ul class="moj-pagination__list">
       
         <li class="moj-pagination__item  moj-pagination__item--prev">
-          <a class="moj-pagination__link" href="/education-skills-and-work?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=10&sort=occurenceDateTime%2CDESC&days=0&selectedPathway=EDUCATION_SKILLS_AND_WORK#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
+          <a class="moj-pagination__link" href="/education-skills-and-work?createdByUserId=2&amp;prisonerNumber=A1234DY&amp;supportNeedUpdateSort=createdDate,ASC&amp;supportNeedsUpdatesPage=1&page=0&size=10&sort=occurenceDateTime%2CDESC&days=0&selectedPathway=EDUCATION_SKILLS_AND_WORK#case-notes">Previous<span class="govuk-visually-hidden"> page</span></a>
         </li>
       
       
           <li class="moj-pagination__item">
-            <a class="moj-pagination__link" href="/education-skills-and-work?createdByUserId=2&amp;prisonerNumber=A1234DY&page=0&size=10&sort=occurenceDateTime%2CDESC&days=0&selectedPathway=EDUCATION_SKILLS_AND_WORK#case-notes " aria-label="Page 1 of 1">1</a>
+            <a class="moj-pagination__link" href="/education-skills-and-work?createdByUserId=2&amp;prisonerNumber=A1234DY&amp;supportNeedUpdateSort=createdDate,ASC&amp;supportNeedsUpdatesPage=1&page=0&size=10&sort=occurenceDateTime%2CDESC&days=0&selectedPathway=EDUCATION_SKILLS_AND_WORK#case-notes " aria-label="Page 1 of 1">1</a>
           </li>
         
       
