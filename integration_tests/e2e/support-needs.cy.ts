@@ -58,9 +58,9 @@ context('Support Needs', () => {
     cy.get('.govuk-button[type="submit"]').click()
 
     // Fill in 'End a tenancy' support need
-    cy.get('[id="status"]').check()
-    cy.get('[id="responsibleStaff"]').check()
-    cy.get('.govuk-textarea[id="updateText"]').type('Some additional details')
+    cy.get('#status').check()
+    cy.get('#responsibleStaff').check()
+    cy.get('#updateText').type('Some additional details')
     cy.get('.govuk-button[type="submit"]').first().click()
 
     // Remove support need 'Set up payment for rent arrears'
@@ -69,8 +69,8 @@ context('Support Needs', () => {
 
     // Fill in 'Custom accommodation support need'
     cy.get('.govuk-grid-column-three-quarters > h1').should('contain.text', 'Custom accommodation support need')
-    cy.get('[id="status-2"]').check()
-    cy.get('[id="responsibleStaff-2"]').check()
+    cy.get('#status-2').check()
+    cy.get('#responsibleStaff-2').check()
     cy.get('.govuk-button[type="submit"]').first().click()
 
     // Submit 'Check your answers' page
@@ -101,9 +101,9 @@ context('Support Needs', () => {
 
     // Update 'End a tenancy' fields
     cy.get('.govuk-heading-l').should('contain.text', 'End a tenancy')
-    cy.get('[id="updateStatus-2"]').check()
-    cy.get('[id="responsibleStaff-2"]').check()
-    cy.get('.govuk-textarea[id="additionalDetails"]').type('Update')
+    cy.get('#updateStatus-2').check()
+    cy.get('#responsibleStaff-2').check()
+    cy.get('#additionalDetails').type('Update')
     cy.get('.govuk-button[type="submit"]').first().click()
 
     // back to the accommodation overview page
@@ -120,7 +120,7 @@ context('Support Needs', () => {
 
     cy.get('.app-summary-card__title').should('contain.text', 'Support needs')
 
-    cy.get('[id="support-needs-updates"]').within(() => {
+    cy.get('#support-needs-updates').within(() => {
       cy.get('.app-summary-card__title').should('contain.text', 'Accommodation updates')
 
       // Verify pagination
@@ -151,7 +151,7 @@ context('Support Needs', () => {
       verifyPageTwo()
 
       // Verify sorting
-      cy.get('[id="supportNeedUpdateSort"]').select('createdDate,ASC')
+      cy.get('#supportNeedUpdateSort').select('createdDate,ASC')
       cy.get('[type="submit"]').click()
 
       verifySortedPage()
@@ -160,22 +160,22 @@ context('Support Needs', () => {
 })
 
 function verifyPageOne() {
-  cy.get('[id="updates-container"] div:first > h3').should('contain.text', 'End a tenancy')
-  cy.get('[id="updates-container"] div:first').within(() => {
+  cy.get('#updates-container div:first > h3').should('contain.text', 'End a tenancy')
+  cy.get('#updates-container div:first').within(() => {
     cy.get('.govuk-caption-m').should('contain.text', 'Updated: 6 May 2025 by Mary Ford')
   })
 }
 
 function verifyPageTwo() {
-  cy.get('[id="updates-container"] div:first > h3').should('contain.text', 'End a tenancy')
-  cy.get('[id="updates-container"] div:first').within(() => {
+  cy.get('#updates-container div:first > h3').should('contain.text', 'End a tenancy')
+  cy.get('#updates-container div:first').within(() => {
     cy.get('.govuk-caption-m').should('contain.text', 'Updated: 30 April 2025 by Zahid Khan')
   })
 }
 
 function verifySortedPage() {
-  cy.get('[id="updates-container"] div:first > h3').should('contain.text', 'Accommodation (case note)')
-  cy.get('[id="updates-container"] div:first').within(() => {
+  cy.get('#updates-container div:first > h3').should('contain.text', 'Accommodation (case note)')
+  cy.get('#updates-container div:first').within(() => {
     cy.get('.govuk-caption-m').should('contain.text', 'Updated: 16 November 2023 by Akiva Moshecorn')
   })
 }
