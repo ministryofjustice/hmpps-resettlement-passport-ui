@@ -109,6 +109,7 @@ export default class AttitudesThinkingBehaviourController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        supportNeedsUpdatesPage,
         pagination,
       )
       return res.render('pages/attitudes-thinking-behaviour', { ...view.renderArgs })

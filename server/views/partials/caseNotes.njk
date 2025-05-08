@@ -22,6 +22,8 @@
           </select>
           {# <input type="hidden" name="selectedPathway" value="{{ selectedPathway }}"> #}
           <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+          <input type="hidden" name="supportNeedUpdateSort" value="{{ supportNeedUpdateSort }}">
+          <input type="hidden" name="supportNeedsUpdatesPage" value="{{ supportNeedsUpdatesPage }}">
         </div>
         <div class="govuk-grid-column-full">
           <button class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4" type="submit">Apply filters</button>
@@ -42,7 +44,7 @@
           {% set totalPages = (totalElements / pageSize) | roundNumberUp %}
           {% set nextPage = page | float + 1 | float%}
           {% set prevPage = page | float - 1 | float%}
-          {% set currentUrl = "/" + (pathway | getUrlFromName) + "?createdByUserId=" + createdByUserId + "&prisonerNumber=" + prisonerData.personalDetails.prisonerNumber %}
+          {% set currentUrl = "/" + (pathway | getUrlFromName) + "?createdByUserId=" + createdByUserId + "&prisonerNumber=" + prisonerData.personalDetails.prisonerNumber + "&supportNeedUpdateSort=" + supportNeedUpdateSort + "&supportNeedsUpdatesPage=" + supportNeedsUpdatesPage %}
           {% if caseNotesData.results.totalElements != 0 %}
             {{ pagination(page, pageSize, totalPages, caseNotesData.results.last, currentUrl, caseNotesData.results.totalElements, sort, days, (pathway | getEnumByName)) }}
           {% endif %}
