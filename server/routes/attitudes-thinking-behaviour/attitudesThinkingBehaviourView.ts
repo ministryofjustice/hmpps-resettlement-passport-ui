@@ -22,6 +22,7 @@ export default class AttitudesThinkingBehaviourView implements View {
     private readonly pathwaySupportNeedsSummary: PathwaySupportNeedsSummary,
     private readonly supportNeedsUpdates: PathwaySupportNeedsUpdates,
     private readonly supportNeedUpdateSort: string,
+    private readonly supportNeedsUpdatesPage: string,
     private readonly pagination: Pagination,
     private readonly errors: ErrorMessage[] = [],
   ) {
@@ -42,6 +43,7 @@ export default class AttitudesThinkingBehaviourView implements View {
     pathwaySupportNeedsSummary: PathwaySupportNeedsSummary
     supportNeedsUpdates: PathwaySupportNeedsUpdates
     supportNeedUpdateSort: string
+    supportNeedsUpdatesPage: string
     pagination: Pagination
     errors: ErrorMessage[]
   } {
@@ -59,6 +61,7 @@ export default class AttitudesThinkingBehaviourView implements View {
       pathwaySupportNeedsSummary: this.pathwaySupportNeedsSummary,
       supportNeedsUpdates: this.supportNeedsUpdates,
       supportNeedUpdateSort: this.supportNeedUpdateSort,
+      supportNeedsUpdatesPage: this.supportNeedsUpdatesPage,
       pagination: this.pagination,
       errors: this.errors.length !== 0 ? this.errors : null,
     }

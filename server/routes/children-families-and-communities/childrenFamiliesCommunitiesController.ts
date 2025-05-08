@@ -108,6 +108,7 @@ export default class ChildrenFamiliesCommunitiesController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        supportNeedsUpdatesPage,
         pagination,
       )
       return res.render('pages/children-families-communities', { ...view.renderArgs })

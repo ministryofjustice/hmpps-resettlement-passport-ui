@@ -132,6 +132,7 @@ export default class FinanceIdController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        supportNeedsUpdatesPage,
         pagination,
       )
       return res.render('pages/finance-id', { ...view.renderArgs })
