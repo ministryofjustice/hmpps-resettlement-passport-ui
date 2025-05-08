@@ -109,6 +109,7 @@ export default class DrugsAlcoholController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        supportNeedsUpdatesPage,
         pagination,
       )
       return res.render('pages/drugs-alcohol', { ...view.renderArgs })

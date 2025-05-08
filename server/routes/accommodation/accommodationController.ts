@@ -120,6 +120,7 @@ export default class AccommodationController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        supportNeedsUpdatesPage,
         pagination,
       )
       return res.render('pages/accommodation', { ...view.renderArgs })

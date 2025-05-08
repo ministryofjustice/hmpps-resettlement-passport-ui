@@ -108,6 +108,7 @@ export default class HealthStatusController {
         pathwaySupportNeedsSummary,
         supportNeedUpdates,
         supportNeedUpdateSort as string,
+        supportNeedsUpdatesPage,
         pagination,
       )
       return res.render('pages/health', { ...view.renderArgs })

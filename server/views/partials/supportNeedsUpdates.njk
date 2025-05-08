@@ -17,6 +17,8 @@
                 <option value="createdDate,ASC" {% if supportNeedUpdateSort == "createdDate,ASC" %}selected{% endif %}>Created (oldest)</option>
               </select>
               <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}"/>
+              <input type="hidden" name="createdByUserId" value="{{ createdByUserId }}" />
+              <input type="hidden" name="page" value="{{ page }}" />
               <button type="submit" class="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-left-2" data-module="govuk-button">Sort</button>
             </div>
           </div>
@@ -60,12 +62,12 @@
         <div class="govuk-grid-column-two-thirds">
           {% if pagination.pages %}
             <nav class="govuk-pagination" aria-label="Pagination">
-              {% for page in pagination.pages %}
-                {% if page.pageType === "previous" %}
+              {% for supportNeedUpdatePage in pagination.pages %}
+                {% if supportNeedUpdatePage.pageType === "previous" %}
                   <div class="govuk-pagination__prev">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/{{ pathway | getUrlFromName }}/?supportNeedUpdateSort={{ supportNeedUpdateSort }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&supportNeedsUpdatesPage={{ page.pageNumber }}#support-needs-updates"
+                      href="/{{ pathway | getUrlFromName }}/?supportNeedUpdateSort={{ supportNeedUpdateSort }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&supportNeedsUpdatesPage={{ supportNeedUpdatePage.pageNumber }}&page={{ page }}&createdByUserId={{ createdByUserId }}#support-needs-updates"
                       rel="prev"
                     >
                       <svg
@@ -82,40 +84,40 @@
                         ></path>
                       </svg>
                       <span class="govuk-pagination__link-title">
-                        Previous<span class="govuk-visually-hidden"> page</span>
+                        Previous<span class="govuk-visually-hidden"> supportNeedUpdatePage</span>
                       </span>
                     </a>
                   </div>
                 {% endif %}
               {% endfor %}
               <ul class="govuk-pagination__list">
-                {% for page in pagination.pages %}
-                  {% if page.pageType === "ellipses" %}
+                {% for supportNeedUpdatePage in pagination.pages %}
+                  {% if supportNeedUpdatePage.pageType === "ellipses" %}
                     <li class="govuk-pagination__item govuk-pagination__item--ellipses">&ctdot;</li>
                   {% endif %}
-                  {% if page.pageType === "number" %}
-                    <li class="govuk-pagination__item {{ "govuk-pagination__item--current" if page.isCurrent }}">
+                  {% if supportNeedUpdatePage.pageType === "number" %}
+                    <li class="govuk-pagination__item {{ "govuk-pagination__item--current" if supportNeedUpdatePage.isCurrent }}">
                       <a
                         class="govuk-link govuk-pagination__link"
-                        href="/{{ pathway | getUrlFromName }}/?supportNeedUpdateSort={{ supportNeedUpdateSort }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&supportNeedsUpdatesPage={{ page.pageNumber }}#support-needs-updates"
-                        aria-label="Page {{ page.pageNumber + 1 }}"
+                        href="/{{ pathway | getUrlFromName }}/?supportNeedUpdateSort={{ supportNeedUpdateSort }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&supportNeedsUpdatesPage={{ supportNeedUpdatePage.pageNumber }}&page={{ page }}&createdByUserId={{ createdByUserId }}#support-needs-updates"
+                        aria-label="Page {{ supportNeedUpdatePage.pageNumber + 1 }}"
                       >
-                        {{ page.pageNumber + 1 }}
+                        {{ supportNeedUpdatePage.pageNumber + 1 }}
                       </a>
                     </li>
                   {% endif %}
                 {% endfor %}
               </ul>
-              {% for page in pagination.pages %}
-                {% if page.pageType === "next" %}
+              {% for supportNeedUpdatePage in pagination.pages %}
+                {% if supportNeedUpdatePage.pageType === "next" %}
                   <div class="govuk-pagination__next">
                     <a
                       class="govuk-link govuk-pagination__link"
-                      href="/{{ pathway | getUrlFromName }}/?supportNeedUpdateSort={{ supportNeedUpdateSort }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&supportNeedsUpdatesPage={{ page.pageNumber }}#support-needs-updates"
+                      href="/{{ pathway | getUrlFromName }}/?supportNeedUpdateSort={{ supportNeedUpdateSort }}&prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&supportNeedsUpdatesPage={{ supportNeedUpdatePage.pageNumber }}&page={{ page }}&createdByUserId={{ createdByUserId }}#support-needs-updates"
                       rel="next"
                     >
                       <span class="govuk-pagination__link-title">
-                        Next<span class="govuk-visually-hidden"> page</span>
+                        Next<span class="govuk-visually-hidden"> supportNeedUpdatePage</span>
                       </span>
                       <svg
                         class="govuk-pagination__icon govuk-pagination__icon--next"

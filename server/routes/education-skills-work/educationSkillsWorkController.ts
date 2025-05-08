@@ -114,6 +114,7 @@ export default class EducationSkillsWorkController {
         pathwaySupportNeedsSummary,
         supportNeedsUpdates,
         supportNeedUpdateSort as string,
+        supportNeedsUpdatesPage,
         pagination,
       )
       return res.render('pages/education-skills-work', { ...view.renderArgs })
