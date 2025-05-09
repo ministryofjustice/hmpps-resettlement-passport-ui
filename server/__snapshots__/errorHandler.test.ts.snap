@@ -498,6 +498,7 @@ exports[`GET 404 should render something went wrong page 1`] = `
     <footer class="govuk-footer govuk-!-display-none-print">
   <div class="govuk-width-container">
     
+    
     <div class="govuk-footer__meta">
       <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
         
