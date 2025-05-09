@@ -13,19 +13,6 @@ export default class AccommodationController {
     // no op
   }
 
-  // Validation for query parameters
-  validateQuery = [
-    query('supportNeedUpdateFilter')
-      .optional()
-      .custom(value => value === '' || /^[0-9]+$/.test(value)) // Check if it's either an empty string or a string with a number
-      .withMessage('supportNeedUpdateFilter must be a number or empty'),
-
-    query('supportNeedUpdateSort')
-      .optional()
-      .isIn(['createdDate,DESC', 'createdDate,ASC'])
-      .withMessage('supportNeedUpdateSort must be createdDate,DESC or createdDate,ASC'),
-  ]
-
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       // Load prisoner data

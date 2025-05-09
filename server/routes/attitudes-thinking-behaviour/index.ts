@@ -9,9 +9,7 @@ export default (router: Router, services: Services) => {
     services.prisonerDetailsService,
   )
 
-  router.get(
-    '/attitudes-thinking-and-behaviour',
-    attitudesThinkingBehaviourController.validateQuery.concat(getValidationForPathwayQuery()),
-    [attitudesThinkingBehaviourController.getView],
-  )
+  router.get('/attitudes-thinking-and-behaviour', getValidationForPathwayQuery(), [
+    attitudesThinkingBehaviourController.getView,
+  ])
 }

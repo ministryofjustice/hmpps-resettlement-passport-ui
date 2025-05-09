@@ -6,7 +6,5 @@ import { getValidationForPathwayQuery } from '../../utils/utils'
 export default (router: Router, services: Services) => {
   const drugsAlcoholController = new DrugsAlcoholController(services.rpService, services.prisonerDetailsService)
 
-  router.get('/drugs-and-alcohol', drugsAlcoholController.validateQuery.concat(getValidationForPathwayQuery()), [
-    drugsAlcoholController.getView,
-  ])
+  router.get('/drugs-and-alcohol', getValidationForPathwayQuery(), [drugsAlcoholController.getView])
 }

@@ -8,9 +8,5 @@ export default (router: Router, services: Services) => {
     services.rpService,
     services.prisonerDetailsService,
   )
-  router.get(
-    '/education-skills-and-work',
-    educationSkillsWorkController.validateQuery.concat(getValidationForPathwayQuery()),
-    [educationSkillsWorkController.getView],
-  )
+  router.get('/education-skills-and-work', getValidationForPathwayQuery(), [educationSkillsWorkController.getView])
 }

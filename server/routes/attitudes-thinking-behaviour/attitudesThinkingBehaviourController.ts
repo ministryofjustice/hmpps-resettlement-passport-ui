@@ -13,14 +13,6 @@ export default class AttitudesThinkingBehaviourController {
     // no op
   }
 
-  // Validation for query parameters
-  validateQuery = [
-    query('supportNeedUpdateSort')
-      .optional()
-      .isIn(['createdDate,DESC', 'createdDate,ASC'])
-      .withMessage('supportNeedUpdateSort must be createdDate,DESC or createdDate,ASC'),
-  ]
-
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
