@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { query, validationResult } from 'express-validator'
+import { validationResult } from 'express-validator'
 import AccommodationView from './accommodationView'
 import RpService from '../../services/rpService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'

@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { query, validationResult } from 'express-validator'
+import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import DrugsAlcoholView from './drugsAlcoholView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
