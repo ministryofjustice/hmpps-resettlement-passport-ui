@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { query, validationResult } from 'express-validator'
+import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import DrugsAlcoholView from './drugsAlcoholView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
@@ -12,14 +12,6 @@ export default class DrugsAlcoholController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
-
-  // Validation for query parameters
-  validateQuery = [
-    query('supportNeedUpdateSort')
-      .optional()
-      .isIn(['createdDate,DESC', 'createdDate,ASC'])
-      .withMessage('supportNeedUpdateSort must be createdDate,DESC or createdDate,ASC'),
-  ]
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {

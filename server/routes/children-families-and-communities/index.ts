@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { Services } from '../../services'
 import ChildrenFamiliesCommunitiesController from './childrenFamiliesCommunitiesController'
-import { getValidationForPathwayQuery } from '../../utils/utils'
+import { getValidationForPathwayQuery } from '../validation'
 
 export default (router: Router, services: Services) => {
   const childrenFamiliesCommunitiesController = new ChildrenFamiliesCommunitiesController(
@@ -9,9 +9,7 @@ export default (router: Router, services: Services) => {
     services.prisonerDetailsService,
   )
 
-  router.get(
-    '/children-families-and-communities',
-    childrenFamiliesCommunitiesController.validateQuery.concat(getValidationForPathwayQuery()),
-    [childrenFamiliesCommunitiesController.getView],
-  )
+  router.get('/children-families-and-communities', getValidationForPathwayQuery(), [
+    childrenFamiliesCommunitiesController.getView,
+  ])
 }

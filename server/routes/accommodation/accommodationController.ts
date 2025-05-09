@@ -1,5 +1,5 @@
 import { RequestHandler } from 'express'
-import { query, validationResult } from 'express-validator'
+import { validationResult } from 'express-validator'
 import AccommodationView from './accommodationView'
 import RpService from '../../services/rpService'
 import { handleWhatsNewBanner } from '../whatsNewBanner'
@@ -12,19 +12,6 @@ export default class AccommodationController {
   constructor(private readonly rpService: RpService, private readonly prisonerDetailsService: PrisonerDetailsService) {
     // no op
   }
-
-  // Validation for query parameters
-  validateQuery = [
-    query('supportNeedUpdateFilter')
-      .optional()
-      .custom(value => value === '' || /^[0-9]+$/.test(value)) // Check if it's either an empty string or a string with a number
-      .withMessage('supportNeedUpdateFilter must be a number or empty'),
-
-    query('supportNeedUpdateSort')
-      .optional()
-      .isIn(['createdDate,DESC', 'createdDate,ASC'])
-      .withMessage('supportNeedUpdateSort must be createdDate,DESC or createdDate,ASC'),
-  ]
 
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
