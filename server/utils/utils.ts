@@ -1,6 +1,6 @@
 import { Callback } from 'nunjucks'
 import { addMinutes, format } from 'date-fns'
-import { FieldValidationError, query, ValidationChain } from 'express-validator'
+import { FieldValidationError } from 'express-validator'
 import { PathwayStatus, PrisonerData } from '../@types/express'
 import {
   ASSESSMENT_ENUMS_DICTIONARY,
@@ -622,21 +622,6 @@ export function validateStringIsAnInteger(input: string) {
   if (!/^[1-9](\d+)?$/.test(input)) {
     throw new Error(`Input ${input} is not a valid integer`)
   }
-}
-
-export function getValidationForPathwayQuery(): ValidationChain[] {
-  return [
-    query('page').isInt({ min: 0 }).optional().withMessage('page must be a positive integer'),
-    query('createdByUserId').isInt({ min: 0 }).optional().withMessage('createdByUserId must be a positive integer'),
-    query('supportNeedsUpdatesPage')
-      .isInt({ min: 0 })
-      .optional()
-      .withMessage('supportNeedsUpdatesPage must be a positive integer'),
-    query('supportNeedUpdateSort')
-      .isIn(['createdDate,DESC', 'createdDate,ASC'])
-      .optional()
-      .withMessage('supportNeedUpdateSort must be createdDate,DESC or createdDate,ASC'),
-  ]
 }
 
 export function processSupportNeedsRequestBody(input: Record<string, string | string[]>): PrisonerSupportNeedsPatch {

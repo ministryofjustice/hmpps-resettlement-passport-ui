@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { Services } from '../../services'
 import FinanceIdController from './financeIdController'
-import { getValidationForPathwayQuery } from '../../utils/utils'
+import { getValidationForPathwayQuery } from '../validation'
 
 export default (router: Router, services: Services) => {
   const financeIdController = new FinanceIdController(services.rpService, services.prisonerDetailsService)
