@@ -1,4 +1,4 @@
-import { FieldValidationError, query, ValidationChain } from 'express-validator'
+import { query, ValidationChain } from 'express-validator'
 
 export function getValidationForPathwayQuery(): ValidationChain[] {
   return [
