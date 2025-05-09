@@ -1785,27 +1785,27 @@ describe('findError', () => {
 describe('findPreviousSelectedSupportNeed', () => {
   it.each([
     [
-      'Finds the previous selected support need',
+      'Finds the previous selected and updatable support need',
       {
         needs: [
-          { uuid: '1', isSelected: false } as SupportNeedCache,
-          { uuid: '2', isSelected: true } as SupportNeedCache,
-          { uuid: '3', isSelected: false } as SupportNeedCache,
-          { uuid: '4', isSelected: true } as SupportNeedCache,
-          { uuid: '5', isSelected: false } as SupportNeedCache,
+          { uuid: '1', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '2', isSelected: true, isUpdatable: true } as SupportNeedCache,
+          { uuid: '3', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '4', isSelected: true, isUpdatable: false } as SupportNeedCache,
+          { uuid: '5', isSelected: false, isUpdatable: true } as SupportNeedCache,
         ],
       },
       '4',
-      { uuid: '2', isSelected: true } as SupportNeedCache,
+      { uuid: '2', isSelected: true, isUpdatable: true } as SupportNeedCache,
     ],
     [
       'Returns null if no previous selected need exists',
       {
         needs: [
-          { uuid: '1', isSelected: false } as SupportNeedCache,
-          { uuid: '2', isSelected: false } as SupportNeedCache,
-          { uuid: '3', isSelected: false } as SupportNeedCache,
-          { uuid: '4', isSelected: true } as SupportNeedCache,
+          { uuid: '1', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '2', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '3', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '4', isSelected: true, isUpdatable: true } as SupportNeedCache,
         ],
       },
       '4',
@@ -1815,35 +1815,47 @@ describe('findPreviousSelectedSupportNeed', () => {
       'Returns null if the given uuid is the first item',
       {
         needs: [
-          { uuid: '1', isSelected: true } as SupportNeedCache,
-          { uuid: '2', isSelected: false } as SupportNeedCache,
-          { uuid: '3', isSelected: true } as SupportNeedCache,
+          { uuid: '1', isSelected: true, isUpdatable: true } as SupportNeedCache,
+          { uuid: '2', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '3', isSelected: true, isUpdatable: true } as SupportNeedCache,
         ],
       },
       '1',
       null,
     ],
     [
-      'Finds the most recent previous selected need',
+      'Finds the most recent previous selected and updatable need',
       {
         needs: [
-          { uuid: '1', isSelected: true } as SupportNeedCache,
-          { uuid: '2', isSelected: false } as SupportNeedCache,
-          { uuid: '3', isSelected: true } as SupportNeedCache,
-          { uuid: '4', isSelected: false } as SupportNeedCache,
-          { uuid: '5', isSelected: true } as SupportNeedCache,
+          { uuid: '1', isSelected: true, isUpdatable: true } as SupportNeedCache,
+          { uuid: '2', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '3', isSelected: true, isUpdatable: true } as SupportNeedCache,
+          { uuid: '4', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '5', isSelected: true, isUpdatable: true } as SupportNeedCache,
         ],
       },
       '5',
-      { uuid: '3', isSelected: true } as SupportNeedCache,
+      { uuid: '3', isSelected: true, isUpdatable: true } as SupportNeedCache,
+    ],
+    [
+      'Returns null if no selected need is updatable',
+      {
+        needs: [
+          { uuid: '1', isSelected: true, isUpdatable: false } as SupportNeedCache,
+          { uuid: '2', isSelected: false, isUpdatable: false } as SupportNeedCache,
+          { uuid: '3', isSelected: true, isUpdatable: false } as SupportNeedCache,
+        ],
+      },
+      '3',
+      null,
     ],
     [
       'Returns null if the uuid does not exist',
       {
         needs: [
-          { uuid: '1', isSelected: true } as SupportNeedCache,
-          { uuid: '2', isSelected: false } as SupportNeedCache,
-          { uuid: '3', isSelected: true } as SupportNeedCache,
+          { uuid: '1', isSelected: true, isUpdatable: true } as SupportNeedCache,
+          { uuid: '2', isSelected: false, isUpdatable: true } as SupportNeedCache,
+          { uuid: '3', isSelected: true, isUpdatable: true } as SupportNeedCache,
         ],
       },
       '10',

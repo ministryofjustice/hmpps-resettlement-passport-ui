@@ -392,8 +392,7 @@ export function getResetReason(caseNoteText: string): string | null {
     const reasonIndex = caseNoteText.indexOf(reasonPrefix)
     if (reasonIndex !== -1) {
       // Extract everything after 'Reason for reset:'
-      const reasonText = caseNoteText.substring(reasonIndex + reasonPrefix.length).trim()
-      return reasonText
+      return caseNoteText.substring(reasonIndex + reasonPrefix.length).trim()
     }
   }
   return null
@@ -703,8 +702,8 @@ export const findPreviousSelectedSupportNeed = (
   if (currentIndex <= 0) return null // If not found or first element, return null
 
   for (let i = currentIndex - 1; i >= 0; i -= 1) {
-    if (needs[i].isSelected) {
-      return needs[i] // Return the first previous selected need
+    if (needs[i].isSelected && needs[i].isUpdatable) {
+      return needs[i] // Return the first previous selected and updatable need
     }
   }
 
