@@ -180,7 +180,7 @@ exports[`getAddBankAccountView Happy path add bank account form renders 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -571,7 +571,7 @@ exports[`getAddBankAccountView navigating via changing your answer 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -962,7 +962,7 @@ exports[`getConfirmAddABankAccountView Happy path confirm add bank account 1`] =
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -1322,7 +1322,7 @@ exports[`getUpdateBankAccountStatusView Happy path update bank account 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -1713,7 +1713,7 @@ exports[`getUpdateBankAccountStatusView error application ID blank 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -2104,7 +2104,7 @@ exports[`getUpdateBankAccountStatusView error application ID missing 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -2495,7 +2495,7 @@ exports[`postBankAccountSubmitView error - bank Name blank 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -2837,7 +2837,7 @@ exports[`postBankAccountSubmitView error - bank Name missing 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -3179,7 +3179,7 @@ exports[`postBankAccountSubmitView error - bank application date blank 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -3521,7 +3521,7 @@ exports[`postBankAccountSubmitView error - bank application date missing 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -3863,7 +3863,7 @@ exports[`postBankAccountUpdateView error - API rejects submission 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 

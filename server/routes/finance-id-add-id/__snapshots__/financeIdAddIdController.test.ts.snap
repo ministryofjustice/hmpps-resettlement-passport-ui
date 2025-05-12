@@ -180,7 +180,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate and ref
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -635,7 +635,7 @@ exports[`getAddAnIdView Accept ID application status - birth certificate, no ref
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -1090,7 +1090,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -2010,7 +2010,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -2930,7 +2930,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -3852,7 +3852,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -4772,7 +4772,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -5690,7 +5690,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -6608,7 +6608,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -7017,7 +7017,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -7426,7 +7426,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -7835,7 +7835,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -8244,7 +8244,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -9162,7 +9162,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -10422,7 +10422,7 @@ exports[`getAddAnIdView Get ID application status - birth certificate 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -10850,7 +10850,7 @@ exports[`getAddAnIdView Get add ID application 1`] = `
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -11429,7 +11429,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, no ref
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -11859,7 +11859,7 @@ exports[`getAddAnIdView Reject ID application status - birth certificate, refund
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -12214,7 +12214,7 @@ exports[`getAddAnIdView Validation error - submit ID application via birth certi
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -12615,7 +12615,7 @@ exports[`getAddAnIdView Validation error - submit empty ID application form 1`] 
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -13020,7 +13020,7 @@ exports[`getAddAnIdView Validation error - submit submit ID application via birt
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
