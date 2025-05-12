@@ -40,7 +40,7 @@
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                {{ prisonerData.personalDetails.releaseDate | formatDate or '-'}}
+                {{ prisonerData.personalDetails.releaseDate | formatDate or 'Unavailable'}}
                 <br />
                 {% set isDayFriday = prisonerData.personalDetails.releaseDate | isFriday %}
                 {% if isDayFriday %}

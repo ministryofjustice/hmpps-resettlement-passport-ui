@@ -180,7 +180,7 @@ exports[`getView Happy path - ensure support need for legacy profile renders cor
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -1036,7 +1036,7 @@ exports[`getView Happy path with default query params and data from endpoints 1`
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -2213,7 +2213,7 @@ exports[`getView Happy path with default query params and no data from endpoints
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
@@ -2694,7 +2694,7 @@ exports[`getView Happy path with specified query params and data from endpoints 
             <div class="govuk-grid-column-one-half">
               <p>
                 <b>Release date:</b>
-                -
+                Unavailable
                 <br />
                 
                 
