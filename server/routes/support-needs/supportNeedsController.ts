@@ -317,7 +317,9 @@ export default class SupportNeedsController {
         }
       })
 
-      const lastSelectedSupportNeedId = currentCacheState.needs.findLast(need => need.isSelected)?.uuid
+      const lastSelectedSupportNeedId = currentCacheState.needs.findLast(
+        need => need.isSelected && need.isUpdatable,
+      )?.uuid
       const backLink = `/support-needs/${pathway}/status/${lastSelectedSupportNeedId}/?prisonerNumber=${prisonerNumber}`
 
       return res.render('pages/support-needs-check-answers', {
