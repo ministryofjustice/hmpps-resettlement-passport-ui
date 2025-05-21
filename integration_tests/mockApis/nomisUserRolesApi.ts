@@ -30,12 +30,12 @@ const getStaffDetails = (staffId = 485588) =>
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
       jsonBody: {
         staffId: 486233,
-        firstName: 'Stephanie',
-        lastName: 'Batliner',
+        firstName: 'John',
+        lastName: 'Smith',
         status: 'ACTIVE',
-        primaryEmail: 'Stephanie.Batliner@justice.gov.uk',
+        primaryEmail: 'john.smith@test.gov.uk',
         generalAccount: {
-          username: 'SBATLINER_GEN',
+          username: 'JOHNSMITH_GEN',
           active: true,
           accountType: 'GENERAL',
           activeCaseload: {
