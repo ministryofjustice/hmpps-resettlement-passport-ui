@@ -60,6 +60,10 @@ context('Finance and ID - bank account', () => {
         feature: 'supportNeeds',
         enabled: false,
       },
+      {
+        feature: 'readOnlyMode',
+        enabled: false,
+      },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
   })

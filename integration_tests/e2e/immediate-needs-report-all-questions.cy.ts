@@ -60,6 +60,10 @@ context('Immediate Needs Report All Questions', () => {
         feature: 'supportNeeds',
         enabled: false,
       },
+      {
+        feature: 'readOnlyMode',
+        enabled: false,
+      },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
   })

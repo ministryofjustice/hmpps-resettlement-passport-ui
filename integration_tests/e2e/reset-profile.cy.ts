@@ -60,6 +60,10 @@ context('ResetProfile', () => {
         feature: 'supportNeeds',
         enabled: true,
       },
+      {
+        feature: 'readOnlyMode',
+        enabled: false,
+      },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
   })
@@ -156,6 +160,10 @@ context('ResetProfile', () => {
         feature: 'supportNeeds',
         enabled: false,
       },
+      {
+        feature: 'readOnlyMode',
+        enabled: false,
+      },
     ]
     cy.task('overwriteFlags', JSON.stringify(supportNeedFlagDisabled))
 
@@ -229,6 +237,10 @@ context('ResetProfile', () => {
       },
       {
         feature: 'supportNeeds',
+        enabled: false,
+      },
+      {
+        feature: 'readOnlyMode',
         enabled: false,
       },
     ]

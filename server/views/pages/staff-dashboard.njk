@@ -3,6 +3,7 @@
 {% from "../macros/prisoners-table.njk" import prisonersTable %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% set assignCaseEnabled = features.ASSIGN_CASE_TAB | getFeatureFlag %}
+{% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
 {% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
 
 {% set tabContent %}
@@ -258,7 +259,7 @@
 {% block content %}
   {# Only NOMIS users can access the list prisoners functionality at present #}
   {% if isPrisonUser %}
-    {% if assignCaseEnabled %}
+    {% if assignCaseEnabled and not readOnlyMode %}
       <div class="govuk-tabs" data-module="govuk-tabs" id="tabs">
         <ul class="govuk-tabs__list">
           <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">

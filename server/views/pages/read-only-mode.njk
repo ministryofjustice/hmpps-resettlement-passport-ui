@@ -1,0 +1,24 @@
+{% extends "../partials/layout.njk" %}
+
+{% set pageTitle = applicationName + " - Page unavailable" %}
+{% set pageHeading = "Sorry, this page is unavailable" %}
+{% set mainClasses = "app-container govuk-body" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <p class="govuk-body">
+        The PSfR (prepare someone for release) service is no longer active.
+      </p>
+      <p class="govuk-body">
+        You can still <a href="/" class="govuk-link">view information in PSfR</a>, but it cannot be changed.
+      </p>
+      <p class="govuk-body">
+        If you reached this page by typing or pasting a web address, check it is correct. If you bookmarked this page, you should update or delete the bookmark.
+      </p>
+      <p class="govuk-body">
+        For more information or support, contact <a href="mailto:resettlementpassportsHQ@justice.gov.uk" class="govuk-link">resettlementpassportsHQ@justice.gov.uk</a>.
+      </p>
+    </div>
+  </div>
+{% endblock %}
