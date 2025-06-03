@@ -294,6 +294,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
   
   
   
+    
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -323,6 +324,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
     </section>
   </div>
 
+  
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
@@ -1381,6 +1383,7 @@ exports[`prisonerOverview should display error when supportNeeds is enabled and 
   
   
   
+    
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -1393,6 +1396,7 @@ exports[`prisonerOverview should display error when supportNeeds is enabled and 
     </section>
   </div>
 
+  
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
@@ -2405,6 +2409,7 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
   
   
   
+    
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -2417,6 +2422,7 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
     </section>
   </div>
 
+  
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
@@ -3583,6 +3589,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
   
   
   
+    
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -3612,6 +3619,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
     </section>
   </div>
 
+  
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
@@ -4657,6 +4665,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
   
   
   
+    
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -4686,6 +4695,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
     </section>
   </div>
 
+  
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
@@ -5731,6 +5741,7 @@ exports[`prisonerOverview should render the prisoner overview page without retri
   
   
   
+    
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -5760,6 +5771,7 @@ exports[`prisonerOverview should render the prisoner overview page without retri
     </section>
   </div>
 
+  
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">

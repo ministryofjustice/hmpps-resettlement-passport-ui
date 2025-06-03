@@ -14,6 +14,7 @@
 {% set resetProfileEnabled = features.RESET_PROFILE | getFeatureFlag %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
 {% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
+{% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
 
 {% set statusType = {
   name: "Support needs statuses" if supportNeedsEnabled else "Resettlement statuses",
@@ -69,7 +70,9 @@
   {% elif prisonerData.resettlementReviewAvailable === false %}
     {{preReleaseComplete(pathway, prisonerData)}}
   {% endif %}
-  {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, resetProfileEnabled, supportNeedsEnabled) }}
+  {% if tasksViewEnabled or not readOnlyMode %}
+    {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, resetProfileEnabled, supportNeedsEnabled, readOnlyMode) }}
+  {% endif %}
 </div>
 
   <div class="govuk-grid-row govuk-!-padding-top-4">
