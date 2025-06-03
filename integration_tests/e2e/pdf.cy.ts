@@ -84,6 +84,10 @@ context('Generate PDF', () => {
         feature: 'supportNeeds',
         enabled: true,
       },
+      {
+        feature: 'readOnlyMode',
+        enabled: false,
+      },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
 
@@ -159,6 +163,10 @@ context('Generate PDF', () => {
       {
         feature: 'supportNeeds',
         enabled: true,
+      },
+      {
+        feature: 'readOnlyMode',
+        enabled: false,
       },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsDisabled))

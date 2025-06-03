@@ -60,6 +60,10 @@ context('Status Update and add case note', () => {
         feature: 'supportNeeds',
         enabled: false,
       },
+      {
+        feature: 'readOnlyMode',
+        enabled: false,
+      },
     ]
     cy.task('overwriteFlags', JSON.stringify(flagsEnabled))
   })
