@@ -3,14 +3,14 @@ import { readOnlyGuard } from './readOnlyGuard'
 import { FEATURE_FLAGS } from '../utils/constants'
 import * as utils from '../utils/utils'
 
-describe('Read Only', () => {
+describe('Read Only Guard', () => {
   const getFeatureFlagBoolean = jest.spyOn(utils, 'getFeatureFlagBoolean')
 
   afterEach(() => {
     getFeatureFlagBoolean.mockReset()
   })
 
-  it('should get the read only mode boolean', async () => {
+  it('should use the read only mode feature flag', async () => {
     getFeatureFlagBoolean.mockResolvedValue(false)
 
     const req = {} as Request
@@ -23,19 +23,7 @@ describe('Read Only', () => {
     expect(getFeatureFlagBoolean).toHaveBeenCalledWith(FEATURE_FLAGS.READ_ONLY_MODE)
   })
 
-  it('should do nothing if read only is not enabled', async () => {
-    getFeatureFlagBoolean.mockResolvedValue(false)
-
-    const req = {} as Request
-    const res = {} as Response
-    const next = jest.fn()
-
-    await readOnlyGuard(req, res, next)
-
-    expect(next).toHaveBeenCalled()
-  })
-
-  it('should return a 404 error page if read only is enabled', async () => {
+  it('if read only mode is enabled - return a 404 and render the read only mode page', async () => {
     getFeatureFlagBoolean.mockResolvedValue(true)
 
     const render = jest.fn()
@@ -50,5 +38,17 @@ describe('Read Only', () => {
     expect(res.status).toHaveBeenCalledWith(404)
     expect(render).toHaveBeenCalledWith('pages/read-only-mode')
     expect(next).not.toHaveBeenCalled()
+  })
+
+  it('if read only mode is disabled - do nothing and continue to the next function', async () => {
+    getFeatureFlagBoolean.mockResolvedValue(false)
+
+    const req = {} as Request
+    const res = {} as Response
+    const next = jest.fn()
+
+    await readOnlyGuard(req, res, next)
+
+    expect(next).toHaveBeenCalled()
   })
 })

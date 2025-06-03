@@ -195,7 +195,7 @@ export const FEATURE_FLAGS: { [key: string]: string } = {
   WHATS_NEW_BANNER: 'whatsNewBanner',
   ASSIGN_CASE_TAB: 'assignCaseTab',
   SUPPORT_NEEDS: 'supportNeeds',
-  READ_ONLY_MODE: 'readOnly',
+  READ_ONLY_MODE: 'readOnlyMode',
 }
 
 export const FEEDBACK_URL = 'https://www.smartsurvey.co.uk/s/QQV2UP'
