@@ -223,14 +223,7 @@ const stubGetPrisoners = () =>
     response: {
       status: 200,
       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-      jsonBody: {
-        content: [],
-        page: 0,
-        last: 0,
-        pageSize: 0,
-        sortName: '',
-        totalElements: 0,
-      },
+      jsonBody: {},
     },
   })
 
@@ -928,22 +921,6 @@ export const stubRpClientPing = (): SuperAgentRequest =>
     },
   })
 
-export const stubGetAssignedWorkersList = (): SuperAgentRequest =>
-  stubFor({
-    request: {
-      method: 'GET',
-      urlPathPattern: '/rpApi/resettlement-passport/workers/capacity.*',
-    },
-    response: {
-      status: 200,
-      headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-      jsonBody: {
-        assignedList: [],
-        unassignedCount: 0,
-      },
-    },
-  })
-
 export default {
   stubGetPrisoners,
   stubGetAppointments,
@@ -999,5 +976,4 @@ export default {
   stubJohnSmithGetAccommodation,
   stubJohnSmithGetAccommodationNoSupportNeeds,
   stubJohnSmithGetAccommodationWithSupportNeeds,
-  stubGetAssignedWorkersList,
 }
