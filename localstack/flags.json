@@ -54,5 +54,9 @@
   {
     "feature": "supportNeeds",
     "enabled": true
+  },
+  {
+    "feature": "readOnly",
+    "enabled": false
   }
 ]
