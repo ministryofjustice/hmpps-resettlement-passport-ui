@@ -3,6 +3,7 @@ import { oneOf, query } from 'express-validator'
 import { Services } from '../../services'
 import AssignCaseController from './assignCaseController'
 import asyncWrapper from '../asyncWrapper'
+import { readOnlyGuard } from '../readOnlyGuard'
 
 export default (router: Router, services: Services) => {
   const assignCase = new AssignCaseController(services.rpService)
@@ -20,7 +21,7 @@ export default (router: Router, services: Services) => {
       query('workerId').isEmpty().optional(), // all workers
     ]),
     oneOf([query('currentPage').isInt({ min: 0 }).optional(), query('currentPage').isEmpty().optional()]),
-    [asyncWrapper(assignCase.getView)],
+    [readOnlyGuard, asyncWrapper(assignCase.getView)],
   )
-  router.post('/assign-a-case', [asyncWrapper(assignCase.assignCases)])
+  router.post('/assign-a-case', [readOnlyGuard, asyncWrapper(assignCase.assignCases)])
 }
