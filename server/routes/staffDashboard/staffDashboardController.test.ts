@@ -7,7 +7,6 @@ import {
   stubPrisonerDetails,
   stubPrisonersList,
   stubNoPrisonersList,
-  stubFeatureFlagToFalse,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
