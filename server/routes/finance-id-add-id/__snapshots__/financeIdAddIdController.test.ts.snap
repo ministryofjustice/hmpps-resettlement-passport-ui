@@ -1268,7 +1268,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2>Apply for a Birth certificate</h2>
+      <h2 class="govuk-heading-m">Apply for a Birth certificate</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         
           <div class="govuk-form-group ">
@@ -2210,7 +2210,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2>Apply for a Birth certificate</h2>
+      <h2 class="govuk-heading-m">Apply for a Birth certificate</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         
           <div class="govuk-form-group ">
@@ -3152,7 +3152,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2>Apply for a Birth certificate</h2>
+      <h2 class="govuk-heading-m">Apply for a Birth certificate</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         
           <div class="govuk-form-group govuk-form-group--error">
@@ -4096,7 +4096,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2>Apply for a Birth certificate</h2>
+      <h2 class="govuk-heading-m">Apply for a Birth certificate</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         
           <div class="govuk-form-group ">
@@ -5038,7 +5038,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2>Apply for a Birth certificate</h2>
+      <h2 class="govuk-heading-m">Apply for a Birth certificate</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         
           <div class="govuk-form-group ">
@@ -5978,7 +5978,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost a
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2>Apply for a Birth certificate</h2>
+      <h2 class="govuk-heading-m">Apply for a Birth certificate</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         
           <div class="govuk-form-group ">
@@ -8642,7 +8642,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit with cost b
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2>Apply for a Birth certificate</h2>
+      <h2 class="govuk-heading-m">Apply for a Birth certificate</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         
           <div class="govuk-form-group ">
@@ -9582,7 +9582,7 @@ exports[`getAddAnIdView Confirm add an ID - birth certificate submit without cos
   </div>
   <div class="govuk-grid-row govuk-!-padding-bottom-4">
     <div class="govuk-grid-column-full">
-      <h2>Apply for a Birth certificate</h2>
+      <h2 class="govuk-heading-m">Apply for a Birth certificate</h2>
       <form action="/finance-and-id/confirm-add-an-id/" class="govuk-form" novalidate>
         
           <div class="govuk-form-group ">
