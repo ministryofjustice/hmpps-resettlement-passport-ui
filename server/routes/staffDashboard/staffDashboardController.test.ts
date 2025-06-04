@@ -7,11 +7,13 @@ import {
   stubPrisonerDetails,
   stubPrisonersList,
   stubNoPrisonersList,
+  stubFeatureFlagToFalse,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import FeatureFlags from '../../featureFlag'
 import { Services } from '../../services'
+import { FEATURE_FLAGS } from '../../utils/constants'
 
 let app: Express
 const { rpService } = mockedServices as Services
@@ -504,5 +506,39 @@ describe('getView', () => {
       .get('/?lastReportCompleted=invalidValue')
       .expect(400)
       .expect(res => expectSomethingWentWrongPage(res))
+  })
+
+  describe('when read only mode is enabled', () => {
+    it('the assign a case and staff capacity tabs should not be shown', async () => {
+      stubPrisonersList(rpService)
+      stubFeatureFlagToTrue(featureFlags, [
+        FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES,
+        FEATURE_FLAGS.ASSIGN_CASE_TAB,
+        FEATURE_FLAGS.READ_ONLY_MODE,
+      ])
+      await request(app)
+        .get('/')
+        .expect(200)
+        .expect(res => {
+          const htmlContent = res.text
+          expect(htmlContent).not.toContain('Assign a case')
+          expect(htmlContent).not.toContain('Staff capacity')
+        })
+    })
+  })
+
+  describe('when read only mode is not enabled', () => {
+    it('the assign a case and staff capacity tabs should be shown', async () => {
+      stubPrisonersList(rpService)
+      stubFeatureFlagToTrue(featureFlags, [FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES, FEATURE_FLAGS.ASSIGN_CASE_TAB])
+      await request(app)
+        .get('/')
+        .expect(200)
+        .expect(res => {
+          const htmlContent = res.text
+          expect(htmlContent).toContain('Assign a case')
+          expect(htmlContent).toContain('Staff capacity')
+        })
+    })
   })
 })
