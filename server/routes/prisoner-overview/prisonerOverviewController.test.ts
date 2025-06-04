@@ -257,6 +257,50 @@ describe('prisonerOverview', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 
+  it('should display "reset profile" button and other tasks when readOnlyMode is false and tasksView is true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['tasksView', 'profileReset', 'supportNeeds'])
+
+    stubPrisonerOverviewData(rpService)
+
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('should display "reset profile" button and NO other tasks when readOnlyMode is false and tasksView is false', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['profileReset', 'supportNeeds'])
+
+    stubPrisonerOverviewData(rpService)
+
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('should display tasks but NO "reset profile" button when readOnlyMode is true and tasksView is true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['readOnlyMode', 'tasksView', 'profileReset', 'supportNeeds'])
+
+    stubPrisonerOverviewData(rpService)
+
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('should display NO "Action" box when readOnlyMode is true and tasksView is false', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['readOnlyMode', 'profileReset', 'supportNeeds'])
+
+    stubPrisonerOverviewData(rpService)
+
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
   it('Error case - invalid page parameter', async () => {
     await request(app)
       .get('/prisoner-overview?prisonerNumber=A1234DY&page=InvalidValue')

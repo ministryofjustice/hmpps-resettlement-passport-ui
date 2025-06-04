@@ -1,11 +1,11 @@
-{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, resetProfileEnabled, supportNeedsEnabled) %}
+{% macro tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, resetProfileEnabled, supportNeedsEnabled, readOnlyMode) %}
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
         <h3 class="app-summary-card__title">Actions:</h3>
       </header>
       <div class="app-summary-card__body">
-        {% if resetProfileEnabled %}
+        {% if resetProfileEnabled and not readOnlyMode %}
           <a href="/resetProfile?prisonerNumber={{prisonerNumber}}" class="govuk-button" id="reset-profile-btn" track-event-name="ResetReportsAndStatusesLinkClicked" track-event-prisoner-id="{{ prisonerNumber }}">
             Reset reports and {{ "support needs" if supportNeedsEnabled else "statuses" }}
           </a>
