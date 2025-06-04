@@ -80,6 +80,10 @@ context('Prisoner search page', () => {
           feature: 'supportNeeds',
           enabled: true,
         },
+        {
+          feature: 'readOnlyMode',
+          enabled: false,
+        },
       ]),
     )
     cy.signIn()
