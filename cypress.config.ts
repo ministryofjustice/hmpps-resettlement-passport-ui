@@ -12,6 +12,7 @@ import rpApi from './integration_tests/mockApis/rpApi'
 import { initRedisCacheForNullExistingAssessment, resetRedisCache } from './integration_tests/mockApis/redis'
 import frontendComponents from './integration_tests/mockApis/frontendComponents'
 import manageUserRoles from './integration_tests/mockApis/manageUserRoles'
+import { Feature } from './server/featureFlag'
 
 const flagFilePath = './localstack/flags.json'
 const flagRestoreFilePath = './integration_tests/flags.restore.json'
@@ -28,6 +29,21 @@ const overwriteFlags = (content: string): Promise<boolean> => {
         reject(err)
       } else {
         resolve(true)
+      }
+    })
+  })
+}
+
+const overwriteFlag = (updated: Feature): Promise<boolean> => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(flagRestoreFilePath, 'utf8', (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        const flags = JSON.parse(data) as Feature[]
+        overwriteFlags(JSON.stringify(flags.map(f => (f.feature === updated.feature ? updated : f))))
+          .then(() => resolve(true))
+          .catch(err2 => reject(err2))
       }
     })
   })
@@ -76,6 +92,7 @@ export default defineConfig({
           return parsePdf(pdfPath).then(x => x.text)
         },
         overwriteFlags,
+        overwriteFlag,
         restoreFlags,
       })
     },
