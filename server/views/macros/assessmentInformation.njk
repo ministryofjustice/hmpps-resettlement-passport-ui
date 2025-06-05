@@ -1,4 +1,4 @@
-{% macro assessmentInformation(assessmentData, prisonerNumber, pathway) %}
+{% macro assessmentInformation(assessmentData, prisonerNumber, pathway, readOnlyMode) %}
   <section id="assessment-information" class="app-summary-card govuk-!-margin-bottom-8">
     <header class="app-summary-card__header">
       <h3 class="app-summary-card__title">Report information</h3>
@@ -28,9 +28,11 @@
                     {{ questionAnswer.answer }}
                   {%- endif -%}
                 </td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/{{ pathway | getEnumByName }}/page/{{ questionAnswer.originalPageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&submitted=true&type={{ assessmentData.latestAssessment.assessmentType }}">Change</a>
-                </td>
+                {% if not readOnlyMode %}
+                  <td class="govuk-table__cell">
+                    <a href="/ImmediateNeedsReport/pathway/{{ pathway | getEnumByName }}/page/{{ questionAnswer.originalPageId }}/start-edit/?prisonerNumber={{ prisonerNumber }}&submitted=true&type={{ assessmentData.latestAssessment.assessmentType }}">Change</a>
+                  </td>
+                {% endif %}
               </tr>
             {% endfor %}
           </tbody>

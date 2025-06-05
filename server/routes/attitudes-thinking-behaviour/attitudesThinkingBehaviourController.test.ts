@@ -153,7 +153,7 @@ describe('getView', () => {
     )
   })
 
-  it('"Add a support need" button should be present when readOnlyMode = false', async () => {
+  it('Add and change links should be present when readOnlyMode = false', async () => {
     stubCrsReferrals(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     stubAssessmentInformation(rpService)
     stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
@@ -167,7 +167,7 @@ describe('getView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 
-  it('"Add a support need" button should NOT be present when readOnlyMode = true', async () => {
+  it('Add and change links should NOT be present when readOnlyMode = true', async () => {
     stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
     stubCrsReferrals(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
     stubAssessmentInformation(rpService)

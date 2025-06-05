@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`getView "Add a support need" button should NOT be present when readOnlyMode = true 1`] = `
+exports[`getView Add and change links should NOT be present when readOnlyMode = true 1`] = `
 "<!DOCTYPE html>
 <html lang="en" class="govuk-template">
   <head>
@@ -948,9 +948,7 @@ This is another new line</p>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">This is a question</th>
                 <td class="govuk-table__cell show-line-breaks">Another answer</td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
-                </td>
+                
               </tr>
             
               <tr class="govuk-table__row">
@@ -958,9 +956,7 @@ This is another new line</p>
                 <td class="govuk-table__cell show-line-breaks">Answer1
 Answer2
 Answer3</td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
-                </td>
+                
               </tr>
             
           </tbody>
@@ -1217,7 +1213,7 @@ Answer3</td>
 "
 `;
 
-exports[`getView "Add a support need" button should be present when readOnlyMode = false 1`] = `
+exports[`getView Add and change links should be present when readOnlyMode = false 1`] = `
 "<!DOCTYPE html>
 <html lang="en" class="govuk-template">
   <head>
@@ -2171,9 +2167,11 @@ This is another new line</p>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">This is a question</th>
                 <td class="govuk-table__cell show-line-breaks">Another answer</td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
-                </td>
+                
+                  <td class="govuk-table__cell">
+                    <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
+                  </td>
+                
               </tr>
             
               <tr class="govuk-table__row">
@@ -2181,9 +2179,11 @@ This is another new line</p>
                 <td class="govuk-table__cell show-line-breaks">Answer1
 Answer2
 Answer3</td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
-                </td>
+                
+                  <td class="govuk-table__cell">
+                    <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
+                  </td>
+                
               </tr>
             
           </tbody>
@@ -3495,9 +3495,11 @@ This is another new line</p>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">This is a question</th>
                 <td class="govuk-table__cell show-line-breaks">Another answer</td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
-                </td>
+                
+                  <td class="govuk-table__cell">
+                    <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
+                  </td>
+                
               </tr>
             
               <tr class="govuk-table__row">
@@ -3505,9 +3507,11 @@ This is another new line</p>
                 <td class="govuk-table__cell show-line-breaks">Answer1
 Answer2
 Answer3</td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
-                </td>
+                
+                  <td class="govuk-table__cell">
+                    <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
+                  </td>
+                
               </tr>
             
           </tbody>
@@ -5228,9 +5232,11 @@ This is another new line</p>
               <tr class="govuk-table__row">
                 <th class="govuk-table__header" scope="row">This is a question</th>
                 <td class="govuk-table__cell show-line-breaks">Another answer</td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
-                </td>
+                
+                  <td class="govuk-table__cell">
+                    <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_1/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
+                  </td>
+                
               </tr>
             
               <tr class="govuk-table__row">
@@ -5238,9 +5244,11 @@ This is another new line</p>
                 <td class="govuk-table__cell show-line-breaks">Answer1
 Answer2
 Answer3</td>
-                <td class="govuk-table__cell">
-                  <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
-                </td>
+                
+                  <td class="govuk-table__cell">
+                    <a href="/ImmediateNeedsReport/pathway/FINANCE_AND_ID/page/PAGE_2/start-edit/?prisonerNumber=A1234DY&submitted=true&type=BCST2">Change</a>
+                  </td>
+                
               </tr>
             
           </tbody>
