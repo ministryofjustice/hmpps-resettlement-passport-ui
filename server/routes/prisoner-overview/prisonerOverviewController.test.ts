@@ -301,6 +301,17 @@ describe('prisonerOverview', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 
+  it('should not display "Complete report now" button in "Important" box when readOnlyMode is true and tasksView is false', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['readOnlyMode', 'profileReset', 'supportNeeds'])
+
+    stubPrisonerOverviewData(rpService)
+
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
   it('Error case - invalid page parameter', async () => {
     await request(app)
       .get('/prisoner-overview?prisonerNumber=A1234DY&page=InvalidValue')
