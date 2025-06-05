@@ -1,27 +1,11 @@
+{% from "../macros/service-update.njk" import serviceUpdate %}
 {%- if whatsNewEnabled -%}
   {% set whatsNewContent %}
     {%- if not banner.title -%}
       <h3 class="govuk-heading-s">{{ banner.date }}</h3>
     {%- endif -%}
 
-    {%- if banner.bodyText is string -%}
-      <p class="govuk-body">{{ banner.bodyText | safe }}</p>
-    {%- elseif banner.bodyText | length > 0 -%}
-      {%- for body in banner.bodyText -%}
-        <p class="govuk-body">{{ body | safe }}</p>
-      {%- endfor -%}
-    {%- endif %}
-
-    {%- if banner.bulletPoints | length > 0 -%}
-      <ul class="govuk-list govuk-list--bullet">
-        {% for point in banner.bulletPoints %}
-        <li>{{ point }}</li>{% endfor %}
-      </ul>
-    {%- endif %}
-
-    {%- if banner.detailsLink -%}
-      <p><a target="_blank" rel="noopener noreferrer" href="{{ banner.detailsLink }}">Find out more about this update</a></p>
-    {%- endif -%}
+    {{ serviceUpdate(banner.bodyText, banner.bulletPoints, banner.detailsLink) }}
 
     <p>
       Let us know what you think of these changes using our

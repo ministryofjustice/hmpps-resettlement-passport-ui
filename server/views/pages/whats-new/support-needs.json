@@ -2,7 +2,7 @@
   "version": "20250318",
   "banner": {
     "date": "18 Mar 2025",
-    "bodyText": "You can now:",
+    "bodyText": ["You can now:"],
     "bulletPoints": [
       "add support needs for each pathway, choosing from a comprehensive list or creating your own",
       "set a status for each support need (these will replace pathway-level statuses)",

@@ -1,0 +1,21 @@
+{% macro serviceUpdate(bodyText, bulletPoints, detailsLink) %}
+    {% if bodyText | length > 0 %}
+        {% for body in bodyText %}
+            <p class="govuk-body">{{ body | safe }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if bulletPoints | length > 0 %}
+        <ul class="govuk-list govuk-list--bullet">
+            {% for point in bulletPoints %}
+                <li>{{ point }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if detailsLink != null %}
+        <p>
+            <a href="{{ detailsLink }}">Find out more about this update</a>
+        </p>
+    {% endif %}
+{% endmacro %}

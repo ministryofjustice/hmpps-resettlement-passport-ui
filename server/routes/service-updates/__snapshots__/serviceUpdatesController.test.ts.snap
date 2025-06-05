@@ -933,7 +933,23 @@ exports[`ServiceUpdatesController getView should render the service updates page
           <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">19 May 2025</h2>
           </div>
-          <div class="govuk-summary-card__content"><h3 class="govuk-header-s govuk-!-margin-top-0">Prepare someone for release (PSfR) testing will end on [date].</h3><p class="govuk-body">From [date] you will not be able to use PSfR to create or update reports or support needs. You’ll still be able to use the service to view information created before this date.</p><p class="govuk-body">After testing has ended, you’ll need to use OASys to complete any new BCST2 and 3 assessments.</p><p class="govuk-body">For more information or support, email <a href='mailto:resettlementpassportsHQ@justice.gov.uk'>resettlementpassportsHQ@justice.gov.uk</a>.</p>
+          <div class="govuk-summary-card__content"><h3 class="govuk-header-s govuk-!-margin-top-0">Prepare someone for release (PSfR) testing will end on [date].</h3>
+
+            
+    
+        
+            <p class="govuk-body">From [date] you will not be able to use PSfR to create or update reports or support needs. You’ll still be able to use the service to view information created before this date.</p>
+        
+            <p class="govuk-body">After testing has ended, you’ll need to use OASys to complete any new BCST2 and 3 assessments.</p>
+        
+            <p class="govuk-body">For more information or support, email <a href='mailto:resettlementpassportsHQ@justice.gov.uk'>resettlementpassportsHQ@justice.gov.uk</a>.</p>
+        
+    
+
+    
+
+    
+
           </div>
         </div>
       </div>
@@ -945,15 +961,35 @@ exports[`ServiceUpdatesController getView should render the service updates page
           <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">18 Mar 2025</h2>
           </div>
-          <div class="govuk-summary-card__content"><p class="govuk-body">You can now:</p><ul class="govuk-list govuk-list--bullet">
-                
-                  <li>add support needs for each pathway, choosing from a comprehensive list or creating your own</li>
-                  <li>set a status for each support need (these will replace pathway-level statuses)</li>
-                  <li>set which staff are responsible for meeting each support need (prison resettlement team or community probation staff)</li>
-                  <li>update support need statuses and add notes, so everyone can easily see what progress has been made</li>
-              </ul><p>
-                <a href="/service-updates/support-needs">Find out more about this update</a>
-              </p>
+          <div class="govuk-summary-card__content">
+
+            
+    
+        
+            <p class="govuk-body">You can now:</p>
+        
+    
+
+    
+        <ul class="govuk-list govuk-list--bullet">
+            
+                <li>add support needs for each pathway, choosing from a comprehensive list or creating your own</li>
+            
+                <li>set a status for each support need (these will replace pathway-level statuses)</li>
+            
+                <li>set which staff are responsible for meeting each support need (prison resettlement team or community probation staff)</li>
+            
+                <li>update support need statuses and add notes, so everyone can easily see what progress has been made</li>
+            
+        </ul>
+    
+
+    
+        <p>
+            <a href="/service-updates/support-needs">Find out more about this update</a>
+        </p>
+    
+
           </div>
         </div>
       </div>
@@ -965,13 +1001,31 @@ exports[`ServiceUpdatesController getView should render the service updates page
           <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">14 Jan 2025</h2>
           </div>
-          <div class="govuk-summary-card__content"><p class="govuk-body">You can now:</p><ul class="govuk-list govuk-list--bullet">
-                
-                  <li>assign people in prison to a resettlement worker</li>
-                  <li>see how many people are assigned to each resettlement worker (staff capacity)</li>
-              </ul><p>
-                <a href="/service-updates/assign-a-case">Find out more about this update</a>
-              </p>
+          <div class="govuk-summary-card__content">
+
+            
+    
+        
+            <p class="govuk-body">You can now:</p>
+        
+    
+
+    
+        <ul class="govuk-list govuk-list--bullet">
+            
+                <li>assign people in prison to a resettlement worker</li>
+            
+                <li>see how many people are assigned to each resettlement worker (staff capacity)</li>
+            
+        </ul>
+    
+
+    
+        <p>
+            <a href="/service-updates/assign-a-case">Find out more about this update</a>
+        </p>
+    
+
           </div>
         </div>
       </div>
@@ -983,14 +1037,33 @@ exports[`ServiceUpdatesController getView should render the service updates page
           <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">20 Nov 2024</h2>
           </div>
-          <div class="govuk-summary-card__content"><p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p><ul class="govuk-list govuk-list--bullet">
-                
-                  <li>add context to most of the answers</li>
-                  <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
-                  <li>input answers about domestic abuse, sexual abuse, and sex work</li>
-              </ul><p>
-                <a href="/service-updates/inputting-report-answers">Find out more about this update</a>
-              </p>
+          <div class="govuk-summary-card__content">
+
+            
+    
+        
+            <p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p>
+        
+    
+
+    
+        <ul class="govuk-list govuk-list--bullet">
+            
+                <li>add context to most of the answers</li>
+            
+                <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
+            
+                <li>input answers about domestic abuse, sexual abuse, and sex work</li>
+            
+        </ul>
+    
+
+    
+        <p>
+            <a href="/service-updates/inputting-report-answers">Find out more about this update</a>
+        </p>
+    
+
           </div>
         </div>
       </div>
@@ -1368,14 +1441,33 @@ exports[`ServiceUpdatesController getView should render the service updates page
           <div class="govuk-summary-card__title-wrapper">
             <h2 class="govuk-summary-card__title">20 Nov 2024</h2>
           </div>
-          <div class="govuk-summary-card__content"><p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p><ul class="govuk-list govuk-list--bullet">
-                
-                  <li>add context to most of the answers</li>
-                  <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
-                  <li>input answers about domestic abuse, sexual abuse, and sex work</li>
-              </ul><p>
-                <a href="/service-updates/inputting-report-answers">Find out more about this update</a>
-              </p>
+          <div class="govuk-summary-card__content">
+
+            
+    
+        
+            <p class="govuk-body">When you input immediate needs or pre-release report answers, you can now:</p>
+        
+    
+
+    
+        <ul class="govuk-list govuk-list--bullet">
+            
+                <li>add context to most of the answers</li>
+            
+                <li>answer all the questions for each pathway on a single page and identify support needs on a new page</li>
+            
+                <li>input answers about domestic abuse, sexual abuse, and sex work</li>
+            
+        </ul>
+    
+
+    
+        <p>
+            <a href="/service-updates/inputting-report-answers">Find out more about this update</a>
+        </p>
+    
+
           </div>
         </div>
       </div>
