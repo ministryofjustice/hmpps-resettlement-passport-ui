@@ -1,14 +1,16 @@
 <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
-       {% if prisonerData.supportNeedsLegacyProfile %}
-           <div class="govuk-summary-card__actions">
-               <p class="govuk-body-m govuk-!-margin-bottom-0">
-                   New support needs cannot be added for this person.&nbsp;<a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out why</a>.
-               </p>
-           </div>
-       {% else %}
-           <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/{{ pathway | getUrlFromName }}/start/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Add a support need</a>
+       {% if not readOnlyMode %}
+           {% if prisonerData.supportNeedsLegacyProfile %}
+               <div class="govuk-summary-card__actions">
+                   <p class="govuk-body-m govuk-!-margin-bottom-0">
+                       New support needs cannot be added for this person.&nbsp;<a class="govuk-link govuk-link--no-visited-state" href="/service-updates/support-needs">Find out why</a>.
+                   </p>
+               </div>
+           {% else %}
+               <a class="govuk-summary-card__actions govuk-link govuk-link--no-visited-state" href="/support-needs/{{ pathway | getUrlFromName }}/start/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Add a support need</a>
+           {% endif %}
        {% endif %}
   </header>
   <div class="app-summary-card__body govuk-!-padding-top-4">

@@ -6,6 +6,7 @@
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
 {% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
+{% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
 
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">

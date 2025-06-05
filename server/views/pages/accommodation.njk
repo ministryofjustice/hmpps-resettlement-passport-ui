@@ -5,6 +5,7 @@
 {% set errorMessage = "Data unavailable - try again later or contact administrator if problem persists" %}
 {% from "../macros/assessmentInformation.njk" import assessmentInformation %}
 {% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
+{% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
 
 {% set mainClasses = "app-container govuk-body" %}
 {% block content %}
