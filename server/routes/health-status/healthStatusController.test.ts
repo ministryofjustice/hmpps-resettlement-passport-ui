@@ -15,19 +15,27 @@ import {
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
+  stubFeatureFlagToTrue,
+  stubFeatureFlagToFalse,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
+import FeatureFlags from '../../featureFlag'
 
 let app: Express
 const { rpService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
+const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
   stubPrisonerDetails(rpService)
   configHelper(config)
 
   app = appWithAllRoutes({})
+
+  FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
+  stubFeatureFlagToFalse(featureFlags)
+  stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'whatsNewBanner'])
 })
 
 afterEach(() => {
@@ -122,6 +130,35 @@ describe('getView', () => {
     expect(getCaseNotesCreatorsSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
     expect(getPathwaySupportNeedsSummarySpy).toHaveBeenCalledWith('A1234DY', 'HEALTH')
     expect(getPathwaySupportNeedsUpdatesSpy).toHaveBeenCalledWith('A1234DY', 'HEALTH', 1, 10, 'createdDate,ASC', '')
+  })
+
+  it('"Add a support need" button should be present when readOnlyMode = false', async () => {
+    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'HEALTH')
+    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
+    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'HEALTH')
+    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/health-status?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('"Add a support need" button should NOT be present when readOnlyMode = true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'HEALTH')
+    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
+    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'HEALTH')
+    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/health-status?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - invalid page parameter', async () => {

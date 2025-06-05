@@ -16,19 +16,27 @@ import {
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
+  stubFeatureFlagToTrue,
+  stubFeatureFlagToFalse,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
+import FeatureFlags from '../../featureFlag'
 
 let app: Express
 const { rpService } = mockedServices
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
+const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
   stubPrisonerDetails(rpService)
   configHelper(config)
 
   app = appWithAllRoutes({})
+
+  FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
+  stubFeatureFlagToFalse(featureFlags)
+  stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'whatsNewBanner'])
 })
 
 afterEach(() => {
@@ -150,6 +158,37 @@ describe('getView', () => {
       'createdDate,ASC',
       '',
     )
+  })
+
+  it('"Add a support need" button should be present when readOnlyMode = false', async () => {
+    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
+    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/education-skills-and-work?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('"Add a support need" button should NOT be present when readOnlyMode = true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
+    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
+    const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
+    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
+    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/education-skills-and-work?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - invalid page parameter', async () => {
