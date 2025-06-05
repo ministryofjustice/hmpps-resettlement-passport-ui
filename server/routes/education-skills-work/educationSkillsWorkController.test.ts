@@ -161,13 +161,13 @@ describe('getView', () => {
   })
 
   it('"Add a support need" button should be present when readOnlyMode = false', async () => {
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'EDUCATION_SKILLS_AND_WORK')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    stubCaseNotesCreators(rpService)
+    stubEducationSkillsWork(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY')
@@ -177,13 +177,13 @@ describe('getView', () => {
 
   it('"Add a support need" button should NOT be present when readOnlyMode = true', async () => {
     stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'EDUCATION_SKILLS_AND_WORK')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getEducationSkillsWorkSpy = stubEducationSkillsWork(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'EDUCATION_SKILLS_AND_WORK')
+    stubCaseNotesCreators(rpService)
+    stubEducationSkillsWork(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/education-skills-and-work?prisonerNumber=A1234DY')

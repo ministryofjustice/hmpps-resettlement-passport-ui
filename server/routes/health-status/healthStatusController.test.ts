@@ -133,12 +133,12 @@ describe('getView', () => {
   })
 
   it('"Add a support need" button should be present when readOnlyMode = false', async () => {
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'HEALTH')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'HEALTH')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'HEALTH')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'HEALTH')
+    stubCaseNotesCreators(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/health-status?prisonerNumber=A1234DY')
@@ -148,12 +148,12 @@ describe('getView', () => {
 
   it('"Add a support need" button should NOT be present when readOnlyMode = true', async () => {
     stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'HEALTH')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'HEALTH')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'HEALTH')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'HEALTH')
+    stubCaseNotesCreators(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/health-status?prisonerNumber=A1234DY')

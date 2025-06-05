@@ -154,12 +154,12 @@ describe('getView', () => {
   })
 
   it('"Add a support need" button should be present when readOnlyMode = false', async () => {
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    stubCaseNotesCreators(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')
@@ -169,12 +169,12 @@ describe('getView', () => {
 
   it('"Add a support need" button should NOT be present when readOnlyMode = true', async () => {
     stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'ATTITUDES_THINKING_AND_BEHAVIOUR')
+    stubCaseNotesCreators(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/attitudes-thinking-and-behaviour?prisonerNumber=A1234DY')

@@ -154,12 +154,12 @@ describe('getView', () => {
   })
 
   it('"Add a support need" button should be present when readOnlyMode = false', async () => {
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    stubCaseNotesCreators(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/children-families-and-communities?prisonerNumber=A1234DY')
@@ -169,12 +169,12 @@ describe('getView', () => {
 
   it('"Add a support need" button should NOT be present when readOnlyMode = true', async () => {
     stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'CHILDREN_FAMILIES_AND_COMMUNITY')
+    stubCaseNotesCreators(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/children-families-and-communities?prisonerNumber=A1234DY')

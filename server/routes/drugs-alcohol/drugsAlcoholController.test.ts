@@ -154,12 +154,12 @@ describe('getView', () => {
   })
 
   it('"Add a support need" button should be present when readOnlyMode = false', async () => {
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'DRUGS_AND_ALCOHOL')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'DRUGS_AND_ALCOHOL')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'DRUGS_AND_ALCOHOL')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'DRUGS_AND_ALCOHOL')
+    stubCaseNotesCreators(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/drugs-and-alcohol?prisonerNumber=A1234DY')
@@ -169,12 +169,12 @@ describe('getView', () => {
 
   it('"Add a support need" button should NOT be present when readOnlyMode = true', async () => {
     stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
-    const getCrsReferralsSpy = stubCrsReferrals(rpService, 'DRUGS_AND_ALCOHOL')
-    const getAssessmentInformationSpy = stubAssessmentInformation(rpService)
-    const getCaseNotesHistorySpy = stubCaseNotesHistory(rpService, 'DRUGS_AND_ALCOHOL')
-    const getCaseNotesCreatorsSpy = stubCaseNotesCreators(rpService)
-    const getPathwaySupportNeedsSummarySpy = stubPathwaySupportNeedsSummary(rpService)
-    const getPathwaySupportNeedsUpdatesSpy = stubPathwaySupportNeedsUpdates(rpService)
+    stubCrsReferrals(rpService, 'DRUGS_AND_ALCOHOL')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'DRUGS_AND_ALCOHOL')
+    stubCaseNotesCreators(rpService)
+    stubPathwaySupportNeedsSummary(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
 
     await request(app)
       .get('/drugs-and-alcohol?prisonerNumber=A1234DY')
