@@ -51,7 +51,7 @@
         {% include "../partials/supportNeedsUpdates.njk" %}
       {% endif %}
       {% include "../partials/caseNotes.njk" %}
-      {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+      {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway, readOnlyMode) }}
       {% include "../partials/crsReferrals.njk" %}
     </div>
   </div>
