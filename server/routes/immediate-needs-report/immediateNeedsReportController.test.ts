@@ -8,20 +8,26 @@ import {
   CachedQuestionAndAnswer,
   WorkingCachedAssessment,
 } from '../../data/model/immediateNeedsReport'
+
+import { parseHtmlDocument, stubFeatureFlagToTrue, stubPrisonerDetails } from '../testutils/testUtils'
+
 import Config from '../../s3Config'
 import { configHelper } from '../configHelperTest'
-import { parseHtmlDocument, stubPrisonerDetails } from '../testutils/testUtils'
 import { Services } from '../../services'
+import FeatureFlags from '../../featureFlag'
 
 let app: Express
 const { rpService, assessmentStateService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
+const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
   configHelper(config)
   stubPrisonerDetails(rpService)
 
   app = appWithAllRoutes({})
+
+  FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
 })
 
 afterEach(() => {
@@ -96,6 +102,17 @@ describe('completeAssessment', () => {
       'BCST2',
     )
   })
+
+  it('should return not found when readOnlyMode = true ', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['readOnlyMode'])
+
+    await request(app)
+      .post('/ImmediateNeedsReport/pathway/DRUGS_AND_ALCOHOL/complete?prisonerNumber=A1234DY')
+      .send({
+        assessmentType: 'BCST2',
+      })
+      .expect(404)
+  })
 })
 
 describe('getFirstPage', () => {
@@ -153,10 +170,17 @@ describe('getFirstPage', () => {
     )
     expect(fetchNextPageSpy).toHaveBeenCalledTimes(0)
   })
+
+  it('should return not found when readOnlyMode = true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['readOnlyMode'])
+    await request(app)
+      .get('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=A1234DY')
+      .expect(404)
+  })
 })
 
 describe('getView', () => {
-  it('should throw error  when existing assessment in cache has no version', async () => {
+  it('should throw error when existing assessment in cache has no version', async () => {
     const stateKey = {
       assessmentType: 'BCST2',
       prisonerNumber: 'A1234DY',
@@ -1346,9 +1370,40 @@ describe('startEdit', () => {
 
     expect(startEditSpy).toHaveBeenCalledWith(stateKey, 'MY_PAGE')
   })
+
+  it('should return not found when readOnlyMode = true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['readOnlyMode'])
+
+    const stateKey = {
+      assessmentType: 'BCST2',
+      prisonerNumber: 'A1234DY',
+      userId: 'user1',
+      pathway: 'ACCOMMODATION',
+    }
+
+    await request(app)
+      .get(
+        `/ImmediateNeedsReport/pathway/${stateKey.pathway}/page/MY_PAGE/start-edit?prisonerNumber=${stateKey.prisonerNumber}&type=BCST2`,
+      )
+      .expect(404)
+  })
 })
 
 describe('saveAnswerAndGetNextPage', () => {
+  it('should return not found when readOnlyMode = true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['readOnlyMode'])
+
+    await request(app)
+      .post('/ImmediateNeedsReport-next-page?type=BCST2&pathway=ACCOMMODATION&prisonerNumber=A1234DY')
+      .send({
+        assessmentType: 'BCST2',
+        pathway: 'ACCOMMODATION',
+        currentPageId: 'PAGE_1',
+        QUESTION_1: 'Answer text',
+      })
+      .expect(404)
+  })
+
   it('Uses version 2 from the cache', async () => {
     const apiAssessmentPage: ApiAssessmentPage = {
       id: 'PAGE_1',
@@ -1463,6 +1518,7 @@ describe('saveAnswerAndGetNextPage', () => {
 
     expect(getWorkingAssessmentVersionSpy).toHaveBeenCalledWith(stateKey)
   })
+
   it('Validation errors', async () => {
     const apiAssessmentPage: ApiAssessmentPage = {
       id: 'PAGE_1',
