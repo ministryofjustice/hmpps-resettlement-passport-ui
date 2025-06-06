@@ -3295,7 +3295,9 @@ This is another new line</p>
                   </tr>
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">Status</th>
-                    <td class="govuk-table__cell">Accepted</td>
+                    
+                        <td class="govuk-table__cell">Accepted</td>
+                    
                   </tr>
                   
                     <tr class="govuk-table__row">
@@ -3308,20 +3310,22 @@ This is another new line</p>
                 </table>
                 <br>
                 
-                
-                <button class="ghost-button delete-finance-button">Delete application</button>
-                <div class="confirm-delete-finance-form" hidden>
-                  <div class="govuk-button-group">
-                    <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
-                      <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                      </button>
-                      <input type="hidden" name="prisonerNumber" value="A1234DY">
-                      <input type="hidden" name="financeId" value="12">
-                      <input type="hidden" name="_csrf" value=""/>
-                    </form>
-                    <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
-                  </div>
-                </div>
+                    
+                    
+                    <button class="ghost-button delete-finance-button">Delete application</button>
+                    <div class="confirm-delete-finance-form" hidden>
+                      <div class="govuk-button-group">
+                        <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
+                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                          </button>
+                          <input type="hidden" name="prisonerNumber" value="A1234DY">
+                          <input type="hidden" name="financeId" value="12">
+                          <input type="hidden" name="_csrf" value=""/>
+                        </form>
+                        <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
+                      </div>
+                    </div>
+                 
                 
                 
                   
@@ -5032,7 +5036,9 @@ This is another new line</p>
                   </tr>
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">Status</th>
-                    <td class="govuk-table__cell">Accepted</td>
+                    
+                        <td class="govuk-table__cell">Accepted</td>
+                    
                   </tr>
                   
                     <tr class="govuk-table__row">
@@ -5045,20 +5051,22 @@ This is another new line</p>
                 </table>
                 <br>
                 
-                
-                <button class="ghost-button delete-finance-button">Delete application</button>
-                <div class="confirm-delete-finance-form" hidden>
-                  <div class="govuk-button-group">
-                    <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
-                      <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                      </button>
-                      <input type="hidden" name="prisonerNumber" value="A1234DY">
-                      <input type="hidden" name="financeId" value="12">
-                      <input type="hidden" name="_csrf" value=""/>
-                    </form>
-                    <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
-                  </div>
-                </div>
+                    
+                    
+                    <button class="ghost-button delete-finance-button">Delete application</button>
+                    <div class="confirm-delete-finance-form" hidden>
+                      <div class="govuk-button-group">
+                        <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
+                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                          </button>
+                          <input type="hidden" name="prisonerNumber" value="A1234DY">
+                          <input type="hidden" name="financeId" value="12">
+                          <input type="hidden" name="_csrf" value=""/>
+                        </form>
+                        <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
+                      </div>
+                    </div>
+                 
                 
                 
                   
