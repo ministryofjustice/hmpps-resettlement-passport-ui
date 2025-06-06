@@ -2,7 +2,7 @@
   "version": "20241120",
   "banner": {
     "date": "20 Nov 2024",
-    "bodyText": "When you input immediate needs or pre-release report answers, you can now:",
+    "bodyText": ["When you input immediate needs or pre-release report answers, you can now:"],
     "bulletPoints": [
       "add context to most of the answers",
       "answer all the questions for each pathway on a single page and identify support needs on a new page",

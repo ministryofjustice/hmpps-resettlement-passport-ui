@@ -2,7 +2,7 @@
   "version": "20250114",
   "banner": {
     "date": "14 Jan 2025",
-    "bodyText": "You can now:",
+    "bodyText": ["You can now:"],
     "bulletPoints": [
       "assign people in prison to a resettlement worker",
       "see how many people are assigned to each resettlement worker (staff capacity)"
