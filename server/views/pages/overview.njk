@@ -63,7 +63,7 @@
 <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-0">
   {{ titleAndIntro(pathway) }}
   {% set releaseDateDays = prisonerData.personalDetails.releaseDate | getDaysFromDate %}
-  {% if prisonerData.assessmentRequired and prisonerData.preReleaseSubmitted === false %}
+  {% if (prisonerData.assessmentRequired and prisonerData.preReleaseSubmitted === false) and not readOnlyMode %}
     {{ incompleteImmediateNeedsReport(pathway, prisonerData) }}
   {% elif (releaseDateDays.daysDiff <= 84 or releaseDateDays.isPast) and prisonerData.resettlementReviewAvailable === true %}
     {{preReleaseRequired(pathway, prisonerData)}}
