@@ -64,7 +64,7 @@
           <h3 class="app-summary-card__title">
             Finance
           </h3>
-          {% if finance.error %}
+          {% if finance.error and not readOnlyMode %}
             <span class="right">
                 <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
                    class="govuk-button">Add a bank account application</a>
@@ -90,7 +90,13 @@
                   </tr>
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">Status</th>
-                    <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
+                    {% if readOnlyMode and (finance.currentStatus === "Pending" or finance.currentStatus === "Returned incomplete" or finance.currentStatus === "Returned inaccurate") %}
+                    <td class="govuk-table__cell">
+                        <p>{{ finance.currentStatus }}</p>
+                        <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
+                    {% else %}
+                        <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
+                    {% endif %}
                   </tr>
                   {% if finance.bankResponseDate and finance.currentStatus !== 'Returned incomplete' and finance.currentStatus !== 'Returned inaccurate' %}
                     <tr class="govuk-table__row">
@@ -114,35 +120,37 @@
                   </tbody>
                 </table>
                 <br>
-                {% if finance.currentStatus === 'Pending' %}
-                  <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
-                    <button class="govuk-button govuk-button--secondary">
-                      Update application
-                    </button>
-                  </a>
-                  <br>
-                {% endif %}
-                {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
-                  <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}&applicationType=resubmit">
-                    <button class="govuk-button">
-                      Resubmit application
-                    </button>
-                  </a>
-                  <br>
-                {% endif %}
-                <button class="ghost-button delete-finance-button">Delete application</button>
-                <div class="confirm-delete-finance-form" hidden>
-                  <div class="govuk-button-group">
-                    <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
-                      <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                      </button>
-                      <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-                      <input type="hidden" name="financeId" value="{{ finance.id }}">
-                      <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                    </form>
-                    <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
-                  </div>
-                </div>
+                {% if not readOnlyMode %}
+                    {% if finance.currentStatus === 'Pending' %}
+                      <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
+                        <button class="govuk-button govuk-button--secondary">
+                          Update application
+                        </button>
+                      </a>
+                      <br>
+                    {% endif %}
+                    {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
+                      <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}&applicationType=resubmit">
+                        <button class="govuk-button">
+                          Resubmit application
+                        </button>
+                      </a>
+                      <br>
+                    {% endif %}
+                    <button class="ghost-button delete-finance-button">Delete application</button>
+                    <div class="confirm-delete-finance-form" hidden>
+                      <div class="govuk-button-group">
+                        <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
+                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                          </button>
+                          <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                          <input type="hidden" name="financeId" value="{{ finance.id }}">
+                          <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                        </form>
+                        <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
+                      </div>
+                    </div>
+                 {% endif %}
                 {% set showDetails = false %}
                 {% for log in finance.logs %}
                   {% if log.status === 'Returned inaccurate' or log.status === 'Returned incomplete' %}
