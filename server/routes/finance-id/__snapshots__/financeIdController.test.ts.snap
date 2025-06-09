@@ -7421,7 +7421,9 @@ This is another new line</p>
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">Status</th>
                     
-                        <td class="govuk-table__cell">Returned incomplete</td>
+                    <td class="govuk-table__cell">
+                        <p>Returned incomplete</p>
+                        <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
                     
                   </tr>
                   
