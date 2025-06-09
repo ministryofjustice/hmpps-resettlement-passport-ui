@@ -90,7 +90,7 @@
                   </tr>
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">Status</th>
-                    {% if readOnlyMode and finance.currentStatus === "Pending" %}
+                    {% if readOnlyMode and (finance.currentStatus === "Pending" or finance.currentStatus === "Returned incomplete" or finance.currentStatus === "Returned inaccurate") %}
                     <td class="govuk-table__cell">
                         <p>{{ finance.currentStatus }}</p>
                         <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
