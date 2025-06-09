@@ -909,12 +909,16 @@ This is another new line</p>
           
             
           
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence">
-                Add an ID application
-              </a>
-            </span>
+            
+          
+          
+              <span class="right">
+                  <a class="govuk-button"
+                     href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence,Driving licence">
+                    Add an ID application
+                  </a>
+              </span>
+          
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -963,7 +967,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Complete</td>
+                        
+                          <td class="govuk-table__cell">Complete</td>
+                        
                       </tr>
                       
                       
@@ -971,22 +977,24 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="13">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="13">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
                   </div>
                 
-                  <div class="">
+                  <div class="govuk-!-margin-bottom-8">
                     <h3 class="govuk-heading-s">ID 2</h3>
                     <table class="govuk-table">
                       <tbody class="govuk-table__body">
@@ -1016,7 +1024,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Rejected</td>
+                        
+                          <td class="govuk-table__cell">Rejected</td>
+                        
                       </tr>
                       
                       
@@ -1024,19 +1034,85 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="17">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="17">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
+                  </div>
+                
+                  <div class="">
+                    <h3 class="govuk-heading-s">ID 3</h3>
+                    <table class="govuk-table">
+                      <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Type</th>
+                        <td class="govuk-table__cell">Driving licence</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application submitted</th>
+                        <td class="govuk-table__cell">12 September 2024</td>
+                      </tr>
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence type</th>
+                          <td class="govuk-table__cell">Full</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence application location</th>
+                          <td class="govuk-table__cell">2024-09-12T14:45:02</td>
+                        </tr>
+                      
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Cost of application</th>
+                          <td class="govuk-table__cell">£45</td>
+                        </tr>
+                      
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application status</th>
+                        
+                          <td class="govuk-table__cell">Pending</td>
+                        
+                      </tr>
+                      
+                      
+                      </tbody>
+                    </table>
+                    <br>
+                    
+                        
+                          <a href="/finance-and-id/update-id-status/?prisonerNumber=A1234DY&applicationId=18&idType=Driving licence&applicationSubmittedDate=2024-09-12T14:45:02">
+                            <button class="govuk-button govuk-button--secondary">
+                              Update application
+                            </button>
+                          </a>
+                          <br>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="18">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
                   </div>
                 
               
@@ -1759,12 +1835,14 @@ exports[`getView Happy path with default query params and no data from endpoints
           </h3>
           
           
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=">
-                Add an ID application
-              </a>
-            </span>
+          
+              <span class="right">
+                  <a class="govuk-button"
+                     href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=">
+                    Add an ID application
+                  </a>
+              </span>
+          
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -2650,12 +2728,16 @@ This is another new line</p>
           
             
           
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence">
-                Add an ID application
-              </a>
-            </span>
+            
+          
+          
+              <span class="right">
+                  <a class="govuk-button"
+                     href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence,Driving licence">
+                    Add an ID application
+                  </a>
+              </span>
+          
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -2704,7 +2786,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Complete</td>
+                        
+                          <td class="govuk-table__cell">Complete</td>
+                        
                       </tr>
                       
                       
@@ -2712,22 +2796,24 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="13">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="13">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
                   </div>
                 
-                  <div class="">
+                  <div class="govuk-!-margin-bottom-8">
                     <h3 class="govuk-heading-s">ID 2</h3>
                     <table class="govuk-table">
                       <tbody class="govuk-table__body">
@@ -2757,7 +2843,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Rejected</td>
+                        
+                          <td class="govuk-table__cell">Rejected</td>
+                        
                       </tr>
                       
                       
@@ -2765,19 +2853,85 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="17">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="17">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
+                  </div>
+                
+                  <div class="">
+                    <h3 class="govuk-heading-s">ID 3</h3>
+                    <table class="govuk-table">
+                      <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Type</th>
+                        <td class="govuk-table__cell">Driving licence</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application submitted</th>
+                        <td class="govuk-table__cell">12 September 2024</td>
+                      </tr>
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence type</th>
+                          <td class="govuk-table__cell">Full</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence application location</th>
+                          <td class="govuk-table__cell">2024-09-12T14:45:02</td>
+                        </tr>
+                      
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Cost of application</th>
+                          <td class="govuk-table__cell">£45</td>
+                        </tr>
+                      
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application status</th>
+                        
+                          <td class="govuk-table__cell">Pending</td>
+                        
+                      </tr>
+                      
+                      
+                      </tbody>
+                    </table>
+                    <br>
+                    
+                        
+                          <a href="/finance-and-id/update-id-status/?prisonerNumber=A1234DY&applicationId=18&idType=Driving licence&applicationSubmittedDate=2024-09-12T14:45:02">
+                            <button class="govuk-button govuk-button--secondary">
+                              Update application
+                            </button>
+                          </a>
+                          <br>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="18">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
                   </div>
                 
               
@@ -3881,12 +4035,16 @@ This is another new line</p>
           
             
           
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence">
-                Add an ID application
-              </a>
-            </span>
+            
+          
+          
+              <span class="right">
+                  <a class="govuk-button"
+                     href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence,Driving licence">
+                    Add an ID application
+                  </a>
+              </span>
+          
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -3935,7 +4093,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Complete</td>
+                        
+                          <td class="govuk-table__cell">Complete</td>
+                        
                       </tr>
                       
                       
@@ -3943,22 +4103,24 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="13">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="13">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
                   </div>
                 
-                  <div class="">
+                  <div class="govuk-!-margin-bottom-8">
                     <h3 class="govuk-heading-s">ID 2</h3>
                     <table class="govuk-table">
                       <tbody class="govuk-table__body">
@@ -3988,7 +4150,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Rejected</td>
+                        
+                          <td class="govuk-table__cell">Rejected</td>
+                        
                       </tr>
                       
                       
@@ -3996,19 +4160,85 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="17">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="17">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
+                  </div>
+                
+                  <div class="">
+                    <h3 class="govuk-heading-s">ID 3</h3>
+                    <table class="govuk-table">
+                      <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Type</th>
+                        <td class="govuk-table__cell">Driving licence</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application submitted</th>
+                        <td class="govuk-table__cell">12 September 2024</td>
+                      </tr>
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence type</th>
+                          <td class="govuk-table__cell">Full</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence application location</th>
+                          <td class="govuk-table__cell">2024-09-12T14:45:02</td>
+                        </tr>
+                      
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Cost of application</th>
+                          <td class="govuk-table__cell">£45</td>
+                        </tr>
+                      
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application status</th>
+                        
+                          <td class="govuk-table__cell">Pending</td>
+                        
+                      </tr>
+                      
+                      
+                      </tbody>
+                    </table>
+                    <br>
+                    
+                        
+                          <a href="/finance-and-id/update-id-status/?prisonerNumber=A1234DY&applicationId=18&idType=Driving licence&applicationSubmittedDate=2024-09-12T14:45:02">
+                            <button class="govuk-button govuk-button--secondary">
+                              Update application
+                            </button>
+                          </a>
+                          <br>
+                        
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="A1234DY">
+                              <input type="hidden" name="idId" value="18">
+                              <input type="hidden" name="_csrf" value=""/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  
                   </div>
                 
               
@@ -5056,12 +5286,9 @@ This is another new line</p>
           
             
           
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence">
-                Add an ID application
-              </a>
-            </span>
+            
+          
+          
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -5110,7 +5337,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Complete</td>
+                        
+                          <td class="govuk-table__cell">Complete</td>
+                        
                       </tr>
                       
                       
@@ -5118,22 +5347,9 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="13">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
                   </div>
                 
-                  <div class="">
+                  <div class="govuk-!-margin-bottom-8">
                     <h3 class="govuk-heading-s">ID 2</h3>
                     <table class="govuk-table">
                       <tbody class="govuk-table__body">
@@ -5163,7 +5379,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Rejected</td>
+                        
+                          <td class="govuk-table__cell">Rejected</td>
+                        
                       </tr>
                       
                       
@@ -5171,19 +5389,50 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="17">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                  </div>
+                
+                  <div class="">
+                    <h3 class="govuk-heading-s">ID 3</h3>
+                    <table class="govuk-table">
+                      <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Type</th>
+                        <td class="govuk-table__cell">Driving licence</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application submitted</th>
+                        <td class="govuk-table__cell">12 September 2024</td>
+                      </tr>
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence type</th>
+                          <td class="govuk-table__cell">Full</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence application location</th>
+                          <td class="govuk-table__cell">2024-09-12T14:45:02</td>
+                        </tr>
+                      
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Cost of application</th>
+                          <td class="govuk-table__cell">£45</td>
+                        </tr>
+                      
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application status</th>
+                        
+                          <td class="govuk-table__cell">
+                            <p>Pending</p>
+                            <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
+                        
+                      </tr>
+                      
+                      
+                      </tbody>
+                    </table>
+                    <br>
+                    
                   </div>
                 
               
@@ -6257,12 +6506,9 @@ This is another new line</p>
           
             
           
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence">
-                Add an ID application
-              </a>
-            </span>
+            
+          
+          
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -6311,7 +6557,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Complete</td>
+                        
+                          <td class="govuk-table__cell">Complete</td>
+                        
                       </tr>
                       
                       
@@ -6319,22 +6567,9 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="13">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
                   </div>
                 
-                  <div class="">
+                  <div class="govuk-!-margin-bottom-8">
                     <h3 class="govuk-heading-s">ID 2</h3>
                     <table class="govuk-table">
                       <tbody class="govuk-table__body">
@@ -6364,7 +6599,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Rejected</td>
+                        
+                          <td class="govuk-table__cell">Rejected</td>
+                        
                       </tr>
                       
                       
@@ -6372,19 +6609,50 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="17">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                  </div>
+                
+                  <div class="">
+                    <h3 class="govuk-heading-s">ID 3</h3>
+                    <table class="govuk-table">
+                      <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Type</th>
+                        <td class="govuk-table__cell">Driving licence</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application submitted</th>
+                        <td class="govuk-table__cell">12 September 2024</td>
+                      </tr>
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence type</th>
+                          <td class="govuk-table__cell">Full</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence application location</th>
+                          <td class="govuk-table__cell">2024-09-12T14:45:02</td>
+                        </tr>
+                      
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Cost of application</th>
+                          <td class="govuk-table__cell">£45</td>
+                        </tr>
+                      
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application status</th>
+                        
+                          <td class="govuk-table__cell">
+                            <p>Pending</p>
+                            <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
+                        
+                      </tr>
+                      
+                      
+                      </tbody>
+                    </table>
+                    <br>
+                    
                   </div>
                 
               
@@ -7477,12 +7745,9 @@ This is another new line</p>
           
             
           
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence">
-                Add an ID application
-              </a>
-            </span>
+            
+          
+          
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -7531,7 +7796,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Complete</td>
+                        
+                          <td class="govuk-table__cell">Complete</td>
+                        
                       </tr>
                       
                       
@@ -7539,22 +7806,9 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="13">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
                   </div>
                 
-                  <div class="">
+                  <div class="govuk-!-margin-bottom-8">
                     <h3 class="govuk-heading-s">ID 2</h3>
                     <table class="govuk-table">
                       <tbody class="govuk-table__body">
@@ -7584,7 +7838,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Rejected</td>
+                        
+                          <td class="govuk-table__cell">Rejected</td>
+                        
                       </tr>
                       
                       
@@ -7592,19 +7848,50 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="17">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                  </div>
+                
+                  <div class="">
+                    <h3 class="govuk-heading-s">ID 3</h3>
+                    <table class="govuk-table">
+                      <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Type</th>
+                        <td class="govuk-table__cell">Driving licence</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application submitted</th>
+                        <td class="govuk-table__cell">12 September 2024</td>
+                      </tr>
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence type</th>
+                          <td class="govuk-table__cell">Full</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence application location</th>
+                          <td class="govuk-table__cell">2024-09-12T14:45:02</td>
+                        </tr>
+                      
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Cost of application</th>
+                          <td class="govuk-table__cell">£45</td>
+                        </tr>
+                      
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application status</th>
+                        
+                          <td class="govuk-table__cell">
+                            <p>Pending</p>
+                            <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
+                        
+                      </tr>
+                      
+                      
+                      </tbody>
+                    </table>
+                    <br>
+                    
                   </div>
                 
               
@@ -8678,12 +8965,9 @@ This is another new line</p>
           
             
           
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber=A1234DY&existingIdTypes=Birth certificate,Driving licence">
-                Add an ID application
-              </a>
-            </span>
+            
+          
+          
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -8732,7 +9016,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Complete</td>
+                        
+                          <td class="govuk-table__cell">Complete</td>
+                        
                       </tr>
                       
                       
@@ -8740,22 +9026,9 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="13">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
                   </div>
                 
-                  <div class="">
+                  <div class="govuk-!-margin-bottom-8">
                     <h3 class="govuk-heading-s">ID 2</h3>
                     <table class="govuk-table">
                       <tbody class="govuk-table__body">
@@ -8785,7 +9058,9 @@ This is another new line</p>
                       
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">Rejected</td>
+                        
+                          <td class="govuk-table__cell">Rejected</td>
+                        
                       </tr>
                       
                       
@@ -8793,19 +9068,50 @@ This is another new line</p>
                     </table>
                     <br>
                     
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="A1234DY">
-                          <input type="hidden" name="idId" value="17">
-                          <input type="hidden" name="_csrf" value=""/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                  </div>
+                
+                  <div class="">
+                    <h3 class="govuk-heading-s">ID 3</h3>
+                    <table class="govuk-table">
+                      <tbody class="govuk-table__body">
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Type</th>
+                        <td class="govuk-table__cell">Driving licence</td>
+                      </tr>
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application submitted</th>
+                        <td class="govuk-table__cell">12 September 2024</td>
+                      </tr>
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence type</th>
+                          <td class="govuk-table__cell">Full</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Driving licence application location</th>
+                          <td class="govuk-table__cell">2024-09-12T14:45:02</td>
+                        </tr>
+                      
+                      
+                        <tr class="govuk-table__row">
+                          <th scope="row" class="govuk-table__header">Cost of application</th>
+                          <td class="govuk-table__cell">£45</td>
+                        </tr>
+                      
+                      <tr class="govuk-table__row">
+                        <th scope="row" class="govuk-table__header">Application status</th>
+                        
+                          <td class="govuk-table__cell">
+                            <p>Pending</p>
+                            <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
+                        
+                      </tr>
+                      
+                      
+                      </tbody>
+                    </table>
+                    <br>
+                    
                   </div>
                 
               

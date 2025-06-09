@@ -9,5 +9,5 @@ export default (router: Router, services: Services) => {
 
   router.get('/finance-and-id', getValidationForPathwayQuery(), [financeIdController.getView])
   router.post('/finance-and-id/bank-account-delete', [readOnlyGuard, financeIdController.postBankAccountDelete])
-  router.post('/finance-and-id/id-delete', [financeIdController.postIdDelete])
+  router.post('/finance-and-id/id-delete', [readOnlyGuard, financeIdController.postIdDelete])
 }
