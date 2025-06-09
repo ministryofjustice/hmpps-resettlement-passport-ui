@@ -735,6 +735,27 @@ export function stubFetchId(rpService: RpService) {
         status: 'rejected',
         dateIdReceived: null,
       },
+      {
+        id: 18,
+        idType: {
+          name: 'Driving licence',
+        },
+        applicationSubmittedDate: '2024-09-12T14:45:02',
+        isPriorityApplication: false,
+        costOfApplication: 45,
+        refundAmount: 12,
+        haveGro: true,
+        isUkNationalBornOverseas: true,
+        countryBornIn: 'Andorra',
+        caseNumber: '7891',
+        courtDetails: 'detail',
+        driversLicenceType: 'Full',
+        driversLicenceApplicationMadeAt: '2024-09-12T14:45:02',
+        isAddedToPersonalItems: false,
+        addedToPersonalItemsDate: null,
+        status: 'pending',
+        dateIdReceived: null,
+      },
     ],
   })
 }
