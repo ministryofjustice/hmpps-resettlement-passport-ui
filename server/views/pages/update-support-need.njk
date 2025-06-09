@@ -1,10 +1,12 @@
 {% extends "../partials/layout.njk" %}
 {% from "../macros/breadCrumb.njk" import breadCrumb %}
+{% from "../macros/statusDetailsReadOnlyMessaging.njk" import statusDetailsReadOnlyMessaging %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% set pageTitle = applicationName + " - update support need"%}
 {% set mainClasses = "app-container govuk-body" %}
+{% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
 
 {% block header %}
   {% if feComponents.header %}
@@ -63,13 +65,17 @@
         {{ existingPrisonerNeed.title }}
       </h1>
 
+      {% if readOnlyMode %}
+      <h3 class="govuk-heading-m">Previous updates</h3>
+      {% else %}
       <details class="govuk-details">
         <summary class="govuk-details__summary">
           <span class="govuk-details__summary-text">
             See previous updates
           </span>
         </summary>
-        <div class="govuk-details__text">
+      {% endif %}
+        <div class="{% if not readOnlyMode %} govuk-details__text {% else %} govuk-details {% endif %}">
           <div class="govuk-warning-text">
             <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
             <strong class="govuk-warning-text__text govuk-!-font-weight-regular">
@@ -85,7 +91,7 @@
                 <p class="govuk-body">
                   <strong>Status set to: </strong>
                   {% set tagColour = "govuk-tag--" + (update.status | getSupportNeedsColour) %}
-                  <span class="govuk-tag {{ tagColour }}">{{ update.status | getSupportNeedsStatus }}</span>
+                  <span class="govuk-tag {{ tagColour }}">{{ update.status | getSupportNeedsStatus }} {{ statusDetailsReadOnlyMessaging(readOnlyMode) }}</span>
                 </p>
               {% endif %}
               {% if update.isPrisonResponsible or update.isProbationResponsible %}
@@ -105,8 +111,11 @@
             </div>
           {% endfor %}
         </div>
+      {% if not readOnlyMode %}
       </details>
+      {% endif %}
 
+      {% if not readOnlyMode %}
       <form action="/support-needs/{{ pathway | getUrlFromName }}/update/{{ prisonerNeedId }}" method="post">
         <div class="govuk-form-group">
 
@@ -182,6 +191,7 @@
         <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}" />
         <button class="govuk-button" type="submit">Update support need</button>
       </form>
+      {% endif %}
       <p class="govuk-body-s govuk-!-padding-bottom-4 govuk-!-padding-top-8">
         <a href="/{{ pathway | getUrlFromName }}?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}">Back to {{ pathway }}</a>
       </p>

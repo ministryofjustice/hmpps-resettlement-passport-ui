@@ -3,7 +3,7 @@ import request from 'supertest'
 import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import { Services } from '../../services'
 import FeatureFlags from '../../featureFlag'
-import { stubFeatureFlagToTrue, stubPrisonerDetails } from '../testutils/testUtils'
+import { stubFeatureFlagToFalse, stubFeatureFlagToTrue, stubPrisonerDetails } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 
@@ -18,6 +18,7 @@ beforeEach(() => {
   app = appWithAllRoutes({})
 
   FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
+  stubFeatureFlagToFalse(featureFlags)
   stubFeatureFlagToTrue(featureFlags, ['supportNeeds'])
 
   stubPrisonerDetails(rpService)
@@ -30,6 +31,60 @@ afterEach(() => {
 describe('SupportNeedUpdateController', () => {
   describe('getSupportNeedUpdateForm', () => {
     it('happy path', async () => {
+      const prisonerNumber = 'A1234DY'
+      const prisonerNeedId = '23'
+
+      const getPrisonerNeedByIdSpy = jest.spyOn(rpService, 'getPrisonerNeedById').mockResolvedValue({
+        title: 'Support need title',
+        isPrisonResponsible: true,
+        isProbationResponsible: false,
+        status: 'MET',
+        previousUpdates: [
+          {
+            id: 134,
+            title: 'Support need title',
+            status: 'MET',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            text: 'This is some update text 3',
+            createdBy: 'A user',
+            createdAt: '2024-12-12T12:00:00',
+          },
+          {
+            id: 133,
+            title: 'Support need title',
+            status: 'IN_PROGRESS',
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            text: 'This is some update text 2',
+            createdBy: 'B user',
+            createdAt: '2024-12-11T12:00:00',
+          },
+          {
+            id: 132,
+            title: 'Support need title',
+            status: 'NOT_STARTED',
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            text: 'This is some update text 1',
+            createdBy: 'A user',
+            createdAt: '2024-12-11T12:00:00',
+          },
+        ],
+      })
+
+      await request(app)
+        .get(`/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
+
+      expect(getPrisonerNeedByIdSpy).toHaveBeenCalledWith(prisonerNumber, prisonerNeedId)
+    })
+
+    it('should not display form when readOnlyMode = true', async () => {
+      stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
       const prisonerNumber = 'A1234DY'
       const prisonerNeedId = '23'
 
@@ -138,6 +193,24 @@ describe('SupportNeedUpdateController', () => {
         status: 'DECLINED',
         text: 'This is a comment',
       })
+    })
+
+    it('should return 404 when readOnlyMode = true', async () => {
+      stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+      const prisonerNumber = 'A1234DY'
+      const prisonerNeedId = '23'
+
+      jest.spyOn(rpService, 'patchSupportNeedById').mockImplementation()
+
+      await request(app)
+        .post(`/support-needs/accommodation/update/${prisonerNeedId}`)
+        .send({
+          prisonerNumber,
+          additionalDetails: 'This is a comment',
+          updateStatus: 'DECLINED',
+          responsibleStaff: ['PRISON', 'PROBATION'],
+        })
+        .expect(404)
     })
 
     it('error case - api error', async () => {

@@ -327,7 +327,9 @@ exports[`getView Add and change links should NOT be present when readOnlyMode = 
     </div>
     <div class="govuk-grid-column-three-quarters">
       
-        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
        
@@ -361,7 +363,9 @@ exports[`getView Add and change links should NOT be present when readOnlyMode = 
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  <span class="govuk-tag govuk-tag--orange">Support not started 
+  (status may be out of date)
+</span>
                 
               </td>
               <td class="govuk-table__cell">2</td>
@@ -386,7 +390,9 @@ exports[`getView Add and change links should NOT be present when readOnlyMode = 
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress 
+  (status may be out of date)
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -408,7 +414,9 @@ exports[`getView Add and change links should NOT be present when readOnlyMode = 
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  <span class="govuk-tag govuk-tag--purple">Support declined 
+  (status may be out of date)
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -427,7 +435,9 @@ exports[`getView Add and change links should NOT be present when readOnlyMode = 
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                  <span class="govuk-tag govuk-tag--green">Support met 
+  (status may be out of date)
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -439,7 +449,9 @@ exports[`getView Add and change links should NOT be present when readOnlyMode = 
     
   </div>
 </section>
-        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Health updates
@@ -473,7 +485,9 @@ exports[`getView Add and change links should NOT be present when readOnlyMode = 
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress 
+  (status may be out of date)
+</span>
                 </p>
               
               
@@ -501,7 +515,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                  <span class="govuk-tag govuk-tag--green">Support met 
+  (status may be out of date)
+</span>
                 </p>
               
               
@@ -529,7 +545,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  <span class="govuk-tag govuk-tag--orange">Support not started 
+  (status may be out of date)
+</span>
                 </p>
               
               
@@ -555,7 +573,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  <span class="govuk-tag govuk-tag--purple">Support declined 
+  (status may be out of date)
+</span>
                 </p>
               
               
@@ -1423,7 +1443,9 @@ exports[`getView Add and change links should be present when readOnlyMode = fals
     </div>
     <div class="govuk-grid-column-three-quarters">
       
-        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
        
@@ -1461,7 +1483,9 @@ exports[`getView Add and change links should be present when readOnlyMode = fals
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  <span class="govuk-tag govuk-tag--orange">Support not started 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">2</td>
@@ -1486,7 +1510,9 @@ exports[`getView Add and change links should be present when readOnlyMode = fals
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -1508,7 +1534,9 @@ exports[`getView Add and change links should be present when readOnlyMode = fals
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  <span class="govuk-tag govuk-tag--purple">Support declined 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -1527,7 +1555,9 @@ exports[`getView Add and change links should be present when readOnlyMode = fals
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                  <span class="govuk-tag govuk-tag--green">Support met 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -1539,7 +1569,9 @@ exports[`getView Add and change links should be present when readOnlyMode = fals
     
   </div>
 </section>
-        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Health updates
@@ -1573,7 +1605,9 @@ exports[`getView Add and change links should be present when readOnlyMode = fals
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress 
+  
+</span>
                 </p>
               
               
@@ -1601,7 +1635,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                  <span class="govuk-tag govuk-tag--green">Support met 
+  
+</span>
                 </p>
               
               
@@ -1629,7 +1665,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  <span class="govuk-tag govuk-tag--orange">Support not started 
+  
+</span>
                 </p>
               
               
@@ -1655,7 +1693,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  <span class="govuk-tag govuk-tag--purple">Support declined 
+  
+</span>
                 </p>
               
               
@@ -2531,7 +2571,9 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     </div>
     <div class="govuk-grid-column-three-quarters">
       
-        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
        
@@ -2569,7 +2611,9 @@ exports[`getView Happy path with default query params and data from endpoints 1`
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  <span class="govuk-tag govuk-tag--orange">Support not started 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">2</td>
@@ -2594,7 +2638,9 @@ exports[`getView Happy path with default query params and data from endpoints 1`
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -2616,7 +2662,9 @@ exports[`getView Happy path with default query params and data from endpoints 1`
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  <span class="govuk-tag govuk-tag--purple">Support declined 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -2635,7 +2683,9 @@ exports[`getView Happy path with default query params and data from endpoints 1`
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                  <span class="govuk-tag govuk-tag--green">Support met 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -2647,7 +2697,9 @@ exports[`getView Happy path with default query params and data from endpoints 1`
     
   </div>
 </section>
-        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Health updates
@@ -2681,7 +2733,9 @@ exports[`getView Happy path with default query params and data from endpoints 1`
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress 
+  
+</span>
                 </p>
               
               
@@ -2709,7 +2763,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                  <span class="govuk-tag govuk-tag--green">Support met 
+  
+</span>
                 </p>
               
               
@@ -2737,7 +2793,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  <span class="govuk-tag govuk-tag--orange">Support not started 
+  
+</span>
                 </p>
               
               
@@ -2763,7 +2821,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  <span class="govuk-tag govuk-tag--purple">Support declined 
+  
+</span>
                 </p>
               
               
@@ -3639,7 +3699,9 @@ exports[`getView Happy path with default query params and no data from endpoints
     </div>
     <div class="govuk-grid-column-three-quarters">
       
-        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
        
@@ -3654,7 +3716,9 @@ exports[`getView Happy path with default query params and no data from endpoints
     
   </div>
 </section>
-        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Health updates
@@ -4086,7 +4150,9 @@ exports[`getView Happy path with specified query params and data from endpoints 
     </div>
     <div class="govuk-grid-column-three-quarters">
       
-        <section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">Support needs</h3>
        
@@ -4124,7 +4190,9 @@ exports[`getView Happy path with specified query params and data from endpoints 
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  <span class="govuk-tag govuk-tag--orange">Support not started 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">2</td>
@@ -4149,7 +4217,9 @@ exports[`getView Happy path with specified query params and data from endpoints 
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -4171,7 +4241,9 @@ exports[`getView Happy path with specified query params and data from endpoints 
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  <span class="govuk-tag govuk-tag--purple">Support declined 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -4190,7 +4262,9 @@ exports[`getView Happy path with specified query params and data from endpoints 
               <td class="govuk-table__cell">
                 
                   
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                  <span class="govuk-tag govuk-tag--green">Support met 
+  
+</span>
                 
               </td>
               <td class="govuk-table__cell">4</td>
@@ -4202,7 +4276,9 @@ exports[`getView Happy path with specified query params and data from endpoints 
     
   </div>
 </section>
-        <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
+        
+
+<section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
       Health updates
@@ -4236,7 +4312,9 @@ exports[`getView Happy path with specified query params and data from endpoints 
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--yellow">Support in progress</span>
+                  <span class="govuk-tag govuk-tag--yellow">Support in progress 
+  
+</span>
                 </p>
               
               
@@ -4264,7 +4342,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--green">Support met</span>
+                  <span class="govuk-tag govuk-tag--green">Support met 
+  
+</span>
                 </p>
               
               
@@ -4292,7 +4372,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--orange">Support not started</span>
+                  <span class="govuk-tag govuk-tag--orange">Support not started 
+  
+</span>
                 </p>
               
               
@@ -4318,7 +4400,9 @@ It has a line break in</p>
                 <p>
                   <strong>Status set to: </strong>
                   
-                  <span class="govuk-tag govuk-tag--purple">Support declined</span>
+                  <span class="govuk-tag govuk-tag--purple">Support declined 
+  
+</span>
                 </p>
               
               
