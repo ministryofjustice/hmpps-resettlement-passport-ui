@@ -295,7 +295,6 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
       
       
       
-        
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -325,7 +324,6 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
     </section>
   </div>
 
-      
   
 </div>
 
@@ -1386,6 +1384,22 @@ exports[`prisonerOverview should display "reset profile" button and NO other tas
       
       
       
+  <div class="govuk-grid-column-one-third">
+    <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
+      <header class="app-summary-card__header">
+        <h3 class="app-summary-card__title">Actions:</h3>
+      </header>
+      <div class="app-summary-card__body">
+        
+          <a href="/resetProfile?prisonerNumber=A1234DY" class="govuk-button" id="reset-profile-btn" track-event-name="ResetReportsAndStatusesLinkClicked" track-event-prisoner-id="A1234DY">
+            Reset reports and support needs
+          </a>
+        
+        
+      </div>
+    </section>
+  </div>
+
   
 </div>
 
@@ -2400,7 +2414,6 @@ exports[`prisonerOverview should display "reset profile" button and other tasks 
       
       
       
-        
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -2430,7 +2443,6 @@ exports[`prisonerOverview should display "reset profile" button and other tasks 
     </section>
   </div>
 
-      
   
 </div>
 
@@ -3445,6 +3457,18 @@ exports[`prisonerOverview should display error when supportNeeds is enabled and 
       
       
       
+  <div class="govuk-grid-column-one-third">
+    <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
+      <header class="app-summary-card__header">
+        <h3 class="app-summary-card__title">Actions:</h3>
+      </header>
+      <div class="app-summary-card__body">
+        
+        
+      </div>
+    </section>
+  </div>
+
   
 </div>
 
@@ -4459,6 +4483,18 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
       
       
       
+  <div class="govuk-grid-column-one-third">
+    <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
+      <header class="app-summary-card__header">
+        <h3 class="app-summary-card__title">Actions:</h3>
+      </header>
+      <div class="app-summary-card__body">
+        
+        
+      </div>
+    </section>
+  </div>
+
   
 </div>
 
@@ -6637,7 +6673,6 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
       
       
       
-        
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -6667,7 +6702,6 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
     </section>
   </div>
 
-      
   
 </div>
 
@@ -7715,7 +7749,6 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
       
       
       
-        
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -7745,7 +7778,6 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
     </section>
   </div>
 
-      
   
 </div>
 
@@ -8793,7 +8825,6 @@ exports[`prisonerOverview should render the prisoner overview page without retri
       
       
       
-        
   <div class="govuk-grid-column-one-third">
     <section id="pathway-status" class="app-summary-card govuk-!-margin-bottom-8">
       <header class="app-summary-card__header">
@@ -8823,7 +8854,6 @@ exports[`prisonerOverview should render the prisoner overview page without retri
     </section>
   </div>
 
-      
   
 </div>
 

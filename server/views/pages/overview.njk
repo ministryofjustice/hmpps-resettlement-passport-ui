@@ -71,9 +71,7 @@
       {% elif prisonerData.resettlementReviewAvailable === false %}
         {{preReleaseComplete(pathway, prisonerData)}}
       {% endif %}
-      {% if tasksViewEnabled %}
-        {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, resetProfileEnabled, supportNeedsEnabled) }}
-      {% endif %}
+      {{ tasksDetails(prisonerNumber, tasksViewEnabled, csrfToken, resetProfileEnabled, supportNeedsEnabled) }}
   {% endif %}
 </div>
 
