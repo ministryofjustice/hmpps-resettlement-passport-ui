@@ -9,6 +9,8 @@ import {
   stubCaseNotesHistory,
   stubCrsReferrals,
   stubFetchFinance,
+  stubFetchFinancePending,
+  stubFetchFinanceReturnedIncomplete,
   stubFetchId,
   stubPathwaySupportNeedsSummary,
   stubPathwaySupportNeedsSummaryNoData,
@@ -168,7 +170,7 @@ describe('getView', () => {
     )
   })
 
-  it('Add and change links should be present when readOnlyMode = false', async () => {
+  it('ReadOnlyMode = false - show all add/update/delete buttons', async () => {
     stubCrsReferrals(rpService, 'FINANCE_AND_ID')
     stubAssessmentInformation(rpService)
     stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
@@ -184,13 +186,64 @@ describe('getView', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 
-  it('Add and change links should NOT be present when readOnlyMode = true', async () => {
+  it('ReadOnlyMode = true - hide all add/update/delete buttons', async () => {
     stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
     stubCrsReferrals(rpService, 'FINANCE_AND_ID')
     stubAssessmentInformation(rpService)
     stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
     stubCaseNotesCreators(rpService)
     stubFetchFinance(rpService)
+    stubFetchId(rpService)
+    stubPathwaySupportNeedsSummaryNoData(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('ReadOnlyMode = true - hide all add/update/delete buttons - with no existing bank account application (add button)', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    stubCrsReferrals(rpService, 'FINANCE_AND_ID')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
+    stubCaseNotesCreators(rpService)
+    stubRpServiceNoData(rpService, 'fetchFinance')
+    stubFetchId(rpService)
+    stubPathwaySupportNeedsSummaryNoData(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('ReadOnlyMode = true - hide all add/update/delete buttons - with pending bank account application (update button)', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    stubCrsReferrals(rpService, 'FINANCE_AND_ID')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
+    stubCaseNotesCreators(rpService)
+    stubFetchFinancePending(rpService)
+    stubFetchId(rpService)
+    stubPathwaySupportNeedsSummaryNoData(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('ReadOnlyMode = true - hide all add/update/delete buttons - with returned incomplete bank account application (resubmit button)', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    stubCrsReferrals(rpService, 'FINANCE_AND_ID')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
+    stubCaseNotesCreators(rpService)
+    stubFetchFinanceReturnedIncomplete(rpService)
     stubFetchId(rpService)
     stubPathwaySupportNeedsSummaryNoData(rpService)
     stubPathwaySupportNeedsUpdates(rpService)
