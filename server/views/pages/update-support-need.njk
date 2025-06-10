@@ -4,7 +4,9 @@
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% set pageTitle = applicationName + " - update support need"%}
+
+{% set suffix = 'update support need' if readOnlyMode else 'support need updates' %}
+{% set pageTitle = applicationName + ' - ' + suffix %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
 
@@ -113,9 +115,6 @@
         </div>
       {% if not readOnlyMode %}
       </details>
-      {% endif %}
-
-      {% if not readOnlyMode %}
       <form action="/support-needs/{{ pathway | getUrlFromName }}/update/{{ prisonerNeedId }}" method="post">
         <div class="govuk-form-group">
 
