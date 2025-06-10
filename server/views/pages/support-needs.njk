@@ -1,9 +1,11 @@
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-
+{% from "../macros/statusDetailsReadOnlyMessaging.njk" import statusDetailsReadOnlyMessaging %}
 {% extends "../partials/layout.njk" %}
 {% set pageTitle = applicationName + " - " + pathway | getNameFromUrl + " support needs" %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set prisonerNumber = prisonerData.personalDetails.prisonerNumber %}
+{% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
+
 {% block header %}
   {% if feComponents.header %}
     {{ feComponents.header | safe }}
@@ -76,10 +78,10 @@
                   </td>
                   <td class="govuk-table__cell">
                     {% if not supportNeed.status and supportNeed.numberOfUpdates === 0 %}
-                      <span class="govuk-tag govuk-tag--grey">Not set</span>
+                      <span class="govuk-tag govuk-tag--grey">Not set {{ statusDetailsReadOnlyMessaging(readOnlyMode) }}</span>
                     {% else %}
                       {% set tagColour = "govuk-tag--" + (supportNeed.status | getSupportNeedsColour) %}
-                      <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }}</span>
+                      <span class="govuk-tag {{ tagColour }}">{{ supportNeed.status | getSupportNeedsStatus }} {{ statusDetailsReadOnlyMessaging(readOnlyMode) }}</span>
                     {% endif %}
                   </td>
                   <td class="govuk-table__cell">{{ supportNeed.numberOfUpdates }}</td>
