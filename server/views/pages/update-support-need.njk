@@ -5,7 +5,7 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
-{% set suffix = 'update support need' if readOnlyMode else 'support need updates' %}
+{% set suffix = 'support need updates' if readOnlyMode else 'update support need' %}
 {% set pageTitle = applicationName + ' - ' + suffix %}
 {% set mainClasses = "app-container govuk-body" %}
 {% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
