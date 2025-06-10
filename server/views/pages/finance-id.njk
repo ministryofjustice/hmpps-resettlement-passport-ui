@@ -5,6 +5,7 @@
 {% set mainClasses = "app-container govuk-body" %}
 {% set pathwayStatus = prisonerData.pathways | filterByPathway(pathway | getEnumByName) %}
 {% set supportNeedsEnabled = features.SUPPORT_NEEDS | getFeatureFlag %}
+{% set readOnlyMode = features.READ_ONLY_MODE | getFeatureFlag %}
 
 {% block content %}
   <div class="govuk-grid-row govuk-!-padding-top-4 govuk-!-padding-bottom-4">
@@ -63,7 +64,7 @@
           <h3 class="app-summary-card__title">
             Finance
           </h3>
-          {% if finance.error %}
+          {% if finance.error and not readOnlyMode %}
             <span class="right">
                 <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}"
                    class="govuk-button">Add a bank account application</a>
@@ -89,7 +90,13 @@
                   </tr>
                   <tr class="govuk-table__row">
                     <th scope="row" class="govuk-table__header">Status</th>
-                    <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
+                    {% if readOnlyMode and (finance.currentStatus === "Pending" or finance.currentStatus === "Returned incomplete" or finance.currentStatus === "Returned inaccurate") %}
+                    <td class="govuk-table__cell">
+                        <p>{{ finance.currentStatus }}</p>
+                        <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
+                    {% else %}
+                        <td class="govuk-table__cell">{{ finance.currentStatus }}</td>
+                    {% endif %}
                   </tr>
                   {% if finance.bankResponseDate and finance.currentStatus !== 'Returned incomplete' and finance.currentStatus !== 'Returned inaccurate' %}
                     <tr class="govuk-table__row">
@@ -113,35 +120,37 @@
                   </tbody>
                 </table>
                 <br>
-                {% if finance.currentStatus === 'Pending' %}
-                  <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
-                    <button class="govuk-button govuk-button--secondary">
-                      Update application
-                    </button>
-                  </a>
-                  <br>
-                {% endif %}
-                {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
-                  <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}&applicationType=resubmit">
-                    <button class="govuk-button">
-                      Resubmit application
-                    </button>
-                  </a>
-                  <br>
-                {% endif %}
-                <button class="ghost-button delete-finance-button">Delete application</button>
-                <div class="confirm-delete-finance-form" hidden>
-                  <div class="govuk-button-group">
-                    <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
-                      <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                      </button>
-                      <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-                      <input type="hidden" name="financeId" value="{{ finance.id }}">
-                      <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                    </form>
-                    <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
-                  </div>
-                </div>
+                {% if not readOnlyMode %}
+                    {% if finance.currentStatus === 'Pending' %}
+                      <a href="/finance-and-id/update-bank-account-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}">
+                        <button class="govuk-button govuk-button--secondary">
+                          Update application
+                        </button>
+                      </a>
+                      <br>
+                    {% endif %}
+                    {% if finance.currentStatus === 'Returned incomplete' or finance.currentStatus === 'Returned inaccurate' %}
+                      <a href="/finance-and-id/add-a-bank-account/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ finance.id }}&applicationType=resubmit">
+                        <button class="govuk-button">
+                          Resubmit application
+                        </button>
+                      </a>
+                      <br>
+                    {% endif %}
+                    <button class="ghost-button delete-finance-button">Delete application</button>
+                    <div class="confirm-delete-finance-form" hidden>
+                      <div class="govuk-button-group">
+                        <form action="/finance-and-id/bank-account-delete" method="post" novalidate>
+                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                          </button>
+                          <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                          <input type="hidden" name="financeId" value="{{ finance.id }}">
+                          <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                        </form>
+                        <button class="ghost-button cancel-delete-finance-button" hidden>Cancel delete application</button>
+                      </div>
+                    </div>
+                 {% endif %}
                 {% set showDetails = false %}
                 {% for log in finance.logs %}
                   {% if log.status === 'Returned inaccurate' or log.status === 'Returned incomplete' %}
@@ -195,12 +204,14 @@
           {% for id in id.results %}
             {% set existingIdTypes = existingIdTypes.concat([id.idType.name]) %}
           {% endfor %}
-          <span class="right">
-              <a class="govuk-button"
-                 href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&existingIdTypes={{ existingIdTypes }}">
-                Add an ID application
-              </a>
-            </span>
+          {% if not readOnlyMode %}
+              <span class="right">
+                  <a class="govuk-button"
+                     href="/finance-and-id/add-an-id/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&existingIdTypes={{ existingIdTypes }}">
+                    Add an ID application
+                  </a>
+              </span>
+          {% endif %}
         </header>
         <div class="app-summary-card__body">
           <div class="govuk-grid-row">
@@ -271,7 +282,13 @@
                       {% endif %}
                       <tr class="govuk-table__row">
                         <th scope="row" class="govuk-table__header">Application status</th>
-                        <td class="govuk-table__cell">{{ id.status | capitalize }}</td>
+                        {% if readOnlyMode and id.status === "pending" %}
+                          <td class="govuk-table__cell">
+                            <p>{{ id.status | capitalize }}</p>
+                            <p class="govuk-tag govuk-tag--red">Status may be out of date</p>
+                        {% else %}
+                          <td class="govuk-table__cell">{{ id.status | capitalize }}</td>
+                        {% endif %}
                       </tr>
                       {% if id.status === 'Rejected' and not(id.idType.name === "National Insurance Number Number letter") %}
                         <tr class="govuk-table__row">
@@ -299,27 +316,29 @@
                       </tbody>
                     </table>
                     <br>
-                    {% if id.status === 'pending' %}
-                      <a href="/finance-and-id/update-id-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ id.id }}&idType={{ id.idType.name }}&applicationSubmittedDate={{ id.applicationSubmittedDate }}">
-                        <button class="govuk-button govuk-button--secondary">
-                          Update application
-                        </button>
-                      </a>
-                      <br>
-                    {% endif %}
-                    <button class="ghost-button delete-id-button">Delete application</button>
-                    <div class="confirm-delete-id-form" hidden>
-                      <div class="govuk-button-group">
-                        <form action="/finance-and-id/id-delete" method="POST" novalidate>
-                          <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
-                          </button>
-                          <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
-                          <input type="hidden" name="idId" value="{{ id.id }}">
-                          <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
-                        </form>
-                        <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
-                      </div>
-                    </div>
+                    {% if not readOnlyMode %}
+                        {% if id.status === 'pending'%}
+                          <a href="/finance-and-id/update-id-status/?prisonerNumber={{ prisonerData.personalDetails.prisonerNumber }}&applicationId={{ id.id }}&idType={{ id.idType.name }}&applicationSubmittedDate={{ id.applicationSubmittedDate }}">
+                            <button class="govuk-button govuk-button--secondary">
+                              Update application
+                            </button>
+                          </a>
+                          <br>
+                        {% endif %}
+                        <button class="ghost-button delete-id-button">Delete application</button>
+                        <div class="confirm-delete-id-form" hidden>
+                          <div class="govuk-button-group">
+                            <form action="/finance-and-id/id-delete" method="POST" novalidate>
+                              <button class="govuk-button govuk-button--warning" type="submit" data-prevent-double-click="true">Confirm delete application
+                              </button>
+                              <input type="hidden" name="prisonerNumber" value="{{ prisonerData.personalDetails.prisonerNumber }}">
+                              <input type="hidden" name="idId" value="{{ id.id }}">
+                              <input type="hidden" name="_csrf" value="{{ csrfToken }}"/>
+                            </form>
+                            <button class="ghost-button cancel-delete-id-button" hidden>Cancel delete application</button>
+                          </div>
+                        </div>
+                  {% endif %}
                   </div>
                 {% endfor %}
               {% endif %}
@@ -327,7 +346,7 @@
           </div>
         </div>
       </section>
-      {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway) }}
+      {{ assessmentInformation(assessmentData, prisonerData.personalDetails.prisonerNumber, pathway, readOnlyMode) }}
       {% include "../partials/crsReferrals.njk" %}
     </div>
   </div>

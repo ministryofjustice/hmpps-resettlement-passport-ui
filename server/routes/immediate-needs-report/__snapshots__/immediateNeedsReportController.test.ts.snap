@@ -285,8 +285,6 @@ exports[`getView get check your answers - v1 of report 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -601,8 +599,6 @@ exports[`getView get check your answers - v2 of report 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -952,8 +948,6 @@ exports[`getView optional text appears 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>
@@ -1155,7 +1149,7 @@ exports[`getView should render an address question: address fieldset 1`] = `
     </fieldset>"
 `;
 
-exports[`getView should throw error  when existing assessment in cache has no version 1`] = `
+exports[`getView should throw error when existing assessment in cache has no version 1`] = `
 "<!DOCTYPE html>
 <html lang="en" class="govuk-template">
   <head>
@@ -1633,8 +1627,6 @@ exports[`saveAnswerAndGetNextPage Validation summary errors 1`] = `
     <span class="govuk-phase-banner__text">
       This is a new service – your <a class="govuk-link" target="_blank" rel="noopener noreferrer"
                                                             href="https://www.smartsurvey.co.uk/s/QQV2UP">feedback</a> will help us to improve it.
-                                                            <a class="govuk-link" target="_blank" rel="noopener noreferrer"
-                                                            href="/service-updates">View updates and changes.</a>
     </span>
   </p>
 </div>

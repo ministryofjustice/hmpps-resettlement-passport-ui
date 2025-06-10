@@ -664,6 +664,32 @@ export function stubFetchFinance(rpService: RpService) {
   })
 }
 
+export function stubFetchFinancePending(rpService: RpService) {
+  return jest.spyOn(rpService, 'fetchFinance').mockResolvedValue({
+    id: 12,
+    logs: [{ status: 'In progress', changeDate: '2024-09-09T12:21:45' }],
+    applicationSubmittedDate: '2024-09-08T09:00:03',
+    currentStatus: 'Pending',
+    bankName: 'Natwest',
+    bankResponseDate: '2024-09-10T14:45:02',
+    isAddedToPersonalItems: true,
+    addedToPersonalItemsDate: '2024-09-12T16:03:12',
+  })
+}
+
+export function stubFetchFinanceReturnedIncomplete(rpService: RpService) {
+  return jest.spyOn(rpService, 'fetchFinance').mockResolvedValue({
+    id: 12,
+    logs: [{ status: 'In progress', changeDate: '2024-09-09T12:21:45' }],
+    applicationSubmittedDate: '2024-09-08T09:00:03',
+    currentStatus: 'Returned incomplete',
+    bankName: 'Natwest',
+    bankResponseDate: '2024-09-10T14:45:02',
+    isAddedToPersonalItems: true,
+    addedToPersonalItemsDate: '2024-09-12T16:03:12',
+  })
+}
+
 export function stubFetchId(rpService: RpService) {
   return jest.spyOn(rpService, 'fetchId').mockResolvedValue({
     results: [
@@ -707,6 +733,27 @@ export function stubFetchId(rpService: RpService) {
         isAddedToPersonalItems: false,
         addedToPersonalItemsDate: null,
         status: 'rejected',
+        dateIdReceived: null,
+      },
+      {
+        id: 18,
+        idType: {
+          name: 'Driving licence',
+        },
+        applicationSubmittedDate: '2024-09-12T14:45:02',
+        isPriorityApplication: false,
+        costOfApplication: 45,
+        refundAmount: 12,
+        haveGro: true,
+        isUkNationalBornOverseas: true,
+        countryBornIn: 'Andorra',
+        caseNumber: '7891',
+        courtDetails: 'detail',
+        driversLicenceType: 'Full',
+        driversLicenceApplicationMadeAt: '2024-09-12T14:45:02',
+        isAddedToPersonalItems: false,
+        addedToPersonalItemsDate: null,
+        status: 'pending',
         dateIdReceived: null,
       },
     ],

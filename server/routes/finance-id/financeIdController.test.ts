@@ -9,6 +9,8 @@ import {
   stubCaseNotesHistory,
   stubCrsReferrals,
   stubFetchFinance,
+  stubFetchFinancePending,
+  stubFetchFinanceReturnedIncomplete,
   stubFetchId,
   stubPathwaySupportNeedsSummary,
   stubPathwaySupportNeedsSummaryNoData,
@@ -17,20 +19,28 @@ import {
   stubPrisonerDetails,
   stubRpServiceNoData,
   stubRpServiceThrowError,
+  stubFeatureFlagToTrue,
+  stubFeatureFlagToFalse,
 } from '../testutils/testUtils'
 import { configHelper } from '../configHelperTest'
 import Config from '../../s3Config'
 import { Services } from '../../services'
+import FeatureFlags from '../../featureFlag'
 
 let app: Express
 const { rpService } = mockedServices as Services
 const config: jest.Mocked<Config> = new Config() as jest.Mocked<Config>
+const featureFlags: jest.Mocked<FeatureFlags> = new FeatureFlags() as jest.Mocked<FeatureFlags>
 
 beforeEach(() => {
   stubPrisonerDetails(rpService)
   configHelper(config)
 
   app = appWithAllRoutes({})
+
+  FeatureFlags.getInstance = jest.fn().mockReturnValue(featureFlags)
+  stubFeatureFlagToFalse(featureFlags)
+  stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'whatsNewBanner'])
 })
 
 afterEach(() => {
@@ -158,6 +168,90 @@ describe('getView', () => {
       'createdDate,ASC',
       '',
     )
+  })
+
+  it('ReadOnlyMode = false - show all add/update/delete buttons', async () => {
+    stubCrsReferrals(rpService, 'FINANCE_AND_ID')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
+    stubCaseNotesCreators(rpService)
+    stubFetchFinance(rpService)
+    stubFetchId(rpService)
+    stubPathwaySupportNeedsSummaryNoData(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('ReadOnlyMode = true - hide all add/update/delete buttons', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    stubCrsReferrals(rpService, 'FINANCE_AND_ID')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
+    stubCaseNotesCreators(rpService)
+    stubFetchFinance(rpService)
+    stubFetchId(rpService)
+    stubPathwaySupportNeedsSummaryNoData(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('ReadOnlyMode = true - hide all add/update/delete buttons - with no existing bank account application (add button)', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    stubCrsReferrals(rpService, 'FINANCE_AND_ID')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
+    stubCaseNotesCreators(rpService)
+    stubRpServiceNoData(rpService, 'fetchFinance')
+    stubFetchId(rpService)
+    stubPathwaySupportNeedsSummaryNoData(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('ReadOnlyMode = true - hide all add/update/delete buttons - with pending bank account application (update button)', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    stubCrsReferrals(rpService, 'FINANCE_AND_ID')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
+    stubCaseNotesCreators(rpService)
+    stubFetchFinancePending(rpService)
+    stubFetchId(rpService)
+    stubPathwaySupportNeedsSummaryNoData(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
+  it('ReadOnlyMode = true - hide all add/update/delete buttons - with returned incomplete bank account application (resubmit button)', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+    stubCrsReferrals(rpService, 'FINANCE_AND_ID')
+    stubAssessmentInformation(rpService)
+    stubCaseNotesHistory(rpService, 'FINANCE_AND_ID')
+    stubCaseNotesCreators(rpService)
+    stubFetchFinanceReturnedIncomplete(rpService)
+    stubFetchId(rpService)
+    stubPathwaySupportNeedsSummaryNoData(rpService)
+    stubPathwaySupportNeedsUpdates(rpService)
+
+    await request(app)
+      .get('/finance-and-id?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
   })
 
   it('Error case - invalid page parameter', async () => {
