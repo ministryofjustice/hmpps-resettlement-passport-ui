@@ -2,7 +2,6 @@ import { RequestHandler } from 'express'
 import { validationResult } from 'express-validator'
 import AccommodationView from './accommodationView'
 import RpService from '../../services/rpService'
-import { handleWhatsNewBanner } from '../whatsNewBanner'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
 import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
@@ -18,8 +17,6 @@ export default class AccommodationController {
       // Load prisoner data
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
-
-      handleWhatsNewBanner(req, res)
 
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
