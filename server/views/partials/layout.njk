@@ -9,6 +9,8 @@
 {% from "../macros/tasks-details.njk" import tasksDetails %}
 {% from "../macros/pathway-subnav.njk" import subNav %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "moj/components/alert/macro.njk" import mojAlert %}
+
 {% if whatsNewBannerEnabled is undefined %}
     {% set whatsNewBannerEnabled = features.WHATS_NEW_BANNER | getFeatureFlag %}
 {% endif %}
@@ -88,6 +90,15 @@
     {% endif %}
 
     {{ breadCrumb(breadcrumbItems) }}
+
+    {{ mojAlert({
+      variant: "information",
+      title: "PSfR testing will end on 25 June 2025",
+      showTitleAsHeading: true,
+      dismissible: false,
+      html: 'See the <a href="/service-updates" class="govuk-link govuk-link--no-visited-state">service updates page</a> for more information.'
+    }) }}
+
     {% include "../partials/whatsNewBanner.njk" -%}
     <br />
     {% if pageHeading %}

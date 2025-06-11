@@ -3,6 +3,7 @@ import { body } from 'express-validator'
 import { Services } from '../../services'
 import SupportNeedUpdateController from './supportNeedUpdateController'
 import { SupportNeedStatus } from '../../data/model/supportNeedStatus'
+import { readOnlyGuard } from '../readOnlyGuard'
 
 export default (router: Router, services: Services) => {
   const supportNeedUpdateController = new SupportNeedUpdateController(
@@ -15,6 +16,7 @@ export default (router: Router, services: Services) => {
   router.post(
     '/support-needs/:pathway/update/:prisonerNeedId',
     [
+      readOnlyGuard,
       body('updateStatus', 'Select a update status').isIn([
         SupportNeedStatus.NOT_STARTED,
         SupportNeedStatus.IN_PROGRESS,

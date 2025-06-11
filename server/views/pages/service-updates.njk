@@ -1,4 +1,5 @@
 {% extends "../partials/serviceUpdatesLayout.njk" %}
+{% from "../macros/service-update.njk" import serviceUpdate %}
 {% set pageName = "Service updates" %}
 
 {% block content %}
@@ -10,14 +11,11 @@
             <h2 class="govuk-summary-card__title">{{ bannerFile.banner.date }}</h2>
           </div>
           <div class="govuk-summary-card__content">
-            <p class="govuk-body">{{ bannerFile.banner.bodyText }}</p>
-            <ul class="govuk-list govuk-list--bullet">
-              {% for point in bannerFile.banner.bulletPoints %}
-              <li>{{ point }}</li>{% endfor %}
-            </ul>
-            <p>
-              <a href="{{ bannerFile.banner.detailsLink }}">Find out more about this update</a>
-            </p>
+            {%- if bannerFile.banner.title -%}
+              <h3 class="govuk-header-s govuk-!-margin-top-0">{{ bannerFile.banner.title }}</h3>
+            {%- endif %}
+
+            {{ serviceUpdate(bannerFile.banner.bodyText, bannerFile.banner.bulletPoints, bannerFile.banner.detailsLink) }}
           </div>
         </div>
       </div>

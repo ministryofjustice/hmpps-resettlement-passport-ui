@@ -1,3 +1,5 @@
+{% from "../macros/statusDetailsReadOnlyMessaging.njk" import statusDetailsReadOnlyMessaging %}
+
 <section id="support-needs-updates" class="app-summary-card govuk-!-margin-bottom-8">
   <header class="app-summary-card__header">
     <h3 class="app-summary-card__title">
@@ -32,7 +34,7 @@
                 <p>
                   <strong>Status set to: </strong>
                   {% set tagColour = "govuk-tag--" + (update.status | getSupportNeedsColour) %}
-                  <span class="govuk-tag {{ tagColour }}">{{ update.status | getSupportNeedsStatus }}</span>
+                  <span class="govuk-tag {{ tagColour }}">{{ update.status | getSupportNeedsStatus }} {{ statusDetailsReadOnlyMessaging(readOnlyMode) | safe }}</span>
                 </p>
               {% endif %}
               {% if update.isPrisonResponsible or update.isProbationResponsible %}
