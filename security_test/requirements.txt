@@ -14,7 +14,7 @@ pyee==11.1.0
 pyerfa==2.0.1.4
 pytest==8.2.2
 PyYAML==6.0.1
-requests==2.32.3
+requests==2.32.4
 scikit-learn==1.5.0
 scipy==1.13.1
 setuptools==78.1.1
