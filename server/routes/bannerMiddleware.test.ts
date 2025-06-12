@@ -6,9 +6,7 @@ import Banner from '../banner'
 describe('Banner Middleware', () => {
   const banner = {
     date: 'date',
-    bodyText: 'bodyText',
-    bulletPoints: ['bulletPoint'],
-    detailsLink: 'detailsLink',
+    bodyText: ['bodyText'],
   }
 
   const nextFn = jest.fn()
