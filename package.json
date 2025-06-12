@@ -5,7 +5,7 @@
   "repository": "git@github.com:ministryofjustice/hmpps-resettlement-passport-ui.git",
   "license": "MIT",
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "hmpps-precommit-hooks-prepare",
     "copy-views": "cp -R server/views dist/server/",
     "compile-sass": "sass --quiet-deps --no-source-map --load-path=node_modules/govuk-frontend/dist --load-path=node_modules/@ministryofjustice/frontend --load-path=. assets/scss/application.scss:./assets/stylesheets/application.css --style compressed",
     "watch-ts": "tsc -w",
@@ -31,7 +31,10 @@
     "int-test": "cypress run --config video=false",
     "int-test-ui": "cypress open",
     "end-to-end-test": "cucumber-js test",
-    "clean": "rm -rf dist build node_modules stylesheets"
+    "clean": "rm -rf dist build node_modules stylesheets",
+    "precommit:secrets": "gitleaks git --pre-commit --redact --staged --verbose --config .gitleaks/config.toml",
+    "precommit:lint": "node_modules/.bin/lint-staged",
+    "precommit:verify": "npm run typecheck && npm test"
   },
   "engines": {
     "node": "^22",
@@ -154,6 +157,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",
+    "@ministryofjustice/hmpps-precommit-hooks": "^0.0.2",
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",
     "@types/compression": "^1.7.5",
@@ -191,7 +195,6 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-no-only-tests": "^3.3.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jest-html-reporter": "^4.1.0",
     "jest-junit": "^16.0.0",
