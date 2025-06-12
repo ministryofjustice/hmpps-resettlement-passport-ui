@@ -48,13 +48,15 @@
     {{ breadCrumb(breadcrumbItems) }}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
-        {{ mojAlert({
-          variant: "information",
-          title: "PSfR testing will end on 25 June 2025",
-          showTitleAsHeading: true,
-          dismissible: false,
-          html: ''
-        }) }}
+        {% if banner and banner.alert %}
+          {{ mojAlert({
+            variant: "information",
+            title: banner.alert.title,
+            showTitleAsHeading: true,
+            dismissible: false,
+            html: ''
+          }) }}
+        {% endif %}
 
         {% if pageName !== "Service updates" %}
           <span class="govuk-caption-xl">Service updates</span>
