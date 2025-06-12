@@ -6,7 +6,6 @@ import DocumentService from '../../services/documentService'
 import RpService from '../../services/rpService'
 import { Appointment } from '../../data/model/appointment'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
-import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { DocumentMeta } from '../../data/model/documents'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { badRequestError } from '../../errorHandler'
@@ -25,7 +24,6 @@ export default class PrisonerOverviewController {
 
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
-      handleWhatsNewBanner(req, res)
 
       const errors = validationResult(req)
       if (!errors.isEmpty()) {

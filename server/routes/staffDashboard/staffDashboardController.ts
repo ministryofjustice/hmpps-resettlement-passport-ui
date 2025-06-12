@@ -5,7 +5,6 @@ import { ErrorMessage } from '../view'
 import RpService from '../../services/rpService'
 import { checkSupportNeedsSet, getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
-import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { badRequestError } from '../../errorHandler'
 
 export default class StaffDashboardController {
@@ -65,7 +64,6 @@ export default class StaffDashboardController {
       const errors: ErrorMessage[] = []
       let prisonersList = null
       try {
-        handleWhatsNewBanner(req, res)
         // Only NOMIS users can access the list prisoners functionality at present
         let pagination = null
         if (res.locals.user.authSource === 'nomis') {

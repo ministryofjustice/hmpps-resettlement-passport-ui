@@ -3,7 +3,6 @@ import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import DrugsAlcoholView from './drugsAlcoholView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
-import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { badRequestError } from '../../errorHandler'
@@ -17,8 +16,6 @@ export default class DrugsAlcoholController {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
-
-      handleWhatsNewBanner(req, res)
 
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
