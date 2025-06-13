@@ -3,7 +3,6 @@ import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import AttitudesThinkingBehaviour from './attitudesThinkingBehaviourView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
-import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { badRequestError } from '../../errorHandler'
@@ -17,8 +16,6 @@ export default class AttitudesThinkingBehaviourController {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
-
-      handleWhatsNewBanner(req, res)
 
       const errors = validationResult(req)
       if (!errors.isEmpty()) {

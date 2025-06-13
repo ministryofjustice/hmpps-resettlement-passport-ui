@@ -30,11 +30,13 @@ import caseNoteRouter from './case-note'
 import featureFlagMiddleware from './featureFlagMiddleware'
 import supportNeedsRouter from './support-needs'
 import supportNeedUpdateRouter from './support-need-update'
+import bannerMiddleware from './bannerMiddleware'
 
 export default function routes(services: Services): Router {
   const router = Router()
   router.use(configMiddleware())
   router.use(featureFlagMiddleware())
+  router.use(bannerMiddleware())
   staffDashboard(router, services)
   drugsAlcoholRouter(router, services)
   attitudesThinkingBehaviourRouter(router, services)

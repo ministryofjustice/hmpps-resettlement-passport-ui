@@ -13,6 +13,7 @@ import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import FeatureFlags from '../../featureFlag'
 import { Services } from '../../services'
 import { FEATURE_FLAGS } from '../../utils/constants'
+import Banner from '../../banner'
 
 let app: Express
 const { rpService } = mockedServices as Services
@@ -537,6 +538,56 @@ describe('getView', () => {
           const htmlContent = res.text
           expect(htmlContent).toContain('Assign a case')
           expect(htmlContent).toContain('Staff capacity')
+        })
+    })
+  })
+
+  describe('when the latest service update includes an alert', () => {
+    it('should render the moj alert component', async () => {
+      stubPrisonersList(rpService)
+      stubFeatureFlagToTrue(featureFlags, [FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES, FEATURE_FLAGS.ASSIGN_CASE_TAB])
+
+      const banner = {
+        date: 'date',
+        bodyText: ['bodyText'],
+        alert: {
+          title: 'this is an alert',
+        },
+      }
+      const getWhatsNewBannerVersion = jest.spyOn(Banner, 'getWhatsNewBannerVersion')
+      getWhatsNewBannerVersion.mockReturnValue(banner)
+
+      await request(app)
+        .get('/')
+        .expect(200)
+        .expect(res => {
+          const htmlContent = res.text
+          expect(htmlContent).toContain('moj-alert')
+          expect(htmlContent).toContain(banner.alert.title)
+          expect(htmlContent).toMatchSnapshot()
+        })
+    })
+  })
+
+  describe('when the latest service update does not include an alert', () => {
+    it('should not render the moj alert component', async () => {
+      stubPrisonersList(rpService)
+      stubFeatureFlagToTrue(featureFlags, [FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES, FEATURE_FLAGS.ASSIGN_CASE_TAB])
+
+      const banner = {
+        date: 'date',
+        bodyText: ['bodyText'],
+      }
+      const getWhatsNewBannerVersion = jest.spyOn(Banner, 'getWhatsNewBannerVersion')
+      getWhatsNewBannerVersion.mockReturnValue(banner)
+
+      await request(app)
+        .get('/')
+        .expect(200)
+        .expect(res => {
+          const htmlContent = res.text
+          expect(htmlContent).not.toContain('moj-alert')
+          expect(htmlContent).toMatchSnapshot()
         })
     })
   })

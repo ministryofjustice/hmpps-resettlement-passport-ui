@@ -23,7 +23,7 @@ export const defaultTestConfig: ConfigFile = {
     },
   },
   whatsNew: {
-    enabled: false,
+    enabled: true,
     version: '1',
   },
   supportNeeds: {

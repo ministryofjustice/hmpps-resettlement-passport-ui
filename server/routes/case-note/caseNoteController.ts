@@ -1,6 +1,5 @@
 import { RequestHandler } from 'express'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
-import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 
@@ -19,8 +18,6 @@ export default class CaseNoteController {
           `prisoner-overview/?prisonerNumber=${prisonerData.personalDetails.prisonerNumber}#case-notes`,
         )
       }
-
-      handleWhatsNewBanner(req, res)
 
       return res.render('pages/add-case-note', {
         prisonerData,

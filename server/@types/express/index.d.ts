@@ -102,9 +102,10 @@ export type BannerFile = {
 
 type BannerDetails = {
   date: string
-  bodyText: string
-  bulletPoints: string[]
-  detailsLink: string
+  bodyText: string[]
+  title?: string
+  bulletPoints?: string[]
+  detailsLink?: string
 }
 
 export type CustomValidationError = {

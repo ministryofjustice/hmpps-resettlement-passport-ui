@@ -3,7 +3,6 @@ import { validationResult } from 'express-validator'
 import RpService from '../../services/rpService'
 import HealthStatusView from './healthStatusView'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
-import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { badRequestError } from '../../errorHandler'
@@ -16,7 +15,6 @@ export default class HealthStatusController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
-      handleWhatsNewBanner(req, res)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       const errors = validationResult(req)

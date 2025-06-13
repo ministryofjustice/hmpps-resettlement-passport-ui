@@ -6,7 +6,6 @@ import logger from '../../../logger'
 import FinanceIdView from './financeIdView'
 import { BankApplicationResponse, IdApplicationResponse } from '../../data/model/financeId'
 import PrisonerDetailsService from '../../services/prisonerDetailsService'
-import { handleWhatsNewBanner } from '../whatsNewBanner'
 import { badRequestError } from '../../errorHandler'
 import { getFeatureFlagBoolean, getPaginationPages } from '../../utils/utils'
 import { FEATURE_FLAGS } from '../../utils/constants'
@@ -19,7 +18,6 @@ export default class FinanceIdController {
   getView: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res)
-      handleWhatsNewBanner(req, res)
       const supportNeedsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.SUPPORT_NEEDS)
 
       const errors = validationResult(req)
