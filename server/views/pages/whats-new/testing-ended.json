@@ -1,0 +1,16 @@
+{
+  "version": "20250626",
+  "banner": {
+    "date": "26 June 2025",
+    "title": "Prepare someone for release (PSfR) testing has ended.",
+    "bodyText": [
+      "You can no longer use PSfR to create or update reports or support needs.",
+      "You can still view information already created within the service.",
+      "Use OASys to complete any new BCST2 and 3 assessments.",
+      "For more information or support, email <a href='mailto:resettlementpassportsHQ@justice.gov.uk' class='govuk-link govuk-link--no-visited-state'>resettlementpassportsHQ@justice.gov.uk</a>."
+    ],
+    "alert": {
+      "title": "PSfR testing has ended"
+    }
+  }
+}
