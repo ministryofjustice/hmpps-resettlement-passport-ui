@@ -382,7 +382,7 @@ exports[`prisonerOverview happy path with default query parameters 1`] = `
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses </th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -1457,7 +1457,7 @@ exports[`prisonerOverview should display "reset profile" button and NO other tas
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses </th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -2503,7 +2503,7 @@ exports[`prisonerOverview should display "reset profile" button and other tasks 
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses </th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -3532,7 +3532,7 @@ exports[`prisonerOverview should display error when supportNeeds is enabled and 
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses </th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -4561,7 +4561,7 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses </th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -4632,7 +4632,9 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
                     </td>
                     <td class="govuk-table__cell">
                       
-                        <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        
+                          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        
                       
                     </td>
                     <td class="govuk-table__cell">-</td>
@@ -4679,7 +4681,9 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
                     </td>
                     <td class="govuk-table__cell">
                       
-                        <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        
+                          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        
                       
                     </td>
                     <td class="govuk-table__cell">-</td>
@@ -4696,7 +4700,9 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
                     </td>
                     <td class="govuk-table__cell">
                       
-                        <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        
+                          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        
                       
                     </td>
                     <td class="govuk-table__cell">-</td>
@@ -4713,7 +4719,9 @@ exports[`prisonerOverview should display responsible staff data when supportNeed
                     </td>
                     <td class="govuk-table__cell">
                       
-                        <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        
+                          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        
                       
                     </td>
                     <td class="govuk-table__cell">-</td>
@@ -5726,7 +5734,7 @@ exports[`prisonerOverview should not display any "Important" or "Action" boxes w
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses (statuses may be out of date)</th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -6778,7 +6786,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses </th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -7857,7 +7865,7 @@ exports[`prisonerOverview should render the prisoner overview page with correct 
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses </th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -8936,7 +8944,7 @@ exports[`prisonerOverview should render the prisoner overview page without retri
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses </th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>

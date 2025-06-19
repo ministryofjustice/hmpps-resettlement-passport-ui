@@ -142,7 +142,7 @@
           {% endif %}
           <th scope="col" class="govuk-table__header">
             {% if supportNeedsEnabled %}
-              Support needs statuses
+              Support needs statuses {% if readOnlyMode %}(statuses may be out of date){% endif %}
             {% else %}
               {% if pathwayView %}
                 {% set pathwayValues = pathwayView | getEnumValue %}

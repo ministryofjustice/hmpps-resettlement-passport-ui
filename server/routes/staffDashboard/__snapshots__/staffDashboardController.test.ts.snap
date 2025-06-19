@@ -1053,7 +1053,7 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
           
           <th scope="col" class="govuk-table__header">
             
-              Support needs statuses
+              Support needs statuses 
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -1093,7 +1093,9 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
     
       <td class="govuk-table__cell" id="lastReport">
         
-          <strong class="govuk-tag govuk-tag--orange">Report required</strong>
+          
+            <strong class="govuk-tag govuk-tag--orange">Report required</strong>
+          
         
       </td>
     
@@ -1101,7 +1103,9 @@ exports[`getView Happy path with default query params with supportNeeds enabled,
     
       <td class="govuk-table__cell">
         
-          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+          
+            <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+          
         
       </td>
     
@@ -1799,7 +1803,7 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
           
           <th scope="col" class="govuk-table__header">
             
-              Support needs statuses
+              Support needs statuses 
             
           </th>
           <th scope="col" class="govuk-table__header">
@@ -1839,7 +1843,9 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
     
       <td class="govuk-table__cell" id="lastReport">
         
-          <strong class="govuk-tag govuk-tag--orange">Report required</strong>
+          
+            <strong class="govuk-tag govuk-tag--orange">Report required</strong>
+          
         
       </td>
     
@@ -1847,7 +1853,9 @@ exports[`getView Happy path with default query params without tabs nav 1`] = `
     
       <td class="govuk-table__cell">
         
-          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+          
+            <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+          
         
       </td>
     
