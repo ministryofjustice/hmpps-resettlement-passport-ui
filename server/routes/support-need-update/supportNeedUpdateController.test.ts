@@ -4,7 +4,7 @@ import { appWithAllRoutes, mockedServices } from '../testutils/appSetup'
 import { Services } from '../../services'
 import FeatureFlags from '../../featureFlag'
 import { stubFeatureFlagToFalse, stubFeatureFlagToTrue, stubPrisonerDetails } from '../testutils/testUtils'
-import { configHelper } from '../configHelperTest'
+import { configHelper, defaultTestConfig } from '../configHelperTest'
 import Config from '../../s3Config'
 
 let app: Express
@@ -135,6 +135,66 @@ describe('SupportNeedUpdateController', () => {
         })
 
       expect(getPrisonerNeedByIdSpy).toHaveBeenCalledWith(prisonerNumber, prisonerNeedId)
+    })
+
+    it('should render whats new banner when it is enabled', async () => {
+      configHelper(config, {
+        ...defaultTestConfig,
+        whatsNew: {
+          enabled: true,
+          version: '20241120',
+        },
+      })
+
+      stubFeatureFlagToTrue(featureFlags, ['supportNeeds', 'readOnlyMode'])
+      const prisonerNumber = 'A1234DY'
+      const prisonerNeedId = '23'
+
+      jest.spyOn(rpService, 'getPrisonerNeedById').mockResolvedValue({
+        title: 'Support need title',
+        isPrisonResponsible: true,
+        isProbationResponsible: false,
+        status: 'MET',
+        previousUpdates: [
+          {
+            id: 134,
+            title: 'Support need title',
+            status: 'MET',
+            isPrisonResponsible: true,
+            isProbationResponsible: false,
+            text: 'This is some update text 3',
+            createdBy: 'A user',
+            createdAt: '2024-12-12T12:00:00',
+          },
+          {
+            id: 133,
+            title: 'Support need title',
+            status: 'IN_PROGRESS',
+            isPrisonResponsible: false,
+            isProbationResponsible: true,
+            text: 'This is some update text 2',
+            createdBy: 'B user',
+            createdAt: '2024-12-11T12:00:00',
+          },
+          {
+            id: 132,
+            title: 'Support need title',
+            status: 'NOT_STARTED',
+            isPrisonResponsible: true,
+            isProbationResponsible: true,
+            text: 'This is some update text 1',
+            createdBy: 'A user',
+            createdAt: '2024-12-11T12:00:00',
+          },
+        ],
+      })
+
+      await request(app)
+        .get(`/support-needs/accommodation/update/${prisonerNeedId}?prisonerNumber=${prisonerNumber}`)
+        .expect(200)
+        .expect(res => {
+          expect(res.text).toMatchSnapshot()
+        })
     })
 
     it('error case - api error', async () => {
