@@ -525,6 +525,23 @@ describe('getView', () => {
           expect(htmlContent).not.toContain('Staff capacity')
         })
     })
+    it('the status column should say that may be out of date', async () => {
+      stubPrisonersList(rpService)
+      stubFeatureFlagToTrue(featureFlags, [
+        FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES,
+        FEATURE_FLAGS.ASSIGN_CASE_TAB,
+        FEATURE_FLAGS.SUPPORT_NEEDS,
+        FEATURE_FLAGS.READ_ONLY_MODE,
+      ])
+      await request(app)
+        .get('/')
+        .expect(200)
+        .expect(res => {
+          const htmlContent = res.text
+          expect(htmlContent).toContain('statuses may be out of date')
+          expect(htmlContent).toMatchSnapshot()
+        })
+    })
   })
 
   describe('when read only mode is not enabled', () => {
@@ -538,6 +555,22 @@ describe('getView', () => {
           const htmlContent = res.text
           expect(htmlContent).toContain('Assign a case')
           expect(htmlContent).toContain('Staff capacity')
+        })
+    })
+    it('the status column should not say that may be out of date', async () => {
+      stubPrisonersList(rpService)
+      stubFeatureFlagToTrue(featureFlags, [
+        FEATURE_FLAGS.INCLUDE_PAST_RELEASE_DATES,
+        FEATURE_FLAGS.ASSIGN_CASE_TAB,
+        FEATURE_FLAGS.SUPPORT_NEEDS,
+      ])
+      await request(app)
+        .get('/')
+        .expect(200)
+        .expect(res => {
+          const htmlContent = res.text
+          expect(htmlContent).not.toContain('statuses may be out of date')
+          expect(htmlContent).toMatchSnapshot()
         })
     })
   })

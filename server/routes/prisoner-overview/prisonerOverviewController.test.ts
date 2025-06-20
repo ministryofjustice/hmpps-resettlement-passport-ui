@@ -290,6 +290,92 @@ describe('prisonerOverview', () => {
       .expect(res => expect(res.text).toMatchSnapshot())
   })
 
+  it('should display different table data when readOnlyMode is true', async () => {
+    stubFeatureFlagToTrue(featureFlags, ['readOnlyMode', 'profileReset', 'supportNeeds'])
+    jest.spyOn(rpService, 'getSupportNeedsSummary').mockResolvedValue({
+      needs: [
+        {
+          pathway: 'ACCOMMODATION',
+          reviewed: true,
+          notStarted: 3,
+          inProgress: 1,
+          met: 0,
+          declined: 2,
+          lastUpdated: '2023-09-12T12:09:56',
+          isPrisonResponsible: true,
+          isProbationResponsible: false,
+        },
+        {
+          pathway: 'ATTITUDES_THINKING_AND_BEHAVIOUR',
+          reviewed: true,
+          notStarted: 2,
+          inProgress: 4,
+          met: 0,
+          declined: 1,
+          lastUpdated: '2023-09-12T12:09:56',
+          isPrisonResponsible: false,
+          isProbationResponsible: false,
+        },
+        {
+          pathway: 'CHILDREN_FAMILIES_AND_COMMUNITY',
+          reviewed: false,
+          notStarted: 0,
+          inProgress: 0,
+          met: 0,
+          declined: 0,
+          lastUpdated: null,
+          isPrisonResponsible: false,
+          isProbationResponsible: true,
+        },
+        {
+          pathway: 'DRUGS_AND_ALCOHOL',
+          reviewed: true,
+          notStarted: 2,
+          inProgress: 2,
+          met: 0,
+          declined: 1,
+          lastUpdated: '2023-09-12T12:09:56',
+          isPrisonResponsible: true,
+          isProbationResponsible: true,
+        },
+        {
+          pathway: 'EDUCATION_SKILLS_AND_WORK',
+          reviewed: false,
+          notStarted: 0,
+          inProgress: 0,
+          met: 0,
+          declined: 0,
+          lastUpdated: null,
+        },
+        {
+          pathway: 'FINANCE_AND_ID',
+          reviewed: false,
+          notStarted: 0,
+          inProgress: 0,
+          met: 0,
+          declined: 0,
+          lastUpdated: null,
+        },
+        {
+          pathway: 'HEALTH',
+          reviewed: false,
+          notStarted: 0,
+          inProgress: 0,
+          met: 0,
+          declined: 0,
+          lastUpdated: null,
+        },
+      ],
+    } as SupportNeedsSummary)
+
+    stubPrisonerOverviewData(rpService)
+
+    await request(app)
+      .get('/prisoner-overview?prisonerNumber=A1234DY')
+      .expect(200)
+      .expect(res => expect(res.text).toMatchSnapshot())
+  })
+
   it('Error case - invalid page parameter', async () => {
     await request(app)
       .get('/prisoner-overview?prisonerNumber=A1234DY&page=InvalidValue')

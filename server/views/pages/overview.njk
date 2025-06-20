@@ -91,7 +91,7 @@
               <tr class="govuk-table__row">
                 <th scope="col" class="govuk-table__header">Pathway</th>
                 <th scope="col" class="govuk-table__header">Responsible staff</th>
-                <th scope="col" class="govuk-table__header">Support need statuses</th>
+                <th scope="col" class="govuk-table__header">Support need statuses {% if readOnlyMode %}(statuses may be out of date){% endif %}</th>
                 <th scope="col" class="govuk-table__header">Last updated</th>
               </tr>
               </thead>
@@ -123,7 +123,11 @@
                         <div class="govuk-tag govuk-tag--purple">Declined: {{ pathwaySupportNeeds.declined }}</div>
                         <br />
                       {% else %}
-                        <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        {% if readOnlyMode %}
+                          <strong class="govuk-tag govuk-tag--grey">Support needs not set</strong>
+                        {% else %}
+                          <strong class="govuk-tag govuk-tag--red">Support needs not set</strong>
+                        {% endif %}
                       {% endif %}
                     </td>
                     <td class="govuk-table__cell">{{ pathwaySupportNeeds.lastUpdated | formatDate if pathwaySupportNeeds.lastUpdated else "-" }}</td>
