@@ -172,7 +172,16 @@ jobs:
       - checkout
       - run:
           name: Run zap tests
-          command: "export ST_USERNAME=${E2E_DEV_USERNAME}\nexport ST_PASSWORD=${E2E_DEV_PASSWORD}\nexport ST_PROXY_URL=\"http://localhost:8080\"\nexport ST_API_KEY=''\nexport ST_ENV_NAME='dev'\nmkdir -p test_results\npip install -r ./security_test/requirements.txt\nplaywright install --with-deps\npython3 ./security_test/test_security.py    \n"
+          command: |
+              export ST_USERNAME=${E2E_DEV_USERNAME}
+              export ST_PASSWORD=${E2E_DEV_PASSWORD}
+              export ST_PROXY_URL="http://localhost:8080"
+              export ST_API_KEY=''
+              export ST_ENV_NAME='dev'
+              mkdir -p test_results
+              pip install -r ./security_test/requirements.txt
+              playwright install --with-deps
+              python3 ./security_test/test_security.py
   pt_browser_smoke_test:
     circleci_ip_ranges: true
     docker:
