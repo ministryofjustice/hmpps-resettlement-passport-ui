@@ -1,33 +1,26 @@
 version: 2.1
-
 orbs:
   hmpps: ministryofjustice/hmpps@11
   slack: circleci/slack@4.12.5
-
 parameters:
   alerts-slack-channel:
     type: string
     # Normally team specific alert channel e.g. hmpps_tech_alerts, syscon-alerts, dps_sed_alerts
     # This is to avoid a general alert dumping ground that no-one then monitors
     default: dps_alerts_security
-
   releases-slack-channel:
     type: string
     default: resettlement_passport_releases
-
   node-version:
     type: string
     default: 22.14-browsers
-
   redis-version:
     type: string
     default: '7.0'
-
   skip-code-coverage:
-    description: if set to true will skil checking code coverage
+    description: if set to true will skip checking code coverage
     type: boolean
     default: false
-
 executors:
   # same as hmpps/node_redis executor with the addition of gotenberg container
   integration-tests-executor:
@@ -44,7 +37,6 @@ executors:
           - "--uno-listener-restart-threshold=0"
     resource_class: medium
     working_directory: ~/app
-
   zap-tests-executor:
     docker:
       - image: cimg/python:3.12.3
@@ -52,9 +44,7 @@ executors:
         entrypoint: ["/bin/sh", "-c"]
         command: ["zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true"]
     resource_class: medium
-    working_directory: ~/app    
-
-
+    working_directory: ~/app
 jobs:
   build:
     executor:
@@ -92,7 +82,6 @@ jobs:
             - assets
             - .cache/Cypress
             - .cache/playwright
-
   unit_test:
     executor:
       name: hmpps/node
@@ -116,7 +105,6 @@ jobs:
           root: coverage
           paths:
             - clover.xml
-
   integration_test:
     executor: integration-tests-executor
     environment:
@@ -153,7 +141,6 @@ jobs:
           path: integration_tests/videos
       - store_artifacts:
           path: integration_tests/screenshots
-
   end-to-end-test:
     circleci_ip_ranges: true
     executor:
@@ -178,7 +165,6 @@ jobs:
             npm run end-to-end-test
       - store_test_results:
           path: test_results
-
   zap_test:
     circleci_ip_ranges: true
     executor: zap-tests-executor
@@ -186,17 +172,7 @@ jobs:
       - checkout
       - run:
           name: Run zap tests
-          command: |
-            export ST_USERNAME=${E2E_DEV_USERNAME}
-            export ST_PASSWORD=${E2E_DEV_PASSWORD}
-            export ST_PROXY_URL="http://localhost:8080"
-            export ST_API_KEY=''
-            export ST_ENV_NAME='dev'
-            mkdir -p test_results
-            pip install -r ./security_test/requirements.txt
-            playwright install --with-deps
-            python3 ./security_test/test_security.py    
-
+          command: "export ST_USERNAME=${E2E_DEV_USERNAME}\nexport ST_PASSWORD=${E2E_DEV_PASSWORD}\nexport ST_PROXY_URL=\"http://localhost:8080\"\nexport ST_API_KEY=''\nexport ST_ENV_NAME='dev'\nmkdir -p test_results\npip install -r ./security_test/requirements.txt\nplaywright install --with-deps\npython3 ./security_test/test_security.py    \n"
   pt_browser_smoke_test:
     circleci_ip_ranges: true
     docker:
@@ -211,7 +187,6 @@ jobs:
           environment:
             EXECUTION_TYPE: smoke
             PROCESS: dev
-
 workflows:
   version: 2
   build-test-and-deploy:
@@ -258,14 +233,14 @@ workflows:
               only:
                 - main
           requires:
-            - end-to-end-test            
+            - end-to-end-test
       - zap_test:
           filters:
             branches:
               only:
                 - main
           requires:
-            - deploy_dev            
+            - deploy_dev
       - request-preprod-approval:
           type: approval
           requires:
@@ -294,44 +269,3 @@ workflows:
           requires:
             - request-prod-approval
           helm_timeout: 5m
-
-  security:
-    triggers:
-      - schedule:
-          cron: "33 4 * * 1-5"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - hmpps/npm_outdated:
-          slack_channel: << pipeline.parameters.alerts-slack-channel >>
-          context:
-            - hmpps-common-vars
-      - hmpps/npm_security_audit:
-          slack_channel: << pipeline.parameters.alerts-slack-channel >>
-          context:
-            - hmpps-common-vars
-      - hmpps/trivy_latest_scan:
-          slack_channel: << pipeline.parameters.alerts-slack-channel >>
-          context:
-            - hmpps-common-vars
-      - hmpps/veracode_pipeline_scan:
-          slack_channel: << pipeline.parameters.alerts-slack-channel >>
-          context:
-            - veracode-credentials
-            - hmpps-common-vars
-  security-weekly:
-    triggers:
-      - schedule:
-          cron: "57 4 * * 1"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - hmpps/veracode_policy_scan:
-          slack_channel: << pipeline.parameters.alerts-slack-channel >>
-          context:
-            - veracode-credentials
-            - hmpps-common-vars
