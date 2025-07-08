@@ -77,7 +77,7 @@ jobs:
     secrets: inherit
   node_zap_tests:
     name: node zap tests
-    uses: ./.github/workflows/node_zap_test_redis.yml # LOCAL_VERSION
+    uses: ./.github/workflows/node_zap_test.yml # LOCAL_VERSION
     needs: [ deploy_dev ]
     secrets: inherit
   deploy_preprod:
