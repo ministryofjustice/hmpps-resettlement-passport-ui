@@ -43,9 +43,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: npm_build_artifacts
-      - name: Start Gotenberg service
+      - name: Start Zap service
         run: |
-          docker compose -f ./.github/docker-compose-gotenberg.yml up -d
+          docker compose -f ./.github/docker-compose-zap.yml up -d
           sleep 5 # Give it a few seconds to start
           docker ps
       - name: Run zap tests

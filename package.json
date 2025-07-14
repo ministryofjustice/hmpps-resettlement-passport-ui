@@ -115,7 +115,6 @@
     "@cucumber/cucumber": "^11.2.0",
     "@ministryofjustice/frontend": "^4.0.1",
     "@ministryofjustice/hmpps-monitoring": "^0.0.1-beta.2",
-    "@playwright/test": "^1.51.1",
     "@types/express": "^4.17.21",
     "@types/pdf-parse": "^1.1.4",
     "@types/validator": "^13.12.2",
@@ -158,6 +157,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@ministryofjustice/hmpps-precommit-hooks": "^0.0.3",
+    "@playwright/test": "^1.54.1",
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",
     "@types/compression": "^1.7.5",
