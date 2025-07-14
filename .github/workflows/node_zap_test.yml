@@ -57,7 +57,7 @@ jobs:
           export ST_ENV_NAME='dev'
           mkdir -p test_results
           pip install -r ./security_test/requirements.txt
-          playwright install --with-deps
+          npx playwright install --with-deps
           python3 ./security_test/test_security.py
       - name: upload the artifacts
         if: ${{ !cancelled() }}
