@@ -12,15 +12,15 @@ permissions:
 jobs:
   zap-test:
     runs-on: ubuntu-latest
-    services:
-      python:
-        image: cimg/python:3.12.3
-        options: --health-cmd="docker info" --health-interval=10s --health-timeout=5s --health-retries=5
-      zap:
-        image: 'zaproxy/zap-stable'
-        ports:
-          - 8080:8080
-        options: --health-cmd="docker info" --health-interval=10s --health-timeout=5s --health-retries=5
+#    services:
+#      python:
+#        image: cimg/python:3.12.3
+#        options: --health-cmd="docker info" --health-interval=10s --health-timeout=5s --health-retries=5
+#      zap:
+#        image: 'zaproxy/zap-stable'
+#        ports:
+#          - 8080:8080
+#        options: --health-cmd="docker info" --health-interval=10s --health-timeout=5s --health-retries=5
 #        entrypoint: [ "/bin/sh", "-c" ]
 #        command: [ "zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true" ]
     steps:
@@ -43,6 +43,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: npm_build_artifacts
+      - name: Start Gotenberg service
+        run: |
+          docker compose -f ./.github/docker-compose-gotenberg.yml up -d
+          sleep 5 # Give it a few seconds to start
+          docker ps
       - name: Run zap tests
         run: |
           export ST_USERNAME=${E2E_DEV_USERNAME}
