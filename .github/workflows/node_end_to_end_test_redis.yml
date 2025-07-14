@@ -40,8 +40,8 @@ jobs:
           name: npm_build_artifacts
       - name: Install project dependencies
         run: npm i
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+#      - name: Install Playwright browsers
+#        run: npx playwright install --with-deps
       - name: Run cucumber tests
         run: |
           export BASEURL=${{ secrets.DEV_BASEURL }}

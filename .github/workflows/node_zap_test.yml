@@ -57,7 +57,10 @@ jobs:
           export ST_ENV_NAME='dev'
           mkdir -p test_results
           pip install -r ./security_test/requirements.txt
+          export PLAYWRIGHT_BROWSERS_PATH="/usr/lib/playwright yarn add playwright-chromium@1.11.1"
+          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = 1
           npx playwright install --with-deps
+          export PLAYWRIGHT_BROWSERS_PATH="/usr/lib/playwright yarn test"
           python3 ./security_test/test_security.py
       - name: upload the artifacts
         if: ${{ !cancelled() }}
