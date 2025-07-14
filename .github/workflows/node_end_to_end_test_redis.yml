@@ -45,9 +45,9 @@ jobs:
       - name: Run cucumber tests
         run: |
           export BASEURL=${{ secrets.DEV_BASEURL }}
-          export PSFRURL=${{ secrets.DEV_PSFRURL }}
-          export USEREMAIL=${{ secrets.E2E_USEREMAIL }}
-          export USERPASSWORD=${{ secrets.E2E_USERPASSWORD }}
+          export USERNAME=${{ secrets.E2E_DEV_USERNAME }}
+          export PASSWORD=${{ secrets. E2E_DEV_PASSWORD }}
+          export BROWSER=${{ secrets.E2E_DEV_BROWSER }}
           npm run end-to-end-test
       - name: upload the artifacts
         if: ${{ !cancelled() }}

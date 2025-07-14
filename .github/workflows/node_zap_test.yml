@@ -50,8 +50,8 @@ jobs:
           docker ps
       - name: Run zap tests
         run: |
-          export ST_USERNAME=${E2E_DEV_USERNAME}
-          export ST_PASSWORD=${E2E_DEV_PASSWORD}
+          export ST_USERNAME=${{ secrets.E2E_DEV_USERNAME }}
+          export ST_PASSWORD=${{ secrets.E2E_DEV_PASSWORD }}
           export ST_PROXY_URL="http://localhost:8080"
           export ST_API_KEY=''
           export ST_ENV_NAME='dev'
