@@ -43,6 +43,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
       - name: Run cucumber tests
+        shell: bash
         run: |
           export BASEURL=${{ secrets.DEV_BASEURL }}
           export USERNAME=${{ secrets.E2E_DEV_USERNAME }}
