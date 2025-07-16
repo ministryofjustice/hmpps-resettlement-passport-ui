@@ -8,7 +8,7 @@ iniconfig==2.0.0
 joblib==1.4.2
 numpy==1.26.4
 packaging==24.0
-playwright==1.53.0
+playwright==1.44.0
 pluggy==1.5.0
 pyee==11.1.0
 pyerfa==2.0.1.4
