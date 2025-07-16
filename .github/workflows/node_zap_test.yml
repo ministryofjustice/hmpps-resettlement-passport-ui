@@ -12,17 +12,6 @@ permissions:
 jobs:
   zap-test:
     runs-on: ubuntu-latest
-#    services:
-#      python:
-#        image: cimg/python:3.12.3
-#        options: --health-cmd="docker info" --health-interval=10s --health-timeout=5s --health-retries=5
-#      zap:
-#        image: 'zaproxy/zap-stable'
-#        ports:
-#          - 8080:8080
-#        options: --health-cmd="docker info" --health-interval=10s --health-timeout=5s --health-retries=5
-#        entrypoint: [ "/bin/sh", "-c" ]
-#        command: [ "zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true" ]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ inputs.node_version_file }}
@@ -43,11 +32,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: npm_build_artifacts
-      - name: Start Zap service
-        run: |
-          docker compose -f ./.github/docker-compose-zap.yml up -d
-          sleep 5 # Give it a few seconds to start
-          docker ps
+      - name: Setup ZAP
+        uses: ./.github/actions/setup-zap
       - name: Run zap tests
         run: |
           export ST_USERNAME=${{ secrets.E2E_DEV_USERNAME }}
@@ -57,22 +43,21 @@ jobs:
           export ST_ENV_NAME='dev'
           mkdir -p test_results
           pip install -r ./security_test/requirements.txt
-          export PLAYWRIGHT_BROWSERS_PATH="./playwright yarn add playwright-chromium@1.11.1"
-          export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-          npx playwright install --with-deps
-          export PLAYWRIGHT_BROWSERS_PATH="./playwright yarn test"
+          playwright install chromium
+          owasp-zap -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true &
+          sleep 60  # Wait for ZAP to start
           python3 ./security_test/test_security.py
       - name: upload the artifacts
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: npm_unit_test_artifacts
+          name: npm_zap_test_artifacts
           path: test_results
       - name: publish test report
         if: ${{ !cancelled() && github.event.repository.visibility == 'public' }}
         uses: dorny/test-reporter@v2
         with:
-          artifact: npm_unit_test_artifacts
+          artifact: npm_zap_test_artifacts
           name: Test Report
           path: 'jest/**/*.xml'
           reporter: java-junit
