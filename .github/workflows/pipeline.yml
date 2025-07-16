@@ -73,14 +73,12 @@ jobs:
   node_end_to_end_tests:
     name: node end-to-end tests
     uses: ./.github/workflows/node_end_to_end_test_redis.yml # LOCAL_VERSION
-    needs: [node_build]
-    #needs: [ deploy_dev ]
+    needs: [ deploy_dev ]
     secrets: inherit
   node_zap_tests:
     name: node zap tests
     uses: ./.github/workflows/node_zap_test.yml # LOCAL_VERSION
-    needs: [node_build]
-    #needs: [ deploy_dev ]
+    needs: [ deploy_dev ]
     secrets: inherit
   deploy_preprod:
     name: Deploy to the preprod environment
