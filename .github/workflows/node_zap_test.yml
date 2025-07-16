@@ -59,6 +59,7 @@ jobs:
           pip install -r ./security_test/requirements.txt
           npm install
           npx playwright@1.54.1 install --with-deps
+          ls /home/runner/.cache/ms-playwright
           python3 ./security_test/test_security.py
       - name: upload the artifacts
         if: ${{ !cancelled() }}
