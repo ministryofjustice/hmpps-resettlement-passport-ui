@@ -35,9 +35,7 @@ jobs:
       - name: Install project dependencies
         run: npm i
       - name: Install Playwright browsers
-        run: |
-          pip install playwright
-          playwright install chromium
+        run: npx playwright install --with-deps
       - name: Run cucumber tests
         shell: bash
         run: |
