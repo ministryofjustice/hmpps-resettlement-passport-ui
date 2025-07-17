@@ -54,13 +54,13 @@ jobs:
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: npm_unit_test_artifacts
+          name: npm_e2e_test_artifacts
           path: test_results
       - name: publish test report
         if: ${{ !cancelled() && github.event.repository.visibility == 'public' }}
         uses: dorny/test-reporter@v2
         with:
-          artifact: npm_unit_test_artifacts
+          artifact: npm_e2e_test_artifacts
           name: Test Report
           path: 'jest/**/*.xml'
           reporter: java-junit
