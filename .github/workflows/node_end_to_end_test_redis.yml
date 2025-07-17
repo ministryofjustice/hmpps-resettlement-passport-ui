@@ -11,7 +11,7 @@ permissions:
   contents: read
 jobs:
   end-to-end-test:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, X64, hmpps-github-actions-runner]
     services:
       redis:
         image: redis:7.0
