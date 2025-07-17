@@ -23,6 +23,8 @@ def run(playwright: Playwright):
     context = browser.new_context(ignore_https_errors=True)
     page = context.new_page()
     page.goto("https://resettlement-passport-ui-dev.hmpps.service.justice.gov.uk")
+
+    page.screenshot(path="test_results/screenshot.png")
    
 
     page.locator('//*[@id="username"]').fill(username)
