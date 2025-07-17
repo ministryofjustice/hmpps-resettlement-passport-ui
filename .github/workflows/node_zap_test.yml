@@ -50,7 +50,8 @@ jobs:
           mkdir -p test_results
           pip install -r ./security_test/requirements.txt
           playwright install chromium
-          owasp-zap -cmd -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true -script ./security_test/test_security.py
+          export PATH=$PATH:$(pwd)/security_test
+          owasp-zap -cmd -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true -script test_security.py
       - name: upload the artifacts
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
