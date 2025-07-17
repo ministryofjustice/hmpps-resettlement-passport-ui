@@ -50,7 +50,7 @@ jobs:
           mkdir -p test_results
           pip install -r ./security_test/requirements.txt
           playwright install chromium
-          zap.sh -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true
+          owasp-zap -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true
           python3 ./security_test/test_security.py
       - name: upload the artifacts
         if: ${{ !cancelled() }}
