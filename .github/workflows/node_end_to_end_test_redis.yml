@@ -1,0 +1,70 @@
+name: Build and test node
+on:
+  workflow_call:
+    inputs:
+      node_version_file:
+        description: "Passed to setup-node action to specify where to source the version of node from"
+        required: false
+        type: string
+        default: ".nvmrc"
+permissions:
+  contents: read
+jobs:
+  end-to-end-test:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7.0
+        ports:
+          - 6379:6379
+        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ inputs.node_version_file }}
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ${{ inputs.node_version_file }}
+      - name: restore cache
+        id: restore-cache
+        uses: actions/cache/restore@v4
+        env:
+          cache-name: node-modules
+        with:
+          path: |
+            ./node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - name: download the artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: npm_build_artifacts
+      - name: Install project dependencies
+        run: npm i
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+      - name: Run cucumber tests
+        shell: bash
+        run: |
+          export BASEURL=${{ secrets.DEV_BASEURL }}
+          export USERNAME=${{ secrets.E2E_DEV_USERNAME }}
+          export PASSWORD=${{ secrets. E2E_DEV_PASSWORD }}
+          export BROWSER=${{ secrets.E2E_DEV_BROWSER }}
+          npm run end-to-end-test
+      - name: upload the artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm_unit_test_artifacts
+          path: test_results
+      - name: publish test report
+        if: ${{ !cancelled() && github.event.repository.visibility == 'public' }}
+        uses: dorny/test-reporter@v2
+        with:
+          artifact: npm_unit_test_artifacts
+          name: Test Report
+          path: 'jest/**/*.xml'
+          reporter: java-junit
+          fail-on-empty: false
+          fail-on-error: false
+          list-suites: 'failed'
+          list-tests: 'failed'
