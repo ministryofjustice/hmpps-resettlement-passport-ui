@@ -111,7 +111,7 @@
     ]
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.772.0",
+    "@aws-sdk/client-s3": "^3.839.0",
     "@cucumber/cucumber": "^11.2.0",
     "@ministryofjustice/frontend": "^4.0.1",
     "@ministryofjustice/hmpps-monitoring": "^0.0.1-beta.2",
