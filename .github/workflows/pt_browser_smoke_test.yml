@@ -48,8 +48,8 @@ jobs:
         with:
           path: |
             pt_tests/tests/run.js
-          flags: |
-            --no-setup
+#          flags: |
+#            --no-setup
 #      - name: run pt browser smoke test
 #        run: |
 #            export PT_USERNAME=${E2E_DEV_USERNAME}
