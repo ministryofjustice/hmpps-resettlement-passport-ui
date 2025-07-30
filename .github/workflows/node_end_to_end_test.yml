@@ -41,9 +41,7 @@ jobs:
           export USERNAME=${{ secrets.E2E_DEV_USERNAME }}
           export PASSWORD=${{ secrets. E2E_DEV_PASSWORD }}
           export BROWSER=${{ secrets.E2E_DEV_BROWSER }}
-          ls -a /home/runner/.cache
           playwright install chromium
-          ls -a /home/runner/.cache
           npm run end-to-end-test
       - name: upload the artifacts
         if: ${{ !cancelled() }}
