@@ -46,7 +46,8 @@ jobs:
           path: |
             pt_tests/tests/run.js
           flags: |
-            --no-setup
+            --no-setup -e execution_type=${{ env.EXECUTION_TYPE }} -e process=${{ env.PROCESS }}
+          inspect-flags: 'execution_type,process'
 #      - name: run pt browser smoke test
 #        run: |
 #            export PT_USERNAME=${E2E_DEV_USERNAME}
