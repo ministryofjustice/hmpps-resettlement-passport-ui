@@ -48,6 +48,7 @@ jobs:
         with:
           path: |
             pt_tests/tests/run.js
+          debug: true
           inspect-flags: 'EXECUTION_TYPE smoke PROCESS dev'
 #          flags: |
 #            --no-setup
