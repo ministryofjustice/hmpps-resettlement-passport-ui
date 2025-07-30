@@ -11,7 +11,7 @@ permissions:
   contents: read
 jobs:
   pt-test:
-    runs-on: [self-hosted, Linux, X64, hmpps-github-actions-runner]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ inputs.node_version_file }}
