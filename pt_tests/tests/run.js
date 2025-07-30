@@ -39,3 +39,7 @@ export function getScenarios(executionType) {
     }
   }
 }
+
+export default function () {
+  mainDevBrowserTest()
+}
