@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: ${{ inputs.node_version_file }}
+      - name: Install Playwright
+        run: npm install -g playwright && npx playwright install
       - name: restore cache
         id: restore-cache
         uses: actions/cache/restore@v4
@@ -48,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: npm_e2e_test_artifacts
-          path: test_results
+          path: test-results
       - name: publish test report
         if: ${{ !cancelled() && github.event.repository.visibility == 'public' }}
         uses: dorny/test-reporter@v2
