@@ -34,6 +34,14 @@ jobs:
           name: npm_build_artifacts
       - name: Setup ZAP
         uses: ./.github/actions/setup-zap
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip' # caching pip dependencies
       - name: Run zap tests
         run: |
           export ST_USERNAME=${{ secrets.E2E_DEV_USERNAME }}
