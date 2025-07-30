@@ -10,7 +10,7 @@ on:
 permissions:
   contents: read
 jobs:
-  zap-test:
+  pt-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
