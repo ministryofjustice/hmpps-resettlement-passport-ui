@@ -1,0 +1,77 @@
+name: Build and run zap test
+on:
+  workflow_call:
+    inputs:
+      node_version_file:
+        description: "Passed to setup-node action to specify where to source the version of node from"
+        required: false
+        type: string
+        default: ".nvmrc"
+permissions:
+  contents: read
+jobs:
+  zap-test:
+    runs-on: [self-hosted, Linux, X64, hmpps-github-actions-runner]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ inputs.node_version_file }}
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ${{ inputs.node_version_file }}
+      - name: Install Playwright
+        run: npm install -g playwright && npx playwright install
+      - name: restore cache
+        id: restore-cache
+        uses: actions/cache/restore@v4
+        env:
+          cache-name: node-modules
+        with:
+          path: |
+            ./node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      - name: download the artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: npm_build_artifacts
+      - name: Setup ZAP
+        uses: ./.github/actions/setup-zap
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip' # caching pip dependencies
+      - name: Run zap tests
+        run: |
+          export ST_USERNAME=${{ secrets.E2E_DEV_USERNAME }}
+          export ST_PASSWORD=${{ secrets.E2E_DEV_PASSWORD }}
+          export ST_PROXY_URL="http://localhost:8080"
+          export ST_API_KEY=''
+          export ST_ENV_NAME='dev'
+          mkdir -p test_results
+          pip install -r ./security_test/requirements.txt
+          playwright install chromium
+          owasp-zap -daemon -host 0.0.0.0 -port 8080 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true &
+          sleep 60  # Wait for ZAP to start
+          python3 ./security_test/test_security.py
+      - name: upload the artifacts
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm_zap_test_artifacts
+          path: test_results
+      - name: publish test report
+        if: ${{ !cancelled() && github.event.repository.visibility == 'public' }}
+        uses: dorny/test-reporter@v2
+        with:
+          artifact: npm_zap_test_artifacts
+          name: Test Report
+          path: 'jest/**/*.xml'
+          reporter: java-junit
+          fail-on-empty: false
+          fail-on-error: false
+          list-suites: 'failed'
+          list-tests: 'failed'
