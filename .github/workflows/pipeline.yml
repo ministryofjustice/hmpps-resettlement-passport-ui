@@ -73,20 +73,17 @@ jobs:
   node_end_to_end_tests:
     name: node end-to-end tests
     uses: ./.github/workflows/node_end_to_end_test.yml # LOCAL_VERSION
-    needs: [ node_build ]
-    #needs: [ deploy_dev ]
+    needs: [ deploy_dev ]
     secrets: inherit
   pt_browser_smoke_test:
     name: pt browser smoke test
     uses: ./.github/workflows/pt_browser_smoke_test.yml # LOCAL_VERSION
-    needs: [ node_build ]
-    #needs: [ node_end_to_end_tests ]
+    needs: [ node_end_to_end_tests ]
     secrets: inherit
   node_zap_tests:
     name: node zap tests
     uses: ./.github/workflows/node_zap_test.yml # LOCAL_VERSION
-    needs: [ node_build ]
-    #needs: [ deploy_dev ]
+    needs: [ deploy_dev ]
     secrets: inherit
   deploy_preprod:
     name: Deploy to the preprod environment
@@ -94,6 +91,7 @@ jobs:
     - build
     - helm_lint
     - deploy_dev
+    - node_end_to_end_tests
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@v2 # WORKFLOW_VERSION
     secrets: inherit
     with:
