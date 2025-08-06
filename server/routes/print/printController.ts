@@ -23,7 +23,7 @@ export default class PrintController {
   printPackPdf: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
-      const { prisonerNumber, prisonName } = prisonerData.personalDetails
+      const { prisonerNumber } = prisonerData.personalDetails
 
       const appointmentsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.VIEW_APPOINTMENTS_END_USER)
       logger.info('Feature flag viewAppointmentsEndUser: ', appointmentsEnabled)
