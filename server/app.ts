@@ -21,7 +21,7 @@ import routes from './routes'
 import type { Services } from './services'
 import getFrontendComponents from './middleware/setUpFrontendComponents'
 import setUpEnvironmentName from './middleware/setUpEnvironmentName'
-import userMetricsAndLoggingMiddleware from './middleware/userMetricsAndLoggingMiddleware'
+import usageLoggingMiddleware from './middleware/usageLoggingMiddleware'
 import config from './config'
 import { userContextMiddleware } from './middleware/userContextMiddleware'
 import { appInsightsMiddleware } from './utils/azureAppInsights'
@@ -47,7 +47,7 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware(AUTH_ROLES))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
-  app.use(userMetricsAndLoggingMiddleware())
+  app.use(usageLoggingMiddleware())
   app.use(userContextMiddleware)
 
   app.use(getFrontendComponents(services))
