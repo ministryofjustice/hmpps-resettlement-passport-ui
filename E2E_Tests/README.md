@@ -35,7 +35,7 @@ This is a Cucumber BDD Typescript Project using Playwright.
      - USERNAME = DPS Username
      - PASSWORD = DPS Password
      - BROWSER = chromium
-- Install Dependencies : npm i 
+- Install Dependencies : npm run setup
 - Run Tests : npm run end-to-end-test
 
 

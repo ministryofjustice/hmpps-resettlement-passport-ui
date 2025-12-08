@@ -40,7 +40,7 @@ AWS_ENDPOINT_URL=http://localhost:4565
 ```
 * Start up dependencies in docker: `docker compose -f docker-compose-local.yml up -d`
 * Ensure [resettlement-passport-api](https://github.com/ministryofjustice/hmpps-resettlement-passport-api) is running locally on port 8080 or update env variable `RESETTLEMENT_PASSPORT_API_URL` to point to the dev site
-* Install npm dependencies `npm i`
+* Install npm dependencies `npm run setup`
 * Run app in dev mode: `npm run start:dev`
 
 ### Updating feature flags/config
