@@ -26,6 +26,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: ${{ inputs.node_version_file }}
+      - name: Install dependencies
+        run: npm run setup
       - name: download artifacts
         uses: actions/download-artifact@v4
         with:
