@@ -19,7 +19,7 @@ jobs:
         with:
           node-version-file: ${{ inputs.node_version_file }}
       - name: Install Playwright
-        run: npm install -g playwright && npx playwright install
+        run: npm run setup -g playwright && npx playwright install
       - name: restore cache
         id: restore-cache
         uses: actions/cache/restore@v4

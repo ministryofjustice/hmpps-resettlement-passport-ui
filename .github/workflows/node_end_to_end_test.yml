@@ -20,7 +20,7 @@ jobs:
           node-version-file: ${{ inputs.node_version_file }}
       - name: Install Playwright
         run: |
-          npm install -g playwright@1.54.1 && npx playwright install
+          npm run setup -g playwright@1.54.1 && npx playwright install
       - name: restore cache
         id: restore-cache
         uses: actions/cache/restore@v4
@@ -36,7 +36,7 @@ jobs:
         with:
           name: npm_build_artifacts
       - name: Install project dependencies
-        run: npm i
+        run: npm run setup
       - name: Run cucumber tests
         shell: bash
         run: |
