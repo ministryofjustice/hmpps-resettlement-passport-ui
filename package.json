@@ -220,6 +220,15 @@
     },
     "csurf": {
       "cookie": "0.7.2"
+    },
+    "assertion-error-formatter": {
+      "diff": "8.0.3"
+    },
+    "mocha": {
+      "diff": "8.0.3"
+    },
+    "ts-node": {
+      "diff": "8.0.3"
     }
   }
 }
