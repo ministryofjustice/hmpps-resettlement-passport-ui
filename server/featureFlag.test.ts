@@ -30,6 +30,9 @@ describe('FeatureFlag', () => {
 
   describe('getInstance', () => {
     it('should return the same instance on multiple calls', () => {
+      ;(readFile as jest.Mock).mockResolvedValue(
+        '[{"feature":"flag1", "enabled":true}, {"feature":"flag2", "enabled":false}]',
+      )
       const instance1 = FeatureFlags.getInstance()
       const instance2 = FeatureFlags.getInstance()
       expect(instance1).toBe(instance2)
@@ -38,11 +41,19 @@ describe('FeatureFlag', () => {
 
   describe('initialize', () => {
     it('IsInitialized should return false', () => {
+      ;(readFile as jest.Mock).mockResolvedValue(
+        '[{"feature":"flag1", "enabled":true}, {"feature":"flag2", "enabled":false}]',
+      )
       const ff = FeatureFlags.getInstance()
       expect(ff.IsInitialized()).toEqual(false)
     })
 
     it('initialize with featureFlags turned off', async () => {
+      jest.doMock('node:fs/promises', () => ({
+        readFile: jest
+          .fn()
+          .mockResolvedValue('[{"feature":"flag1", "enabled":true}, {"feature":"flag2", "enabled":false}]'),
+      }))
       jest.doMock('./config', () => ({
         s3: {
           featureFlag: {
