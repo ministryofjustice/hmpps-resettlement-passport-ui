@@ -204,7 +204,7 @@
     "lint-staged": "^15.5.0",
     "mocha-junit-reporter": "^2.2.1",
     "nock": "^14.0.1",
-    "nodemon": "^3.1.9",
+    "nodemon": "^3.1.11",
     "prettier": "^2.8.8",
     "prettier-plugin-jinja-template": "^0.5.0",
     "sass": "^1.86.0",
@@ -229,6 +229,12 @@
     },
     "ts-node": {
       "diff": "8.0.3"
+    },
+    "@aws-sdk/client-s3": {
+      "fast-xml-parser": "^5.3.6"
+    },
+    "glob": {
+      "minimatch": "^10.2.1"
     }
   }
 }
