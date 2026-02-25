@@ -2,7 +2,6 @@ import { RequestHandler } from 'express'
 import nunjucks from 'nunjucks'
 import RpService from '../../services/rpService'
 import PrintView from './printView'
-import { pdfMetricsCounter } from '../../monitoring/customMetrics'
 import { FEATURE_FLAGS } from '../../utils/constants'
 import { getFeatureFlagBoolean } from '../../utils/utils'
 import { Appointment } from '../../data/model/appointment'
@@ -24,7 +23,7 @@ export default class PrintController {
   printPackPdf: RequestHandler = async (req, res, next): Promise<void> => {
     try {
       const prisonerData = await this.prisonerDetailsService.loadPrisonerDetailsFromParam(req, res, true)
-      const { prisonerNumber, prisonName } = prisonerData.personalDetails
+      const { prisonerNumber } = prisonerData.personalDetails
 
       const appointmentsEnabled = await getFeatureFlagBoolean(FEATURE_FLAGS.VIEW_APPOINTMENTS_END_USER)
       logger.info('Feature flag viewAppointmentsEndUser: ', appointmentsEnabled)
@@ -38,11 +37,6 @@ export default class PrintController {
       const fullName = `${prisonerData.personalDetails.firstName} ${prisonerData.personalDetails.lastName}`
 
       const view = new PrintView(prisonerData, fullName, appointments, otpData, appointmentsEnabled)
-
-      pdfMetricsCounter.inc({
-        path: req.path.toLowerCase(),
-        prison: prisonName,
-      })
 
       const headerHtml = nunjucks.render('pages/printPackHeader.njk', { ...view.renderArgs })
       res.renderPDF('pages/printPack', headerHtml, { ...view.renderArgs }, { filename, pdfOptions: { ...pdfOptions } })
