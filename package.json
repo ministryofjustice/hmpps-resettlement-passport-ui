@@ -230,11 +230,21 @@
     "ts-node": {
       "diff": "8.0.3"
     },
-    "@aws-sdk/client-s3": {
-      "fast-xml-parser": "^5.3.6"
+    "minimatch": "^10.2.3",
+    "jest-html-reporter": {
+      "minimatch": "^10.2.3"
     },
-    "glob": {
-      "minimatch": "^10.2.1"
+    "eslint": {
+      "minimatch": "^3.1.4"
+    },
+    "eslint-plugin-import": {
+      "minimatch": "^3.1.4"
+    },
+    "test-exclude": {
+      "minimatch": "^3.1.4"
+    },
+    "@aws-sdk/client-s3": {
+      "fast-xml-parser": "^5.3.8"
     }
   }
 }

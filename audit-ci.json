@@ -2,14 +2,5 @@
   "low": true,
   "package-manager": "auto",
   "registry": "https://registry.npmjs.org",
-  "allowlist": [
-    "GHSA-3ppc-4f35-3m26|minimatch>",
-    "GHSA-3ppc-4f35-3m26|*eslint*>minimatch*",
-    "GHSA-3ppc-4f35-3m26|*jest*>minimatch*",
-    "GHSA-3ppc-4f35-3m26|*mocha*>minimatch",
-    "GHSA-3ppc-4f35-3m26|@humanwhocodes/config-array>minimatch>",
-    "GHSA-3ppc-4f35-3m26|babel-plugin-istanbul>test-exclude>minimatch>",
-    "GHSA-3ppc-4f35-3m26|filelist>minimatch",
-    "GHSA-3ppc-4f35-3m26|jake>minimatch"
-  ]
+  "allowlist": []
 }
