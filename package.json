@@ -240,6 +240,9 @@
     "eslint-plugin-import": {
       "minimatch": "^3.1.4"
     },
+    "test-exclude": {
+      "minimatch": "^3.1.4"
+    },
     "@aws-sdk/client-s3": {
       "fast-xml-parser": "^5.3.8"
     }
