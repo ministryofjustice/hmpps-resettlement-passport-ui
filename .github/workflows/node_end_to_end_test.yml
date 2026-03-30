@@ -13,9 +13,9 @@ jobs:
   end-to-end-test:
     runs-on: [self-hosted, Linux, X64, hmpps-github-actions-runner]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Use Node.js ${{ inputs.node_version_file }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version-file: ${{ inputs.node_version_file }}
       - name: Install Playwright
@@ -23,7 +23,7 @@ jobs:
           npm run setup -g playwright@1.54.1 && npx playwright install
       - name: restore cache
         id: restore-cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         env:
           cache-name: node-modules
         with:
@@ -32,7 +32,7 @@ jobs:
             ~/.cache/Cypress
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - name: download the artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: npm_build_artifacts
       - name: Install project dependencies
@@ -48,13 +48,13 @@ jobs:
           npm run end-to-end-test
       - name: upload the artifacts
         if: ${{ !cancelled() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: npm_e2e_test_artifacts
           path: test-results
       - name: publish test report
         if: ${{ !cancelled() && github.event.repository.visibility == 'public' }}
-        uses: dorny/test-reporter@v2
+        uses: dorny/test-reporter@df6247429542221bc30d46a036ee47af1102c451 # v2
         with:
           artifact: npm_e2e_test_artifacts
           name: Test Report
