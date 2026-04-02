@@ -38,7 +38,7 @@
     "setup": "npm ci && hmpps-npm-script-run-allowlist"
   },
   "engines": {
-    "node": "^22",
+    "node": "^24",
     "npm": "^10"
   },
   "jest": {
@@ -115,7 +115,7 @@
     "@aws-sdk/client-s3": "^3.772.0",
     "@cucumber/cucumber": "^11.3.0",
     "@ministryofjustice/frontend": "^4.0.1",
-    "@ministryofjustice/hmpps-monitoring": "^0.0.1-beta.2",
+    "@ministryofjustice/hmpps-monitoring": "^1.0.2",
     "@types/express": "^4.17.21",
     "@types/pdf-parse": "^1.1.4",
     "@types/validator": "^13.12.2",
@@ -158,7 +158,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.10",
     "@ministryofjustice/hmpps-npm-script-allowlist": "0.0.3",
-    "@ministryofjustice/hmpps-precommit-hooks": "^0.0.3",
+    "@ministryofjustice/hmpps-precommit-hooks": "^2.0.2",
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",
     "@types/compression": "^1.7.5",
@@ -172,7 +172,7 @@
     "@types/jest": "^29.5.14",
     "@types/jsdom": "^21.1.7",
     "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^22.13.11",
+    "@types/node": "^24.12.0",
     "@types/nunjucks": "^3.2.6",
     "@types/passport": "^1.0.17",
     "@types/passport-oauth2": "^1.4.17",
@@ -231,9 +231,9 @@
     "ts-node": {
       "diff": "8.0.3"
     },
-    "minimatch": "^10.2.3",
+    "minimatch": "^10.2.5",
     "jest-html-reporter": {
-      "minimatch": "^10.2.3"
+      "minimatch": "^10.2.5"
     },
     "eslint": {
       "minimatch": "^3.1.4"
