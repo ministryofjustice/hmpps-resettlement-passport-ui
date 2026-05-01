@@ -3,6 +3,7 @@ import cookieSession from 'cookie-session'
 import createError from 'http-errors'
 
 import cookieParser from 'cookie-parser'
+import { randomUUID } from 'crypto'
 import routes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
@@ -48,6 +49,7 @@ function appSetup(services: Services, production: boolean, userSupplier: () => E
   app.use(cookieParser())
   app.use(cookieSession({ keys: [''] }))
   app.use((req, res, next) => {
+    req.id = randomUUID()
     req.user = userSupplier()
     req.flash = flashProvider
     res.locals = { userActiveCaseLoad: { caseLoadId: 'MDI' }, isPrisonUser: true }
