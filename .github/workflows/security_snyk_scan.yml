@@ -3,7 +3,7 @@ name: Security Snyk dependency check
 on:
   workflow_dispatch:
    schedule:
-     - cron: "0 7 7 * * MON-FRI" # At 07:07 AM, Monday through Friday
+     - cron: "7 7 * * MON-FRI" # At 07:07 AM, Monday through Friday
 
 jobs:
   security-snyk-check:
