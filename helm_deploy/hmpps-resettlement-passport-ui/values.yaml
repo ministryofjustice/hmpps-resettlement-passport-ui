@@ -1,5 +1,6 @@
 generic-service:
   nameOverride: hmpps-resettlement-passport-ui
+  productId: "DPS042"
 
   replicaCount: 4
 
